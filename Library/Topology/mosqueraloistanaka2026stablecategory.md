@@ -55,6 +55,7 @@ strata_touched:
   - D5/S3/Topology/StableCategory/SevenTrianglePowerCovers
   - D5/S3/Topology/StableCategory/UnrestrictedFactorPowers
   - D5/S3/Topology/StableCategory/ShellingColourCriterion
+  - D5/S3/Topology/StableCategory/ShellingColourObstruction
   - D5/S3/Topology/StableCategory/CategoricalCoverFactorization
 license: citation-only
 triage: anchor
@@ -1397,3 +1398,47 @@ approximation and the cited results on subdivision and collapse.
 Question 6.3, the case \(b=2\), remains open.
 [Adiprasito and Benedetti](https://arxiv.org/abs/1202.6606) ·
 [Barmak and Minian](https://arxiv.org/abs/0907.2954)
+
+## An obstruction to mixing all shelling restriction faces
+
+In a facet shelling starting from a simplex, mixing every nonsingleton
+restriction face makes each monochromatic induced graph chordal. A mixed
+restriction introduces no monochromatic face. A singleton restriction can
+add one vertex whose old same-colour neighbours form a clique. In
+particular, a monochromatic induced four-cycle would have to survive back
+to the first simplex, where it would have a diagonal.
+
+The first barycentric subdivision of any complex with a nine-vertex face
+contains an induced complete tripartite graph with three vertices in each
+part. Partition the nine vertices into three triples. In each part use the
+faces consisting of one vertex of that triple together with all vertices in
+earlier triples. Comparability holds exactly across parts. Two parts have
+the same majority colour, producing the monochromatic induced four-cycle.
+The Lean proof uses the restriction-interval hypotheses of
+`ShellingColourCriterion` and proves the obstruction directly. Since
+barycentric subdivision preserves dimension, the obstruction applies at
+every positive iterate in dimension at least eight. For instance it
+applies to every iterate of the first subdivision of the eight-simplex.
+That complex is a cone, so its categorical covering number is one.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Multipartite posets in Boolean lattices](https://arxiv.org/abs/2204.03010)
+
+## Coherent triangulations of a simplex
+
+The universal ratio bound in Question 6.3 can be tested on the face
+posets of coherent triangulations of a simplex. For a finite
+contractible complex, take its first subdivision as a full subcomplex
+of the barycentrically triangulated simplex on its original vertices.
+Extend a contraction by the homotopy extension property to obtain a
+continuous retraction. Near the full subcomplex, adjust it to normalize
+the barycentric coordinates supported on that subcomplex. Relative
+barycentric subdivisions fix the full subcomplex. The total
+off-subcomplex barycentric weight decays on all cells meeting it, and
+ordinary mesh bounds apply on the other cells. Vertex-star labels
+then give a simplicial retraction fixing the retained subcomplex.
+Every relative subdivision is a sequence of stellar subdivisions and
+preserves coherence by lowering the lifted height of each inserted
+vertex sufficiently little. The exact retraction transports a
+categorical cover at the same depth. This is a paper-level reduction.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Relative simplicial approximation](https://doi.org/10.1017/S0305004100037415)
