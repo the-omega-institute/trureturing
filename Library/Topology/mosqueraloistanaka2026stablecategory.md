@@ -46,6 +46,7 @@ strata_touched:
   - D5/S3/Topology/StableCategory/ExactCategoricalExtension
   - D5/S3/Topology/StableCategory/MixedSimplexChart
   - D5/S3/Topology/StableCategory/MixedSimplexAttachment
+  - D5/S3/Topology/StableCategory/ShellingExactExtension
 license: citation-only
 triage: anchor
 ---
@@ -1212,3 +1213,20 @@ to the horn by adjoining the chosen singleton and deleting the top
 face where needed. The comparisons fix the subdivided horn and
 extend over the old piece. The full-cover extension theorem gives
 exactly the prescribed old intersections at depth three.
+
+
+## Exact extension across a shelling step
+
+Suppose the retained triangulation already has a categorical
+two-cover and one simplex is attached along a union of its facets.
+The cover extends with both exact old intersections after three
+ordinary barycentric subdivisions in the same ambient. At the second
+subdivision the two induced regions need only cover vertices. In
+the mixed case, use the face formed by the omitted vertices of the
+facets in the second old piece. The first region can insert this
+anchor into its new chains even if it lies in both prescribed pieces.
+The second region cuts its chains by the second old piece. In the
+monochromatic case connectedness suffices to move the constants for
+the disjoint new and old components to a common vertex. A last
+ordinary subdivision covers the remaining mixed flags and preserves
+the prescribed intersections.
