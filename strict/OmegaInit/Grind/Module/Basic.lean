@@ -146,7 +146,7 @@ end Omega.Lean.Grind.IntModule
 
 namespace Omega.Lean.Grind.NoNatZeroDivisors
 set_option linter.defProp false in
-@[instance_reducible] public def mk' {α : Type u} [IntModule α]
+@[irreducible] public def mk' {α : Type u} [IntModule α]
     (eq_zero_of_mul_eq_zero : ∀ (k : Nat) (a : α), Ne k Nat.zero → Eq (SMul.smul k a) Zero.zero → Eq a Zero.zero) :
     NoNatZeroDivisors α :=
   NoNatZeroDivisors.mk fun k a b nz hab =>
