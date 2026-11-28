@@ -22,6 +22,10 @@ $$\operatorname{IsLeast}\left(\{ k \in \mathbb{N} \mid 0 < k \land \left(\forall
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/WordSpans/ShitovSizeThree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/shitov-2023-size-three-exact-word-length` (proved) by `D5/S3/Quantum/Matrix/WordSpans/ShitovSizeThree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"shitov-2023-size-three-exact-word-length","declaration_gid":"D5/S3/Quantum/Matrix/WordSpans/ShitovSizeThree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yaroslav Shitov (2023). *Growth in Matrix Algebras and a Conjecture of Pérez-García, Verstraete, Wolf and Cirac*. DOI: [10.1007/s00023-026-01728-6](https://doi.org/10.1007/s00023-026-01728-6). URL: <https://vixra.org/pdf/2308.0028v1.pdf>.

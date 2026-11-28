@@ -53,7 +53,10 @@ internal sealed class ShitovSizeThreeDocument : IScribeDocumentDefinition
                         + "size three. A linear functional vanishes on every six-letter word, and "
                         + "nine seven-letter words form a basis. By persistence, a universal positive "
                         + "length below seven would make the sixth span full for Yu's pair."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("shitov-2023-size-three-exact-word-length"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Complex => Seq(Mathbb, Grp(F.Id("C")));
