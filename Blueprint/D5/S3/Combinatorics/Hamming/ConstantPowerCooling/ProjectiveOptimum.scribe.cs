@@ -63,8 +63,9 @@ internal sealed class ProjectiveOptimumDocument : IScribeDocumentDefinition
         Formula conclusion = Call("IsGreatest", attained, Seq(n, Minus, D(1)));
         return Disp(Seq(Forall, Sp, Open, field, Colon, Sp, F.Id("Type"), Close,
             Sp, OpenBracket, Call("Field", field), CloseBracket,
-            Sp, OpenBracket, Call("Finite", field), CloseBracket, Comma, Quad,
-            F.Id("let"), Sp, q, Eq, Call("Nat.card", field), Comma, Sp,
+            Sp, OpenBracket, Call("Finite", field), CloseBracket, Comma, Quad, Sp,
+            Operatorname, Grp(F.Id("let")), Sp, q, Eq,
+            new Formula.Apply(Seq(F.Id("Nat"), Dot, F.Id("card")), [field]), Comma, Sp,
             n, Eq, size, Comma, Sp, m, Eq, Seq(n, Slash, D(2)), Comma, Quad,
             Open, D(7), Sp, Le, Sp, q, Sp, Land, Sp, Call("Odd", q), Sp, Land, Sp,
             Open, oddCase, Sp, Lor, Sp, evenCase, Close, Close, Sp, Implies, Sp, conclusion));

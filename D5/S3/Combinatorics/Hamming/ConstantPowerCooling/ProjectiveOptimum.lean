@@ -9,16 +9,8 @@
 import D5.S3.Combinatorics.Hamming.ConstantPowerCooling.GroupDivisibleDesign
 import OmegaBuild.Commands
 import Mathlib.Combinatorics.Configuration
-import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Mathlib.LinearAlgebra.Projectivization.Cardinality
-import Mathlib.Order.Partition.Finpartition
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Zify
 
 compile_only_with_mathlib
 
@@ -204,10 +196,12 @@ section DesignIncidence
 
 attribute [local instance] Classical.propDecidable
 
-private def groupPartition {V : Type*} [Fintype V] [DecidableEq V] {k : ℕ} (G : GroupDivisibleDesign V k 2) : Finpartition (Finset.univ : Finset V) :=
+private def groupPartition {V : Type*} [Fintype V] [DecidableEq V] {k : ℕ}
+    (G : GroupDivisibleDesign V k 2) : Finpartition (Finset.univ : Finset V) :=
   @Finpartition.ofSetoid V _ _ G.groups (Classical.decRel _)
 
-private theorem parts_card_two {V : Type*} [Fintype V] [DecidableEq V] {k : ℕ} (G : GroupDivisibleDesign V k 2) :
+private theorem parts_card_two {V : Type*} [Fintype V] [DecidableEq V] {k : ℕ}
+    (G : GroupDivisibleDesign V k 2) :
     ∀ t : (groupPartition G).parts, t.1.card = 2 := by
   intro t
   obtain ⟨x, hx⟩ := Finpartition.nonempty_of_mem_parts (groupPartition G) t.property
@@ -348,13 +342,17 @@ private theorem incidence_count {V : Type*} [DecidableEq V] {k : ℕ}
       rw [ite_eq_right huv, ite_eq_right hgroup, hfilter]
       simp
 
-private abbrev DesignBlock {V : Type*} [DecidableEq V] {k : ℕ} (G : GroupDivisibleDesign V k 2) := {B // B ∈ G.blocks}
+private abbrev DesignBlock {V : Type*} [DecidableEq V] {k : ℕ}
+    (G : GroupDivisibleDesign V k 2) := {B // B ∈ G.blocks}
 
-private def incidenceMatrix {V : Type*} [DecidableEq V] {k : ℕ} (G : GroupDivisibleDesign V k 2) {m : ℕ} (eV : GramIndex m ≃ V)
+private def incidenceMatrix {V : Type*} [DecidableEq V] {k : ℕ}
+    (G : GroupDivisibleDesign V k 2) {m : ℕ} (eV : GramIndex m ≃ V)
     (eB : GramIndex m ≃ DesignBlock G) : Matrix (GramIndex m) (GramIndex m) ℤ :=
   Matrix.of fun i j => if eV i ∈ (eB j).1 then 1 else 0
 
-private theorem inc_gram_entry {V : Type*} [DecidableEq V] {k : ℕ} (G : GroupDivisibleDesign V k 2) {m : ℕ} (eV : GramIndex m ≃ V) (eB : GramIndex m ≃ DesignBlock G)
+private theorem inc_gram_entry {V : Type*} [DecidableEq V] {k : ℕ}
+    (G : GroupDivisibleDesign V k 2) {m : ℕ}
+    (eV : GramIndex m ≃ V) (eB : GramIndex m ≃ DesignBlock G)
     (i j : GramIndex m) :
     (incidenceMatrix G eV eB * (incidenceMatrix G eV eB)ᵀ) i j =
       (G.blocks.filter (fun B => eV i ∈ B ∧ eV j ∈ B)).card := by
@@ -390,7 +388,9 @@ private theorem inc_gram_entry {V : Type*} [DecidableEq V] {k : ℕ} (G : GroupD
     norm_num
   exact hcast
 
-private theorem inc_gram_entry_value {V : Type*} [DecidableEq V] {k : ℕ} (G : GroupDivisibleDesign V k 2) {m : ℕ} (eV : GramIndex m ≃ V) (eB : GramIndex m ≃ DesignBlock G)
+private theorem inc_gram_entry_value {V : Type*} [DecidableEq V] {k : ℕ}
+    (G : GroupDivisibleDesign V k 2) {m : ℕ}
+    (eV : GramIndex m ≃ V) (eB : GramIndex m ≃ DesignBlock G)
     (hdegree : ∀ v : V, (G.blocks.filter (fun B => v ∈ B)).card = k)
     (heV : ∀ i j, G.groups.r (eV i) (eV j) ↔ i.1 = j.1)
     (i j : GramIndex m) :
