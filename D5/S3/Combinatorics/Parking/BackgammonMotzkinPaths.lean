@@ -8,6 +8,8 @@
 
 import D5.S3.Combinatorics.Parking.BackgammonReverseWeights
 
+/- The four-slot registration audit is unfinished. See https://github.com/the-omega-institute/trureturing/issues/35186. -/
+
 namespace BackgammonMotzkinPaths
 
 open BackgammonIncreasingPrefix
@@ -456,12 +458,6 @@ theorem reverseOutcome_weight_eq_motzkin (m : Nat) (weight : Nat → Nat) :
     rw [reverseOutcome_weight_succ_succ, walkWeight_succ_succ,
       reverseOutcome_weight_eq_motzkin (m + 1), reverseOutcome_weight_eq_motzkin m]
 
-/-- Clifton–Harris–Khaqan, Theorem 1.8, together with the empty outcome. -/
-theorem reverseOutcome_count_eq_motzkin (m : Nat) :
-    (outcomeWords (reverseOutcome m)).length = (motzkinWalks m).length := by
-  simpa [outcomeWeight, walkWeight, List.map_const', List.sum_replicate_nat] using
-    reverseOutcome_weight_eq_motzkin m (fun _ => 1)
-
 /-- The increasing prefix outcome is counted by weighting ordinary Motzkin
 walks of length `n - k` by the number of ways to insert the `k` prefix cars. -/
 theorem increasingPrefix_count_eq_motzkin (n k : Nat) (bound : k ≤ n) :
@@ -491,7 +487,8 @@ private theorem sumNat_map_add {α : Type} (xs : List α) (f g : α → Nat) :
 def liftCatalan (k : Nat) : Nat := iteratedLiftCount k 0
 
 private theorem liftCatalan_succ (k : Nat) : liftCatalan (k + 1) = iteratedLiftCount k 1 := by
-  simp [liftCatalan, iteratedLiftCount_succ, List.range']
+  change iteratedLiftCount k 1 + 0 = iteratedLiftCount k 1
+  exact Nat.add_zero _
 
 private theorem sum_rank_weights {α β : Type} (entries : List α) (rank : α → Nat)
     (terms : List β) (c : β → Nat) (f : β → Nat → Nat) :

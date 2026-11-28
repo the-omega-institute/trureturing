@@ -12,6 +12,8 @@ public import Init
 
 @[expose] public section
 
+/- The four-slot registration audit is unfinished. See https://github.com/the-omega-institute/trureturing/issues/35186. -/
+
 namespace BackgammonIncreasingPrefix
 
 abbrev Board := List (Option Nat)

@@ -13,6 +13,8 @@ import all D5.S3.Combinatorics.Parking.BackgammonIncreasingPrefix
 
 @[expose] public section
 
+/- The four-slot registration audit is unfinished. See https://github.com/the-omega-institute/trureturing/issues/35186. -/
+
 namespace BackgammonIncreasingPrefix
 
 /-- All words of a fixed length over the one-based alphabet `[spots]`. -/
@@ -272,10 +274,6 @@ theorem outcomeWeight_increasingPrefix (k : Nat) (outcome : List Nat) (weight : 
 
 /-- The number of extensions through `k` inserted cars, for a reduced word of rank `length`. -/
 def iteratedLiftCount (k length : Nat) : Nat := iteratedLiftWeight k (fun _ => 1) length
-
-theorem iteratedLiftCount_succ (k length : Nat) :
-    iteratedLiftCount (k + 1) length =
-      ((List.range' 1 (length + 1)).map (iteratedLiftCount k)).sum := rfl
 
 /-- Count the outcome of Question 5.2 by weighting each reverse-outcome word by its exact
 number of extensions. The total street length is `k + suffixLength`. -/
