@@ -226,6 +226,43 @@ def centeredPrimeDilations (x : ℝ) : ℝ :=
   ∑ d ∈ Ioc 1 ⌊B * x⌋₊,
     ((if d.Prime then Real.log (d : ℝ) else 0) - 1) * shell (x / (d : ℝ))
 
+/-- The Dirichlet coefficient of the prime weight centered by integer counting. -/
+def centeredPrimeCoefficient : ArithmeticFunction ℝ :=
+  ⟨fun n => if 1 < n then (if n.Prime then Real.log (n : ℝ) else 0) - 1 else 0,
+    by simp⟩
+
+theorem centeredPrimeDilations_eq_convolution (x : ℝ) :
+    centeredPrimeDilations x =
+      ∑ n ∈ Ioc 0 ⌊B * x⌋₊,
+        (centeredPrimeCoefficient * (μ : ArithmeticFunction ℝ)) n * b ((n : ℝ) / x) := by
+  rw [← sum_dilations_eq_sum_convolution]
+  unfold centeredPrimeDilations
+  calc
+    _ = ∑ d ∈ Ioc 1 ⌊B * x⌋₊, centeredPrimeCoefficient d * shell (x / (d : ℝ)) := by
+      apply sum_congr rfl
+      intro d hd
+      simp [centeredPrimeCoefficient, (mem_Ioc.mp hd).1]
+    _ = _ := by
+      apply sum_subset (fun d hd => mem_Ioc.mpr
+        ⟨zero_lt_one.trans (mem_Ioc.mp hd).1, (mem_Ioc.mp hd).2⟩)
+      intro d hmem hnot
+      have hd : ¬ 1 < d := fun h => hnot (mem_Ioc.mpr ⟨h, (mem_Ioc.mp hmem).2⟩)
+      simp [centeredPrimeCoefficient, hd]
+
+theorem centeredPrimeDilations_eq_zero_of_le_one {x : ℝ} (hx : x ≤ 1) :
+    centeredPrimeDilations x = 0 := by
+  have hB : 0 ≤ B := pow_nonneg A_pos.le _
+  have hcut : ⌊B * x⌋₊ < 2 := by
+    apply (Nat.floor_lt' (by norm_num : (2 : ℕ) ≠ 0)).mpr
+    exact (by simpa using mul_le_mul_of_nonneg_left hx hB :
+      B * x ≤ B).trans_lt NymanFixedRationalKernel.A4_lt_two
+  have hempty : Ioc 1 ⌊B * x⌋₊ = (∅ : Finset ℕ) := by
+    apply eq_empty_iff_forall_notMem.mpr
+    intro n hn
+    have h := mem_Ioc.mp hn
+    omega
+  simp [centeredPrimeDilations, hempty]
+
 theorem primeDilations_add_shell_eq_centered {x : ℝ} (hx : 1 ≤ x) :
     primeDilations x + shell x = centeredPrimeDilations x := by
   have hx₀ : 0 < x := zero_lt_one.trans_le hx
