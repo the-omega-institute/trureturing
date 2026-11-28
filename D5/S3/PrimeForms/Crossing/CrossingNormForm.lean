@@ -5,7 +5,8 @@
    anchors: []
    digest: The one-parameter crossing form Q_t(P,Q) = P²−(2t+1)PQ+(t²+t+1)Q² has discriminant identically −3, and for every integer t reduces under the explicit unimodular substitution (P,Q) ↦ (P−(t+1)Q, Q) to the principal Eisenstein/Löschian norm form x²+xy+y², so the whole family represents exactly the Eisenstein norms. This is the algebraic unified foundation of residual E.63's norm-state criterion; the crossing ⟺ continued-fraction-orbit biconditional and the generation-mechanism sub-results are not covered. -/
 
-import Mathlib
+import Mathlib.Data.Set.Basic
+import Mathlib.Tactic.Ring
 
 namespace D5.S3.PrimeForms.Crossing.CrossingNormForm
 
