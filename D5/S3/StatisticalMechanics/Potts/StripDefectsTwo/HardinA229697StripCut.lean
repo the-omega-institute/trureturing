@@ -93,11 +93,25 @@ private theorem tail_cut (r : Row) (c : ℕ) (d : Fin 2) (j : Fin 14) :
 
 private theorem active_table : ∀ (p : Row) (d : Fin 3) (j : Fin 28),
     0 < d.val → HardinA229589StripData.T (HardinA229589StripData.cl p (d.val - 1)) j = T (cl p d.val) (j.castAdd 14) := by
-  decide +kernel
+  intro p d j hd
+  simp only [cl, ite_eq_left hd, T, Matrix.reindex_apply, Matrix.submatrix_apply,
+    finSumFinEquiv_symm_apply_castAdd]
+  rfl
 
 private theorem tail_table : ∀ (p : Row) (d : Fin 2) (j : Fin 14),
     HardinA229589StripData.T (HardinA229589StripData.cl p d.val) (j.natAdd 14) = T (cl p d.val) (j.natAdd 28) := by
-  decide +kernel
+  intro p d j
+  have hd : d.val = 0 ∨ d.val = 1 := by omega
+  rcases hd with h | h
+  · simp only [h, cl, HardinA229589StripData.cl, Nat.lt_irrefl, Nat.zero_ne_one,
+      ite_false, ite_true, T, HardinA229589StripData.T, Matrix.reindex_apply,
+      Matrix.submatrix_apply, finSumFinEquiv_symm_apply_natAdd]
+    rfl
+  · simp only [h, cl, HardinA229589StripData.cl, Nat.zero_lt_one, Nat.sub_self,
+      Nat.zero_ne_one, ite_false, ite_true, T, Matrix.reindex_apply,
+      Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
+      finSumFinEquiv_symm_apply_natAdd]
+    erw [Matrix.fromBlocks_apply₁₂, Fin.append_right, Matrix.submatrix_apply]
 
 /-- The leading two budget sectors reuse the frozen one-defect certificate. -/
 theorem leading_counts (p : Row) (d : Fin 3) (j : Fin 28) :
