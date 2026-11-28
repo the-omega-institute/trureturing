@@ -18,8 +18,7 @@ open Finset SimpleGraph
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q IsBalanced flip_adj)
 open scoped Classical
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 local notation "flip" => BalancedCriticalSpectrum.flip
 

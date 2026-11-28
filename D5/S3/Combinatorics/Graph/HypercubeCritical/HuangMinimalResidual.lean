@@ -26,8 +26,7 @@ open D5.S3.Combinatorics.Graph.HypercubeCritical.HuangIntegralNormGap
 open BalancedCriticalSpectrum (Q)
 open private intCoeff intA intA_square intCoeff_sign_of_adj intCoeff_zero_of_not_adj from
   D5.S3.Combinatorics.Graph.HypercubeCritical.HuangIntegralNormGap
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private diff diff_of_adj_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 

@@ -37,8 +37,7 @@ open private coeff_symm from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeFourCut
 open private diff diff_of_adj_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 open Classical in
 private theorem neighbor_card_nine (y : Q9) :
