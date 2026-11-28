@@ -47,6 +47,22 @@ internal sealed class Q9InactiveContactFibreDocument : IScribeDocumentDefinition
                     Paragraph(Text("Cubic regularity puts 129 selected vertices on each parity. The equal direction counts give 43 edges per axis and 215 edges in the five free directions.")),
                     Paragraph(Text("If exactly five fibres are occupied and pure and at most ten are mixed, the pure fibres have at most eleven holes in total. At least four of them adjoin a mixed fibre and therefore have at least two holes. With up to three holes in a pure fibre, any selected vertex of the opposite parity must neighbour at least two holes. Two holes have at most two common neighbours. Three holes have at most four distinct vertices adjacent to two of them, because any three intersecting pairs of their neighbourhoods have a common vertex.")),
                     Paragraph(Text("The resulting capacity of the pure fibres is at most sixty free edges. The mixed fibres contribute at most 150, so the total falls short of 215."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("q9-five-axis-hole-energy"),
+                DeclarationHandle.Create(Placement + "Q9PureFibreEdgeCapacity.five_axis_hole_energy"),
+                H("The signed energy bounds free edges by the parity holes"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For a balanced component in a five-axis fibre, write n for the selected size on the chosen parity, q for the opposite selected size, and e for the number of free edges. Balancing the two constant weights in the signed cut inequality gives a bound of n times q for the sum of squared directional crossing counts. Cauchy–Schwarz then gives e squared at most five times n times q.")),
+                    Paragraph(Text("If there are h holes on the chosen parity, the five free neighbours of each selected opposite vertex contribute either an edge or a hole incidence. There are at most five times h hole incidences. Hence q is at most h plus the integer quotient of e by five."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("q9-five-axis-hole-linear"),
+                DeclarationHandle.Create(Placement + "Q9PureFibreEdgeCapacity.five_axis_hole_linear_bound"),
+                H("A linear free-edge bound in the number of holes"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Small hole counts use the common-neighbour bound. At four to six holes the energy inequality controls the finite range left by subcubic degree. The degree bound suffices for larger hole counts. In particular the total is at most five times the number of holes plus one, and at six holes it is at most twenty-two."))),
                 DescribeRole.Theorem)),
         []));
 }

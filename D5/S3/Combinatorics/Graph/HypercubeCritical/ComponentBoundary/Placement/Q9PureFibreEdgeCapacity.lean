@@ -1,5 +1,6 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9InactiveContactFibre
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.HuangThreeColumnIntegrality
+import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9WeightedCutEnergy
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.BinaryCubeKernelSupport
 
 /-! With at most three holes in a parity half-fibre, few vertices on the
@@ -17,6 +18,7 @@ open BalancedCubeComponentBoundary (directions mem_directions flip_injective reg
 open Q9IsotropicHuang (parity)
 open Q9InactiveContactFibre (freeEdges restrictToFibre sameFibre)
 open Q9MinimumDistanceOperator (minimumDisplacements)
+open Q9WeightedCutEnergy (directedPairCount cut_direction_energy)
 open HuangThreeColumnIntegrality (neighbors mem_neighbors common_neighbors_card_le_two
   triple_common_neighbor)
 open CoordinateHalves.BinaryCubeKernelSupport (cubeFinsetEquiv cubeFinsetEquiv_flip)
@@ -31,6 +33,8 @@ open private endpoint_card_twice from
 open private regular_parity_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9BoundaryGram
 open private paritySide from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
+open private directedPairCount_symm from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9WeightedCutEnergy
 
 private theorem three_small_union {α : Type*} [DecidableEq α] (A B C : Finset α)
     (ha : A.card ≤ 2) (hb : B.card ≤ 2) (hc : C.card ≤ 2)
@@ -304,7 +308,208 @@ private theorem freeEdges_eq_sum_directionEdges (S : Finset (Q 9)) (A : Finset (
       · exact Prod.ext rfl hq.symm
   rw [← htag, card_image_of_injective _ (fun _ _ h => congrArg Prod.fst h), hcard]
 
+open scoped BigOperators in
+/-- Opposite parity shores of a balanced cube support have a crossing-count
+bound on any chosen family of directions. -/
+theorem parity_cut_edge_square_le (L R : Finset (Q 9)) (b : Bool) (A : Finset (Fin 9))
+    (hl : ∀ x ∈ L, parity x = b) (hr : ∀ x ∈ R, parity x = !b)
+    (hbal : BalancedCriticalSpectrum.IsBalanced (L ∪ R)) :
+    (∑ i ∈ A, (directedPairCount L R i : ℝ)) ^ 2 ≤
+      (A.card : ℝ) * ((L.card : ℝ) * R.card) := by
+  classical
+  by_cases hL : L.Nonempty
+  · by_cases hR : R.Nonempty
+    · have hd : Disjoint L R := disjoint_left.mpr (by
+        intro x hxl hxr
+        have h := (hl x hxl).symm.trans (hr x hxr)
+        cases b <;> simp at h)
+      have hzero (S : Finset (Q 9)) (c : Bool)
+          (hS : ∀ x ∈ S, parity x = c) (i : Fin 9) : directedPairCount S S i = 0 := by
+        apply card_eq_zero.mpr
+        apply not_nonempty_iff_eq_empty.mp
+        rintro ⟨x, hx⟩
+        obtain ⟨hs, hf⟩ := mem_filter.mp hx
+        have h := hS _ hf
+        rw [parity_flip, hS _ hs] at h
+        cases c <;> simp at h
+      let n : ℝ := L.card
+      let q : ℝ := R.card
+      have hn : 0 < n := by
+        change (0 : ℝ) < (L.card : ℝ)
+        exact_mod_cast card_pos.mpr hL
+      have hq : 0 < q := by
+        change (0 : ℝ) < (R.card : ℝ)
+        exact_mod_cast card_pos.mpr hR
+      let s := Real.sqrt q
+      let t := Real.sqrt n
+      have hs : s ^ 2 = q := Real.sq_sqrt hq.le
+      have ht : t ^ 2 = n := Real.sq_sqrt hn.le
+      have he := cut_direction_energy L R hd hbal s t
+      simp only [hzero L b hl, hzero R (!b) hr, Nat.cast_zero, zero_mul, zero_add, hs, ht] at he
+      have hrewrite (i : Fin 9) :
+          (2 * (directedPairCount L R i : ℝ) * s * t) ^ 2 =
+            (4 * (n * q)) * (directedPairCount L R i : ℝ) ^ 2 := by
+        calc
+          _ = 4 * (t ^ 2 * s ^ 2) * (directedPairCount L R i : ℝ) ^ 2 := by ring
+          _ = _ := by rw [hs, ht]
+      rw [sum_congr rfl (fun i _ => hrewrite i), ← mul_sum] at he
+      have hsum : (∑ i : Fin 9, (directedPairCount L R i : ℝ) ^ 2) ≤ n * q := by
+        apply le_of_mul_le_mul_left _ (show (0 : ℝ) < 4 * (n * q) by positivity)
+        calc
+          _ ≤ (n * q + q * n) ^ 2 := he
+          _ = _ := by ring
+      have hsub := sum_le_sum_of_subset_of_nonneg (subset_univ A)
+        (fun i _ _ => sq_nonneg (directedPairCount L R i : ℝ))
+      have hcs := Finset.sum_mul_sq_le_sq_mul_sq A (fun _ => (1 : ℝ))
+        (fun i => (directedPairCount L R i : ℝ))
+      simp only [one_mul, one_pow, sum_const, nsmul_eq_mul, mul_one] at hcs
+      exact hcs.trans (mul_le_mul_of_nonneg_left (hsub.trans hsum) (by positivity))
+    · simp [not_nonempty_iff_eq_empty.mp hR, directedPairCount]
+  · simp [not_nonempty_iff_eq_empty.mp hL, directedPairCount]
+
+open Classical in
+open scoped BigOperators in
+/-- In a five-axis fibre, the squared number of selected free edges is
+bounded by the selected parity size and its number of holes. -/
+theorem five_axis_hole_energy (S : Finset (Q 9)) (A : Finset (Fin 9)) (hA : A.card = 5)
+    (z : Q 9) (b : Bool) (hbal : BalancedCriticalSpectrum.IsBalanced S) :
+    let L := (restrictToFibre S A z).filter (fun x => parity x = b)
+    let H := (restrictToFibre univ A z).filter (fun x => parity x = b ∧ x ∉ S)
+    let E := (freeEdges S L A).card
+    E ^ 2 ≤ 5 * (L.card * (H.card + E / 5)) := by
+  intro L H E
+  let R := (restrictToFibre S A z).filter (fun x => parity x = !b)
+  have hm {T : Finset (Q 9)} {x : Q 9} {p : Bool}
+      (h : x ∈ (restrictToFibre T A z).filter (fun v => parity v = p)) :
+      x ∈ T ∧ sameFibre A z x ∧ parity x = p :=
+    ⟨(mem_filter.mp (mem_filter.mp h).1).1, (mem_filter.mp (mem_filter.mp h).1).2,
+      (mem_filter.mp h).2⟩
+  have hflip {x : Q 9} {i : Fin 9} (hx : sameFibre A z x) (hi : i ∈ A) :
+      sameFibre A z (flip x i) :=
+    fun j hj => (flip_same_fibre hi j hj).trans (hx j hj)
+  have hE : E = ∑ i ∈ A, directedPairCount L R i := by
+    let edges := freeEdges S L A
+    change edges.card = _
+    have hmap (p : Q 9 × Fin 9) (hp : p ∈ edges) : p.2 ∈ A :=
+      (mem_product.mp (mem_filter.mp hp).1).2
+    rw [card_eq_sum_card_fiberwise (f := Prod.snd) (t := A) hmap]
+    apply sum_congr rfl
+    intro i hi
+    unfold directedPairCount
+    apply card_bij (fun p _ => p.1)
+    · intro p hp
+      obtain ⟨he, hpi⟩ := mem_filter.mp hp
+      obtain ⟨ha, hs⟩ := mem_filter.mp he
+      have hx := (mem_product.mp ha).1
+      obtain ⟨_, hxf, hxb⟩ := hm hx
+      have hf : flip p.1 i ∈ S := hpi ▸ hs
+      exact mem_filter.mpr ⟨hx, mem_filter.mpr
+        ⟨mem_filter.mpr ⟨hf, hflip hxf hi⟩, (parity_flip p.1 i).trans (congrArg Bool.not hxb)⟩⟩
+    · intro p hp q hq he
+      exact Prod.ext he ((mem_filter.mp hp).2.trans (mem_filter.mp hq).2.symm)
+    · intro x hx
+      obtain ⟨hxL, hxR⟩ := mem_filter.mp hx
+      exact ⟨(x, i), mem_filter.mpr
+        ⟨mem_filter.mpr ⟨mem_product.mpr ⟨hxL, hi⟩, (hm hxR).1⟩, rfl⟩, rfl⟩
+  have hsplit (i : Fin 9) (hi : i ∈ A) :
+      directedPairCount R L i + directedPairCount R H i = R.card := by
+    have he : R.filter (fun x => flip x i ∉ L) = R.filter (fun x => flip x i ∈ H) := by
+      ext x
+      simp only [mem_filter]
+      apply and_congr_right
+      intro hx
+      obtain ⟨_, hxf, hxb⟩ := hm hx
+      have hf := hflip hxf hi
+      have hb : parity (flip x i) = b := by rw [parity_flip, hxb, Bool.not_not]
+      have hs : flip x i ∈ L ↔ flip x i ∈ S := by
+        constructor
+        · exact fun h => (hm h).1
+        · exact fun h => mem_filter.mpr ⟨mem_filter.mpr ⟨h, hf⟩, hb⟩
+      rw [hs]
+      change _ ↔ BalancedCriticalSpectrum.flip x i ∈ (restrictToFibre univ A z).filter _
+      simp [restrictToFibre, hf, hb]
+    unfold directedPairCount
+    rw [← he]
+    exact card_filter_add_card_filter_not _
+  have hsum : E + (∑ i ∈ A, directedPairCount R H i) = 5 * R.card := by
+    rw [hE, ← sum_add_distrib]
+    calc
+      _ = ∑ _ ∈ A, R.card := sum_congr rfl fun i hi => by
+        rw [directedPairCount_symm L R]
+        exact hsplit i hi
+      _ = _ := by simp [hA]
+  have hholes : (∑ i ∈ A, directedPairCount R H i) ≤ 5 * H.card := by
+    calc
+      _ ≤ ∑ _ ∈ A, H.card := sum_le_sum fun i _ => by
+        rw [directedPairCount_symm R H]
+        exact card_le_card (filter_subset _ _)
+      _ = _ := by simp [hA]
+  have hq : R.card ≤ H.card + E / 5 := by omega
+  have hb : BalancedCriticalSpectrum.IsBalanced (L ∪ R) := by
+    obtain ⟨σ, hσ⟩ := hbal
+    have hsub (x : Q 9) (hx : x ∈ L ∪ R) : x ∈ S :=
+      (mem_union.mp hx).elim (fun h => (hm h).1) (fun h => (hm h).1)
+    exact ⟨σ, ⟨fun x hx => hσ.1 x (hsub x hx),
+      fun x hx y hy he => hσ.2 x (hsub x hx) y (hsub y hy) he⟩⟩
+  have he := parity_cut_edge_square_le L R b A (fun x hx => (hm hx).2.2)
+    (fun x hx => (hm hx).2.2) hb
+  rw [hA] at he
+  have hnat : E ^ 2 ≤ 5 * (L.card * R.card) := by
+    rw [hE]
+    exact_mod_cast he
+  exact hnat.trans (Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ hq))
+
+private theorem middle_hole_energy_bound :
+    ∀ (h : Fin 7) (v : Fin 49), 4 ≤ h.val →
+      v.val ^ 2 ≤ 5 * ((16 - h.val) * (h.val + v.val / 5)) →
+      v.val ≤ 5 * h.val + 1 ∧ (h.val = 6 → v.val ≤ 22) := by decide
+
+open Classical in
+/-- The signed hole bound and subcubic degree bound give a linear free-edge
+bound, with a sharper value at six holes. -/
+theorem five_axis_hole_linear_bound (S : Finset (Q 9)) (e : Fin 5 ↪ Fin 9)
+    {i : Fin 9} (hi : i ∉ univ.map e) (z : Q 9) (b : Bool)
+    (hbal : BalancedCriticalSpectrum.IsBalanced S)
+    (hdeg : ∀ x ∈ S, (directions S x).card ≤ 3) :
+    let A := univ.map e
+    let L := (restrictToFibre S A z).filter (fun x => parity x = b)
+    let H := (restrictToFibre univ A z).filter (fun x => parity x = b ∧ x ∉ S)
+    let E := (freeEdges S L A).card
+    E ≤ 5 * H.card + 1 ∧ (H.card = 6 → E ≤ 22) := by
+  intro A L H E
+  let F := (restrictToFibre univ A z).filter (fun x => parity x = b)
+  have hF : F.card ≤ 16 := by
+    have h := Q9InactiveContactFibre.adjacent_fibre_capacity (C := ∅) (D := univ) b
+      (flip z i) e hi ∅ (empty_subset _) (by simp)
+    simpa [F, A] using h
+  have hselected : F.filter (fun x => x ∈ S) = L := by
+    ext x
+    simp only [F, L, restrictToFibre, mem_filter, mem_univ, true_and]
+    tauto
+  have hholes : F.filter (fun x => x ∉ S) = H := by
+    ext x
+    simp [F, H, restrictToFibre, and_assoc]
+  have hc := card_filter_add_card_filter_not (s := F) (fun x => x ∈ S)
+  rw [hselected, hholes] at hc
+  have hdegree : E ≤ 3 * L.card :=
+    freeEdges_le_degree_sum (fun x hx => hdeg x (mem_filter.mp (mem_filter.mp hx).1).1)
+  have hA : A.card = 5 := by simp [A]
+  by_cases hsmall : H.card ≤ 3
+  · have hs := few_holes_bound_freeEdges S A hA z b hdeg hsmall
+    change E ≤ 6 * (H.card - 1) at hs
+    omega
+  by_cases hlarge : 7 ≤ H.card
+  · omega
+  have hL : L.card ≤ 16 - H.card := by omega
+  have hspec := five_axis_hole_energy S A hA z b hbal
+  change E ^ 2 ≤ 5 * (L.card * (H.card + E / 5)) at hspec
+  have hspec' := hspec.trans
+    (Nat.mul_le_mul_left 5 (Nat.mul_le_mul_right (H.card + E / 5) hL))
+  have hh : 4 ≤ H.card := by omega
+  exact middle_hole_energy_bound ⟨H.card, by omega⟩ ⟨E, by omega⟩ hh hspec'
+
 set_option maxHeartbeats 600000 in
+-- The proof elaborates both vertex and edge projections over the four-cube.
 open Classical in
 open scoped BigOperators in
 /-- For the triangle-complement contact geometry, the global free edge count
@@ -563,6 +768,9 @@ theorem five_pure_contact_fibres_force_eleven_mixed {C D : Finset (Q 9)} (b : Bo
 
 #print axioms few_holes_bound_freeEdges
 #print axioms pure_edge_budget
+#print axioms parity_cut_edge_square_le
+#print axioms five_axis_hole_energy
+#print axioms five_axis_hole_linear_bound
 #print axioms five_pure_forces_eleven_mixed
 #print axioms five_pure_contact_fibres_force_eleven_mixed
 
