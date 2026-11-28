@@ -60,3 +60,8 @@ port_definition Array.instAppend
 public theorem Omega.Array.foldlM.loop._proof_1 {α : Type u} (as : Omega.Array α) (stop : Omega.Nat)
     (h : Omega.Nat.le stop (Omega.Array.size as)) (j : Omega.Nat) (hlt : Omega.Nat.lt j stop) :
     Omega.Nat.lt j (Omega.Array.size as) := Omega.Nat.lt_of_lt_of_le hlt h
+
+port_proof Array.zipWithMAux._unary._proof_1
+port_definition Array.zipWithMAux._unary
+port_definition Array.zipWithMAux
+port_definition Array.zipWithM

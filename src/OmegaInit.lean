@@ -21,6 +21,7 @@ public import OmegaInit.Data.List.Attach
 public import OmegaInit.Data.List.Basic
 public import OmegaInit.Data.List.Erase
 public import OmegaInit.Data.List.Lemmas
+public import OmegaInit.Data.List.Monadic
 public import OmegaInit.Data.List.Perm
 public import OmegaInit.Data.List.Scan.Lemmas
 public import OmegaInit.Data.Nat
