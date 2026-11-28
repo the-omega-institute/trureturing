@@ -10,7 +10,10 @@ The original types of `Quot.recOnSubsingleton`, `Quotient.recOnSubsingleton`,
 `Quotient.recOnSubsingleton₂` and both `pliftOn` operations admit direct terms in
 the representative model: the quotient point itself supplies a representative.
 That operation is unavailable on the native carrier. These five interfaces remain open
-there. For `Quotient.exact`, decidability of the setoid relation suffices by
+there. In `InitInventory.Quotient`, `QuotientFibers` builds each unary subsingleton
+recursor from the corresponding `pliftOn`. The setoid binary recursor can be built
+from unary recursors at the two carrier universes. At equal carrier universes a
+binary recursor also gives back a unary one. For `Quotient.exact`, decidability of the setoid relation suffices by
 `QuotientDecision.exactOfDecidable` in `OmegaChecks.InitInventory.Quotient`.
 The official type quantifies over arbitrary setoids.
 -/

@@ -157,6 +157,41 @@ public def certifyTransportPath (official : Environment) (source : ConstantInfo)
 
 end OmegaChecks.InitBoundaries.HeterogeneousQuotient
 
+namespace OmegaChecks.InitBoundaries.QuotientFibers
+universe u v
+
+/-- A pointed lift can return the element in a dependent fiber at the supplied
+quotient point. Transport along the branch equality puts every value in that one
+fiber, where subsingleton elimination supplies coherence. -/
+public def unaryOfLift (lift : type_of% @Quot.pliftOn.{u,v}) :
+    type_of% @Quot.recOnSubsingleton.{u,v} := fun {α r F} h q f =>
+  letI := Quot.ind (β := fun x => Subsingleton (F x)) h q
+  @lift (F q) α r q (fun a e => e.symm ▸ f a) (fun _ _ _ _ _ => Subsingleton.elim _ _)
+
+public def unaryOfSetoidLift (lift : type_of% @Quotient.pliftOn.{u,v}) :
+    type_of% @Quotient.recOnSubsingleton.{u,v} := fun {α s F} h q f =>
+  letI := Quotient.ind (motive := fun x => Subsingleton (F x)) h q
+  @lift (F q) α s q (fun a e => e.symm ▸ f a) (fun _ _ _ _ _ => Subsingleton.elim _ _)
+
+private def unaryOfBinary (binary : type_of% @Quotient.recOnSubsingleton₂.{u,u,v}) :
+    type_of% @Quotient.recOnSubsingleton.{u,v} := fun {α s F} h q f =>
+  @binary α α s s (fun x _ => F x) (fun a _ => h a) q q (fun a _ => f a)
+
+/-- This direction needs no relation between the two carrier universes when a unary
+eliminator is available for each carrier. -/
+public def binaryOfUnaries.{u₁,u₂,w} (first : type_of% @Quotient.recOnSubsingleton.{u₁,w})
+    (second : type_of% @Quotient.recOnSubsingleton.{u₂,w}) :
+    type_of% @Quotient.recOnSubsingleton₂.{u₁,u₂,w} := fun {α β s t F} h x y f =>
+  @first α s (fun a => F a y)
+    (fun a => Quotient.ind (motive := fun b => Subsingleton (F (Quotient.mk s a) b)) (h a) y) x
+    (fun a => @second β t (fun b => F (Quotient.mk s a) b) (h a) y (f a))
+
+public theorem unaryIffBinary : Nonempty (type_of% @Quotient.recOnSubsingleton.{u,v}) ↔
+    Nonempty (type_of% @Quotient.recOnSubsingleton₂.{u,u,v}) :=
+  ⟨fun ⟨unary⟩ => ⟨binaryOfUnaries @unary @unary⟩, fun ⟨binary⟩ => ⟨unaryOfBinary @binary⟩⟩
+
+end OmegaChecks.InitBoundaries.QuotientFibers
+
 namespace OmegaChecks.InitBoundaries.QuotientDecision
 
 universe u v
