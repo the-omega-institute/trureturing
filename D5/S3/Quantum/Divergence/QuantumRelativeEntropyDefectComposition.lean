@@ -5,9 +5,16 @@
    anchors: []
    digest: Quantum relative-entropy loss telescopes along composable matrix channels. -/
 
-import D5.S3.Quantum.ChannelFixedState
-import Mathlib.Analysis.CStarAlgebra.CompletelyPositiveMap
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.ExpLog.Basic
+module
+
+public import D5.S3.Quantum.ChannelFixedState
+public import Mathlib.Analysis.CStarAlgebra.CompletelyPositiveMap
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.ExpLog.Basic
+public import Mathlib.Analysis.CStarAlgebra.CStarMatrix
+
+/-! # Relative-entropy defects under channel composition -/
+
+@[expose] public section
 
 /- Library-search audit trail (2026-08-22):
    * `rg -n 'PosSemidef.*trace|trace.*= 1|structure .*Channel' D5/S3`
