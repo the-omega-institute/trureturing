@@ -13,6 +13,13 @@ public theorem of_eq {α} [NatModule α] {a b : α} {a' b' : Q α}
     (h₁ : Eq (toQ a) a') (h₂ : Eq (toQ b) b') (h : Eq a b) : Eq a' b' :=
   h₁.symm.trans ((congrArg toQ h).trans h₂)
 
+/- of_diseq remains open for arbitrary cancellative natural modules.
+ModuleEnvelopeExact.ofDiseqIff identifies its exact condition: equality of
+two embedded elements implies the double negation of their equality in α.
+For each fixed a, deciding a + c = b for arbitrary b and c suffices to
+recover ordinary injectivity at a. For the negative conclusion alone,
+ofDiseqOfRow only requires double-negated existence of such a decision. -/
+
 /- The conclusion of of_le compares a' and b' using instLEQOfOrderedAdd.
 The conclusion of of_not_le negates that same comparison. Both use the
 canonical quotient lift with arbitrary order parameters. Its representative

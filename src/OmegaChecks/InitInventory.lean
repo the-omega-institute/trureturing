@@ -2,6 +2,7 @@ module
 public import Lean
 import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitInventory.EnvelopeCancellation
+import OmegaChecks.InitInventory.ModuleEnvelopeExact
 import OmegaChecks.InitInventory.PublicReduction
 meta import OmegaChecks.InitInventory.PublicReduction
 import OmegaChecks.InitInventory.UnsafeCast
@@ -152,6 +153,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   if owner == `Init.Grind.Ring.CommSemiringAdapter && name == ``Lean.Grind.Ring.OfSemiring.of_diseq then
     return (``OmegaChecks.InitBoundaries.RingEnvelopeExact.ReflectsDisequality,
       ``OmegaChecks.InitBoundaries.RingEnvelopeExact.adapterIff)
+  if owner == `Init.Grind.Module.OfNatModule && name == ``Lean.Grind.IntModule.OfNatModule.of_diseq then
+    return (``OmegaChecks.InitBoundaries.ModuleEnvelopeExact.ReflectsDisequality,
+      ``OmegaChecks.InitBoundaries.ModuleEnvelopeExact.ofDiseqIff)
   if owner == `Init.Grind.Norm && name == ``Lean.Grind.exists_prop then
     return (``OmegaChecks.InitBoundaries.ExistentialConjunction.ClosedEquality,
       ``OmegaChecks.InitBoundaries.ExistentialConjunction.ofRule)
