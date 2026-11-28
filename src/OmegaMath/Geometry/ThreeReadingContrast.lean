@@ -1,6 +1,7 @@
 module
 
 import OmegaBuild.Commands
+public import Mathlib.Algebra.Order.Group.Unbundled.Abs
 public import Mathlib.Algebra.Order.Ring.Basic
 meta import Mathlib.Tactic.Linarith.Frontend
 
