@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.2303.14688
 url: https://arxiv.org/html/2303.14688v2
 claim: "Lemma 20 and Appendix D.1 give local chi-square subadditivity for fully symmetric Potts channels; Appendix H states broader BP uniqueness and stability conjectures."
 strata_touched:
-  - D5/S3/Divergence/PottsLocalSubadditivity
+  - D5/S3/Divergence/ChiSquareBilinearFusion
 license: citation-only
 triage: anchor
 ---
@@ -43,13 +43,14 @@ using real division, including `0/0 = 0`. The product channel has entries
 given the same input.
 
 Lemma 20, Appendix D.1, equations (137)–(166), establishes a local bound
-with a constant depending only on q. The finite-output formalization permits
-all output cardinalities, zero entries, zero-mass columns, redundant symbols
-and trivial channels. For `q≥2`, `ε>0` and `C₂(P)≤ε`, it proves
+with a constant depending only on q for fully symmetric channels. A finite
+version includes all output cardinalities, zero entries, zero-mass columns,
+redundant symbols and trivial channels. For `q≥2`, `ε>0` and `C₂(P)≤ε`,
+the local estimate has the form
 
 `C₂(P⋆Q) ≤ (1 + (8q⁴+q) ε^(1/5)) (C₂(P)+C₂(Q))`.
 
-The proof uses finite posterior mixtures, permutation cancellation of the
+The finite proof uses posterior mixtures, permutation cancellation of the
 first variation, a rational remainder bound for small coordinate deviations,
 and the good/bad split at posterior defect t² when the mean defect is at most
 t⁵. Lemma 35 is the local fully symmetric-channel estimate. Appendix D.2,
@@ -61,7 +62,13 @@ Appendix H supplies the research anchor:
 > Above the KS threshold: We conjecture that BP uniqueness and BI always hold
 > in this regime, and the unique non-trivial fixed point is globally stable.
 
-This concerns belief-propagation dynamics and boundary irrelevance for the
+The project's bilinear fusion theorem considers arbitrary finite row-stochastic
+channels, without permutation symmetry, and controls the excess by
+`32q C₂(P)C₂(Q)`. Its proof uses likelihood calibration and a corrected rational
+remainder. This statement is not attributed to Lemma 20, which supplies the
+research context; no literature novelty or coefficient optimality is asserted.
+
+The quoted conjecture concerns belief-propagation dynamics and boundary irrelevance for the
 Potts broadcast model above the Kesten–Stigum threshold. The finite local
 combining estimate is a known ingredient, not a resolution of that broader
 statement. The formalization does not include infinite output spaces,

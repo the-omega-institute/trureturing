@@ -148,12 +148,6 @@ theorem inputMean_ratio_le_card_mul [Nonempty I]
   rw [hratio, ← sum_eq_card_mul_inputMean]
   exact square_ratio_le_sum a ha
 
-theorem ratio_div_scale (a b k : ℝ) (hk : k ≠ 0) :
-    (a / k ^ 2) / (b / k) = (a / b) / k := by
-  by_cases hb : b = 0
-  · simp [hb]
-  · field_simp [hb, hk] <;> ring
-
 def channelMargin {Y : Type*} (P : I → Y → ℝ) (y : Y) : ℝ :=
   (∑ i, P i y) / (Fintype.card I : ℝ)
 
