@@ -534,6 +534,11 @@ port_proof Quot.indBeta
 port_proof Quot.inductionOn
 port_proof Quot.exists_rep
 port_definition Quot.indep
+
+/- Quot.indepCoherent, Quot.liftIndepPr1, Quot.rec and Quot.recOn transport a
+branch along Quot.sound. Their pinned coherence premise requires that path even
+when the motive has a constant result. The unit-motive specialization in
+HeterogeneousQuotient.soundFromUnitCoherence recovers Quot.sound from coherence. -/
 port_definition Quotient
 port_definition Quotient.mk with_native_code
 port_definition Quotient.mk' with_native_code
@@ -554,11 +559,20 @@ port_proof Quotient.inductionOn₂
 port_proof Quotient.inductionOn₃
 port_alternative_definition Quot.hrecOn from OmegaChecks.InitPort.Alternatives.Logic.Quotient
 port_definition Quotient.hrecOn with_native_code
+/- Quotient.sound identifies false and true for Setoid.trivial Bool.
+RepresentativeQuotient.refuteSound separates those representatives while preserving
+the four quotient primitives and both computation rules. Quotient.rec and
+Quotient.recOn require this equality in the type of the branch coherence proof.
+Quotient.decidableEq also returns a positive decision on these two representatives
+with the pinned always-true relation test (RepresentativeQuotient.refutePositiveDecision). -/
+
 port_definition Squash
 port_definition Squash.mk with_native_code
 port_proof Squash.ind
 port_proof Squash.lift._proof_1
 port_definition Squash.lift with_native_code
+/- instSubsingletonSquash would identify Squash.mk false with Squash.mk true.
+RepresentativeQuotient.refuteSquash checks these two distinct representatives. -/
 port_definition instTransIff with_native_code
 port_definition noConfusionTypeEnum
 port_proof noConfusionEnum._proof_1
