@@ -45,7 +45,10 @@ class BackendScheduling(unittest.TestCase):
             (project / ".lake/packages").symlink_to((ROOT / ".lake/packages").resolve(), target_is_directory=True)
             directory = project / "D5"
             directory.mkdir()
-            (directory / "A.lean").write_text("import OmegaMath.Data.Nat\n")
+            (directory / "A.lean").write_text(
+                "import OmegaMath.Data.Nat\n"
+                "opaque keptByBothBackends : Nat := 7\n"
+            )
             (directory / "C.lean").write_text("import D5.B\n")
             (directory / "D.lean").write_text("import D5.A\n")
             (directory / "All.lean").write_text("import D5.C\nimport D5.D\n")
