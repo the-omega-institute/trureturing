@@ -1,5 +1,6 @@
 module
 public import OmegaChecks.InitPort.CharacterSplit
+public import OmegaChecks.InitPort.SingletonSelection
 public import OmegaChecks.InitPort.SearcherSplit
 public import OmegaChecks.InitPort.Translation
 public import Init.Data.String.Lemmas.Pattern.TakeDrop.Basic
@@ -42,6 +43,10 @@ private def splitOwner := `Init.Data.String.Lemmas.Pattern.Split.Basic
 private def charOwner := `Init.Data.String.Lemmas.Pattern.Split.Char
 
 public def rules : List MatchRule := [
+  ⟨`Init.Classical, ``Classical.epsilon, mkPrivateNameCore `Init.Classical `Classical.selectSingleton,
+    ``SingletonSelection.epsilon, ``SingletonSelection.witness, ``SingletonSelection.epsilonAgreement⟩,
+  ⟨`Init.Data.Erased, ``Erased.out, mkPrivateNameCore `Init.Data.Erased `Erased.outOfMk,
+    ``SingletonSelection.erased, ``SingletonSelection.witness, ``SingletonSelection.erasedAgreement⟩,
   ⟨owner, ``matchAt?, mkPrivateNameCore owner `String.Slice.Pos.matchWithForwardPattern,
     ``forward, ``skip, ``forward_eq⟩,
   ⟨owner, ``revMatchAt?, mkPrivateNameCore owner `String.Slice.Pos.matchWithBackwardPattern,
@@ -57,8 +62,10 @@ public def rules : List MatchRule := [
   ⟨splitOwner, ``Model.split, mkPrivateNameCore splitOwner `String.Slice.splitFromLawfulSearcher,
     ``SearcherSplit.searchReference, ``SearcherSplit.search, ``SearcherSplit.searchAgreement⟩]
 
-/-- Only a lawful search operation for the exact pattern model can realize its longest match. -/
+/-- Specialize a call when its arguments determine a certified computation. -/
 public def specialize? (rule : MatchRule) (sub : Expr) : MetaM (Option Expr) := do
+  if rule.original == ``Classical.epsilon || rule.original == ``Erased.out then
+    return ← SingletonSelection.specialize? rule.helper sub
   if rule.original == ``Model.split then
     let #[ρ, pat, model, strict, s, first, curr, le] := sub.getAppArgs | return none
     let args : Array (Option Expr) :=
