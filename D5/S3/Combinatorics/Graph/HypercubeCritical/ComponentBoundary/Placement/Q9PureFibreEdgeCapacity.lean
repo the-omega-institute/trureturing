@@ -625,13 +625,97 @@ theorem adjacent_fibre_hole_edge_capacity {C D : Finset (Q 9)} (b : Bool) {x : Q
     freeEdges_le_degree_sum (fun v hv => hdeg v (mem_filter.mp (mem_filter.mp hv).1).1)
   omega
 
-set_option maxHeartbeats 600000 in
+open scoped BigOperators in
+private theorem pure_edge_capacity_sum (P M : Finset (Q 4)) (holes edges : Q 4 → ℕ)
+    (hline : ∀ p ∈ P, edges p ≤ 5 * holes p + 1)
+    (hboundary : ∀ p ∈ P, (∃ i : Fin 4, flip p i ∈ M) → edges p + 6 ≤ 5 * holes p) :
+    (∑ p ∈ P, edges p) + 7 * (P.filter (fun p => ∃ i : Fin 4, flip p i ∈ M)).card ≤
+      5 * (∑ p ∈ P, holes p) + P.card := by
+  classical
+  let boundary (p : Q 4) : ℕ := if ∃ i : Fin 4, flip p i ∈ M then 1 else 0
+  calc
+    _ = ∑ p ∈ P, (edges p + 7 * boundary p) := by
+      simp only [sum_add_distrib, ← mul_sum, boundary, sum_boole, Nat.cast_id]
+    _ ≤ ∑ p ∈ P, (5 * holes p + 1) := by
+      apply sum_le_sum
+      intro p hp
+      by_cases hm : ∃ i : Fin 4, flip p i ∈ M
+      · have h := hboundary p hp hm
+        simp only [boundary, if_pos hm]
+        omega
+      · simpa [boundary, hm] using hline p hp
+    _ = _ := by simp [sum_add_distrib, ← mul_sum]
+
+private theorem at_most_one_pure_interior (P M : Finset (Q 4)) (hdis : Disjoint P M)
+    (hm : 9 ≤ M.card) :
+    (P.filter (fun p => ¬ ∃ i : Fin 4, flip p i ∈ M)).card ≤ 1 := by
+  classical
+  let I := P.filter (fun p => ¬ ∃ i : Fin 4, flip p i ∈ M)
+  change I.card ≤ 1
+  by_contra! h
+  obtain ⟨p, q, hp, hq, hpq⟩ := one_lt_card_iff.mp h
+  have hsub (z : Q 4) (hz : z ∈ I) : closedPattern z ⊆ univ \ M := by
+    obtain ⟨hzP, hzM⟩ := mem_filter.mp hz
+    intro u hu
+    refine mem_sdiff.mpr ⟨mem_univ _, ?_⟩
+    intro hM
+    rcases mem_insert.mp hu with rfl | hu
+    · exact disjoint_left.mp hdis hzP hM
+    · obtain ⟨i, _, rfl⟩ := mem_image.mp hu
+      exact hzM ⟨i, hM⟩
+  have hu := (two_closed_patterns_card p q hpq).trans
+    (card_le_card (union_subset (hsub p hp) (hsub q hq)))
+  have htotal : (univ \ M).card + M.card = 16 := by
+    rw [card_sdiff_add_card_eq_card (subset_univ M)]
+    decide
+  omega
+
+open scoped BigOperators in
+/-- At least nine mixed fibres leave at most one pure interior. The free
+edge requirement then bounds the total deficits of the mixed fibres. -/
+theorem mixed_fibre_deficit_capacity (P M : Finset (Q 4)) (holes edges : Q 4 → ℕ)
+    (hm : 9 ≤ M.card) (hdis : Disjoint P M) (deficit loss : ℕ)
+    (hoccupancy : 129 + deficit + (∑ p ∈ P, holes p) ≤ 6 * M.card + 16 * P.card)
+    (hedges : 215 + loss ≤ 15 * M.card + (∑ p ∈ P, edges p))
+    (hline : ∀ p ∈ P, edges p ≤ 5 * holes p + 1)
+    (hboundary : ∀ p ∈ P, (∃ i : Fin 4, flip p i ∈ M) → edges p + 6 ≤ 5 * holes p) :
+    853 + 5 * deficit + loss ≤ 74 * P.card + 45 * M.card := by
+  classical
+  have hcap := pure_edge_capacity_sum P M holes edges hline hboundary
+  have hi := at_most_one_pure_interior P M hdis hm
+  have hsplit := card_filter_add_card_filter_not (s := P) (fun p => ∃ i : Fin 4, flip p i ∈ M)
+  omega
+
+open scoped BigOperators in
+/-- With six pure fibres, the linear free-edge bounds force ten mixed
+fibres and constrain the sum of their occupancy and edge deficits. -/
+theorem six_pure_fibre_capacity (P M : Finset (Q 4)) (holes edges : Q 4 → ℕ)
+    (hp : P.card = 6) (hdis : Disjoint P M) (deficit loss : ℕ)
+    (hoccupancy : 129 + deficit + (∑ p ∈ P, holes p) ≤ 6 * M.card + 96)
+    (hedges : 215 + loss ≤ 15 * M.card + (∑ p ∈ P, edges p))
+    (hline : ∀ p ∈ P, edges p ≤ 5 * holes p + 1)
+    (hboundary : ∀ p ∈ P, (∃ i : Fin 4, flip p i ∈ M) → edges p + 6 ≤ 5 * holes p) :
+    M.card = 10 ∧ 5 * deficit + loss ≤ 41 := by
+  classical
+  have hsum : P.card + M.card ≤ 16 := by
+    rw [← card_union_of_disjoint hdis]
+    exact (card_le_univ _).trans (by decide)
+  have hcap := pure_edge_capacity_sum P M holes edges hline hboundary
+  have hm : 9 ≤ M.card := by omega
+  have hs : 129 + deficit + (∑ p ∈ P, holes p) ≤ 6 * M.card + 16 * P.card := by
+    rwa [hp]
+  have hb := mixed_fibre_deficit_capacity P M holes edges hm hdis deficit loss hs hedges
+    hline hboundary
+  have hm10 : M.card = 10 := by omega
+  exact ⟨hm10, by omega⟩
+
+set_option maxHeartbeats 800000 in
 -- The proof elaborates both vertex and edge projections over the four-cube.
 open Classical in
 open scoped BigOperators in
-/-- For the triangle-complement contact geometry, the global free edge count
-forces every fibre outside the five occupied pure fibres to be mixed. -/
-theorem five_pure_contact_fibres_force_eleven_mixed {C D : Finset (Q 9)} (b : Bool)
+/-- In the triangle-complement contact geometry with 258 vertices, the
+five- and six-pure cases have explicit mixed occupancy and edge budgets. -/
+theorem triangle_complement_mixed_fibre_deficits {C D : Finset (Q 9)} (b : Bool)
     (e : Fin 5 ↪ Fin 9) (g : Fin 4 ↪ Fin 9)
     (hcover : ∀ k, k ∉ univ.map e ↔ ∃ i, g i = k)
     (hsep : ∀ x ∈ C, ∀ y ∈ D, 2 ≤ hammingDist x y)
@@ -649,14 +733,17 @@ theorem five_pure_contact_fibres_force_eleven_mixed {C D : Finset (Q 9)} (b : Bo
     let M := univ.filter (fun p => (bank C p).Nonempty ∧ (bank D p).Nonempty)
     let P := univ.filter (fun p => ((bank C p).Nonempty ∧ bank D p = ∅) ∨
       (bank C p = ∅ ∧ (bank D p).Nonempty))
-    P.card = 5 → M.card = 11 := by
-  intro bank M P hpure
-  let A := univ.map e
+    let A := univ.map e
+    let occ (p : Q 4) := (bank C p).card + (bank D p).card
+    let edges (p : Q 4) := (freeEdges C (bank C p) A).card + (freeEdges D (bank D p) A).card
+    let deficit := 6 * M.card - ∑ p ∈ M, occ p
+    let loss := 15 * M.card - ∑ p ∈ M, edges p
+    (P.card = 5 → M.card = 11 ∧ 5 * deficit + loss ≤ 12 ∧ ∀ p ∈ M, 5 ≤ occ p) ∧
+      (P.card = 6 → M.card = 10 ∧ 5 * deficit + loss ≤ 41) := by
+  intro bank M P A occ edges deficit loss
   let project (x : Q 9) : Q 4 := fun i => x (g i)
   let lift (p : Q 4) (l : Fin 9) : Bool :=
     if h : ∃ i, g i = l then p (Classical.choose h) else false
-  let occ (p : Q 4) := (bank C p).card + (bank D p).card
-  let edges (p : Q 4) := (freeEdges C (bank C p) A).card + (freeEdges D (bank D p) A).card
   let holes (p : Q 4) := 16 - occ p
   have hA : A.card = 5 := by simp [A]
   have hc3 (x : Q 9) (hx : x ∈ C) : (directions C x).card ≤ 3 :=
@@ -790,29 +877,23 @@ theorem five_pure_contact_fibres_force_eleven_mixed {C D : Finset (Q 9)} (b : Bo
           nonempty_iff_ne_empty.mpr he⟩)
   rw [hparts occ (by intro p hC hD; simp [occ, hC, hD])] at htotal
   rw [hparts edges (by intro p hC hD; simp [edges, freeEdges, hC, hD])] at hedges
+  have hmoccOne (p : Q 4) (hp : p ∈ M) : occ p ≤ 6 := by
+    obtain ⟨ha, hD⟩ := (mem_filter.mp hp).2
+    rw [hrepr] at ha hD
+    change (bank C p).card + (bank D p).card ≤ 6
+    rw [hrepr C, hrepr D]
+    exact Q9InactiveContactFibre.mixed_five_axis_fibre_capacity b (lift p) e hsep hinside ha hD
+  have hmedgeOne (p : Q 4) (hp : p ∈ M) : edges p ≤ 15 := by
+    obtain ⟨ha, hD⟩ := (mem_filter.mp hp).2
+    rw [hrepr] at ha hD
+    change (freeEdges C (bank C p) A).card + (freeEdges D (bank D p) A).card ≤ 15
+    rw [hrepr C, hrepr D]
+    exact Q9InactiveContactFibre.mixed_five_axis_fibre_edge_capacity b (lift p) e hsep
+      hinside hc hd hc3 hd3 ha hD
   have hmocc : (∑ p ∈ M, occ p) ≤ 6 * M.card := by
-    calc
-      _ ≤ ∑ p ∈ M, 6 := by
-        apply sum_le_sum
-        intro p hp
-        obtain ⟨ha, hD⟩ := (mem_filter.mp hp).2
-        rw [hrepr] at ha hD
-        change (bank C p).card + (bank D p).card ≤ 6
-        rw [hrepr C, hrepr D]
-        exact Q9InactiveContactFibre.mixed_five_axis_fibre_capacity b (lift p) e hsep hinside ha hD
-      _ = _ := by simp [Nat.mul_comm]
+    simpa [Nat.mul_comm] using sum_le_sum hmoccOne
   have hmedges : (∑ p ∈ M, edges p) ≤ 15 * M.card := by
-    calc
-      _ ≤ ∑ p ∈ M, 15 := by
-        apply sum_le_sum
-        intro p hp
-        obtain ⟨ha, hD⟩ := (mem_filter.mp hp).2
-        rw [hrepr] at ha hD
-        change (freeEdges C (bank C p) A).card + (freeEdges D (bank D p) A).card ≤ 15
-        rw [hrepr C, hrepr D]
-        exact Q9InactiveContactFibre.mixed_five_axis_fibre_edge_capacity b (lift p) e hsep
-          hinside hc hd hc3 hd3 ha hD
-      _ = _ := by simp [Nat.mul_comm]
+    simpa [Nat.mul_comm] using sum_le_sum hmedgeOne
   have hone (S T : Finset (Q 9)) (p : Q 4) (i : Fin 4)
       (hmj : ({g i, j} : Finset (Fin 9)) ∉ minimumDisplacements S T b 2)
       (hmk : ({g i, k} : Finset (Fin 9)) ∉ minimumDisplacements S T b 2)
@@ -836,13 +917,13 @@ theorem five_pure_contact_fibres_force_eleven_mixed {C D : Finset (Q 9)} (b : Bo
     rcases (mem_filter.mp hp).2 with hp' | hp'
     · simpa [occ, hp'.2] using hbankC C p
     · simpa [occ, hp'.1] using hbankC D p
-  have hhole : (∑ p ∈ P, holes p) + (∑ p ∈ P, occ p) = 80 := by
+  have hhole : (∑ p ∈ P, holes p) + (∑ p ∈ P, occ p) = 16 * P.card := by
     rw [← sum_add_distrib]
     calc
       _ = ∑ p ∈ P, 16 := sum_congr rfl (by
         intro p hp
         exact Nat.sub_add_cancel (hslots p hp))
-      _ = _ := by simp [hpure]
+      _ = _ := by simp [Nat.mul_comm]
   have hsmallBank (S : Finset (Q 9)) (p : Q 4)
       (h3 : ∀ x ∈ S, (directions S x).card ≤ 3)
       (hsmall : 16 - (bank S p).card ≤ 3) :
@@ -880,93 +961,143 @@ theorem five_pure_contact_fibres_force_eleven_mixed {C D : Finset (Q 9)} (b : Bo
     rcases (mem_filter.mp hp).2 with hp' | hp'
     · simpa [edges, occ, freeEdges, hp'.2] using hdegBank C p hc3
     · simpa [edges, occ, freeEdges, hp'.1] using hdegBank D p hd3
-  exact five_pure_forces_eleven_mixed P M holes edges hpure hmixed hdis hnear
-    (by omega) (by omega) hsmall hdeg
+  have hoccupancy :
+      129 + deficit + (∑ p ∈ P, holes p) ≤ 6 * M.card + 16 * P.card := by
+    have hfill := Nat.sub_add_cancel hmocc
+    change deficit + (∑ p ∈ M, occ p) = 6 * M.card at hfill
+    omega
+  have hbudget : 215 + loss ≤ 15 * M.card + ∑ p ∈ P, edges p := by
+    have hfill := Nat.sub_add_cancel hmedges
+    change loss + (∑ p ∈ M, edges p) = 15 * M.card at hfill
+    omega
+  have hholes (S : Finset (Q 9)) (p : Q 4) (z : Q 9) (hz : project z = p) :
+      ((restrictToFibre univ A z).filter (fun x => parity x = b ∧ x ∉ S)).card ≤
+        16 - (bank S p).card := by
+    let H := (restrictToFibre univ A z).filter (fun x => parity x = b ∧ x ∉ S)
+    have hS : (bank univ p).filter (fun x => x ∈ S) = bank S p := by
+      ext x
+      simp [bank]
+      tauto
+    have hH : (bank univ p).filter (fun x => x ∉ S) = H := by
+      rw [← hz, hbank]
+      ext x
+      simp [H, restrictToFibre]
+      tauto
+    have hsum := card_filter_add_card_filter_not (s := bank univ p) (fun x => x ∈ S)
+    rw [hS, hH] at hsum
+    have hcap := hfibre p
+    change H.card ≤ 16 - (bank S p).card
+    omega
+  have hlineBank (S : Finset (Q 9)) (p : Q 4) (hbal : BalancedCriticalSpectrum.IsBalanced S)
+      (hdeg : ∀ x ∈ S, (directions S x).card ≤ 3) :
+      (freeEdges S (bank S p) A).card ≤ 5 * (16 - (bank S p).card) + 1 := by
+    have h := (five_axis_hole_linear_bound S e (hout 0) (lift p) b hbal hdeg).1
+    change (freeEdges S ((restrictToFibre S A (lift p)).filter _) A).card ≤
+      5 * ((restrictToFibre univ A (lift p)).filter _).card + 1 at h
+    rw [← hrepr] at h
+    have hh := hholes S p (lift p) (hproj p)
+    omega
+  have hline (p : Q 4) (hp : p ∈ P) : edges p ≤ 5 * holes p + 1 := by
+    rcases (mem_filter.mp hp).2 with hp' | hp'
+    · simpa [edges, holes, occ, freeEdges, hp'.2] using hlineBank C p hc hc3
+    · simpa [edges, holes, occ, freeEdges, hp'.1] using hlineBank D p hd hd3
+  have hboundBank (S T : Finset (Q 9)) (p : Q 4) (q : Fin 4)
+      (hST : ∀ x ∈ S, ∀ y ∈ T, 2 ≤ hammingDist x y)
+      (hbal : BalancedCriticalSpectrum.IsBalanced T)
+      (hdeg : ∀ x ∈ T, (directions T x).card ≤ 3)
+      (hmj : ({g q, j} : Finset (Fin 9)) ∉ minimumDisplacements S T b 2)
+      (hmk : ({g q, k} : Finset (Fin 9)) ∉ minimumDisplacements S T b 2)
+      (hs : (bank S (flip p q)).Nonempty) :
+      (freeEdges T (bank T p) A).card + 6 ≤ 5 * (16 - (bank T p).card) := by
+    obtain ⟨x, hx⟩ := hs
+    obtain ⟨hxp, hxq⟩ := mem_filter.mp hx
+    obtain ⟨hxS, hxb⟩ := mem_filter.mp hxp
+    have hprojFlip : project (BalancedCriticalSpectrum.flip x (g q)) = p := by
+      funext l
+      have hcoord := congrFun hxq l
+      change x (g l) = flip p q l at hcoord
+      by_cases hl : l = q
+      · subst l
+        simpa [project] using congrArg Bool.not hcoord
+      · simpa [project, BalancedCriticalSpectrum.flip, hl, g.injective.ne hl] using hcoord
+    have hb := adjacent_fibre_hole_edge_capacity b hxS hxb hST e (hout q)
+      hj hk hjk hmj hmk hbal hdeg
+    change (freeEdges T ((restrictToFibre T A (BalancedCriticalSpectrum.flip x (g q))).filter _) A).card + 6 ≤
+      5 * ((restrictToFibre univ A (BalancedCriticalSpectrum.flip x (g q))).filter _).card at hb
+    have hh := hholes T p (BalancedCriticalSpectrum.flip x (g q)) hprojFlip
+    rw [← hbank, hprojFlip] at hb
+    omega
+  have hboundary (p : Q 4) (hp : p ∈ P)
+      (hm : ∃ i : Fin 4, flip p i ∈ M) : edges p + 6 ≤ 5 * holes p := by
+    obtain ⟨i, hi⟩ := hm
+    obtain ⟨hmC, hmD⟩ := (mem_filter.mp hi).2
+    have hfs := hmissing _ (hout i)
+    rcases (mem_filter.mp hp).2 with hp' | hp'
+    · rw [minimumDisplacements_swap_two C D b] at hfs
+      have hsep' (x : Q 9) (hx : x ∈ D) (y : Q 9) (hy : y ∈ C) :
+          2 ≤ hammingDist x y := by rw [hammingDist_comm]; exact hsep y hy x hx
+      simpa [edges, holes, occ, freeEdges, hp'.2] using
+        hboundBank D C p i hsep' hc hc3 hfs.1 hfs.2 hmD
+    · simpa [edges, holes, occ, freeEdges, hp'.1] using
+        hboundBank C D p i hsep hd hd3 hfs.1 hfs.2 hmC
+  constructor
+  · intro hpure
+    have hm11 := five_pure_forces_eleven_mixed P M holes edges hpure hmixed hdis hnear
+      (by omega) (by omega) hsmall hdeg
+    have h := mixed_fibre_deficit_capacity P M holes edges (by omega) hdis deficit loss
+      hoccupancy hbudget hline hboundary
+    have hw : 5 * deficit + loss ≤ 12 := by omega
+    refine ⟨hm11, hw, ?_⟩
+    intro p hp
+    have hd1 : 6 - occ p ≤ deficit := by
+      have he : (∑ q ∈ M, (6 - occ q)) = deficit := by
+        rw [Finset.sum_tsub_distrib _ hmoccOne]
+        simp [deficit, Nat.mul_comm]
+      rw [← he]
+      exact single_le_sum (fun q _ => Nat.zero_le (6 - occ q)) hp
+    have hl1 : 15 - edges p ≤ loss := by
+      have he : (∑ q ∈ M, (15 - edges q)) = loss := by
+        rw [Finset.sum_tsub_distrib _ hmedgeOne]
+        simp [loss, Nat.mul_comm]
+      rw [← he]
+      exact single_le_sum (fun q _ => Nat.zero_le (15 - edges q)) hp
+    have hcdeg := hdegBank C p hc3
+    have hddeg := hdegBank D p hd3
+    change _ ≤ 3 * (bank C p).card at hcdeg
+    change _ ≤ 3 * (bank D p).card at hddeg
+    have hedge : edges p ≤ 3 * occ p := by dsimp [edges, occ]; omega
+    omega
+  · intro hpure
+    exact six_pure_fibre_capacity P M holes edges hpure hdis deficit loss
+      (by simpa [hpure] using hoccupancy) hbudget hline hboundary
 
+open Classical in
 open scoped BigOperators in
-private theorem pure_edge_capacity_sum (P M : Finset (Q 4)) (holes edges : Q 4 → ℕ)
-    (hline : ∀ p ∈ P, edges p ≤ 5 * holes p + 1)
-    (hboundary : ∀ p ∈ P, (∃ i : Fin 4, flip p i ∈ M) → edges p + 6 ≤ 5 * holes p) :
-    (∑ p ∈ P, edges p) + 7 * (P.filter (fun p => ∃ i : Fin 4, flip p i ∈ M)).card ≤
-      5 * (∑ p ∈ P, holes p) + P.card := by
-  classical
-  let boundary (p : Q 4) : ℕ := if ∃ i : Fin 4, flip p i ∈ M then 1 else 0
-  calc
-    _ = ∑ p ∈ P, (edges p + 7 * boundary p) := by
-      simp only [sum_add_distrib, ← mul_sum, boundary, sum_boole, Nat.cast_id]
-    _ ≤ ∑ p ∈ P, (5 * holes p + 1) := by
-      apply sum_le_sum
-      intro p hp
-      by_cases hm : ∃ i : Fin 4, flip p i ∈ M
-      · have h := hboundary p hp hm
-        simp only [boundary, if_pos hm]
-        omega
-      · simpa [boundary, hm] using hline p hp
-    _ = _ := by simp [sum_add_distrib, ← mul_sum]
+/-- For the triangle-complement contact geometry, the global free edge count
+forces every fibre outside the five occupied pure fibres to be mixed. -/
+theorem five_pure_contact_fibres_force_eleven_mixed {C D : Finset (Q 9)} (b : Bool)
+    (e : Fin 5 ↪ Fin 9) (g : Fin 4 ↪ Fin 9)
+    (hcover : ∀ k, k ∉ univ.map e ↔ ∃ i, g i = k)
+    (hsep : ∀ x ∈ C, ∀ y ∈ D, 2 ≤ hammingDist x y)
+    (hinside : ∀ T ∈ minimumDisplacements C D b 2, ¬ T ⊆ univ.map e)
+    {j k : Fin 9} (hj : j ∈ univ.map e) (hk : k ∈ univ.map e) (hjk : j ≠ k)
+    (hmissing : ∀ i ∉ univ.map e,
+      ({i, j} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2 ∧
+      ({i, k} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2)
+    (hc : BalancedCriticalSpectrum.IsBalanced C) (hd : BalancedCriticalSpectrum.IsBalanced D)
+    (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
+    (hsize : C.card + D.card = 258) :
+    let bank (S : Finset (Q 9)) (p : Q 4) :=
+      (S.filter (fun x => parity x = b)).filter (fun x => (fun i => x (g i)) = p)
+    let M := univ.filter (fun p => (bank C p).Nonempty ∧ (bank D p).Nonempty)
+    let P := univ.filter (fun p => ((bank C p).Nonempty ∧ bank D p = ∅) ∨
+      (bank C p = ∅ ∧ (bank D p).Nonempty))
+    P.card = 5 → M.card = 11 := by
+  exact fun hp => ((triangle_complement_mixed_fibre_deficits b e g hcover hsep
+    hinside hj hk hjk hmissing hc hd hrC hrD hsize).1 hp).1
 
-private theorem at_most_one_pure_interior (P M : Finset (Q 4)) (hdis : Disjoint P M)
-    (hm : 9 ≤ M.card) :
-    (P.filter (fun p => ¬ ∃ i : Fin 4, flip p i ∈ M)).card ≤ 1 := by
-  classical
-  let I := P.filter (fun p => ¬ ∃ i : Fin 4, flip p i ∈ M)
-  change I.card ≤ 1
-  by_contra! h
-  obtain ⟨p, q, hp, hq, hpq⟩ := one_lt_card_iff.mp h
-  have hsub (z : Q 4) (hz : z ∈ I) : closedPattern z ⊆ univ \ M := by
-    obtain ⟨hzP, hzM⟩ := mem_filter.mp hz
-    intro u hu
-    refine mem_sdiff.mpr ⟨mem_univ _, ?_⟩
-    intro hM
-    rcases mem_insert.mp hu with rfl | hu
-    · exact disjoint_left.mp hdis hzP hM
-    · obtain ⟨i, _, rfl⟩ := mem_image.mp hu
-      exact hzM ⟨i, hM⟩
-  have hu := (two_closed_patterns_card p q hpq).trans
-    (card_le_card (union_subset (hsub p hp) (hsub q hq)))
-  have htotal : (univ \ M).card + M.card = 16 := by
-    rw [card_sdiff_add_card_eq_card (subset_univ M)]
-    decide
-  omega
-
-open scoped BigOperators in
-/-- At least nine mixed fibres leave at most one pure interior. The free
-edge requirement then bounds the total deficits of the mixed fibres. -/
-theorem mixed_fibre_deficit_capacity (P M : Finset (Q 4)) (holes edges : Q 4 → ℕ)
-    (hm : 9 ≤ M.card) (hdis : Disjoint P M) (deficit loss : ℕ)
-    (hoccupancy : 129 + deficit + (∑ p ∈ P, holes p) ≤ 6 * M.card + 16 * P.card)
-    (hedges : 215 + loss ≤ 15 * M.card + (∑ p ∈ P, edges p))
-    (hline : ∀ p ∈ P, edges p ≤ 5 * holes p + 1)
-    (hboundary : ∀ p ∈ P, (∃ i : Fin 4, flip p i ∈ M) → edges p + 6 ≤ 5 * holes p) :
-    853 + 5 * deficit + loss ≤ 74 * P.card + 45 * M.card := by
-  classical
-  have hcap := pure_edge_capacity_sum P M holes edges hline hboundary
-  have hi := at_most_one_pure_interior P M hdis hm
-  have hsplit := card_filter_add_card_filter_not (s := P) (fun p => ∃ i : Fin 4, flip p i ∈ M)
-  omega
-
-open scoped BigOperators in
-/-- With six pure fibres, the linear free-edge bounds force ten mixed
-fibres and constrain the sum of their occupancy and edge deficits. -/
-theorem six_pure_fibre_capacity (P M : Finset (Q 4)) (holes edges : Q 4 → ℕ)
-    (hp : P.card = 6) (hdis : Disjoint P M) (deficit loss : ℕ)
-    (hoccupancy : 129 + deficit + (∑ p ∈ P, holes p) ≤ 6 * M.card + 96)
-    (hedges : 215 + loss ≤ 15 * M.card + (∑ p ∈ P, edges p))
-    (hline : ∀ p ∈ P, edges p ≤ 5 * holes p + 1)
-    (hboundary : ∀ p ∈ P, (∃ i : Fin 4, flip p i ∈ M) → edges p + 6 ≤ 5 * holes p) :
-    M.card = 10 ∧ 5 * deficit + loss ≤ 41 := by
-  classical
-  have hsum : P.card + M.card ≤ 16 := by
-    rw [← card_union_of_disjoint hdis]
-    exact (card_le_univ _).trans (by decide)
-  have hcap := pure_edge_capacity_sum P M holes edges hline hboundary
-  have hm : 9 ≤ M.card := by omega
-  have hs : 129 + deficit + (∑ p ∈ P, holes p) ≤ 6 * M.card + 16 * P.card := by
-    rwa [hp]
-  have hb := mixed_fibre_deficit_capacity P M holes edges hm hdis deficit loss hs hedges
-    hline hboundary
-  have hm10 : M.card = 10 := by omega
-  exact ⟨hm10, by omega⟩
-
+#print axioms triangle_complement_mixed_fibre_deficits
 #print axioms mixed_fibre_deficit_capacity
 #print axioms six_pure_fibre_capacity
 #print axioms adjacent_fibre_hole_edge_capacity

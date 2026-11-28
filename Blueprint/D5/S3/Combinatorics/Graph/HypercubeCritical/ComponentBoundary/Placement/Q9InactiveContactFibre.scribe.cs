@@ -92,6 +92,15 @@ internal sealed class Q9InactiveContactFibreDocument : IScribeDocumentDefinition
                     Paragraph(Text("At four and five holes, the excess configurations contain an eight-cycle whose signed product is negative. The common-neighbour count handles smaller hole counts. The spectral bound at six holes and the degree bound at larger hole counts complete the bound of five times the number of holes minus six."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("q9-triangle-complement-mixed-fibre-deficits"),
+                DeclarationHandle.Create(Placement + "Q9PureFibreEdgeCapacity.triangle_complement_mixed_fibre_deficits"),
+                H("Five and six pure fibres constrain the mixed fibres"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("The 258 vertices contribute 129 points on the chosen parity and 215 edges in the five free directions. Count each pure fibre against sixteen possible points. Count each mixed fibre against six points and fifteen free edges.")),
+                    Paragraph(Text("Five times the total mixed occupancy deficit plus the mixed edge deficit is at most twelve with five pure fibres and forty-one with six. With five pure fibres, all eleven mixed fibres contain at least five selected points. A four-point mixed fibre would cost at least two points and at least three free edges, exceeding the weighted deficit of twelve."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("q9-six-pure-capacity"),
                 DeclarationHandle.Create(Placement + "Q9PureFibreEdgeCapacity.six_pure_fibre_capacity"),
                 H("The linear edge bounds restrict the six-pure case"),
