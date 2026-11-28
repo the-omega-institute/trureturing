@@ -964,9 +964,9 @@ theorem triangle_complement_mixed_fibre_deficits {C D : Finset (Q 9)} (b : Bool)
     (P.card = 5 → M.card = 11 ∧ 5 * deficit + loss ≤ 12 ∧
       (∀ p ∈ M, 5 ≤ occ p) ∧ largeExposure = ∅) ∧
       (P.card = 6 → M.card = 10 ∧ 5 * deficit + loss + 21 * largeExposure.card ≤ 41 ∧
-        (deficit = 8 →
-          (∃ p ∈ P, ∀ i : Fin 4, flip p i ∈ P) ∧
-            (M.filter (fun p => occ p = 5)).card = 8)) := by
+        3 * (deficit - (M.filter (fun p => occ p < 6)).card) ≤ loss ∧
+        (7 ≤ deficit → ∃ p ∈ P, ∀ i : Fin 4, flip p i ∈ P) ∧
+        (deficit = 8 → (M.filter (fun p => occ p = 5)).card = 8)) := by
   intro bank M P largeExposure A occ edges deficit loss
   let project (x : Q 9) : Q 4 := fun i => x (g i)
   let lift (p : Q 4) (l : Fin 9) : Bool :=
@@ -1340,48 +1340,70 @@ theorem triangle_complement_mixed_fibre_deficits {C D : Finset (Q 9)} (b : Bool)
     have h := mixed_fibre_deficit_with_large_bank_exposure P M largeExposure holes edges
       (by omega) hdis deficit loss hoccupancy hbudget hline hboundary hlargeSubset hstrong
     have hh := h.1
-    refine ⟨hm10, by omega, ?_⟩
-    intro hdef8
-    have hs := h.2
-    let I := P.filter (fun p => ¬ ∃ i : Fin 4, flip p i ∈ M)
-    change _ ≤ 74 * P.card + 45 * M.card + 7 * I.card at hs
-    have hI : I.Nonempty := card_pos.mp (by omega)
-    have hspace : P ∪ M = univ := by
-      apply eq_of_subset_of_card_le (subset_univ _)
-      rw [card_union_of_disjoint hdis, hpure, hm10]
-      decide
-    constructor
-    · obtain ⟨p, hp⟩ := hI
+    have hdefSum : (∑ p ∈ M, (6 - occ p)) = deficit := by
+      rw [Finset.sum_tsub_distrib _ hmoccOne]
+      simp [deficit, Nat.mul_comm]
+    have hedSum : (∑ p ∈ M, (15 - edges p)) = loss := by
+      rw [Finset.sum_tsub_distrib _ hmedgeOne]
+      simp [loss, Nat.mul_comm]
+    let underfilled (p : Q 4) : ℕ := if occ p < 6 then 1 else 0
+    have hsub (p : Q 4) (hp : p ∈ M) : underfilled p ≤ 6 - occ p := by
+      by_cases h : occ p < 6
+      · simp only [underfilled, if_pos h]
+        omega
+      · simp [underfilled, h]
+    have hdegree (p : Q 4) : edges p ≤ 3 * occ p := by
+      have hc' := hdegBank C p hc3
+      have hd' := hdegBank D p hd3
+      dsimp [edges, occ]
+      omega
+    have hfloor : 3 * (deficit - (M.filter (fun p => occ p < 6)).card) ≤ loss := by
+      calc
+        _ = ∑ p ∈ M, 3 * ((6 - occ p) - underfilled p) := by
+          rw [← mul_sum, sum_tsub_distrib _ hsub, hdefSum]
+          simp only [underfilled, sum_boole, Nat.cast_id]
+        _ ≤ ∑ p ∈ M, (15 - edges p) := by
+          apply sum_le_sum
+          intro p hp
+          have he := hdegree p
+          by_cases hsmall : occ p < 6
+          · simp only [underfilled, if_pos hsmall]
+            omega
+          · simp [underfilled, hsmall]
+            omega
+        _ = loss := hedSum
+    have hstar (hdef7 : 7 ≤ deficit) : ∃ p ∈ P, ∀ i : Fin 4, flip p i ∈ P := by
+      have hs := h.2
+      let I := P.filter (fun p => ¬ ∃ i : Fin 4, flip p i ∈ M)
+      change _ ≤ 74 * P.card + 45 * M.card + 7 * I.card at hs
+      have hI : I.Nonempty := card_pos.mp (by omega)
+      have hspace : P ∪ M = univ := by
+        apply eq_of_subset_of_card_le (subset_univ _)
+        rw [card_union_of_disjoint hdis, hpure, hm10]
+        decide
+      obtain ⟨p, hp⟩ := hI
       obtain ⟨hpP, hpM⟩ := mem_filter.mp hp
       refine ⟨p, hpP, fun i => ?_⟩
       have hu : flip p i ∈ P ∪ M := hspace ▸ mem_univ _
       exact (mem_union.mp hu).resolve_right (fun hi => hpM ⟨i, hi⟩)
-    · have hsum : (∑ q ∈ M, (15 - edges q)) = loss := by
-        rw [Finset.sum_tsub_distrib _ hmedgeOne]
-        simp [loss, Nat.mul_comm]
-      have hpoint (p : Q 4) (hp : p ∈ M) : 5 ≤ occ p := by
-        have h1 : 15 - edges p ≤ loss := by
-          rw [← hsum]
-          exact single_le_sum (fun q _ => Nat.zero_le (15 - edges q)) hp
-        have he : edges p ≤ 3 * occ p := by
-          have hc' := hdegBank C p hc3
-          have hd' := hdegBank D p hd3
-          dsimp [edges, occ]
-          omega
-        omega
-      have heq : (∑ p ∈ M, (6 - occ p)) = deficit := by
-        rw [Finset.sum_tsub_distrib _ hmoccOne]
-        simp [deficit, Nat.mul_comm]
-      have hcount : (∑ p ∈ M, (6 - occ p)) = (M.filter (fun p => occ p = 5)).card := by
-        calc
-          _ = ∑ p ∈ M, (if occ p = 5 then 1 else 0) := by
-            apply sum_congr rfl
-            intro p hp
-            have h5 := hpoint p hp
-            have h6 := hmoccOne p hp
-            split <;> omega
-          _ = _ := by simp only [sum_boole, Nat.cast_id]
+    refine ⟨hm10, by omega, hfloor, hstar, ?_⟩
+    intro hdef8
+    have hpoint (p : Q 4) (hp : p ∈ M) : 5 ≤ occ p := by
+      have h1 : 15 - edges p ≤ loss := by
+        rw [← hedSum]
+        exact single_le_sum (fun q _ => Nat.zero_le (15 - edges q)) hp
+      have he := hdegree p
       omega
+    have hcount : (∑ p ∈ M, (6 - occ p)) = (M.filter (fun p => occ p = 5)).card := by
+      calc
+        _ = ∑ p ∈ M, (if occ p = 5 then 1 else 0) := by
+          apply sum_congr rfl
+          intro p hp
+          have h5 := hpoint p hp
+          have h6 := hmoccOne p hp
+          split <;> omega
+        _ = _ := by simp only [sum_boole, Nat.cast_id]
+    omega
 
 open Classical in
 open scoped BigOperators in
