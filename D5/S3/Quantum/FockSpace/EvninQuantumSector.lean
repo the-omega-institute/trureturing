@@ -9,7 +9,7 @@
 import OmegaBuild.Commands
 import D5.S3.Combinatorics.WeightedBond.LagrangeBurmann
 import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
 import Mathlib.RingTheory.PowerSeries.Binomial
 import Mathlib.Tactic.Module
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose
@@ -642,12 +642,18 @@ private theorem raney_zero (σ r : ℝ) (hr : 0 < r) : raney σ r 0 = 1 := by
 
 private theorem gamma_asc (x : ℝ) (hx : 0 < x) (n : ℕ) :
     Real.Gamma (x + n) = Real.Gamma x * (ascPochhammer ℝ n).eval x := by
-  induction n with
-  | zero => simp [ascPochhammer_zero]
-  | succ n ih =>
-    rw [Nat.cast_succ, ← add_assoc, Real.Gamma_add_one (by positivity), ih,
-      ascPochhammer_succ_eval]
-    ring
+  have hpole (k : ℕ) : (x : ℂ) ≠ -(k : ℂ) := by
+    intro eq
+    have h := congrArg Complex.re eq
+    simp only [Complex.ofReal_re, Complex.neg_re, Complex.natCast_re] at h
+    have hk : (0 : ℝ) ≤ k := Nat.cast_nonneg k
+    linarith
+  have hshift := Complex.Gamma_add_nat_div_Gamma_eq (n := n) (x : ℂ) hpole
+  rw [← Complex.ofReal_natCast, ← Complex.ofReal_add, Complex.Gamma_ofReal,
+    Complex.Gamma_ofReal, Polynomial.ascPochhammer_eval₂ Complex.ofRealHom,
+    Polynomial.eval₂_at_apply, ← Complex.ofReal_div] at hshift
+  exact ((div_eq_iff (Real.Gamma_pos_of_pos hx).ne').mp
+    (Complex.ofReal_injective hshift)).trans (mul_comm _ _)
 
 private theorem raney_choose (σ r : ℝ) (hσ : 1 ≤ σ) (hr : 0 < r) (n : ℕ) :
     ((n : ℝ) + 1) * raney σ r (n + 1) =

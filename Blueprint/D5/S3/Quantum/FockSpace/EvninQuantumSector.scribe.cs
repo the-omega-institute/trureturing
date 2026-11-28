@@ -8,7 +8,7 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Quantum/FockSpace/EvninQuantumSector";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Quantum/evnin2026quantumestimates");
+        LibraryNoteRef.Create("D5/L/HilbertOperators/evnin2026quantumestimates");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Evnin's normally ordered resonant Hamiltonian has greatest real spectral value "
@@ -32,24 +32,28 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
                 "The equality instance is Classical.decEq on Sector(L, N, M)."),
             Definition("raney", "raney", "Raney coefficients", RaneyBody(),
                 "Equation (31) gives this Gamma quotient with real parameters s and r and natural index j. "
-                + "The Hamiltonian and its eigenvector use r = 1. The convolution in the proof also uses r = 2."),
+                + "Mathlib assigns Gamma(0) = 0 at the pole and uses total division. The proof uses s ≥ 1 "
+                + "and r > 0, so all Gamma arguments are positive. It uses r = 1 for the Hamiltonian "
+                + "and eigenvector and r = 2 in the convolution."),
             Definition("energy", "energy", "Energy of the attaining state", EnergyBody(),
                 "Both N and M are cast from natural numbers to real numbers before the arithmetic of Eq. (33)."),
             Definition("vector", "occupationVector", "Factorial occupation vector", VectorBody(),
                 "For real mode weights A, each coordinate is computed in the reals and cast to the complex "
-                + "numbers. In the theorem, A(t) is raney(s, 1, t) for each natural label t, and the vector "
+                + "numbers. Mathlib's real square root is zero for negative arguments. In the theorem, "
+                + "the weights A(t) = raney(s, 1, t) are positive for every natural label t, and the vector "
                 + "is indexed by Sector(M, N, M)."),
             Definition("hamiltonian", "hamiltonian", "Normally ordered Hamiltonian", HamiltonianBody(),
                 "For N at least two, B is the ordered pair annihilation matrix. Angle brackets denote "
                 + "the element of Mode(M) with the indicated natural label. The bracketed equalities "
                 + "in the entry formula are indicators, with value one when true and zero otherwise. "
                 + "The adjoint is conjugate transpose, and smul is the real scalar action on complex matrices. "
-                + "Both orders of a distinct-mode pair occur in the sums from Eqs. (19) and (30)."),
+                + "The momentum constraint forces all modes above M to have zero occupation. A pair "
+                + "with total momentum above M cannot be removed. Both orders of a distinct-mode pair "
+                + "occur in the sums from Eqs. (19) and (30)."),
             Describe.Lean(
                 DescribeId.Create("evnin-quantum-sector-claim"), DeclarationHandle.Create(Module + ".claim"),
                 H("Proposition on the top spectral value"),
-                StatementSource.FromAuthor(Disp(new Formula.Logic(
-                    F.Id("claim"), FormulaLogicOperator.Iff, Parenthesized(ClaimBody())))),
+                StatementSource.FromAuthor(Disp(ClaimBody(includeClaimName: true))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -86,9 +90,7 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
                         + "positive before casting to complex numbers, so v is nonzero in every nonempty "
                         + "sector. This gives the eigenvalue E and proves attainment. With fewer than two "
                         + "particles the nonempty sectors have zero energy."))),
-                DescribeRole.Theorem,
-                openProblemResolutionClaim: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("evnin-2026-quantum-sector-maximum"), ResolutionKind.Proved)))));
+                DescribeRole.Theorem))));
 
     private static DocumentBlock.Describe Definition(
         string id, string declaration, string title, Formula body, string explanation) => Describe.Lean(
@@ -190,34 +192,38 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
                 Typed(s, Reals()), Typed(n, Naturals()), Typed(m, Naturals()))),
             Seq(Amp, Quad, Sp, Assign(a, LambdaOf(Call("raney", s, D(1), t), Typed(t, Naturals()))), Comma),
             Seq(Amp, Quad, Sp, Assign(c, LambdaOf(coefficient, Typed(t, Naturals()))), Comma),
-            Seq(Amp, Quad, Sp, Assign(w, LambdaOf(weight, jBinder, kBinder)), Sp, Word("in")),
-            Seq(Amp, Quad, Call("hamiltonian", s, n, m), Sp, Eq, Sp,
+            Seq(Amp, Quad, Sp, Assign(w, LambdaOf(weight, jBinder, kBinder)), Comma),
+            Seq(Amp, Quad, Sp, Assign(b, LambdaOf(Word("let"), jBinder, kBinder)), Sp,
+                Assign(u, ModeAt(kVal, modes)), Comma, Sp, Assign(v, ModeAt(difference, modes)), Sp, Word("in")),
+            Seq(Amp, Qquad, LambdaOf(Word("if"), Typed(zeta, lower), Typed(eta, upper))),
+            Seq(Amp, Qquad, Quad, Parenthesized(matching)),
+            Seq(Amp, Qquad, Quad, Word("then"), Sp, OfReal(Root(count)), Sp, Word("else"), Sp, D(0), Sp, Word("in")),
+            Seq(Amp, Call("hamiltonian", s, n, m), Sp, Eq, Sp,
                 Word("if"), Sp, new Formula.Relation(D(2), FormulaRelationOperator.LessThanOrEqual, n), Sp, Word("then")),
-            Seq(Amp, Qquad, Word("let"), Sp, Assign(b, LambdaOf(Word("let"), jBinder, kBinder)), Sp,
-                Assign(u, ModeAt(kVal, modes)), Comma, Quad, Sp, Assign(v, ModeAt(difference, modes)), Sp, Word("in")),
-            Seq(Amp, Qquad, LambdaOf(Seq(Word("if"), Sp, Parenthesized(matching)),
-                Typed(zeta, lower), Typed(eta, upper))),
-            Seq(Amp, Qquad, Quad, Word("then"), Sp, OfReal(Root(count)), Quad, Word("else"), Sp, D(0)),
-            Seq(Amp, Qquad, Word("in"), Sp, ordered),
-            Seq(Amp, Quad, Word("else"), Sp, D(0))]);
+            Seq(Amp, Quad, ordered),
+            Seq(Amp, Word("else"), Sp, D(0))]);
     }
 
-    private static Formula ClaimBody()
+    private static Formula ClaimBody(bool includeClaimName = false)
     {
         Formula sigma = F.Id("s"), n = F.Id("N"), m = F.Id("M");
+        Formula h = F.Id("H"), e = F.Id("E"), v = F.Id("v");
         Formula sector = Call("Sector", m, n, m);
-        Formula h = Call("hamiltonian", sigma, n, m);
-        Formula vector = Typed(Call("occupationVector", Call("raney", sigma, D(1))),
-            new Formula.TypeArrow(sector, Seq(Mathbb, Grp(F.Id("C")))));
-        Formula energy = Call("energy", sigma, n, m);
-        Formula conclusion = And(Call("IsHermitian", h), And(
-            Call("IsGreatest", Call("spectrum", Reals(), h), energy),
-            And(new Formula.Relation(vector, FormulaRelationOperator.NotEqual, D(0)),
-                new Formula.Relation(Call("mulVec", h, vector), FormulaRelationOperator.Equal,
-                    Call("smul", energy, vector)))));
+        Formula vectorType = new Formula.TypeArrow(sector, Seq(Mathbb, Grp(F.Id("C"))));
         Formula instance = Seq(OpenBracket, Call("Nonempty", sector), CloseBracket);
-        return Quantify(Implies(new Formula.Relation(D(1), FormulaRelationOperator.LessThanOrEqual, sigma),
-            Quantify(conclusion, Typed(n, Naturals()), Typed(m, Naturals()), instance)), Typed(sigma, Reals()));
+        Formula premise = new Formula.Relation(D(1), FormulaRelationOperator.LessThanOrEqual, sigma);
+        Formula binders = Quantify(Seq(Parenthesized(premise), Sp, F.Implies, Sp,
+            Quantify(Word("let"), Typed(n, Naturals()), Typed(m, Naturals()), instance)), Typed(sigma, Reals()));
+        return new Formula.Aligned([
+            includeClaimName ? Seq(F.Id("claim"), Sp, Iff, Amp, Sp, binders) : Seq(Amp, binders),
+            Seq(Amp, Quad, Assign(h, Call("hamiltonian", sigma, n, m)), Comma, Quad,
+                Assign(e, Call("energy", sigma, n, m)), Comma),
+            Seq(Amp, Quad, Assign(Typed(v, vectorType), Call("occupationVector", Call("raney", sigma, D(1)))),
+                Sp, Word("in")),
+            Seq(Amp, Quad, Call("IsHermitian", h), Sp, Land),
+            Seq(Amp, Quad, Call("IsGreatest", Call("spectrum", Reals(), h), e), Sp, Land),
+            Seq(Amp, Quad, new Formula.Relation(v, FormulaRelationOperator.NotEqual, D(0)), Sp, Land),
+            Seq(Amp, Quad, Equal(Call("mulVec", h, v), Call("smul", e, v)))]);
     }
 
     private static Formula Call(string name, params Formula[] arguments) =>
@@ -244,10 +250,6 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
     private static Formula Quantify(Formula body, params Formula[] binders) =>
         Seq(Forall, Sp, Seq(binders), Comma, Sp, body);
-    private static Formula And(Formula x, Formula y) =>
-        new Formula.Logic(x, FormulaLogicOperator.And, Parenthesized(y));
-    private static Formula Implies(Formula x, Formula y) =>
-        new Formula.Logic(Parenthesized(x), FormulaLogicOperator.Implies, Parenthesized(y));
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
     private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
