@@ -26,10 +26,10 @@ namespace SimpleGraph
 
 open ChordalResidualExtension
 
-variable {V E : Type*} [Finite V] {G : SimpleGraph V}
-variable [NormedAddCommGroup E] [NormedSpace ℝ E]
+variable {V E : Type*} {G : SimpleGraph V}
+variable [NormedAddCommGroup E]
 
-private theorem scale_gain_bound (hG : G.IsChordal) (C : ℝ)
+private theorem scale_gain_bound [Finite V] [NormedSpace ℝ E] (hG : G.IsChordal) (C : ℝ)
     (hfit : PairRetention.Upper G E C)
     (g : V → V → E) (δ : ℝ) (hδ : 0 ≤ δ) (hrev : Skew g)
     (htri : ∀ a b c, G.Adj a b → G.Adj b c → G.Adj a c → ‖g a b + g b c - g a c‖ ≤ δ) :
@@ -57,7 +57,7 @@ private theorem scale_gain_bound (hG : G.IsChordal) (C : ℝ)
 
 section Hilbert
 
-variable [InnerProductSpace ℝ E]
+variable [Finite V] [InnerProductSpace ℝ E]
 
 /-- At clique number at most four, the squared triangle invariant gives
 edge error at most `259/200` times the triangle-defect budget. -/
@@ -129,9 +129,8 @@ theorem hilbert_cliqueFour_phase_separation :
       hcl g 1 zero_le_one hg ht
   have hb : BddBelow {C | HilbertCliqueUpper 4 C} := ⟨0, fun _ h => h.1⟩
   have hsqrt : Real.sqrt (2 - 2 / (3 : ℝ)) = 2 / Real.sqrt 3 := by
-    rw [← Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 2), ← Real.sqrt_div (sq_nonneg (2 : ℝ))]
-    congr 1
-    norm_num
+    rw [show (2 - 2 / (3 : ℝ)) = 2 ^ 2 / 3 by norm_num,
+      Real.sqrt_div (sq_nonneg (2 : ℝ)), Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 2)]
   have hOne : (1 : ℝ) < 2 / Real.sqrt 3 := by
     apply (lt_div_iff₀ (Real.sqrt_pos.2 (by norm_num))).2
     simpa using (Real.sqrt_lt (by norm_num : (0 : ℝ) ≤ 3) (by norm_num : (0 : ℝ) ≤ 2)).2

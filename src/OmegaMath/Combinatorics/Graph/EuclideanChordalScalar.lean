@@ -43,16 +43,6 @@ private theorem triangleProduct_bound (g : V → V → ℝ) {δ : ℝ}
     change |Multiplicative.toAdd z + Multiplicative.toAdd x + -Multiplicative.toAdd z| ≤ _
     convert hx using 1; congr 1; ring
 
-private theorem gain_eq_weight (g : V → V → ℝ) {a b : V} (p : G.Walk a b) :
-    Multiplicative.toAdd (p.gain (fun v w => Multiplicative.ofAdd (g v w))) =
-      p.scalarWeight g := by
-  induction p with
-  | nil => rfl
-  | cons h p ih =>
-    rw [Walk.gain_cons, Walk.scalarWeight_cons]
-    change g _ _ + Multiplicative.toAdd (p.gain _) = _
-    rw [ih]
-
 /-- A dimension-free scalar cycle estimate, with arbitrary nonnegative defect. -/
 theorem cycle_bound [Finite V] (hG : G.IsChordal) (g : V → V → ℝ) {δ : ℝ}
     (hδ : 0 ≤ δ) (hrev : ∀ a b, G.Adj a b → g b a = -g a b)
@@ -63,7 +53,7 @@ theorem cycle_bound [Finite V] (hG : G.IsChordal) (g : V → V → ℝ) {δ : �
   obtain ⟨n, hn, hprod⟩ := hG.closed_walk_triangle_product
     (fun a b => Multiplicative.ofAdd (g a b)) (fun a b h => hrev a b h) p
   have hs := triangleProduct_bound g hδ hrev htri hprod
-  rw [gain_eq_weight] at hs
+  rw [ScalarCycleReconstruction.scalarGain_of_walk] at hs
   apply hs.trans
   apply mul_le_mul_of_nonneg_right _ hδ
   have hn' : (n : ℝ) ≤ ((p.length - 2 : ℕ) : ℝ) := by exact_mod_cast hn
