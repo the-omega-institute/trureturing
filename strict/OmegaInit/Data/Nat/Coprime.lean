@@ -7,7 +7,6 @@ module
 prelude
 public import OmegaInit.Data.Nat.Gcd
 import OmegaInit.Data.Nat.Dvd
-import OmegaInit.PropLemmas
 import OmegaInit.Data.Nat.Basic
 
 @[expose] public section
