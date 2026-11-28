@@ -50,6 +50,9 @@ strata_touched:
   - D5/S3/Topology/StableCategory/ProductRigidCores
   - D5/S3/Topology/StableCategory/ProductStableCover
   - D5/S3/Topology/StableCategory/ProductStableLower
+  - D5/S3/Topology/StableCategory/DisjointCoverObstruction
+  - D5/S3/Topology/StableCategory/HalesJewettCategoricalCover
+  - D5/S3/Topology/StableCategory/SevenTrianglePowerCovers
 license: citation-only
 triage: anchor
 ---
@@ -1267,3 +1270,45 @@ This determines ((\operatorname{cat}_w,\operatorname{cat}_s,
 in Question 6.3 remains open.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
 [Strong homotopy types, nerves and collapses](https://arxiv.org/abs/0907.2954)
+
+## A categorical cover transport obstruction at every ordinary depth
+
+In a four-dimensional complex obtained by adding one simplex and its free
+tetrahedral facet, the retained first subdivision has a disjoint vertex
+partition into two induced categorical regions. Either assignment of the new
+chamber barycentre forces a six-edge cycle in the chosen region. A retraction
+projects that cycle to a subdivided two-dimensional complex in which two
+original cycle vertices stay fixed throughout every contiguity chain.
+
+The same witness subdivides through every later ordinary depth. For either
+colour, any full region containing its retained part and all exterior vertices
+contains that subdivided witness. Thus any full categorical two-cover
+containing the inherited regions must distribute the exterior between its
+pieces. The arbitrary contractible four-complex case of Question 6.3 remains
+open. [Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
+
+## Unbounded categorical cover size after one subdivision of powers
+
+A finite poset with a monotone rank and a finite alphabet of full-rank
+chains admits a rank-aligned chain for each word of letters. Assume each
+letter is a section of the rank and every nonempty chain of the factor
+fits in a letter. If the factor's first subdivision has no one-piece
+categorical lower cover, then for every (k) the first ordinary subdivision
+of some finite power needs more than (k) categorical lower sets.
+
+Colour each rank-aligned chain by a lower set containing it. A
+Hales–Jewett line fixes some of the coordinates and varies the rest
+together. At each fixed coordinate use the chain element of the given
+rank, and at each variable coordinate use the element of the factor.
+The resulting order embedding puts every chain of the factor into the
+same lower set. Projection at a variable coordinate splits that
+embedding, so a contraction of that set would contract the subdivided
+factor.
+
+For the seven-triangle disk, rank is face cardinality minus one.
+Every chain extends to a vertex–edge–triangle flag, and the persistent
+boundary obstruction excludes a one-piece cover. The Lean theorem
+applies to finite powers of this one factor. All these powers have weak
+category one by realization of products. The stable category also
+allows further subdivisions, and the proof gives an obstruction at
+one fixed depth.
