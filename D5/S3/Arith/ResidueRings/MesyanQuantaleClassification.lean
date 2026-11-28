@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: A ring has a quantale unit on its additive submonoids exactly when it has a ring unit or is a torsion ring with unital primary components. -/
+   digest: Quantale units in rings are classified by ring units and torsion primary units. -/
 
 import Mathlib.Algebra.Module.Torsion.PrimaryComponent
 import Mathlib.Algebra.Ring.Submonoid.Pointwise
@@ -14,8 +14,6 @@ import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.RingTheory.Ideal.NatInt
 import OmegaBuild.Commands
 
-compile_only_with_mathlib
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -24,6 +22,8 @@ The associative-ring classification in Mesyan's *Quantales Arising From Rings*,
 Question 36 (arXiv:2611.31109v1). The product of additive submonoids is the
 positive finite-sum product of Definition 4.
 -/
+
+compile_only_with_mathlib
 
 open scoped Pointwise
 
@@ -107,7 +107,7 @@ is injective on the elements killed by powers of p. -/
 private theorem ker_eq_zero_of_prime_order {A : Type*} [AddCommGroup A]
     (F : A →+ A) (hF : ∀ x, ∃ n : ℕ, n • x = F x)
     (p : Nat.Primes) {a : A} (ha : addOrderOf a = (p : ℕ)) (hfa : F a = a)
-    (b : A) (hb : F b = 0) (hbp : ∃ j : ℕ, (p : ℕ)^j • b = 0) :
+    (b : A) (hb : F b = 0) (hbp : ∃ j : ℕ, (p : ℕ) ^ j • b = 0) :
     b = 0 := by
   have orderP (c : A) (hc : (p : ℕ) • c = 0) (hfc : F c = 0) : c = 0 :=
     ker_eq_zero_of_order_dvd F hF hfa hfc (ha ▸ addOrderOf_dvd_of_nsmul_eq_zero hc)
@@ -147,7 +147,7 @@ private def Primary (A : Type*) [AddCommGroup A] (p : Nat.Primes) : Submodule �
   Ideal.primaryComponent A (Ideal.span {((p : ℕ) : ℤ)})
 
 private theorem mem_primary_iff {A : Type*} [AddCommGroup A] {p : Nat.Primes} {x : A} :
-    x ∈ Primary A p ↔ ∃ j : ℕ, (p : ℕ)^j • x = 0 := by
+    x ∈ Primary A p ↔ ∃ j : ℕ, (p : ℕ) ^ j • x = 0 := by
   unfold Primary
   rw [Ideal.primaryComponent_mem]
   simp only [Ideal.span_singleton_pow, Submodule.torsionBySet_ideal_span_singleton_eq,
@@ -215,7 +215,7 @@ private theorem exists_order_p_of_ne_zero {A : Type*} [AddCommGroup A]
   induction j with
   | zero => exact (hx (by simpa using hj)).elim
   | succ j ih =>
-    by_cases h : (p : ℕ)^j • x = 0
+    by_cases h : (p : ℕ) ^ j • x = 0
     · exact ih h
     · exact ⟨_, addOrderOf_eq_prime (by simpa [pow_succ, mul_nsmul] using hj) h⟩
 
@@ -409,8 +409,8 @@ theorem product_unit_iff :
     (∃ E : AddSubmonoid R, ∀ M : AddSubmonoid R, E * M = M ∧ M * E = M) ↔
       (∃ u : R, ∀ x : R, u * x = x ∧ x * u = x) ∨
       ((∀ a : R, 0 < addOrderOf a) ∧
-        ∀ p : Nat.Primes, ∃ u : R, (∃ j : ℕ, (p : ℕ)^j • u = 0) ∧
-          ∀ x : R, (∃ j : ℕ, (p : ℕ)^j • x = 0) → u * x = x ∧ x * u = x) := by
+        ∀ p : Nat.Primes, ∃ u : R, (∃ j : ℕ, (p : ℕ) ^ j • u = 0) ∧
+          ∀ x : R, (∃ j : ℕ, (p : ℕ) ^ j • x = 0) → u * x = x ∧ x * u = x) := by
   constructor
   · rintro ⟨E, h⟩
     have hleft (M : AddSubmonoid R) := (h M).1
