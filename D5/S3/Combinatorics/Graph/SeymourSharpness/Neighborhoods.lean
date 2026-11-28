@@ -107,11 +107,9 @@ theorem composition_exact_second (B : I → I → Prop)
         · exact hnadj hij
         · exact hne h
 
-private lemma fiber_card (i : I) (P : C i → Prop) :
-    Nat.card {z : Σ j, C j // ∃ h : z.1 = i, P (h ▸ z.2)} = Nat.card {a // P a} := by
+private noncomputable def fiberEquiv (i : I) (P : C i → Prop) :
+    {a // P a} ≃ {z : Σ j, C j // ∃ h : z.1 = i, P (h ▸ z.2)} := by
   classical
-  symm
-  apply Nat.card_congr
   apply Equiv.ofBijective (fun a : {a // P a} =>
     (⟨⟨i,a.1⟩,rfl,a.2⟩ : {z : Σ j, C j // ∃ h : z.1 = i, P (h ▸ z.2)}))
   constructor
@@ -123,18 +121,20 @@ private lemma fiber_card (i : I) (P : C i → Prop) :
     subst j
     exact ⟨⟨b,hb⟩,rfl⟩
 
-/-- The two disjoint pieces give the actual cardinalities in a finite composition. -/
-theorem composition_degrees [Finite I] [∀ i, Finite (C i)]
+private lemma fiber_card (i : I) (P : C i → Prop) :
+    Nat.card {z : Σ j, C j // ∃ h : z.1 = i, P (h ▸ z.2)} = Nat.card {a // P a} :=
+  Nat.card_congr (fiberEquiv i P).symm
+
+/-- Only the root and the two relevant neighbor fibers need be finite. -/
+theorem composition_degrees
     (B : I → I → Prop) (A : (i : I) → C i → C i → Prop)
     (hB : ∀ ⦃i j⦄, B i j → ¬ B j i) (inh : ∀ i, Nonempty (C i))
-    (i s t : I) (a : C i)
+    (i s t : I) [Finite (C i)] [Finite (C s)] [Finite (C t)] (a : C i)
     (hfirst : ∀ j, B i j ↔ j = s)
     (hsecond : ∀ j, ExactSecond B i j ↔ j = t) :
     outDegree (composition B A) ⟨i,a⟩ = outDegree (A i) a + Nat.card (C s) ∧
     secondDegree (composition B A) ⟨i,a⟩ = secondDegree (A i) a + Nat.card (C t) := by
   classical
-  letI : Fintype I := Fintype.ofFinite I
-  letI (j : I) : Fintype (C j) := Fintype.ofFinite (C j)
   have hc (j : I) : Nat.card {z : Σ j, C j // z.1 = j} = Nat.card (C j) :=
     Nat.card_congr (Equiv.sigmaSubtype j)
   constructor
@@ -149,6 +149,12 @@ theorem composition_degrees [Finite I] [∀ i, Finite (C i)]
         have hii : B i i := by simpa only [P,h] using hz
         exact (hB hii hii).elim
       · exact False.elim
+    let ep : {z // P z} ≃ C s :=
+      (Equiv.subtypeEquivRight (fun z : Σ j, C j => hfirst z.1)).trans
+        (Equiv.sigmaSubtype s)
+    let eq : {z // Q z} ≃ {b // A i a b} := (fiberEquiv i (A i a)).symm
+    haveI : Finite {z // P z} := Finite.of_injective ep ep.injective
+    haveI : Finite {z // Q z} := Finite.of_injective eq eq.injective
     change Nat.card {z // P z ∨ Q z} = _
     rw [Nat.card_congr (subtypeOrEquiv P Q hd),Nat.card_sum]
     have hp : Nat.card {z // P z} = Nat.card (C s) := by
@@ -173,6 +179,13 @@ theorem composition_degrees [Finite I] [∀ i, Finite (C i)]
       rintro ⟨j,b⟩
       exact composition_exact_second B A hB inh i j a b
     rw [Nat.card_congr (Equiv.subtypeEquivRight he)]
+    let ep : {z // P z} ≃ {b // ExactSecond (A i) a b} :=
+      (fiberEquiv i (ExactSecond (A i) a)).symm
+    let eq : {z // Q z} ≃ C t :=
+      (Equiv.subtypeEquivRight (fun z : Σ j, C j => hsecond z.1)).trans
+        (Equiv.sigmaSubtype t)
+    haveI : Finite {z // P z} := Finite.of_injective ep ep.injective
+    haveI : Finite {z // Q z} := Finite.of_injective eq eq.injective
     change Nat.card {z // P z ∨ Q z} = _
     rw [Nat.card_congr (subtypeOrEquiv P Q hd),Nat.card_sum]
     have hp : Nat.card {z // P z} = secondDegree (A i) a :=

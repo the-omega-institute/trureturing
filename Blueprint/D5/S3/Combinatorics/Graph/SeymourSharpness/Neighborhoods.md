@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SeymourSharpness/Neighborhoods.compos
 
 *Commentary.*
 
-For a finite base and finite nonempty cluster carriers, if the base is asymmetric and its vertex has a unique first-neighbor cluster s and a unique exact second-neighbor cluster t, the global first degree is its internal first degree plus the cardinality of s, and its global exact second degree is its internal exact second degree plus the cardinality of t.
+For an arbitrary index type and nonempty cluster carriers, suppose the base is asymmetric and its vertex i has a unique first-neighbor cluster s and a unique exact second-neighbor cluster t. Only the three fibers at i, s and t must be finite; the index type and all other fibers may be infinite. Then the global first degree is its internal first degree plus the cardinality of s, and its global exact second degree is its internal exact second degree plus the cardinality of t. The extension to infinite index types is proved here; the cited paper uses a finite cycle of blocks.
 
 ## References
 
