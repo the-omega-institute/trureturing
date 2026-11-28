@@ -1,6 +1,8 @@
 module
 public import Lean
 import all Init.Data.List.Scan.Basic
+import all Init.Data.Option.Instances
+public import Init.Data.Option.Monadic
 import Lean.Replay
 import all Lean.Util.CollectAxioms
 public import OmegaChecks.InitInventory.Extensionality
@@ -343,6 +345,106 @@ private theorem readerLaws (T : Type u) :
     pure_bind := by intros; rfl
     bind_assoc := by intros; rfl
   }
+
+namespace OptionIteration
+
+/-- Moving a map outside the two identical continuation branches, uniformly as a function. -/
+def Fusion : Prop := ∀ {β : Type u} {δ : Type v} (k : β → δ),
+  (fun r : ForInStep β => match r with | .done b | .yield b => k b) =
+    (fun r => k r.value)
+
+abbrev SomeRule := type_of% @Option.forIn_some.{u,v,w}
+
+private theorem someStep (rule : SomeRule.{u,v,w}) {m : Type u → Type v} [Monad m] [LawfulMonad m]
+    {α : Type w} {β : Type u} (a : α) (b : β) (f : (x : α) → x ∈ some a → β → m (ForInStep β)) :
+    forIn' (some a) b f = bind (f a rfl b) (fun r => pure r.value) :=
+  @rule m α β _ _ a b (fun _ y => f a rfl y)
+
+theorem someOfFusion (fusion : Fusion.{u,v}) : SomeRule.{u,v,w} := by
+  intro m α β _ _ a b f
+  exact congrArg (Bind.bind (f a b)) (fusion pure)
+
+theorem dependentSome (rule : SomeRule.{u,v,w}) : type_of% @Option.forIn'_some.{u,v,w} := by
+  intro m α β _ _ a b f
+  exact someStep rule a b f
+
+theorem ofDependentSome (rule : type_of% @Option.forIn'_some.{u,v,w}) : SomeRule.{u,v,w} := by
+  intro m α β _ _ a b f
+  exact rule a b fun x _ => f x
+
+theorem dependentElim (rule : SomeRule.{u,v,w}) : type_of% @Option.forIn'_eq_pelim.{u,v,w} := by
+  intro m α β _ _ o f b
+  cases o with
+  | none => rfl
+  | some a => exact (someStep rule a b f).trans (bind_pure_comp _ _)
+
+theorem elimRule (rule : SomeRule.{u,v,w}) : type_of% @Option.forIn_eq_elim.{u,v,w} := by
+  intro m α β _ _ o f b
+  cases o with
+  | none => rfl
+  | some a => exact (someStep rule a b (fun x _ => f x)).trans (bind_pure_comp _ _)
+
+theorem dependentYield (rule : SomeRule.{u,v,w}) : type_of% @Option.forIn'_yield_eq_pelim.{u,v,w} := by
+  intro m α β γ _ _ o f g b
+  cases o with
+  | none => rfl
+  | some a =>
+    exact (dependentElim rule _ _ b).trans (LawfulFunctor.comp_map _ _ _).symm
+
+theorem yieldRule (rule : SomeRule.{u,v,w}) : type_of% @Option.forIn_yield_eq_elim.{u,v,w} := by
+  intro m α β γ _ _ o f g b
+  cases o with
+  | none => rfl
+  | some a => exact (elimRule rule _ _ b).trans (LawfulFunctor.comp_map _ _ _).symm
+
+theorem dependentJoin (rule : SomeRule.{u,v,w}) {m : Type u → Type v} {β : Type u} {α : Type w}
+    [Monad m] [LawfulMonad m] (b : β) (o : Option (Option α))
+    (f : (a : α) → a ∈ o.join → β → m (ForInStep β)) :
+    forIn' o.join b f = forIn' o b (fun o' ho' b => ForInStep.yield <$>
+      forIn' o' b (fun a ha b' => f a (by cases o <;> cases ho' <;> exact ha) b')) := by
+  cases o with
+  | none => rfl
+  | some inner =>
+    rw [dependentSome rule]
+    exact (id_map _).symm.trans ((LawfulFunctor.comp_map ForInStep.yield ForInStep.value _).trans
+      (bind_pure_comp _ _).symm)
+
+example (rule : SomeRule.{u,v,w}) : type_of% @Option.forIn'_join.{u,v,w} := @dependentJoin rule
+
+theorem joinRule (rule : SomeRule.{u,v,w}) : type_of% @Option.forIn_join.{u,v,w} := by
+  intro m α β init _ _ o f
+  exact dependentJoin rule init o fun a _ => f a
+
+theorem ofElim (rule : type_of% @Option.forIn_eq_elim.{u,v,w}) : SomeRule.{u,v,w} := by
+  intro m α β _ _ a b f
+  exact (rule (some a) f b).trans (bind_pure_comp _ _).symm
+
+theorem ofDependentElim (rule : type_of% @Option.forIn'_eq_pelim.{u,v,w}) : SomeRule.{u,v,w} := by
+  intro m α β _ _ a b f
+  exact (rule (some a) (fun x _ => f x) b).trans (bind_pure_comp _ _).symm
+
+/-- Applying the pinned option loop to a reader retains equality of the complete functions. -/
+def ReaderStep := ∀ {σ β : Type u} (_ : β) (steps : σ → ForInStep β),
+  (fun t => (match steps t with | .done v | .yield v => fun _ : σ => v) t) =
+    (fun t => (steps t).value)
+
+theorem readerStep (rule : SomeRule.{u,u,u}) : ReaderStep.{u} := by
+  intro σ β b steps
+  letI := reader σ
+  letI := readerLaws σ
+  exact @rule (fun γ => σ → γ) (PUnit.{u+1}) β _ _ .unit b (fun _ _ => steps)
+
+
+def directConsequences : List (Name × Name × Name) := [
+  (``Option.forIn_some, ``ReaderStep, ``readerStep),
+  (``Option.forIn'_some, ``SomeRule, ``ofDependentSome),
+  (``Option.forIn_eq_elim, ``SomeRule, ``ofElim),
+  (``Option.forIn'_eq_pelim, ``SomeRule, ``ofDependentElim)]
+
+def constructions : List Name :=
+  [``someOfFusion, ``dependentSome, ``dependentElim, ``elimRule, ``dependentYield, ``yieldRule, ``dependentJoin, ``joinRule]
+
+end OptionIteration
 
 private def input? {T : Type u} {f : T → T} : Option (Graph f) → Option T
   | none => none
