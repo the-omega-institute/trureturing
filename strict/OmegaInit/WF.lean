@@ -13,6 +13,18 @@ noncomputable section
 
 port_inductive Acc
 port_inductive WellFounded
+port_definition Acc.ndrec
+port_definition Acc.ndrecOn
+port_proof Acc.inv
+port_proof WellFounded.apply
+port_definition WellFounded.recursion
+port_proof WellFounded.induction
+port_definition WellFounded.fixF
+port_proof WellFounded.fixF_eq
+port_definition WellFounded.fix
+port_proof WellFounded.fix_eq
+port_definition WellFounded.wrap with_native_code
+port_proof WellFounded.val_wrap by_reflexivity
 
 namespace Omega
 

@@ -60,3 +60,4 @@ public import OmegaInit.PropLemmas
 public import OmegaInit.SimpLemmas
 public import OmegaInit.System.IO
 public import OmegaInit.WF
+public import OmegaInit.WFExtrinsicFix
