@@ -38,7 +38,7 @@ For the public refutation, take the $m=2$ member of the uniform construction. Re
 
 $$\rho(r,Z)\rho(s,W)=\rho(0,r^{\mathsf T}s).$$
 
-Two basis rows give a noncommuting pair. If $r^{\mathsf T}s=-(s^{\mathsf T}r)$, a nonzero coordinate of $r$ forces the corresponding coordinate of $s$ to vanish and then forces $s=0$, so the product is zero. For every probe, a fixed signed permutation unitary conjugates the ordinary transpose of a block back to the block. Their direct sum and its matrix-level block diagonals preserve the Euclidean operator norm, giving the exact amplification equality.
+Two basis rows give a noncommuting pair. If $r^{\mathsf T}s=-(s^{\mathsf T}r)$, a nonzero coordinate of $r$ forces the corresponding coordinate of $s$ to vanish and then forces $s=0$, so the product is zero. For every probe, if $B$ is the block and $U$ its fixed signed permutation unitary, the identity is $U B^{\mathsf T} U=B$: the same unitary multiplies the transpose on the left and right. Their direct sum and its matrix-level block diagonals preserve the Euclidean operator norm, giving the exact amplification equality.
 
 The uniform scope is every natural $m\ge2$, with ambient size $m^2(m+2)$. The public refutation scope is the single specialization $m=2$, with ambient size $16$. The public theorem consumes the uniform construction at that specialization and supplies the submodule range and closure witness required by `claim`.
 
@@ -54,7 +54,7 @@ The theorem does not assert minimal ambient dimension, symmetry for Blecher's or
 
 The Reg audit has no target. `result` is a utility refutation with `utility: kind=certified-instance; basis=refutes=gid:D5/S3/HilbertOperators/BlecherNoAnticommutingPair.claim; result=D5/S3/HilbertOperators/BlecherNoAnticommutingPair.result; claim=D5/S3/HilbertOperators/BlecherNoAnticommutingPair.claim`, and the designated refutation result is exempt from the four-slot escape registration under CLAUDE.md §3.9. No Reg mirror is required for this module.
 
-The source prerequisite is `Library/HilbertOperators/blecher2025commutativity.md`, whose DOI and URL are exactly `10.1016/j.exmath.2025.125742` and `https://arxiv.org/abs/2509.17673v2`. The measured immediate directory capacities are 20 Lean files in `D5/S3/HilbertOperators`, 40 Blueprint files in `Blueprint/D5/S3/HilbertOperators`, and 61 Library files in `Library/HilbertOperators`, each below the configured 96-entry limit.
+The source prerequisite is `Library/HilbertOperators/blecher2025commutativity.md`, whose DOI and URL are exactly `10.1016/j.exmath.2025.125742` and `https://arxiv.org/abs/2509.17673v2`. The measured immediate directory capacities are 20 Lean files in `D5/S3/HilbertOperators`, 40 Blueprint files in `Blueprint/D5/S3/HilbertOperators`, and 62 Library files in `Library/HilbertOperators`, each below the configured 96-entry limit.
 
 The scoped Scribe source uses the real Lean objects `Submodule`, `Matrix`, `Fin`, `Matrix.comp`, and `Matrix.transpose`. The result node displays the complete proposition via `ClaimBody()`, including the exact entrywise-transpose norm equation above.
 
