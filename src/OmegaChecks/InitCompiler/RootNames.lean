@@ -5,7 +5,7 @@ open Lean
 
 namespace OmegaChecks.InitCompiler.RootNames
 
-/-- Runtime entry points over two borrowed kernel naturals, returning a natural. -/
+/-- Runtime bitwise entry points over two borrowed kernel naturals. -/
 public def natBitwiseExtern? (n : Name) : Option String :=
   match n with
   | `Nat.land => some "lean_nat_land"
@@ -14,6 +14,11 @@ public def natBitwiseExtern? (n : Name) : Option String :=
   | `Nat.shiftLeft => some "lean_nat_shiftl"
   | `Nat.shiftRight => some "lean_nat_shiftr"
   | _ => none
+
+/-- Source module, runtime entry point and argument count for operations on borrowed kernel naturals. -/
+public def borrowedNatExtern? (n : Name) : Option (Name × String × Nat) :=
+  if n == `Nat.log2 then some (`OmegaInit.Data.Nat.Log2, "lean_nat_log2", 1)
+  else (natBitwiseExtern? n).map fun symbol => (`OmegaInit.Data.Nat.Bitwise.Basic, symbol, 2)
 
 /-- The compiler recognizes the primitive task type, constructor, projection and eliminators
 by their root names. These objects remain inductives, constructors and recursors in their owner. -/

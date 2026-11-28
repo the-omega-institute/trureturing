@@ -284,7 +284,8 @@ private def installRuntimeExtern (src : Environment) (name : Name) : CoreM Unit 
     | `ByteArray.mk => some ("lean_byte_array_mk", "omega_byte_array_mk", #[(.object, false)], .object)
     | `ByteArray.emptyWithCapacity => some ("lean_mk_empty_byte_array", "omega_byte_array_empty", #[(.tobject, true)], .object)
     | `ByteArray.push => some ("lean_byte_array_push", "omega_byte_array_push", #[(.object, false), (.uint8, false)], .object)
-    | _ => RootNames.natBitwiseExtern? name |>.map fun sym => (sym, sym, #[(.tobject, true), (.tobject, true)], .tobject)
+    | _ => RootNames.borrowedNatExtern? name |>.map fun (_, sym, arity) =>
+      (sym, sym, Array.replicate arity (.tobject, true), .tobject)
   let some (target, symbol, args, result) := spec | return
   let some (.extern _ ps ret ⟨[.standard `all upstream]⟩) := IR.findEnvDecl src name
     | throwError "missing pinned native primitive {name}"
