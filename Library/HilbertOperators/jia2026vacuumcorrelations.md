@@ -15,11 +15,21 @@ triage: anchor
 
 # Vacuum correlation measures as CFT partition functions
 
+## Verified locator
+
+- [Pinned arXiv record](https://arxiv.org/abs/2611.34922v1) and [DOI](https://doi.org/10.48550/arXiv.2611.34922).
+- [Equations (14) and (15)](https://arxiv.org/html/2611.34922v1#S0.E14) identify the replica partition function and its temperature.
+- The [Discussion](https://arxiv.org/html/2611.34922v1#p22.1) asks for an operator-algebraic proof.
+
+## Order-two derivation
+
 The v1 Discussion asks for a direct algebraic proof of Eq. (14) for split
 Type III₁ algebras. The calculation below treats order two for concentric
 conformal diamonds with geometric vacuum modular action, Haag duality for
 the outer diamond, and a finite vacuum-normalized partition function at
-the specified inverse temperature. It also gives a Hilbert–Schmidt
+the specified inverse temperature. The specialization identifies the
+positive-energy cylinder generator with the radial dilatation generator
+of the CFT in Eq. (15). It also gives a Hilbert–Schmidt
 finiteness criterion for standard split pairs. [Eq. (14)](https://arxiv.org/html/2611.34922v1#S0.E14) ·
 [Discussion](https://arxiv.org/html/2611.34922v1#p22.1)
 
@@ -27,9 +37,12 @@ Let $M,N$ commute and form a split pair with a common vector
 $\Omega$ cyclic and separating for each algebra. Put $P=N'$, let
 $\omega$ be the joint vacuum functional and let $\sigma$ be the product
 of its two marginal states, transported by the split isomorphism. Set
-$X=\overline{\Delta_P^{1/4}\Delta_M^{-1/4}}$ and $T=X^*$ when the modular
-transfer has a bounded closure on the vacuum Hilbert space. The symmetric
-embeddings are
+$X=\overline{\Delta_P^{1/4}\Delta_M^{-1/4}}$ and $T=X^*$. The inclusion
+$M\subset P$ has the same cyclic and separating vector, so the product
+is densely defined and its closure $X$ is a contraction.
+[Buchholz–D’Antoni–Longo, §5.1](https://arxiv.org/html/math-ph/0603083#S5.SS1)
+
+The symmetric embeddings are
 $j_M(a)=\Delta_M^{1/4}a\Omega$ and $j_N(b)=\Delta_N^{1/4}b\Omega$.
 For $b\in N$, the vector $j_N(b)$ belongs to the domain of
 $\Delta_M^{-1/4}\Delta_P^{1/4}$. Indeed,
@@ -61,17 +74,18 @@ $v$ with $\|v\|^2=\operatorname{Tr}(T^*T)$. By Hölder multiplication and
 trace cyclicity, $h_\sigma^{1/4}v^*h_\sigma^{1/4}$ defines a normal
 functional whose values on $a\otimes b$ are $\omega(ab)$. The algebraic
 tensor product is ultraweakly dense, so this density is $h_\omega$.
-The isometry in Jenčová's Theorem 2.3 at $p=2$ gives
-$\exp(\widetilde D_2(\omega\Vert\sigma))=\|v\|^2$. Conversely, membership
+The isometry in Jenčová's Theorem 2.3 sends $v^*$ to $h_\omega$ at
+$p=2$. Her Eq. (13) then gives
+$\exp(\widetilde D_2(\omega\Vert\sigma))=\|v^*\|_2^2=\|v\|^2$. Conversely, membership
 of $h_\omega$ in Kosaki $L^2(M\bar\otimes N,\sigma)$ supplies a bounded
 functional on the symmetric tensor readouts by the same pairing.
 Each local symmetric embedding has dense range. For example, $M\Omega$
 is a core for $\Delta_M^{1/2}$, hence for $\Delta_M^{1/4}$, whose range
 is dense by faithfulness. Continuity extends the readout bound to arbitrary
 finite sums of elementary Hilbert tensors. The Hilbert–Schmidt criterion
-therefore gives infinite divergence when $T$ is bounded and fails to be
-Hilbert–Schmidt.
-[Jenčová, Theorem 2.3](https://arxiv.org/html/1609.08462#S2.Thmthm3)
+therefore gives infinite divergence when $T$ fails to be Hilbert–Schmidt.
+[Jenčová, Theorem 2.3](https://arxiv.org/html/1609.08462#S2.Thmthm3) ·
+[Eq. (13)](https://arxiv.org/html/1609.08462#S3.E13)
 
 For the concentric conformal geometry, restrict geometric modular
 action to the Möbius subgroup preserving the time axis. The nested
@@ -80,7 +94,8 @@ and $2$. The interval distance in Buchholz–D’Antoni–Longo is
 $s=-\log\xi$. Their Proposition 3.1 and Eq. (3.2) give $XX^*$ unitarily
 equivalent to $e^{-2sL_0}$, where $L_0$ generates conformal cylinder
 time and has the radial spectrum. Since $T^*T=XX^*$, the trace is the
-thermal partition function at Jia's $\beta_2=-2\log\xi$. With
+thermal partition function at Jia's $\beta_2=-2\log\xi$. The identity
+$T\Omega=\Omega$ ensures that its trace is at least one. With
 $s=-\log\xi$, the geometric cross ratio is
 $\eta=4\xi/(1+\xi)^2=\operatorname{sech}^2(s/2)$.
 The split hypothesis provides the product reference. Splitness alone

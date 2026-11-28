@@ -6,7 +6,7 @@ internal sealed class ModularTransferReadoutDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Quantum/Analysis/TraceClass/ModularTransferReadout.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Quantum/jia2026vacuumcorrelations");
+        LibraryNoteRef.Create("D5/L/HilbertOperators/jia2026vacuumcorrelations");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite sums of product probes characterize Hilbert–Schmidt modular transfer.",

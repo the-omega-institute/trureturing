@@ -44,8 +44,10 @@ private theorem partial_sum_le [CompleteSpace H] (T : H →L[ℂ] H) (reflect : 
     rw [Complex.re_sum]
     apply Finset.sum_congr rfl
     intro i hi
-    rw [ite_eq_left hi, inner_self_eq_norm_sq_to_K]
-    rw [← Complex.ofReal_pow, Complex.ofReal_re, show ‖x i‖ = ‖T (b i)‖ from hiso _]
+    rw [ite_eq_left hi]
+    calc
+      (inner ℂ (x i) (x i)).re = ‖x i‖ ^ 2 := inner_self_eq_norm_sq (𝕜 := ℂ) _
+      _ = ‖T (b i)‖ ^ 2 := congrArg (fun r : ℝ => r ^ 2) (hiso _)
   have hnum : (∑ i ∈ s, inner ℂ (reflect (x i)) (T (b i))) = (E : ℂ) := by
     rw [Complex.ofReal_sum]
     apply Finset.sum_congr rfl
