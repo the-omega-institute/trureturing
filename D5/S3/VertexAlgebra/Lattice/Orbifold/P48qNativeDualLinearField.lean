@@ -8,6 +8,7 @@
 
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeRestrictedDualField
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeDualResidue
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeDualTranslation
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFieldCarrierTransport
 import OmegaBuild.Commands
 
@@ -31,12 +32,14 @@ open LatticeActualConformalWard (omega_ncoeff)
 open LatticeAllStateField (vacuum stateField_creativity)
 open LatticePositiveEnergy (actualL0_eigen_iff_grade carrierCoeffEquiv carrierEnergyDecomposition
   chargeEnergy_nonneg energy grade mem_grade_iff)
+open LatticeSugawaraConformal (translation)
 open LatticeSugawaraCurrents (sugawaraMode)
 open NativeStandardThirdLift (standardLift)
 open P48qAllJetWickField (NativeStates nativeField nativeField_ground)
 open P48qFieldCarrierTransport (InResidueOn)
 open P48qNativeDualCoefficients (bpzCoeff bpzCoeff_apply_val)
 open P48qNativeDualResidue (bpzDualCoeff_eq_zero_of_residue_ne)
+open P48qNativeDualTranslation (oppositeField_translate_coeff)
 open P48qNativeRestrictedDualField (ActualGrade GradeDual RestrictedDual coeff coeff_lof
   gradeCoeff oppositeField oppositeField_coeff shiftedGradeEquiv shiftedWeight)
 open P48qThirdTwistedField (State)
@@ -46,11 +49,14 @@ open private gram_det_unit from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConformalVectorDecomposition
 open private lift_sourceLZero from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalSector
+open private sourceLMinusOne_eq_translation source_translation_weight from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeDualTranslation
 
 noncomputable section
 
 local notation "L₀" => sugawaraMode lattice (actualInverse lattice) 0
 local notation "L₁" => sugawaraMode lattice (actualInverse lattice) 1
+local notation "T" => sugawaraMode lattice (actualInverse lattice) (-1)
 local notation "σ" => standardLift lattice g g_cube g_isometry
 local notation "ζ" => (ThirdTwistedChargeCocycle.zeta : ℂ)
 local notation "C" => HVertexOperator.coeff
@@ -159,6 +165,32 @@ theorem dualField_homogeneous (a : NativeStates) (d : ℕ) (ha : L₀ a = (d : �
   change DirectSum.toModule ℂ ℤ (VertexOperator ℂ RestrictedDual) gradedField
     (carrierEnergyDecomposition lattice a) = _
   rw [h, DirectSum.toModule_lof] <;> rfl
+
+/-- Source translation differentiates the full restricted-dual field in `z = x^3`. -/
+theorem dualField_translate_coeff (a : NativeStates) (j : ℤ) :
+    C (dualField (translation lattice a)) j =
+      (((j + 3 : ℤ) : ℂ) / 3) • C (dualField a) (j + 3) := by
+  classical
+  let read (k : ℤ) : NativeStates →ₗ[ℂ] Module.End ℂ RestrictedDual :=
+    ((LinearMap.proj k).comp C).comp dualField
+  let sumGrades := DirectSum.coeLinearMap (grade lattice)
+  have h : ((read j).comp T).comp sumGrades =
+      ((((j + 3 : ℤ) : ℂ) / 3) • read (j + 3)).comp sumGrades := by
+    apply DirectSum.linearMap_ext
+    intro n
+    apply LinearMap.ext
+    intro u
+    have hu := source_grade_weight n u
+    simp only [LinearMap.comp_apply, sumGrades, DirectSum.coeLinearMap_lof,
+      LinearMap.smul_apply, read, LinearMap.proj_apply]
+    rw [dualField_homogeneous (T u.val) (n.toNat + 1) (source_translation_weight u.val n.toNat hu),
+      dualField_homogeneous u.val n.toNat hu]
+    exact oppositeField_translate_coeff u.val n.toNat hu j
+  have hSum : sumGrades (carrierEnergyDecomposition lattice a) = a :=
+    (carrierEnergyDecomposition lattice).symm_apply_apply a
+  rw [← sourceLMinusOne_eq_translation]
+  simpa only [LinearMap.comp_apply, LinearMap.smul_apply, hSum]
+    using LinearMap.congr_fun h (carrierEnergyDecomposition lattice a)
 
 private def liftOnGrade (n : ℤ) : grade lattice n →ₗ[ℂ] grade lattice n :=
   (σ).toLinearMap.restrict (fun a ha => (source_grade_iff n (σ a)).mp (by
