@@ -18,7 +18,7 @@ import Mathlib.Tactic.IntervalCases
 /-! The explicit A/B tile witness in issue #35234. Splitting a two-empty gap
 into its first and second vacancies permits a single adjacency rule at all joins. -/
 
-@[expose] public section
+public section
 
 open scoped BigOperators Matrix
 
@@ -79,36 +79,37 @@ private def tail : ℕ → List Cell
 private def pad (b : Bool) : List Cell :=
   if b then tileA ++ tileA ++ tileA else tileB ++ tileB
 
-private def prefix : {m : ℕ} → (Fin m → Bool) → List Cell
+private def blockCells : {m : ℕ} → (Fin m → Bool) → List Cell
   | 0, _ => []
-  | _ + 1, b => block (b 0) ++ prefix (fun i => b i.succ)
+  | _ + 1, b => block (b 0) ++ blockCells (fun i => b i.succ)
 
 private theorem block_length (b : Bool) : (block b).length = 5 := by cases b <;> rfl
 
 private theorem prefix_length {m : ℕ} (b : Fin m → Bool) :
-    (prefix b).length = 5 * m := by
+    (blockCells b).length = 5 * m := by
   induction m with
   | zero => rfl
   | succ n ih =>
-    simp only [prefix, List.length_append, block_length, ih]
+    simp only [blockCells, List.length_append, block_length, ih]
     omega
 
 private theorem block_join (b : Bool) (xs : List Cell)
     (hh : xs.head? = some .occupied) (hc : xs.IsChain Edge) :
     (block b ++ xs).head? = some .occupied ∧ (block b ++ xs).IsChain Edge := by
-  cases b <;> simp [block, tileA, tileB, List.isChain_append, hh, hc, Edge]
+  cases b <;>
+    simp [block, tileA, tileB, List.isChain_cons, hh, hc, Edge]
 
 private theorem prefix_join {m : ℕ} (b : Fin m → Bool) (xs : List Cell)
     (hh : xs.head? = some .occupied) (hc : xs.IsChain Edge) :
-    (prefix b ++ xs).head? = some .occupied ∧ (prefix b ++ xs).IsChain Edge := by
+    (blockCells b ++ xs).head? = some .occupied ∧ (blockCells b ++ xs).IsChain Edge := by
   induction m with
   | zero => exact ⟨hh, hc⟩
   | succ n ih =>
-    rw [prefix, List.append_assoc]
+    rw [blockCells, List.append_assoc]
     exact block_join _ _ (ih _).1 (ih _).2
 
 private def cells {L : ℕ} (b : Fin (blocks L) → Bool) : List Cell :=
-  prefix b ++ (tail (residue L) ++ pad (padWithSingles L))
+  blockCells b ++ (tail (residue L) ++ pad (padWithSingles L))
 
 private theorem cells_length {L : ℕ} (hL : 12 ≤ L) (b : Fin (blocks L) → Bool) :
     (cells b).length = L := by
@@ -125,24 +126,25 @@ private theorem cells_chain {L : ℕ} (b : Fin (blocks L) → Bool) :
     (cells b).head? = some .occupied ∧ (cells b ++ [.occupied]).IsChain Edge := by
   have ht : residue L < 5 := Nat.mod_lt _ (by decide)
   have hchain (t : ℕ) (h : t < 5) (d : Bool) :
-      ((tail t ++ pad d) ++ [.occupied]).head? = some .occupied ∧
-        ((tail t ++ pad d) ++ [.occupied]).IsChain Edge := by
+      (tail t ++ pad d).head? = some Cell.occupied ∧
+        ((tail t ++ pad d) ++ [Cell.occupied]).IsChain Edge := by
     interval_cases t <;> cases d <;>
-      simp [tail, pad, tileA, tileB, List.isChain_cons_cons, Edge]
+      simp [tail, pad, tileA, tileB, List.isChain_cons, Edge]
   have h := hchain _ ht (padWithSingles L)
-  have hj := prefix_join b _ h.1 h.2
-  constructor
-  · simpa [cells, List.head?_append, h.1] using hj.1
-  · simpa only [cells, List.append_assoc] using hj.2
+  have hend : ((tail (residue L) ++ pad (padWithSingles L)) ++ [Cell.occupied]).head? =
+      some Cell.occupied := by simp [List.head?_append, h.1]
+  have hj := prefix_join b _ hend h.2
+  refine ⟨?_, by simpa only [cells, List.append_assoc] using hj.2⟩
+  simpa only [cells, List.head?_append, h.1, Option.some_or] using hj.1
 
 private theorem cells_marks {L : ℕ} (b : Fin (blocks L) → Bool) :
     ((cells b).map Cell.mark).sum = deficit L := by
   have hb (d : Bool) : ((block d).map Cell.mark).sum = 1 := by cases d <;> rfl
-  have hprefix {m : ℕ} (f : Fin m → Bool) : ((prefix f).map Cell.mark).sum = m := by
+  have hprefix {m : ℕ} (f : Fin m → Bool) : ((blockCells f).map Cell.mark).sum = m := by
     induction m with
     | zero => rfl
     | succ n ih =>
-      simp only [prefix, List.map_append, List.sum_append, hb, ih]
+      simp only [blockCells, List.map_append, List.sum_append, hb, ih]
       omega
   have ht (t : ℕ) (h : t < 5) : ((tail t).map Cell.mark).sum = tailZeros t := by
     interval_cases t <;> rfl
@@ -151,15 +153,15 @@ private theorem cells_marks {L : ℕ} (b : Fin (blocks L) → Bool) :
   simp [cells, deficit, hprefix, ht _ (Nat.mod_lt _ (by decide : 0 < 5)), hp, Nat.add_assoc]
 
 private theorem prefix_decode {m : ℕ} (b : Fin m → Bool) (i : Fin m) :
-    ((prefix b).getD (5 * i.val + 2) .occupied).rung =
+    ((blockCells b).getD (5 * i.val + 2) .occupied).rung =
       if b i then Rung.e else .minus := by
   induction m with
   | zero => exact Fin.elim0 i
   | succ m ih =>
     refine Fin.cases ?_ (fun j => ?_) i
-    · rw [prefix, List.getD_append _ _ _ _ (by rw [block_length]; decide)]
+    · rw [blockCells, List.getD_append _ _ _ _ (by rw [block_length]; decide)]
       cases h : b 0 <;> simp [block, h, tileA, tileB, Cell.rung, List.getD]
-    · rw [prefix, List.getD_append_right _ _ _ _ (by
+    · rw [blockCells, List.getD_append_right _ _ _ _ (by
         rw [block_length]
         have h := j.isLt
         simp only [Fin.val_succ]
@@ -183,8 +185,8 @@ private theorem cells_edge {L : ℕ} (hL : 12 ≤ L) (b : Fin (blocks L) → Boo
   have hget (k : ℕ) (hk : k < L) :
       (cells b ++ [.occupied])[k]'(by simp [hlen]; omega) =
         (cells b).getD k .occupied := by
-    rw [List.getElem_append_left (by rw [hlen]; exact hk),
-      List.getD_eq_getElem _ _ (by rw [hlen]; exact hk)]
+    rw [List.getElem_append_left (by simpa only [hlen] using hk),
+      List.getD_eq_getElem _ _ (by simpa only [hlen] using hk)]
   rw [hget j.val hj] at hstep
   unfold cellAt
   rw [next_val]
@@ -250,7 +252,7 @@ private theorem sum_marks {L : ℕ} (hL : 12 ≤ L) (b : Fin (blocks L) → Bool
 private theorem tiled_charge_add {L : ℕ} (hL : 12 ≤ L) (b : Fin (blocks L) → Bool) :
     charge (tiledConfig hL b) + deficit L = L := by
   rw [← sum_marks hL b, charge, ← Finset.sum_add_distrib]
-  simp only [tiled_mark, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one]
+  simp [tiled_mark]
 
 private theorem tiled_injective {L : ℕ} (hL : 12 ≤ L) :
     Function.Injective (tiledConfig hL) := by
@@ -298,10 +300,12 @@ theorem jammed_charge_count {L : ℕ} (hL : 12 ≤ L) :
     have hdef : L - targetCharge L = deficit L := by unfold targetCharge; omega
     rw [hdef, Nat.odd_iff]
     by_cases h : (blocks L + tailZeros (residue L)) % 2 = 0
-    · simp [deficit, padWithSingles, h] <;> omega
-    · simp [deficit, padWithSingles, h] <;> omega
+    · simp [deficit, padWithSingles, h]
+      omega
+    · simp [deficit, padWithSingles, h]
+      omega
   constructor
-  · simp [Fintype.card_pi_const]
+  · simp
   · simpa only [Fintype.card_pi_const, Fintype.card_bool, Fintype.card_fin] using
       Fintype.card_le_of_injective (jamEmbedding hL) (jamEmbedding hL).injective
 

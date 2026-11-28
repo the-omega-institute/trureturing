@@ -40,9 +40,9 @@ instance : Fintype Rung where
 
 abbrev Word (L : ℕ) := Fin L → Rung
 
-abbrev next {L : ℕ} (j : Fin L) : Fin L := finRotate L j
+def next {L : ℕ} (j : Fin L) : Fin L := finRotate L j
 
-abbrev prev {L : ℕ} (j : Fin L) : Fin L := (finRotate L).symm j
+def prev {L : ℕ} (j : Fin L) : Fin L := (finRotate L).symm j
 
 @[simp] private theorem next_prev {L : ℕ} (j : Fin L) : next (prev j) = j :=
   (finRotate L).apply_symm_apply j
@@ -121,7 +121,8 @@ private theorem center_involutive {L : ℕ} (j : Fin L) :
   intro w
   funext i
   by_cases h : i = j
-  · cases hwi : w i <;> simp [centerMove, h, hwi, centerSwap]
+  · subst i
+    cases hwi : w j <;> simp [centerMove, hwi, centerSwap]
   · simp [centerMove, h]
 
 private theorem flank_involutive {L : ℕ} (j : Fin L) :
@@ -165,6 +166,11 @@ private theorem flank_empty {L : ℕ} (j : Fin L) (w : Word L) (i : Fin L) :
   · cases hwi : w i <;> simp [flankMove, h, hwi, signSwap]
   · simp [flankMove, h]
 
+private theorem flanks_allowed {L : ℕ} (j : Fin L) (w : Word L)
+    (h : flanksAllowed j w) : flanksAllowed j (flankMove j w) :=
+  ⟨fun hl => h.1 ((flank_empty j w (prev j)).mp hl),
+    fun hr => h.2 ((flank_empty j w (next j)).mp hr)⟩
+
 private theorem center_blockade {L : ℕ} (hL : 5 ≤ L) (j : Fin L) (x : Config L)
     (h : centerAllowed j x.val) : Blockade (centerMove j x.val) := by
   intro i
@@ -195,7 +201,7 @@ theorem guarded_moves {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
   refine ⟨fun x h => ⟨center_blockade hL j x h, (center_allowed hL j x.val).mpr h,
     center_involutive j x.val⟩, ?_⟩
   intro x h
-  exact ⟨flank_blockade j x, by simpa only [flanksAllowed, flank_empty] using h,
+  exact ⟨flank_blockade j x, flanks_allowed j _ h,
     flank_involutive j x.val⟩
 
 private theorem p_zero_of_center {L : ℕ} {x : Config L} {j : Fin L}
@@ -222,7 +228,8 @@ private theorem center_keeps_p_away {L : ℕ} {j k : Fin L}
     intro he
     exact hl (by simpa using congrArg prev he)
   by_cases he : k = j
-  · simp [p, pTriple, hy, centerMove, he, hprev, hnext, center_swap_minus]
+  · subst k
+    simp [p, pTriple, hy, centerMove, hprev, hnext, center_swap_minus]
   · simp [p, hy, centerMove, he, hprev, hnext]
 
 private theorem flank_keeps_p_away {L : ℕ} {j k : Fin L}
@@ -324,7 +331,7 @@ private theorem S_symm {L : ℕ} (hL : 5 ≤ L) (j : Fin L) (x y : Config L) :
       flanksAllowed j v.val ∧ u.val = flankMove j v.val := by
     rintro ⟨h, e⟩
     rw [e, flank_involutive]
-    exact ⟨by simpa only [flanksAllowed, flank_empty] using h, rfl⟩
+    exact ⟨flanks_allowed j _ h, rfl⟩
   simp only [S, Matrix.add_apply, A, F]
   rw [if_congr ⟨hA x y, hA y x⟩ rfl rfl, if_congr ⟨hF x y, hF y x⟩ rfl rfl]
 
@@ -418,7 +425,7 @@ theorem charge_eigenvalue {L : ℕ} (x : Config L) :
     by_cases he : y = z
     · subst z
       simp [P, charge, Nat.cast_sum]
-    · simp [P, Matrix.diagonal_apply_ne _ he, he]
+    · simp [P, he]
   rw [hd]
   unfold ket
   rw [Matrix.diagonal_mulVec_single, mul_one]
