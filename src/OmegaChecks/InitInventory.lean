@@ -43,7 +43,7 @@ public import OmegaChecks.InitInventory.Traversal
 public import OmegaChecks.InitInventory.MonadicZip
 meta import OmegaChecks.InitInventory.MonadicZip
 public import OmegaChecks.InitInventory.Collector
-public import OmegaChecks.InitInventory.StringPatterns
+public import OmegaChecks.InitInventory.StringPatternMatchers
 public import OmegaChecks.InitInventory.StringSearchLoops
 
 public section
@@ -589,13 +589,13 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     | `Init.Data.Order.Lemmas, ``Std.not_lt_iff_not_le_or_ge =>
       some ``OmegaChecks.InitBoundaries.excludedMiddleOfNotLTIff
     | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.IsMatch.exists_isLongestMatch =>
-      some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfLongest
+      some ``OmegaChecks.InitInventory.StringPatterns.forwardLongestIff
     | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.IsRevMatch.exists_isLongestRevMatch =>
-      some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfRevLongest
+      some ``OmegaChecks.InitInventory.StringPatterns.backwardLongestIff
     | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.matchesAt_iff_exists_isMatch =>
-      some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfMatchesAt
+      some ``OmegaChecks.InitInventory.StringPatterns.matchesAtIffEM
     | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.revMatchesAt_iff_exists_isRevMatch =>
-      some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfRevMatchesAt
+      some ``OmegaChecks.InitInventory.StringPatterns.revMatchesAtIffEM
     | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.matchAt?_eq_some_iff =>
       some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfMatchAtSome
     | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.revMatchAt?_eq_some_iff =>
