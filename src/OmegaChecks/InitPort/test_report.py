@@ -226,6 +226,8 @@ class CoverageTest(unittest.TestCase):
         for owner, name, kind in [
                 ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.neg_add_cancel", "theorem"),
                 ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.add.eq_1", "theorem"),
+                ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.mul", "definition"),
+                ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.sub", "definition"),
                 ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.ofNatModule", "definition")]:
             row = site(owner, name, kind=kind, representativeRefuter=proof)
             certificate = [[owner, name, name, proof]]

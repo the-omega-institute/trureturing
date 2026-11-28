@@ -60,20 +60,34 @@ private def pair (a b : Nat) :=
   mkApp4 (mkConst ``Prod.mk [0, 0]) (mkConst ``Nat) (mkConst ``Nat) (mkRawNatLit a) (mkRawNatLit b)
 
 private abbrev natRing : Semiring Nat := inferInstance
+private abbrev natModule : NatModule Nat := inferInstance
 
 private theorem relatedAt (n : Nat) : ∃ k : Nat, n + k = n + k := ⟨0, rfl⟩
 
-public def isLiftEquation (owner name : Name) : Bool :=
-  owner == `Init.Grind.Ring.Envelope && [``Ring.OfSemiring.add, ``Ring.OfSemiring.sub,
-    ``Ring.OfSemiring.mul, ``Ring.OfSemiring.neg].any (fun op => name == op.str "eq_1")
+public def liftOperation? (owner name : Name) : Option Name := do
+  let ops ← match owner with
+    | `Init.Grind.Ring.Envelope => some [``Ring.OfSemiring.add, ``Ring.OfSemiring.sub,
+        ``Ring.OfSemiring.mul, ``Ring.OfSemiring.neg]
+    | `Init.Grind.Module.Envelope => some [``IntModule.OfNatModule.add, ``IntModule.OfNatModule.sub,
+        ``IntModule.OfNatModule.neg]
+    | _ => none
+  let n := privateToUserName name
+  ops.find? fun op => n == op || n == op.str "eq_1"
 
-/-- Read the coherence argument required by the right side of the public unfolding equation,
-while its quotient arguments are still variables. On two related natural-number pairs it
-must identify the classes of (1,1) and (0,0). The inputs to the argument replay without axioms. -/
-private def liftEquationClaim (official witnesses : Environment) (source : ConstantInfo) : IO Expr := do
-  let some inst := (witnesses.find? ``natRing).bind ConstantInfo.value? | throw <| IO.userError "missing Nat semiring"
-  let op := source.name.getPrefix
-  let unary := op == ``Ring.OfSemiring.neg
+/-- Check the pinned operation and its unfolding equation at variable quotient arguments.
+The bare operation signatures also admit constant functions. The coherence proof for the
+specified representative computation must identify the classes of (1,1) and (0,0). -/
+private def liftEquationClaim (official witnesses : Environment) (owner op : Name)
+    (source : ConstantInfo) : IO Expr := do
+  let ring := owner == `Init.Grind.Ring.Envelope
+  let fixture := if ring then ``natRing else ``natModule
+  let some inst := (witnesses.find? fixture).bind ConstantInfo.value? | throw <| IO.userError s!"missing {fixture}"
+  let some (.defnInfo impl) := official.find? op | throw <| IO.userError s!"missing pinned operation {op}"
+  let equationName := if ring then op.str "eq_1" else mkPrivateNameCore owner (op.str "eq_1")
+  let some (.thmInfo equation) := official.find? equationName | throw <| IO.userError s!"missing {equationName}"
+  unless source.name == op || source.name == equationName do throw <| IO.userError s!"wrong site {source.name}"
+  let unary := op.getString! == "neg"
+  let lift := if unary then ``Quot.liftOn else if ring then ``Ring.OfSemiring.Q.liftOn₂ else ``IntModule.OfNatModule.Q.liftOn₂
   -- Multiplication fixes (1,0), its unit representative. Addition and subtraction fix (0,0).
   let fixed := if op == ``Ring.OfSemiring.mul then 1 else 0
   let evidence (n : Nat) := mkApp (mkConst ``relatedAt) (mkRawNatLit n)
@@ -83,12 +97,15 @@ private def liftEquationClaim (official witnesses : Environment) (source : Const
   for arg in args do
     if let .error _ := Kernel.check clean {} arg then throw <| IO.userError "invalid coherence test input"
   let test := do
-    let type := (source.type.instantiateLevelParams source.levelParams [0]).bindingBody!.instantiate1 (mkConst ``Nat)
+    let type := (equation.type.instantiateLevelParams equation.levelParams [0]).bindingBody!.instantiate1 (mkConst ``Nat)
     Meta.forallTelescope (type.bindingBody!.instantiate1 inst) fun qs conclusion => do
       let some (_, lhs, rhs) := conclusion.eq? | throwError "expected an unfolding equality"
       unless qs.size == (if unary then 1 else 2) && lhs == mkAppN (mkApp2 (mkConst op [0]) (mkConst ``Nat) inst) qs &&
-          rhs.getAppFn.isConstOf (if unary then ``Quot.liftOn else ``Ring.OfSemiring.Q.liftOn₂) do
+          rhs.getAppFn.isConstOf lift do
         throwError "unexpected unfolding equation for {source.name}"
+      let body := (impl.value.instantiateLevelParams impl.levelParams [0]).beta (#[mkConst ``Nat, inst] ++ qs)
+      unless body.getAppFn.isConstOf lift && Kernel.isDefEqGuarded official (← getLCtx) body rhs do
+        throwError "pinned body and unfolding equation disagree for {op}"
       let .forallE _ required _ _ ← Meta.whnf (← Meta.inferType rhs.appFn!) | throwError "missing coherence argument"
       let ctx ← getLCtx
       unless Kernel.isDefEqGuarded witnesses ctx (← Meta.inferType rhs.appArg!) required && !required.hasFVar do
@@ -105,7 +122,7 @@ The returned equality is the observation in the representative model. -/
 public def counterexample (official witnesses : Environment) (source : ConstantInfo) (modelPoint : Name) : IO Expr := do
   let some idx := official.getModuleIdxFor? source.name | throw <| IO.userError s!"missing owner for {source.name}"
   let owner := official.header.moduleNames[idx]!
-  let claim ← if isLiftEquation owner source.name then liftEquationClaim official witnesses source else do
+  let claim ← if let some op := liftOperation? owner source.name then liftEquationClaim official witnesses owner op source else do
     let some probe := observation? owner source.name
       | throw <| IO.userError s!"unexpected envelope declaration {source.name}"
     let some (.thmInfo template) := witnesses.find? probe | throw <| IO.userError s!"missing {probe}"
