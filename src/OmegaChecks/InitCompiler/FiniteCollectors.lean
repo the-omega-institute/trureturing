@@ -6,6 +6,7 @@ import Init.Data.Iterators.Consumers.Access
 import Init.Data.Iterators.Consumers.Collect
 import Init.Data.Iterators.Consumers.Total
 import Init.Data.Slice.Operations
+import Init.Data.Slice.Array.Iterator
 import all Init.Data.String.Iter.Intercalate
 
 /-! Use the terminating consumer at collection sites with an available finite instance.
@@ -95,6 +96,10 @@ public def finiteCollectors (env : Environment) (input : Expr) (withinImplementa
     try
       forallBoundedTelescope (← inferType sub) (some (arity - sub.getAppNumArgs)) fun xs _ => do
         let call := mkAppN sub xs
+        if !withinImplementation && head == ``Std.Slice.toArray && env.contains ``Subarray.copy then
+          -- Subarray.copy publicly unfolds to this exact collection, even with an unknown slice.
+          if let some copy ← observing? (mkAppM ``Subarray.copy #[call.appArg!]) then
+            if ← isDefEq call copy then return .visit (← mkLambdaFVars xs copy)
         let some core ← (if isSlice then unfoldDefinition? call else pure (some call)) | return .continue
         let some result ← specializeCollector core | return .continue
         let result ← instantiateMVars result
