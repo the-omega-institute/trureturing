@@ -218,6 +218,33 @@ class CoverageTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "live quotient order formation"):
                 verify_complete(data, Path("product"), *check_coverage(data))
 
+    def test_specified_choice_requires_the_observation_of_the_same_operand(self):
+        owner, op, law, proof = ("Init.Data.Option.Lemmas", "Option.choice", "Option.isSome_choice",
+                                 "OmegaChecks.InitBoundaries.OptionSelector.fromSome")
+        name = "Option.choice_eq_some"
+        operation = site(owner, op, kind="definition", reductionWitness=proof, impliesAxiom="Classical.choice",
+                         requiredBehavior="returns some on every inhabited type")
+        row = site(owner, name)
+        data = inventory(row, operation)
+        self.assertEqual(check_coverage(data), (1, [(owner, name)]))
+        row.update(specifiedChoiceOperand=op, specifiedChoiceObservation=law)
+        cert = [owner, name, op, law, proof]
+        data["certifiedSpecifiedChoice"] = [cert]
+        self.assertEqual(check_coverage(data), (1, []))
+        for index in range(5):
+            wrong = cert.copy()
+            wrong[index] = "Other"
+            with self.subTest(index=index), self.assertRaisesRegex(ValueError, "specified selector"):
+                check_coverage(data | {"certifiedSpecifiedChoice": [wrong]})
+        with self.assertRaisesRegex(ValueError, "specified selector"):
+            check_coverage(data | {"certifiedSpecifiedChoice": [cert, cert]})
+        for change in ({"requiredBehavior": None}, {"reductionWitness": "Other"}):
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, "specified selector"):
+                check_coverage(data | {"declarations": [row, operation | change]})
+        with patch("report.envelope_formation_certificates", return_value=[]), self.assertRaisesRegex(
+                ValueError, "live specified selector"):
+            verify_complete(data, Path("product"), *check_coverage(data))
+
     def test_ring_formation_requires_each_physical_type_and_the_model_for_its_index(self):
         owner = "Init.Grind.Ring.Envelope"
         scope = "Lean.Grind.Ring.OfSemiring."

@@ -803,6 +803,23 @@ theorem smallChainSelections :
 
 example : ChainLaw (@flat_csup.{1}) = type_of% @flat_csup_is_sup.{1} := rfl
 
+/-- With a certified upper bound for each chain, agreement with that bound is
+equivalent to the supremum law for the proposed selector. -/
+theorem eqIffChainLaw (pick : type_of% @flat_csup.{u+1})
+    (bound : ∀ {α : Type u} {b : α} (c : FlatOrder b → Prop), chain c → FlatOrder b)
+    (valid : ∀ {α : Type u} {b : α} (c : FlatOrder b → Prop) (hc : chain c), is_sup c (bound c hc)) :
+    (∀ {α : Type u} {b : α} (c : FlatOrder b → Prop) (hc : chain c), @pick α b c = bound c hc) ↔
+      ChainLaw (@pick) := by
+  constructor
+  · intro same α b c hc
+    rw [same c hc]
+    exact valid c hc
+  · intro law α b c hc
+    exact is_sup_unique (law c hc) (valid c hc)
+
+example : type_of% @flat_csup_eq.{u+1} :=
+  (eqIffChainLaw (@flat_csup) (fun _ hc => CCPO.csup hc) (fun _ hc => CCPO.csup_spec hc)).mpr flat_csup_is_sup
+
 end FlatSelection
 
 /-- Least upper bounds form a subsingleton by antisymmetry. An existence proof

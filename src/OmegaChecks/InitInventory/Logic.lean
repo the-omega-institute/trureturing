@@ -39,6 +39,28 @@ end ExistentialConjunction
 
 namespace OptionSelector
 
+abbrev singletonPresence (select : type_of% @Option.choice.{u}) : Prop :=
+  ∀ {α : Type u} [Subsingleton α] [Nonempty α], (select α).isSome
+
+/-- The singleton equation needs a successful selection only on inhabited subsingletons. -/
+theorem eqSomeIff (select : type_of% @Option.choice.{u}) :
+    (∀ {α : Type u} [Subsingleton α] (a : α), select α = some a) ↔ singletonPresence select := by
+  constructor
+  · intro law α _ h
+    exact h.elim fun a => (law a).symm ▸ rfl
+  · intro present α _ a
+    have h := @present α _ ⟨a⟩
+    cases eq : select α with
+    | none => rw [eq] at h; contradiction
+    | some value => exact congrArg some (Subsingleton.elim value a)
+
+theorem eqDefaultIff (select : type_of% @Option.choice.{u}) :
+    (∀ {α : Type u} [Subsingleton α] [Inhabited α], select α = some default) ↔ singletonPresence select :=
+  Iff.trans ⟨fun law {_} sub a => @law _ sub ⟨a⟩, fun law {_} _ _ => law default⟩ (eqSomeIff select)
+
+example : type_of% @Option.choice_eq_some.{u} := (eqSomeIff Option.choice).mpr fun {_} _ _ => Option.isSome_choice
+example : type_of% @Option.choice_eq_default.{u} := (eqDefaultIff Option.choice).mpr fun {_} _ _ => Option.isSome_choice
+
 /-- On the subsingleton type of proofs of a proposition, the selector's tag decides it. -/
 def decideFromSingleton (select : type_of% @Option.choice.{0})
     (law : ∀ {α : Type} [Subsingleton α] (a : α), select α = some a) (p : Prop) : Decidable p := by
