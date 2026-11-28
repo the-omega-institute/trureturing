@@ -54,7 +54,10 @@ internal sealed class GlampeSixPeriodMultipliersDocument : IScribeDocumentDefini
                         + "Each entry of the period is fixed by raising it to the kth power, "
                         + "so G(kn)=G(n)^k. Take the coefficient of degree k to be one, "
                         + "every other coefficient to be zero, and every sign bit to be zero."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("glampe-2026-six-period-multipliers"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers => Seq(Mathbb, Grp(F.Id("Z")));

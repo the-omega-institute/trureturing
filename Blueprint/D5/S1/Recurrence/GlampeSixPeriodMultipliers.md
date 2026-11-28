@@ -26,6 +26,10 @@ $$\forall K: Type*, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/GlampeSixPeriodMultipliers.multipliers_iff` (`✓ std3`). ∎
 
+*Resolves.* `Problems/glampe-2026-six-period-multipliers` (proved) by `D5/S1/Recurrence/GlampeSixPeriodMultipliers.multipliers_iff`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"glampe-2026-six-period-multipliers","declaration_gid":"D5/S1/Recurrence/GlampeSixPeriodMultipliers.multipliers_iff","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Joey Glampe, Aryaman Joshi, Swagat Malla, Matthew Richey, Matthew Wright (2026). *Polynomial Identities for Generalized Fibonacci Sequences*. URL: <https://arxiv.org/abs/2610.15131v1>.
