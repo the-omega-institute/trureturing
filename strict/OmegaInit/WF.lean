@@ -33,13 +33,20 @@ namespace Omega
 
 end Omega
 
-port_definition WellFounded.Nat.eager
+port_definition WellFounded.Nat.eager with_native_code
 port_proof WellFounded.Nat.fix.go._proof_1
 port_proof WellFounded.Nat.fix._proof_1
 port_definition WellFounded.Nat.fix.go
+port_structural_code WellFounded.Nat.fix.go on_arg 5 using
+  fun {α} {motive} h step fuel =>
+    Nat.casesOn (motive := fun k => ∀ (x : α), Omega.Nat.lt (h x) k → motive x) fuel
+      (fun x impossible => Omega.False.elim (Omega.Nat.not_succ_le_zero (h x) impossible))
+      (fun k x bound => step x (fun y smaller =>
+        Omega.WellFounded.Nat.fix.go h step k y
+          (Omega.Nat.lt_of_lt_of_le smaller (Omega.Nat.le_of_lt_succ bound))))
 port_proof WellFounded.Nat.eager_eq
 port_proof WellFounded.Nat.fix._proof_2
-port_definition WellFounded.Nat.fix
+port_definition WellFounded.Nat.fix with_native_code
 
 /- WellFounded.Nat.fix.go_congr and WellFounded.Nat.fix_eq quantify over all
 steps F. With the pinned fuel recursion both imply equality of all dependent

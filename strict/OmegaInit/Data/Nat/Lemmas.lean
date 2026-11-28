@@ -7,6 +7,8 @@ prelude
 import all OmegaInit.Prelude
 
 public import OmegaInit.Data.Nat.Basic
+public import OmegaInit.Data.Nat.Div.Basic
+public import OmegaInit.Data.Nat.Log2
 
 @[expose] public section
 
@@ -206,4 +208,52 @@ end Omega.Nat
 public section
 namespace Nat
 export _root_.Omega.Nat (add_add_add_comm add_eq_left add_eq_right add_eq_zero_iff add_left_cancel_iff add_left_inj add_right_cancel_iff add_right_inj add_sub_cancel_right add_succ_sub_one eq_zero_of_add_eq_zero_right left_eq_add lt_iff_add_one_le lt_one_add_iff mul_eq_zero mul_right_comm one_add one_add_le_iff one_add_sub_one one_le_of_lt one_lt_succ_succ one_pow pow_add pow_add' pow_add_one' pow_mul pow_mul' pow_right_comm pow_succ' pow_two pred_eq_of_eq_succ pred_one_add pred_sub right_eq_add sub_one sub_right_comm sub_succ' succ_add_eq_add_succ succ_add_sub_one succ_eq_one_add succ_le succ_ne_succ succ_sub_one two_pow_succ)
+end Nat
+
+namespace Omega.Nat
+private theorem compareLog (k : Nat) :
+    ∀ n, Not (Eq n 0) → Iff (Nat.le k (log2 n)) (Nat.le (Nat.pow 2 k) n) :=
+  Nat.rec (motive := fun i => ∀ n, Not (Eq n 0) → Iff (Nat.le i (log2 n)) (Nat.le (Nat.pow 2 i) n))
+    (fun n hn => Iff.intro (fun _ => Nat.pos_of_ne_zero hn) (fun _ => Nat.zero_le (log2 n)))
+    (fun i ih n _ => Decidable.byCases (dec := Nat.decLe 2 n)
+      (fun h =>
+        let q := Nat.div n 2
+        let qpos : Nat.lt 0 q := (Nat.le_div_iff_mul_le Nat.zero_lt_two).mpr h
+        let logStep : Eq (log2 n) (Nat.succ (log2 q)) := (log2_def n).trans (ite_eq_left h)
+        let decrease := ih q (Nat.ne_of_gt qpos)
+        let lower : Iff (Nat.le i (log2 q)) (Nat.le (Nat.mul (Nat.pow 2 i) 2) n) :=
+          decrease.trans (Nat.le_div_iff_mul_le Nat.zero_lt_two)
+        Iff.intro
+          (fun bound => lower.mp (Nat.le_of_succ_le_succ (Eq.subst (motive := Nat.le i.succ) logStep bound)))
+          (fun bound => Eq.subst (motive := Nat.le i.succ) logStep.symm (Nat.succ_le_succ (lower.mpr bound))))
+      (fun h =>
+        let logZero : Eq (log2 n) 0 := (log2_def n).trans (ite_eq_right h)
+        let twoBound : Nat.le 2 (Nat.pow 2 i.succ) := Nat.pow_le_pow_right Nat.zero_lt_two (Nat.succ_le_succ (Nat.zero_le i))
+        Iff.intro
+          (fun bound => False.elim (Nat.not_succ_le_zero i (Eq.subst (motive := Nat.le i.succ) logZero bound)))
+          (fun bound => False.elim (h (Nat.le_trans twoBound bound))))) k
+
+private theorem leLog {n k : Nat} (h : Not (Eq n 0)) : Iff (Nat.le k (log2 n)) (Nat.le (Nat.pow 2 k) n) := compareLog k n h
+
+private theorem logLt {n k : Nat} (h : Not (Eq n 0)) : Iff (Nat.lt (log2 n) k) (Nat.lt n (Nat.pow 2 k)) :=
+  let projected := compareLog k n h
+  Iff.intro
+    (fun hl => Nat.not_le.mp (fun hp => Nat.not_le_of_lt hl (projected.mpr hp)))
+    (fun hp => Nat.not_le.mp (fun hl => Nat.not_le_of_lt hp (projected.mp hl)))
+
+private theorem logEq {n k : Nat} (h : Not (Eq n 0)) :
+    Iff (Eq (log2 n) k) (And (Nat.le (Nat.pow 2 k) n) (Nat.lt n (Nat.pow 2 (Nat.succ k)))) :=
+  Iff.intro
+    (fun eq => ⟨(compareLog k n h).mp (Nat.le_of_eq eq.symm),
+      (logLt h).mp (Eq.subst (motive := fun z => Nat.lt z k.succ) eq.symm (Nat.lt_succ_self _))⟩)
+    (fun bounds => Nat.le_antisymm (Nat.le_of_lt_succ ((logLt h).mpr bounds.right))
+      ((compareLog k n h).mpr bounds.left))
+
+end Omega.Nat
+port_proof Nat.le_log2 using Omega.Nat.leLog
+port_proof Nat.log2_lt using Omega.Nat.logLt
+port_proof Nat.log2_eq_iff using Omega.Nat.logEq
+
+namespace Nat
+export _root_.Omega.Nat (le_log2 log2_eq_iff log2_lt)
 end Nat

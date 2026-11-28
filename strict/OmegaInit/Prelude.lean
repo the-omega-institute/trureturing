@@ -370,6 +370,11 @@ port_proof instDecidableOr._proof_1
 port_definition instDecidableOr with_native_code
 attribute [instance] Omega.instDecidableOr
 
+port_definition instDecidableNot.match_1 with_native_code
+port_proof instDecidableNot._proof_1
+port_definition instDecidableNot with_native_code
+attribute [instance] Omega.instDecidableNot
+
 port_native_records Trans
 port_definition instTransEq with_native_code
 port_definition instTransEq_1 with_native_code
