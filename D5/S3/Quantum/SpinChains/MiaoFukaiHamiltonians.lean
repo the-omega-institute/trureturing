@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/SpinChains/MiaoFukaiHamiltonians
    generality: I
    mirror-B: D5/B/S3/Quantum/SpinChains/MiaoFukaiHamiltonians
-   mirror-E: none(waiver:external-open-problem-resolution)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Exact periodic ladder Hamiltonians and a family of singleton charge components. -/
@@ -39,13 +39,13 @@ def H46plus (L : ℕ) (Δ : ℂ) : Op L := ∑ j : Fin L, h46plus Δ j
 def H71 (L : ℕ) (Δ : ℂ) : Op L := ∑ j : Fin L, h71 Δ j
 
 /-- The plus-sign printing in Eq. (46) is the minus family at the opposite parameter. -/
-theorem h46plus_eq_h46minus_neg {L : ℕ} (hL : 5 ≤ L) (Δ : ℂ) (j : Fin L) :
+private theorem h46plus_eq_h46minus_neg {L : ℕ} (hL : 5 ≤ L) (Δ : ℂ) (j : Fin L) :
     h46plus Δ j = h46minus (-Δ) j := by
   rw [h46plus, mul_add, Matrix.mul_smul, ← controlled_square hL, ← T,
     h46minus, neg_smul, sub_neg_eq_add]
 
 /-- The explicit Eq. (71) density agrees with the plus-sign printing of Eq. (46). -/
-theorem h71_eq_h46plus {L : ℕ} (hL : 5 ≤ L) (Δ : ℂ) (j : Fin L) :
+private theorem h71_eq_h46plus {L : ℕ} (hL : 5 ≤ L) (Δ : ℂ) (j : Fin L) :
     h71 Δ j = h46plus Δ j := by
   obtain ⟨hlinear, hsquare⟩ := ladder_density_parts hL j
   rw [h46plus_eq_h46minus_neg hL, h46minus, neg_smul, sub_neg_eq_add,
@@ -67,27 +67,6 @@ def deltaH {L : ℕ} (μ v₀ : ℂ) (j k : Fin L) : Op L :=
 def staggeredPair {L : ℕ} (n : Fin (L / 2)) : Fin L × Fin L :=
   let j : Fin L := ⟨2 * n.val + 1, by have hn := n.isLt; omega⟩
   (j, next j)
-
-theorem staggered_pair_indices {L : ℕ} (n : Fin (L / 2)) :
-    (staggeredPair n).1.val = 2 * n.val + 1 ∧
-      (staggeredPair n).2.val = (2 * n.val + 2) % L := by
-  refine ⟨rfl, ?_⟩
-  change (next (staggeredPair n).1).val = _
-  rw [next_val, show (staggeredPair n).1.val = 2 * n.val + 1 from rfl]
-  split
-  · rw [Nat.mod_eq_of_lt (by omega)]
-  · have hn := n.isLt
-    rw [show 2 * n.val + 2 = L by omega, Nat.mod_self]
-
-/-- The final one-based pair is `(L, 1)`. -/
-theorem staggered_last_pair {L : ℕ} (hL : 2 ≤ L) (he : Even L) :
-    let n : Fin (L / 2) := ⟨L / 2 - 1, by omega⟩
-    (staggeredPair n).1.val = L - 1 ∧ (staggeredPair n).2.val = 0 := by
-  obtain ⟨m, hm⟩ := he
-  dsimp only
-  rw [(staggered_pair_indices _).1, (staggered_pair_indices _).2]
-  change 2 * (L / 2 - 1) + 1 = L - 1 ∧ (2 * (L / 2 - 1) + 2) % L = 0
-  exact ⟨by omega, by rw [show 2 * (L / 2 - 1) + 2 = L by omega, Nat.mod_self]⟩
 
 def staggeredH (L : ℕ) (μ v₀ : ℂ) : Op L :=
   H46minus L (Complex.cos μ) +
@@ -137,7 +116,7 @@ private theorem ordinary_local_kills {L : ℕ} (hL : 5 ≤ L) {x : Config L} (hx
     exact kills_add (kills_add ha (kills_smul hda)) (kills_add hf (kills_smul hdf))
 
 /-- All three printed ordinary Hamiltonian sums annihilate a jammed basis word on both sides. -/
-theorem ordinary_kills {L : ℕ} (hL : 5 ≤ L) {x : Config L} (hx : Jammed x) (Δ : ℂ) :
+private theorem ordinary_kills {L : ℕ} (hL : 5 ≤ L) {x : Config L} (hx : Jammed x) (Δ : ℂ) :
     Kills (H46minus L Δ) x ∧ Kills (H46plus L Δ) x ∧ Kills (H71 L Δ) x :=
   ⟨kills_sum fun j => (ordinary_local_kills hL hx Δ j).1,
     kills_sum fun j => (ordinary_local_kills hL hx Δ j).2.1,
@@ -160,8 +139,8 @@ private theorem delta_kills {L : ℕ} (hL : 5 ≤ L) {x : Config L} (hx : Jammed
   · exact kills_smul (kills_mul hXX hY)
 
 /-- The normalized density sum in Eq. (57) annihilates the same jammed word. -/
-theorem staggered_kills {L : ℕ} (hL : 5 ≤ L) {x : Config L} (hx : Jammed x)
-    (_he : Even L) (μ v₀ : ℂ) (_hμv : Nonsingular μ v₀) :
+private theorem staggered_kills {L : ℕ} (hL : 5 ≤ L) {x : Config L} (hx : Jammed x)
+    (μ v₀ : ℂ) :
     Kills (staggeredH L μ v₀) x :=
   kills_add (ordinary_kills hL hx (Complex.cos μ)).1
     (kills_sum fun n => delta_kills hL hx μ v₀ (staggeredPair n).1 (staggeredPair n).2)
@@ -206,7 +185,7 @@ private theorem T_preserves_charge {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
   exact h (charge_of_nonzero_entry hL j hn)
 
 /-- All three ordinary sums are block diagonal for the unextended projector charge. -/
-theorem ordinary_preserves_charge {L : ℕ} (hL : 5 ≤ L) (Δ : ℂ) :
+private theorem ordinary_preserves_charge {L : ℕ} (hL : 5 ≤ L) (Δ : ℂ) :
     PreservesCharge (H46minus L Δ) ∧ PreservesCharge (H46plus L Δ) ∧
       PreservesCharge (H71 L Δ) := by
   have hminus (a : ℂ) (j : Fin L) : PreservesCharge (h46minus a j) := by
@@ -220,7 +199,7 @@ theorem ordinary_preserves_charge {L : ℕ} (hL : 5 ≤ L) (Δ : ℂ) :
     exact hminus (-Δ) j
 
 /-- The normalized staggered sum is block diagonal for the same charge. -/
-theorem staggered_preserves_charge {L : ℕ} (hL : 5 ≤ L) (μ v₀ : ℂ) :
+private theorem staggered_preserves_charge {L : ℕ} (hL : 5 ≤ L) (μ v₀ : ℂ) :
     PreservesCharge (staggeredH L μ v₀) := by
   apply charge_add (ordinary_preserves_charge hL (Complex.cos μ)).1
   apply charge_sum
@@ -282,6 +261,9 @@ def sectorEmbedding {L : ℕ} (hL : 12 ≤ L) : (Fin (blocks L) → Bool) ↪ Se
 component for each ordinary Hamiltonian and for every applicable staggered sum. -/
 theorem tiled_singleton_components {L : ℕ} (hL : 12 ≤ L) :
     Odd (L - targetCharge L) ∧ (Finset.univ.map (sectorEmbedding hL)).card = 2 ^ blocks L ∧
+    (∀ Δ : ℂ, PreservesCharge (H46minus L Δ) ∧ PreservesCharge (H46plus L Δ) ∧
+      PreservesCharge (H71 L Δ)) ∧
+    (Even L → ∀ μ v₀ : ℂ, Nonsingular μ v₀ → PreservesCharge (staggeredH L μ v₀)) ∧
     ∀ b : Fin (blocks L) → Bool,
       let x := sectorEmbedding hL b
       x.val = tiledConfig hL b ∧
@@ -295,7 +277,9 @@ theorem tiled_singleton_components {L : ℕ} (hL : 12 ≤ L) :
       (Even L → ∀ μ v₀ : ℂ, Nonsingular μ v₀ →
         Kills (staggeredH L μ v₀) x.val ∧
           ((sectorSupport (staggeredH L μ v₀)).connectedComponentMk x).supp = {x}) := by
-  refine ⟨(jammed_charge_count hL).1, by simp, ?_⟩
+  have hmin : 5 ≤ L := by omega
+  refine ⟨target_deficit_odd hL, by simp, ordinary_preserves_charge hmin,
+    fun _ μ v₀ _ => staggered_preserves_charge hmin μ v₀, ?_⟩
   intro b
   dsimp only
   let x := sectorEmbedding hL b
@@ -308,11 +292,11 @@ theorem tiled_singleton_components {L : ℕ} (hL : 12 ≤ L) :
     rw [charge_eigenvalue, x.property]
   refine ⟨jamEmbedding_val hL b, hn, hq, ?_, ?_⟩
   · intro Δ
-    obtain ⟨hm, hp, h71⟩ := ordinary_kills (by omega) hj Δ
+    obtain ⟨hm, hp, h71⟩ := ordinary_kills hmin hj Δ
     exact ⟨⟨hm, singleton_of_kills x hm⟩, ⟨hp, singleton_of_kills x hp⟩,
       ⟨h71, singleton_of_kills x h71⟩⟩
-  · intro he μ v₀ hd
-    have h := staggered_kills (by omega) hj he μ v₀ hd
+  · intro _ μ v₀ _
+    have h := staggered_kills hmin hj μ v₀
     exact ⟨h, singleton_of_kills x h⟩
 
 end

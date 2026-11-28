@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/SpinChains/MiaoFukaiGuardedMoves
    generality: I
    mirror-B: D5/B/S3/Quantum/SpinChains/MiaoFukaiGuardedMoves
-   mirror-E: none(waiver:external-open-problem-resolution)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The guarded local moves of the periodic Miao–Fukai Rydberg ladder. -/
@@ -191,7 +191,7 @@ private theorem flank_blockade {L : ℕ} (j : Fin L) (x : Config L) :
 
 /-- The two Eq. (70) transitions restrict to involutions on their guarded
 periodic blockade subtypes. -/
-theorem guarded_moves {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
+private theorem guarded_moves {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
     (∀ x : Config L, centerAllowed j x.val →
       Blockade (centerMove j x.val) ∧ centerAllowed j (centerMove j x.val) ∧
         centerMove j (centerMove j x.val) = x.val) ∧
@@ -350,7 +350,7 @@ private theorem jammed_zero_row {L : ℕ} (j : Fin L) {x : Config L} (hx : Jamme
     simp [S, A, F, ha, hf]
 
 /-- A jammed basis word has a zero column and row for Eq. (40). -/
-theorem jammed_zero_entries {L : ℕ} (hL : 5 ≤ L) (j : Fin L)
+private theorem jammed_zero_entries {L : ℕ} (hL : 5 ≤ L) (j : Fin L)
     {x : Config L} (hx : Jammed x) (y : Config L) : T j y x = 0 ∧ T j x y = 0 := by
   classical
   refine ⟨?_, jammed_zero_row j hx y hL⟩

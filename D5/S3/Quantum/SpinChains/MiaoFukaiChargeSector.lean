@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/SpinChains/MiaoFukaiChargeSector
    generality: I
    mirror-B: D5/B/S3/Quantum/SpinChains/MiaoFukaiChargeSector
-   mirror-E: none(waiver:external-open-problem-resolution)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Explicit labelled jammed configurations at one odd-deficit charge. -/
@@ -281,11 +281,6 @@ private theorem tiled_injective {L : ℕ} (hL : 12 ≤ L) :
 
 abbrev JamSector (L q : ℕ) := {x : Config L // charge x = q ∧ Jammed x}
 
-noncomputable instance jamSectorFintype (L q : ℕ) : Fintype (JamSector L q) := by
-  classical
-  unfold JamSector
-  infer_instance
-
 def jamEmbedding {L : ℕ} (hL : 12 ≤ L) :
     (Fin (blocks L) → Bool) ↪ JamSector L (targetCharge L) where
   toFun b := ⟨tiledConfig hL b, by
@@ -296,34 +291,17 @@ def jamEmbedding {L : ℕ} (hL : 12 ≤ L) :
 
 /-- Forgetting the sector proof recovers the labelled tile word. -/
 theorem jamEmbedding_val {L : ℕ} (hL : 12 ≤ L) (b : Fin (blocks L) → Bool) :
-    (jamEmbedding hL b).val = tiledConfig hL b := (rfl)
+    (jamEmbedding hL b).val = tiledConfig hL b := by rfl
 
-/-- The witness image has exactly the stated size and lies in a sector with odd deficit. -/
-theorem jammed_charge_count {L : ℕ} (hL : 12 ≤ L) :
-    Odd (L - targetCharge L) ∧
-      (Finset.univ.map (jamEmbedding hL)).card = 2 ^ blocks L ∧
-      2 ^ blocks L ≤ Fintype.card (JamSector L (targetCharge L)) := by
-  constructor
-  · have hbound := tiled_charge_add hL (fun _ => false)
-    have hdef : L - targetCharge L = deficit L := by unfold targetCharge; omega
-    rw [hdef, Nat.odd_iff]
-    by_cases h : (blocks L + tailZeros (residue L)) % 2 = 0
-    · simp [deficit, padWithSingles, h]
-      omega
-    · simp [deficit, padWithSingles, h]
-      omega
-  constructor
-  · simp
-  · simpa only [Fintype.card_pi_const, Fintype.card_bool, Fintype.card_fin] using
-      Fintype.card_le_of_injective (jamEmbedding hL) (jamEmbedding hL).injective
-
-/-- Every prescribed word has the common projector charge and zero local row and column. -/
-theorem witness_local_actions {L : ℕ} (hL : 12 ≤ L) (b : Fin (blocks L) → Bool) :
-    NP L *ᵥ ket (tiledConfig hL b) = (targetCharge L : ℂ) • ket (tiledConfig hL b) ∧
-    ∀ j : Fin L, T j *ᵥ ket (tiledConfig hL b) = 0 ∧
-      ket (tiledConfig hL b) ᵥ* T j = 0 := by
-  have hc : charge (tiledConfig hL b) = targetCharge L := (jamEmbedding hL b).property.1
-  refine ⟨?_, fun j => jammed_kills (by omega) j (tiled_jammed hL b)⟩
-  rw [charge_eigenvalue, hc]
+/-- The parity pad makes the deficit in the constructed charge sector odd. -/
+theorem target_deficit_odd {L : ℕ} (hL : 12 ≤ L) : Odd (L - targetCharge L) := by
+  have hbound := tiled_charge_add hL (fun _ => false)
+  have hdef : L - targetCharge L = deficit L := by unfold targetCharge; omega
+  rw [hdef, Nat.odd_iff]
+  by_cases h : (blocks L + tailZeros (residue L)) % 2 = 0
+  · simp [deficit, padWithSingles, h]
+    omega
+  · simp [deficit, padWithSingles, h]
+    omega
 
 end D5.S3.Quantum.SpinChains.MiaoFukaiGuardedMoves
