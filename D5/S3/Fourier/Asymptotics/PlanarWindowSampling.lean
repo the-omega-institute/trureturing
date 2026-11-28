@@ -188,22 +188,16 @@ private theorem lattice_periodization (f : Plane → ℂ) (hf : HasCompactSuppor
 private theorem mode_count_le (s : Finset (ℤ × ℤ)) (J : ℕ)
     (h : ∀ m ∈ s, modeRadius m ≤ J) : (s.card : ℝ) ≤ (2 * (J : ℝ) + 1) ^ 2 := by
   let B : Finset ℤ := Finset.Icc (-(J : ℤ)) J
-  have hcoord (z : ℤ) (hz : z.natAbs ≤ J) : z ∈ B := by
-    change z ∈ Finset.Icc _ _
-    rw [Finset.mem_Icc, ← abs_le, Int.abs_eq_natAbs, Int.ofNat_le]
-    exact hz
-  have hsub : s ⊆ B ×ˢ B := by
-    intro m hm
-    have hmax := h m hm
-    change max m.1.natAbs m.2.natAbs ≤ J at hmax
-    exact Finset.mem_product.mpr
-      ⟨hcoord _ ((le_max_left _ _).trans hmax), hcoord _ ((le_max_right _ _).trans hmax)⟩
+  have hsub : s ⊆ modeBox J := fun _ hm => mem_modeBox.mpr (h _ hm)
+  have hbox : modeBox J = B ×ˢ B := by
+    change Finset.Icc (-(J : ℤ), -(J : ℤ)) ((J : ℤ), (J : ℤ)) = B ×ˢ B
+    rw [Icc_prod_def]
   have hcard : B.card = 2 * J + 1 := by
     change (Finset.Icc (-(J : ℤ)) (J : ℤ)).card = _
     rw [Int.card_Icc]
     omega
   have hc := Finset.card_le_card hsub
-  rw [Finset.card_product, hcard, ← pow_two] at hc
+  rw [hbox, Finset.card_product, hcard, ← pow_two] at hc
   exact_mod_cast hc
 
 private theorem scaled_fourier_mass (s : Finset (ℤ × ℤ)) (a : ℤ × ℤ → ℂ) (ε K : ℝ)
