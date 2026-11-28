@@ -32,7 +32,7 @@ def make_view(source, target, files, *, snapshot=False):
     target.mkdir(parents=True, exist_ok=True)
     owners = [".".join(path.relative_to(source).with_suffix("").parts) for path in files if path.suffix == ".olean"]
     if owners:
-        subprocess.run(["lake", "build", "+OmegaChecks.InitPort.HostedProjection", "+OmegaChecks.Interface.Equations"],
+        subprocess.run(["lake", "build", "+OmegaChecks.InitPort.HostedProjection"],
                        cwd=ROOT, check=True, stdout=subprocess.DEVNULL)
         subprocess.run(["lake", "env", "lean", "--run", GENERATOR, source, target, *owners], cwd=ROOT, check=True)
     # Lean resolves a whole module prefix in one directory. The projector writes
@@ -50,7 +50,8 @@ def make_view(source, target, files, *, snapshot=False):
 def fingerprint(source, files):
     digest = hashlib.sha256(GENERATOR.read_bytes())
     digest.update((ROOT / "lean-toolchain").read_bytes())
-    for tool in ("InitPort/HostedProjection.lean", "InitCompiler/CompilerMarkers.lean", "Interface.lean", "Interface/Equations.lean"):
+    for tool in ("InitPort/HostedProjection.lean", "InitPort/HostedBitwise.lean",
+                 "InitCompiler/CompilerMarkers.lean", "Interface.lean", "Interface/Equations.lean"):
         digest.update((GENERATOR.parents[1] / tool).read_bytes())
     for path in files:
         digest.update(os.fsencode(path.relative_to(source)) + b"\0")

@@ -1,6 +1,7 @@
 import Lean
 import Lean.Replay
 import OmegaChecks.Interface
+import OmegaChecks.InitPort.HostedBitwise
 
 /-! Share pinned physical roots with an ordinary Lean importer. -/
 
@@ -62,7 +63,83 @@ private def relocate (moved : NameSet) (ci : ConstantInfo) : ConstantInfo := Id.
   | .recInfo v => return .recInfo {v with toConstantVal := base v.toConstantVal, rules := v.rules.map fun r => {r with rhs := term r.rhs}}
   | .quotInfo v => return .quotInfo {v with toConstantVal := base v.toConstantVal}
 
-private def project (source output : System.FilePath) (env pinned : Environment) (moved : NameSet) (owner : Name) : IO Unit := do
+private def digitProofName (n : Name) : Bool :=
+  [`Omega.Nat.bitwise.eq_def, `Omega.Nat.one_and_eq_mod_two, `Omega.Nat.testBit_bitwise,
+    `Omega.Nat.bitwise_lt_two_pow, `Omega.Nat.and_lt_two_pow].contains
+    ((privateToUserName? n).getD n)
+
+/-- Transport first-order occurrences of the digit computation one at a time. The original
+proof uses the isolated division and remainder. Each substitution is an equality of naturals. -/
+private def transportDigits (env : Environment) (moved : NameSet) (certificate : Expr)
+    (th : TheoremVal) : IO Expr := do
+  let some (.defnInfo bitwise) := env.find? `Omega.Nat.bitwise
+    | throw <| IO.userError "missing isolated bitwise"
+  let slow := renameTerm moved bitwise.value
+  let expandAnd (e : Expr) := Meta.deltaExpand e (· == `Omega.Nat.land) (allowOpaque := true)
+  let work : MetaM Expr := Meta.forallTelescope th.type fun xs target => do
+    let target ← Meta.zetaReduce (← expandAnd target)
+    let target := renameTerm moved target
+    let proof := (← expandAnd th.value).replace fun e =>
+      if e.isConstOf `Omega.Nat.bitwise then some bitwise.value else none
+    let mut result := mkAppN (renameTerm moved proof) xs
+    let isCall := fun (e : Expr) => e.isAppOfArity `Omega.Nat.bitwise 3
+    let mut remaining := target
+    let mut calls := #[]
+    while let some call := remaining.find? isCall do
+      calls := calls.push call
+      remaining := remaining.replace fun e => if e == call then some (mkNatLit 0) else none
+    if calls.isEmpty then throwError "no binary digit computation in {th.name}"
+    let mut converted := target
+    for call in calls do
+      converted := converted.replace fun e =>
+        if e == call then some (mkAppN slow call.getAppArgs) else none
+    for call in calls do
+      let args := call.getAppArgs
+      let before := mkAppN slow args
+      let after := converted.replace fun e => if e == before then some call else none
+      let motive ← Meta.withLocalDeclD `value (mkConst `Nat) fun v => do
+        Meta.mkLambdaFVars #[v] (after.replace fun e => if e == call then some v else none)
+      let equality := mkApp4 certificate args[0]! (mkApp (mkConst `Nat.succ) args[1]!) args[1]! args[2]!
+      result := mkAppN (mkConst `Eq.subst [.succ .zero]) #[mkConst `Nat, motive, before, call, equality, result]
+      converted := after
+    Meta.mkLambdaFVars xs result
+  work.run'.toIO' {fileName := "<hosted digit computation>", fileMap := default} {env}
+
+/-- Check the pointwise equality even for a selected module that exports no digit theorem. -/
+private def checkDigitComputation (kernel : Environment) (moved : NameSet) (certificate : Expr) : IO Unit := do
+  let some (.defnInfo bitwise) := kernel.find? `Omega.Nat.bitwise
+    | throw <| IO.userError "missing hosted bitwise"
+  let slow := renameTerm moved bitwise.value
+  let work : MetaM (Expr × Expr) := Meta.forallTelescope bitwise.type fun xs _ => do
+    let #[f, n, m] := xs | throwError "unexpected bitwise interface"
+    let equality := mkApp4 certificate f (mkApp (mkConst `Nat.succ) n) n m
+    let claim := mkApp3 (mkConst `Eq [.succ .zero]) (mkConst `Nat)
+      (mkAppN slow xs) (mkAppN (mkConst bitwise.name) xs)
+    return (← Meta.mkLambdaFVars xs equality, ← Meta.mkForallFVars xs claim)
+  let (proof, expected) ← work.run'.toIO'
+    {fileName := "<hosted bitwise equality>", fileMap := default} {env := kernel}
+  let .ok inferred := Kernel.check kernel {} proof
+    | throw <| IO.userError "invalid hosted bitwise equality"
+  unless Kernel.isDefEqGuarded kernel {} inferred expected do
+    throw <| IO.userError "hosted bitwise differs from the isolated digit computation"
+
+private def hostedConstant (env : Environment) (moved : NameSet) (certificate : Expr)
+    (ci : ConstantInfo) : IO ConstantInfo := do
+  let changed := relocate moved ci
+  unless moved.contains `Nat.xor do return changed
+  if ci.name == `Omega.Nat.bitwise then
+    if let some (.defnInfo impl) := env.find? ci.name then
+      return .defnInfo impl
+  if ci.name == `Nat.xor then
+    if let some (.defnInfo impl) := env.find? ci.name then
+      return relocate moved (.defnInfo impl)
+  if digitProofName ci.name then
+    if let .thmInfo th := ci then
+      if let .thmInfo out := changed then
+        return .thmInfo {out with value := ← transportDigits env moved certificate th}
+  return changed
+
+private def project (source output : System.FilePath) (env pinned : Environment) (moved : NameSet) (certificate : Expr) (owner : Name) : IO Unit := do
   let raw := modToFilePath source owner "olean"
   let path := modToFilePath output owner "olean"
   let strict := (← readModuleDataParts (parts raw)).map Prod.fst
@@ -74,21 +151,25 @@ private def project (source output : System.FilePath) (env pinned : Environment)
     if let some target := pinned.find? ci.name then
       unless sameImplementation ci target || sameEnumEliminator env pinned ci target do throw <| IO.userError s!"incompatible physical root {owner}/{ci.name}"
       shared := shared.insert ci.name
-  let affected := strict[2]!.constants.any fun ci => moved.contains ci.name || ci.getUsedConstantsAsSet.toArray.any moved.contains
+  let affected := strict[2]!.constants.any fun ci =>
+    moved.contains ci.name || ci.getUsedConstantsAsSet.toArray.any moved.contains ||
+    (moved.contains `Nat.xor && (ci.name == `Omega.Nat.bitwise || digitProofName ci.name))
   if shared.isEmpty && !affected then return
   IO.FS.createDirAll path.parent.get!
   let mut outputParts := #[]
   for data in strict, file in parts path, level in #[OLeanLevel.exported,.server,.private] do
     let remaining := data.constants.filter fun ci => !shared.contains ci.name
-    let constants := remaining.map (relocate moved)
+    let constants ← remaining.mapM (hostedConstant env moved certificate)
     let mut metadata := (← mkEmptyEnvironment).setMainModule owner
-    for (alias, target) in aliasExtension.getModuleEntries env idx (level := level) do
+    for (aliasName, target) in aliasExtension.getModuleEntries env idx (level := level) do
       let target := if moved.contains target then `Omega ++ target else target
-      if alias != target then metadata := addAlias metadata alias target
+      if aliasName != target then metadata := addAlias metadata aliasName target
     let renamed := fun n => if moved.contains n then `Omega ++ n else n
     for n in protectedExt.getModuleEntries env idx (level := level) do
       metadata := addProtected metadata (renamed n)
     for (n, status) in reducibilityCoreExt.getModuleEntries env idx (level := level) do
+      let expose := moved.contains `Nat.xor && [`Nat.xor, `Omega.Nat.bitwise].contains n
+      let status := if expose then .semireducible else status
       metadata := reducibilityCoreExt.addEntry (asyncDecl := renamed n) metadata (renamed n, status)
     let replaced := #[aliasExtension.name, protectedExt.name, reducibilityCoreExt.name]
     let mut entries := data.entries.filter fun e => !replaced.contains e.1
@@ -120,7 +201,7 @@ def write (source output : System.FilePath) (names : Array Name)
   unless names.all (fun n => #[`OmegaInit, `OmegaMathlib, `OmegaMath].contains n.getRoot) do
     throw <| IO.userError "expected isolated mathematical library modules"
   if let some paths := referencePath? then searchPathRef.set paths else initSearchPath (← findSysroot)
-  let certificates ← importModules #[{module := `OmegaChecks.Interface.Equations}] {} (level := .private)
+  let certificates ← importModules #[{module := `OmegaChecks.InitPort.HostedBitwise}] {} (level := .private)
   searchPathRef.set [← getLibDir (← findSysroot)]
   let upstream := names.filter (·.getRoot == `OmegaInit)
   let pinned ← importModules (upstream.map fun n => {module := n.replacePrefix `OmegaInit `Init, importAll := true}) {} (level := .private)
@@ -134,28 +215,36 @@ def write (source output : System.FilePath) (names : Array Name)
         unless raw.type.equal host.type && raw matches .defnInfo _ do throw <| IO.userError s!"invalid arithmetic interface for {n}"
         OmegaChecks.Interface.checkInstalledEquation env certificates n
         moved := moved.insert n
+  let some (.thmInfo same) := certificates.find? `OmegaChecks.InitPort.HostedBitwise.sameSteps
+    | throw <| IO.userError "missing hosted bitwise certificate"
+  let localProof := fun n => [`OmegaChecks.InitPort.HostedBitwise, `OmegaChecks.Interface.Equations].any fun mod =>
+    certificates.getModuleIdx? mod == certificates.getModuleIdxFor? n
+  let certificate ← (Meta.deltaExpand same.value localProof (allowOpaque := true)).toIO'
+    {fileName := "<hosted bitwise certificate>", fileMap := default} {env := certificates}
   let operations := moved
   for (n, ci) in env.constants.toList do
     if ci.isTheorem && operations.toArray.any (·.isPrefixOf n) then moved := moved.insert n
   let mut terms := {}
   for (n,ci) in env.constants.toList do
     if moved.contains n || !pinned.contains n then
-      let changed := relocate moved ci
+      let changed ← hostedConstant env moved certificate ci
       terms := terms.insert changed.name changed
   let checked ← pinned.toKernelEnv.replay terms
+  if moved.contains `Nat.xor then
+    checkDigitComputation (Environment.ofKernelEnv checked) moved certificate
   -- Each physical proof occurrence has a body, including duplicated public equations.
   for data in env.header.moduleData do
     for ci in data.constants do
       if let .thmInfo t := ci then
         let name := if moved.contains t.name then `Omega ++ t.name else t.name
         let some canonical := terms[name]? | continue
-        let body := renameTerm moved t.value
+        let some body := (← hostedConstant env moved certificate ci).value? (allowOpaque := true) | unreachable!
         if (canonical.value? (allowOpaque := true)).any (·.equal body) then continue
         let kernel := Environment.ofKernelEnv checked
         let .ok type := Kernel.check kernel {} body | throw <| IO.userError s!"invalid hosted proof {name}"
         unless Kernel.isDefEqGuarded kernel {} type (renameTerm moved t.type) do
           throw <| IO.userError s!"hosted proof type mismatch for {name}"
-  for name in names do project source output env pinned moved name
+  for name in names do project source output env pinned moved certificate name
 
 
 /-- Compare imported foundation bytes with the kernel-replayed projection of the isolated library. -/

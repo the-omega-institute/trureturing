@@ -428,6 +428,14 @@ def main():
             link_other_roots(library, hosted)
             consumer = roots[0].replace("Init", "OmegaInit", 1) if args.modules else "OmegaMath"
             probe = f"import {consumer}\n"
+            xor_module = "Init.Data.Nat.Bitwise.Basic"
+            check_xor = has_interfaces(product / "inventory.jsonl", {xor_module: {"Nat.xor"}})
+            if check_xor:
+                probe += "import OmegaInit.Data.Nat.Bitwise.Basic\n"
+                x = 2**127 + 2**73 + 1
+                y = 2**131 + 2**73 + 13
+                probe += "example : Omega.Nat.xor 3 5 = 6 := rfl\n"
+                probe += f"example : Omega.Nat.xor {x} {y} = {x ^ y} := rfl\n"
             if consumer == "OmegaMath" or consumer == "OmegaInit.Prelude":
                 probe += "example {p q : Prop} (h : Omega.And p q) : p := Omega.And.left h\n"
             run("lean", "--stdin", text=True, input=probe, env={**os.environ, "LEAN_PATH": str(hosted)})
