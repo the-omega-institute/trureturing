@@ -5,9 +5,10 @@ year: 2026
 title: "Parking Functions Inspired by Board Games"
 doi: 10.48550/arXiv.2611.29890
 url: https://arxiv.org/pdf/2611.29890v1
-claim: "The reverse backgammon outcome is counted by Motzkin paths."
+claim: "The reverse backgammon outcome is counted by Motzkin paths. Question 5.2 asks for a Motzkin expansion after fixing an increasing prefix."
 strata_touched:
   - D5/S3/Combinatorics/Parking/BackgammonIncreasingPrefix
+  - D5/S3/Combinatorics/Parking/BackgammonReverseWeights
   - D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths
 license: citation-only
 triage: anchor
@@ -31,7 +32,17 @@ Question 5.2 uses an increasing prefix followed by the remaining labels in
 decreasing order. Theorem 1.8 and Corollaries 1.9–1.10 give the Motzkin
 formulas for prefix lengths zero, one and two, respectively. Theorem 1.6
 gives Catalan counts for the increasing-prefix outcomes with suffix lengths
-zero, one or two. Its three-label suffix is `(n,n−2,n−1)`, while Corollary
-1.10 uses a decreasing suffix.
-[Theorem and corollary](https://arxiv.org/pdf/2611.29890v1#page=5) ·
+zero, one or two. The three-label suffix in Theorem 1.6 and Propositions 3.11
+and 3.13 is `(n,n−2,n−1)`. Question 5.2 uses `(n,n−1,n−2)` for a
+three-label suffix. For example, its fiber at n = 5 and k = 2 has count
+37 by Corollary 1.10, whereas the Catalan number C₅ is 42.
+[Theorem 1.6](https://arxiv.org/pdf/2611.29890v1#page=5) ·
+[Corollary 1.10](https://arxiv.org/pdf/2611.29890v1#page=6) ·
+[Proposition 3.11](https://arxiv.org/pdf/2611.29890v1#page=11) ·
 [Question 5.2](https://arxiv.org/pdf/2611.29890v1#page=27)
+
+## Verified locator
+
+DOI https://doi.org/10.48550/arXiv.2611.29890
+
+Source https://arxiv.org/pdf/2611.29890v1

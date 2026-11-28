@@ -6,7 +6,7 @@
    utility: none
    digest: Weighted and signed Motzkin formulas for increasing-prefix backgammon outcomes. -/
 
-import D5.S3.Combinatorics.Parking.BackgammonIncreasingPrefix
+import D5.S3.Combinatorics.Parking.BackgammonReverseWeights
 
 namespace BackgammonMotzkinPaths
 

@@ -9,23 +9,17 @@ internal sealed class BackgammonIncreasingPrefixDocument : IScribeDocumentDefini
         LibraryNoteRef.Create("D5/L/PermutationPatterns/cliftonharriskhaqan2026parking");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "First-car deletion and the final arrival give exact recurrences for backgammon parking words.",
-        H("Increasing prefixes and reverse outcomes"),
+        "First-car deletion and insertion describe backgammon parking words.",
+        H("Backgammon parking and first-car insertion"),
         Blocks(
             Node("backgammonOutcome", "Backgammon outcome", DescribeRole.Definition,
                 "Cars arrive in label order. The arriving car takes its preference and sends any incumbent to the least vacant spot. Read car labels in spot order.",
                 AssessedProvenance.FromLiterature(Source)),
-            Node("increasingPrefix_count", "Count by deleting the increasing prefix", DescribeRole.Theorem,
-                "Delete the fixed prefix of k cars. Each shorter reverse-outcome word of rank r contributes the number of k successive lifts from rank r. A lift has one word of each rank from 1 through r + 1.",
+            Node("backgammon_first_car_insertion", "Insert car one in spot one", DescribeRole.Theorem,
+                "For a valid reduced word, increase every old preference by one. The new initial preference is either one or one more than an entry of the reduced word's longest distinct initial prefix. These are exactly the valid words with this shifted tail and with car one occupying the first spot of the shifted outcome.",
                 AssessedProvenance.FromRepo(Source)),
-            Node("reverseOutcome_weight_succ_succ", "Two cases for a reverse outcome", DescribeRole.Theorem,
-                "If car 1 starts in the final spot, deleting it leaves a reverse word and lowers the rank by one. Otherwise the final arrival bumps car 1 from spot 1 into the final vacancy. The preceding word is a one-car lift of a reverse word two cars shorter, and appending preference 1 preserves its rank.",
-                AssessedProvenance.FromRepo(Source)),
-            Node("refinedCount_reverse_succ_succ", "Count by longest distinct prefix", DescribeRole.Theorem,
-                "The number at length m + 2 and rank j + 1 is the number at length m + 1 and rank j plus the sum at length m over ranks j through m. An empty street has one word of rank zero.",
-                AssessedProvenance.FromLiterature(Source)),
-            Node("increasingPrefix_count_diagonal", "The empty suffix", DescribeRole.Theorem,
-                "When the increasing prefix fills the street, its fiber is counted by the number of iterated lifts of the unique empty word.",
+            Node("backgammon_lift_statistic", "Rank of an inserted word", DescribeRole.Theorem,
+                "The lifts of a valid word occur without duplicates and give exactly one word of each longest distinct initial prefix length from one through one more than the reduced word's rank.",
                 AssessedProvenance.FromRepo(Source))),
         []));
 

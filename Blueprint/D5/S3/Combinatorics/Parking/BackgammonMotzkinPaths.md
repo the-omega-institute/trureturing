@@ -114,7 +114,7 @@ The k-lift count at rank zero is the kth Catalan number Cₖ. Shifting the start
 
 **Definition 1.9 (Integer shift coefficients).**
 
-Lean statement: `D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths.signedCoefficients`
+$$Q_{0}=1,\quad Q_{k + 1}=T^{2}Q_{k}-T\sum_{i=0}^{k} C_{i}Q_{k - i}$$
 
 *Formalization.* `D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths.signedCoefficients` (`✓ std3`).
 
@@ -124,7 +124,7 @@ Lean statement: `D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths.signedCoeffi
 
 *Commentary.*
 
-In increasing order of offset from n − k, the coefficient list represents Qₖ(T), with Q₀ = 1 and Qₖ₊₁ = T² Qₖ − T times the sum of Cᵢ Qₖ₋ᵢ for 0 ≤ i ≤ k. The Laurent shift polynomial for offsets from n is T⁻ᵏ Qₖ(T).
+Read the list from the constant term upward as the coefficients of Qₖ(T). Here Cᵢ is the Catalan number liftCatalan(i). The recurrence first shifts the previous coefficient list by two positions, then subtracts the Catalan-weighted lists shifted by one position. The Laurent polynomial for offsets from n has the coefficients of Qₖ shifted down by k.
 
 **Theorem 1.10 (Range of shifts).**
 
@@ -142,7 +142,7 @@ The list has length 2k + 1 and its last coefficient is one. For k ≥ 1 the firs
 
 **Theorem 1.11 (Signed Motzkin formula for Question 5.2).**
 
-Lean statement: `D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths.increasingPrefix_count_eq_signed_motzkin`
+$$|\operatorname{outcomeWords}\left(\operatorname{withIncreasingPrefix}\left(k, \operatorname{reverseOutcome}\left(n - k\right)\right)\right)|=\sum_{j=0}^{2k} \operatorname{signedCoefficients}\left(k\right)[j]\cdot|\operatorname{motzkinWalks}\left(n - k + j\right)|,\quad n\geq k\geq0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths.increasingPrefix_count_eq_signed_motzkin` (`✓ std3`). ∎
 
@@ -152,7 +152,7 @@ Lean statement: `D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths.increasingPr
 
 *Commentary.*
 
-For all n ≥ k ≥ 0, the coefficient at offset j weights the Motzkin number M(n − k + j). The ground-return recurrence and the Catalan rank shift give the recurrence for Qₖ, including an empty suffix. For k = 0, 1 and 2 this yields M(n), M(n + 1) − M(n), and M(n + 2) − 2M(n + 1) + M(n) − M(n − 1), as in Theorem 1.8 and Corollaries 1.9–1.10 of Clifton, Harris and Khaqan on their respective ranges. At n = k the signed sum equals Cₖ, with value one at n = k = 0.
+Clifton, Harris and Khaqan ask in Question 5.2 for a sum involving Motzkin numbers with indices depending on n, for each fixed k and n > k. The target outcome has the labels 1 through k in increasing order followed by the remaining labels in decreasing order. The formula holds for all n ≥ k ≥ 0. Vertical bars count list entries, the square brackets index signedCoefficients from zero, and the arithmetic of the sum is over the integers. The ground-return recurrence and the Catalan rank shift give the recurrence for Qₖ. For k = 0, 1 and 2 the formula yields M(n), M(n + 1) − M(n), and M(n + 2) − 2M(n + 1) + M(n) − M(n − 1), where M counts ordinary Motzkin walks. These are Theorem 1.8 and Corollaries 1.9–1.10 on their published ranges. At n = k the suffix is empty and the sum is Cₖ, agreeing with the identity-permutation case of Theorem 1.6 for positive k. The empty street contributes one.
 
 ## References
 
@@ -167,4 +167,4 @@ For all n ≥ k ≥ 0, the coefficient at offset j weights the Motzkin number M(
 - Truth anchor: `D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths.signedCoefficients_shape`
 - Truth anchor: `D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths.trace`
 - Truth anchor: `D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths.walkWeight_succ_succ`
-- Dependency: [D5/S3/Combinatorics/Parking/BackgammonIncreasingPrefix](BackgammonIncreasingPrefix.md)
+- Dependency: [D5/S3/Combinatorics/Parking/BackgammonReverseWeights](BackgammonReverseWeights.md)
