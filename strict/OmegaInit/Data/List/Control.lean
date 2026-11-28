@@ -33,6 +33,16 @@ port_definition List.zipWithM.loop
 port_structural_code List.zipWithM.loop on_arg 7
 port_definition List.zipWithM with_native_code
 
+port_definition List.firstM._f
+port_definition List.firstM
+port_structural_code List.firstM on_arg 6
+port_definition List.anyM._f
+port_definition List.anyM
+port_structural_code List.anyM on_arg 5
+port_definition List.allM._f
+port_definition List.allM
+port_structural_code List.allM on_arg 5
+
 port_definition List.findM?._f
 port_definition List.findM?
 port_structural_code List.findM? on_arg 5
