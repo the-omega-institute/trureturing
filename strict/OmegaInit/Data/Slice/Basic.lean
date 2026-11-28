@@ -8,3 +8,7 @@ prelude
 public import OmegaInit.Core
 
 port_native_records Std.Slice
+port_definition Std.Slice.noConfusionType
+port_definition Std.Slice.noConfusion
+port_definition Std.Slice.mk.noConfusion
+port_definition Std.Slice.ctorIdx with_native_code
