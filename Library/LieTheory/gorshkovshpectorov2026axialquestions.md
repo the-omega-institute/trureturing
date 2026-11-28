@@ -15,6 +15,10 @@ triage: anchor
 
 # Gorshkov and Shpectorov on inner Lie algebras of axial algebras
 
+## Verified locator
+
+The journal DOI is 10.46298/cm.19581. The cited arXiv version is https://arxiv.org/abs/2606.30048v1.
+
 Problem 3.20 of arXiv:2606.30048v1, §3.3, p. 13, appears as Problem 2.20 in *Communications in Mathematics* 35 (2027), no. 2, paper 5, §2.3, p. 17, published online in 2026. [arXiv](https://arxiv.org/pdf/2606.30048v1#page=13) · [Journal](https://cm.episciences.org/20094/pdf#page=17)
 
 > Is it true that the simplicity of an axial algebra $A$ implies the simplicity of the inner Lie algebra $DA_X$ for any generating set of axes $X$? Vice versa, does simplicity of $DA_X$ imply simplicity of $A$?

@@ -18,11 +18,11 @@ internal sealed class AxialInnerLieConverseRefutationDocument : IScribeDocumentD
                 DeclarationHandle.Create(Prefix + "claim"),
                 H("The rational primitive Jordan-half converse"),
                 StatementSource.FromAuthor(Disp(
-                    new Formula.Logic(Name("claim"), FormulaLogicOperator.Iff, Parens(ClaimBody())))),
+                    new Formula.Logic(Name("claim"), FormulaLogicOperator.Iff, Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "The type binder for A has the Lean typeclass assumptions AddCommGroup A, Module ℚ A and FiniteDimensional ℚ A. "
-                    + "The bilinear map L defines multiplication by L(a)(b). Its symmetry gives commutativity. "
+                    "The endomorphisms in End(ℚ,A) are ℚ-linear. "
+                    + "The linear map L defines multiplication by L(a)(b). Its symmetry gives commutativity. "
                     + "IsAxis uses the actual eigenspaces of L(a) at 1, 0 and 1/2. It requires a nonzero idempotent, "
                     + "its line as the 1-eigenspace, spanning by the three eigenspaces and the six products of the Jordan-half fusion table. "
                     + "Distinct eigenspaces are independent. Generates requires every multiplication-closed linear subspace containing X to be the whole space. "
@@ -60,20 +60,23 @@ internal sealed class AxialInnerLieConverseRefutationDocument : IScribeDocumentD
         var axes = All("a", a, Imp(
             new Formula.Relation(u, FormulaRelationOperator.MemberOf, x),
             Call("IsAxis", l, u)));
-        var innerSimple = Call("IsSimple", q, Parens(Call("selectedLie", l, x)));
-        return All("A", Name("Type"),
-            All("L", new Formula.TypeArrow(a, Call("End", q, a)),
+        var innerSimple = Call("IsSimple", q, Parenthesized(Call("selectedLie", l, x)));
+        return All("A", Name("Type"), Seq(
+            OpenBracket, Call("AddCommGroup", a), CloseBracket, Sp,
+            OpenBracket, Call("Module", q, a), CloseBracket, Sp,
+            OpenBracket, Call("FiniteDimensional", q, a), CloseBracket, Sp,
+            All("L", Call("LinearMap", q, a, Call("End", q, a)),
                 All("X", Call("Set", a),
                     Imp(symmetric, Imp(axes, Imp(Call("Generates", l, x),
-                        Imp(innerSimple, Call("AlgebraSimple", l))))))));
+                        Imp(innerSimple, Call("AlgebraSimple", l)))))))));
     }
 
     private static Formula Name(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Apply(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Call(string f, params Formula[] args) => Apply(Name(f), args);
-    private static Formula Parens(Formula body) => Seq(Open, body, Close);
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
     private static Formula All(string name, Formula type, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, Parens(body));
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, Parenthesized(body));
     private static Formula Imp(Formula left, Formula right) =>
-        new Formula.Logic(Parens(left), FormulaLogicOperator.Implies, Parens(right));
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
 }
