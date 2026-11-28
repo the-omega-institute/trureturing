@@ -367,7 +367,7 @@ separate PRs.
 
 For mathematical work, follow [the reuse and admission rules](../CLAUDE.md#3-形式化逃逸内容用途与研究):
 check the D5 frozen ledger for the result and prefer OmegaMath when constructing
-the proof. Contribute missing reusable results to `src/OmegaMath/` in the upstream OmegaMath repository and adopt its release here.
+the proof. Contribute reusable results that build with the independent Omega foundations to `src/OmegaMath/` in the upstream OmegaMath repository and adopt its release here. Place proofs that import Mathlib or depend on it transitively in D5.
 For a port, use the pinned Mathlib defining module's path under the upstream `strict/OmegaMathlib`
 root and prefix the original declaration name with `Omega.`. Place original
 results near their mathematical topic and mark the module `Omega original.`.

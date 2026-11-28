@@ -1,6 +1,6 @@
 # 在 D5 中使用 OmegaMath
 
-D5 和 Reg 从本仓钉定的 OmegaMath release 导入数学模块。Lake 解析的源码版本记录在根 `lake-manifest.json` 的 `omegamath` 条目，依赖源码位于 `.lake/packages/omegamath/`。开发通用数学、移植 Mathlib 接口或查阅库的审计脚本时，使用独立的 [OmegaMath 仓库](https://github.com/the-omega-institute/omegamath)。
+D5 和 Reg 从本仓钉定的 OmegaMath release 导入数学模块。Lake 解析的源码版本记录在根 `lake-manifest.json` 的 `omegamath` 条目，依赖源码位于 `.lake/packages/omegamath/`。trureturing 在根 Lake 配置中直接钉定 Mathlib，Reg 继承这个版本。引用 Mathlib 的证明放在 D5。可用独立基础编译的通用数学和严格移植提交到 [OmegaMath 仓库](https://github.com/the-omega-institute/omegamath)。
 
 升级发行版本时，将上游 Release 的 `omegamath-release.json` 保存到 `Meta/omegamath-release.json`，一并更新根与 Reg 的 Lake 锁文件。在宿主根目录运行 `make verify-omegamath-release`，核对上游源码 SHA、Lean 工具链和本平台下载的 archive SHA-256。校验通过后，命令解包，并用 Lake 的 `--no-cache --no-build` 检查 `OmegaInit`、`OmegaMathlib`、`OmegaMath`、`OmegaBuild` 和 `omegaBackendPlan` 的编译产物。
 

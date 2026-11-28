@@ -6,6 +6,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import tomllib
 from urllib.parse import quote
 from urllib.request import urlopen
 
@@ -48,6 +49,10 @@ def verify_release(root):
     manifest = json.loads((root / 'lake-manifest.json').read_text())
     reg_manifest = json.loads((root / 'Reg/lake-manifest.json').read_text())
     receipt = json.loads((root / 'Meta/omegamath-release.json').read_text())
+    mathlib, = [item for item in manifest['packages'] if item['name'] == 'mathlib']
+    reg_mathlib, = [item for item in reg_manifest['packages'] if item['name'] == 'mathlib']
+    if mathlib['inherited'] or mathlib['rev'] != reg_mathlib['rev']:
+        raise ValueError('trureturing must directly pin the Mathlib revision used by Reg')
     for lock in (manifest, reg_manifest):
         package, = [item for item in lock['packages'] if item['name'] == 'omegamath']
         if (package['url'].removesuffix('.git') != 'https://github.com/' + REPOSITORY or
@@ -63,6 +68,11 @@ def verify_release(root):
     head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=package_root, text=True).strip()
     if head != receipt['source']:
         raise ValueError(f'OmegaMath checkout differs from the lock: {head}')
+    product_lock = json.loads((package_root / 'lake-manifest.json').read_text())
+    product_config = tomllib.loads((package_root / 'lakefile.toml').read_text())
+    if (any(item['name'] == 'mathlib' for item in product_config.get('require', [])) or
+            any(item['name'] == 'mathlib' for item in product_lock['packages'])):
+        raise ValueError('OmegaMath release includes Mathlib in its product dependencies')
     name = subprocess.check_output(
         ['lean', '--stdin'], cwd=root, text=True,
         input='import Lake\n#eval IO.println (Lake.defaultBuildArchive `omegamath)\n',

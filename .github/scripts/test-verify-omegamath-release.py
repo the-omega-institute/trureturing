@@ -28,7 +28,10 @@ class ReleaseTest(unittest.TestCase):
         self.lean_toolchain = 'leanprover/lean4:v4.35.0'
         repository = 'the-omega-institute/omegamath'
         manifest = {'packagesDir': '.lake/packages', 'packages': [
-            {'name': 'omegamath', 'url': 'https://github.com/' + repository, 'rev': sha}]}
+            {'name': 'omegamath', 'url': 'https://github.com/' + repository, 'rev': sha},
+            {'name': 'mathlib', 'inherited': False, 'rev': 'a' * 40}]}
+        (self.package / 'lake-manifest.json').write_text(json.dumps({'packages': []}))
+        (self.package / 'lakefile.toml').write_text('name = "omegamath"\n')
         receipt = {'source': sha, 'repository': repository, 'toolchain': self.lean_toolchain,
                    'assets': {self.archive.name: 'sha256:' + hashlib.sha256(self.archive.read_bytes()).hexdigest()}}
         (self.root / 'Reg').mkdir()
@@ -74,6 +77,30 @@ class ReleaseTest(unittest.TestCase):
         self.commands.run.assert_called_once_with(['lake', 'env', 'true'], cwd=self.root, check=True)
         self.assertFalse(self.archive.exists())
         self.assertFalse((self.package / '.lake/build').exists())
+
+    def test_product_rejects_direct_or_transitive_mathlib(self):
+        lock = self.package / 'lake-manifest.json'
+        config = self.package / 'lakefile.toml'
+        with patch.object(verifier.subprocess, 'check_output', return_value='d' * 40):
+            for direct in (True, False):
+                with self.subTest(direct=direct):
+                    if direct:
+                        config.write_text('[[require]]\nname = "mathlib"\n')
+                    else:
+                        config.write_text('name = "omegamath"\n')
+                        lock.write_text(json.dumps({'packages': [{'name': 'mathlib', 'inherited': True}]}))
+                    with self.assertRaisesRegex(ValueError, 'product dependencies'):
+                        verifier.verify_release(self.root)
+        self.download.assert_not_called()
+
+    def test_consumer_must_pin_mathlib_directly(self):
+        path = self.root / 'lake-manifest.json'
+        manifest = json.loads(path.read_text())
+        manifest['packages'][1]['inherited'] = True
+        path.write_text(json.dumps(manifest))
+        with self.assertRaisesRegex(ValueError, 'directly pin'):
+            verifier.verify_release(self.root)
+        self.commands.run.assert_not_called()
 
     def test_reg_must_resolve_the_same_release(self):
         path = self.root / 'Reg/lake-manifest.json'

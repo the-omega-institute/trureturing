@@ -301,8 +301,8 @@ Evaluating 42 illustrates the encoding; the theorem covers every natural number.
 
 ## Strict Omega mathematics
 
-D5 imports the pinned OmegaMath release. Its default backend uses the same
-official Lean Init and Mathlib as this package. For the chapter 39 projective overlap, import
+D5 imports the pinned OmegaMath release and declares its own Mathlib dependency.
+Proofs that require Mathlib live in D5. The OmegaMath package builds independently with Lean. For the chapter 39 projective overlap, import
 `OmegaMath.Projective.Basic` to compute the reading or `OmegaMath.Projective`
 to use the scaling theorem. The OmegaMath release checks the same source against
 `OmegaInit` and `OmegaMathlib`, compares the exported mathematics, and replays

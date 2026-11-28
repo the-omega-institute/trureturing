@@ -8,7 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from unittest.mock import Mock, call, patch
+from unittest.mock import Mock, patch
 
 spec = importlib.util.spec_from_file_location("consumer", Path(__file__).with_name("omega-consumer.py"))
 consumer = importlib.util.module_from_spec(spec)
@@ -57,10 +57,9 @@ class ConsumerTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "missing changed-path manifest"):
                 consumer.discover(manifest)
             manifest.write_bytes(b"D5/Direct.lean\0")
-            scope, selected_adapter, lean, discovered = consumer.discover(manifest)
+            scope, selected_adapter, discovered = consumer.discover(manifest)
             names = scope["consumers"]
             self.assertFalse(scope["verify_release"])
-            self.assertEqual(lean, "lean")
             self.assertIs(selected_adapter, adapter)
             self.assertEqual(names, ["D5.Direct", "D5.Inherited", "Reg.Observation", "Trureturing"])
             adapter.import_graph.assert_called_once_with("lean", with_reg=True)
@@ -95,12 +94,12 @@ class ConsumerTests(unittest.TestCase):
             for changed in sorted(consumer.RELEASE_INPUTS):
                 with self.subTest(changed=changed):
                     path.write_bytes(changed.encode() + b"\0")
-                    scope, _, _, _ = consumer.discover(path)
+                    scope, _, _ = consumer.discover(path)
                     self.assertTrue(scope["verify_release"])
-            scope, _, _, _ = consumer.discover(None)
+            scope, _, _ = consumer.discover(None)
             self.assertTrue(scope["verify_release"])
             path.write_bytes(b"")
-            scope, _, _, _ = consumer.discover(path)
+            scope, _, _ = consumer.discover(path)
             self.assertFalse(scope["verify_release"])
 
     def test_required_unit_accounts_for_release_gate_on_both_events(self):
@@ -121,69 +120,10 @@ class ConsumerTests(unittest.TestCase):
                     with patch.dict(os.environ, {"NEEDS": json.dumps(needs), "HITS": json.dumps(hits)}), patch("builtins.print"):
                         self.assertEqual(ci_required.main(), 1)
 
-    def test_release_gate_prepares_only_external_imports_of_public_targets(self):
-        adapter = Mock()
-        upstream = adapter.upstream_portable.return_value
-        graph = {"OmegaMath": {"OmegaMath.Core", "OmegaMathlib.Facade"},
-                 "OmegaMath.Core": {"Mathlib.Algebra.Group.Basic"},
-                 "OmegaMath.Extra": {"Mathlib.Algebra.Ring.Basic"},
-                 "OmegaMathlib": {"Mathlib.Data.List.Basic"},
-                 "OmegaMathlib.Facade": {"Mathlib.Data.Nat.Basic", "Init.Prelude", "Batteries.Data.List.Basic"},
-                 "OmegaInit": {"OmegaInit.Core"},
-                 "OmegaInit.Core": {"Mathlib.Init"},
-                 "OmegaBuild.Commands": {"Mathlib.Tactic.Basic"},
-                 "OmegaBuild.Plan": {"OmegaBuild.Commands", "Mathlib.Lean.Expr.Basic"},
-                 "OmegaChecks.Other": {"Mathlib.Topology.Basic"}}
-        def import_graph(lean, *, official_basis=False):
-            return ({}, {"OmegaInit": graph["OmegaInit"]} if official_basis
-                    else {**graph, "OmegaInit": {"Unexpected.StrictOnly"}})
-
-        upstream.import_graph.side_effect = import_graph
-        upstream.closure.return_value = [name for name in graph if name != "OmegaChecks.Other"]
-        with tempfile.TemporaryDirectory() as temporary, patch.object(consumer.subprocess, "run") as run:
-            upstream.ROOT = Path(temporary)
-            config = upstream.ROOT / "lakefile.toml"
-            config.write_text('''[[lean_lib]]
-name = "OmegaMath"
-globs = ["OmegaMath.*"]
-[[lean_lib]]
-name = "OmegaMathlib"
-[[lean_lib]]
-name = "OmegaInit"
-[[lean_lib]]
-name = "OmegaBuild"
-roots = ["OmegaBuild.Commands"]
-[[lean_exe]]
-name = "omegaBackendPlan"
-root = "OmegaBuild.Plan"
-''')
-            consumer.verify_release(adapter, "lean")
-            self.assertEqual(upstream.import_graph.call_args_list, [call("lean"), call("lean", official_basis=True)])
-            upstream.closure.assert_called_once_with(graph, {"OmegaMath", "OmegaMath.Core", "OmegaMath.Extra",
-                                                            "OmegaMathlib", "OmegaInit", "OmegaBuild.Commands",
-                                                            "OmegaBuild.Plan"})
-            expected = [call(["lake", "exe", "cache", "get", "Batteries.Data.List.Basic", "Mathlib.Algebra.Group.Basic",
-                              "Mathlib.Algebra.Ring.Basic", "Mathlib.Data.List.Basic", "Mathlib.Data.Nat.Basic",
-                              "Mathlib.Init", "Mathlib.Lean.Expr.Basic", "Mathlib.Tactic.Basic"],
-                             cwd=consumer.ROOT, check=True),
-                        call(["make", "verify-omegamath-release"], cwd=consumer.ROOT, check=True)]
-            self.assertEqual(run.call_args_list, expected)
-            run.reset_mock()
-            run.side_effect = subprocess.CalledProcessError(1, "lake")
-            with self.assertRaises(subprocess.CalledProcessError):
-                consumer.verify_release(adapter, "lean")
-            self.assertEqual(run.call_args_list, expected[:1])
-            run.reset_mock()
-            config.write_text(config.read_text().replace('name = "omegaBackendPlan"', 'name = "other"'))
-            with self.assertRaises(ValueError):
-                consumer.verify_release(adapter, "lean")
-            run.assert_not_called()
-
-    def test_receipt_only_scope_runs_real_gate_without_backend_targets(self):
-        adapter = Mock()
-        adapter.import_graph.return_value = ({}, self.graph)
-        adapter.consumers.return_value = self.eligible
-        with tempfile.TemporaryDirectory() as temporary, patch.object(consumer, "portable_adapter", return_value=(adapter, "lean")):
+    def test_receipt_only_scope_runs_just_the_release_verifier(self):
+        with tempfile.TemporaryDirectory() as temporary, \
+             patch.object(consumer, "portable_adapter") as load_adapter, \
+             patch.object(consumer.subprocess, "run") as run:
             root = Path(temporary)
             changed, scope, targets = (root / name for name in ("changed", "scope", "targets"))
             changed.write_bytes(b"Meta/omegamath-release.json\0")
@@ -192,11 +132,35 @@ root = "OmegaBuild.Plan"
                     consumer.main()
                 self.assertEqual(json.loads(scope.read_text()), {"consumers": [], "verify_release": True})
                 self.assertEqual(targets.read_text(), "")
-                with patch.dict(os.environ, {"OMEGA_SCOPE_FILE": str(scope)}), patch.object(sys, "argv", ["omega-consumer.py"]), \
-                     patch.object(consumer, "verify_release") as verifier:
+                run.assert_not_called()
+                with patch.dict(os.environ, {"OMEGA_SCOPE_FILE": str(scope)}), patch.object(sys, "argv", ["omega-consumer.py"]):
                     consumer.main()
-                verifier.assert_called_once_with(adapter, "lean")
+                run.assert_called_once_with(["make", "verify-omegamath-release"], cwd=consumer.ROOT, check=True)
+                load_adapter.assert_not_called()
+
+    def test_release_and_backend_checks_run_in_order_and_propagate_release_failure(self):
+        adapter = Mock()
+        with tempfile.TemporaryDirectory() as temporary, \
+             patch.object(consumer, "portable_adapter", return_value=(adapter, "lean")) as load_adapter, \
+             patch.object(consumer.subprocess, "run") as run:
+            scope = Path(temporary) / "scope"
+            names = ["D5.Direct", "Reg.Observation"]
+            scope.write_text(json.dumps({"consumers": names, "verify_release": True}))
+            with patch.dict(os.environ, {"OMEGA_SCOPE_FILE": str(scope)}, clear=True), patch.object(sys, "argv", ["omega-consumer.py"]):
+                failure = subprocess.CalledProcessError(1, "make")
+                run.side_effect = failure
+                with self.assertRaises(subprocess.CalledProcessError) as error:
+                    consumer.main()
+                self.assertIs(error.exception, failure)
+                load_adapter.assert_not_called()
                 adapter.check.assert_not_called()
+                run.assert_called_once_with(["make", "verify-omegamath-release"], cwd=consumer.ROOT, check=True)
+                run.reset_mock()
+                run.side_effect = None
+                adapter.check.side_effect = lambda *args, **kwargs: run.assert_called_once_with(
+                    ["make", "verify-omegamath-release"], cwd=consumer.ROOT, check=True)
+                consumer.main()
+                adapter.check.assert_called_once_with(names, "both", basis_roots=[], common_roots=(), discovered=None)
 
     def test_empty_scope_does_not_call_adapter_and_invalid_scope_fails(self):
         adapter = Mock()
