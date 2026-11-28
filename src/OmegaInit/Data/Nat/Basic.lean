@@ -24,3 +24,11 @@ namespace Omega.Nat
 export _root_.Nat (lt_trichotomy ne_of_lt' pow_left_inj pow_lt_pow_left zero_lt_of_ne_zero
   zero_pow_of_pos)
 end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_le_of_le_sub add_lt_of_lt_sub add_sub_assoc eq_add_of_sub_eq le_add_of_sub_le
+  le_antisymm_iff le_iff_lt_or_eq le_of_mul_le_mul_right le_of_sub_eq_zero lt_add_of_pos_left
+  lt_add_of_pos_right lt_of_sub_eq_succ lt_of_sub_ne_zero lt_of_sub_pos lt_or_eq_of_le
+  lt_sub_of_add_lt lt_succ_iff_lt_or_eq ne_zero_of_lt pow_le_pow_left pred_lt_of_lt sub_eq_of_eq_add
+  sub_one_lt sub_one_lt_of_lt zero_lt_of_lt)
+end Omega.Nat
