@@ -10,13 +10,13 @@ import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondSphere4D
 import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondMultipliers4D
 import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondMassShell4D
 import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondProfileFourier4D
-import OmegaMath.Analysis.ConeCapLimits
-import OmegaMath.Analysis.RegulatedSeparation
-import OmegaMath.Analysis.AngularFourierPairing
-import OmegaMath.Analysis.CompactKernelPairing
-import OmegaMath.Analysis.ShellPairing
+import D5.S3.Analysis.ConeCapLimits
+import D5.S3.Analysis.RegulatedSeparation
+import D5.S3.Analysis.AngularFourierPairing
+import D5.S3.Analysis.CompactKernelPairing
+import D5.S3.Analysis.ShellPairing
 import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
-import OmegaMath.Analysis.ModularLogPairing
+import D5.S3.Analysis.ModularLogPairing
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 
 /-! A regulated shell square for compact cone profiles. -/

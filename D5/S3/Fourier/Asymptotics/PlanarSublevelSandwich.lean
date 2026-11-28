@@ -6,7 +6,7 @@
    utility: none
    digest: Smooth test functions bound a planar sublevel near a regular zero. -/
 
-import OmegaMath.Analysis.PlanarSublevelSandwich
+import D5.S3.Analysis.PlanarSublevelSandwich
 
 /-! Lean reference for the regular-zero sublevel bounds in the two-clock argument. -/
 

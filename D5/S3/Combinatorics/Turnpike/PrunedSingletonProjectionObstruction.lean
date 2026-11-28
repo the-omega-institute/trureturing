@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Turnpike/PrunedSingletonProjectionObstruction.claim; result=D5/S3/Combinatorics/Turnpike/PrunedSingletonProjectionObstruction.result; claim=D5/S3/Combinatorics/Turnpike/PrunedSingletonProjectionObstruction.claim
    digest: A realizable nine-point assignment passes every singleton cut but has no full lift. -/
 module
-public import OmegaMath.Combinatorics.Turnpike.PrunedSingletonCutCertificate
+public import D5.S3.Combinatorics.Turnpike.PrunedSingletonCutCertificate
 public import Mathlib.Data.Fin.VecNotation
 public import Mathlib.Algebra.BigOperators.Fin
 

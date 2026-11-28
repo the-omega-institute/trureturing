@@ -6,7 +6,7 @@
    utility: none
    digest: Used distance rank blocks obey containment bounds. -/
 module
-public import OmegaMath.Combinatorics.Turnpike.ContainmentRankBounds
+public import D5.S3.Combinatorics.Turnpike.ContainmentRankBoundsProofs
 
 /-! Known containment rank bounds with unused-label histogram support. -/
 @[expose] public section

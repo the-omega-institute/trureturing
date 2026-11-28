@@ -11,8 +11,8 @@ import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Analysis.GNSOrderCoordinates
 import D5.S3.QuantumStates.GNSCompatibleStateExtension
 import Mathlib.Analysis.CStarAlgebra.PositiveLinearFunctional
-import OmegaMath.OperatorAlgebra.VectorStateGNS
-import OmegaMath.Matrix.QubitProductDistance
+import D5.S3.OperatorAlgebra.VectorStateGNS
+import D5.S3.Matrix.QubitProductDistance
 
 /-!
 # Pure vector states and product GNS sectors

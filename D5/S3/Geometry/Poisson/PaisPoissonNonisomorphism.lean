@@ -6,7 +6,7 @@
    utility: none
    digest: Nonisomorphism of the two resonant real Poisson coordinate algebras for all odd exponents. -/
 
-import OmegaMath.Algebra.ResonantPoissonBracket
+import D5.S3.Algebra.ResonantPoissonBracket
 import Mathlib.Algebra.Polynomial.Derivative
 import Mathlib.Algebra.Polynomial.Monic
 import Mathlib.Algebra.Order.Ring.Canonical

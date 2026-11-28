@@ -6,7 +6,7 @@
    utility: none
    digest: Clique products preserve well-covered powers and increase diameter, refuting the diameter bound. -/
 
-import OmegaMath.Combinatorics.Graph.GraphDistance
+import D5.S3.Combinatorics.Graph.GraphDistance
 import Mathlib.Combinatorics.SimpleGraph.Prod
 import Mathlib.Combinatorics.SimpleGraph.Diam
 import Mathlib.Combinatorics.SimpleGraph.Finite

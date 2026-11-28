@@ -8,9 +8,9 @@
 
 import D5.S3.Quantum.Analysis.NullConeGravity.CCRFockFactorDisjointness
 import D5.S3.Quantum.Analysis.NullConeGravity.NullMemoryBMS4D
-import OmegaMath.OperatorAlgebra.BoundedOperatorFamily
-import OmegaMath.OperatorAlgebra.UnitaryIntertwining
-import OmegaMath.Analysis.PlanarGaussian
+import D5.S3.OperatorAlgebra.BoundedOperatorFamily
+import D5.S3.OperatorAlgebra.UnitaryIntertwining
+import D5.S3.Analysis.PlanarGaussian
 import Mathlib.Analysis.Real.Cardinality
 
 /-! Coherent shifts of the finite-mode Weyl algebra and disjoint dyadic memory sectors. -/

@@ -9,10 +9,10 @@
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondKernel5D
 import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondProfileFourier4D
-import OmegaMath.Analysis.SemicircleConeCap
-import OmegaMath.Analysis.RegulatedHalfPowerDifference
-import OmegaMath.Analysis.CompactKernelPairing
-import OmegaMath.Analysis.FourSpatialConeShell
+import D5.S3.Analysis.SemicircleConeCap
+import D5.S3.Analysis.RegulatedHalfPowerDifference
+import D5.S3.Analysis.CompactKernelPairing
+import D5.S3.Analysis.FourSpatialConeShell
 
 /-! Regulated mass shells, the angular boundary limits, and the positive covariance. -/
 

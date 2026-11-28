@@ -6,7 +6,7 @@
    utility: none
    digest: The least positive universal exact word length in the complex three-by-three matrix algebra is seven. -/
 
-import OmegaMath.Matrix.HomogeneousWordPowersSharpThree
+import D5.S3.Matrix.HomogeneousWordPowersSharpThree
 import Mathlib.Basic.Complex.Basic
 
 set_option autoImplicit false

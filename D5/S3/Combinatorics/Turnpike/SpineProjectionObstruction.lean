@@ -8,7 +8,7 @@
 
 module
 
-public import OmegaMath.Combinatorics.Turnpike.TriangleLP
+public import D5.S3.Combinatorics.Turnpike.TriangleLP
 public import Mathlib.Data.Fin.VecNotation
 
 /-! # A fixed-assignment obstruction to the endpoint-spine relaxation

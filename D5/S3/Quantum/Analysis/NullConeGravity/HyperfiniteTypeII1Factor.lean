@@ -7,15 +7,15 @@
    digest: Dyadic matrix traces, projection equivalence, and minus-sided affine covariance on Lebesgue L². -/
 
 import OmegaBuild.Commands
-import OmegaMath.MeasureTheory.AffineTranslationSpectrum
-import OmegaMath.MeasureTheory.AffineStrongContinuity
+import D5.S3.MeasureTheory.AffineTranslationSpectrum
+import D5.S3.MeasureTheory.AffineStrongContinuity
 import Mathlib.Algebra.Colimit.DirectLimit
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.SpecificLimits.Basic
-import OmegaMath.LinearAlgebra.Matrix.ProjectionSpectrum
-import OmegaMath.OperatorAlgebra.TracialRegularRepresentation
-import OmegaMath.OperatorAlgebra.NormalVectorFunctional
+import D5.S3.LinearAlgebra.Matrix.ProjectionSpectrum
+import D5.S3.OperatorAlgebra.TracialRegularRepresentation
+import D5.S3.OperatorAlgebra.NormalVectorFunctional
 
 /-! Normalized traces on finite matrix algebras and their dyadic direct limit. -/
 

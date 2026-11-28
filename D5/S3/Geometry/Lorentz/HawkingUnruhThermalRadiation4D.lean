@@ -12,7 +12,7 @@ import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Mathlib.Topology.Algebra.Order.Field
-import OmegaMath.Analysis.ThermalIntegrals
+import D5.S3.Analysis.ThermalIntegrals
 import D5.S3.Geometry.Lorentz.BlackHoleThermodynamics4D
 import D5.S3.Quantum.Analysis.NullConeGravity.NullModularKMSUniqueness
 

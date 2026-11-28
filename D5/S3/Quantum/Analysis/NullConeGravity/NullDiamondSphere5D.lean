@@ -12,7 +12,7 @@ import Mathlib.MeasureTheory.Constructions.HaarToSphere
 import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.MeasureTheory.Function.L2Space
-import OmegaMath.Analysis.SemicircleIntegrals
+import D5.S3.Analysis.SemicircleIntegrals
 import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.FunProp

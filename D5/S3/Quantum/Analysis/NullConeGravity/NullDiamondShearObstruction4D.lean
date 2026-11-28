@@ -9,9 +9,9 @@
 import OmegaBuild.Commands
 import D5.S3.Geometry.Lorentz.PerturbedCausalOrderWeyl4D
 import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondKernelHS
-import OmegaMath.Analysis.ScreenAnisotropy
-import OmegaMath.Analysis.PlanarKernelSingularity
-import OmegaMath.Analysis.L2ProductKernel
+import D5.S3.Analysis.ScreenAnisotropy
+import D5.S3.Analysis.PlanarKernelSingularity
+import D5.S3.Analysis.L2ProductKernel
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 

@@ -7,8 +7,8 @@
    digest: Rolling clique separators force Banach gain reconstruction errors approaching four. -/
 
 import D5.S3.Combinatorics.Graph.Chordal.Dirac
-import OmegaMath.Combinatorics.Graph.AncestralChainLocalization
-import OmegaMath.Combinatorics.Graph.PeriodicBandCochains
+import D5.S3.Combinatorics.Graph.AncestralChainLocalization
+import D5.S3.Combinatorics.Graph.PeriodicBandCochains
 
 namespace SimpleGraph.ChordalReconstruction
 

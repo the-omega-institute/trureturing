@@ -6,7 +6,7 @@
    utility: none
    digest: Periodized smooth tests bound the whole sublevel of a planar map with isolated regular zeros. -/
 
-import OmegaMath.Analysis.PeriodicSublevelSandwich
+import D5.S3.Analysis.PeriodicSublevelSandwich
 
 /-! Publication reference for periodic sublevel bounds in the two-clock argument. -/
 

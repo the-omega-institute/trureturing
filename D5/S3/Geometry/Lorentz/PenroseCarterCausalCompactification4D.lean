@@ -7,8 +7,8 @@
    digest: Conformal boundaries, Kruskal extension and sharp interior proper time. -/
 
 import OmegaBuild.Commands
-import OmegaMath.Analysis.ExponentialRadialCoordinates
-import OmegaMath.Analysis.SymmetricAngleCoordinates
+import D5.S3.Analysis.ExponentialRadialCoordinates
+import D5.S3.Analysis.SymmetricAngleCoordinates
 import D5.S3.Geometry.Lorentz.FLRWCosmologyFriedmann4D
 import D5.S3.Geometry.Lorentz.BlackHoleThermodynamics4D
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv

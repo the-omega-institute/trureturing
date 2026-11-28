@@ -10,7 +10,7 @@ import OmegaBuild.Commands
 import D5.S3.Geometry.Lorentz.SachsJacobsonEinstein4D
 import D5.S3.Geometry.Lorentz.FLRWCosmologyFriedmann4D
 import D5.S3.Geometry.Lorentz.BlackHoleThermodynamics4D
-import OmegaMath.Analysis.InverseDistanceThree
+import D5.S3.Analysis.InverseDistanceThree
 import Mathlib.Analysis.Calculus.Deriv.Add
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Analysis.Calculus.Deriv.MeanValue

@@ -7,7 +7,7 @@
    digest: Exceptional roots, orthogonal family weights and the two conjugate branches. -/
 
 import OmegaBuild.Commands
-import OmegaMath.LinearAlgebra.RootSystem.ExceptionalEightBranching
+import D5.S3.LinearAlgebra.RootSystem.ExceptionalEightBranching
 import D5.S3.Quantum.Gauge.E6TrinificationUnification4D
 
 /-! The exceptional root system and its root-level decomposition into the six-dimensional
