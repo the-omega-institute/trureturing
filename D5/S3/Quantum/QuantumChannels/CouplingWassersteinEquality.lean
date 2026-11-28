@@ -9,7 +9,6 @@
 import D5.S3.Quantum.GleasonComplexRepresentation
 import D5.S3.Quantum.QuantumChannels.CouplingWassersteinTriangleRefutation
 import D5.S3.Quantum.Foundation.TrigonometricMomentGap
-import D5.S3.Quantum.Foundation.FiniteHermitianTraceDuality
 import D5.S3.Quantum.Foundation.FiniteHermitianSign
 
 /-!
@@ -27,7 +26,8 @@ namespace D5.S3.Quantum.QuantumChannels.CouplingWassersteinEquality
 
 open Matrix
 open scoped ComplexOrder
-open CouplingWassersteinTriangleRefutation (UnitVector ground Plan cost wasserstein)
+open CouplingWassersteinTriangleRefutation
+  (UnitVector ground Plan cost wasserstein ground_bounds cost_summable)
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity pure_state_handshake)
 
 variable {n : ℕ}
@@ -80,11 +80,6 @@ private theorem ground_sq (x y : UnitVector n) :
   rw [Complex.normSq_eq_norm_sq, Real.sq_sqrt]
   nlinarith [overlap_le_one x y, norm_nonneg (ip x.val y.val)]
 
-private theorem ground_nonneg (x y : UnitVector n) : 0 ≤ ground x y := Real.sqrt_nonneg _
-
-private theorem ground_le_one (x y : UnitVector n) : ground x y ≤ 1 := by
-  nlinarith [ground_sq x y, ground_nonneg x y, sq_nonneg ‖ip x.val y.val‖]
-
 private theorem rankOneDensity_phase (d : ℂ) (hd : ‖d‖ = 1) (y : Fin n → ℂ) :
     rankOneDensity (d • y) = rankOneDensity y := by
   have h : d * star d = 1 := by
@@ -128,8 +123,8 @@ private theorem amplitudes {t : ℝ} (ht : 0 ≤ t) (ht' : t ≤ 1) :
 private theorem amplitude_overlap (x y : UnitVector n) :
     2 * upper (ground x y) * lower (ground x y) = ‖ip x.val y.val‖ := by
   let t := ground x y
-  have ha : upper t ^ 2 = (1 + t) / 2 := Real.sq_sqrt (by linarith [ground_nonneg x y])
-  have hb : lower t ^ 2 = (1 - t) / 2 := Real.sq_sqrt (by linarith [ground_le_one x y])
+  have ha : upper t ^ 2 = (1 + t) / 2 := Real.sq_sqrt (by linarith [(ground_bounds x y).1])
+  have hb : lower t ^ 2 = (1 - t) / 2 := Real.sq_sqrt (by linarith [(ground_bounds x y).2])
   have hnonneg : 0 ≤ 2 * upper t * lower t :=
     mul_nonneg (mul_nonneg (by norm_num) (Real.sqrt_nonneg _)) (Real.sqrt_nonneg _)
   apply (sq_eq_sq₀ hnonneg (norm_nonneg _)).mp
@@ -160,7 +155,7 @@ private theorem swapped_representation (x y : UnitVector n)
   obtain ⟨y', hy', hxy⟩ := align_phase x y
   let t := ground x y
   have ht : 0 < t := by
-    refine lt_of_le_of_ne (ground_nonneg x y) ?_
+    refine lt_of_le_of_ne ((ground_bounds x y).1) ?_
     intro hz
     have hc : ‖ip x.val y.val‖ = 1 := by
       have hs := ground_sq x y
@@ -179,9 +174,9 @@ private theorem swapped_representation (x y : UnitVector n)
   let a := upper t
   let b := lower t
   have hs : (a : ℂ) ^ 2 + (b : ℂ) ^ 2 = 1 := by
-    exact_mod_cast (amplitudes (le_of_lt ht) (ground_le_one x y)).1
+    exact_mod_cast (amplitudes (le_of_lt ht) ((ground_bounds x y).2)).1
   have hd : (a : ℂ) ^ 2 - (b : ℂ) ^ 2 = (t : ℂ) := by
-    exact_mod_cast (amplitudes (le_of_lt ht) (ground_le_one x y)).2
+    exact_mod_cast (amplitudes (le_of_lt ht) ((ground_bounds x y).2)).2
   have htC : (t : ℂ) ≠ 0 := by exact_mod_cast ht.ne'
   have hc : ip x.val y'.val = 2 * (a : ℂ) * (b : ℂ) := by
     rw [hxy]
@@ -272,7 +267,7 @@ private theorem spectral_pairing (H : Matrix (Fin n) (Fin n) ℂ)
 
 /-- Equality against a fixed Hermitian contraction precisely requires shared swapped
 amplitudes on its two extremal eigenspaces. -/
-theorem fixed_pair_equality (x y : UnitVector n)
+private theorem fixed_pair_equality (x y : UnitVector n)
     (hne : rankOneDensity x.val ≠ rankOneDensity y.val)
     (H : Matrix (Fin n) (Fin n) ℂ) (hminus : (1 - H).PosSemidef)
     (hplus : (1 + H).PosSemidef) :
@@ -288,7 +283,7 @@ theorem fixed_pair_equality (x y : UnitVector n)
             rankOneDensity ((lower t : ℂ) • u.val + (upper t : ℂ) • v.val)) := by
   dsimp only
   obtain ⟨ht, u, v, huv, hx, hy⟩ := swapped_representation x y hne
-  have ht' := ground_le_one x y
+  have ht' := (ground_bounds x y).2
   have hd := (amplitudes ht.le ht').2
   have hA : rankOneDensity x.val - rankOneDensity y.val =
       (ground x y : ℂ) • (rankOneDensity u.val - rankOneDensity v.val) :=
@@ -333,13 +328,6 @@ private theorem atom_pairing_le (H : Matrix (Fin n) (Fin n) ℂ)
   · simp [h, pairing, ground_eq_zero_of_density_eq x y h]
   · exact (fixed_pair_equality x y h H hminus hplus).2.2.1
 
-private theorem hasSum_cost {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ σ) :
-    HasSum (fun j => Q.weight j * ground (Q.source j) (Q.target j)) (cost Q) := by
-  apply Summable.hasSum
-  exact Summable.of_nonneg_of_le
-    (fun j => mul_nonneg (Q.nonneg j) (ground_nonneg _ _))
-    (fun j => mul_le_of_le_one_right (Q.nonneg j) (ground_le_one _ _)) Q.mass.summable
-
 private def pairingMap (H : Matrix (Fin n) (Fin n) ℂ) :
     Matrix (Fin n) (Fin n) ℂ →L[ℝ] ℝ where
   toFun := pairing H
@@ -363,7 +351,7 @@ private theorem hasSum_pairing {ρ σ : Matrix (Fin n) (Fin n) ℂ}
 
 /-- For an arbitrary countable plan the weighted atom slacks are nonnegative
 and sum to its cost minus the marginal pairing. -/
-theorem countable_plan_slack {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ σ)
+private theorem countable_plan_slack {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ σ)
     (H : Matrix (Fin n) (Fin n) ℂ) (hminus : (1 - H).PosSemidef)
     (hplus : (1 + H).PosSemidef) :
     let slack := fun j => Q.weight j *
@@ -373,11 +361,11 @@ theorem countable_plan_slack {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ �
   dsimp only
   refine ⟨fun j => mul_nonneg (Q.nonneg j)
     (sub_nonneg.mpr (atom_pairing_le H hminus hplus _ _)), ?_⟩
-  simpa only [mul_sub] using (hasSum_cost Q).sub (hasSum_pairing Q H)
+  simpa only [cost, mul_sub] using (cost_summable Q).hasSum.sub (hasSum_pairing Q H)
 
 /-- A countable plan attains the fixed test bound exactly when all of its
 positive-weight atoms attain their individual bounds. -/
-theorem countable_plan_equality {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ σ)
+private theorem countable_plan_equality {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ σ)
     (H : Matrix (Fin n) (Fin n) ℂ) (hminus : (1 - H).PosSemidef)
     (hplus : (1 + H).PosSemidef) :
     cost Q = pairing H (ρ - σ) ↔
@@ -402,34 +390,6 @@ theorem countable_plan_equality {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan �
     exact sub_eq_zero.mp (hsum.unique hasSum_zero)
 
 open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm)
-open D5.S3.Quantum.Foundation.FiniteHermitianTraceDuality (exists_hermitian_traceNorm_test)
-
-open scoped Matrix.Norms.L2Operator MatrixOrder in
-/-- The trace-norm lower bound holds for every admissible countable plan. -/
-theorem traceNorm_le_countable_cost {ρ σ : Matrix (Fin n) (Fin n) ℂ}
-    (Q : Plan ρ σ) (hΔ : (ρ - σ).IsHermitian) :
-    traceNorm (ρ - σ) / 2 ≤ cost Q := by
-  obtain ⟨H, hH, hnorm, htrace⟩ := exists_hermitian_traceNorm_test (ρ - σ) hΔ
-  have hu : H ≤ 1 := hH.isSelfAdjoint.le_algebraMap_norm_self H |>.trans (by
-    simpa using (algebraMap_mono (Matrix (Fin n) (Fin n) ℂ) hnorm))
-  have hl : -H ≤ 1 := hH.neg.isSelfAdjoint.le_algebraMap_norm_self (-H) |>.trans (by
-    simpa using (algebraMap_mono (Matrix (Fin n) (Fin n) ℂ) hnorm))
-  have hs := countable_plan_slack Q H (sub_nonneg.mpr hu).posSemidef
-    (by simpa [sub_neg_eq_add] using (sub_nonneg.mpr hl).posSemidef)
-  have hn := hs.2.tsum_eq ▸ tsum_nonneg hs.1
-  rw [sub_nonneg] at hn
-  simpa [pairing, htrace] using hn
-
-/-- The same lower bound passes to the original infimum whenever its cost set is inhabited. -/
-theorem traceNorm_le_wasserstein {ρ σ : Matrix (Fin n) (Fin n) ℂ}
-    (hplan : Nonempty (Plan ρ σ)) (hΔ : (ρ - σ).IsHermitian) :
-    traceNorm (ρ - σ) / 2 ≤ wasserstein ρ σ := by
-  apply le_csInf
-  · obtain ⟨Q⟩ := hplan
-    exact ⟨cost Q, Q, rfl⟩
-  · rintro _ ⟨Q, rfl⟩
-    exact traceNorm_le_countable_cost Q hΔ
-
 /-- Countable barycenters are limits of finite convex combinations formed by
 placing the leftover mass on one fixed point. -/
 private theorem countable_barycenter_mem {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
@@ -482,14 +442,14 @@ private def pureMoments (n : ℕ) : Set (TransportMoment n) :=
 
 /-- The marginals and cost of an arbitrary countable plan lie in the
 closure of the convex hull of the pure-pair moment graph. -/
-theorem countable_plan_mem_closure {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ σ) :
+private theorem countable_plan_mem_closure {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ σ) :
     ((ρ, σ, cost Q) : TransportMoment n) ∈ closure (convexHull ℝ (pureMoments n)) := by
   let z := fun j => pureMoment (Q.source j) (Q.target j)
   have hz (j : ℕ) : z j ∈ closure (convexHull ℝ (pureMoments n)) :=
     subset_closure (subset_convexHull ℝ _ ⟨(Q.source j, Q.target j), rfl⟩)
   have hp : HasSum (fun j => Q.weight j • z j) (ρ, σ, cost Q) := by
-    simpa [z, pureMoment, Complex.real_smul, smul_eq_mul] using
-      Q.left.prodMk (Q.right.prodMk (hasSum_cost Q))
+    simpa [z, cost, pureMoment, Complex.real_smul, smul_eq_mul] using
+      Q.left.prodMk (Q.right.prodMk (cost_summable Q).hasSum)
   exact countable_barycenter_mem isClosed_closure (convex_convexHull ℝ _).closure
     (z 0) (hz 0) z hz Q.weight Q.nonneg Q.mass hp
 
@@ -552,7 +512,7 @@ private theorem finite_realization {ι : Type} [Fintype ι]
 
 /-- A point of the finite convex hull gives an actual finitely supported
 countable plan with the specified marginals and cost. -/
-theorem convexHull_realized_as_plan {ρ σ : Matrix (Fin n) (Fin n) ℂ} {c : ℝ}
+private theorem convexHull_realized_as_plan {ρ σ : Matrix (Fin n) (Fin n) ℂ} {c : ℝ}
     (padding : UnitVector n) (h : ((ρ, σ, c) : TransportMoment n) ∈ convexHull ℝ (pureMoments n)) :
     ∃ Q : Plan ρ σ, (∃ s : Finset ℕ, ∀ j ∉ s, Q.weight j = 0) ∧ cost Q = c := by
   classical
@@ -576,7 +536,7 @@ theorem convexHull_realized_as_plan {ρ σ : Matrix (Fin n) (Fin n) ℂ} {c : �
 
 /-- Compactness of the pure-pair hull gives finite attainment for the original
 countable-plan infimum as soon as a single admissible plan exists. -/
-theorem finite_attainment_of_compact_hull {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+private theorem finite_attainment_of_compact_hull {ρ σ : Matrix (Fin n) (Fin n) ℂ}
     (Q₀ : Plan ρ σ) (hcompact : IsCompact (convexHull ℝ (pureMoments n))) :
     ∃ Q : Plan ρ σ, (∃ s : Finset ℕ, ∀ j ∉ s, Q.weight j = 0) ∧ cost Q = wasserstein ρ σ := by
   let fiber : Set (TransportMoment n) := {p | p.1 = ρ ∧ p.2.1 = σ}
@@ -651,7 +611,7 @@ open D5.S3.Quantum.Foundation.TrigonometricMomentGap (compact_hull)
 
 /-- Every inhabited plan space has a finitely supported minimizer of its
 original countable-plan infimum. -/
-theorem finite_attainment {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q₀ : Plan ρ σ) :
+private theorem finite_attainment {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q₀ : Plan ρ σ) :
     ∃ Q : Plan ρ σ, (∃ s : Finset ℕ, ∀ j ∉ s, Q.weight j = 0) ∧ cost Q = wasserstein ρ σ :=
   finite_attainment_of_compact_hull Q₀
     (compact_hull pureMoments_compact ⟨_, ⟨(Q₀.source 0, Q₀.target 0), rfl⟩⟩)
@@ -665,7 +625,7 @@ private def spectralVector {A : Matrix (Fin n) (Fin n) ℂ} (hA : A.IsHermitian)
     norm_num)⟩
 
 /-- Spectral decompositions of both marginals yield an admissible product plan. -/
-theorem plan_nonempty_of_density (hn : 0 < n) {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+private theorem plan_nonempty_of_density (hn : 0 < n) {ρ σ : Matrix (Fin n) (Fin n) ℂ}
     (hρ : ρ.PosSemidef) (hρtr : ρ.trace = 1)
     (hσ : σ.PosSemidef) (hσtr : σ.trace = 1) : Nonempty (Plan ρ σ) := by
   let r := hρ.isHermitian.eigenvalues
@@ -701,15 +661,6 @@ theorem plan_nonempty_of_density (hn : 0 < n) {ρ σ : Matrix (Fin n) (Fin n) �
   obtain ⟨Q, _, _, _⟩ := finite_realization (spectralVector hρ.isHermitian ⟨0, hn⟩) w hw hm x y
   exact ⟨hl ▸ hright ▸ Q⟩
 
-/-- The original countable-plan infimum of two finite-dimensional density
-matrices is attained by a finitely supported plan. -/
-theorem finite_attainment_of_density (hn : 0 < n) {ρ σ : Matrix (Fin n) (Fin n) ℂ}
-    (hρ : ρ.PosSemidef) (hρtr : ρ.trace = 1)
-    (hσ : σ.PosSemidef) (hσtr : σ.trace = 1) :
-    ∃ Q : Plan ρ σ, (∃ s : Finset ℕ, ∀ j ∉ s, Q.weight j = 0) ∧ cost Q = wasserstein ρ σ := by
-  obtain ⟨Q⟩ := plan_nonempty_of_density hn hρ hρtr hσ hσtr
-  exact finite_attainment Q
-
 /-- An atom that saturates a fixed test is stationary or has swapped amplitudes
 in its two extremal eigenspaces. -/
 private def SaturatedAtom (H : Matrix (Fin n) (Fin n) ℂ) (x y : UnitVector n) : Prop :=
@@ -730,7 +681,7 @@ private theorem atom_saturates_iff (H : Matrix (Fin n) (Fin n) ℂ)
 
 /-- A fixed test is sharp for the countable-plan infimum precisely when some
 finitely supported plan uses only saturating positive-weight atoms. -/
-theorem wasserstein_eq_pairing_iff {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+private theorem wasserstein_eq_pairing_iff {ρ σ : Matrix (Fin n) (Fin n) ℂ}
     (Q₀ : Plan ρ σ) (H : Matrix (Fin n) (Fin n) ℂ)
     (hminus : (1 - H).PosSemidef) (hplus : (1 + H).PosSemidef) :
     wasserstein ρ σ = pairing H (ρ - σ) ↔
@@ -774,7 +725,7 @@ private theorem ground_blends {t : ℝ} (ht : 0 ≤ t) (ht' : t ≤ 1)
     ground (blendUnit (upper t) (lower t) u v huv (amplitudes ht ht').1)
       (blendUnit (lower t) (upper t) u v huv
         (by rw [add_comm]; exact (amplitudes ht ht').1)) = t := by
-  rw [← sq_eq_sq₀ (ground_nonneg _ _) ht, ground_sq]
+  rw [← sq_eq_sq₀ ((ground_bounds _ _).1) ht, ground_sq]
   change 1 - ‖ip (blend (upper t) (lower t) u v) (blend (lower t) (upper t) u v)‖ ^ 2 = t ^ 2
   rw [blend_inner _ _ _ _ u v huv, Complex.norm_real, Real.norm_eq_abs, sq_abs]
   have hsum := (amplitudes ht ht').1
@@ -855,7 +806,7 @@ private theorem certificate_of_saturating_plan {ρ σ : Matrix (Fin n) (Fin n) �
     exact (e.sum_comp (fun j : moving => f j)).symm
   refine ⟨R, moving.card, w, t, u, v, hR, ?_, ?_, ?_⟩
   · intro i
-    exact ⟨hw i, (fixed_pair_equality _ _ (hne i) _ hm hp).1, ground_le_one _ _,
+    exact ⟨hw i, (fixed_pair_equality _ _ (hne i) _ hm hp).1, (ground_bounds _ _).2,
       (huv i).1, (huv i).2.1⟩
   · rw [split left ρ Q.left, reindex]
     simp only [R, w, (huv _).2.2.1]
@@ -954,45 +905,5 @@ theorem wasserstein_eq_traceNorm_iff {ρ σ : Matrix (Fin n) (Fin n) ℂ}
   · rintro ⟨Q, ⟨s, hs⟩, hat⟩
     exact certificate_of_saturating_plan hΔ Q s hs hat
   · exact saturating_plan_of_certificate hn hρtr hΔ
-
-private def phaseX : UnitVector 2 :=
-  ⟨![4 / 5, (3 / 5) * Complex.I], by
-    norm_num [Fin.sum_univ_two, Complex.normSq_apply, Complex.mul_re, Complex.mul_im]⟩
-
-private def phaseY (c : ℂ) (hc : Complex.normSq c = 16 / 25) : UnitVector 2 :=
-  ⟨![3 / 5, c], by
-    have hc' : c.re * c.re + c.im * c.im = 16 / 25 := hc
-    norm_num [Fin.sum_univ_two, Complex.normSq_apply, hc']⟩
-
-private def sharedY : UnitVector 2 :=
-  phaseY ((4 / 5) * Complex.I) (by
-    norm_num [Complex.normSq_apply, Complex.mul_re, Complex.mul_im])
-
-private def oppositeY : UnitVector 2 :=
-  phaseY (-((4 / 5) * Complex.I)) (by
-    norm_num [Complex.normSq_apply, Complex.mul_re, Complex.mul_im])
-
-private def phaseH : Matrix (Fin 2) (Fin 2) ℂ := diagonal ![1, -1]
-
-private theorem phase_pairing (c : ℂ) (hc : Complex.normSq c = 16 / 25) :
-    pairing phaseH (rankOneDensity phaseX.val - rankOneDensity (phaseY c hc).val) = 7 / 25 := by
-  have hc' : c.re * c.re + c.im * c.im = 16 / 25 := hc
-  unfold pairing phaseH trace
-  simp only [Fin.sum_univ_two, diag_apply, diagonal_mul, Matrix.sub_apply, rankOneDensity,
-    vecMulVec_apply, Pi.star_apply, phaseX, phaseY, Matrix.cons_val_zero, Matrix.cons_val_one]
-  norm_num [Complex.star_def, Complex.mul_re, Complex.mul_im, Complex.conj_ofNat]; linarith
-
-/-- At the same diagonal test, flipping one relative phase changes the exact slack. -/
-theorem phase_diagnostic :
-    ground phaseX sharedY = 7 / 25 ∧
-    pairing phaseH (rankOneDensity phaseX.val - rankOneDensity sharedY.val) = 7 / 25 ∧
-    ground phaseX oppositeY = 1 ∧
-    pairing phaseH (rankOneDensity phaseX.val - rankOneDensity oppositeY.val) = 7 / 25 := by
-  refine ⟨?_, phase_pairing _ _, ?_, phase_pairing _ _⟩
-  · norm_num [ground, phaseX, sharedY, phaseY, Fin.sum_univ_two,
-      Complex.normSq_apply, Complex.star_def, Complex.conj_ofNat, Complex.mul_re,
-      Complex.mul_im, Real.sqrt_div]
-  · norm_num [ground, phaseX, oppositeY, phaseY, Fin.sum_univ_two,
-      Complex.normSq_apply, Complex.star_def, Complex.conj_ofNat, Complex.mul_re, Complex.mul_im]
 
 end D5.S3.Quantum.QuantumChannels.CouplingWassersteinEquality
