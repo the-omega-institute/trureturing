@@ -122,10 +122,29 @@ port_proof Option.mem_map_of_mem
 
 namespace Omega.Option
 
-private theorem memSomeImpl {α : Type u} {a b : α} : Iff (Eq (Option.some b) (Option.some a)) (Eq b a) :=
-  Iff.intro (fun h => congrArg (fun o : Option α => Option.getD o a) h) (congrArg Option.some)
+public theorem mem_some {α : Type u} {a b : α} : Iff (Membership.mem (some b) a) (Eq b a) :=
+  some_inj
 
 end Omega.Option
 
-port_proof Option.mem_some using Omega.Option.memSomeImpl
 port_proof Option.mem_some_iff
+
+port_proof Option.pbind_none by_reflexivity
+port_proof Option.pbind_some by_reflexivity
+port_proof Option.pelim_none by_reflexivity
+port_proof Option.pelim_some by_reflexivity
+port_proof Option.pfilter_none by_reflexivity
+port_proof Option.pmap_none by_reflexivity
+port_proof Option.pmap_some by_reflexivity
+port_proof Option.map_pbind
+port_proof Option.pbind_eq_bind
+port_proof Option.pbind_map
+port_proof Option.pbind_none'
+port_proof Option.pbind_some'
+port_proof Option.pelim_congr
+port_proof Option.pelim_congr_left
+port_proof Option.pelim_none'
+port_proof Option.pelim_some'
+port_proof Option.pmap_congr
+port_proof Option.pmap_none'
+port_proof Option.pmap_some'
