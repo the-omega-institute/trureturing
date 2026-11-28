@@ -518,39 +518,43 @@ private theorem block_inter_le_one {i j : Fin (Nat.card F * (Nat.card F + 1) + 1
   exact h.resolve_right (fun heq => hij ((indexToLine F).injective heq))
 
 /-- The projective construction uses the points plus one additional coordinate. -/
-private theorem projective_support_family :
+private theorem projective_support_family (hq : 1 < Nat.card F) :
     let q := Nat.card F
     ∃ P : Fin (q * (q + 1) + 1) → Finset (Finset (Fin (q * (q + 1) + 2))),
       IsSupportFamily P (q - 1) 2 := by
   dsimp
-  refine ⟨fun i => (block F i).powersetCard (Nat.card F - 1), ?_, ?_, ?_⟩
-  · intro i A hA
-    exact (Finset.mem_powersetCard.mp hA).2
-  · intro i D hD
-    have hremain := Finset.le_card_sdiff D (block F i)
-    rw [hD, block_card] at hremain
-    have hweight : Nat.card F - 1 ≤ ((block F i) \ D).card := by omega
-    obtain ⟨A, hA, hcard⟩ := Finset.exists_subset_card_eq hweight
-    refine ⟨A, Finset.mem_powersetCard.mpr ⟨hA.trans Finset.sdiff_subset, hcard⟩, ?_⟩
-    exact Finset.disjoint_left.mpr (fun _ hpD hpA => (Finset.mem_sdiff.mp (hA hpA)).2 hpD)
-  · intro i j hij A hA B hB
-    exact (Finset.card_le_card (Finset.inter_subset_inter
-      (Finset.mem_powersetCard.mp hA).1 (Finset.mem_powersetCard.mp hB).1)).trans
-        (block_inter_le_one F hij)
+  let blocks := Finset.univ.image (block F)
+  let indexedBlock (i : Fin (Nat.card F * (Nat.card F + 1) + 1)) : {B // B ∈ blocks} :=
+    ⟨block F i, Finset.mem_image.mpr ⟨i, Finset.mem_univ i, rfl⟩⟩
+  have hinjective : Function.Injective indexedBlock := by
+    intro i j heq
+    by_contra hne
+    have hle := block_inter_le_one F hne
+    have hsame : block F i = block F j := congrArg Subtype.val heq
+    rw [hsame, Finset.inter_self, block_card] at hle
+    omega
+  have hblock : ∀ B ∈ blocks, B.card = Nat.card F + 1 := by
+    intro B hB
+    obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp hB
+    exact block_card F i
+  have hpairs : ∀ ⦃B B' : Finset (Fin (Nat.card F * (Nat.card F + 1) + 2))⦄,
+      B ∈ blocks → B' ∈ blocks → B ≠ B' → (B ∩ B').card ≤ 1 := by
+    intro B B' hB hB' hne
+    obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp hB
+    obtain ⟨j, _, rfl⟩ := Finset.mem_image.mp hB'
+    exact block_inter_le_one F (fun hij => hne (congrArg (block F) hij))
+  obtain ⟨hsize, hdel, hcross⟩ :=
+    CPECCBridge.block_support_family blocks (Nat.card F - 1) 2 (Nat.card F + 1)
+      hblock (by omega) hpairs
+  refine ⟨fun i => (block F i).powersetCard (Nat.card F - 1), ?_⟩
+  simp only [Finset.powersetCard_eq_filter]
+  refine ⟨fun i => hsize (indexedBlock i), fun i => hdel (indexedBlock i), ?_⟩
+  intro i j hij
+  exact hcross (i := indexedBlock i) (j := indexedBlock j) (fun heq => hij (hinjective heq))
 
 end ProjectiveConstruction
 
 section Optimum
-
-private theorem threshold (w : ℕ) (hw : 6 ≤ w) :
-    (w + 2) * (w + 2 + 2 - 2) ≤ 2 * AppendixA.B w 2 := by
-  have hchoose (a : ℕ) : 2 * a.choose 2 = a * (a - 1) := by
-    rw [mul_comm, Nat.choose_two_right, Nat.div_mul_cancel (Nat.even_mul_pred_self a).two_dvd]
-  change (w + 2) * (w + 2 + 2 - 2) ≤ 2 * (w.choose 2 + (w + 1).choose 2)
-  rw [Nat.add_sub_cancel, Nat.mul_add 2, hchoose, hchoose, Nat.add_sub_cancel]
-  obtain ⟨r, rfl⟩ := Nat.exists_eq_add_of_le hw
-  rw [show 6 + r - 1 = 5 + r by omega]
-  nlinarith
 
 /-- For every finite field of odd order q ≥ 7, under either stated nonsquare
 condition, the support-model optimum at weight q - 1 and deletion size two is n - 1. -/
@@ -607,14 +611,16 @@ theorem support_optimum (F : Type*) [Field F] [Finite F]
   have hbound (s : ℕ) (P : Fin s → Finset (Finset (Fin n)))
       (hP : IsSupportFamily P (q - 1) 2) : s ≤ n := by
     obtain ⟨hsize, hdel, hcross⟩ := hP
-    have hthreshold := threshold (q - 1) (by omega)
-    rw [← hkdef] at hthreshold
+    have hstrict := CPECCBridge.even_strict_edge_threshold (w := q - 1) (t := 2)
+      (by decide) (by omega) (by decide)
+    have hthreshold : (q + 1) * (q + 1 + 2 - 2) ≤ 2 * AppendixA.B (q - 1) 2 := by
+      simpa only [Nat.add_sub_cancel, ← hkdef] using hstrict.le
     have hu := finite_cpecc_support_upper_bound P n (q - 1) 2 2 (q + 1)
       (Fintype.card_fin n) hkdef hkN (by decide) (by omega) (by decide) (by omega)
       hRdiv hJdiv hsize hdel hcross hthreshold
     simpa only [Fintype.card_fin, hJ] using hu
   refine ⟨?_, ?_⟩
-  · have hp := projective_support_family F
+  · have hp := projective_support_family F hq
     change ∃ P : Fin (q * (q + 1) + 1) → Finset (Finset (Fin n)),
       IsSupportFamily P (q - 1) 2 at hp
     have hind : n - 1 = q * (q + 1) + 1 := by dsimp [n]
