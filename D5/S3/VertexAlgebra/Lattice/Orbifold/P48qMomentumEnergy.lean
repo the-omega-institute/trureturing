@@ -8,7 +8,7 @@
 
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramPositivity
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedChargeAction
-import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairingDraft
+import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairing
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Tactic.Ring
 

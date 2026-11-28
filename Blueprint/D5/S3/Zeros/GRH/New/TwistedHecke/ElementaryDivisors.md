@@ -6,7 +6,19 @@ Elementary Divisors
 
 Twisted Hecke operator has small elementary divisors; approximate projector; Smith form of ends.
 
-**Theorem 1.1 (hasType_twisted_hecke).**
+**Theorem 1.1 (A capped full minor from the pairing).**
+
+Lean statement: `D5/S3/Zeros/GRH/New/TwistedHecke/ElementaryDivisors.of_pairing_capped_minor`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/GRH/New/TwistedHecke/ElementaryDivisors.of_pairing_capped_minor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The residue-space dimension bounds the number of retained Smith indices. The corresponding correction factors through those indices, so the block determinant construction gives a nonzero full column minor of the capped pairing matrix. Its determinant divides the scalar pairing budget.
+
+**Theorem 1.2 (hasType_twisted_hecke).**
 
 Lean statement: `D5/S3/Zeros/GRH/New/TwistedHecke/ElementaryDivisors.hasType_twisted_hecke`
 
@@ -21,5 +33,7 @@ Elementary divisors of the twisted Hecke operator (AF)(c) = ∑_b (u_e ⊗ (ρ(g
 ## References
 
 - Truth anchor: `D5/S3/Zeros/GRH/New/TwistedHecke/ElementaryDivisors.hasType_twisted_hecke`
+- Truth anchor: `D5/S3/Zeros/GRH/New/TwistedHecke/ElementaryDivisors.of_pairing_capped_minor`
+- Dependency: [D5/S3/Zeros/GRH/New/Core/CappedMinorWitness](../Core/CappedMinorWitness.md)
 - Dependency: [D5/S3/Zeros/GRH/New/Core/ModuleIndex](../Core/ModuleIndex.md)
 - Dependency: [D5/S3/Zeros/GRH/New/TwistedHecke/Counting](Counting.md)

@@ -293,7 +293,7 @@ private theorem nativeCoeff_jetWord (a : Charge lattice) (k : ℤ)
     cases p
     exact List.perm_middle
 
-open private oscillator_X mixingMatrix from D5.S3.VertexAlgebra.Lattice.IsometryLift
+open IsometryLift (oscillator_X)
 open LatticeGeneratingFieldLocality (unitCharge)
 
 private theorem oscillator_X_eq_jetPolynomial (j : NativeIndex) :
@@ -303,7 +303,6 @@ private theorem oscillator_X_eq_jetPolynomial (j : NativeIndex) :
   simp only [oscillatorJet]
   apply Finset.sum_congr rfl
   intro i _
-  rw [mixingMatrix]
   have hunit : chargeVector (unitCharge lattice j.1) = Pi.single j.1 1 := by
     classical
     ext l

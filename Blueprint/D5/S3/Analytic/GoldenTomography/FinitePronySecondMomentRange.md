@@ -1,0 +1,26 @@
+# Attainable second moments of positive Prony families
+
+## Abstract
+
+Which means and second moments can a positive Prony family realize?
+
+**Theorem 1.1 (The second-moment interval and the minimum node count).**
+
+Lean statement: `D5/S3/Analytic/GoldenTomography/FinitePronySecondMomentRange.finite_prony_second_moment_range`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/GoldenTomography/FinitePronySecondMomentRange.finite_prony_second_moment_range` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Over a linearly ordered field, fix a total mass M > 0. Let a finite family of distinct nodes in the open interval (a, b) have positive weights with that total mass. Their first moment M times x forces a < x < b. For each such x, the feasible second moments run from M times x squared, inclusive, to M times the quantity (a + b) x minus a b, exclusive. A realizing family has one node if and only if its second moment equals the lower endpoint. Each interior second moment admits a two-node family. The minimum number of nodes realizing the full moment triple is one at the lower endpoint and two in the interior.
+
+The weighted sums of distances to the left and right endpoints are M times (x − a) and M times (b − x). Positive mass supplies at least one node, so these sums are strictly positive. The weighted sum of squared distances from the mean gives the lower slack. If it vanishes, positivity forces every node to equal the mean. The upper slack is the weighted sum of the products of the two distances from each node to the interval endpoints. Every summand is positive.
+
+For positive variance v, choose the left distance d halfway between v/(b − x) and x − a. The right distance e is v divided by d. Weights proportional to e and d center the two nodes at x and give variance d times e. Both nodes lie strictly inside the interval. The upper variance bound is the strict form of Bhatia and Davis, A Better Bound on the Variance (doi:10.1080/00029890.2000.12005203).
+
+## References
+
+- Truth anchor: `D5/S3/Analytic/GoldenTomography/FinitePronySecondMomentRange.finite_prony_second_moment_range`
+- Dependency: [D5/S3/Analytic/GoldenTomography/FinitePronyHankelReconstruction](FinitePronyHankelReconstruction.md)

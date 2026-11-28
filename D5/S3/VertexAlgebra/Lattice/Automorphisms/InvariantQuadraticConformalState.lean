@@ -23,7 +23,7 @@ open scoped BigOperators Matrix VertexOperator
 
 noncomputable section
 
-open private mixingMatrix oscillator_X lift_vacuum mixing_inverse from
+open private mixingMatrix lift_vacuum mixing_inverse from
   D5.S3.VertexAlgebra.Lattice.IsometryLift
 
 private abbrev CurrentMatrix (D : LatticeData) := Matrix (Fin D.rank) (Fin D.rank) ℂ

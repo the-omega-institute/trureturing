@@ -62,7 +62,8 @@ class Schedule:
             raise ValueError("unknown or duplicate pending compiler unit")
         if not valid_ids(lanes, lambda n: type(n) is int and 0 <= n < len(plan["lanes"])):
             raise ValueError("unknown or duplicate pending physical lane")
-        self.waiting = set(keys) - self.done
+        self.required = set(keys)
+        self.waiting = self.required - self.done
         self.lanes = set(lanes)
         self.lane_units = pending["lane_units"]
         if set(self.lane_units) != {str(n) for n in lanes}:
@@ -259,11 +260,14 @@ def coordinate(github, schedule, maximum, unit_size, shard_size, refresh=None):
                 outstanding = set(values)
                 if refresh:
                     receipts, pending = refresh(phase)
-                    if phase == "units":
+                    if receipts is not None:
                         validate_receipts(schedule.plan, receipts)
-                        recovered = outstanding.intersection(receipts)
-                        schedule.done.update(recovered)
-                        outstanding.difference_update(recovered)
+                        running = {k for other, (_, kind, batch_keys) in active.items()
+                                   if other != identifier and kind == "units" for k in batch_keys}
+                        schedule.done = set(receipts)
+                        schedule.waiting = schedule.required - schedule.done - running
+                    if phase == "units":
+                        outstanding.difference_update(schedule.done)
                     else:
                         outstanding.intersection_update(pending["lanes"])
                 for value in sorted(outstanding):
@@ -319,12 +323,12 @@ def main():
         schedule = Schedule(plan, read(args.pending), read(receipts))
 
         def refresh(phase):
+            cache("compiler-receipts", args.plan, receipts)
             if phase == "units":
-                cache("compiler-receipts", args.plan, receipts)
                 return read(receipts), None
             pending = Path(directory) / "pending.json"
             cache("compiler-pending-shards", args.plan, pending)
-            return None, read(pending)
+            return read(receipts), read(pending)
 
         if schedule.waiting or schedule.lanes:
             coordinate(GitHub(source), schedule, args.max_active, args.units_per_batch, args.shards_per_batch, refresh)
