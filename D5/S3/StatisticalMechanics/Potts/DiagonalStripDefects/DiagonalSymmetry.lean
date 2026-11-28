@@ -21,6 +21,8 @@ class_rep: proof_shape=bind-only; consumers=lift_counts
 lift_counts: proof_shape=bind-only; consumers=HardinA203980StripCertificate.counts
 -/
 
+import Mathlib.Data.Fintype.Perm
+import Mathlib.Tactic.NormNum
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203980StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
@@ -62,7 +64,7 @@ private theorem cost_recolor (e f : Equiv.Perm (Fin 3)) (p r : Row) :
 
 private theorem cost_reverse (p r : Row) :
     bondDefects between (reverse p) (reverse r) = bondDefects between p r := by
-  norm_num [cost_formula, reverse, Equiv.arrowCongr_apply, Fin.revPerm, Fin.rev,
+  norm_num [cost_formula, reverse, Equiv.arrowCongr_apply, Fin.revPerm_symm, Fin.revPerm_apply, Fin.rev,
     Fin.val_natCast]
   omega
 

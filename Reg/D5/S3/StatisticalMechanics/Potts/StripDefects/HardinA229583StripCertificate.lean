@@ -1,3 +1,4 @@
+import Mathlib.Tactic.Linarith
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229583StripCertificate
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229583StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer

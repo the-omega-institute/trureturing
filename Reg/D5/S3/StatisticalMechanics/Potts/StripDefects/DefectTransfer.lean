@@ -1,3 +1,5 @@
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout

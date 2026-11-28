@@ -19,6 +19,8 @@ tail_polynomial: proof_shape=bind-only; consumers=HardinA229682Strip.result
 finite_certificate: proof_shape=bind-only; consumers=HardinA229682Strip.result
 -/
 
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Tactic.Linarith
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229682StripData
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229507StripData
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229507StripCertificate
