@@ -21,6 +21,15 @@ internal sealed class Q9InactiveContactFibreDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("A flip of the frozen axis moves to the adjacent fibre. Each forbidden free-axis correction restores the chosen parity and sends occupied points into positions excluded from the opposite component. Two different corrections differ by the involution that flips both free axes."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("q9-adjacent-fibre-majority-holes"),
+                DeclarationHandle.Create(Placement + "Q9PureFibreEdgeCapacity.adjacent_fibre_majority_hole_capacity"),
+                H("The two translations of a mixed bank overlap in at most two points"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Inside a mixed fibre the two banks have cross-distance four on the chosen parity. A point in the second bank certifies that the first bank lies among the five neighbours of its free-coordinate antipode.")),
+                    Paragraph(Text("The forbidden corrections translate the first bank into neighbourhoods of distinct centres. Two cube vertices share at most two neighbours. A bank of size m therefore excludes at least twice m minus two positions from the opposite bank in the adjacent fibre. A bank of size five excludes at least eight positions."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("q9-five-axis-fibre-counts"),
                 DeclarationHandle.Create(Fibre + "five_axis_fibre_counts"),
                 H("At most eleven mixed fibres and at least five occupied pure fibres"),

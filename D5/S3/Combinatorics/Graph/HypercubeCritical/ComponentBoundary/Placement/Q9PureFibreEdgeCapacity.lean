@@ -625,6 +625,100 @@ theorem adjacent_fibre_hole_edge_capacity {C D : Finset (Q 9)} (b : Bool) {x : Q
     freeEdges_le_degree_sum (fun v hv => hdeg v (mem_filter.mp (mem_filter.mp hv).1).1)
   omega
 
+open private five_axis_cross_distance from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9InactiveContactFibre
+
+open Classical in
+/-- A bank in a mixed fibre lies among the free neighbours of the antipode
+of an opposite-bank point. Its two forbidden translations intersect in at
+most two points, so they exclude at least twice its size minus two. -/
+theorem adjacent_fibre_majority_hole_capacity {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
+    (e : Fin 5 ↪ Fin 9) {i j k : Fin 9} (hi : i ∉ univ.map e)
+    (hj : j ∈ univ.map e) (hk : k ∈ univ.map e) (hjk : j ≠ k)
+    (hmj : ({i, j} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2)
+    (hmk : ({i, k} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2)
+    (hsep : ∀ x ∈ C, ∀ y ∈ D, 2 ≤ hammingDist x y)
+    (hmask : ∀ T ∈ minimumDisplacements C D b 2, ¬ T ⊆ univ.map e) :
+    let A := univ.map e
+    let L := (restrictToFibre C A z).filter (fun x => parity x = b)
+    let R := (restrictToFibre D A (flip z i)).filter (fun x => parity x = b)
+    ((restrictToFibre D A z).filter (fun x => parity x = b)).Nonempty →
+      2 * L.card + R.card ≤ 18 := by
+  intro A L R hD
+  obtain ⟨x, hx⟩ := hD
+  obtain ⟨hxF, hxb⟩ := mem_filter.mp hx
+  obtain ⟨hxD, hxF⟩ := mem_filter.mp hxF
+  let t : Q 9 := fun l => if l ∈ A then !x l else x l
+  have hnear (y : Q 9) (hy : y ∈ L) : ∃ l ∈ A, y = flip t l := by
+    obtain ⟨hyF, hyb⟩ := mem_filter.mp hy
+    obtain ⟨hyC, hyF⟩ := mem_filter.mp hyF
+    have hA : A.card = 5 := by simp [A]
+    have hd := five_axis_cross_distance b z A hA hsep hmask hyC hxD hyb hxb hyF hxF
+    rw [hammingDist_comm] at hd
+    change (univ.filter (fun l => x l ≠ y l)).card = 4 at hd
+    let same := A.filter (fun l => x l = y l)
+    have hdiff : A.filter (fun l => x l ≠ y l) = univ.filter (fun l => x l ≠ y l) := by
+      ext l
+      simp only [mem_filter, mem_univ, true_and, and_iff_right_iff_imp]
+      intro hn
+      by_contra hl
+      exact hn ((hxF l hl).trans (hyF l hl).symm)
+    have hcount := card_filter_add_card_filter_not (s := A) (fun l => x l = y l)
+    rw [hdiff, hd, hA] at hcount
+    obtain ⟨l, hl⟩ := card_eq_one.mp (show same.card = 1 by dsimp [same]; omega)
+    obtain ⟨hlA, hlxy⟩ := mem_filter.mp (show l ∈ same by simp [hl])
+    refine ⟨l, hlA, ?_⟩
+    funext q
+    by_cases he : q = l
+    · subst q
+      simpa [t, hlA] using hlxy.symm
+    · by_cases hq : q ∈ A
+      · have hdxy : x q ≠ y q := by
+          intro h
+          exact he (mem_singleton.mp (hl ▸ mem_filter.mpr ⟨hq, h⟩))
+        simpa [t, BalancedCriticalSpectrum.flip, he, hq] using
+          (Bool.eq_not_of_ne (Ne.symm hdxy))
+      · simpa [t, BalancedCriticalSpectrum.flip, he, hq] using
+          (hyF q hq).trans (hxF q hq).symm
+  let tau (l : Fin 9) (y : Q 9) := flip (flip y i) l
+  let move (l : Fin 9) := L.image (tau l)
+  have invol (a : Fin 9) : Function.Involutive (fun y : Q 9 => flip y a) :=
+    fun _ => BalancedCriticalSpectrum.flip_flip _ _
+  have hcard (l : Fin 9) : (move l).card = L.card :=
+    card_image_of_injective _ ((invol l).injective.comp (invol i).injective)
+  let g := cubeFinsetEquiv 9
+  have hmaps {l : Fin 9} {y : Q 9} (hy : y ∈ move l) : g y ∈ neighbors (g (tau l t)) := by
+    obtain ⟨u, hu, rfl⟩ := mem_image.mp hy
+    obtain ⟨a, _, rfl⟩ := hnear u hu
+    have he : tau l (flip t a) = flip (tau l t) a := by
+      dsimp [tau]
+      rw [BalancedCubeGirth.flip_comm t a i, BalancedCubeGirth.flip_comm (flip t i) a l]
+    rw [he]
+    exact mem_image.mpr ⟨a, mem_univ _, (cubeFinsetEquiv_flip _ _).symm⟩
+  have hjk' : g (tau j t) ≠ g (tau k t) :=
+    fun he => hjk (flip_injective (flip t i) (g.injective he))
+  have hsub : ((move j ∩ move k).map g.toEmbedding) ⊆
+      neighbors (g (tau j t)) ∩ neighbors (g (tau k t)) := by
+    intro x hx
+    obtain ⟨y, hy, rfl⟩ := mem_map.mp hx
+    exact mem_inter.mpr ⟨hmaps (mem_inter.mp hy).1, hmaps (mem_inter.mp hy).2⟩
+  have hinter := (card_le_card hsub).trans (common_neighbors_card_le_two hjk')
+  rw [card_map] at hinter
+  have hsum := card_union_add_card_inter (move j) (move k)
+  rw [hcard, hcard] at hsum
+  have hB : ({j, k} : Finset (Fin 9)) ⊆ A := by
+    intro l hl
+    simp only [mem_insert, mem_singleton] at hl
+    rcases hl with rfl | rfl <;> assumption
+  have hm (l : Fin 9) (hl : l ∈ ({j, k} : Finset (Fin 9))) :
+      ({i, l} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2 := by
+    simp only [mem_insert, mem_singleton] at hl
+    rcases hl with rfl | rfl <;> assumption
+  have hb := Q9InactiveContactFibre.adjacent_fibre_capacity b z e hi {j, k} hB hm
+  change (({j, k} : Finset (Fin 9)).biUnion move).card + R.card ≤ 16 at hb
+  rw [biUnion_insert, singleton_biUnion] at hb
+  omega
+
 open scoped BigOperators in
 private theorem pure_edge_capacity_sum (P M : Finset (Q 4)) (holes edges : Q 4 → ℕ)
     (hline : ∀ p ∈ P, edges p ≤ 5 * holes p + 1)
