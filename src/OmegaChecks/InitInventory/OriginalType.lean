@@ -1,6 +1,7 @@
 module
 public import Lean
 import OmegaChecks.InitPort.Translation
+import OmegaChecks.InitInventory.EnvelopePublicTypes
 
 open Lean
 namespace OmegaChecks.InitInventory
@@ -118,7 +119,8 @@ public def originalTypeGap? (official visible strict : Environment) (owner : Nam
   unless missing.isEmpty do
     if checkedFinBound official strict owner source.name pinned target.type ||
         checkedEnvelopePowZero visible strict owner source pinned target.type ||
-        checkedOrderFields visible strict owner source pinned target.type missing then return none
+        checkedOrderFields visible strict owner source pinned target.type missing ||
+        EnvelopePublicTypes.checked visible strict owner source pinned target.type then return none
     return some ("missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString))
   if (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target.type then
     return none
