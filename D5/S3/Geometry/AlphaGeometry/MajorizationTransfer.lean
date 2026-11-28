@@ -38,14 +38,20 @@ proof_shape: isTTransform_transfer: bind-only; consumer=FiniteVector.exists_isTT
 proof_shape: exists_isTTransform_of_not_forall_le: content; consumer=PositiveSimplexGeometryAndMixing.positive_sorted_chain; witness=exists_isTTransform_of_not_forall_le
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
-import Mathlib.Algebra.GroupWithZero.Action.Pi
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Finset.Max
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+public import Mathlib.Algebra.GroupWithZero.Action.Pi
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Tactic.Linarith
+
+/-! Hardy--Littlewood--Polya transfer step for finite vectors. -/
+
+@[expose] public section
 
 
 noncomputable section

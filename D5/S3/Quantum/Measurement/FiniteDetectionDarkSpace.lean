@@ -6,8 +6,14 @@
    utility: none
    digest: Repeated-detection dark vectors form the kernel of the dimension-step survival defect. -/
 
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+module
+
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+
+/-! Repeated-detection dark vectors form the kernel of the dimension-step survival defect. -/
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

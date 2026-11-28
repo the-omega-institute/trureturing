@@ -148,18 +148,24 @@ proof_shape: determinant_reindex: bind-only; consumers=determinant_cq_bound
 proof_shape: determinant_cq_bound: bind-only; consumers=result
 -/
 
-import D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure
-import D5.S3.Quantum.Subentropy.POVMGram
-import D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace
-import D5.S3.Quantum.Subentropy.Basic
-import D5.S3.Quantum.Subentropy.GuessingProbability
-import D5.S3.Quantum.Subentropy.ClassicalQuantumGram
-import D5.S3.Quantum.Foundation.FiniteStateChannel
-import D5.S3.Quantum.Information.OrthogonalRecordEntropy
-import D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing
-import D5.S3.Quantum.Subentropy.GaussianMatrix
-import D5.S3.Quantum.Subentropy.GaussianQuadratic
-import D5.S3.StatisticalMechanics.RandomWalks.RenewalMinorantMaximalityRefutation
+module
+
+public import D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure
+public import D5.S3.Quantum.Subentropy.POVMGram
+public import D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace
+public import D5.S3.Quantum.Subentropy.Basic
+public import D5.S3.Quantum.Subentropy.GuessingProbability
+public import D5.S3.Quantum.Subentropy.ClassicalQuantumGram
+public import D5.S3.Quantum.Foundation.FiniteStateChannel
+public import D5.S3.Quantum.Information.OrthogonalRecordEntropy
+public import D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing
+public import D5.S3.Quantum.Subentropy.GaussianMatrix
+public import D5.S3.Quantum.Subentropy.GaussianQuadratic
+public import D5.S3.StatisticalMechanics.RandomWalks.RenewalMinorantMaximalityRefutation
+
+/-! Conditional subentropy is at most the guessing min-entropy of a finite c-q state. -/
+
+@[expose] public section
 namespace D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound
 open D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing (chart)
 open ProbabilityTheory

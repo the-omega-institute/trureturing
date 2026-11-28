@@ -6,12 +6,16 @@
    utility: none
    digest: Rectangular square-root Gram realization of classical-quantum conditional subentropy. -/
 
-import D5.S3.Quantum.Subentropy.Basic
-import D5.S3.Quantum.Subentropy.DensityKernel
-import D5.S3.Quantum.Information.OrthogonalRecordEntropy
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
+module
+
+public import D5.S3.Quantum.Subentropy.Basic
+public import D5.S3.Quantum.Subentropy.DensityKernel
+public import D5.S3.Quantum.Information.OrthogonalRecordEntropy
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
 
 /-! Exact rectangular Gram interfaces for canonical c-q states. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

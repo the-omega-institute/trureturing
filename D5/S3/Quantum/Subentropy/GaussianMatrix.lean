@@ -6,13 +6,17 @@
    utility: none
    digest: Matrix subentropy is a common-coordinate Gaussian entropy expectation. -/
 
-import D5.S3.Quantum.Subentropy.GaussianDiagonal
-import D5.S3.Quantum.Subentropy.GaussianQuadratic
-import D5.S3.Quantum.Subentropy.DensityKernel
-import Mathlib.Probability.Distributions.Gaussian.Multivariate
+module
+
+public import D5.S3.Quantum.Subentropy.GaussianDiagonal
+public import D5.S3.Quantum.Subentropy.GaussianQuadratic
+public import D5.S3.Quantum.Subentropy.DensityKernel
+public import Mathlib.Probability.Distributions.Gaussian.Multivariate
 
 /-! Unitary spectral transport supplies a common Gaussian measure for all matrices
 of a fixed dimension. No nonzero-spectrum or invertibility hypothesis is used. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

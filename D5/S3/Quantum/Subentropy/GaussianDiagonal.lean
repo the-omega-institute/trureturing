@@ -6,11 +6,15 @@
    utility: none
    digest: Diagonal subentropy is a Gaussian entropy expectation minus a fixed coordinate baseline. -/
 
-import D5.S3.Quantum.Subentropy.GaussianEntropy
-import Mathlib.MeasureTheory.Integral.Pi
-import Mathlib.MeasureTheory.Constructions.Pi
+module
+
+public import D5.S3.Quantum.Subentropy.GaussianEntropy
+public import Mathlib.MeasureTheory.Integral.Pi
+public import Mathlib.MeasureTheory.Constructions.Pi
 
 /-! Coordinate exchangeability cancels the linear entropy baseline. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

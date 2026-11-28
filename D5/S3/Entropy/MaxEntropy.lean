@@ -22,8 +22,14 @@
    * Units here are nats: `Real.log` is the natural logarithm, matching `klDivergence`.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import D5.S3.Divergence.GrandmotherTheorem
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import D5.S3.Divergence.GrandmotherTheorem
+
+/-! Define finite Shannon entropy in nats and bound it by the log-cardinality. -/
+
+@[expose] public section
 
 namespace D5.S3.Entropy.MaxEntropy
 

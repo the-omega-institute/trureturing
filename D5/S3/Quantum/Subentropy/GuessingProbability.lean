@@ -6,16 +6,20 @@
    utility: none
    digest: Faithful finite-POVM guessing probability and supremum comparison bounds. -/
 
-import D5.S3.Quantum.Foundation.FiniteStateChannel
-import D5.S3.Quantum.Information.OrthogonalRecordEntropy
-import D5.S3.Weil.ZetaLinear.RankTrace
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.SplitIfs
+module
+
+public import D5.S3.Quantum.Foundation.FiniteStateChannel
+public import D5.S3.Quantum.Information.OrthogonalRecordEntropy
+public import D5.S3.Weil.ZetaLinear.RankTrace
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.SplitIfs
 
 /-! The finite-POVM success set and its positive bounded supremum. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

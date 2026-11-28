@@ -6,11 +6,15 @@
    utility: none
    digest: Label-preserving positive Gram decomposition induced by a finite POVM. -/
 
-import D5.S3.Quantum.Subentropy.ClassicalQuantumGram
-import D5.S3.Quantum.Subentropy.GuessingProbability
-import D5.S3.Quantum.Subentropy.PinchingGap
+module
+
+public import D5.S3.Quantum.Subentropy.ClassicalQuantumGram
+public import D5.S3.Quantum.Subentropy.GuessingProbability
+public import D5.S3.Quantum.Subentropy.PinchingGap
 
 /-! The outcome label in each positive Gram piece determines its success contribution. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

@@ -91,12 +91,18 @@ proof_shape: positive_sorted_chain: content; consumer=LogScalarCurvatureMonotone
 proof_shape: positiveT_simplex: bind-only; consumer=LogScalarCurvatureMonotone.formula_oneT; witness=none
 -/
 
-import D5.S3.Geometry.AlphaGeometry.MajorizationTransfer
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Algebra.Group.Pi.Units
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.InformationTheory.Hamming
+module
+
+public import D5.S3.Geometry.AlphaGeometry.MajorizationTransfer
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.Algebra.Group.Pi.Units
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.InformationTheory.Hamming
+
+/-! Logarithmic simplex curvature formula and positive T-transform chain. -/
+
+@[expose] public section
 
 
 noncomputable section
