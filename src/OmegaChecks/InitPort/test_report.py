@@ -226,8 +226,6 @@ class CoverageTest(unittest.TestCase):
         for owner, name, kind in [
                 ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.neg_add_cancel", "theorem"),
                 ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.add.eq_1", "theorem"),
-                ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.mul", "definition"),
-                ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.sub", "definition"),
                 ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.ofNatModule", "definition")]:
             row = site(owner, name, kind=kind, representativeRefuter=proof)
             certificate = [[owner, name, name, proof]]
@@ -236,6 +234,20 @@ class CoverageTest(unittest.TestCase):
                 altered = {**row, **change}
                 data = inventory(altered)
                 data["certifiedRepresentativeRefutations"] = [[altered["module"], altered["name"], altered["name"], proof]]
+                with self.assertRaisesRegex(ValueError, "inconsistent representative"):
+                    check_coverage(data)
+
+    def test_lift_coherence_keeps_the_operation_open(self):
+        proof = "OmegaChecks.InitBoundaries.RepresentativeQuotient.refuteEnvelopeCancellation"
+        for owner, prefix, ops in [
+                ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring", ("add", "sub", "mul", "neg")),
+                ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule", ("add", "sub", "neg"))]:
+            for op in ops:
+                name = f"{prefix}.{op}"
+                row = site(owner, name, kind="definition", pinnedLiftCoherenceRefuter=proof)
+                self.assertEqual(check_coverage(inventory(row)), (0, [(owner, name)]))
+                data = inventory(row | {"representativeRefuter": proof})
+                data["certifiedRepresentativeRefutations"] = [[owner, name, name, proof]]
                 with self.assertRaisesRegex(ValueError, "inconsistent representative"):
                     check_coverage(data)
 

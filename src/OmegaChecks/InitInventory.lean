@@ -1,6 +1,7 @@
 module
 public import Lean
 import OmegaChecks.InitPort.Translation
+import OmegaChecks.InitInventory.EnvelopeCancellation
 import OmegaChecks.InitInventory.UnsafeCast
 meta import OmegaChecks.InitInventory.UnsafeCast
 import OmegaChecks.InitCompiler.RootNames
@@ -643,7 +644,7 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
   let mut nativeByModule := #[]
   let mut allNative := #[]
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness\tstrictConstructorIff\tformationArgument\ttransportPathType\trepresentativeRefuter\trefinedQuotientConsequence\toriginalTypeGap"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness\tstrictConstructorIff\tformationArgument\ttransportPathType\tpinnedLiftCoherenceRefuter\trepresentativeRefuter\trefinedQuotientConsequence\toriginalTypeGap"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -707,6 +708,11 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
         let path := if setoid then ``Quotient.sound else ``Quot.sound
         certifiedTransportPaths := certifiedTransportPaths.push #[owner.toString, name.toString, path.toString]
         pure (some path.toString)
+      else pure none
+      let liftOperand ← if OmegaChecks.InitBoundaries.EnvelopeCancellation.liftOperation? owner name == some name then do
+        let proof := ``OmegaChecks.InitBoundaries.RepresentativeQuotient.refuteEnvelopeCancellation
+        OmegaChecks.InitBoundaries.RepresentativeQuotient.certify official witnesses info proof
+        pure (some proof.toString)
       else pure none
       let refinedModel := OmegaChecks.InitBoundaries.RefinedQuotient.sites.contains (owner, name)
       if refinedModel then
@@ -810,7 +816,7 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
             (operand.map fun _ => (``Classical.choice).toString).getD "", (operand.map (·.witness.toString)).getD "",
             String.intercalate "," (typeAxioms.toList.map Name.toString), packedObservation.getD "", endpointType.getD "",
             (additional.map Prod.fst).getD "", (additional.map (·.2.toString)).getD "", if constructorIff then "true" else "",
-            formationArgument.getD "", transportPath.getD "", (refuter.map Name.toString).getD "",
+            formationArgument.getD "", transportPath.getD "", liftOperand.getD "", (refuter.map Name.toString).getD "",
             if refinedModel then "The pinned operations in the refined interpretation imply Not (type of Quot.sound.{1})" else "",
             typeGap.getD ""]
       if info.isAxiom then
@@ -839,6 +845,7 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
       else pure row
       let row := if refinedModel then row.setObjVal! "refinedQuotientConsequence"
         (toJson "The pinned operations in the refined interpretation imply Not (type of Quot.sound.{1})") else row
+      let row := if let some proof := liftOperand then row.setObjVal! "pinnedLiftCoherenceRefuter" (toJson proof) else row
       let row := if let some proof := refuter then row.setObjVal! "representativeRefuter" (toJson proof.toString) else row
       let row := if let some path := transportPath then row.setObjVal! "transportPathType" (toJson path) else row
       let row := if let some argument := formationArgument then row.setObjVal! "formationArgument" (toJson argument) else row

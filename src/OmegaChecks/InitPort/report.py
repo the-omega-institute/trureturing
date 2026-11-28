@@ -40,13 +40,6 @@ ENVELOPE_COUNTEREXAMPLES = {
     ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.add_zsmul"): "theorem",
     ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.instIsPartialOrderQ"): "theorem",
     ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.instIsLinearOrderQ"): "theorem",
-    ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.add"): "definition",
-    ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.sub"): "definition",
-    ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.mul"): "definition",
-    ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.neg"): "definition",
-    ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.add"): "definition",
-    ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.sub"): "definition",
-    ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.neg"): "definition",
     ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.add.eq_1"): "theorem",
     ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.sub.eq_1"): "theorem",
     ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.mul.eq_1"): "theorem",
@@ -398,7 +391,7 @@ def report(product, require_complete=False):
                              "runtimeConflictWitness", "equationOperand", "operandImpliesAxiom", "operandReductionWitness",
                              "unchangedTypeAxioms", "unsafePackedObservation", "strictImpliesAxiom", "strictSelectionWitness",
                              "unconditionalLogicalConsequence", "unconditionalLogicalConsequenceWitness",
-                             "specializedEndpointType", "strictConstructorIff", "formationArgument", "transportPathType",
+                             "specializedEndpointType", "strictConstructorIff", "formationArgument", "transportPathType", "pinnedLiftCoherenceRefuter",
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
                              "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap"])
             for row in official["declarations"]:
@@ -441,7 +434,7 @@ def report(product, require_complete=False):
                                  row.get("strictImpliesAxiom"), row.get("strictSelectionWitness"),
                                  row.get("unconditionalLogicalConsequence"), row.get("unconditionalLogicalConsequenceWitness"),
                                  row.get("specializedEndpointType"), "true" if row.get("strictConstructorIff") else "",
-                                 row.get("formationArgument"), row.get("transportPathType"),
+                                 row.get("formationArgument"), row.get("transportPathType"), row.get("pinnedLiftCoherenceRefuter"),
                                  row.get("strictLogicalConsequence"), row.get("strictLogicalConsequenceWitness"),
                                  row.get("strictEquivalenceWitness"), row.get("representativeRefuter"),
                                  row.get("refinedQuotientConsequence"), row.get("originalTypeGap")])
