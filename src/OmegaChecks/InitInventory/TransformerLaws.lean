@@ -787,53 +787,230 @@ abbrev MoveUnit := ∀ {m : Type u → Type u} [Monad m] [LawfulMonad m] {T : Ty
 abbrev RepeatUnit := ∀ {m : Type u → Type u} [Monad m] [LawfulMonad m] {T : Type u} (s : T → m T),
   (fun x => s x >>= pure) = fun x => (s x >>= pure) >>= pure
 
-theorem funextOfMoveUnit (law : MoveUnit.{max 1 u v}) : type_of% @funext.{u,v} := by
-  apply funextFromEndomorphisms
+abbrev EndomorphismExt := ∀ {T : Type u} {f g : T → T}, (∀ x, f x = g x) → f = g
+
+private theorem endomorphismsOfMoveUnit (law : MoveUnit.{u}) : EndomorphismExt.{u} := by
   intro T f g h
   letI := exceptionMonad (@swap T)
   letI := lawful (@swap T) swap_eq
   exact (congrArg observe (@law (Except (Twin T)) _ _ T (step h))).symm
 
-theorem funextOfRepeatUnit (law : RepeatUnit.{max 1 u v}) : type_of% @funext.{u,v} := by
-  apply funextFromEndomorphisms
+private theorem endomorphismsOfRepeatUnit (law : RepeatUnit.{u}) : EndomorphismExt.{u} := by
   intro T f g h
   letI := exceptionMonad (@swap T)
   letI := lawful (@swap T) swap_eq
   exact (congrArg observe (@law (Except (Twin T)) _ _ T (step h))).symm
 
-public theorem funextOfLeftSuccessor (rule : type_of% @Fin.foldlM_succ_last.{max 1 u v, max 1 u v}) :
-    type_of% @funext.{u,v} := by
-  apply funextOfMoveUnit
+theorem funextOfMoveUnit (law : MoveUnit.{max 1 u v}) : type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (endomorphismsOfMoveUnit law)
+
+theorem funextOfRepeatUnit (law : RepeatUnit.{max 1 u v}) : type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (endomorphismsOfRepeatUnit law)
+
+private theorem endomorphismsOfLeftSuccessor (rule : type_of% @Fin.foldlM_succ_last.{u,u}) :
+    EndomorphismExt.{u} := by
+  apply endomorphismsOfMoveUnit
   intro m _ _ T s
   have e := @rule m T 0 _ _ (fun x _ => s x)
   rw [Fin.foldlM_succ, Fin.foldlM_zero] at e
   exact e
 
-public theorem funextOfRightSuccessor (rule : type_of% @Fin.foldrM_succ.{max 1 u v, max 1 u v}) :
-    type_of% @funext.{u,v} := by
-  apply funextOfMoveUnit
+public theorem funextOfLeftSuccessor (rule : type_of% @Fin.foldlM_succ_last.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (endomorphismsOfLeftSuccessor @rule)
+
+private theorem endomorphismsOfRightSuccessor (rule : type_of% @Fin.foldrM_succ.{u,u}) :
+    EndomorphismExt.{u} := by
+  apply endomorphismsOfMoveUnit
   intro m _ _ T s
   have e := @rule m 0 T _ _ (fun _ x => s x)
   rw [Fin.foldrM_succ_last, Fin.foldrM_zero] at e
   exact e
 
-public theorem funextOfLeftAddition (rule : type_of% @Fin.foldlM_add.{max 1 u v, max 1 u v}) :
-    type_of% @funext.{u,v} := by
-  apply funextOfRepeatUnit
+public theorem funextOfRightSuccessor (rule : type_of% @Fin.foldrM_succ.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (endomorphismsOfRightSuccessor @rule)
+
+private theorem endomorphismsOfLeftAddition (rule : type_of% @Fin.foldlM_add.{u,u}) :
+    EndomorphismExt.{u} := by
+  apply endomorphismsOfRepeatUnit
   intro m _ _ T s
   have e := @rule m T 1 0 _ _ (fun x _ => s x)
   change Fin.foldlM 1 (fun x _ => s x) = fun x => Fin.foldlM 1 (fun x _ => s x) x >>= Fin.foldlM 0 (fun x _ => s x) at e
   rw [Fin.foldlM_succ, Fin.foldlM_zero] at e
   exact e
 
-public theorem funextOfRightAddition (rule : type_of% @Fin.foldrM_add.{max 1 u v, max 1 u v}) :
-    type_of% @funext.{u,v} := by
-  apply funextOfRepeatUnit
+public theorem funextOfLeftAddition (rule : type_of% @Fin.foldlM_add.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (endomorphismsOfLeftAddition @rule)
+
+private theorem endomorphismsOfRightAddition (rule : type_of% @Fin.foldrM_add.{u,u}) :
+    EndomorphismExt.{u} := by
+  apply endomorphismsOfRepeatUnit
   intro m _ _ T s
   have e := @rule m 0 1 T _ _ (fun _ x => s x)
   change Fin.foldrM 1 (fun _ x => s x) = fun x => Fin.foldrM 1 (fun _ x => s x) x >>= Fin.foldrM 0 (fun _ x => s x) at e
   rw [Fin.foldrM_succ_last, Fin.foldrM_zero] at e
   exact e
+
+public theorem funextOfRightAddition (rule : type_of% @Fin.foldrM_add.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (endomorphismsOfRightAddition @rule)
+
+/-- Pointwise equality on one fixed pair of source and result types. -/
+abbrev ArrowExt (α : Type u) (m : Type u → Type v) :=
+  ∀ {f g : α → m α}, (∀ a, f a = g a) → f = g
+
+private theorem arrowsOfEndomorphisms (ext : EndomorphismExt.{u}) {α : Type u} {m : Type u → Type u} :
+    ArrowExt α m := by
+  intro f g h
+  let promote (t : α → m α) : Sum α (m α) → Sum α (m α) := fun s =>
+    Sum.casesOn s (fun a => .inr (t a)) Sum.inr
+  have eq : promote f = promote g := ext (fun s => by
+    cases s with
+    | inl a => exact congrArg Sum.inr (h a)
+    | inr _ => rfl)
+  exact congrArg (fun t a => Sum.casesOn (motive := fun _ => m α) (t (.inl a)) (fun _ => f a) id) eq
+
+section
+variable {m : Type u → Type v} {α : Type u} [Monad m] [LawfulMonad m]
+
+theorem leftStep (ext : ArrowExt α m) {n : Nat} (f : α → Fin (n+1) → m α) :
+    Fin.foldlM (n+1) f = fun x => Fin.foldlM n (fun x j => f x j.castSucc) x >>= (f · (Fin.last n)) := by
+  induction n with
+  | zero =>
+    apply ext
+    intro x
+    simp only [Fin.foldlM_succ, Fin.foldlM_zero, pure_bind, bind_pure]
+    rfl
+  | succ n ih =>
+    apply ext
+    intro x
+    rw [Fin.foldlM_succ]
+    conv => rhs; rw [Fin.foldlM_succ]
+    simp only [bind_assoc]
+    apply congrArg (fun cont => f x 0 >>= cont)
+    exact ih _
+
+theorem rightStep (ext : ArrowExt α m) {n : Nat} (f : Fin (n+1) → α → m α) :
+    Fin.foldrM (n+1) f = fun x => Fin.foldrM n (fun i => f i.succ) x >>= f 0 := by
+  induction n with
+  | zero =>
+    apply ext
+    intro x
+    simp only [Fin.foldrM_succ_last, Fin.foldrM_zero, pure_bind, bind_pure]
+    rfl
+  | succ n ih =>
+    apply ext
+    intro x
+    rw [Fin.foldrM_succ_last]
+    conv => rhs; rw [Fin.foldrM_succ_last]
+    simp only [bind_assoc]
+    apply congrArg (fun cont => f (Fin.last (n+1)) x >>= cont)
+    exact ih _
+
+private theorem leftCongr (ext : ArrowExt α m) {n : Nat} (f g : α → Fin n → m α)
+    (h : ∀ x i, f x i = g x i) : Fin.foldlM n f = Fin.foldlM n g := by
+  induction n with
+  | zero => rw [Fin.foldlM_zero, Fin.foldlM_zero]
+  | succ n ih =>
+    apply ext
+    intro x
+    rw [Fin.foldlM_succ, Fin.foldlM_succ g]
+    dsimp only
+    rw [h x 0]
+    exact congrArg (fun cont => g x 0 >>= cont) (ih _ _ (fun x i => h x i.succ))
+
+private theorem rightCongr (ext : ArrowExt α m) {n : Nat} (f g : Fin n → α → m α)
+    (h : ∀ i x, f i x = g i x) : Fin.foldrM n f = Fin.foldrM n g := by
+  induction n with
+  | zero => rw [Fin.foldrM_zero, Fin.foldrM_zero]
+  | succ n ih =>
+    apply ext
+    intro x
+    rw [Fin.foldrM_succ_last, Fin.foldrM_succ_last g]
+    dsimp only
+    rw [h (Fin.last n) x]
+    exact congrArg (fun cont => g (Fin.last n) x >>= cont) (ih _ _ (fun i x => h i.castSucc x))
+
+theorem leftAdd (ext : ArrowExt α m) {n k : Nat} (f : α → Fin (n+k) → m α) :
+    Fin.foldlM (n+k) f = fun x => Fin.foldlM n (fun x i => f x (i.castLE (Nat.le_add_right n k))) x >>=
+      Fin.foldlM k (fun x i => f x (i.natAdd n)) := by
+  induction k with
+  | zero =>
+    apply ext
+    intro x
+    rw [Fin.foldlM_zero, bind_pure]
+    rfl
+  | succ k ih =>
+    apply ext
+    intro x
+    change Fin.foldlM ((n+k)+1) f x = _
+    rw [leftStep ext (n := n+k) f]
+    rw [ih]
+    rw [leftStep ext (n := k)]
+    dsimp only
+    rw [bind_assoc]
+    apply congrArg (fun cont => Fin.foldlM n _ x >>= cont)
+    apply ext
+    intro y
+    have indices := leftCongr ext (fun z (i : Fin k) => f z (i.natAdd n).castSucc)
+      (fun z i => f z (i.castSucc.natAdd n)) (fun z i => congrArg (f z) (Fin.castSucc_natAdd n i))
+    rw [indices, Fin.natAdd_last]
+
+theorem rightAdd (ext : ArrowExt α m) {n k : Nat} (f : Fin (n+k) → α → m α) :
+    Fin.foldrM (n+k) f = fun x => Fin.foldrM k (fun i => f (i.natAdd n)) x >>=
+      Fin.foldrM n (fun i => f (i.castLE (Nat.le_add_right n k))) := by
+  induction k with
+  | zero =>
+    apply ext
+    intro x
+    rw [Fin.foldrM_zero, pure_bind]
+    rfl
+  | succ k ih =>
+    apply ext
+    intro x
+    change Fin.foldrM ((n+k)+1) f x = _
+    rw [Fin.foldrM_succ_last (n := n+k) f]
+    rw [ih]
+    rw [Fin.foldrM_succ_last (n := k), bind_assoc, Fin.natAdd_last]
+    apply congrArg (fun cont => f (Fin.last (n+k)) x >>= cont)
+    apply ext
+    intro y
+    have indices := rightCongr ext (fun (i : Fin k) => f (i.natAdd n).castSucc)
+      (fun i => f (i.castSucc.natAdd n)) (fun i z => congrArg (fun j => f j z) (Fin.castSucc_natAdd n i))
+    rw [indices]
+    rfl
+
+end
+
+theorem iffLeftSuccessor : (type_of% @Fin.foldlM_succ_last.{u,u}) ↔ EndomorphismExt.{u} := by
+  constructor
+  · intro rule
+    exact endomorphismsOfLeftSuccessor @rule
+  · intro ext m α n _ _ f
+    exact leftStep (arrowsOfEndomorphisms ext) f
+
+theorem iffRightSuccessor : (type_of% @Fin.foldrM_succ.{u,u}) ↔ EndomorphismExt.{u} := by
+  constructor
+  · intro rule
+    exact endomorphismsOfRightSuccessor @rule
+  · intro ext m n α _ _ f
+    exact rightStep (arrowsOfEndomorphisms ext) f
+
+theorem iffLeftAddition : (type_of% @Fin.foldlM_add.{u,u}) ↔ EndomorphismExt.{u} := by
+  constructor
+  · intro rule
+    exact endomorphismsOfLeftAddition @rule
+  · intro ext m α n k _ _ f
+    exact leftAdd (arrowsOfEndomorphisms ext) f
+
+theorem iffRightAddition : (type_of% @Fin.foldrM_add.{u,u}) ↔ EndomorphismExt.{u} := by
+  constructor
+  · intro rule
+    exact endomorphismsOfRightAddition @rule
+  · intro ext m n k α _ _ f
+    exact rightAdd (arrowsOfEndomorphisms ext) f
 
 open Lean in
 run_cmd

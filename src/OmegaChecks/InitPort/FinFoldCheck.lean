@@ -18,9 +18,10 @@ public def main (args : List String) : IO Unit := do
   let some fe := source.find? `funext | throw <| IO.userError "missing official function extensionality"
   let mut roots := #[]
   let mut rows := #[]
-  for (name, root) in [(`Fin.foldlM_succ_last, `funextOfLeftSuccessor), (`Fin.foldrM_succ, `funextOfRightSuccessor),
-      (`Fin.foldlM_add, `funextOfLeftAddition), (`Fin.foldrM_add, `funextOfRightAddition)] do
-    let witness := `OmegaChecks.InitBoundaries.TransformerLaws.FiniteFold ++ root
+  let ns := `OmegaChecks.InitBoundaries.TransformerLaws.FiniteFold
+  for (name, variant) in [(`Fin.foldlM_succ_last, "LeftSuccessor"), (`Fin.foldrM_succ, "RightSuccessor"),
+      (`Fin.foldlM_add, "LeftAddition"), (`Fin.foldrM_add, "RightAddition")] do
+    let witness := ns.str ("funextOf" ++ variant)
     kernel ← OmegaChecks.InitPort.restoreEvidence source kernel witness
     let some proof := kernel.find? (portName witness) | throw <| IO.userError s!"missing evidence {witness}"
     let some rule := source.find? name | throw <| IO.userError s!"missing {name}"
@@ -33,8 +34,18 @@ public def main (args : List String) : IO Unit := do
         source.getModuleIdxFor? name == source.getModuleIdx? owner &&
         Kernel.isDefEqGuarded (.ofKernelEnv kernel) {} expected proof.type do
       throw <| IO.userError s!"incorrect strict type {witness}"
+    let iffName := ns.str ("iff" ++ variant)
+    kernel ← OmegaChecks.InitPort.restoreEvidence source kernel iffName
+    let some iffProof := kernel.find? (portName iffName) | throw <| IO.userError s!"missing {iffName}"
+    let [level] := iffProof.levelParams.map Level.param | throw <| IO.userError "expected one common universe"
+    let site := translate portName (rule.type.instantiateLevelParams rule.levelParams [level,level])
+    let condition := mkConst (portName (ns.str "EndomorphismExt")) [level]
+    let both := mkApp2 (mkConst `Omega.Iff) site condition
+    unless iffProof.isTheorem && Kernel.isDefEqGuarded (.ofKernelEnv kernel) {} iffProof.type both do
+      throw <| IO.userError s!"incorrect same-universe equivalence {iffName}"
+    roots := roots.push (portName iffName)
     roots := roots.push (portName witness)
     rows := rows.push #[owner.toString, name.toString, "funext", (portName witness).toString]
   let count ← OmegaChecks.InitPort.replayStrict kernel roots
   IO.FS.writeFile output (toJson rows).compress
-  IO.println s!"Replayed {roots.size} original finite fold implications, {count} declarations, zero axioms."
+  IO.println s!"Replayed {rows.size} finite fold implications and {rows.size} equal-universe equivalences, {count} declarations, zero axioms."
