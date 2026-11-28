@@ -65,6 +65,18 @@ private theorem exists_inverse_product {g : K} {x : B} (hx : x ∈ grade g) (hx�
   intro ht₀
   exact hxy (by rw [← ht, ht₀, zero_smul])
 
+include twisted_assoc in
+private theorem mem_span_singleton_of_inverse_products {g : K} {a b c p : B} {t u : ℂ}
+    (ha : a ∈ grade g) (hb : b ∈ grade g⁻¹) (hc : c ∈ grade g)
+    (hab : μ a b = t • p) (hbc : μ b c = u • p) (ht₀ : t ≠ 0)
+    (hpc : μ p c = c) (hap : μ a p = a) : c ∈ Submodule.span ℂ {a} := by
+  have h := twisted_assoc ha hb hc
+  rw [hab, map_smul, LinearMap.smul_apply, hpc, hbc, map_smul, hap, smul_smul] at h
+  have hs : (↑(α g g⁻¹ g) : ℂ) * t ≠ 0 := mul_ne_zero (Units.ne_zero _) ht₀
+  have hsmul : ((↑(α g g⁻¹ g) : ℂ) * t) • c ∈ Submodule.span ℂ {a} :=
+    Submodule.mem_span_singleton.mpr ⟨u, h.symm⟩
+  exact (Submodule.smul_mem_iff _ hs).mp hsmul
+
 include mul_mem unit_grade pairing twisted_assoc left_unit right_unit in
 /-- Any nonzero homogeneous vector spans its grade. -/
 theorem grade_eq_span_singleton {g : K} {a : B} (ha : a ∈ grade g) (ha₀ : a ≠ 0) :
@@ -74,12 +86,8 @@ theorem grade_eq_span_singleton {g : K} {a : B} (ha : a ∈ grade g) (ha₀ : a 
   intro c hc
   have hbc_mem : μ b c ∈ grade 1 := by simpa only [inv_mul_cancel] using mul_mem hb hc
   obtain ⟨u, hbc⟩ := Submodule.mem_span_singleton.mp (unit_grade ▸ hbc_mem)
-  have h := twisted_assoc ha hb hc
-  rw [hab, map_smul, LinearMap.smul_apply, left_unit, ← hbc, map_smul, right_unit, smul_smul] at h
-  have hs : (↑(α g g⁻¹ g) : ℂ) * t ≠ 0 := mul_ne_zero (Units.ne_zero _) ht₀
-  have hsmul : ((↑(α g g⁻¹ g) : ℂ) * t) • c ∈ Submodule.span ℂ {a} :=
-    Submodule.mem_span_singleton.mpr ⟨u, h.symm⟩
-  exact (Submodule.smul_mem_iff _ hs).mp hsmul
+  exact mem_span_singleton_of_inverse_products (grade := grade) (α := α) twisted_assoc
+    ha hb hc hab hbc.symm ht₀ (left_unit c) (right_unit a)
 
 include mul_mem unit_grade pairing twisted_assoc right_unit in
 /-- Multiplication of two nonzero homogeneous vectors gives a nonzero vector. -/
@@ -116,6 +124,79 @@ theorem finrank_grade_eq_one [Fintype K] [DecidableEq K]
   simp [hsum] at hlt
 
 end Multiplication
+
+section NeutralProjection
+
+variable (mul_mem : ∀ {g h : K} {x y : B},
+  x ∈ grade g → y ∈ grade h → μ x y ∈ grade (g * h))
+variable (pairing : ∀ {g : K} {x : B}, x ∈ grade g → x ≠ 0 →
+  ∃ y ∈ grade g⁻¹, μ x y ≠ 0)
+variable (twisted_assoc : ∀ {g h k : K} {x y z : B},
+  x ∈ grade g → y ∈ grade h → z ∈ grade k →
+    (α g h k : ℂ) • μ (μ x y) z = μ x (μ y z))
+variable (normalized : ∀ g h k : K, g = 1 ∨ h = 1 ∨ k = 1 → α g h k = 1)
+
+variable (μ) in
+/-- Left multiplication by a neutral element, restricted to a homogeneous degree. -/
+def neutralProjection {p : B} (hp : p ∈ grade 1) (g : K) : grade g →ₗ[ℂ] grade g :=
+  ((μ p).comp (grade g).subtype).codRestrict (grade g) fun b => by
+    simpa only [LinearMap.comp_apply, Submodule.subtype_apply, one_mul] using mul_mem hp b.property
+
+include twisted_assoc normalized in
+private theorem neutral_mul_assoc {g h : K} {p a b : B}
+    (hp : p ∈ grade 1) (ha : a ∈ grade g) (hb : b ∈ grade h) :
+    μ (μ p a) b = μ p (μ a b) := by
+  simpa only [normalized 1 g h (Or.inl rfl), Units.val_one, one_smul] using twisted_assoc hp ha hb
+
+include pairing twisted_assoc normalized in
+/-- A neutral idempotent with a one-dimensional neutral range has at most a line
+in each homogeneous degree, provided it commutes with homogeneous vectors. -/
+theorem finrank_neutralProjection_range_le_one {p : B} (hp : p ∈ grade 1)
+    (idem : μ p p = p)
+    (neutral_line : ∀ {b : B}, b ∈ grade 1 → μ p b ∈ Submodule.span ℂ {p})
+    (commute : ∀ {g : K} {b : B}, b ∈ grade g → μ p b = μ b p)
+    (g : K) : Module.finrank ℂ (LinearMap.range (neutralProjection μ mul_mem hp g)) ≤ 1 := by
+  have fixed {h : K} (v : grade h) : μ p (neutralProjection μ mul_mem hp h v : B) =
+      (neutralProjection μ mul_mem hp h v : B) := by
+    change μ p (μ p (v : B)) = μ p (v : B)
+    rw [← neutral_mul_assoc twisted_assoc normalized hp hp v.property, idem]
+  have fixed_of_mem_range {h : K} {v : grade h}
+      (hv : v ∈ LinearMap.range (neutralProjection μ mul_mem hp h)) : μ p (v : B) = v := by
+    obtain ⟨w, rfl⟩ := LinearMap.mem_range.mp hv
+    exact fixed w
+  have mul_mem_line {h k : K} {u v : B} (hu : u ∈ grade h) (hv : v ∈ grade k)
+      (hpu : μ p u = u) (hdeg : h * k = 1) : μ u v ∈ Submodule.span ℂ {p} := by
+    have hmem : μ u v ∈ grade 1 := hdeg ▸ mul_mem hu hv
+    simpa only [← neutral_mul_assoc twisted_assoc normalized hp hu hv, hpu] using neutral_line hmem
+  let P := neutralProjection μ mul_mem hp g
+  change Module.finrank ℂ (LinearMap.range P) ≤ 1
+  by_cases hbot : LinearMap.range P = ⊥
+  · rw [hbot, finrank_bot]
+    exact Nat.zero_le _
+  obtain ⟨a, ha, ha₀⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hbot
+  have hpa := fixed_of_mem_range ha
+  have hap : μ (a : B) p = a := (commute a.property).symm.trans hpa
+  obtain ⟨y, hy, hay⟩ := pairing a.property (fun h => ha₀ (Subtype.ext h))
+  let b : grade g⁻¹ := neutralProjection μ mul_mem hp g⁻¹ ⟨y, hy⟩
+  have hab : μ (a : B) (b : B) = μ (a : B) y := by
+    change μ (a : B) (μ p y) = μ (a : B) y
+    simpa only [normalized g 1 g⁻¹ (Or.inr (Or.inl rfl)), Units.val_one, one_smul, hap] using
+      (twisted_assoc a.property hp hy).symm
+  obtain ⟨t, ht⟩ := Submodule.mem_span_singleton.mp
+    (mul_mem_line a.property b.property hpa (mul_inv_cancel g))
+  have ht₀ : t ≠ 0 := fun h => hay (by rw [← hab, ← ht, h, zero_smul])
+  have hrange : LinearMap.range P = Submodule.span ℂ {a} := by
+    apply le_antisymm _ ((Submodule.span_singleton_le_iff_mem _ _).mpr ha)
+    intro c hc
+    obtain ⟨u, hu⟩ := Submodule.mem_span_singleton.mp
+      (mul_mem_line b.property c.property (fixed ⟨y, hy⟩) (inv_mul_cancel g))
+    obtain ⟨s, hs⟩ := Submodule.mem_span_singleton.mp
+      (mem_span_singleton_of_inverse_products (grade := grade) (α := α) twisted_assoc
+        a.property b.property c.property ht.symm hu.symm ht₀ (fixed_of_mem_range hc) hap)
+    exact Submodule.mem_span_singleton.mpr ⟨s, Subtype.ext hs⟩
+  rw [hrange, finrank_span_singleton ha₀]
+
+end NeutralProjection
 
 private theorem finrank_eq_sum_finrank_range {ι V : Type*} [Fintype ι]
     [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
@@ -233,9 +314,65 @@ theorem finrank_grade_eq_card_fixedBy {G X V : Type*} [Group G] [Fintype G] [Dec
   exact (Finset.sum_eq_sum_iff_of_le (fun y _ => hcorner_le g y)).mp
     hcorner_total x (Finset.mem_univ x)
 
+section NeutralCoordinates
+
+variable {X : Type*} [Fintype K] [DecidableEq K] [Fintype X] [DecidableEq X] [Nonempty X]
+    [MulAction K X] [MulAction.IsPretransitive K X]
+
+/-- For neutral coordinates of a twisted graded algebra, the occupied corners
+of each degree are exactly the coordinates fixed by that degree. -/
+theorem finrank_grade_eq_card_fixedBy_of_multiplication
+    (decomposition : DirectSum.IsInternal grade)
+    (dimension : Module.finrank ℂ B = Fintype.card K)
+    (mul_mem : ∀ {g h : K} {a b : B}, a ∈ grade g → b ∈ grade h → μ a b ∈ grade (g * h))
+    (pairing : ∀ {g : K} {a : B}, a ∈ grade g → a ≠ 0 → ∃ b ∈ grade g⁻¹, μ a b ≠ 0)
+    (twisted_assoc : ∀ {g h k : K} {a b c : B}, a ∈ grade g → b ∈ grade h → c ∈ grade k →
+      (α g h k : ℂ) • μ (μ a b) c = μ a (μ b c))
+    (normalized : ∀ g h k : K, g = 1 ∨ h = 1 ∨ k = 1 → α g h k = 1)
+    (left_unit : ∀ b : B, μ e b = b)
+    (p : X → B) (neutral_mem : ∀ x, p x ∈ grade 1)
+    (orthogonal : ∀ x y, x ≠ y → μ (p x) (p y) = 0)
+    (sum_eq_unit : (∑ x : X, p x) = e)
+    (neutral_line : ∀ (x : X) {b : B}, b ∈ grade 1 → μ (p x) b ∈ Submodule.span ℂ {p x})
+    (commute : ∀ (x : X) {g : K} {b : B}, b ∈ grade g → μ (p x) b = μ b (p x))
+    (braid : ∀ (x : X) {g : K} {b : B}, b ∈ grade g → μ b (p x) = μ (p (g • x)) b)
+    (g : K) :
+    Module.finrank ℂ (grade g) = Nat.card (MulAction.fixedBy X g) ∧
+      ∀ x : X, Module.finrank ℂ (LinearMap.range (neutralProjection μ mul_mem (neutral_mem x) g)) =
+        (if g • x = x then 1 else 0) := by
+  let P (h : K) (x : X) := neutralProjection μ mul_mem (neutral_mem x) h
+  have sum_mul (b : B) : (∑ x : X, μ (p x) b) = b := by
+    simpa only [map_sum, LinearMap.sum_apply, left_unit] using
+      congrArg (fun a : B => μ a b) sum_eq_unit
+  have idem (x : X) : μ (p x) (p x) = p x := by
+    calc
+      μ (p x) (p x) = ∑ y : X, μ (p y) (p x) :=
+        (Finset.sum_eq_single_of_mem x (Finset.mem_univ x) (fun y _ hy => orthogonal y x hy)).symm
+      _ = p x := sum_mul (p x)
+  apply finrank_grade_eq_card_fixedBy grade decomposition dimension P _ _ _ _ g
+  · intro h x y hxy b
+    apply Subtype.ext
+    change μ (p x) (μ (p y) (b : B)) = 0
+    rw [← neutral_mul_assoc twisted_assoc normalized (neutral_mem x) (neutral_mem y) b.property,
+      orthogonal x y hxy, map_zero, LinearMap.zero_apply]
+  · intro h b
+    apply Subtype.ext
+    change (grade h).subtype (∑ x : X, P h x b) = (b : B)
+    rw [map_sum]
+    exact sum_mul b
+  · intro h x b
+    exact Subtype.ext ((commute x b.property).trans (braid x b.property))
+  · intro h x _
+    exact finrank_neutralProjection_range_le_one (grade := grade) (α := α) mul_mem pairing
+      twisted_assoc normalized (neutral_mem x) (idem x) (neutral_line x) (commute x) h
+
+end NeutralCoordinates
+
 #print axioms grade_eq_span_singleton
 #print axioms homogeneous_mul_ne_zero
 #print axioms finrank_grade_eq_one
 #print axioms finrank_grade_eq_card_fixedBy
+#print axioms finrank_neutralProjection_range_le_one
+#print axioms finrank_grade_eq_card_fixedBy_of_multiplication
 
 end D5.S3.FiniteGroups.CosetActions.TwistedGradedCorner
