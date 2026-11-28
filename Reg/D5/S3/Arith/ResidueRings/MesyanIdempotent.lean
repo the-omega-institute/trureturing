@@ -54,7 +54,7 @@ private abbrev Witness := ULift.{u} (MinTropical (WithTop ℕ))
 private theorem erased_fails : ¬ arena.{u}.Law erased := by
   intro h
   have hAdd (a : Witness.{u}) : a + a = a :=
-    ULift.ext _ _ (MinTropical.add_self a.down)
+    ULift.ext (MinTropical.add_self a.down)
   obtain ⟨E, hE⟩ := (@h Witness.{u} _ hAdd).2 ⟨1, fun x => ⟨one_mul x, mul_one x⟩⟩
   exact (bot_ne_top : (⊥ : AddSubmonoid Witness.{u}) ≠ ⊤) ((hE ⊤).1)
 
