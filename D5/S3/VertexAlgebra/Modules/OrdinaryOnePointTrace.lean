@@ -8,11 +8,15 @@
 
 module
 
-public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Data.PNat.Defs
 public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 public import Mathlib.LinearAlgebra.LinearIndependent.Defs
 public import Mathlib.LinearAlgebra.Trace
 public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Defs
+import Mathlib.Analysis.Analytic.IsolatedZeros
+import Mathlib.Analysis.Analytic.OfScalars
 import Mathlib.Data.Finset.Max
 import OmegaBuild.Commands
 
@@ -29,6 +33,45 @@ public section
 set_option autoImplicit false
 
 namespace D5.S3.VertexAlgebra.Modules.OrdinaryOnePointTrace
+
+open Filter Set
+open scoped Topology
+
+private theorem hasSum_mul_pow_of_summable_norm {a : ℕ → ℂ} {r : ℝ}
+    (ha : Summable fun n => ‖a n‖ * r ^ n) {z : ℂ} (hz : ‖z‖ ≤ r) :
+    HasSum (fun n => a n * z ^ n) (∑' n, a n * z ^ n) := by
+  refine (ha.of_nonneg_of_le (fun n => norm_nonneg (a n * z ^ n)) (fun n => ?_)).of_norm.hasSum
+  rw [norm_mul, norm_pow]
+  exact mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (norm_nonneg z) hz n) (norm_nonneg _)
+
+/-- Equality on the positive real radius determines both ordinary series. -/
+private theorem eq_coefficients_of_hasSum_eqOn {a b : ℕ → ℂ} {f g : ℂ → ℂ} {r : ℝ}
+    (hr : 0 < r) (ha : ∀ z : ℂ, ‖z‖ < r → HasSum (fun n => a n * z ^ n) (f z))
+    (hb : ∀ z : ℂ, ‖z‖ < r → HasSum (fun n => b n * z ^ n) (g z))
+    (heq : ∀ x : ℝ, 0 < x → x < r → f x = g x) : a = b := by
+  have series {c : ℕ → ℂ} {h : ℂ → ℂ}
+      (hs : ∀ z : ℂ, ‖z‖ < r → HasSum (fun n => c n * z ^ n) (h z)) :
+      HasFPowerSeriesAt h (FormalMultilinearSeries.ofScalars ℂ c) 0 := by
+    apply hasFPowerSeriesAt_iff'.mpr
+    filter_upwards [Metric.ball_mem_nhds (0 : ℂ) hr] with z hz
+    simpa only [sub_zero, FormalMultilinearSeries.coeff_ofScalars, smul_eq_mul, mul_comm]
+      using hs z (by simpa using hz)
+  have := left_nhdsWithin_Ioo_neBot hr
+  have hcast : Tendsto (fun x : ℝ => (x : ℂ)) (𝓝[Ioo 0 r] 0) (𝓝[≠] (0 : ℂ)) := by
+    refine tendsto_nhdsWithin_iff.mpr ⟨?_, ?_⟩
+    · exact Complex.continuous_ofReal.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
+    · filter_upwards [self_mem_nhdsWithin (a := (0 : ℝ)) (s := Ioo 0 r)] with x hx
+      simpa using hx.1.ne'
+  have hfrequent : ∃ᶠ z in 𝓝[≠] (0 : ℂ), f z = g z := by
+    have hreal : ∀ᶠ x in 𝓝[Ioo (0 : ℝ) r] 0, f (Complex.ofReal x) = g (Complex.ofReal x) := by
+      filter_upwards [self_mem_nhdsWithin (a := (0 : ℝ)) (s := Ioo 0 r)] with x hx
+      exact heq x hx.1 hx.2
+    exact hcast.frequently hreal.frequently
+  have hp := series ha
+  have hq := series hb
+  have heventually := (hp.analyticAt.frequently_eq_iff_eventually_eq hq.analyticAt).mp hfrequent
+  exact FormalMultilinearSeries.ofScalars_series_injective ℂ ℂ
+    (hp.eq_formalMultilinearSeries_of_eventually hq heventually)
 
 /-- An algebra element acts as the identity on the chosen simple module and as
 zero on all other modules of a finite family of pairwise inequivalent simples. -/
@@ -138,9 +181,54 @@ theorem linearIndependent_coefficient [Finite I]
   rw [Fintype.sum_eq_single k (fun i hi => hvanish i hi), hbottom] at hread
   exact (mul_ne_zero ((hmem k).1 hk) hdim) hread
 
+/-- For a common lowest weight `base` and denominator `d`, put `q = x ^ d`.
+After removing the common factor `q ^ (base - c/24)`, weight `base + n/d`
+contributes the ordinary power `x ^ n`. If the normalized traces converge
+absolutely at `r` and their two finite combinations agree for every insertion
+on `(0,r)`, their label coefficients agree. -/
+theorem eq_labels_of_normalized_trace_eq [Fintype I]
+    (zeroMode : ∀ i w, V →ₗ[ℂ] Module.End ℂ (E i w))
+    (hIndependent : LinearIndependent ℂ (coefficient zeroMode))
+    (base : ℚ) (d : ℕ+)
+    (hSupport : ∀ i w, coefficient zeroMode i w ≠ 0 →
+      ∃ n : ℕ, w = base + (n : ℚ) / (d : ℕ))
+    (a b : I → ℂ) {r : ℝ} (hr : 0 < r)
+    (hConv : ∀ i v, Summable fun n : ℕ =>
+      ‖coefficient zeroMode i (base + (n : ℚ) / (d : ℕ)) v‖ * r ^ n)
+    (hEq : ∀ (v : V) (x : ℝ), 0 < x → x < r →
+      (∑ i, a i * ∑' n : ℕ, coefficient zeroMode i (base + (n : ℚ) / (d : ℕ)) v * (x : ℂ) ^ n) =
+      (∑ i, b i * ∑' n : ℕ, coefficient zeroMode i (base + (n : ℚ) / (d : ℕ)) v * (x : ℂ) ^ n)) :
+    a = b := by
+  classical
+  have hLattice (v : V) :
+      (fun n : ℕ => ∑ i, a i * coefficient zeroMode i (base + (n : ℚ) / (d : ℕ)) v) =
+      (fun n : ℕ => ∑ i, b i * coefficient zeroMode i (base + (n : ℚ) / (d : ℕ)) v) := by
+    have hSeries (m : I → ℂ) (z : ℂ) (hz : ‖z‖ < r) : HasSum
+        (fun n : ℕ => (∑ i, m i * coefficient zeroMode i (base + (n : ℚ) / (d : ℕ)) v) * z ^ n)
+        (∑ i, m i * ∑' n : ℕ, coefficient zeroMode i (base + (n : ℚ) / (d : ℕ)) v * z ^ n) := by
+      simpa only [Finset.sum_mul, mul_assoc] using
+        (hasSum_sum (s := Finset.univ) fun i _ =>
+          (hasSum_mul_pow_of_summable_norm (hConv i v) hz.le).mul_left (m i))
+    exact eq_coefficients_of_hasSum_eqOn hr (hSeries a) (hSeries b) (hEq v)
+  have hRelation : ∑ i, (a i - b i) • coefficient zeroMode i = 0 := by
+    ext w v
+    simp only [Finset.sum_apply, LinearMap.sum_apply, Pi.smul_apply, LinearMap.smul_apply,
+      smul_eq_mul, Pi.zero_apply, LinearMap.zero_apply, sub_mul, Finset.sum_sub_distrib]
+    apply sub_eq_zero.mpr
+    by_cases hw : ∃ n : ℕ, w = base + (n : ℚ) / (d : ℕ)
+    · obtain ⟨n, rfl⟩ := hw
+      exact congrFun (hLattice v) n
+    · have hZero (i : I) : coefficient zeroMode i w = 0 := by
+        by_contra h
+        exact hw (hSupport i w h)
+      simp [hZero]
+  exact funext fun i => sub_eq_zero.mp
+    (Fintype.linearIndependent_iff.mp hIndependent _ hRelation i)
+
 end GradedTrace
 
 #print axioms exists_action_id_and_zero
 #print axioms linearIndependent_coefficient
+#print axioms eq_labels_of_normalized_trace_eq
 
 end D5.S3.VertexAlgebra.Modules.OrdinaryOnePointTrace
