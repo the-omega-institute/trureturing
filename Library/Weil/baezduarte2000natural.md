@@ -11,6 +11,12 @@ license: citation-only
 triage: anchor
 ---
 
+## Verified locator
+
+https://arxiv.org/abs/math/0011254v1, Sections 1.1--1.3 for the
+complex fractional-part family, reciprocal tail and parameter-one
+correction; Section 4 for the natural-prefix obstruction.
+
 # The natural-prefix obstruction and its exact scope
 
 The pinned source is [arXiv:math/0011254v1](https://arxiv.org/abs/math/0011254v1),
@@ -33,6 +39,23 @@ $g(n)=\sum_{k\le n}\mu(k)/k$ and the unbalanced natural prefix
 $$
 S_n(x)=\sum_{k=1}^n\mu(k)\rho\!\left(\frac1{kx}\right).
 $$
+
+Section 1.1 permits arbitrary complex coefficients in the finite
+fractional-part family and defines the constrained subspace by
+$\sum_k c_k\theta_k=0$. Section 1.2 gives its literal tail
+$f(x)=x^{-1}\sum_k c_k\theta_k$ for $x>1$. Section 1.3, equation
+labelled `Vn` in the author source, records Vasyunin's correction
+$V_n=S_n-g(n)\rho(1/x)$ at parameter one.
+
+`NymanTailCentering` uses this classical mechanism with
+$\theta_k=1/k$: its local error and reciprocal-tail energy add exactly,
+and correction by $-\sum_k c_k/k$ at parameter one gives an element
+of the existing constrained unit-interval class. Its explicit factor
+$1+\|\rho(1/x)\|_{L^2(0,1)}^2$ and comparison with the literal finite
+Gram distance are repository-derived quantitative consequences for
+arbitrary complex coefficients, not separately numbered statements
+of this paper. No optimality of that factor or asymptotic decay rate
+is asserted.
 
 Thus the approximation residual has sign $\chi+S_n$; it is not
 $\chi-S_n$. The coefficient cutoff passes through all positive integers

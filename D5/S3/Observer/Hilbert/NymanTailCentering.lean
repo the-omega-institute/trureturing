@@ -176,11 +176,11 @@ theorem constrained_distance_le (N : ℕ) :
       (1 + ‖NymanUnitIntervalMellin.source 1‖ ^ 2) * distance N ^ 2 := by
   have hp : (shell N).starProjection target ∈ (synthesis N).range := by
     rw [synthesis_range]
-    exact (shell N).starProjection_mem target
+    exact (shell N).starProjection_apply_mem target
   obtain ⟨c, hc⟩ := hp
   have hd : ‖target - synthesis N c‖ = distance N := by
-    rw [hc, ← dist_eq_norm, (shell N).dist_starProjection_eq_infDist]
-    rfl
+    simpa only [hc, dist_eq_norm, distance] using
+      (shell N).dist_starProjection_eq_infDist target
   obtain ⟨hmem, hbound⟩ := centered_approximation N c
   have hle : Metric.infDist NymanUnitIntervalMellin.unitTarget (closure NymanUnitIntervalMellin.B0) ≤
       ‖NymanUnitIntervalMellin.unitTarget - centered N c‖ := by

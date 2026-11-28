@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Hilbert;
 internal sealed class NymanTailCenteringDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Observer/Hilbert/NymanTailCentering.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Weil/baezduarte2000natural");
     private static Formula N => F.Id("N");
     private static Formula C => F.Id("c");
     private static Formula One => D(1);
@@ -34,7 +36,7 @@ internal sealed class NymanTailCenteringDocument : IScribeDocumentDefinition
     private static DocumentBlock Theorem(string name, string title, Formula statement, string text) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -42,10 +44,11 @@ internal sealed class NymanTailCenteringDocument : IScribeDocumentDefinition
         H("Nyman Tail Centering"), Blocks(
             Paragraph(Text("Use complex L2 with Lebesgue measure. On the positive half-line, chi is the indicator of (0,1) and rho_n(x) is fract(1/(n x)), for n at least one. On (0,1), r_n is the restriction of rho_n and the target is the constant one. The half-line and unit-interval norms below refer to these two distinct Hilbert spaces.")),
             Paragraph(Text("For every natural N, coefficients are indexed by n from one through N; equivalently n=i+1 for i in Fin N. Define S_N(c) as the sum of c_n rho_n and U_N(c) as the sum of c_n r_n. The empty sums are allowed. Define the tail coefficient and the corrected unit-interval approximant by")),
-            Paragraph(Math(Disp(Seq(A, Eq, Sum, Underscore, Grp(F.Id("n"), Eq, One),
+            Paragraph(Math(Disp(Seq(Bind, A, Eq, Sum, Underscore, Grp(F.Id("n"), Eq, One),
                 Caret, Grp(N), Div(Sub("c", F.Id("n")), F.Id("n")), Comma, Sp,
                 G, Eq, U, Minus, A, R1)))),
             Paragraph(Text("B_0 is the existing constrained Nyman class: finite sums of u_j fract(theta_j/x), where each real theta_j lies in (0,1] and the complex weighted coefficient sum of u_j theta_j is zero. Repeated parameters are permitted. Its closure and infimum distance use the unit-interval Hilbert norm. The number d_N is the distance from chi to the span of rho_1 through rho_N in the original positive-half-line Hilbert space.")),
+            Paragraph(Text("The reciprocal-tail formula is classical: Baez-Duarte, Arithmetical Aspects of Beurling's Real Variable Reformulation of the Riemann Hypothesis, Section 1.2, writes the tail of a finite fractional-part sum as the weighted coefficient sum divided by x. Section 1.3 records Vasyunin's correction at parameter one for Mobius coefficients. The results below implement the same mechanism for arbitrary complex coefficients in the two L2 quotient spaces and derive the stated quantitative finite-distance comparison; no new literature theorem or optimal constant is claimed.")),
             Theorem("finite_error_split", "The exact reciprocal-tail penalty",
                 Seq(Bind, Whole, Eq, Local, Plus, Sq(Norm(A))),
                 "For x greater than one, rho_n(x)=1/(n x), so the synthesis has tail a_N(c)/x. The integral of x to the power minus two on (1,infinity) is exactly one. Splitting the squared error at one gives the identity; the endpoint singleton has Lebesgue measure zero. No coefficient constraint is assumed."),
