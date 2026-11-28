@@ -198,10 +198,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
       ``OmegaChecks.InitBoundaries.FiniteMembership.ofFirstVectorMember)
   | `Init.Data.List.Lemmas, ``List.eq_replicate_or_eq_replicate_append_cons =>
     return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
-      ``OmegaChecks.InitBoundaries.FiniteMembership.ofRunDecomposition)
+      ``OmegaChecks.InitBoundaries.FiniteMembership.runDecompositionIffEqualityCases)
   | `Init.Data.List.Lemmas, ``List.replicateRecOn =>
     return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
-      ``OmegaChecks.InitBoundaries.FiniteMembership.ofRunInduction)
+      ``OmegaChecks.InitBoundaries.FiniteMembership.runInductionIffEqualityCases)
   | `Init.Data.List.Lemmas, ``List.eq_or_ne_mem_of_mem =>
     return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
       ``OmegaChecks.InitBoundaries.FiniteMembership.ofListMember)
@@ -210,7 +210,7 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
       ``OmegaChecks.InitBoundaries.FiniteMembership.ofArrayMember)
   | `Init.Data.List.Lemmas, ``List.eq_append_cons_of_mem =>
     return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
-      ``OmegaChecks.InitBoundaries.FiniteMembership.ofFirstListMember)
+      ``OmegaChecks.InitBoundaries.FiniteMembership.firstListMemberIffEqualityCases)
   | `Init.Data.Array.Lemmas, ``Array.eq_push_append_of_mem =>
     return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
       ``OmegaChecks.InitBoundaries.FiniteMembership.ofFirstArrayMember)
