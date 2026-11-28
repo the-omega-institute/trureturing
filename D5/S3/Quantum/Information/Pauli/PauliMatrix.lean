@@ -9,7 +9,11 @@
 /- pauliMatrix: proof_shape: bind-only; escape_witness: none; consumer: B_formula and the
    stabilizer word construction. -/
 
-import D5.S3.Quantum.FiniteDimensional
+module
+
+public import D5.S3.Quantum.FiniteDimensional
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
