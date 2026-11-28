@@ -10,7 +10,8 @@ Preregistration: https://github.com/the-omega-institute/trureturing/issues/35123
 -/
 
 set_option autoImplicit false
-set_option maxHeartbeats 400000
+set_option Elab.async false
+set_option maxHeartbeats 250000
 
 noncomputable section
 
@@ -42,7 +43,6 @@ private theorem ip_sub (x y z : Fin n → ℂ) : ip x (y - z) = ip x y - ip x z 
 
 private theorem sub_ip (x y z : Fin n → ℂ) : ip (x - y) z = ip x z - ip y z := by
   rw [ip, star_sub, sub_dotProduct]
-  rfl
 
 private theorem ip_smul (c : ℂ) (x y : Fin n → ℂ) : ip x (c • y) = c * ip x y :=
   dotProduct_smul _ _ _
@@ -96,7 +96,7 @@ private theorem align_phase (x y : UnitVector n) :
   · exact ⟨y, rfl, by change z = (‖z‖ : ℂ); simp [hz]⟩
   let d := star z / (‖z‖ : ℂ)
   have hd : ‖d‖ = 1 := by
-    simp [d, norm_div, norm_ne_zero_iff.mpr hz]
+    simp [d, norm_ne_zero_iff.mpr hz]
   have hd' : star d * d = 1 := by
     rw [Complex.star_def, Complex.conj_mul', hd]
     norm_num
@@ -107,7 +107,6 @@ private theorem align_phase (x y : UnitVector n) :
   change star z / (‖z‖ : ℂ) * z = _
   rw [div_mul_eq_mul_div, Complex.star_def, Complex.conj_mul']
   field_simp [norm_ne_zero_iff.mpr hz]
-  <;> push_cast <;> ring
 
 private def upper (t : ℝ) : ℝ := Real.sqrt ((1 + t) / 2)
 private def lower (t : ℝ) : ℝ := Real.sqrt ((1 - t) / 2)
@@ -123,8 +122,9 @@ private theorem amplitude_overlap (x y : UnitVector n) :
   let t := ground x y
   have ha : upper t ^ 2 = (1 + t) / 2 := Real.sq_sqrt (by linarith [ground_nonneg x y])
   have hb : lower t ^ 2 = (1 - t) / 2 := Real.sq_sqrt (by linarith [ground_le_one x y])
-  apply (sq_eq_sq₀ (by exact mul_nonneg (mul_nonneg (by norm_num) (Real.sqrt_nonneg _))
-    (Real.sqrt_nonneg _)) (norm_nonneg _)).mp
+  have hnonneg : 0 ≤ 2 * upper t * lower t :=
+    mul_nonneg (mul_nonneg (by norm_num) (Real.sqrt_nonneg _)) (Real.sqrt_nonneg _)
+  apply (sq_eq_sq₀ hnonneg (norm_nonneg _)).mp
   calc
     (2 * upper t * lower t) ^ 2 = 4 * upper t ^ 2 * lower t ^ 2 := by ring
     _ = ‖ip x.val y.val‖ ^ 2 := by rw [ha, hb]; nlinarith [ground_sq x y]
@@ -137,9 +137,9 @@ private theorem swapped_difference (u v : Fin n → ℂ) {a b t : ℝ}
       (t : ℂ) • (rankOneDensity u - rankOneDensity v) := by
   have h : (a : ℂ) ^ 2 - (b : ℂ) ^ 2 = (t : ℂ) := by exact_mod_cast ht
   ext i j
-  simp only [rankOneDensity, sub_apply, smul_apply, vecMulVec_apply, Pi.star_apply, Pi.add_apply,
-    Pi.smul_apply, smul_eq_mul, star_add, star_mul, Complex.star_ofReal]
-  linear_combination (u i * star (u j) - v i * star (v j)) * h
+  simp only [rankOneDensity, Matrix.sub_apply, Matrix.smul_apply, vecMulVec_apply, Pi.star_apply, Pi.add_apply,
+    Pi.smul_apply, smul_eq_mul, star_add, star_mul, Complex.star_def, Complex.conj_ofReal]
+  linear_combination (u i * (starRingEnd ℂ) (u j) - v i * (starRingEnd ℂ) (v j)) * h
 
 private theorem swapped_representation (x y : UnitVector n)
     (hne : rankOneDensity x.val ≠ rankOneDensity y.val) :
@@ -160,11 +160,11 @@ private theorem swapped_representation (x y : UnitVector n)
       nlinarith [norm_nonneg (ip x.val y.val)]
     have he : x.val - y'.val = 0 := by
       apply dotProduct_star_self_eq_zero.mp
-      rw [dotProduct_comm]
       change ip (x.val - y'.val) (x.val - y'.val) = 0
       have hyx := ip_conj x.val y'.val
       rw [hxy, hc] at hyx
-      simp [sub_ip, ip_sub, ip_self, hxy, hc, ← hyx]
+      rw [sub_ip, ip_sub, ip_sub, ip_self, ip_self, hxy, hc, ← hyx]
+      simp
     exact hne ((congrArg rankOneDensity (sub_eq_zero.mp he)).trans hy')
   refine ⟨ht, ?_⟩
   let a := upper t
@@ -184,19 +184,19 @@ private theorem swapped_representation (x y : UnitVector n)
   let v := ((t : ℂ)⁻¹) • ((a : ℂ) • y'.val - (b : ℂ) • x.val)
   have hu : ip u u = 1 := by
     simp only [u, smul_ip, ip_smul, sub_ip, ip_sub, ip_self, hc, hc',
-      star_inv₀, Complex.star_ofReal]
+      star_inv₀, Complex.star_def, Complex.conj_ofReal]
     field_simp
     linear_combination hd * ((a : ℂ) ^ 2 - (b : ℂ) ^ 2 + (t : ℂ)) -
-      hs * ((a : ℂ) ^ 2 + (b : ℂ) ^ 2 - 1)
+      hs * ((a : ℂ) ^ 2 + (b : ℂ) ^ 2)
   have hv : ip v v = 1 := by
     simp only [v, smul_ip, ip_smul, sub_ip, ip_sub, ip_self, hc, hc',
-      star_inv₀, Complex.star_ofReal]
+      star_inv₀, Complex.star_def, Complex.conj_ofReal]
     field_simp
     linear_combination hd * ((a : ℂ) ^ 2 - (b : ℂ) ^ 2 + (t : ℂ)) -
-      hs * ((a : ℂ) ^ 2 + (b : ℂ) ^ 2 - 1)
+      hs * ((a : ℂ) ^ 2 + (b : ℂ) ^ 2)
   have huv : ip u v = 0 := by
     simp only [u, v, smul_ip, ip_smul, sub_ip, ip_sub, ip_self, hc, hc',
-      star_inv₀, Complex.star_ofReal]
+      star_inv₀, Complex.star_def, Complex.conj_ofReal]
     field_simp
     linear_combination (2 * (a : ℂ) * (b : ℂ)) * hs
   have hx : (a : ℂ) • u + (b : ℂ) • v = x.val := by
@@ -237,7 +237,7 @@ private theorem spectral_pairing (H : Matrix (Fin n) (Fin n) ℂ)
   have hslack : t - pairing H ((t : ℂ) • (rankOneDensity u.val - rankOneDensity v.val)) =
       (t / 2) * (qu + qv) := by
     unfold pairing qu qv
-    rw [mul_smul, trace_smul, mul_sub, trace_sub, smul_eq_mul,
+    rw [Matrix.mul_smul, trace_smul, mul_sub, trace_sub, smul_eq_mul,
       ← (pure_state_handshake u.val (ip_self u) H).2.2,
       ← (pure_state_handshake v.val (ip_self v) H).2.2]
     simp only [sub_mulVec, add_mulVec, one_mulVec, ip_sub, ip_self, dotProduct_add,
@@ -252,7 +252,6 @@ private theorem spectral_pairing (H : Matrix (Fin n) (Fin n) ℂ)
     rw [hplus'.2, add_mulVec, one_mulVec, add_comm, add_eq_zero_iff_eq_neg]
   have ht' : 0 < t / 2 := by positivity
   refine ⟨by linarith [mul_nonneg ht'.le (add_nonneg hminus'.1 hplus'.1)], ?_⟩
-  rw [← sub_eq_zero (a := _ ) (b := t)]
   constructor
   · intro h
     have hz : (t / 2) * (qu + qv) = 0 := by linarith
@@ -282,15 +281,66 @@ theorem fixed_pair_equality (x y : UnitVector n)
   obtain ⟨ht, u, v, huv, hx, hy⟩ := swapped_representation x y hne
   have ht' := ground_le_one x y
   have hd := (amplitudes ht.le ht').2
-  have hA := (congrArg₂ Sub.sub hx hy).trans (swapped_difference u.val v.val hd)
-  refine ⟨ht, ht', hA ▸ (spectral_pairing H hminus hplus u v ht).1, ?_⟩
-  constructor
-  · intro h
-    rw [hA] at h
-    obtain ⟨hu, hv⟩ := (spectral_pairing H hminus hplus u v ht).2.mp h
-    exact ⟨u, v, huv, hu, hv, hx, hy⟩
-  · rintro ⟨u', v', _, hu', hv', hx', hy'⟩
-    rw [(congrArg₂ Sub.sub hx' hy').trans (swapped_difference u'.val v'.val hd)]
-    exact (spectral_pairing H hminus hplus u' v' ht).2.mpr ⟨hu', hv'⟩
+  have hA : rankOneDensity x.val - rankOneDensity y.val =
+      (ground x y : ℂ) • (rankOneDensity u.val - rankOneDensity v.val) :=
+    (congrArg₂ (· - ·) hx hy).trans (swapped_difference u.val v.val hd)
+  refine ⟨ht, ht', ?_, ?_⟩
+  · rw [hA]
+    exact (spectral_pairing H hminus hplus u v ht).1
+  · constructor
+    · intro h
+      rw [hA] at h
+      obtain ⟨hu, hv⟩ := (spectral_pairing H hminus hplus u v ht).2.mp h
+      exact ⟨u, v, huv, hu, hv, hx, hy⟩
+    · rintro ⟨u', v', _, hu', hv', hx', hy'⟩
+      have hA' : rankOneDensity x.val - rankOneDensity y.val =
+          (ground x y : ℂ) • (rankOneDensity u'.val - rankOneDensity v'.val) :=
+        (congrArg₂ (· - ·) hx' hy').trans (swapped_difference u'.val v'.val hd)
+      rw [hA']
+      exact (spectral_pairing H hminus hplus u' v' ht).2.mpr ⟨hu', hv'⟩
+
+
+private def phaseX : UnitVector 2 :=
+  ⟨![4 / 5, (3 / 5) * Complex.I], by
+    norm_num [Fin.sum_univ_two, Complex.normSq_apply, Complex.mul_re, Complex.mul_im]⟩
+
+private def phaseY (c : ℂ) (hc : Complex.normSq c = 16 / 25) : UnitVector 2 :=
+  ⟨![3 / 5, c], by
+    have hc' : c.re * c.re + c.im * c.im = 16 / 25 := hc
+    norm_num [Fin.sum_univ_two, Complex.normSq_apply, hc']⟩
+
+private def sharedY : UnitVector 2 :=
+  phaseY ((4 / 5) * Complex.I) (by
+    norm_num [Complex.normSq_apply, Complex.mul_re, Complex.mul_im])
+
+private def oppositeY : UnitVector 2 :=
+  phaseY (-((4 / 5) * Complex.I)) (by
+    norm_num [Complex.normSq_apply, Complex.mul_re, Complex.mul_im])
+
+private def phaseH : Matrix (Fin 2) (Fin 2) ℂ := diagonal ![1, -1]
+
+private theorem phase_pairing (c : ℂ) (hc : Complex.normSq c = 16 / 25) :
+    pairing phaseH (rankOneDensity phaseX.val - rankOneDensity (phaseY c hc).val) = 7 / 25 := by
+  have hc' : c.re * c.re + c.im * c.im = 16 / 25 := hc
+  unfold pairing phaseH trace
+  simp only [Fin.sum_univ_two, diag_apply, diagonal_mul, Matrix.sub_apply, rankOneDensity,
+    vecMulVec_apply, Pi.star_apply, phaseX, phaseY, Matrix.cons_val_zero, Matrix.cons_val_one]
+  norm_num [Complex.star_def, Complex.mul_re, Complex.mul_im, Complex.conj_ofNat]; linarith
+
+/-- At the same diagonal test, flipping one relative phase changes the exact slack. -/
+theorem phase_diagnostic :
+    ground phaseX sharedY = 7 / 25 ∧
+    pairing phaseH (rankOneDensity phaseX.val - rankOneDensity sharedY.val) = 7 / 25 ∧
+    ground phaseX oppositeY = 1 ∧
+    pairing phaseH (rankOneDensity phaseX.val - rankOneDensity oppositeY.val) = 7 / 25 := by
+  refine ⟨?_, phase_pairing _ _, ?_, phase_pairing _ _⟩
+  · norm_num [ground, phaseX, sharedY, phaseY, Fin.sum_univ_two,
+      Complex.normSq_apply, Complex.star_def, Complex.conj_ofNat, Complex.mul_re,
+      Complex.mul_im, Real.sqrt_div]
+  · norm_num [ground, phaseX, oppositeY, phaseY, Fin.sum_univ_two,
+      Complex.normSq_apply, Complex.star_def, Complex.conj_ofNat, Complex.mul_re, Complex.mul_im]
+
+#print axioms fixed_pair_equality
+#print axioms phase_diagnostic
 
 end D5.S3.Quantum.QuantumChannels.CouplingWassersteinEquality
