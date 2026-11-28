@@ -28,9 +28,8 @@ public import OmegaInit.Data.List.Find
 public import OmegaInit.Data.List.Lemmas
 public import OmegaInit.Data.List.Monadic
 public import OmegaInit.Data.List.Perm
-public import OmegaInit.Data.List.Scan.Lemmas
+public import OmegaInit.Data.List.Scan
 public import OmegaInit.Data.Nat
-public import OmegaInit.Data.Nat.Bitwise.Lemmas
 public import OmegaInit.Data.Option.Attach
 public import OmegaInit.Data.Option.Basic
 public import OmegaInit.Data.Option.Lemmas
@@ -42,8 +41,7 @@ public import OmegaInit.Data.Prod
 public import OmegaInit.Data.Slice.Operations
 public import OmegaInit.Data.String.Decode
 public import OmegaInit.Data.String.Slice
-public import OmegaInit.Data.Sum.Basic
-public import OmegaInit.Data.Sum.Lemmas
+public import OmegaInit.Data.Sum
 public import OmegaInit.Data.ULift
 public import OmegaInit.Ext
 public import OmegaInit.Grind.Lemmas
