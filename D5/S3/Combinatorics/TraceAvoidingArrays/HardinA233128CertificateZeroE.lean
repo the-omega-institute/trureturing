@@ -42,6 +42,7 @@ statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e5005
 unseen_0101010: proof_shape=bind-only; consumers=row_counts_01
 -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128Rows
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128Fibres
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge

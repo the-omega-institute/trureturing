@@ -206,13 +206,15 @@ private theorem tail_iff {n : ℕ} (s : Seen) (p : B) (f : Fin n → WidthRow k)
       · intro h
         constructor
         · intro hn
-          simpa only [edge, Fin.tail, Fin.succ] using h.1 (by omega)
+          simpa only [edge, Fin.tail, Fin.succ_mk] using h.1 (by omega)
         · intro i hi
           exact h.2 i (by omega)
       · rintro ⟨h0, ht⟩
         constructor
         · intro hn
-          simpa only [edge, Fin.tail, Fin.succ] using h0 (by omega)
+          have hpos : 0 < n := by omega
+          have htail : Fin.tail f ⟨0, hpos⟩ = f ⟨1, hn⟩ := rfl
+          simpa only [edge, htail] using h0 hpos
         · intro i hi
           exact ht i (by omega)
     rw [hb]

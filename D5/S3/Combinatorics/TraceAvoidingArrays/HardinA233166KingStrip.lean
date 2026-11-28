@@ -6,6 +6,7 @@
    utility: none
    digest: Exact literal six-column king-strip counts, recurrence and formal series. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.Data.Fin.Init

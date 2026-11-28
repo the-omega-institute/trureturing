@@ -59,6 +59,7 @@ completed_0102120: proof_shape=bind-only; consumers=row_counts_01
 completed_0102121: proof_shape=bind-only; consumers=row_counts_01
 -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
