@@ -733,6 +733,69 @@ set_option linter.deprecated false in
 theorem ofLeftInverse (split : type_of% @Function.Injective.leftInverse.{1,1}) : type_of% @Classical.em :=
   ofExists fun {α β f} hf hα => @split α β f hf hα
 
+/-- Propositional unique choice for a small family of inhabited subsingleton fibers. -/
+abbrev UniqueSections : Prop := ∀ {ι : Type} (F : ι → Type) [∀ i, Subsingleton (F i)],
+  (∀ i, Nonempty (F i)) → Nonempty (∀ i, F i)
+
+/-- An inverse to the injective projection of a subsingleton family supplies a section.
+The extra point makes the source inhabited even when the index type is empty. -/
+theorem sectionsOfExists (split : type_of% @Function.Injective.exists_leftInverse.{1,1}) : UniqueSections := by
+  intro ι F fibers inhabited
+  let forget : Option ((i : ι) × F i) → Option ι := Option.map Sigma.fst
+  have inj : Function.Injective forget := by
+    intro x y h
+    cases x with
+    | none => cases y with | none => rfl | some b => nomatch h
+    | some a =>
+      cases y with
+      | none => nomatch h
+      | some b =>
+        obtain ⟨i, x⟩ := a
+        obtain ⟨j, y⟩ := b
+        have eq : i = j := Option.some.inj h
+        subst j
+        exact congrArg (fun z => some (Sigma.mk i z)) (Subsingleton.elim x y)
+  obtain ⟨back, law⟩ := @split _ _ forget inj ⟨none⟩
+  have covers (i : ι) : forget (back (some i)) = some i := (inhabited i).elim fun a =>
+    congrArg forget (law (some ⟨i, a⟩))
+  refine ⟨fun i => ?_⟩
+  generalize h : back (some i) = v
+  have index := (congrArg forget h).symm.trans (covers i)
+  cases v with
+  | none => nomatch index
+  | some v => exact (Option.some.inj index) ▸ v.2
+
+/-- The small-universe splitting principle combines excluded middle and unique choice. -/
+abbrev SplittingPrinciple : Prop := (type_of% @Classical.em) ∧ UniqueSections
+
+/-- Off the image a chosen default suffices. In the image, injectivity makes the
+preimage unique, so the fibers below require only propositional unique choice. -/
+theorem existsIff : (type_of% @Function.Injective.exists_leftInverse.{1,1}) ↔
+    SplittingPrinciple := by
+  constructor
+  · exact fun split => ⟨ofExists split, sectionsOfExists split⟩
+  · rintro ⟨em, choose⟩ α β f inj ⟨a₀⟩
+    let F (b : β) := {a : α // (∀ x, f x = b → a = x) ∧ ((¬ ∃ x, f x = b) → a = a₀)}
+    letI (b : β) : Subsingleton (F b) := ⟨fun x y => by
+      apply Subtype.ext
+      cases em (∃ a, f a = b) with
+      | inl image => obtain ⟨a, h⟩ := image; exact (x.2.1 a h).trans (y.2.1 a h).symm
+      | inr absent => exact (x.2.2 absent).trans (y.2.2 absent).symm⟩
+    have inhabited (b : β) : Nonempty (F b) := by
+      cases em (∃ a, f a = b) with
+      | inl image =>
+        obtain ⟨a, h⟩ := image
+        exact ⟨a, fun x hx => inj (h.trans hx.symm), fun no => (no ⟨a,h⟩).elim⟩
+      | inr no => exact ⟨a₀, fun x hx => (no ⟨x,hx⟩).elim, fun _ => rfl⟩
+    obtain ⟨sectionFn⟩ := choose F inhabited
+    exact ⟨fun b => (sectionFn b).1, fun a => (sectionFn (f a)).2.1 a rfl⟩
+
+set_option linter.deprecated false in
+theorem leftInverseIff : (type_of% @Function.Injective.leftInverse.{1,1}) ↔
+    SplittingPrinciple :=
+  ⟨fun split => existsIff.mp fun {α β f} hf hα => @split α β f hf hα,
+   fun h {_ _} _ hf _ => existsIff.mpr h hf⟩
+
 end EmbeddingRange
 
 namespace LexicographicOrder

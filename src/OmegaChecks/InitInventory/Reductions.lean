@@ -199,7 +199,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     ContainerEquality.witnesses.map (fun row => row.2.2) ++
     [``ConstructorNormalization.propextOfDecision, ``ConstructorNormalization.addCancelOfSucc,
      ``ConstructorNormalization.prefixEqualityOfCons] ++
-    [``EmbeddingRange.ofExists, ``EmbeddingRange.ofLeftInverse,
+    [``EmbeddingRange.ofExists, ``EmbeddingRange.ofLeftInverse, ``EmbeddingRange.existsIff, ``EmbeddingRange.leftInverseIff,
       ``LexicographicOrder.ofListNotLE, ``LexicographicOrder.ofArrayNotLE, ``LexicographicOrder.ofVectorNotLE,
       ``FiniteMembership.ofRunDecomposition, ``FiniteMembership.ofRunInduction,
       ``FiniteMembership.ofListMember, ``FiniteMembership.ofArrayMember,

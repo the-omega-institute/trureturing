@@ -116,6 +116,13 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   if owner == `Init.Data.Option.Monadic then
     if let some entry := OmegaChecks.InitBoundaries.TransformerLaws.OptionIteration.directConsequences.lookup name then
       return entry
+  if owner == `Init.Data.Function then
+    if name == ``Function.Injective.exists_leftInverse then
+      return (``OmegaChecks.InitBoundaries.EmbeddingRange.SplittingPrinciple,
+        ``OmegaChecks.InitBoundaries.EmbeddingRange.existsIff)
+    if name == `Function.Injective.leftInverse then
+      return (``OmegaChecks.InitBoundaries.EmbeddingRange.SplittingPrinciple,
+        ``OmegaChecks.InitBoundaries.EmbeddingRange.leftInverseIff)
   if owner == `Init.Data.Sum.Lemmas then
     if name == ``Sum.forall_sum then
       return (``OmegaChecks.InitBoundaries.SumFunctionEta, ``OmegaChecks.InitBoundaries.sumEtaOfForall)
@@ -526,8 +533,6 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     if let some witness := OmegaChecks.InitBoundaries.ClassicalConsequences.witnesses.lookup name then
       return (``Classical.em, witness)
   let witness ← match owner, name with
-    | `Init.Data.Function, ``Function.Injective.exists_leftInverse => some ``OmegaChecks.InitBoundaries.EmbeddingRange.ofExists
-    | `Init.Data.Function, `Function.Injective.leftInverse => some ``OmegaChecks.InitBoundaries.EmbeddingRange.ofLeftInverse
     | `Init.Data.List.Lex, ``List.not_le | `Init.Data.List.Lex, `List.not_le_iff_gt =>
       some ``OmegaChecks.InitBoundaries.LexicographicOrder.ofListNotLE
     | `Init.Data.Array.Lex.Lemmas, ``Array.not_le | `Init.Data.Array.Lex.Lemmas, `Array.not_le_iff_gt =>
