@@ -52,7 +52,8 @@ private def specializeCollector (e : Expr) : MetaM (Option Expr) := do
     return some (← mkAppOptM method #[args[0]!, m, β, monad, args[4]!, none, it])
   return none
 
-public def finiteCollectors (env : Environment) (input : Expr) (withinImplementation := false) : IO Expr := do
+public def finiteCollectors (env : Environment) (input : Expr) (withinImplementation := false)
+    (keepLoop : Option Name := none) : IO Expr := do
   let used := input.getUsedConstants
   let aliases := used.foldl (init := ({} : NameSet)) fun ns n =>
     if isDefaultLoopAlias env n then ns.insert n else ns
@@ -85,7 +86,7 @@ public def finiteCollectors (env : Environment) (input : Expr) (withinImplementa
           if let some fold ← unfoldDefinition? sub then return .visit fold
     -- A generic searcher can revisit a position. At concrete uses of the same
     -- instance, the iterator may supply a proof that its traversal is finite.
-    if (hasLoop && aliases.contains head) || (hasStringFold && isDefaultLoopAlias env head) then
+    if keepLoop != some head && ((hasLoop && aliases.contains head) || (hasStringFold && isDefaultLoopAlias env head)) then
       if let some core ← unfoldDefinition? sub then
         if let some loop ← InitPort.LawfulLoop.specializeFiniteDefault? core then return .done loop
     for rule in patterns do
