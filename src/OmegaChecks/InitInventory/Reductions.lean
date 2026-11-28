@@ -178,7 +178,9 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``ChoiceOperands.fromChoice, ``ExistentialConjunction.ofRule] ++
     [``SubsingletonState.ofState, ``SubsingletonState.iffState] ++
     [``QuotientFibers.unaryOfLift, ``QuotientFibers.unaryOfSetoidLift,
-      ``QuotientFibers.binaryOfUnaries, ``QuotientFibers.unaryIffBinary] ++
+      ``QuotientFibers.binaryOfUnaries, ``QuotientFibers.unaryIffBinary,
+      ``QuotientFibers.liftFromProp, ``QuotientFibers.liftToProp,
+      ``QuotientFibers.unaryOfSelection, ``QuotientFibers.setoidLiftOfSelection_mk] ++
     SumFunctions.consequences.map (fun row => row.2.2) ++
     [``SumFunctions.etaIffBranches, ``SumFunctions.etaOfComposition, ``SumFunctions.compositionOfEta,
       ``SumFunctions.identityOfEta, ``SumFunctions.constantsOfComposition, ``SumFunctions.swapIffIdentity] ++

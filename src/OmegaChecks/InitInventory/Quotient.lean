@@ -190,6 +190,51 @@ public theorem unaryIffBinary : Nonempty (type_of% @Quotient.recOnSubsingleton.{
     Nonempty (type_of% @Quotient.recOnSubsingleton₂.{u,u,v}) :=
   ⟨fun ⟨unary⟩ => ⟨binaryOfUnaries @unary @unary⟩, fun ⟨binary⟩ => ⟨unaryOfBinary @binary⟩⟩
 
+/-- A quotient of a proposition supplies its own representative by small elimination.
+Proof irrelevance identifies its class with the requested point in every target universe. -/
+public def liftFromProp : type_of% @Quot.pliftOn.{0,v} := fun {_ α r} q f _ =>
+  let a : α := Quot.ind (β := fun _ : Quot r => α) (fun a => a) q
+  f a rfl
+
+/-- In a propositional target the representative can instead be used inside existential elimination. -/
+public theorem liftToProp : type_of% @Quot.pliftOn.{u,0} := fun {_ _ _} q f _ => by
+  obtain ⟨a, e⟩ := Quot.exists_rep q
+  exact f a e.symm
+
+/-- Supply an element only when the entire fiber is subsingleton and known to be inhabited. -/
+public abbrev SubsingletonSelection := ∀ {T : Sort v}, Subsingleton T → Nonempty T → T
+
+public def unaryOfSelection (pick : SubsingletonSelection.{v}) : type_of% @Quot.recOnSubsingleton.{u,v} :=
+  fun {_ r F} h q f => pick
+    (Quot.ind (β := fun q : Quot r => Subsingleton (F q)) h q)
+    (Quot.ind (β := fun q : Quot r => Nonempty (F q)) (fun a => ⟨f a⟩) q)
+
+/-- Exactness makes all outputs obtainable from representatives of this one quotient point equal. -/
+public def setoidLiftOfSelection (pick : SubsingletonSelection.{max 1 v}) (exactRep : type_of% @Quotient.exact.{u}) :
+    type_of% @Quotient.pliftOn.{u,v} := fun {β α s} q f coherent => by
+  let T := {b : β // ∃ (a : α) (e : q = Quotient.mk s a), f a e = b}
+  have inhabited : Nonempty T := by
+    obtain ⟨a, e⟩ := Quotient.exists_rep q
+    exact ⟨⟨f a e.symm, a, e.symm, rfl⟩⟩
+  have unique : Subsingleton T := ⟨fun x y => by
+    obtain ⟨a, e, hx⟩ := x.property
+    obtain ⟨b, d, hy⟩ := y.property
+    exact Subtype.ext (hx.symm.trans ((coherent a b e d (exactRep (e.symm.trans d))).trans hy))⟩
+  exact (pick unique inhabited).val
+
+public theorem setoidLiftOfSelection_mk
+    (pick : SubsingletonSelection.{max 1 v}) (exactRep : type_of% @Quotient.exact.{u})
+    {β : Sort v} {α : Sort u} {s : Setoid α} (a : α)
+    (f : ∀ b, Quotient.mk s a = Quotient.mk s b → β)
+    (coherent : ∀ b c (e : Quotient.mk s a = Quotient.mk s b) (d : Quotient.mk s a = Quotient.mk s c),
+      s.r b c → f b e = f c d) :
+    setoidLiftOfSelection (@pick) (@exactRep) (Quotient.mk s a) f coherent = f a rfl := by
+  have branch (x : {z : β // ∃ (b : α) (e : Quotient.mk s a = Quotient.mk s b), f b e = z}) :
+      x.val = f a rfl := by
+    obtain ⟨b, e, h⟩ := x.property
+    exact h.symm.trans (coherent b a e rfl (exactRep e.symm))
+  exact branch _
+
 end OmegaChecks.InitBoundaries.QuotientFibers
 
 namespace OmegaChecks.InitBoundaries.QuotientDecision

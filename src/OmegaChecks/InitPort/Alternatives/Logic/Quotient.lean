@@ -9,8 +9,11 @@ coherence premise uses quotient soundness to transport between fibers.
 The original types of `Quot.recOnSubsingleton`, `Quotient.recOnSubsingleton`,
 `Quotient.recOnSubsingleton₂` and both `pliftOn` operations admit direct terms in
 the representative model: the quotient point itself supplies a representative.
-That operation is unavailable on the native carrier. These five interfaces remain open
-there. In `InitInventory.Quotient`, `QuotientFibers` builds each unary subsingleton
+On the native carrier, `Quot.pliftOn` is constructible when its domain or result
+lies in `Prop`. For arbitrary universes, selection from inhabited subsingletons
+suffices for `Quot.recOnSubsingleton`. Given that selection and `Quotient.exact`,
+the setoid pointed lift also computes the requested branch on each representative.
+The unrestricted interfaces remain open. In `InitInventory.Quotient`, `QuotientFibers` builds each unary subsingleton
 recursor from the corresponding `pliftOn`. The setoid binary recursor can be built
 from unary recursors at the two carrier universes. At equal carrier universes a
 binary recursor also gives back a unary one. For `Quotient.exact`, decidability of the setoid relation suffices by
