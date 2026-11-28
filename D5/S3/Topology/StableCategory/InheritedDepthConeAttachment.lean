@@ -7,7 +7,7 @@
    digest: An attachment retains a relative retraction and its exact cone base under subdivision. -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.Topology.StableCategory.LowerCoverSubdivision
+import D5.S3.Topology.StableCategory.OrdinarySubdivisionTransfer
 import D5.S3.Topology.StableCategory.TrimmedAnchorMixedCone
 
 /-!
@@ -25,7 +25,6 @@ noncomputable section
 namespace D5.S3.Topology.StableCategory.InheritedDepthConeAttachment
 
 open DescendingClosureContiguity (exists_relative_contiguity_of_le)
-open D5.S3.Topology.LowerCoverSubdivision (liftedRegion liftedRegion_lower)
 open OrdinarySubdivisionTransfer (finiteSpaceSubdivision)
 open PartialOrder (NonemptyFiniteChains)
 open PartialOrder.NonemptyFiniteChains (orderHomMap)
@@ -34,8 +33,7 @@ open Relation (EqvGen)
 
 open private restrictChains unionMap map_fence from D5.S3.Topology.SubdivisionCategoricalCover
 open private chainsCongr homOfIso from D5.S3.Topology.StableCategory.OrdinarySubdivisionTransfer
-open private depth_finite from D5.S3.Topology.StableCategory.ProductStableLower
-open private relative_fence_of_comparison from
+open private liftedRegion liftedRegion_lower relative_fence_of_comparison from
   D5.S3.Topology.StableCategory.RelativeMaximaDoubleSubdivision
 
 local notation "S" => NonemptyFiniteChains
@@ -47,6 +45,15 @@ private theorem finiteChains [Finite P] : Finite (S P) := by
   classical
   let := Fintype.ofFinite P
   exact Finite.of_injective (fun s : S P => s.finset) (fun _ _ h => NonemptyFiniteChains.ext h)
+
+private theorem finiteAtDepth [Finite X] (n : ℕ) : Finite (finiteSpaceSubdivision X n).1 := by
+  induction n with
+  | zero => exact inferInstanceAs (Finite X)
+  | succ n ih =>
+    let P := finiteSpaceSubdivision X n
+    let : PartialOrder P.1 := P.2
+    let : Finite P.1 := ih
+    exact finiteChains
 
 private def inclusion (U : Set P) : U →o P :=
   (OrderEmbedding.subtype U).toOrderHom
@@ -682,7 +689,7 @@ def ConeDecomposition.iterate [Finite X] {Q H : Set (S X)}
   | succ n ih =>
     let P := finiteSpaceSubdivision X n
     letI : PartialOrder P.1 := P.2
-    letI : Finite P.1 := depth_finite X n
+    letI : Finite P.1 := finiteAtDepth n
     exact ih.subdivide
 
 namespace ConeDecomposition
@@ -785,7 +792,7 @@ theorem exact_two_cover_of_adjoined_maximum [Finite X] {Q₀ : Set X}
   intro dec E hE lower cover cat full v hv span
   let P := finiteSpaceSubdivision X n
   let : PartialOrder P.1 := P.2
-  let : Finite P.1 := depth_finite X n
+  let : Finite P.1 := finiteAtDepth n
   let : Finite (S P.1) := finiteChains
   exact ((ofAdjoinedMaximum t hQ ht hcover).iterate n).attachment.trimmed_anchor_exact_two_cover
     E hE lower cover cat full v hv span
