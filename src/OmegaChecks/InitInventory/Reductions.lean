@@ -11,6 +11,8 @@ public import OmegaChecks.InitInventory.PostconditionIdentity
 import all OmegaChecks.InitInventory.PostconditionIdentity
 public import OmegaChecks.InitInventory.ChoiceOperands
 import all OmegaChecks.InitInventory.ChoiceOperands
+public import OmegaChecks.InitInventory.ErasedSelection
+import all OmegaChecks.InitInventory.ErasedSelection
 public import OmegaChecks.InitInventory.WhileChoice
 import all OmegaChecks.InitInventory.WhileChoice
 public import OmegaChecks.InitInventory.Traversal
@@ -160,6 +162,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
      ``IteratorStepLift.funextOfFilter, ``IteratorStepLift.funextOfFilterM] ++
     [``IteratorLoopLift.funextOfForIn, ``IteratorLoopLift.funextOfForIn', ``IteratorLoopLift.funextOfFold] ++
     [``PostconditionIdentity.pureImage, ``PostconditionIdentity.imageBind, ``PostconditionIdentity.associatedPredicates] ++
+    [``ErasedSelection.ofLeft, ``ErasedSelection.ofRight, ``ErasedSelection.outOfSelection,
+     ``ErasedSelection.recoverOfSelection, ``ErasedSelection.leftIffRight] ++
     [``ChoiceOperands.fromChoice, ``ExistentialConjunction.ofRule] ++
     [``SubsingletonState.ofState, ``SubsingletonState.iffState] ++
     TransformerLaws.OptionIteration.directConsequences.map (fun row => row.2.2) ++
