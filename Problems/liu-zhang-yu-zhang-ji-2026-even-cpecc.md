@@ -59,7 +59,10 @@ The finite upper bound is
 `D5/S3/Combinatorics/Hamming/ConstantPowerCooling/FiniteBound.finite_cpecc_support_upper_bound`.
 The attainment theorem is
 `D5/S3/Combinatorics/Hamming/ConstantPowerCooling/GroupDivisibleDesign.finite_cpecc_support_optimum_of_design`.
-The finite statements use (nge k=w+t), (tge1), (w>t+3),
+The residue-two criterion is
+`D5/S3/Combinatorics/Hamming/ConstantPowerCooling/GroupDivisibleDesign.even_residue_optimum_iff_groupDivisibleDesign`.
+It proves that \(J\) is the optimum exactly when the two-point-group
+design exists. The general finite statements use (nge k=w+t), (tge1), (w>t+3),
 (1le g<w), (k-1mid n-g), (k(k-1)mid n(n-g)), and the
 threshold in the Route section. Attainment takes a finite design as an input.
 
@@ -68,7 +71,7 @@ threshold in the Route section. Attainment takes a finite design as an input.
 A partial resolution on the matching finite parameters. The case (g=2)
 relates the issue's lengths to type (2^{n/2}). For (t=2s>0) and
 (w=2s+4+r), (2B(w,t)-k^2=r^2+4(s+1)r+2(s+1)^2>0), so the
-threshold is satisfied. Section 2, Theorem 2.2 cites J. Liu's 2007
+threshold is satisfied. Theorem 2.2 in Section 2 cites J. Liu's 2007
 asymptotic existence theorem. For fixed (k) and (g=2), the progression
 satisfies its two divisibility conditions, yielding eventual attainment
 as a literature consequence. [J. Liu, JCTA 114 (2007), 410–420](https://doi.org/10.1016/j.jcta.2006.06.006)

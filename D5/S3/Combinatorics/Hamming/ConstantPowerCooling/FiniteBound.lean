@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.Hamming.ConstantPowerCooling.Shadows
 import D5.S3.Combinatorics.Hamming.ConstantPowerCooling.CliquePacking
+import Mathlib.Combinatorics.SimpleGraph.Matching
 
 /-! # Finite upper bound for constant-power error-correcting cooling codes -/
 
@@ -262,7 +263,88 @@ private theorem chosen_cliques_inter_le_one
     SimpleGraph.mem_edgeFinset.mpr ((SimpleGraph.mem_edgeSet (H j)).2 hadj_j)
   exact (Finset.disjoint_left.mp hdi) hei hej
 
-theorem finite_cpecc_support_upper_bound
+private theorem strict_budget_forces_no_nonclique
+    (L : SimpleGraph V) (H : I → SimpleGraph V)
+    [(i : I) → DecidableRel (H i).Adj] [Fintype L.edgeSet]
+    (C : Finset I) (B d k : ℕ)
+    (h_each : ∀ i, i ∉ C → B ≤ (H i).edgeFinset.card)
+    (h_sub : ∀ i, i ∉ C → H i ≤ L)
+    (h_disj : (Set.univ : Set I).PairwiseDisjoint
+      (fun i => (H i).edgeFinset))
+    (hbudget : 2 * L.edgeFinset.card ≤ k * k * d)
+    (hstrict : k * k < 2 * B)
+    (hcard : Fintype.card I = C.card + d) :
+    d = 0 := by
+  let N := {i : I // i ∉ C}
+  let HN : N → SimpleGraph V := fun i => H i.1
+  have h_eachN : ∀ i : N, B ≤ (HN i).edgeFinset.card := by
+    intro i
+    exact h_each i.1 i.2
+  have h_subN : ∀ i : N, HN i ≤ L := by
+    intro i
+    exact h_sub i.1 i.2
+  have h_disjN : (Set.univ : Set N).PairwiseDisjoint
+      (fun i => (HN i).edgeFinset) := by
+    intro i hi j hj hij
+    exact h_disj (Set.mem_univ i.1) (Set.mem_univ j.1)
+      (by intro heq; exact hij (Subtype.ext heq))
+  have hcardN : Fintype.card N = d := by
+    have hN : Fintype.card N = Fintype.card I - C.card := by
+      dsimp [N]
+      rw [Fintype.card_subtype_compl (fun i : I => i ∈ C)]
+      simp [Fintype.card_coe]
+    omega
+  have h_union : ((Finset.univ : Finset N).biUnion
+      (fun i => (HN i).edgeFinset)).card =
+      ∑ i : N, (HN i).edgeFinset.card := by
+    simpa using (Finset.card_biUnion (s := (Finset.univ : Finset N))
+      (t := fun i => (HN i).edgeFinset) (by simpa using h_disjN))
+  have h_union_sub : ((Finset.univ : Finset N).biUnion
+      (fun i => (HN i).edgeFinset)) ⊆ L.edgeFinset := by
+    intro e he
+    simp only [Finset.mem_biUnion, Finset.mem_univ, true_and] at he
+    obtain ⟨i, hi⟩ := he
+    exact (SimpleGraph.edgeFinset_subset_edgeFinset.mpr (h_subN i)) hi
+  have h_sum_le : (∑ i : N, (HN i).edgeFinset.card) ≤ L.edgeFinset.card := by
+    rw [← h_union]
+    exact Finset.card_le_card h_union_sub
+  have h_lower : Fintype.card N * B ≤ ∑ i : N, (HN i).edgeFinset.card := by
+    calc
+      Fintype.card N * B = ∑ i : N, B := by simp
+      _ ≤ ∑ i : N, (HN i).edgeFinset.card := Finset.sum_le_sum (fun i hi => h_eachN i)
+  have hprod : d * B ≤ L.edgeFinset.card := by
+    rw [← hcardN]
+    exact h_lower.trans h_sum_le
+  by_contra hd
+  have hdpos : 0 < d := Nat.pos_of_ne_zero hd
+  have hleft : 2 * (d * B) ≤ 2 * L.edgeFinset.card := Nat.mul_le_mul_left 2 hprod
+  have hmid : 2 * L.edgeFinset.card ≤ k * k * d := hbudget
+  have hright : k * k * d < 2 * B * d := by
+    have hh := (Nat.mul_lt_mul_right hdpos).mpr hstrict
+    simpa [Nat.mul_assoc, Nat.mul_left_comm, Nat.mul_comm] using hh
+  have hleft' : 2 * B * d ≤ 2 * L.edgeFinset.card := by
+    simpa [Nat.mul_assoc, Nat.mul_left_comm, Nat.mul_comm] using hleft
+  have hmid' : 2 * L.edgeFinset.card ≤ k * k * d := by
+    simpa [Nat.mul_assoc] using hmid
+  exact (Nat.not_lt_of_ge (hleft'.trans hmid')) hright
+
+omit [DecidableEq V] in
+omit [Fintype V] in
+private theorem perfect_matching_of_degree_one
+    (L : SimpleGraph V) [DecidableRel L.Adj] [(v : V) → Fintype (L.neighborSet v)]
+    (hdeg : ∀ v, L.degree v = 1) :
+    (L.toSubgraph (G := (⊤ : SimpleGraph V)) le_top).IsPerfectMatching := by
+  rw [SimpleGraph.Subgraph.isPerfectMatching_iff]
+  intro v
+  have hu := (SimpleGraph.degree_eq_one_iff_existsUnique_adj).mp (hdeg v)
+  rcases hu with ⟨u, hu, hunique⟩
+  refine ⟨u, ?_, ?_⟩
+  · exact hu
+  · intro w hw
+    exact hunique w hw
+
+
+private theorem finite_cpecc_clique_leave
     (P : I → Finset (Finset V))
     (n w t g k : ℕ)
     (hn : Fintype.card V = n)
@@ -279,7 +361,13 @@ theorem finite_cpecc_support_upper_bound
     (hcross : ∀ ⦃i j : I⦄, i ≠ j → ∀ A ∈ P i, ∀ B ∈ P j,
       (A ∩ B).card ≤ 1)
     (hthreshold : k * (k + g - 2) ≤ 2 * AppendixA.B w t) :
-    Fintype.card I ≤ n * (n - g) / (k * (k - 1)) := by
+    let J := n * (n - g) / (k * (k - 1))
+    Fintype.card I ≤ J ∧
+      (g = 2 → k * k < 2 * AppendixA.B w t → Fintype.card I = J →
+        ∃ W : I → Finset V, (∀ i, (Shadow (P i)).IsNClique k (W i)) ∧
+          (Set.univ : Set I).Pairwise (fun i j => (W i ∩ W j).card ≤ 1) ∧
+          ((packedGraph Finset.univ W)ᶜ.toSubgraph
+            (G := (⊤ : SimpleGraph V)) le_top).IsPerfectMatching) := by
   classical
   let H : I → SimpleGraph V := fun i => Shadow (P i)
   letI : (i : I) → DecidableRel (H i).Adj := fun i => Classical.decRel _
@@ -478,8 +566,86 @@ theorem finite_cpecc_support_upper_bound
     apply Nat.div_eq_of_eq_mul_left
     · exact Nat.mul_pos (by omega) (by omega)
     · simpa [Nat.mul_assoc, Nat.mul_left_comm, Nat.mul_comm] using hJ_eq
-  rw [hquot] at hboundJ
-  exact hboundJ
+  refine ⟨hquot ▸ hboundJ, ?_⟩
+  intro hg2 hstrict hEq
+  let d := J' - C.card
+  have hd : d = 0 := by
+    apply strict_budget_forces_no_nonclique LN H C (AppendixA.B w t) d k
+    · intro i hi
+      exact h_eachN ⟨i, hi⟩
+    · intro i hi
+      exact h_subN ⟨i, hi⟩
+    · exact hdisj
+    · simpa [d, hg2] using hbudget
+    · exact hstrict
+    · exact (hEq.trans hquot.symm).trans hJsum.symm
+  have hCcard : C.card = Fintype.card I := by omega
+  have hCtop : C = Finset.univ := Finset.eq_univ_of_card C hCcard
+  have hzero (v : V) : x v = 0 := by
+    by_contra hx
+    have hv : v ∈ S := (hinterC v).mpr (Nat.pos_of_ne_zero hx)
+    have hsumpos : 0 < ∑ u ∈ S, x u :=
+      Finset.sum_pos' (fun u _ => Nat.zero_le (x u)) ⟨v, hv, Nat.pos_of_ne_zero hx⟩
+    have hdeficit : J' - C.card = 0 := hd
+    have hsum0 : ∑ u ∈ S, x u = 0 := by
+      simpa only [hdeficit, Nat.mul_zero] using hsum
+    exact (Nat.ne_of_gt hsumpos) hsum0
+  have hmatching : (L₀.toSubgraph (G := (⊤ : SimpleGraph V)) le_top).IsPerfectMatching := by
+    apply perfect_matching_of_degree_one
+    intro v
+    simp [hleave v, hg2, hzero v]
+  have hmem (i : I) : i ∈ C := by simp [hCtop]
+  exact ⟨W, fun i => hW i (hmem i), fun i _ j _ hij => hinter (hmem i) (hmem j) hij,
+    hCtop ▸ hmatching⟩
+
+
+/-- The finite leave bound for support families with cross-class intersections of size at most one.
+-/
+theorem finite_cpecc_support_upper_bound
+    (P : I → Finset (Finset V))
+    (n w t g k : ℕ)
+    (hn : Fintype.card V = n)
+    (hkdef : k = w + t)
+    (hkN : k ≤ n)
+    (ht : 1 ≤ t)
+    (hw : t + 3 < w)
+    (hg : 1 ≤ g)
+    (hgw : g < w)
+    (hRdiv : k - 1 ∣ n - g)
+    (hJdiv : k * (k - 1) ∣ n * (n - g))
+    (hsize : ∀ i A, A ∈ P i → A.card = w)
+    (hdel : ∀ i (D : Finset V), D.card = t → ∃ A ∈ P i, Disjoint D A)
+    (hcross : ∀ ⦃i j : I⦄, i ≠ j → ∀ A ∈ P i, ∀ B ∈ P j,
+      (A ∩ B).card ≤ 1)
+    (hthreshold : k * (k + g - 2) ≤ 2 * AppendixA.B w t) :
+    Fintype.card I ≤ n * (n - g) / (k * (k - 1)) :=
+  (finite_cpecc_clique_leave P n w t g k hn hkdef hkN ht hw hg hgw hRdiv hJdiv hsize hdel hcross
+    hthreshold).1
+
+/-- In the strict two-point case, an optimal family yields a clique packing with matching leave. -/
+theorem g2_optimal_support_clique_packing
+    (P : I → Finset (Finset V))
+    (n w t k : ℕ)
+    (hn : Fintype.card V = n)
+    (hkdef : k = w + t)
+    (hkN : k ≤ n)
+    (ht : 1 ≤ t)
+    (hw : t + 3 < w)
+    (hRdiv : k - 1 ∣ n - 2)
+    (hJdiv : k * (k - 1) ∣ n * (n - 2))
+    (hsize : ∀ i A, A ∈ P i → A.card = w)
+    (hdel : ∀ i (D : Finset V), D.card = t → ∃ A ∈ P i, Disjoint D A)
+    (hcross : ∀ ⦃i j : I⦄, i ≠ j → ∀ A ∈ P i, ∀ B ∈ P j,
+      (A ∩ B).card ≤ 1)
+    (hstrict : k * k < 2 * AppendixA.B w t)
+    (hEq : Fintype.card I = n * (n - 2) / (k * (k - 1))) :
+    ∃ W : I → Finset V, (∀ i, (Shadow (P i)).IsNClique k (W i)) ∧
+      (Set.univ : Set I).Pairwise (fun i j => (W i ∩ W j).card ≤ 1) ∧
+      ((packedGraph Finset.univ W)ᶜ.toSubgraph
+        (G := (⊤ : SimpleGraph V)) le_top).IsPerfectMatching := by
+  have hthreshold : k * (k + 2 - 2) ≤ 2 * AppendixA.B w t := by simpa using hstrict.le
+  exact (finite_cpecc_clique_leave P n w t 2 k hn hkdef hkN ht hw (by omega) (by omega)
+    hRdiv hJdiv hsize hdel hcross hthreshold).2 rfl hstrict hEq
 
 end
 end CPECCBridge

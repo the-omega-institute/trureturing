@@ -26,4 +26,4 @@ of exact cover number is Lemma 3.1 of the CPECC paper.
 https://arxiv.org/abs/2611.34386v1
 
 The statement used here is identified as the Erdős–Gallai theorem in
-arXiv:2611.34386v1, Theorem 2.4 and the proof of Lemma 3.1.
+arXiv:2611.34386v1, Theorem 2.5 and the proof of Lemma 3.1.

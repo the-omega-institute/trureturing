@@ -21,6 +21,12 @@ internal sealed class GroupDivisibleDesignDocument : IScribeDocumentDefinition
                 H("A uniform group divisible design"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Hamming/liuzhangyuzhangji2026optimalcpecc")),
-                Blocks(Paragraph(Text("The groups on a point set V are equivalence classes of a setoid, each of size g. The blocks form a finite family of k-subsets. A distinct pair in one group belongs to no block, and each cross-group pair belongs to exactly one block. For a finite point set of size n this is a design of type g raised to the number of groups."))), DescribeRole.Definition)),
+                Blocks(Paragraph(Text("The groups on a point set V are equivalence classes of a setoid, each of size g. The blocks form a finite family of k-subsets. A distinct pair in one group belongs to no block, and each cross-group pair belongs to exactly one block. For a finite point set of size n this is a design of type g raised to the number of groups."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("even-residue-optimum"),
+                DeclarationHandle.Create(Prefix + "even_residue_optimum_iff_groupDivisibleDesign"),
+                H("Exact design criterion for even deletions"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/Hamming/liuzhangyuzhangji2026optimalcpecc")),
+                Blocks(Paragraph(Text("Let t be positive and even, let w exceed t + 3, and let n be at least k = w + t with n congruent to 2 modulo k(k − 1). Then J = n(n − 2)/(k(k − 1)) is the greatest attainable number of classes if and only if there exists a k-group divisible design on the n points with groups of size two. Writing t = 2s and w = 2s + 4 + r gives 2B(w,t) − k² = r² + 4(s + 1)r + 2(s + 1)² > 0. Equality therefore gives a perfect matching leave. Its edges are the groups, and the selected cliques contain each pair from distinct groups in exactly one block. Conversely a design attains J using the w-subsets of its blocks."))), DescribeRole.Theorem)),
         []));
 }
