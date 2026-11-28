@@ -82,22 +82,23 @@ public def sites := [
 private def interpretations :=
   [(``Quot, ``carrier), (``Quot.mk, ``point), (``Quot.ind, ``ind), (``Quot.lift, ``lift)]
 
-private def interpret (e : Expr) := e.replace fun t => do
+private def interpret (rules : List (Name × Name)) (e : Expr) := e.replace fun t => do
   let .const n us := t | none
-  let replacement ← interpretations.lookup n
+  let replacement ← rules.lookup n
   return mkConst replacement us
 
-private def checkRules (official clean : Environment) : IO Unit := do
-  for (original, target) in interpretations do
+private def checkRules (official clean : Environment) (rules : List (Name × Name)) : IO Unit := do
+  let some mk := rules.lookup ``Quot.mk | throw <| IO.userError "missing quotient constructor"
+  for (original, target) in rules do
     let some (.quotInfo primitive) := official.find? original | throw <| IO.userError s!"missing primitive {original}"
     let some ci := clean.find? target | throw <| IO.userError s!"missing {target}"
     let ls := ci.levelParams.map Level.param
-    let expected := interpret (primitive.type.instantiateLevelParams primitive.levelParams ls)
+    let expected := interpret rules (primitive.type.instantiateLevelParams primitive.levelParams ls)
     unless Kernel.isDefEqGuarded clean {} ci.type expected do throw <| IO.userError s!"incorrect type for {target}"
     if original == ``Quot.lift || original == ``Quot.ind then
       let check := Meta.forallTelescope ci.type fun xs _ => do
         Meta.withLocalDeclD `a xs[0]! fun a => do
-          let constructor := mkAppN (mkConst ``point [ls.head!]) #[xs[0]!, xs[1]!, a]
+          let constructor := mkAppN (mkConst mk [ls.head!]) #[xs[0]!, xs[1]!, a]
           let app := mkAppN (mkConst target ls) (xs.pop.push constructor)
           let .ok result := Kernel.whnf clean (← getLCtx) app | throwError "failed to reduce {target}"
           unless result.isApp && result.appFn!.equal xs[3]! && result.appArg!.equal a do
@@ -147,7 +148,7 @@ public def certify (official witnesses : Environment) (owner : Name) (source : C
   let mk := mkApp2 (mkConst ``Quot.mk [1]) natPair relation
   let clean ← replayBoundaryDependencies official witnesses
     (``incompatible :: ``arithmeticRelated :: ``lift_beta :: ``ind_beta :: interpretations.map Prod.snd)
-  checkRules official clean
+  checkRules official clean interpretations
   let relationModel := mkConst ``arithmeticRelation
   let modelPoint := mkApp2 (mkConst ``point [1]) natPair relationModel
   let observation := mkApp (mkConst ``separate) relationModel
@@ -199,3 +200,110 @@ public def certify (official witnesses : Environment) (owner : Name) (source : C
   (Meta.MetaM.run' verify).toIO' {fileName := "<refined quotient arithmetic>", fileMap := default} {env := clean}
 
 end OmegaChecks.InitBoundaries.RefinedQuotient
+
+namespace OmegaChecks.InitBoundaries.TwoStepQuotient
+
+/-! Interpret each relation by its two-step paths. Respect for one edge implies
+respect for a two-step path, so native lifting still computes on representatives.
+For 0 → 1 → 2, the interpreted quotient can identify the endpoints while keeping
+the middle vertex in a different fiber. -/
+
+universe u v
+public abbrev Twice {α : Sort u} (r : α → α → Prop) (a c : α) : Prop :=
+  ∃ b, r a b ∧ r b c
+@[expose] public def carrier {α : Sort u} (r : α → α → Prop) := Quot (Twice r)
+@[expose] public def point {α : Sort u} (r : α → α → Prop) (a : α) : carrier r := Quot.mk _ a
+@[expose] public def lift {α : Sort u} {r : α → α → Prop} {β : Sort v}
+    (f : α → β) (resp : ∀ a b, r a b → f a = f b) (q : carrier r) : β :=
+  Quot.lift f (fun a c ⟨b, hab, hbc⟩ => (resp a b hab).trans (resp b c hbc)) q
+set_option linter.defProp false in
+@[expose] public def ind {α : Sort u} {r : α → α → Prop} {p : carrier r → Prop}
+    (f : ∀ a, p (point r a)) (q : carrier r) : p q := Quot.ind f q
+public theorem lift_mk {α : Sort u} {r : α → α → Prop} {β : Sort v}
+    (f : α → β) (resp : ∀ a b, r a b → f a = f b) (a : α) :
+    lift f resp (point r a) = f a := rfl
+public theorem ind_mk {α : Sort u} {r : α → α → Prop} {p : carrier r → Prop}
+    (f : ∀ a, p (point r a)) (a : α) : ind f (point r a) = f a := rfl
+
+private inductive Vertex where
+  | start | mid | stop
+
+private inductive Edge : Vertex → Vertex → Prop where
+  | first : Edge .start .mid
+  | second : Edge .mid .stop
+
+private def middle : Vertex → Bool
+  | .mid => true
+  | .start | .stop => false
+
+private def observe : carrier Edge → Bool :=
+  Quot.lift middle (by
+    intro a c h
+    obtain ⟨b, ab, bc⟩ := h
+    cases ab <;> cases bc
+    rfl)
+
+private def endValue : Vertex → Bool
+  | .start | .mid => false
+  | .stop => true
+
+private theorem coherent (q : carrier Edge) (a b : Vertex) (ea : q = point Edge a)
+    (eb : q = point Edge b) (edge : Edge a b) : endValue a = endValue b := by
+  have seen := congrArg observe (ea.symm.trans eb)
+  cases edge <;> exact Bool.noConfusion seen
+
+public abbrev PointedLift := ∀ {β α : Type} {r : α → α → Prop} (q : carrier r)
+  (f : (a : α) → q = point r a → β), (∀ a b e d, r a b → f a e = f b d) → β
+
+public abbrev Computes (op : PointedLift) := ∀ {β α : Type} {r : α → α → Prop} (a : α)
+    (f : (x : α) → point r a = point r x → β)
+    (h : ∀ x y e d, r x y → f x e = f y d),
+    @op β α r (point r a) f h = f a rfl
+
+/-- Soundness in the ambient kernel identifies the ends of the two-edge path
+in this interpretation. A pointed lift satisfying its constructor rule would
+return different Booleans at those ends. -/
+public theorem incompatible (op : PointedLift) (beta : Computes @op) :
+    ¬ type_of% @Quot.sound.{1} := by
+  intro sound
+  have same : point Edge .start = point Edge .stop :=
+    @sound Vertex (Twice Edge) .start .stop ⟨.mid, Edge.first, Edge.second⟩
+  let eval (q : carrier Edge) : Bool :=
+    @op Bool Vertex Edge q (fun a _ => endValue a) (coherent q)
+  have atPoint (a : Vertex) : eval (point Edge a) = endValue a :=
+    @beta Bool Vertex Edge a (fun x _ => endValue x) (coherent _)
+  exact Bool.noConfusion ((atPoint .start).symm.trans ((congrArg eval same).trans (atPoint .stop)))
+
+public theorem official_mk {β : Sort v} {α : Sort u} {r : α → α → Prop} (a : α)
+    (f : (x : α) → Quot.mk r a = Quot.mk r x → β)
+    (h : ∀ x y e d, r x y → f x e = f y d) :
+    Quot.pliftOn (Quot.mk r a) f h = f a rfl := rfl
+
+open Lean Meta in
+/-- Compare the interpreted public operation and its constructor rule at Type with the
+two premises of the counterexample. Replay the model and counterexample without axioms. -/
+public def certify (official witnesses : Environment) : IO Unit := do
+  let some source := official.find? ``Quot.pliftOn | throw <| IO.userError "missing Quot.pliftOn"
+  unless official.getModuleIdxFor? source.name == official.getModuleIdx? `Init.Core &&
+      (source matches .defnInfo _) && source.numLevelParams == 2 do
+    throw <| IO.userError "unexpected pointed quotient eliminator"
+  let rules := [(``Quot, ``carrier), (``Quot.mk, ``point), (``Quot.ind, ``ind), (``Quot.lift, ``lift)]
+  let clean ← replayBoundaryDependencies official witnesses
+    (``incompatible :: ``lift_mk :: ``ind_mk :: rules.map Prod.snd)
+  RefinedQuotient.checkRules official clean rules
+  let sourceType := source.type.instantiateLevelParams source.levelParams [.one, .one]
+  unless Kernel.isDefEqGuarded clean {} (RefinedQuotient.interpret rules sourceType) (mkConst ``PointedLift) do
+    throw <| IO.userError "the pointed lift has a different type in the interpretation"
+  let some beta := witnesses.find? ``official_mk | throw <| IO.userError "missing pinned constructor equation"
+  let pinned := beta.type.instantiateLevelParams beta.levelParams [.one, .one]
+  let check : MetaM Unit := Meta.withLocalDeclD `op (mkConst ``PointedLift) fun op => do
+    let eqn := (RefinedQuotient.interpret rules pinned).replace fun e =>
+      if e.isConstOf source.name then some op else none
+    let expected := mkApp (mkConst ``Computes) op
+    let ctx ← getLCtx
+    discard <| ofExceptKernelException (Kernel.check clean ctx eqn)
+    unless Kernel.isDefEqGuarded clean ctx eqn expected do
+      throwError "wrong pointed lift constructor rule"
+  (check.run').toIO' {fileName := "<pointed quotient computation>", fileMap := default} {env := clean}
+
+end OmegaChecks.InitBoundaries.TwoStepQuotient
