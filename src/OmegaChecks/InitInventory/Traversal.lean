@@ -525,4 +525,57 @@ run_cmd
 
 end ArrayLoopCongruence
 
+namespace PublicAlgorithmEquations
+
+/-- Prepend a fixed number of entries, with no assumption on the element type. -/
+private def prepend {α : Type u} : (n : Nat) → (Fin n → α) → List α → List α
+  | 0, _, xs => xs
+  | n + 1, f, xs => f ⟨0, Nat.zero_lt_succ _⟩ :: prepend n (fun i => f i.succ) xs
+
+private theorem prefixAux (n acc : Nat) :
+    (fun (α : Type u) (f : Fin n → α) (xs : List α) => (prepend n f xs).lengthTRAux acc) =
+    (fun (α : Type u) (_ : Fin n → α) (xs : List α) => xs.lengthTRAux (acc + n)) := by
+  induction n generalizing acc with
+  | zero => rfl
+  | succ n ih =>
+    have h := congrArg (fun g => fun (α : Type u) (f : Fin (n + 1) → α) (xs : List α) =>
+      g α (fun i => f (Fin.succ i)) xs) (ih (acc + 1))
+    change _ = (fun (α : Type u) (_ : Fin (n + 1) → α) (xs : List α) =>
+      xs.lengthTRAux (acc.succ + n)) at h
+    rw [Nat.succ_add] at h
+    exact h
+
+/-- Prepending `n` entries to ordinary length agrees as a function with starting
+the tail-recursive accumulator at `n`, uniformly in the element type and suffix. -/
+def PrefixLength := ∀ n : Nat,
+  (fun (α : Type u) (f : Fin n → α) (xs : List α) => (prepend n f xs).length) =
+  (fun (α : Type u) (_ : Fin n → α) (xs : List α) => xs.lengthTRAux n)
+
+theorem ofLength : (type_of% @List.length_eq_lengthTR.{u}) ↔ PrefixLength.{u} := by
+  constructor
+  · intro h n
+    have mapped := congrArg (fun (len : {α : Type u} → List α → Nat) =>
+      fun (α : Type u) (f : Fin n → α) (xs : List α) => @len α (prepend n f xs)) h
+    have shift := prefixAux.{u} n 0
+    rw [Nat.zero_add] at shift
+    exact mapped.trans shift
+  · intro h
+    exact congrArg (fun g => fun {α : Type u} (xs : List α) => g α Fin.elim0 xs) (h 0)
+
+/-- Testing for absence after any optional step, as an equality of the operations
+which take the step and the initial value as arguments. -/
+def BindClassifier := ∀ (α β : Type u),
+  (fun (step : α → Option β) (start : Option α) => !(start.bind step).isSome) =
+  (fun (step : α → Option β) (start : Option α) => (start.bind step).isNone)
+
+theorem ofClassifier : (type_of% @Option.not_comp_isSome.{u}) ↔ BindClassifier.{u} := by
+  constructor
+  · intro law α β
+    exact congrArg (fun pred => fun (step : α → Option β) (start : Option α) =>
+      pred (start.bind step)) (@law β)
+  · intro law α
+    exact congrArg (fun fusion => fun o : Option α => fusion id (some o)) (law (Option α) α)
+
+end PublicAlgorithmEquations
+
 end OmegaChecks.InitBoundaries

@@ -7,6 +7,9 @@ import all Init.Data.List.Impl
 namespace OmegaChecks.InitPort.Alternatives
 
 @[expose] public def List.appendTR : type_of% @_root_.List.appendTR := @_root_.List.append
+/- Restoring the public accumulator body also requires a whole-function proof of
+`length_eq_lengthTR`. `PublicAlgorithmEquations.ofLength` characterizes that obligation
+for every finite prefix and every element type. -/
 @[expose] public def List.lengthTR : type_of% @_root_.List.lengthTR := @_root_.List.length
 
 public theorem List.append_eq_appendTR : @_root_.List.append = @List.appendTR := rfl

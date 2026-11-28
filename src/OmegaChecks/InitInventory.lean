@@ -402,6 +402,12 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``OmegaChecks.InitBoundaries.RefutedPropExt, ``OmegaChecks.InitBoundaries.refutedPropExtOfEqFalseRule)
   | `Init.Grind.Norm, ``Lean.Grind.ite_true_false =>
     return (``OmegaChecks.InitBoundaries.OptionalIndex.DecidablePropExt, ``OmegaChecks.InitBoundaries.OptionalIndex.decidablePropExtOfIte)
+  | `Init.Data.List.Basic, ``List.length_eq_lengthTR =>
+    return (``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.PrefixLength,
+      ``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.ofLength)
+  | `Init.Data.Option.Lemmas, ``Option.not_comp_isSome =>
+    return (``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.BindClassifier,
+      ``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.ofClassifier)
   | `Init.Data.Nat.Internal.Linear, ``Nat.Internal.Linear.Expr.of_cancel_eq =>
     return (``Nat.succ.injEq, ``OmegaChecks.InitBoundaries.NaturalCancellation.exprEq)
   | `Init.Data.Nat.Internal.Linear, ``Nat.Internal.Linear.Expr.of_cancel_le =>

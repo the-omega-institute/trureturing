@@ -11,6 +11,9 @@ public import Init.Data.Option.List
 namespace OmegaChecks.InitPort.Alternatives
 namespace Option
 
+/- Restoring the public constructor matcher also requires a whole-function proof of
+`not_comp_isSome`. `PublicAlgorithmEquations.ofClassifier` characterizes that obligation
+by absence testing after an arbitrary optional step. -/
 @[expose] public def isNone {α : Type u} (x : _root_.Option α) : Bool := !x.isSome
 
 public theorem not_comp_isSome {α : Type u} :

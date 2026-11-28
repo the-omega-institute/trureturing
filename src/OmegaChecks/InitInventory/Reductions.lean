@@ -161,6 +161,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
     [``MonadicTraversal.IndexedMap.singleton, ``MonadicTraversal.IndexedMap.fromList, ``MonadicTraversal.IndexedMap.fromArray] ++
     [``MonadicTraversal.SingletonSearch.boolOfSingleton, ``MonadicTraversal.SingletonSearch.optionOfSingleton] ++
+    [``PublicAlgorithmEquations.ofLength, ``PublicAlgorithmEquations.ofClassifier] ++
     [``MonadicTraversal.fromListFoldl, ``MonadicTraversal.fromListFoldr, ``ArrayLoopCongruence.listForInCongr] ++
     [``funextFromFunextIff, ``PostconditionIdentity.rightIdentity, ``PostconditionIdentity.leftIdentity, ``PostconditionIdentity.ofMonad] ++
     [``IteratorStepLift.funextOfMap, ``IteratorStepLift.funextOfMapM,
