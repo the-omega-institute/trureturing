@@ -254,7 +254,7 @@ private theorem maximal_antichain_staircase (d : YoungDiagram) (A : Finset (ℕ 
   apply d.isLowerSet (show x ≤ c i from ?_) (hmem (c i) (hc i))
   constructor <;> dsimp [i] at * <;> omega
 
-private theorem single_extension_cells {X d : YoungDiagram} {c : ℕ × ℕ}
+theorem single_extension_cells {X d : YoungDiagram} {c : ℕ × ℕ}
     (hsub : X ≤ d) (hdiff : d.cells \ X.cells = {c}) : d.cells = insert c X.cells := by
   ext x
   constructor
@@ -318,7 +318,7 @@ private theorem star_contains_staircase {n : ℕ} (hn : 0 < n)
     exact hbelow p x hx hne
   simpa only [hAcard] using antichain_staircase X A hanti hb
 
-private theorem single_removal_cells {U d : YoungDiagram} {c : ℕ × ℕ}
+theorem single_removal_cells {U d : YoungDiagram} {c : ℕ × ℕ}
     (hsub : d ≤ U) (hdiff : U.cells \ d.cells = {c}) : d.cells = U.cells.erase c := by
   ext x
   constructor
@@ -625,7 +625,7 @@ theorem clique_le_local {n : ℕ} (C : Finset (Nat.Partition n))
   exact Finset.le_sup (f := fun s : Finset (Nat.Partition n) => s.card - 1)
     (by simp [cliques, hC, hp])
 
-private theorem local_le_maximum {n : ℕ} (p : Nat.Partition n) :
+theorem local_le_maximum {n : ℕ} (p : Nat.Partition n) :
     localDimension p ≤ maxDimension n := Finset.le_sup (Finset.mem_univ p)
 
 private theorem lower_maximum (n r : ℕ) (hr : triangular r + 1 ≤ n) :

@@ -64,31 +64,11 @@ private theorem extension_key_injective {X : YoungDiagram}
   · by_cases hdi : d.1 < X.colLen 0
     · simp only [hci, hdi, ite_true] at hkey
       have hcd2 : c.2 = d.2 := Option.some.inj hkey
+      obtain ⟨hcA, hcX⟩ := mem_one_cell hc
+      obtain ⟨hdB, hdX⟩ := mem_one_cell hd
       by_cases hle : c.1 ≤ d.1
-      · have hmem : c ∈ B := by
-          have hdmem : d ∈ B := by
-            exact (Finset.mem_sdiff.mp (by rw [hd]; simp : d ∈ B.cells \ X.cells)).1
-          exact B.up_left_mem hle (by omega) hdmem
-        have hnot : c ∉ X := by
-          intro hx
-          exact (Finset.mem_sdiff.mp (by rw [hc]; simp : c ∈ A.cells \ X.cells)).2 hx
-        have : c = d := by
-          have hm : c ∈ B.cells \ X.cells := Finset.mem_sdiff.mpr ⟨hmem, hnot⟩
-          rw [hd] at hm
-          exact Finset.mem_singleton.mp hm
-        exact this
-      · have hmem : d ∈ A := by
-          have hcmem : c ∈ A := by
-            exact (Finset.mem_sdiff.mp (by rw [hc]; simp : c ∈ A.cells \ X.cells)).1
-          exact A.up_left_mem (by omega) (by omega) hcmem
-        have hnot : d ∉ X := by
-          intro hx
-          exact (Finset.mem_sdiff.mp (by rw [hd]; simp : d ∈ B.cells \ X.cells)).2 hx
-        have : d = c := by
-          have hm : d ∈ A.cells \ X.cells := Finset.mem_sdiff.mpr ⟨hmem, hnot⟩
-          rw [hc] at hm
-          exact Finset.mem_singleton.mp hm
-        exact this.symm
+      · exact eq_one_cell hd (B.up_left_mem hle hcd2.le hdB) hcX
+      · exact (eq_one_cell hc (A.up_left_mem (by omega) hcd2.ge hcA) hdX).symm
     · simp only [hci, hdi, ite_true, ite_false] at hkey
       contradiction
   · by_cases hdi : d.1 < X.colLen 0
@@ -99,36 +79,20 @@ private theorem extension_key_injective {X : YoungDiagram}
       have hd_le : X.colLen 0 ≤ d.1 := by omega
       have hc_eq : c.1 = X.colLen 0 := by
         by_contra hne
-        have hx : (X.colLen 0, 0) ∈ A := by
-          have hcmem : c ∈ A := by
-            have hh := Finset.mem_sdiff.mp (by rw [hc]; simp : c ∈ A.cells \ X.cells)
-            exact hh.1
-          apply A.isLowerSet (show (X.colLen 0, 0) ≤ c by constructor <;> omega) hcmem
+        have hx : (X.colLen 0, 0) ∈ A :=
+          A.isLowerSet (show (X.colLen 0, 0) ≤ c by constructor <;> omega) (mem_one_cell hc).1
         have hxX : (X.colLen 0, 0) ∉ X := by
           rw [YoungDiagram.mem_iff_lt_colLen]
           simp
-        have hxd : (X.colLen 0, 0) ≠ c := by
-          intro he
-          exact hne (he ▸ rfl)
-        have hm : (X.colLen 0, 0) ∈ A.cells \ X.cells := Finset.mem_sdiff.mpr ⟨hx,hxX⟩
-        rw [hc] at hm
-        exact hxd (Finset.mem_singleton.mp hm)
+        exact hne (congrArg Prod.fst (eq_one_cell hc hx hxX)).symm
       have hd_eq : d.1 = X.colLen 0 := by
         by_contra hne
-        have hx : (X.colLen 0, 0) ∈ B := by
-          have hdm : d ∈ B := by
-            have hh := Finset.mem_sdiff.mp (by rw [hd]; simp : d ∈ B.cells \ X.cells)
-            exact hh.1
-          apply B.isLowerSet (show (X.colLen 0, 0) ≤ d by constructor <;> omega) hdm
+        have hx : (X.colLen 0, 0) ∈ B :=
+          B.isLowerSet (show (X.colLen 0, 0) ≤ d by constructor <;> omega) (mem_one_cell hd).1
         have hxX : (X.colLen 0, 0) ∉ X := by
           rw [YoungDiagram.mem_iff_lt_colLen]
           simp
-        have hxd : (X.colLen 0, 0) ≠ d := by
-          intro he
-          exact hne (he ▸ rfl)
-        have hm : (X.colLen 0, 0) ∈ B.cells \ X.cells := Finset.mem_sdiff.mpr ⟨hx,hxX⟩
-        rw [hd] at hm
-        exact hxd (Finset.mem_singleton.mp hm)
+        exact hne (congrArg Prod.fst (eq_one_cell hd hx hxX)).symm
       apply Prod.ext
       · exact hc_eq.trans hd_eq.symm
       · have hc0 : c.2 = 0 := by
@@ -149,9 +113,7 @@ private theorem star_card_bound {n : ℕ} (hn : 0 < n)
   classical
   have hm (p : C) : ∃ c : ℕ × ℕ,
       (YoungDiagram.ofPartition p.val).cells \ X.cells = {c} := by
-    apply Finset.card_eq_one.mp
-    rw [Finset.card_sdiff_of_subset (hsub p.val p.property)]
-    change (YoungDiagram.ofPartition p.val).card - X.card = 1
+    apply one_cell (hsub p.val p.property)
     rw [YoungDiagram.card_ofPartition, hX]
     omega
   let f (p : C) := Classical.choose (hm p)
@@ -162,11 +124,8 @@ private theorem star_card_bound {n : ℕ} (hn : 0 < n)
     apply Subtype.ext
     apply diagram_injective
     apply YoungDiagram.ext
-    have hp := Finset.sdiff_union_of_subset (hsub p.val p.property)
-    have hq := Finset.sdiff_union_of_subset (hsub q.val q.property)
-    rw [hf p, he] at hp
-    rw [hf q] at hq
-    exact hp.symm.trans hq
+    rw [single_extension_cells (hsub p.val p.property) (hf p),
+      single_extension_cells (hsub q.val q.property) (hf q), he]
   let g (p : C) : Option ℕ :=
     if (f p).1 < X.colLen 0 then some (f p).2 else none
   have hg_inj : Function.Injective g := by
@@ -209,21 +168,21 @@ private theorem top_corner_injective {U A B : YoungDiagram} {c d : ℕ × ℕ}
   apply Prod.ext
   · by_contra hne
     by_cases hlt : c.1 < d.1
-    · have hdU : d ∈ U := (Finset.mem_sdiff.mp (by rw [hd]; simp)).1
+    · obtain ⟨hdU, -⟩ := mem_one_cell hd
       have hdA : d ∈ A := by
         by_contra hnot
         have heq := eq_one_cell hc hdU hnot
         exact hne (congrArg Prod.fst heq.symm)
       have hcA : c ∈ A := A.isLowerSet (show c ≤ d by constructor <;> omega) hdA
-      exact (Finset.mem_sdiff.mp (by rw [hc]; simp)).2 hcA
+      exact (mem_one_cell hc).2 hcA
     · have hlt' : d.1 < c.1 := by omega
-      have hcU : c ∈ U := (Finset.mem_sdiff.mp (by rw [hc]; simp)).1
+      have hcU := (mem_one_cell hc).1
       have hcB : c ∈ B := by
         by_contra hnot
         have heq := eq_one_cell hd hcU hnot
         exact hne (congrArg Prod.fst heq)
       have hdB : d ∈ B := B.isLowerSet (show d ≤ c by constructor <;> omega) hcB
-      exact (Finset.mem_sdiff.mp (by rw [hd]; simp)).2 hdB
+      exact (mem_one_cell hd).2 hdB
   · exact he
 
 private theorem top_card_bound {n : ℕ} (C : Finset (Nat.Partition n))
@@ -233,11 +192,8 @@ private theorem top_card_bound {n : ℕ} (C : Finset (Nat.Partition n))
   classical
   have hm (p : C) : ∃ c : ℕ × ℕ,
       U.cells \ (YoungDiagram.ofPartition p.val).cells = {c} := by
-    apply Finset.card_eq_one.mp
-    rw [Finset.card_sdiff_of_subset (hsub p.val p.property)]
-    change U.card - (YoungDiagram.ofPartition p.val).card = 1
+    apply one_cell (hsub p.val p.property)
     rw [YoungDiagram.card_ofPartition, hU]
-    omega
   let f (p : C) := Classical.choose (hm p)
   have hf (p : C) : U.cells \ (YoungDiagram.ofPartition p.val).cells = {f p} :=
     Classical.choose_spec (hm p)
@@ -246,11 +202,8 @@ private theorem top_card_bound {n : ℕ} (C : Finset (Nat.Partition n))
     apply Subtype.ext
     apply diagram_injective
     apply YoungDiagram.ext
-    have hp := inf_eq_right.mpr (cells_subset_iff.mpr (hsub p.val p.property))
-    have hq := inf_eq_right.mpr (cells_subset_iff.mpr (hsub q.val q.property))
-    rw [← sdiff_sdiff_right_self, hf p, he] at hp
-    rw [← sdiff_sdiff_right_self, hf q] at hq
-    exact hp.symm.trans hq
+    rw [single_removal_cells (hsub p.val p.property) (hf p),
+      single_removal_cells (hsub q.val q.property) (hf q), he]
   let f' (p : C) := (f p).2 + 1
   have hf'_inj : Function.Injective f' := by
     intro p q he

@@ -183,16 +183,11 @@ theorem boundary_result (r : ℕ) (hr : 1 ≤ r) :
     have hqLayer : q ∈ layer (r+1) n := by rwa [hlayer]
     have hqDim : localDimension q = r + 1 := (Finset.mem_filter.mp hqLayer).2
     have hlo : r ≤ localDimension p := by
-      have h := Finset.le_sup (f := fun s : Finset (Nat.Partition n) => s.card - 1)
-        (s := (cliques n).filter (p ∈ ·)) (b := C)
-        (by simp [cliques, hC, hpC])
-      change C.card - 1 ≤ localDimension p at h
+      have h := clique_le_local C hC p hpC
       rw [hCcard] at h
       omega
     have hhi : localDimension p ≤ r + 1 := by
-      have h : localDimension p ≤ maxDimension n := Finset.le_sup (Finset.mem_univ p)
-      have hm : maxDimension n = r+1 := maximum_at_threshold (r+1)
-      omega
+      simpa only [n, maximum_at_threshold] using local_le_maximum p
     have hp_not : (r,0) ∉ YoungDiagram.ofPartition p := by
       change (r,0) ∉ YoungDiagram.ofPartition (P first)
       rw [hP]
