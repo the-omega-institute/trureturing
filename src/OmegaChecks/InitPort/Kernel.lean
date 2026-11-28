@@ -452,16 +452,27 @@ partial def visit (n : Name) : M Bool := do
   if let some generated := (← get).env.find? dest then
     if agrees (← get).env (← expectGenerated c.source ci) (some generated) then return ← record n .added
     return ← record n (.blocked "target name collision")
-  if n == Meta.mkSmartUnfoldingNameFor n.getPrefix then
-    if c.base.contains (portName n.getPrefix) then
-      return ← record n (.blocked "smart unfolding belongs to a different implementation" (some n.getPrefix))
-    if let some body := ci.value? then
-      let missing := body.find? fun expr => Id.run do
-        let some m := Meta.smartUnfoldingMatch? expr | return false
-        let some matcher := m.getAppFn.constName? | return true
-        return (Meta.getMatcherInfoCore? c.base (portName matcher)).isNone
-      if missing.isSome then return ← record n (.blocked "smart unfolding requires unavailable matcher metadata")
   if let some reason := c.excluded.find? n then return ← record n (.blocked reason)
+  if n == Meta.mkSmartUnfoldingNameFor n.getPrefix then
+    let parent := n.getPrefix
+    modify fun s => {s with visiting := s.visiting.insert n}
+    unless ← visit parent do return ← record n (.blocked "unavailable smart unfolding parent" (some parent))
+    unless exactDefinition c.source (← get).env parent do
+      return ← record n (.blocked "smart unfolding belongs to a different implementation" (some parent))
+    let some (.defnInfo helper) := c.source.find? n | return ← record n (.blocked "unexpected smart unfolding declaration")
+    -- Install the same body whose annotated matcher applications Lean will reduce.
+    for dep in usedConstants helper.type ++ usedConstants helper.value do
+      unless ← visit dep do return ← record n (.blocked "unavailable dependency" (some dep))
+    let kernel := (← get).env
+    let missing := helper.value.find? fun expr => Id.run do
+      let some app := Meta.smartUnfoldingMatch? expr | return false
+      let some matcher := app.getAppFn.constName? | return true
+      return (Meta.getMatcherInfoCore? c.source matcher).isNone || !exactDefinition c.source kernel matcher
+    if missing.isSome then return ← record n (.blocked "smart unfolding requires unavailable matcher metadata")
+    let .ok decl := translateDecl ci helper.type helper.value | return ← record n (.blocked "open smart unfolding term")
+    let .ok next ← checkWithRetry kernel decl c.maxHeartbeats | return ← record n (.blocked "kernel rejected smart unfolding definition")
+    modify fun s => {s with env := next}
+    return ← record n .added
   if ci.isAxiom then return ← record n (.blocked "axiom")
   let mapRef := OmegaChecks.InitPort.ArrayMap.reference? n
   let allocator := OmegaChecks.InitPort.LogicalHandle.implementation? n

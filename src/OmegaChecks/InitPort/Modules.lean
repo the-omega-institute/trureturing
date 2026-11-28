@@ -56,7 +56,7 @@ def mergeImports (a b : Array Import) : Array Import := Id.run do
   return out
 
 /-- Copy the elaborator's declaration tags from the same visibility level as the constants. -/
-private def elaboratorEntries (source seed : Environment) (idx : ModuleIdx) (owner : Name)
+private def elaboratorEntries (source visible seed : Environment) (idx : ModuleIdx) (owner : Name)
     (available : NameSet) (level : OLeanLevel) : IO (Array (Name × Array EnvExtensionEntry)) := do
   let mut env := (← mkEmptyEnvironment).setMainModule owner
   let names (original inherited : Array Name) :=
@@ -85,11 +85,24 @@ private def elaboratorEntries (source seed : Environment) (idx : ModuleIdx) (own
     for entry in aliasExtension.getModuleEntries seed old (level := level) do
       unless aliases.contains entry do aliases := aliases.push entry
   for entry in aliases do env := aliasExtension.addEntry env entry
+  let matchers := Meta.Match.Extension.extension
+  let mut inherited : NameSet := {}
+  if let some old := seed.getModuleIdx? owner then
+    for entry in matchers.getModuleEntries seed old (level := level) do
+      inherited := inherited.insert entry.name
+      env := Meta.Match.Extension.addMatcherInfo env entry.name entry.info
+  -- MatcherInfo exports the same entries to ordinary and server imports.
+  let matcherEnv := if level == .private then source else visible
+  let matcherIdx := (matcherEnv.getModuleIdx? source.header.moduleNames[idx]!).get!
+  for entry in matchers.getModuleEntries matcherEnv matcherIdx do
+    let installed := renamed entry.name
+    if !inherited.contains installed && available.contains installed && InitKernelPort.exactDefinition source seed.toKernelEnv entry.name then
+      env := Meta.Match.Extension.addMatcherInfo env installed entry.info
   -- The empty encoder has no declarations. The two input entry arrays have already
   -- been filtered to this level, so export the assembled tags without filtering again.
   let data ← mkModuleData env .private
   return data.entries.filter fun e =>
-    #[matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, neverExtractAttr.ext.name, auxRecExt.name, aliasExtension.name].contains e.1
+    #[matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, neverExtractAttr.ext.name, auxRecExt.name, aliasExtension.name, matchers.name].contains e.1
 
 /-- A structure literal needs its field order, inherited projections and binder information. -/
 private def structureEntries (source port : Environment) (idx : ModuleIdx) (owner : Name)
@@ -309,12 +322,13 @@ unsafe def main (args : List String) : IO Unit := do
           if let some n := v.globalName? then available := available.insert n
       let instances ← instanceEntries source idx available owner level
       let structures ← structureEntries source monolith idx owner available level
-      let tags ← elaboratorEntries source monolith idx owner available level
+      let tags ← elaboratorEntries source surface monolith idx owner available level
       let entries := (previous.entries.filter (fun e =>
         !selected.contains e.1 && e.1 != Meta.instanceExtension.ext.name &&
         e.1 != structureExt.name && e.1 != projectionFnInfoExt.name &&
         e.1 != matchPatternAttr.ext.name && e.1 != Elab.Term.elabAsElim.ext.name &&
-        e.1 != neverExtractAttr.ext.name && e.1 != auxRecExt.name && e.1 != aliasExtension.name)) ++ replacement ++ instances ++ structures ++ tags
+        e.1 != neverExtractAttr.ext.name && e.1 != auxRecExt.name && e.1 != aliasExtension.name &&
+        e.1 != Meta.Match.Extension.extension.name)) ++ replacement ++ instances ++ structures ++ tags
       let mut entries := entries
       if let some compiled := nameCode then
         let generated ← OmegaChecks.InitPort.TypeName.publicCompilerEntries compiled

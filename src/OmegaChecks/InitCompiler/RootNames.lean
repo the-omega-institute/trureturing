@@ -53,7 +53,11 @@ private def reservedEquation : Name → Bool
     primitiveName parent && (Meta.isEqnLikeSuffix suffix || suffix == "congr_simp")
   | _ => false
 
-public def usesRoot (name : Name) := primitiveName name || reservedEquation name
+/-- Smart unfolding looks up the helper under the kernel name of the recursive definition. -/
+private def primitiveUnfolding (name : Name) : Bool :=
+  name == Meta.mkSmartUnfoldingNameFor name.getPrefix && primitiveName name.getPrefix
+
+public def usesRoot (name : Name) := primitiveName name || reservedEquation name || primitiveUnfolding name
 
 public def isPrimitive (owner name : Name) : Bool :=
   (owner == `OmegaInit.Data.Nat.Gcd && name == `Nat.gcd) ||
@@ -63,7 +67,8 @@ public def isPrimitive (owner name : Name) : Bool :=
 
 /-- Method lookup uses the structure's physical namespace, even when callers spell its alias. -/
 public def aliasFor? (official : Name) : Option (Name × Name) :=
-  if usesRoot official then some (`Omega ++ official, official)
+  if primitiveUnfolding official then none
+  else if usesRoot official then some (`Omega ++ official, official)
   else if (usesRoot official.getPrefix) && !official.isInternal then some (official, `Omega ++ official)
   else none
 

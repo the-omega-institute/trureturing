@@ -87,7 +87,8 @@ private def audit (roots : List String) (path label : String)
   let env ← importModules imports {}
   -- Each basis module is independently importable, including privately imported dependencies.
   let basis := env.allImportedModuleNames.filter OmegaChecks.ModuleSurface.isBasis
-  let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
+  -- Server imports also load the separately persisted editor extension entries.
+  let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .server)
   checkLayers env
   OmegaChecks.InitPort.NativeQuot.checkSupport env
   OmegaChecks.InitPort.NativeQuot.checkSupport publicStrict .exported
@@ -194,7 +195,7 @@ def main (args : List String) : IO Unit := do
       checkLayers isolated
       pure isolated
     else pure strict
-    let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
+    let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .server)
     let mode ← IO.getEnv "OMEGA_CACHE_CONSUMER_MODE"
     let report := (← IO.getEnv "OMEGA_OFFICIAL_AXIOM_REPORT").map System.FilePath.mk
     let cacheable := (← IO.getEnv "OMEGA_AUDIT_CACHE").isSome &&

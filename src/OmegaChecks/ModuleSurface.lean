@@ -85,7 +85,7 @@ private def supportedExtension (name : Name) : Bool :=
   [-- Compiled interface registrations checked by the port and kernel-interface audits.
    externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.simpExtension.ext.name, auxRecExt.name, noConfusionExt.name, Meta.completionBlackListExt.name,
    protectedExt.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, neverExtractAttr.ext.name, reducibilityCoreExt.name,
-   privateToUserName structureExt.name, projectionFnInfoExt.name,
+   privateToUserName structureExt.name, projectionFnInfoExt.name, Meta.Match.Extension.extension.name,
    -- Module provenance, compiled representation and kernel bookkeeping in the pinned toolchain.
    `Lean.namespacesExt, `Lean.noncomputableExt, `Lean.Compiler.inlineAttrs, `Lean.exportedAxiomsExt,
    `Lean.privateConstKindsExt, `Lean.modPkgExt, `Lean.IR.declMapExt, `Lean.Compiler.LCNF.baseExt,
@@ -108,6 +108,48 @@ private def checkSpecializations (env : Environment) (owner : Name) : IO Unit :=
           entry.paramsInfo.size == decl.params.size &&
           entry.paramsInfo.any Compiler.LCNF.SpecParamInfo.causesSpecialization do
         throw <| IO.userError s!"invalid parameter specialization for {entry.declName} in {owner}"
+
+private def sameMatcherInfo (a b : Meta.MatcherInfo) : Bool :=
+  a.numParams == b.numParams && a.numDiscrs == b.numDiscrs && a.altInfos == b.altInfos &&
+  a.uElimPos? == b.uElimPos? && a.discrInfos.map (·.hName?) == b.discrInfos.map (·.hName?) &&
+  a.overlaps.map.size == b.overlaps.map.size &&
+  a.overlaps.map.all fun i set => (b.overlaps.map[i]?).any fun other => set.toList == other.toList
+
+private def checkMatchers (strict full visible pinned : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
+  let ext := Meta.Match.Extension.extension
+  let entries := ext.getModuleEntries strict idx
+  let some origIdx := visible.getModuleIdx? (counterpart owner)
+    | throw <| IO.userError s!"missing official matcher owner for {owner}"
+  let original := ext.getModuleEntries visible origIdx
+  -- The upstream matcher extension exports identical entries to ordinary and server consumers.
+  let server := ext.getModuleEntries strict idx (level := .server)
+  unless entries.size == server.size && (entries.zip server).all (fun (a, b) =>
+      a.name == b.name && sameMatcherInfo a.info b.info) do
+    throw <| IO.userError s!"inconsistent server matcher registrations in {owner}"
+  for entry in entries do
+    let upstream := InitKernelPort.originalName entry.name
+    unless InitKernelPort.portName upstream == entry.name &&
+        strict.getModuleIdxFor? entry.name == some idx &&
+        visible.getModuleIdxFor? upstream == some origIdx &&
+        original.any (fun e => e.name == upstream && sameMatcherInfo entry.info e.info) &&
+        InitKernelPort.exactDefinition pinned full.toKernelEnv upstream do
+      throw <| IO.userError s!"unmatched matcher registration for {entry.name} in {owner}"
+
+  for constant in strict.header.moduleData[idx]!.constants do
+    unless constant.name == Meta.mkSmartUnfoldingNameFor constant.name.getPrefix do continue
+    let upstream := InitKernelPort.originalName constant.name
+    unless visible.getModuleIdxFor? upstream == some origIdx &&
+        constant.name.getPrefix == InitKernelPort.portName upstream.getPrefix &&
+        InitKernelPort.exactDefinition pinned full.toKernelEnv upstream &&
+        InitKernelPort.exactDefinition pinned full.toKernelEnv upstream.getPrefix do
+      throw <| IO.userError s!"unmatched smart unfolding definition for {constant.name} in {owner}"
+    let some (.defnInfo helper) := strict.find? constant.name | continue
+    if let some missing := helper.value.find? fun expr => Id.run do
+        let some app := Meta.smartUnfoldingMatch? expr | return false
+        let some matcher := app.getAppFn.constName? | return true
+        let some home := strict.getModuleIdxFor? matcher | return true
+        return !(ext.getModuleEntries strict home).any (·.name == matcher) then
+      throw <| IO.userError s!"unregistered smart unfolding matcher in {constant.name}: {missing}"
 
 private def checkElaboration (env full : Environment) (reference? : Option Environment)
     (owner : Name) (idx : ModuleIdx) : IO Unit := do
@@ -430,13 +472,21 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
   let nativeOwners := strict.allImportedModuleNames.filter fun owner =>
     owner.getRoot == `OmegaInit && (strict.getModuleIdx? owner).any fun idx =>
       !(externAttr.ext.getModuleEntries strict idx).isEmpty
-  let nativeReference ← importModules (nativeOwners.map fun n => {module := counterpart n, importAll := true}) {}
+  let full := full?.getD strict
+  let hasMatchers := fun (env : Environment) owner => (env.getModuleIdx? owner).any fun idx =>
+    let ext := Meta.Match.Extension.extension
+    !(ext.getModuleEntries env idx).isEmpty || !(ext.getModuleEntries env idx (level := .server)).isEmpty ||
+    env.header.moduleData[idx]!.constNames.any fun n => n == Meta.mkSmartUnfoldingNameFor n.getPrefix
+  let matcherOwners := strict.allImportedModuleNames.filter fun owner =>
+    isBasis owner && (hasMatchers strict owner || hasMatchers full owner)
+  let pinnedOwners := nativeOwners ++ matcherOwners.filter (!nativeOwners.contains ·)
+  let pinned ← importModules (pinnedOwners.map fun n => {module := counterpart n, importAll := true}) {}
   for port in strict.allImportedModuleNames do
     if !isBasis port then continue
     let some idx := strict.getModuleIdx? port | throw <| IO.userError s!"missing module {port}"
-    checkSpecializations (full?.getD strict) port
+    checkSpecializations full port
     if port == port.getRoot then
-      checkElaboration strict (full?.getD strict) none port idx
+      checkElaboration strict full none port idx
       unless (structureExt.getModuleEntries strict idx).isEmpty &&
           (projectionFnInfoExt.getModuleEntries strict idx).isEmpty do
         throw <| IO.userError s!"unmatched structure registration in the {port} umbrella"
@@ -444,11 +494,18 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
         throw <| IO.userError s!"unmatched instance registration in the {port} umbrella"
       unless (Meta.simpExtension.ext.getModuleEntries strict idx).isEmpty do
         throw <| IO.userError s!"unmatched simp registration in the {port} umbrella"
+      if matcherOwners.contains port then
+        throw <| IO.userError s!"unmatched matcher registration in the {port} umbrella"
       checkUmbrella strict port idx
       continue
     let official := counterpart port
     let reference := withImportedAliases (← importModules #[{module := official}] {} (level := .exported))
-    checkElaboration strict (full?.getD strict) (some nativeReference) port idx
+    checkElaboration strict full (some pinned) port idx
+    if matcherOwners.contains port then
+      checkMatchers strict full reference pinned port idx
+      if full?.isSome && port.getRoot == `OmegaInit then
+        let fullIdx := (full.getModuleIdx? port).get!
+        checkMatchers full full pinned pinned port fullIdx
     let officialClasses := classParameters reference (Array.range reference.header.modules.size)
     let visible ← publicClosure strict port
     let visibleIndices := (Array.range strict.header.modules.size).filter fun i =>
@@ -457,7 +514,7 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
     -- Diagnose the port's own public registrations before those of a re-export.
     for owner in port :: (visible.erase port).toList do
       let some idx := strict.getModuleIdx? owner | throw <| IO.userError s!"missing module {owner}"
-      if owner != port then checkElaboration strict (full?.getD strict) (some nativeReference) owner idx
+      if owner != port then checkElaboration strict full (some pinned) owner idx
       let data := strict.header.moduleData[idx]!
       checkStructures strict reference owner idx
       checkInstances strict reference owner idx

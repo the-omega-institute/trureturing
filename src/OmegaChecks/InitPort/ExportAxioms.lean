@@ -100,6 +100,27 @@ private def checkCountEquations (env : Environment) : IO Unit := do
     unless Kernel.isDefEqGuarded env {} inferred ci.type do
       throw <| IO.userError s!"ordinary imports lost definitional reduction for {name}"
 
+/-- Smart unfolding stops at the selected alternative, including a recursive call on an unknown name. -/
+private def checkSmartUnfolding (env : Environment) : IO Unit := do
+  let name := `Omega.Lean.Name.hasMacroScopes
+  unless env.contains (Meta.mkSmartUnfoldingNameFor name) do return
+  let check : MetaM Unit := do
+    let call := mkApp (mkConst name)
+    let empty := call (mkConst `Omega.Lean.Name.anonymous)
+    let negative := mkConst `Bool.false
+    unless (← Meta.unfoldDefinition? empty true) == some negative && Kernel.isDefEqGuarded env {} empty negative do
+      throwError "unexpected smart unfolding of the anonymous name"
+    Meta.withLocalDeclD `p (mkConst `Omega.Lean.Name) fun p => do
+      let num := call (mkApp2 (mkConst `Omega.Lean.Name.num) p (mkRawNatLit 0))
+      let recursive := call p
+      let left ← Meta.mkLambdaFVars #[p] num
+      let right ← Meta.mkLambdaFVars #[p] recursive
+      unless (← Meta.unfoldDefinition? num true) == some recursive && Kernel.isDefEqGuarded env {} left right do
+        throwError "smart unfolding lost the recursive name projection"
+      unless (← Meta.unfoldDefinition? recursive true).isNone do
+        throwError "smart unfolding selected an alternative on a free name"
+  check.run' |>.toIO' {fileName := "<ordinary import>", fileMap := default} {env}
+
 /-- Ordinary imports consult the public axiom extension when bodies are sealed.
 Read the persisted exported module level and ask the same API as `#print axioms`. -/
 private def checkPublic (imports : Array Import) : IO Unit := do
@@ -107,6 +128,7 @@ private def checkPublic (imports : Array Import) : IO Unit := do
   let env ← importModules imports {} (loadExts := true) (level := .exported)
   OmegaChecks.InitPort.NativeQuot.checkSupport env .exported
   checkCountEquations env
+  checkSmartUnfolding env
   let check : CoreM Nat := do
     for mod in env.header.modules, data in env.header.moduleData, i in [:env.header.modules.size] do
       let entries := exportedAxiomsExt.getModuleEntries env i

@@ -40,4 +40,11 @@ public partial def translate (rename : Name → Name) (e : Expr) : Expr :=
     | .lit (.strVal s) => some (stringTerm s)
     | _ => none
 
+/-- Matcher indices and smart-unfolding annotations describe a particular definition body. -/
+public def exactDefinition (source : Environment) (target : Kernel.Environment) (name : Name) : Bool := Id.run do
+  let some (.defnInfo original) := source.find? name | return false
+  let some (.defnInfo installed) := target.find? (portName name) | return false
+  return installed.levelParams == original.levelParams && installed.safety == original.safety &&
+    installed.type.equal (translate portName original.type) && installed.value.equal (translate portName original.value)
+
 end InitKernelPort
