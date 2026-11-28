@@ -39,7 +39,10 @@ internal sealed class MekeraRankIntegrationDocument : IScribeDocumentDefinition
                         + "even over the binary field. Rank–nullity converts the resulting strict "
                         + "kernel inclusions into the two right-witness inequalities. Transposing "
                         + "and exchanging the endpoints gives the left-witness inequalities."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mekera-somer-yesil-matrix-arc-ranks"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
