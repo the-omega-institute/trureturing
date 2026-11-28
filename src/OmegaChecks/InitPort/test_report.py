@@ -234,12 +234,26 @@ class CoverageTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "live quotient order formation"):
                 verify_complete(data, Path("product"), *check_coverage(data))
 
+    def test_strict_comparison_requires_the_constructor_for_its_own_envelope(self):
+        owner = "Init.Grind.Ring.Envelope"
+        scope = "Lean.Grind.Ring.OfSemiring."
+        name, order = scope + "instLTQOfOrderedAdd", scope + "instLEQOfOrderedAdd"
+        proofs = "OmegaChecks.InitBoundaries.EnvelopeOrder."
+        cert = [owner, name, order, order + "._proof_1", proofs + "propextFromRingLift",
+                proofs + "ringLiftFromPropext", proofs + "ringStrictOrderFromPropext"]
+        data = inventory(site(owner, name, kind="definition", quotientOrderFormation=order))
+        data["certifiedEnvelopeOrderFormations"] = [cert]
+        self.assertEqual(check_coverage(data), (0, []))
+        for bad in (cert[:-1], cert[:-1] + [proofs + "moduleStrictOrderFromPropext"]):
+            with self.subTest(certificate=bad), self.assertRaisesRegex(ValueError, "quotient order formation"):
+                check_coverage(data | {"certifiedEnvelopeOrderFormations": [bad]})
+
     def test_embedding_order_implications_belong_to_their_defining_module(self):
         owner = "Init.Grind.Module.OfNatModule"
         scope = "Lean.Grind.IntModule.OfNatModule."
         order = scope + "instLEQOfOrderedAdd"
         proofs = "OmegaChecks.InitBoundaries.EnvelopeOrder."
-        rows = [site(owner, scope + suffix, originalTypeGap=None) for suffix in ("of_le", "of_not_le")]
+        rows = [site(owner, scope + suffix, originalTypeGap=None) for suffix in ("of_le", "of_not_le", "of_lt", "of_not_lt")]
         data = inventory(*rows)
         self.assertEqual(check_coverage(data)[1], [(owner, row["name"]) for row in rows])
         certificates = [[owner, row["name"], order, order + "._proof_3", proofs + "propextFromModuleLift",
@@ -249,7 +263,7 @@ class CoverageTest(unittest.TestCase):
         data["certifiedEnvelopeOrderFormations"] = certificates
         self.assertEqual(check_coverage(data), (0, []))
         for bad in (["Init.Grind.Module.Envelope", *certificates[0][1:]],
-                    [owner, scope + "of_lt", *certificates[0][2:]]):
+                    [owner, scope + "of_eq", *certificates[0][2:]]):
             with self.subTest(certificate=bad), self.assertRaisesRegex(ValueError, "quotient order formation"):
                 check_coverage(data | {"certifiedEnvelopeOrderFormations": [bad]})
 

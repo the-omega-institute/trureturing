@@ -77,6 +77,9 @@ moduleOrderFromPropext reconstructs the entire pinned LE instance with its binar
 quotient lift. The bare LE type also admits the constant-false comparison.
 The public types of instIsPreorderQ and instOrderedAddQ also fix that comparison
 at arbitrary quotient inputs. -/
+/- instLTQOfOrderedAdd reduces on arbitrary x and y to x ≤ y ∧ ¬ y ≤ x.
+Both operands retain the full canonical quotient lift. With propext,
+moduleStrictOrderFromPropext reconstructs the pinned definition. -/
 /- instIsLinearPreorderQ additionally assumes a linear preorder on the base.
 LinearEnvelopeOrder.propextFromLinearLift uses a total relation on Nat whose
 comparisons at (1,0) and (2,1) reduce to any two equivalent propositions.

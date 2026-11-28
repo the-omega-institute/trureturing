@@ -21,6 +21,11 @@ OmegaChecks.InitBoundaries.EnvelopeOrder.propextFromModuleLift.
 The converse and the reconstruction of the full comparison are checked by
 moduleLiftFromPropext and moduleOrderFromPropext. -/
 
+/- of_lt and of_not_lt use instLTQOfOrderedAdd on a' and b'. Its public body
+compares these same arbitrary quotient arguments in both directions.
+Every base LE admits the additional LT and LawfulOrderLT premises, witnessed
+by EnvelopeOrder.strictRelation and strictRelationLawful. -/
+
 /- add_congr uses addition projected from ofNatModule on its two arbitrary
 quotient arguments. smul_congr uses natural scalar multiplication projected
 from the same instance. On natural-number pairs, the specified computations

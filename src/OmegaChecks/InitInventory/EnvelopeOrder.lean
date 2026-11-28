@@ -177,6 +177,25 @@ open Ring.OfSemiring in
   fun {_} _ _ _ _ => ⟨fun x y => Q.liftOn₂ x y
     (fun (a, b) (c, d) => a + d ≤ b + c) (ringLiftFromPropext ext)⟩
 
+
+open IntModule.OfNatModule in
+@[instance_reducible] def moduleStrictOrderFromPropext (ext : type_of% @propext) : type_of% @instLTQOfOrderedAdd.{u} :=
+  fun {_} _ _ _ _ => ⟨fun a b => (moduleOrderFromPropext ext).le a b ∧ ¬ (moduleOrderFromPropext ext).le b a⟩
+
+open Ring.OfSemiring in
+@[instance_reducible] def ringStrictOrderFromPropext (ext : type_of% @propext) : type_of% @instLTQOfOrderedAdd.{u} :=
+  fun {_} _ _ _ _ => ⟨fun a b => (ringOrderFromPropext ext).le a b ∧ ¬ (ringOrderFromPropext ext).le b a⟩
+
+example : @moduleStrictOrderFromPropext.{u} propext = @IntModule.OfNatModule.instLTQOfOrderedAdd.{u} := rfl
+example : @ringStrictOrderFromPropext.{u} propext = @Ring.OfSemiring.instLTQOfOrderedAdd.{u} := rfl
+
+/-- Every base comparison admits the additional lawful strict relation in of_lt and of_not_lt. -/
+@[instance_reducible] def strictRelation (α : Type u) (le : LE α) : LT α :=
+  ⟨fun a b => le.le a b ∧ ¬ le.le b a⟩
+
+theorem strictRelationLawful (α : Type u) (le : LE α) : @LawfulOrderLT α (strictRelation α le) le :=
+  @LawfulOrderLT.mk α (strictRelation α le) le (fun _ _ => Iff.rfl)
+
 example : @moduleOrderFromPropext.{u} propext = @IntModule.OfNatModule.instLEQOfOrderedAdd.{u} := rfl
 example : @ringOrderFromPropext.{u} propext = @Ring.OfSemiring.instLEQOfOrderedAdd.{u} := rfl
 
