@@ -227,4 +227,20 @@ theorem exists_gain_for_doubled_radius {k M : ℕ} (hk : 0 < k) (hM : 0 < M)
   rw [show (2 : ℝ) • u a - q a₀ = ((2 : ℝ) • u a - q a) + (q a - q a₀) by abel]
   exact (norm_add_le _ _).trans (add_le_add (along a) hc)
 
+theorem clique_card_le_width_add_one {n k : ℕ} {s : Finset (Fin n)}
+    (hc : (pathPower n k).IsClique (s : Set (Fin n))) : s.card ≤ k + 1 := by
+  classical
+  by_cases hs : s.Nonempty
+  · obtain ⟨a, ha, hm⟩ := Finset.exists_min_image s Fin.val hs
+    have hsub : s.image Fin.val ⊆ Finset.Icc a.val (a.val + k) := by
+      intro i hi
+      obtain ⟨b, hb, rfl⟩ := Finset.mem_image.mp hi
+      refine Finset.mem_Icc.mpr ⟨hm b hb, ?_⟩
+      by_cases he : a = b
+      · simp [he]
+      · exact (hc ha hb he).2.2
+    rw [← s.card_image_of_injective Fin.val_injective]
+    exact (Finset.card_le_card hsub).trans (by rw [Nat.card_Icc]; omega)
+  · simp [Finset.not_nonempty_iff_eq_empty.mp hs]
+
 end SimpleGraph.BanachPathPower

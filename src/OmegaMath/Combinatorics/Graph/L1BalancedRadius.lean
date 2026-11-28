@@ -35,7 +35,7 @@ private theorem side_dist_sum (a : Fin (2 * m)) :
   · have he (b : Fin (2 * m)) :
         |side m a - side m b| = if ¬ b.val < m then (1 : ℝ) else 0 := by
       by_cases hb : b.val < m <;> simp [side, h, hb]
-    simp only [he, sum_ite, sum_const, sum_const_zero, nsmul_eq_mul, mul_one, hother]
+    simp only [he, sum_ite, sum_const, nsmul_eq_mul, mul_one, hother, mul_zero, add_zero]
   · have he (b : Fin (2 * m)) :
         |side m a - side m b| = if b.val < m then (1 : ℝ) else 0 := by
       by_cases hb : b.val < m <;> simp [side, h, hb]
@@ -181,7 +181,6 @@ theorem exists_balanced_l1_family (m : ℕ) (hm : 0 < m) :
     have he : P * (2 * A * (m : ℝ)) = (2 * (m : ℝ)) * T := by
       dsimp [A, T]
       field_simp
-      <;> ring
     rw [he] at hlo
     exact le_of_mul_le_mul_left (hlo.trans hhi) (by positivity)
 

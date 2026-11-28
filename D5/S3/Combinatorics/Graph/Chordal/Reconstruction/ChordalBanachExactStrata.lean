@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.subtwo_cyclic_path_claim; result=D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.not_subtwo_cyclic_path; claim=D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.subtwo_cyclic_path_claim
+   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.subtwo_finite_group_claim; result=D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.not_subtwo_finite_group; claim=D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.subtwo_finite_group_claim
    digest: Exact scalar reconstruction, finite abelian reduction, and sharp geometric and group bounds on chordal graphs. -/
 
 import D5.S3.Combinatorics.Graph.Chordal.GainPotential
@@ -28,6 +28,12 @@ import OmegaMath.Combinatorics.Graph.PairRetention
 import OmegaMath.Combinatorics.Graph.PathPowerRadius
 import OmegaMath.Combinatorics.Graph.HilbertSimplexRadius
 import OmegaMath.Combinatorics.Graph.L1BalancedRadius
+import OmegaMath.Combinatorics.Graph.L1Counting
+import OmegaMath.Combinatorics.Graph.ChordalAbelianReduction
+import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
+import OmegaMath.Combinatorics.Graph.ChordalEightVertexMetric
+import OmegaMath.Combinatorics.Graph.CliqueTreeRadiusForm
+import D5.S3.Combinatorics.Graph.Chordal.Dirac
 
 /-! # Chordal reconstruction strata
 
@@ -40,142 +46,7 @@ namespace SimpleGraph.GainReduction
 
 universe u
 
-variable {V : Type u} {A : Type*} {G T : SimpleGraph V}
-
-/-- The triangle-defect set of a cochain, with zero included for padding. -/
-def defects [AddCommGroup A] (G : SimpleGraph V) (g : V → V → A) : Set A :=
-  {d | d = 0 ∨ ∃ v w x, G.Adj v w ∧ G.Adj w x ∧ G.Adj v x ∧
-    d = g v w + g w x - g v x}
-
-/-- Reconstruction with a uniform budget on the number of triangle defects. -/
-def Reconstructs [AddCommGroup A] (G : SimpleGraph V) (g : V → V → A)
-    (U : Set A) (k : ℕ) : Prop :=
-  ∃ p : V → A, ∀ v w, G.Adj v w → Short U k (g v w - (p w - p v))
-
-/-- A chosen orientation of the edges outside a spanning tree. -/
-abbrev CotreeEdge (G T : SimpleGraph V) [LT V] :=
-  {e : V × V // e.1 < e.2 ∧ G.Adj e.1 e.2 ∧ ¬ T.Adj e.1 e.2}
-
-/-- The canonical integer cochain in tree gauge, using one coordinate per cotree edge. -/
-def canonical [LinearOrder V] (G T : SimpleGraph V) (v w : V) (i : CotreeEdge G T) : ℤ :=
-  if (v, w) = i.val then 1 else if (w, v) = i.val then -1 else 0
-
-private theorem canonical_rev [LinearOrder V] (v w : V) :
-    canonical G T w v = -canonical G T v w := by
-  funext i
-  have hne : i.val.1 ≠ i.val.2 := ne_of_lt i.property.1
-  have hpair : ¬ ((v, w) = i.val ∧ (w, v) = i.val) := by
-    rw [Prod.ext_iff, Prod.ext_iff]
-    grind
-  by_cases h1 : (v, w) = i.val <;> by_cases h2 : (w, v) = i.val
-  · exact (hpair ⟨h1, h2⟩).elim
-  all_goals simp [canonical, h1, h2]
-
-private theorem canonical_triangle [LinearOrder V] {v w x : V}
-    (hvw : v ≠ w) (hwx : w ≠ x) (hvx : v ≠ x) (i : CotreeEdge G T) :
-    |canonical G T v w i + canonical G T w x i - canonical G T v x i| ≤ 1 := by
-  have hne : i.val.1 ≠ i.val.2 := ne_of_lt i.property.1
-  simp only [canonical, Prod.ext_iff]
-  split_ifs <;> norm_num <;> grind
-
-private theorem defects_neg [AddCommGroup A] {g : V → V → A}
-    (hrev : ∀ v w, G.Adj v w → g w v = -g v w) : ∀ u ∈ defects G g, -u ∈ defects G g := by
-  rintro u (rfl | ⟨v, w, x, hvw, hwx, hvx, rfl⟩)
-  · exact Or.inl (neg_zero)
-  refine Or.inr ⟨x, w, v, hwx.symm, hvw.symm, hvx.symm, ?_⟩
-  rw [hrev w x hwx, hrev v w hvw, hrev v x hvx]
-  abel
-
-private theorem integrate [Finite V] [AddCommGroup A] (hG : G.IsChordal) (g : V → V → A)
-    (hrev : ∀ v w, G.Adj v w → g w v = -g v w)
-    (htri : ∀ v w x, G.Adj v w → G.Adj w x → G.Adj v x →
-      g v w + g w x = g v x) :
-    ∃ p : V → A, ∀ v w, G.Adj v w → g v w = p w - p v := by
-  obtain ⟨p, hp⟩ := hG.exists_gain_potential (fun v w => Multiplicative.ofAdd (g v w))
-    (fun v w h => hrev v w h) (fun v w x hvw hwx hvx => htri v w x hvw hwx hvx)
-  exact ⟨fun v => Multiplicative.toAdd (p v), fun v w h => by
-    have he := congrArg Multiplicative.toAdd (hp v w h)
-    change g v w = -Multiplicative.toAdd (p v) + Multiplicative.toAdd (p w) at he
-    rw [sub_eq_add_neg, add_comm]
-    exact he⟩
-
-private theorem reconstructs_modular_iff_integral [Finite V] [LinearOrder V] (hG : G.IsChordal)
-    {k q : ℕ} (hq : 3 * k + 1 < q) :
-    Reconstructs G (fun v w => reduce q (canonical G T v w))
-      (reduce q '' defects G (canonical G T)) k ↔
-    Reconstructs G (canonical G T) (defects G (canonical G T)) k := by
-  constructor
-  · rintro ⟨p, hp⟩
-    obtain ⟨r, hrev, hr, htri⟩ := exists_integral_residuals_of_modular_potential
-      (canonical G T) (fun v w _ => canonical_rev v w) (defects G (canonical G T))
-      (defects_neg fun v w _ => canonical_rev v w)
-      (by
-        rintro u (rfl | ⟨v, w, x, hvw, hwx, hvx, rfl⟩) i
-        · simp
-        · exact canonical_triangle hvw.ne hwx.ne hvx.ne i)
-      (fun _ _ _ hvw hwx hvx => canonical_triangle hvw.ne hwx.ne hvx.ne) hq p hp
-    obtain ⟨p', hp'⟩ := integrate hG (fun v w => canonical G T v w - r v w)
-      (fun v w h => by rw [canonical_rev, hrev v w h]; abel)
-      (fun v w x hvw hwx hvx => by
-        rw [← sub_eq_zero]
-        calc
-          _ = (canonical G T v w + canonical G T w x - canonical G T v x) -
-                (r v w + r w x - r v x) := by abel
-          _ = 0 := by rw [htri v w x hvw hwx hvx, sub_self])
-    refine ⟨p', fun v w h => ?_⟩
-    rw [← hp' v w h, sub_sub_cancel]
-    exact hr v w h
-  · rintro ⟨p, hp⟩
-    refine ⟨fun v => reduce q (p v), fun v w h => ?_⟩
-    simpa only [map_sub] using (hp v w h).map (reduce q)
-
-private noncomputable def evalCochain [Finite V] [LinearOrder V] [AddCommGroup A]
-    (g : V → V → A) : (CotreeEdge G T → ℤ) →+ A := by
-  classical
-  letI := Fintype.ofFinite (CotreeEdge G T)
-  exact
-    { toFun := fun z => ∑ i, z i • g i.val.1 i.val.2
-      map_zero' := by simp
-      map_add' := fun z z' => by simp [add_zsmul, Finset.sum_add_distrib] }
-
-open Classical in
-private theorem eval_canonical [Finite V] [LinearOrder V] [AddCommGroup A]
-    (g : V → V → A) (hrev : ∀ v w, G.Adj v w → g w v = -g v w)
-    (hzero : ∀ v w, T.Adj v w → g v w = 0) (v w : V) (h : G.Adj v w) :
-    evalCochain (G := G) (T := T) g (canonical G T v w) = g v w := by
-  let := Fintype.ofFinite (CotreeEdge G T)
-  change (∑ i : CotreeEdge G T, canonical G T v w i • g i.val.1 i.val.2) = _
-  by_cases ht : T.Adj v w
-  · rw [hzero v w ht]
-    apply Finset.sum_eq_zero
-    intro i _
-    have h1 : (v, w) ≠ i.val := fun he => i.property.2.2 (he ▸ ht)
-    have h2 : (w, v) ≠ i.val := fun he => i.property.2.2 (he ▸ ht.symm)
-    simp [canonical, h1, h2]
-  · rcases lt_or_gt_of_ne h.ne with hlt | hlt
-    · let e : CotreeEdge G T := ⟨(v, w), hlt, h, ht⟩
-      rw [Finset.sum_eq_single e]
-      · simp [e, canonical]
-      · intro i _ hi
-        have h1 : (v, w) ≠ i.val := fun he => hi (Subtype.ext he.symm)
-        have h2 : (w, v) ≠ i.val := fun he => by
-          have hi := i.property.1
-          rw [← he] at hi
-          exact hlt.not_gt hi
-        simp [canonical, h1, h2]
-      · simp
-    · let e : CotreeEdge G T := ⟨(w, v), hlt, h.symm, fun he => ht he.symm⟩
-      rw [Finset.sum_eq_single e]
-      · have hrv := hrev v w h
-        simp [e, canonical, h.ne, hrv]
-      · intro i _ hi
-        have h1 : (v, w) ≠ i.val := fun he => by
-          have hi := i.property.1
-          rw [← he] at hi
-          exact hlt.not_gt hi
-        have h2 : (w, v) ≠ i.val := fun he => hi (Subtype.ext he.symm)
-        simp [canonical, h1, h2]
-      · simp
+variable {V : Type u} {G T : SimpleGraph V}
 
 /-- A single canonical cochain over the residue ring decides universal abelian feasibility.
 Choosing a spanning tree indexes the coordinates by the edges outside that tree. The
@@ -523,40 +394,6 @@ end SimpleGraph
 
 namespace SimpleGraph
 
-private theorem cliqueTreeRadius_closed_form {m : ℕ} (hm : 2 ≤ m) (h : ℕ) :
-    cliqueTreeRadius m 1 h =
-      ((m : ℝ) - 1) - ((m : ℝ) - 2) * (((m : ℝ) - 1) / m) ^ h := by
-  have hmR : (2 : ℝ) ≤ m := by exact_mod_cast hm
-  have hm0 : (0 : ℝ) < m := by linarith
-  let t := ((m : ℝ) - 1) / m
-  have ht0 : 0 ≤ t := div_nonneg (by linarith) hm0.le
-  have ht1 : t ≤ 1 := (div_le_iff₀ hm0).mpr (by linarith)
-  have ht : 1 - 1 / (m : ℝ) = t := by dsimp [t]; field_simp
-  induction h with
-  | zero => norm_num [cliqueTreeRadius]
-  | succ h ih =>
-    rw [cliqueTreeRadius, ih]
-    change max (max ((m : ℝ) - 1 - ((m : ℝ) - 2) * t ^ h) 1)
-      ((1 - 1 / (m : ℝ)) * (1 + ((m : ℝ) - 1 - ((m : ℝ) - 2) * t ^ h))) =
-      (m : ℝ) - 1 - ((m : ℝ) - 2) * t ^ (h + 1)
-    have he : (1 - 1 / (m : ℝ)) * (1 + ((m : ℝ) - 1 - ((m : ℝ) - 2) * t ^ h)) =
-        (m : ℝ) - 1 - ((m : ℝ) - 2) * t ^ (h + 1) := by
-      rw [ht, pow_succ]
-      have htm : t * (m : ℝ) = (m : ℝ) - 1 := div_mul_cancel₀ _ hm0.ne'
-      calc
-        _ = t * (m : ℝ) - ((m : ℝ) - 2) * (t ^ h * t) := by ring
-        _ = _ := by rw [htm]
-    have hp : t ^ h ≤ 1 := pow_le_one₀ ht0 ht1
-    have hmon : t ^ (h + 1) ≤ t ^ h := by
-      rw [pow_succ]
-      exact mul_le_of_le_one_right (pow_nonneg ht0 _) ht1
-    rw [he, max_eq_right]
-    apply max_le
-    · linarith only [mul_le_mul_of_nonneg_left hmon (show 0 ≤ (m : ℝ) - 2 by linarith)]
-    · have hpow : t ^ (h + 1) ≤ 1 := hmon.trans hp
-      have := mul_le_mul_of_nonneg_left hpow (show 0 ≤ (m : ℝ) - 2 by linarith)
-      linarith
-
 /-- The separator recurrence gives an exact expression for the upper bound at finite height. -/
 theorem cliqueTree_height_banach_gain_potential {V I E : Type*} [Finite V] [Finite I]
     [SeminormedAddCommGroup E] [NormedSpace ℝ E]
@@ -724,22 +561,6 @@ end SimpleGraph
 
 namespace SimpleGraph.BanachPathPower
 
-private theorem clique_card_le {n k : ℕ} {s : Finset (Fin n)}
-    (hc : (pathPower n k).IsClique (s : Set (Fin n))) : s.card ≤ k + 1 := by
-  classical
-  by_cases hs : s.Nonempty
-  · obtain ⟨a, ha, hm⟩ := Finset.exists_min_image s Fin.val hs
-    have hsub : s.image Fin.val ⊆ Finset.Icc a.val (a.val + k) := by
-      intro i hi
-      obtain ⟨b, hb, rfl⟩ := Finset.mem_image.mp hi
-      refine Finset.mem_Icc.mpr ⟨hm b hb, ?_⟩
-      by_cases he : a = b
-      · simp [he]
-      · exact (hc ha hb he).2.2
-    rw [← s.card_image_of_injective Fin.val_injective]
-    exact (Finset.card_le_card hsub).trans (by rw [Nat.card_Icc]; omega)
-  · simp [Finset.not_nonempty_iff_eq_empty.mp hs]
-
 /-- The cyclic abelian witness gives exact error two on any width-three path with
 at least fourteen vertices. In particular, the universal group bound for
 chordal graphs of clique number at most four is attained in an abelian group. -/
@@ -766,7 +587,7 @@ theorem pathPower_width_three_cyclic_exact {n : ℕ} (hn : 14 ≤ n) :
   have hG := (intervalGraph_isChordal_and_two_approximate_gain_potential ℓ r hI hshape
     g 1 (by norm_num) hr htri).1
   obtain ⟨p, hp⟩ := hG.exists_clique_four_group_gain_potential
-    (fun s hs => clique_card_le hs) g (ε := 1) (by norm_num) hr htri
+    (fun s hs => clique_card_le_width_add_one hs) g (ε := 1) (by norm_num) hr htri
   exact ⟨g, hr, htri, ⟨p, by simpa only [mul_one] using hp⟩, hlow⟩
 
 end SimpleGraph.BanachPathPower
@@ -811,8 +632,7 @@ def subtwo_cyclic_path_claim : Prop :=
     Dist.dist (Multiplicative.ofAdd (ChordalPath49.skew
       (fun i j => ChordalPath49.forwardGain i (j - i)) a b)) ((p a)⁻¹ * p b) < 2
 
-/-- The cyclic word certificate refutes a sub-two fit on the specified power path. -/
-theorem not_subtwo_cyclic_path : ¬ subtwo_cyclic_path_claim := by
+private theorem no_cyclic_subtwo_fit : ¬ subtwo_cyclic_path_claim := by
   let := ChordalPath49.cayleyMetric
   let f := fun i j : ℕ => ChordalPath49.forwardGain i (j - i)
   intro h
@@ -943,3 +763,83 @@ theorem l1_even_powerPath_exact (m : ℕ) (hm : 0 < m) (C : ℝ) :
     simpa [Nat.cast_mul] using hC
 
 end SimpleGraph.BanachPathPower
+
+namespace SimpleGraph.BanachPathPower
+
+open ChordalEightVertex in
+/-- The split-graph witness attains the clique-four group coefficient in a finite abelian group. -/
+theorem split_clique_four_group_witness :
+    letI := cayleyMetric
+    graph.IsChordal ∧ (∀ s : Finset V, graph.IsClique (s : Set V) → s.card ≤ 4) ∧
+    (∃ A : Set V, graph.IsClique A ∧ graph.IsIndepSet Aᶜ) ∧
+    (∀ u v w, graph.Adj u v → graph.Adj v w → graph.Adj u w →
+      Dist.dist (Multiplicative.ofAdd (gain u v + gain v w))
+        (Multiplicative.ofAdd (gain u w)) ≤ 1) ∧
+    (∃ p : V → M, ∀ u v, graph.Adj u v →
+      Dist.dist (Multiplicative.ofAdd (gain u v)) ((p u)⁻¹ * p v) ≤ 2) ∧
+    (∀ p : V → M, ∃ u v, graph.Adj u v ∧
+      2 ≤ Dist.dist (Multiplicative.ofAdd (gain u v)) ((p u)⁻¹ * p v)) := by
+  let := cayleyMetric
+  let := cayley_left
+  let := cayley_right
+  let A : Set V := {u | u.val < 4}
+  have hc : graph.IsClique A := fun _ hu _ hv hne => split_partition.1 _ _ hu hv hne
+  have hd : graph.IsIndepSet Aᶜ := fun u hu v hv _ =>
+    split_partition.2 u v (by exact Nat.le_of_not_lt hu) (by exact Nat.le_of_not_lt hv)
+  obtain ⟨p, hp⟩ := (exists_two_approximate_gain_potential_of_split A hc hd
+    (fun u v => Multiplicative.ofAdd (gain u v)) 1 (by norm_num)
+    (fun u v _ => congrArg Multiplicative.ofAdd (gain_reverse u v)) triangle_metric).2
+  exact ⟨graph_chordal, clique_card_le_four, ⟨A, hc, hd⟩, triangle_metric,
+    ⟨p, fun u v huv => by simpa using hp u v huv⟩, exists_metric_residual_ge_two⟩
+
+open ChordalEightVertex in
+/-- A sub-two fit on at least one of the two specified finite abelian witnesses. -/
+def subtwo_finite_group_claim : Prop :=
+  subtwo_cyclic_path_claim ∨ (letI := cayleyMetric
+    ∃ p : V → M, ∀ u v, graph.Adj u v →
+      Dist.dist (Multiplicative.ofAdd (gain u v)) ((p u)⁻¹ * p v) < 2)
+
+/-- Each of the finite abelian cochains obstructs a sub-two fit. -/
+theorem not_subtwo_finite_group : ¬ subtwo_finite_group_claim := by
+  rintro (h | ⟨p, hp⟩)
+  · exact no_cyclic_subtwo_fit h
+  · obtain ⟨u, v, huv, h⟩ := ChordalEightVertex.exists_metric_residual_ge_two p
+    exact h.not_gt (hp u v huv)
+
+end SimpleGraph.BanachPathPower
+
+namespace ChordalL1
+
+open MeasureTheory
+
+/-- The sharp radius for at most two m or two m plus one unit-diameter points,
+uniformly over real L1 spaces. The lower bound uses a finite counting measure. -/
+theorem l1_uniform_jung_exact (m k : ℕ) (hm : 0 < m) (hmk : 2 * m ≤ k)
+    (hk : k ≤ 2 * m + 1) (C : ℝ) :
+    (∀ (Ω : Type) [MeasurableSpace Ω] (μ : Measure Ω) (s : Finset (Lp ℝ 1 μ)),
+      s.card ≤ k → (∀ a ∈ s, ∀ b ∈ s, ‖a - b‖ ≤ 1) →
+      ∃ c : Lp ℝ 1 μ, ∀ a ∈ s, ‖a - c‖ ≤ C) ↔ 1 - 1 / (2 * (m : ℝ)) ≤ C := by
+  classical
+  constructor
+  · intro h
+    let Ω := BalancedCutCoordinate m
+    let : MeasurableSpace Ω := ⊤
+    let μ : Measure Ω := Measure.count
+    obtain ⟨x, hd, hr⟩ := exists_counting_radius_obstruction m hm
+    let s := Finset.univ.image x
+    have hs : s.card ≤ k := by
+      have hcard := Finset.card_image_le (s := (Finset.univ : Finset (Fin (2 * m)))) (f := x)
+      exact (by simpa [s] using hcard : s.card ≤ 2 * m).trans hmk
+    obtain ⟨c, hc⟩ := h Ω μ s hs (by
+      rintro _ ha _ hb
+      obtain ⟨a, _, rfl⟩ := Finset.mem_image.mp ha
+      obtain ⟨b, _, rfl⟩ := Finset.mem_image.mp hb
+      exact hd a b)
+    obtain ⟨a, ha⟩ := hr c
+    exact ha.trans (hc (x a) (Finset.mem_image.mpr ⟨a, Finset.mem_univ a, rfl⟩))
+  · intro h Ω _ μ s hs hd
+    obtain ⟨c, hc⟩ := exists_center_finset_odd m hm s id zero_le_one
+      (hs.trans hk) (fun a ha b hb => hd a ha b hb)
+    exact ⟨c, fun a ha => (hc a ha).trans (by simpa using h)⟩
+
+end ChordalL1

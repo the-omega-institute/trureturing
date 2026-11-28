@@ -42,7 +42,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachE
 
 *Commentary.*
 
-Root a tree at any vertex. Join two distinct vertices when one is on the root path of the other and their distance is at most the positive integer k. For skew gains in a real seminormed vector space with triangle defect at most epsilon, the displayed coefficient times epsilon bounds all edge residuals.
+Root a tree at any vertex. Join two distinct vertices when one is on the root path of the other and their distance is at most the positive integer k. For skew gains in a real seminormed vector space with triangle defect at most epsilon, all edge residuals are bounded by epsilon times two minus two over k.
 
 For each depth residue modulo k, integrate on the chain of marked ancestors and then along each branch to the vertex. Across one edge, at most one marked depth is crossed. The norm bound counts at most one triangle per endpoint, with no charge when that endpoint is marked. Each endpoint is marked in one residue class, and the average potential gives the claimed bound.
 
@@ -84,7 +84,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachE
 
 *Commentary.*
 
-For a closed walk p in a finite chordal graph and inverse-compatible gains in any group, its ordered gain is the ordered product of the factors in F. Each factor is a conjugate of the holonomy of an oriented triangle. Length subtraction is natural, so a trivial walk or a backtrack uses zero factors.
+For a closed walk p in a finite chordal graph and inverse-compatible gains in any group, there is a list F of length at most the length of p minus two, truncated at zero, whose ordered product is the gain of p. Each factor is a conjugate of the holonomy of an oriented triangle. Length subtraction is natural, so a trivial walk or a backtrack uses zero factors.
 
 Rotate to a simplicial vertex in the induced support. Either delete a backtrack or close a triangle across its two neighbors. Conjugate the shorter factorization back to the original basepoint.
 
@@ -100,7 +100,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachE
 
 Suppose a spanning tree T of a finite chordal graph is contained in the graph and every graph edge has endpoints at tree distance at most t. The group and defect hypotheses are those of the clique bounds.
 
-Integrate the gains on the tree. Closing a tree path with one graph edge gives a loop of length at most t plus one. Its triangle factors bound the residual by the displayed coefficient times the defect.
+Integrate the gains on the tree. Closing a tree path with one graph edge gives a loop of length at most t plus one. Its triangle factors bound the residual by t minus one times the defect.
 
 **Theorem 1.8 (Group reconstruction from graph radius).**
 
@@ -112,7 +112,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachE
 
 *Commentary.*
 
-Let the finite connected chordal graph have a vertex at distance at most r from every vertex. The same group and gain hypotheses apply. A potential integrates chosen shortest root walks, and each graph edge closes a loop of length at most two r plus one. The displayed coefficient times the defect bounds the residual.
+Let the finite connected chordal graph have a vertex at distance at most r from every vertex. The same group and gain hypotheses apply. A potential integrates chosen shortest root walks, and each graph edge closes a loop of length at most two r plus one. The edge residual is at most two r minus one times the defect.
 
 **Theorem 1.9 (Hilbert reconstruction from finite Jung centers).**
 
@@ -124,9 +124,9 @@ Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachE
 
 *Commentary.*
 
-Let G be finite and chordal with cliques of size at most k plus one, for k at least one. The target is any real inner product space. For skew gains whose triangle defects have norm at most epsilon, one potential bounds all edge residuals by the displayed coefficient times epsilon. J is the square root of the ratio of k minus one to twice k.
+Let G be finite and chordal with cliques of size at most k plus one, for k at least one. The target is any real inner product space. For skew gains whose triangle defects have norm at most epsilon, one potential bounds all edge residuals by J divided by one minus J, times epsilon. Here J is the square root of the ratio of k minus one to twice k.
 
-At each simplicial insertion, the candidate labels are at pairwise distance at most the sum of the old error bound and epsilon. A finite Jung center for at most k candidates shrinks that diameter by J. The displayed coefficient is the fixed point of this estimate.
+At each simplicial insertion, the candidate labels are at pairwise distance at most the sum of the old error bound and epsilon. A finite Jung center for at most k candidates shrinks that diameter by J. The factor J divided by one minus J is the fixed point of this estimate.
 
 **Theorem 1.10 (A finite-height clique-tree bound).**
 
@@ -138,9 +138,147 @@ Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachE
 
 *Commentary.*
 
-Let the adjacent bags of a clique tree meet in at least one and at most q vertices, where q is at least two. If the tree has a root at distance at most h from every bag, every skew Banach gain assignment of defect at most epsilon admits a potential with the stated residual coefficient.
+Let the adjacent bags of a clique tree meet in at least one and at most q vertices, where q is at least two. If the tree has a root at distance at most h from every bag, every skew Banach gain assignment of defect at most epsilon admits a potential with residual at most epsilon times q minus one minus the product of q minus two and the h-th power of the ratio of q minus one to q.
 
 Distances through the root bound the clique-tree diameter by twice h. The center-extension recurrence begins at one and applies the separator averaging update. Solving this recurrence gives q minus one minus the product of q minus two and the h-th power of the ratio of q minus one to q.
+
+**Theorem 1.11 (Exact group bounds on finite path powers).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.pathPower_group_exact_strata`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.pathPower_group_exact_strata` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive width k, the least nonnegative bound over every finite path power and every bi-invariant group is zero, one, or two, according as k is one, two, or at least three.
+
+Consecutive-edge integration handles the first two widths. The existing interval potential supplies the upper bound two. At width two a nonflat triangle in an integral word metric forces unit error. At every larger width the cyclic group of order 49 gives a word-budget obstruction, pulled back from width three along a depth collapse.
+
+**Theorem 1.12 (Real L1 reconstruction from odd Jung centers).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_l1_jung_gain_potential`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_l1_jung_gain_potential` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let G be finite and chordal with cliques of size at most two m plus two, for m at least one. For any measure and skew real L1 gains of triangle defect at most epsilon, one potential gives residual at most two m minus one times epsilon. Clique bounds four and six give factors one and three.
+
+The pointwise lattice median and the explicit nonnegative weights give a Jung center for up to two m plus one candidate gains. In simplicial elimination its radius factor is one minus one over two m. Solving the radius recurrence gives the stated coefficient.
+
+**Theorem 1.13 (Integrality of the universal group coefficient).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.group_coefficient_integral`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.group_coefficient_integral` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The optimal universal coefficient of a finite connected chordal graph is an integer between zero and four. Normalize along a spanning tree. In the canonical free group on non-tree edges, the triangle holonomies and their conjugates generate all labels.
+
+The induced word metric has integral distances. Every target gain after tree normalization is the image of the canonical free-group cochain. Its triangle bounds carry each generator into the unit ball, so a shortest word-budget potential controls every target. The free-group example attains this budget.
+
+**Theorem 1.14 (The cyclic reconstruction witness at width three).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.pathPower_width_three_cyclic_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.pathPower_width_three_cyclic_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each width-three path power with at least fourteen vertices, a cyclic group of order 49 with the specified Cayley generators admits gains of defect at most one and exact optimal error two. These interval graphs are chordal and have no clique of size greater than four.
+
+The period-three gain pattern is zero on consecutive edges. A unit-error potential would have increments in the unit word ball. Exact checks on the last two increments eliminate every possible continuation by the fourteenth vertex. The two-factor clique potential gives the matching upper bound. Applying the existing Banach path-power estimate at width three gives four thirds, strictly below two.
+
+**Theorem 1.15 (Exact real L1 coefficient at clique number four).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.l1_clique_four_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.l1_clique_four_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every nonzero real L1 space, the optimal uniform coefficient on finite chordal graphs of clique number at most four is one. The zero space has coefficient zero.
+
+The three-candidate median gives the upper bound under simplicial elimination. Chordal fans have unbounded circumference at clique number three. Unit-vector scalar gains on these fans preserve the scalar lower bound by applying a norm-one functional to every potential.
+
+**Theorem 1.16 (No sub-two fit for the cyclic cochain).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.not_subtwo_cyclic_path`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.not_subtwo_cyclic_path` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On the width-three power of the twenty-seven-vertex path, the specified cyclic gain in the Cayley metric of order 49 has some residual at least two for every potential. The metric has integer distances, so a sub-two fit would use at most one generator on every edge. The word certificate rules out such a fit.
+
+**Theorem 1.17 (Exact coefficient of the pair-retention family).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.family_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.family_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Start with a clique of size m at least three. At each of D generations, attach a clique of n fresh vertices together with each retained pair in each current bag. In every nonzero real normed space the least uniform residual over gains of triangle defect at most one is one minus two divided by the product of m and the D-th power of n plus one.
+
+The sharp extension along each pair multiplies the gap from one by the reciprocal of n plus one. Traversing all fresh vertices along each edge of a distinguished cycle multiplies its length by n plus one. Ordered gains in a unit direction give the matching obstruction.
+
+**Theorem 1.18 (Power-path lower bound from a finite family).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.powerPath_uniform_ge_doubled_radius`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.powerPath_uniform_ge_doubled_radius` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Take k indexed points of diameter at most one in a real seminormed space. Suppose every ball containing their doubles has radius at least r. Any nonnegative coefficient C valid for every finite width-k path power is at least r.
+
+Assign the translated point of the starting residue as the gain of a short forward edge and twice that point on edges of length k. At defect at most one, a fit of size C on M plus one rows gives an enclosing ball of radius at most C plus twice C divided by M. Arbitrarily large M gives the result.
+
+**Theorem 1.19 (The Hilbert power-path lower bound).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.hilbert_powerPath_uniform_lower`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.hilbert_powerPath_uniform_lower` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any positive width k, a nonnegative coefficient valid for all finite width-k path powers with gains in real k-dimensional Euclidean space is at least the square root of two minus two over k.
+
+The normalized regular simplex has diameter one. The squared distances of its doubled vertices from a common center average to two minus two over k plus the squared distance of that center from the simplex centroid. Apply the finite-family radius lower bound.
+
+**Theorem 1.20 (Exact finite-dimensional L1 bound at even widths).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.l1_even_powerPath_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.l1_even_powerPath_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At width two m with m positive, the least uniform coefficient over all path lengths for the real L1 space on the permutations of two m labels is two minus two over two m.
+
+Every coordinate separates the labels into two halves. Symmetry makes the distances between distinct sample points equal. Any center has total distance at least the contribution from these balanced cuts. The periodic radius construction gives the lower bound, and the general Banach path-power theorem gives the upper bound.
 
 ## References
 
@@ -150,10 +288,23 @@ Distances through the root bound the clique-tree diameter by twice h. The center
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_clique_five_group_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_clique_four_group_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_hilbert_jung_gain_potential`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_l1_jung_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_radius_approximate_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_tree_spanner_approximate_gain_potential`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.family_exact`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.finite_modulus_decides_abelian_reconstruction`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.group_coefficient_integral`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.hilbert_powerPath_uniform_lower`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.l1_clique_four_exact`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.l1_even_powerPath_exact`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.not_subtwo_cyclic_path`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.pathPower_group_exact_strata`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.pathPower_width_three_cyclic_exact`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.powerPath_uniform_ge_doubled_radius`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.scalar_circumference_exact`
+- Dependency: [D5/S3/Combinatorics/Graph/Chordal/ChordalBanachLimitTwo](../ChordalBanachLimitTwo.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/CliqueTreeBanachPotential](../CliqueTreeBanachPotential.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Chordal/CompleteAndCliqueSumBanach](../CompleteAndCliqueSumBanach.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/EliminationForest](../EliminationForest.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/GainPotential](../GainPotential.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Chordal/SimplicialAndIntervalPotential](../SimplicialAndIntervalPotential.md)
