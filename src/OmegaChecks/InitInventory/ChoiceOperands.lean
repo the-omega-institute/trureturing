@@ -5,6 +5,7 @@ meta import OmegaChecks.InitInventory.Replay
 import all Init.Classical
 import all Init.WFExtrinsicFix
 import all Init.While
+import all Init.Internal.Order.While
 import all Init.Data.Option.Lemmas
 import all Init.Control.Lawful.MonadAttach.Lemmas
 public import OmegaChecks.InitInventory.Logic
@@ -54,6 +55,9 @@ The witness consumes the complete polymorphic operation used to state the equati
 public def operand? (owner : Name) (source : ConstantInfo) : Option Operand := do
   guard (owner.getRoot == `Init)
   guard source.isTheorem
+  if owner == `Init.Internal.Order.While && source.name == `repeatM.congr_simp then
+    let [u, _] := source.levelParams | none
+    return ⟨``repeatM, ``choiceFromRepeatM, [.param u, .param u]⟩
   if owner == `Init.Classical then
     if let some (name, witness) := specification? source.name then
       guard (source.type.getUsedConstants.contains name)
@@ -78,13 +82,14 @@ private def check (env : Environment) (owner : Name) (source : ConstantInfo) (op
   let some target := env.find? ``Classical.choice | throw "missing official choice type"
   let some (.param targetLevel) := levels.getLast?
     | throw s!"choice at a fixed universe in {owner}/{source.name}"
+  let proofLevels := if name == ``repeatM then [.param targetLevel] else levels
   unless source.levelParams.contains targetLevel && levels.length == op.numLevelParams &&
-      levels.length == proof.numLevelParams && target.isAxiom do
+      proofLevels.length == proof.numLevelParams && target.isAxiom do
     throw s!"incompatible operand universes in {owner}/{source.name}"
   let domain := op.type.instantiateLevelParams op.levelParams levels
   let codomain := target.type.instantiateLevelParams target.levelParams [.param targetLevel]
   let expected := Expr.forallE .anonymous domain codomain .default
-  unless proof.type.instantiateLevelParams proof.levelParams levels == expected do
+  unless proof.type.instantiateLevelParams proof.levelParams proofLevels == expected do
     throw s!"incorrect choice witness type for {owner}/{source.name}"
 
 open Meta in
@@ -92,18 +97,22 @@ open Meta in
 implementation of its operator, each of the two resulting endpoints is a complete choice function. -/
 public def checkCongruenceEndpoints (official : Environment) (source : ConstantInfo) (operand : Operand) : MetaM Unit := do
   let u := Level.param `u
+  let isRepeat := operand.name == ``repeatM
   let sourceLevels := source.levelParams.map fun param =>
-    if operand.levels.getLast? == some (.param param) then u else Level.one
+    if isRepeat || operand.levels.getLast? == some (.param param) then u else Level.one
   let opLevels := operand.levels.map fun level => level.instantiateParams source.levelParams sourceLevels
   let op ← getConstInfo operand.name
   let choice ← getConstInfo ``Classical.choice
   let env ← getEnv
-  let choiceType := choice.type.instantiateLevelParams choice.levelParams [u]
+  -- The result of a monad lives in Type. Its endpoints supply choice on Type u
+  -- directly, and choiceFromRepeatM lifts arbitrary sorts through PLift.
+  let choiceType := choice.type.instantiateLevelParams choice.levelParams [if isRepeat then u.succ else u]
+  let selector := if isRepeat then mkConst ``choiceFromRepeatAtType [u] else mkConst operand.witness opLevels
   withLocalDeclD `op (op.type.instantiateLevelParams op.levelParams opLevels) fun port => do
     let siteType := (source.type.instantiateLevelParams source.levelParams sourceLevels).replace fun term =>
       if term == mkConst operand.name opLevels then some port else none
     forallTelescope choiceType fun params _ => do
-      let selected ← withTransparency .all <| whnf (mkAppN (mkApp (mkConst operand.witness opLevels) port) params)
+      let selected ← withTransparency .all <| whnf (mkAppN (mkApp selector port) params)
       let (args, _, eqn) ← forallMetaTelescope siteType
       let some (_, lhs, rhs) := eqn.eq? | throwError "expected equality"
       unless lhs.getAppFn == port && selected.getAppFn == port &&
@@ -190,6 +199,7 @@ actual statement exhibits a function of the type of Classical.choice at both end
 private def congruenceSites : List (Name × Name) := [
   (`Init.Classical, `Classical.choose.congr_simp),
   (`Init.WFExtrinsicFix, `WellFounded.extrinsicFix.congr_simp),
+  (`Init.Internal.Order.While, `repeatM.congr_simp),
   (`Init.While, `Classical.choice.congr_simp),
   (`Init.While, `Exists.choose.congr_simp),
   (`Init.Control.Lawful.Lemmas, `Exists.choose.congr_simp),

@@ -233,10 +233,14 @@ def choiceFromLeftInv (leftInv : type_of% (@Lean.Grind.leftInv.{u,u+1})) : type_
   fun {α} inhabited => @leftInv α (Option (PLift α)) (fun a => some ⟨a⟩)
     (fun _ _ h => congrArg PLift.down (Option.some.inj h)) inhabited none
 
+def choiceFromRepeatAtType (loop : type_of% (@repeatM.{u,u})) : type_of% (@Classical.choice.{u+1}) :=
+  fun {α} inhabited =>
+    @loop PUnit.{u+1} Id inferInstance α inhabited (fun x => Sum.inl x) PUnit.unit
+
 def choiceFromRepeatM (loop : type_of% (@repeatM.{u,u})) : type_of% (@Classical.choice.{u}) :=
   fun {α} inhabited =>
     let wrapped : Nonempty (PLift α) := inhabited.elim (fun a => ⟨⟨a⟩⟩)
-    (@loop (PLift (PUnit.{u})) Id inferInstance (PLift α) wrapped (fun x => Sum.inl x) ⟨PUnit.unit⟩).down
+    (@choiceFromRepeatAtType loop (PLift α) wrapped).down
 
 /- Specialize each range interface to a singleton. Its comparison expresses any proposition
 and its size is one. Double negation is exactly what the zero-size law needs. -/
