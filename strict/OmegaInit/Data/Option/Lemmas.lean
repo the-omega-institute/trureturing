@@ -64,3 +64,51 @@ port_proof Option.le.eq_3 by_reflexivity
 port_proof Option.le.eq_4 by_reflexivity
 port_proof Option.lt.eq_1 by_reflexivity
 port_proof Option.lt.eq_2 by_reflexivity
+
+port_proof Option.default_eq_none by_reflexivity
+port_proof Option.not_isSome by_reflexivity
+port_proof Option.not_comp_isSome by_reflexivity
+port_proof Option.pure_def by_reflexivity
+port_proof Option.pure_apply by_reflexivity
+port_proof Option.bind_eq_bind by_reflexivity
+port_proof Option.bind_apply by_reflexivity
+port_proof Option.map_eq_map by_reflexivity
+port_proof Option.map_apply by_reflexivity
+port_proof Option.filter_none by_reflexivity
+port_proof Option.filter_some by_reflexivity
+port_proof Option.bind_guard by_reflexivity
+port_proof Option.guard_false by_reflexivity
+port_proof Option.guard_true by_reflexivity
+port_proof Option.guard_def by_reflexivity
+port_proof Option.guard_apply by_reflexivity
+port_proof Option.guard_eq_ite by_reflexivity
+port_proof Option.guard_eq_filter by_reflexivity
+port_proof Option.toArray_some by_reflexivity
+port_proof Option.toArray_none by_reflexivity
+port_proof Option.orElse_eq_orElse by_reflexivity
+port_proof Option.orElse_apply by_reflexivity
+port_proof Option.none_beq_none by_reflexivity
+port_proof Option.none_beq_some by_reflexivity
+port_proof Option.some_beq_none by_reflexivity
+port_proof Option.some_beq_some by_reflexivity
+port_proof Option.isEqSome_eq_beq_some by_reflexivity
+port_proof Option.some_lt_some by_reflexivity
+port_proof Option.some_le_some by_reflexivity
+port_proof Option.merge_max by_reflexivity
+port_proof Option.map_ite by_finite_cases
+port_proof Option.map_if by_finite_cases
+port_proof Option.map_dite by_finite_cases
+port_proof Option.map_dif by_finite_cases
+port_proof Option.some_ne_none
+port_proof Option.get_of_eq_some
+port_proof Option.get_eq_getD
+port_proof Option.get_congr
+port_proof Option.isSome_of_eq_some
+port_proof Option.eq_some_of_isSome
+port_proof Option.isSome_of_isSome_bind
+port_proof Option.isSome_apply_of_isSome_bind
+port_proof Option.get_bind
+port_proof Option.filter_some_pos
+port_proof Option.isSome_of_any
+port_proof Option.none_lt_some
+port_proof Option.none_le
