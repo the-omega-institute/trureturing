@@ -336,6 +336,8 @@ def check_module_surface():
              "Not (Eq b Bool.false) → Eq b Bool.true := Omega.Bool.eq_true_of_ne_false\n"
              "namespace Bool\nexport Omega.Bool (of_not_eq_false)\nend Bool", None),
             (core, [prelude], "import all OmegaInit.Prelude\nattribute [local semireducible] Nat.div", None),
+            (core, [prelude], "attribute [default_instance 77] Omega.instDecidableAnd",
+             "unmatched default instance Omega.instDecidableAnd"),
             (port, [prelude], "attribute [class] Omega.True", "public class registration mismatch for Omega.True"),
             (core, [prelude], "attribute [class] Omega.True", "public class registration mismatch for Omega.True"),
             ("OmegaInit", [prelude], "attribute [class] Omega.True", "unmatched class registration"),
@@ -726,6 +728,7 @@ if __name__ == "__main__":
         print(f"Omega scope: {len(targets)} cache roots, {len(scope['consumers'])} consumer targets, "
               f"{len(scope['common'])} common targets", flush=True)
     elif args.library is not None:
+        run("lake", "build", "omegaAudit")
         ENV.update(lake_environment())
         check_library(args.library)
     elif args.full or args.incremental or not (args.scope or args.changed):

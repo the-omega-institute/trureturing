@@ -159,7 +159,14 @@ private def instanceEntries (source : Environment) (idx : ModuleIdx) (available 
     env := match scope with
       | some ns => ext.addScopedEntry env (renamed ns) translated
       | none => ext.addEntry env translated
-  return (← mkModuleData env level).entries.filter (·.1 == ext.ext.name)
+  let defaults := Meta.defaultInstanceExtension
+  for entry in defaults.getModuleEntries source idx (level := level) do
+    if available.contains (renamed entry.instanceName) then
+      env := defaults.addEntry env {entry with
+        className := renamed entry.className, instanceName := renamed entry.instanceName}
+  -- The two source registries already supplied only entries visible at this level.
+  -- The scratch environment contains no declarations for a second visibility filter.
+  return (← mkModuleData env .private).entries.filter fun e => e.1 == ext.ext.name || e.1 == defaults.name
 
 /-- Definitions with pointwise computation equations checked by the interface audit. -/
 private def sealedImplementation (n : Name) : Bool :=
@@ -324,7 +331,7 @@ unsafe def main (args : List String) : IO Unit := do
       let structures ← structureEntries source monolith idx owner available level
       let tags ← elaboratorEntries source surface monolith idx owner available level
       let entries := (previous.entries.filter (fun e =>
-        !selected.contains e.1 && e.1 != Meta.instanceExtension.ext.name &&
+        !selected.contains e.1 && e.1 != Meta.instanceExtension.ext.name && e.1 != Meta.defaultInstanceExtension.name &&
         e.1 != structureExt.name && e.1 != projectionFnInfoExt.name &&
         e.1 != matchPatternAttr.ext.name && e.1 != Elab.Term.elabAsElim.ext.name &&
         e.1 != neverExtractAttr.ext.name && e.1 != auxRecExt.name && e.1 != aliasExtension.name &&

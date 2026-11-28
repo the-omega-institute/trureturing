@@ -28,6 +28,7 @@ public import OmegaInit.Data.Nat
 public import OmegaInit.Data.Nat.Bitwise.Lemmas
 public import OmegaInit.Data.Option.Basic
 public import OmegaInit.Data.Option.Lemmas
+public import OmegaInit.Data.Option.Monadic
 public import OmegaInit.Data.Ord.Basic
 public import OmegaInit.Data.String.Decode
 public import OmegaInit.Data.String.Slice

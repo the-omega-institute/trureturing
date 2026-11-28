@@ -9,8 +9,13 @@ public import OmegaInit.Core
 
 @[expose] public section
 
-port_native_records Alternative, ToBool
+port_native_records Alternative, ToBool, ForM
+namespace Omega
+export ForM (forM)
+end Omega
+
 port_definition instForInOfForIn' with_native_code
+attribute [instance 500, default_instance] Omega.instForInOfForIn'
 port_definition Functor.mapRev with_native_code
 port_definition Functor.discard with_native_code
 port_definition instOrElseOfAlternative with_native_code

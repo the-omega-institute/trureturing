@@ -83,7 +83,8 @@ private def checkUmbrella (env : Environment) (port : Name) (idx : ModuleIdx) : 
 extension kinds therefore require a correspondence before a port can expose them. -/
 private def supportedExtension (name : Name) : Bool :=
   [-- Compiled interface registrations checked by the port and kernel-interface audits.
-   externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.simpExtension.ext.name, auxRecExt.name, noConfusionExt.name, Meta.completionBlackListExt.name,
+   externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.defaultInstanceExtension.name,
+   Meta.simpExtension.ext.name, auxRecExt.name, noConfusionExt.name, Meta.completionBlackListExt.name,
    protectedExt.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, neverExtractAttr.ext.name, reducibilityCoreExt.name,
    privateToUserName structureExt.name, projectionFnInfoExt.name, Meta.Match.Extension.extension.name,
    -- Module provenance, compiled representation and kernel bookkeeping in the pinned toolchain.
@@ -423,7 +424,8 @@ private abbrev ClassParameters := Array Nat × Array Nat
 
 private def checkInstances (env reference : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
   let installed := Meta.instanceExtension.ext.getModuleEntries env idx
-  if installed.isEmpty then return
+  let defaults := Meta.defaultInstanceExtension.getModuleEntries env idx
+  if installed.isEmpty && defaults.isEmpty then return
   let rename := fun (n : Name) => n.replacePrefix `Omega .anonymous
   let key := fun (k : Meta.DiscrTree.Key) => match k with
     | .const n a => .const (rename n) a
@@ -434,6 +436,19 @@ private def checkInstances (env reference : Environment) (owner : Name) (idx : M
     | .scoped ns v => (some ns, v)
   let some upstream := reference.getModuleIdx? (counterpart owner)
     | throw <| IO.userError s!"missing official owner for instances in {owner}"
+  let pinnedDefaults := Meta.defaultInstanceExtension.getModuleEntries reference upstream
+  let mut remaining := pinnedDefaults.toList
+  for d in defaults do
+    remaining := remaining.dropWhile fun p =>
+      InitKernelPort.portName p.className != d.className ||
+      InitKernelPort.portName p.instanceName != d.instanceName || p.priority != d.priority
+    let _ :: rest := remaining
+      | throw <| IO.userError s!"unmatched default instance {d.instanceName} for {d.className} in {owner}"
+    let registeredClass := (env.getModuleIdxFor? d.className).any fun classOwner =>
+      (classExtension.getModuleEntries env classOwner).any (·.name == d.className)
+    unless env.contains d.instanceName && registeredClass do
+      throw <| IO.userError s!"unavailable default instance {d.instanceName} for {d.className} in {owner}"
+    remaining := rest
   let actual := (Meta.instanceExtension.ext.getModuleEntries reference upstream).map load
   let mut last := 0
   for e in installed do
@@ -510,7 +525,8 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
       unless (structureExt.getModuleEntries strict idx).isEmpty &&
           (projectionFnInfoExt.getModuleEntries strict idx).isEmpty do
         throw <| IO.userError s!"unmatched structure registration in the {port} umbrella"
-      unless (Meta.instanceExtension.ext.getModuleEntries strict idx).isEmpty do
+      unless (Meta.instanceExtension.ext.getModuleEntries strict idx).isEmpty &&
+          (Meta.defaultInstanceExtension.getModuleEntries strict idx).isEmpty do
         throw <| IO.userError s!"unmatched instance registration in the {port} umbrella"
       unless (Meta.simpExtension.ext.getModuleEntries strict idx).isEmpty do
         throw <| IO.userError s!"unmatched simp registration in the {port} umbrella"
