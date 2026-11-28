@@ -1,0 +1,7 @@
+module
+prelude
+public import OmegaInit.Core
+
+port_native_records MonadAttach
+port_definition MonadAttach.pbind with_native_code
+port_definition MonadAttach.trivial with_native_code

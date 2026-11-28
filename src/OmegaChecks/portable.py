@@ -10,7 +10,8 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
-from strict_lake import BUILD, COMMON_SRC, INSPECTOR, lake_layout, strict_config
+from strict_lake import BUILD, COMMON_SRC, INSPECTOR, lake_layout, isolated_config, host_modules
+from hosted import foundation_files, make_view, fingerprint
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -28,7 +29,11 @@ def output(*args, **kwargs):
     return subprocess.check_output(args, cwd=ROOT, text=True, **kwargs)
 
 
-def import_graph(lean, pathspecs=("strict/*.lean", "src/*.lean", "D5/*.lean", "Trureturing.lean"), *,
+STRICT_LIBRARIES = ("strict/OmegaInit.lean", "strict/OmegaInit/*.lean",
+                    "OmegaMathlib.lean", "OmegaMathlib/*.lean")
+
+
+def import_graph(lean, pathspecs=(*STRICT_LIBRARIES, "src/*.lean", "D5/*.lean", "Trureturing.lean"), *,
                  with_reg=False, official_basis=False):
     if with_reg:
         pathspecs = (*pathspecs, "Reg/*.lean")
@@ -39,7 +44,7 @@ def import_graph(lean, pathspecs=("strict/*.lean", "src/*.lean", "D5/*.lean", "T
         if file and (ROOT / file).is_file():
             path = file.removeprefix("strict/").removeprefix("src/")
             name = path.removesuffix(".lean").replace("/", ".")
-            if file.startswith("src/") and root(name) in BASIS and not official_basis:
+            if root(name) in BASIS and file.startswith("src/") != official_basis:
                 continue
             sources[name] = ROOT / file
     if with_reg:
@@ -105,8 +110,8 @@ def backend_plan(official_path, names, environment=None, *, prepared=False):
 
 def namespace_exports(lean, strict, basis, official_path):
     helper = SRC / "OmegaChecks/Portable/Exports.lean"
-    surface = json.loads(output(lean, "--run", helper, strict, official_path, *basis,
-                                env={**os.environ, "LEAN_PATH": ""}))
+    subprocess.run(["lake", "build", "+OmegaChecks.Portable.Exports"], cwd=ROOT, check=True)
+    surface = json.loads(output("lake", "env", lean, "--run", helper, strict, official_path, *basis))
     exports = defaultdict(lambda: defaultdict(list))
     for module, namespace, official, leaf in surface["names"]:
         exports[module][namespace, official].append(leaf)
@@ -154,18 +159,18 @@ def derived_facades(lean, strict, basis, official_path):
 
 def regenerate_facades():
     lean = output("lake", "env", "printenv", "LEAN").strip()
-    sources, graph = import_graph(lean, ("strict/*.lean",))
+    _, graph = import_graph(lean, STRICT_LIBRARIES)
     basis = sorted(name for name in graph if root(name) in BASIS)
     if not BASIS.issubset(basis):
         raise RuntimeError("strict foundation roots are missing")
-    subprocess.run(["lake", "-f", strict_config(), "build", *("+" + name for name in basis)],
+    subprocess.run(["lake", "-f", isolated_config(), "build", *("+" + name for name in basis)],
                    cwd=ROOT, check=True)
     generated, _ = derived_facades(lean, ROOT / BUILD / "lib/lean", basis,
                                 output("lake", "env", "printenv", "LEAN_PATH").strip())
     changed = []
     with tempfile.TemporaryDirectory(dir=ROOT / ".lake") as temporary:
         for name, content in generated.items():
-            relative = sources[name].relative_to(ROOT / "strict")
+            relative = Path(*name.split(".")).with_suffix(".lean")
             target = SRC / relative
             if target.resolve() != target:
                 raise ValueError(f"refusing to write a facade through a symlink: {target}")
@@ -185,8 +190,16 @@ def regenerate_facades():
 
 
 def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environment,
-                      common_dir=None, *, snapshots=None):
-    lake, libraries = lake_layout(strict, with_reg, common_dir)
+                      common_dir=None, *, snapshots=None, hosted=None):
+    profile = None
+    if hosted:
+        view, key = hosted
+        # Lake's child compiler resolves external modules through the configured library.
+        # Keep the verified projection immutable while Lake writes witness artifacts.
+        hosted_lib = stage.parent / "hosted-lake"
+        shutil.copytree(view, hosted_lib)
+        profile = (hosted_lib, key)
+    lake, libraries = lake_layout(strict, with_reg, common_dir, profile)
     paths = [Path(path).resolve() for path in
              output(*lake, "env", "printenv", "LEAN_PATH", env=environment).strip().split(os.pathsep)]
     syslib = Path(output(lean, "--print-libdir").strip()).resolve()
@@ -196,7 +209,9 @@ def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environm
     # Querying the facets builds the selected modules through the normal Lake graph.
     # Lake supplies both the actual source owner and the resulting olean in request order.
     targets = [f"+{name}:{facet}" for name in sources for facet in ("lean", "olean")]
-    resolved = [Path(p).resolve() for p in output(*lake, "query", *targets, env=environment).splitlines()]
+    resolved = []
+    if targets:
+        resolved = [Path(p).resolve() for p in output(*lake, "query", *targets, env=environment).splitlines()]
     expected_paths = []
     hashes = {}
     for name, source in sources.items():
@@ -229,14 +244,17 @@ def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environm
     # Audit and publish these exact immutable bytes, even if another Lake build follows.
     if snapshots is not None:
         snapshots[stage] = artifact_snapshot(stage)
-    actual = output(lean, "--run", SRC / "OmegaChecks/Portable/ArtifactHashes.lean",
-                    input="\n".join(map(str, hashes)), env=environment).splitlines()
+    actual = []
+    if hashes:
+        actual = output(lean, "--run", SRC / "OmegaChecks/Portable/ArtifactHashes.lean",
+                        input="\n".join(map(str, hashes)), env=environment).splitlines()
     for (file, expected), observed in zip(hashes.items(), actual, strict=True):
         if expected != observed:
             raise RuntimeError(f"artifact differs from its Lake trace: {file}")
     if snapshots is not None and artifact_snapshot(stage) != snapshots[stage]:
         raise RuntimeError(f"staged compiler artifacts changed during trace verification: {stage}")
-    return os.pathsep.join(map(str, [stage, *(path for path in paths if path not in libraries.values())]))
+    external = [path for path in paths if path not in libraries.values()]
+    return os.pathsep.join(map(str, [*([view] if hosted else []), stage, *external]))
 
 
 def publish(tree, destination):
@@ -478,9 +496,10 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                        for file in ("lakefile.toml", "lake-manifest.json"))
     tracked.update([Path(__file__), SRC / "OmegaChecks/strict_lake.py", SRC / "OmegaChecks/Portable/ArtifactHashes.lean"])
     if backend != "mathlib":
-        tracked.update((SRC / "OmegaBuild/Commands.lean", SRC / "OmegaBuild/Plan.lean"))
+        tracked.update((SRC / "OmegaBuild/Commands.lean", SRC / "OmegaBuild/Plan.lean", SRC / "OmegaChecks/hosted.py"))
+        tracked.update(sources[n] for n in closure(graph, ["OmegaChecks.InitPort.Hosted"]))
     if backend == "both":
-        tracked.add(SRC / "OmegaChecks/Portable/Exports.lean")
+        tracked.update(sources[name] for name in closure(graph, ["OmegaChecks.Portable.Exports"]))
     if frozen is not None:
         tracked.update(sources[name] for name in closure(graph, ["OmegaChecks.Audit"]))
         tracked.add(frozen[1])
@@ -495,11 +514,13 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         destination = Path(destination).absolute()
         destination.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="omega-portable-", dir=destination.parent if destination else None) as temp:
-        strict, official = (Path(temp) / x for x in ("strict", "standard"))
+        temp = Path(temp).resolve()
+        strict, official = (temp / x for x in ("strict", "standard"))
         snapshots = {} if frozen is not None else None
         official_path = backend_artifacts(False, with_reg, official_sources, official, packages,
                                           lean, environment, snapshots=snapshots)
         skipped = {}
+        mixed = set()
         if backend != "mathlib":
             plan = backend_plan(official_path, list(compiled), environment)
             skipped = plan["mathlibOnly"]
@@ -508,8 +529,40 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             common_modules = closure(graph, [n for n in common_roots if n not in skipped])
             strict.mkdir()
             if strict_sources:
-                strict_path = backend_artifacts(True, with_reg, strict_sources, strict, packages, lean,
+                if backend == "both":
+                    # Host-only predecessors also import Init. They share the hosted
+                    # comparison with any Omega clients that depend on them.
+                    mixed = host_modules(graph, strict_sources) & strict_sources.keys()
+                isolated_sources = {n: p for n, p in strict_sources.items() if n not in mixed}
+                strict_path = backend_artifacts(True, with_reg, isolated_sources, strict, packages, lean,
                                                 environment, snapshots=snapshots)
+                if mixed:
+                    projection = Path(temp) / "projection"
+                    files = foundation_files(strict)
+                    key = fingerprint(strict, files)
+                    make_view(strict, projection, files, snapshot=True)
+                    if snapshots is not None:
+                        snapshots[projection] = artifact_snapshot(projection)
+                    required = set(closure(graph, mixed))
+                    witnesses = {n: p for n, p in strict_sources.items()
+                                 if n in required and root(n) not in BASIS | {"OmegaMath"}}
+                    hosted_stage = Path(temp) / "witnesses"
+                    hosted_path = backend_artifacts(True, with_reg, witnesses, hosted_stage, packages, lean,
+                                                   environment, snapshots=snapshots, hosted=(projection, key))
+
+        def compare_command(names):
+            if not mixed.isdisjoint(names):
+                return [AUDIT, "--hosted-consumer", strict, projection, hosted_path]
+            return [AUDIT, "--consumer", strict_path]
+        def comparison_groups(names, ports):
+            pure = [n for n in names if n not in mixed]
+            if pure or ports:
+                yield pure, [AUDIT, "--consumer", strict_path]
+            hosted_names = set(names) & mixed
+            if hosted_names:
+                prerequisites = set(closure(graph, hosted_names))
+                yield [n for n in names if n in prerequisites], compare_command(hosted_names)
+
         if common_modules:
             common_basis = [name for name in common_modules if root(name) in BASIS]
             normal, common = derived_facades(lean, strict, common_basis, official_path)
@@ -534,19 +587,26 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         if backend == "both" and frozen is None:
             subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
         if common_modules:
-            subprocess.run([AUDIT, "--consumer", strict_path, common_path, *common_downstream, "--basis", *common_basis], cwd=ROOT,
-                           env={**environment, "OMEGA_CACHE_CONSUMER_MODE": "common-interface"}, check=True)
+            for clients, command in comparison_groups(common_downstream, common_basis):
+                subprocess.run([*command, common_path, *clients, "--basis", *common_basis], cwd=ROOT,
+                               env={**environment, "OMEGA_CACHE_CONSUMER_MODE": "common-interface"}, check=True)
             print(f"Common computational interface checked: {len(common_basis)} basis modules, "
                   f"{len(common_downstream)} downstream modules", flush=True)
         if backend == "both" and frozen is None:
             staged_report = Path(temp) / "official-axioms.json"
             report_data = {"backend": "mathlib", "consumerModules": [], "declarations": []}
-            if downstream or basis:
-                subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis],
+            declaration_rows = {}
+            for clients, command in comparison_groups(downstream, basis):
+                subprocess.run([*command, official_path, *clients, "--basis", *basis],
                                cwd=ROOT, env={**environment, "OMEGA_CACHE_CONSUMER_MODE": "official-interface",
                                               "OMEGA_OFFICIAL_AXIOM_REPORT": str(staged_report)},
                                check=True)
-                report_data = json.loads(staged_report.read_text())
+                for row in json.loads(staged_report.read_text())["declarations"]:
+                    name = row["name"]
+                    if declaration_rows.setdefault(name, row) != row:
+                        raise RuntimeError(f"inconsistent official axiom measurement for {name}")
+            report_data["consumerModules"] = downstream[:]
+            report_data["declarations"] = [declaration_rows[n] for n in sorted(declaration_rows)]
             # Supplemental common-interface checks may cover unrelated consumers.
             reported = {name: skipped[name] for name in modules if name in skipped}
             report_data["mathlibOnly"] = reported
@@ -574,19 +634,32 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                     canonical_by_name[name]["mathlibOnly"] = skipped[name]
             inventory, strict_rows, certified = [], [], []
             if eligible:
-                request.write_text(json.dumps(eligible))
-                strict_rows = measure_staged(inspector, request, eligible, strict_path,
-                                             Path(temp) / "strict-dependencies.json", environment)
+                for is_mixed in (False, True):
+                    names = [n for n in eligible if (n in mixed) == is_mixed]
+                    if names:
+                        request.write_text(json.dumps(names))
+                        strict_rows.extend(measure_staged(inspector, request, names,
+                            hosted_path if is_mixed else strict_path, Path(temp) / "strict-dependencies.json", environment))
                 paired_official = [row for row in official_rows if row["module"] not in skipped]
                 inventory = paired_inventory(canonical, paired_official, strict_rows, set(eligible))
                 inventory_path = Path(temp) / "frozen-inventory.json"
                 certificate_path = Path(temp) / "frozen-certificate.json"
-                inventory_path.write_text(json.dumps(inventory))
                 subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
-                subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis],
-                               cwd=ROOT, env={**environment, "OMEGA_FROZEN_INVENTORY": str(inventory_path),
-                                    "OMEGA_FROZEN_CERTIFICATE": str(certificate_path)}, check=True)
-                certified = json.loads(certificate_path.read_text())
+                by_module = {}
+                for is_mixed in (False, True):
+                    group = [row for row in inventory if (row["moduleName"] in mixed) == is_mixed]
+                    if not group:
+                        continue
+                    names = [row["moduleName"] for row in group]
+                    clients = [n for n in closure(graph, names) if n in downstream]
+                    inventory_path.write_text(json.dumps(group))
+                    subprocess.run([*compare_command(clients), official_path, *clients, "--basis", *basis],
+                                   cwd=ROOT, env={**environment, "OMEGA_FROZEN_INVENTORY": str(inventory_path),
+                                        "OMEGA_FROZEN_CERTIFICATE": str(certificate_path)}, check=True)
+                    for module, key in json.loads(certificate_path.read_text()):
+                        by_module.setdefault(module, []).append(key)
+                certified = [[row["moduleName"], key] for row in inventory
+                             for key in by_module.get(row["moduleName"], [])]
             for tree, before in snapshots.items():
                 if artifact_snapshot(tree) != before:
                     raise RuntimeError(f"staged compiler artifacts changed during measurement: {tree}")

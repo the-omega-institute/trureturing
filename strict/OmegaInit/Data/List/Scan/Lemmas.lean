@@ -5,6 +5,6 @@ Authors: Parikshit Khanna, Jeremy Avigad, Leonardo de Moura, Floris van Doorn, M
 -/
 module
 prelude
-public import OmegaInit.Control.Id
+public import OmegaInit.Data.List.Scan.Basic
 
 port_proof Id.run.eq_1 by_reflexivity

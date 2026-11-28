@@ -1,9 +1,132 @@
 module
 public import Init.Data.Nat.Lemmas
 public import OmegaInit.Data.Nat.Basic
+public import OmegaInit.Data.Nat.Div.Basic
+public import OmegaInit.Data.Nat.Log2
+public import OmegaInit.PropLemmas
+public import OmegaInit.Data.Nat.Bitwise.Basic
 
 /-! Namespace aliases to the pinned public interface. -/
 public section
 namespace Omega.Nat
-export _root_.Nat (add_add_add_comm add_eq_left add_eq_right add_eq_zero_iff add_left_cancel_iff add_left_inj add_right_cancel_iff add_right_inj add_sub_cancel_right add_succ_sub_one eq_zero_of_add_eq_zero_right left_eq_add lt_iff_add_one_le lt_one_add_iff mul_eq_zero mul_right_comm one_add one_add_le_iff one_add_sub_one one_le_of_lt one_lt_succ_succ one_pow pow_add pow_add' pow_add_one' pow_mul pow_mul' pow_right_comm pow_succ' pow_two pred_eq_of_eq_succ pred_one_add pred_sub right_eq_add sub_one sub_right_comm sub_succ' succ_add_eq_add_succ succ_add_sub_one succ_eq_one_add succ_le succ_ne_succ succ_sub_one two_pow_succ)
+export _root_.Nat (add_add_add_comm add_eq_left add_eq_right add_eq_zero_iff add_left_cancel_iff add_left_inj add_right_cancel_iff add_right_inj add_sub_cancel_right add_succ_sub_one eq_zero_of_add_eq_zero_right le_log2 left_eq_add log2_eq_iff log2_lt lt_iff_add_one_le lt_one_add_iff mul_eq_zero mul_right_comm one_add one_add_le_iff one_add_sub_one one_le_of_lt one_lt_succ_succ one_pow pow_add pow_add' pow_add_one' pow_mul pow_mul' pow_right_comm pow_succ' pow_two pred_eq_of_eq_succ pred_one_add pred_sub right_eq_add sub_one sub_right_comm sub_succ' succ_add_eq_add_succ succ_add_sub_one succ_eq_one_add succ_le succ_ne_succ succ_sub_one two_pow_succ)
+end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_lt_add_iff_left add_lt_add_iff_right add_lt_add_of_le_of_lt
+  add_lt_add_of_lt_of_le add_mod add_mod_eq_add_mod_left add_mod_eq_add_mod_right add_mod_mod
+  add_one_mul_add_one add_pos_left add_self_ne_one add_sub_cancel' add_sub_one_le_mul
+  add_sub_sub_add_right div_add_mod' div_eq_zero_iff div_le_div_right div_le_iff_le_mul_add_pred
+  div_lt_one_iff div_mul_div_comm div_mul_div_le div_ne_zero_iff eq_div_of_mul_eq_left
+  eq_div_of_mul_eq_right eq_of_dvd_of_lt_two_mul exists_eq_add_of_le exists_eq_add_of_le'
+  exists_eq_add_of_lt exists_ne_zero le_mul_of_pos_left le_mul_of_pos_right le_mul_self le_of_mod_lt
+  le_of_pred_lt le_self_pow le_sub_of_add_le' log2_self_le log2_zero lt_div_mul_add lt_iff_le_pred
+  lt_log2_self lt_mul_div_succ lt_mul_of_div_lt lt_of_add_lt_add_left lt_of_add_lt_add_right
+  lt_of_div_lt_div lt_pow_self lt_two_pow_self mod_add_div' mod_add_mod mod_div_self mod_eq_iff_lt
+  mod_eq_sub mod_succ mod_succ_eq_iff_lt mod_two_bne_zero mod_two_eq_zero_or_one mod_two_ne_one
+  mod_two_ne_zero mod_two_not_eq_one mod_two_not_eq_zero mod_two_pow_self mul_add_div
+  mul_div_le_mul_div_assoc mul_div_mul_comm mul_eq_left mul_eq_right mul_le_add_right mul_le_of_le_div
+  mul_left_cancel mul_left_cancel_iff mul_left_inj mul_lt_mul_of_le_of_lt mul_lt_mul_of_le_of_lt'
+  mul_lt_mul_of_lt_of_le mul_lt_mul_of_lt_of_le' mul_mod mul_mod_mul_right mul_mul_mul_comm
+  mul_ne_mul_left mul_ne_mul_right mul_right_cancel mul_right_cancel_iff mul_right_inj
+  mul_self_le_mul_self mul_self_sub_mul_self_eq not_dvd_of_pos_of_lt not_succ_lt_self one_le_div_iff
+  one_le_iff_ne_zero one_le_two_pow one_lt_pow one_lt_two_pow one_lt_two_pow' one_lt_two_pow_iff
+  one_mod one_mod_eq_one one_mod_two_pow one_mod_two_pow_eq_one one_sub pos_of_lt_add_left
+  pos_of_lt_add_right pow_eq pow_lt_pow_of_lt pow_lt_pow_succ pow_pred_mul pow_sub_mul_pow
+  pow_two_sub_pow_two pred_add_self pred_eq_self_iff self_add_pred self_add_sub_one sub_add_comm
+  sub_add_lt_sub sub_lt_add_one sub_lt_of_pos_le sub_lt_succ sub_mod_eq_zero_of_mod_eq sub_mul_div
+  sub_mul_mod sub_one_add_self sub_sub_self succ_mul_pos succ_mul_succ succ_mul_succ_eq
+  succ_sub_sub_succ two_pow_pred_add_two_pow_pred two_pow_pred_mul_two two_pow_sub_two_pow_pred
+  zero_eq_mul)
+end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_left_max_self add_left_min_self add_right_max_self add_right_min_self
+  div_div_div_eq_div div_dvd_div div_dvd_iff_dvd_mul div_dvd_of_dvd div_eq_iff_eq_of_dvd_dvd
+  div_left_inj div_lt_div_of_lt_of_dvd div_lt_div_right div_mod_unique div_mul_right_comm
+  div_ne_zero_iff_of_dvd div_pos_iff dvd_add_left dvd_add_right dvd_iff_div_mul_eq dvd_iff_dvd_dvd
+  dvd_mul_of_div_dvd dvd_of_pow_dvd eq_mul_of_div_eq_left eq_mul_of_div_eq_right
+  eq_of_dvd_of_div_eq_one eq_one_of_mul_eq_one_left eq_one_of_mul_eq_one_right
+  eq_zero_of_dvd_of_div_eq_zero eq_zero_of_dvd_of_lt instAssociativeMax instAssociativeMin
+  instIdempotentOpMax instIdempotentOpMin instLawfulIdentityMaxOfNat le_iff_ne_zero_of_dvd
+  le_of_lt_add_of_dvd log2_two_mul lt_div_iff_mul_lt' lt_div_iff_mul_lt_of_dvd lt_mul_iff_one_lt_left
+  lt_mul_iff_one_lt_right lt_mul_self_iff max_add_left_self max_add_right_self max_assoc max_left_comm
+  max_min_distrib_left max_min_distrib_right max_right_comm max_self min_add_left_self
+  min_add_right_self min_assoc min_eq_zero_iff min_left_comm min_max_distrib_left
+  min_max_distrib_right min_right_comm min_self min_self_assoc min_self_assoc' mod_mod mod_mul_mod
+  mul_div_cancel_left' mul_div_eq_iff_dvd mul_div_right_comm mul_dvd_mul_iff_left
+  mul_dvd_mul_iff_right mul_dvd_of_dvd_div mul_lt_mul_pow_succ mul_mod_mod mul_ne_zero mul_ne_zero_iff
+  ne_zero_of_mul_ne_zero_left ne_zero_of_mul_ne_zero_right one_shiftLeft pow_dvd_of_le_of_pow_dvd
+  pow_dvd_pow pow_mod pred_max_pred pred_min_pred shiftLeft_add shiftLeft_shiftRight shiftLeft_succ
+  shiftLeft_succ_inside shiftLeft_zero shiftRight_succ_inside sub_add_min_cancel sub_eq_max_sub
+  sub_eq_sub_min sub_lt_self sub_max_sub_right sub_min_sub_right sub_sub_eq_min succ_max_succ
+  succ_min_succ zero_shiftLeft zero_shiftRight)
+end Omega.Nat
+
+namespace Omega.Nat.decidableBallLT
+export _root_.Nat.decidableBallLT (match_1 match_3 match_5)
+end Omega.Nat.decidableBallLT
+
+namespace Omega.Nat.decidableExistsFin
+export _root_.Nat.decidableExistsFin (match_1 match_3)
+end Omega.Nat.decidableExistsFin
+
+namespace Omega.Nat.decidableExistsLT'
+export _root_.Nat.decidableExistsLT' (match_1)
+end Omega.Nat.decidableExistsLT'
+
+namespace Omega.Nat.decidableExistsLT
+export _root_.Nat.decidableExistsLT (match_1)
+end Omega.Nat.decidableExistsLT
+
+namespace Omega.Nat.decidableForallFin
+export _root_.Nat.decidableForallFin (match_1)
+end Omega.Nat.decidableForallFin
+
+namespace Omega.Nat
+export _root_.Nat (add_le_of_le_sub' add_lt_of_lt_sub' decidableBallLE decidableBallLT div_div_self
+  div_eq_iff_eq_mul_left div_eq_iff_eq_mul_right div_eq_sub_mod_div div_le_div_of_mul_le_mul
+  div_le_iff_le_mul_of_dvd div_mul_div_le_div dvd_div_iff_mul_dvd dvd_div_of_mul_dvd
+  dvd_iff_le_div_mul dvd_sub_mod eq_div_iff_mul_eq_left le_of_sub_le_sub_left
+  le_one_iff_eq_zero_or_eq_one le_sub_iff_add_le le_sub_iff_add_le' le_succ_iff lt_add_left_iff_pos
+  lt_add_right_iff_pos lt_sub_iff_add_lt lt_sub_iff_add_lt' mod_eq_iff mul_add_mod mul_add_mod'
+  mul_add_mod_of_lt mul_add_mul_div_of_dvd mul_lt_mul_of_lt_of_lt mul_sub_div_of_dvd
+  mul_sub_mul_div_of_dvd one_le_pow one_lt_pow' one_lt_pow_iff pow_div pow_le_one_iff pow_le_pow_of_le
+  pow_lt_pow_iff_left pow_pred_lt_pow pow_self_mul_pow_self_le sub_add_eq_max sub_eq_zero_iff_le
+  sub_le_iff_le_add sub_le_iff_le_add' sub_le_sub_iff_left sub_one_lt_of_le sub_one_sub_lt
+  sub_pos_iff_lt two_pow_pred_lt_two_pow two_pow_pred_mod_two_pow)
+end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (decidableExistsFin decidableExistsLE decidableExistsLT decidableForallFin
+  div_eq_self div_pow div_pow_of_pos log2_two_pow lt_of_pow_dvd_right mul_div_lt_iff_not_dvd
+  mul_pos_iff_of_pos_left mul_pos_iff_of_pos_right mul_sub_mod one_lt_mul_iff pos_of_mul_pos_left
+  pos_of_mul_pos_right pow_dvd_pow_iff_le_right pow_dvd_pow_iff_le_right' pow_dvd_pow_iff_pow_le_pow
+  pow_eq_one pow_eq_self_iff pow_eq_zero pow_le_pow_iff_left pow_le_pow_iff_right pow_lt_pow_iff_right
+  pow_lt_pow_right pow_pos_iff pow_right_inj pow_self_pos succ_mod_succ_eq_zero_iff zero_pow)
+end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_eq_max_iff add_eq_min_iff add_eq_zero add_lt_iff_lt_sub_right
+  add_pos_iff_pos_or_pos add_succ_lt_add eq_sub_of_add_eq eq_sub_of_add_eq' eq_zero_of_le_div
+  eq_zero_of_le_div_two eq_zero_of_mul_le eq_zero_of_two_mul_le exists_add_one_eq exists_eq_add_one
+  le_add_one_iff le_add_pred_of_pos le_and_le_add_one_iff le_iff_lt_add_one lt_mul_div_self_add
+  lt_of_lt_pred max_eq_zero_iff mul_lt_mul'' mul_self_inj mul_self_le_mul_self_iff
+  mul_self_lt_mul_self mul_self_lt_mul_self_iff pos_of_lt_mul_left pos_of_lt_mul_right
+  pred_eq_succ_iff sub_eq_of_eq_add' sub_lt_iff_lt_add sub_lt_iff_lt_add' sub_max_sub_left
+  sub_min_sub_left)
+end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_eq_one_iff add_eq_three_iff add_eq_two_iff add_mod_eq_ite add_sub_sub_cancel
+  div_lt_div_left le_or_le_of_add_eq_add_pred le_pow lt_iff_lt_of_mul_eq_mul mod_two_bne_one
+  not_dvd_iff_lt_mul_succ not_dvd_of_lt_of_lt_mul_succ one_lt_iff_ne_zero_and_ne_one
+  pow_lt_pow_iff_pow_mul_le_pow self_sub_mod sub_add_sub_cancel sub_lt_sub_iff_right
+  sub_sub_sub_cancel_right)
+end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_le_mul div_two_le_of_sub_le_div_two exists_lt_succ_left exists_lt_succ_left'
+  exists_lt_succ_right exists_lt_succ_right' forall_lt_succ_left forall_lt_succ_left'
+  forall_lt_succ_right forall_lt_succ_right' le_div_two_of_div_two_lt_sub)
 end Omega.Nat

@@ -17,48 +17,25 @@ port_inductive Sum
 
 namespace Omega
 
-@[no_expose] def Iff (a b : Prop) : Prop := And (a → b) (b → a)
+end Omega
 
-namespace Iff
-theorem intro {a b : Prop} (mp : a → b) (mpr : b → a) : Iff a b := And.intro mp mpr
+port_prop_record Iff
+port_prop_record Std.Associative
+port_prop_record Std.Commutative
+port_prop_record Subsingleton
+port_proof Subsingleton.elim
 
-theorem mp {a b : Prop} (self : Iff a b) : a → b := And.left self
+namespace Omega
 
-theorem mpr {a b : Prop} (self : Iff a b) : b → a := And.right self
-@[no_expose] def rec {a b : Prop} {motive : Iff a b → Sort u}
-    (intro : ∀ mp mpr, motive (Iff.intro mp mpr)) (t : Iff a b) : motive t :=
-  intro t.mp t.mpr
-
-abbrev casesOn {a b : Prop} {motive : Iff a b → Sort u} (t : Iff a b)
-    (intro : ∀ mp mpr, motive (Iff.intro mp mpr)) : motive t :=
-  intro t.mp t.mpr
-
-protected abbrev recOn.{u} := @Iff.casesOn.{u}
-end Iff
-
-@[no_expose] def Exists {α : Sort u} (p : α → Prop) : Prop := ∀ r : Prop, (∀ w, p w → r) → r
-
-theorem Exists.intro {α : Sort u} {p : α → Prop} (w : α) (h : p w) : Exists p :=
-  fun _ use => use w h
+inductive Exists {α : Sort u} (p : α → Prop) : Prop where
+  | intro (w : α) (h : p w) : Exists p
 
 theorem Exists.elim {α : Sort u} {p : α → Prop} {b : Prop}
-    (h₁ : Exists p) (h₂ : ∀ a, p a → b) : b := h₁ b h₂
-
-theorem Exists.rec {α : Sort u} {p : α → Prop} {motive : Exists p → Prop}
-    (intro : ∀ w h, motive (Exists.intro w h)) (t : Exists p) : motive t :=
-  t (motive t) intro
-
-abbrev Exists.casesOn {α : Sort u} {p : α → Prop} {motive : Exists p → Prop}
-    (t : Exists p) (intro : ∀ w h, motive (Exists.intro w h)) : motive t :=
-  Exists.rec (motive := motive) intro t
-
-protected abbrev Exists.recOn.{u} := @Exists.casesOn.{u}
-
-attribute [irreducible] Iff Iff.rec Exists
+    (h₁ : Exists p) (h₂ : ∀ a, p a → b) : b :=
+  Exists.rec (motive := fun _ => b) h₂ h₁
 
 namespace Nat
 
-attribute [local semireducible] Nat.add Nat.pred
 
 theorem succ.inj {m n : Nat} : Eq (succ m) (succ n) → Eq m n := fun h =>
   congrArg pred h
@@ -114,7 +91,7 @@ theorem Function.id_comp.{u, v} {α : Sort u} {β : Sort v} (f : α → β) :
   Eq (Function.comp id f) f :=
   Omega.rfl
 
-def Empty.elim.{u} {C : Sort u} : Empty → C := Empty.rec
+def Empty.elim.{u} {C : Sort u} : Empty → C := fun x => Empty.casesOn (fun _ => C) x
 
 def PEmpty.elim.{u, v} {C : Sort u} : PEmpty.{v} → C :=
   let motive : PEmpty → Prop := fun _ => False; fun a => False.elim (PEmpty.rec (motive := motive) a)
@@ -221,7 +198,7 @@ theorem cast_heq.{u} {α β : Sort u} (h : Eq α β) (a : α) : HEq (cast h a) a
 
 theorem heq_of_eqRec_eq.{u} {α β : Sort u} {a : α} {b : β} (h₁ : Eq α β) (h₂ : Eq (Eq.rec (motive := fun α _ => α) a h₁) b) :
   HEq a b :=
-  (cast_heq h₁ a).symm.trans (heq_of_eq h₂)
+  HEq.trans (HEq.symm (cast_heq h₁ a)) (heq_of_eq h₂)
 
 /-! ## Logical equivalence -/
 
@@ -416,3 +393,297 @@ port_proof Sum.nonemptyRight
 port_proof flip.eq_1 by_reflexivity
 port_proof id.eq_1 by_reflexivity
 port_proof inline.eq_1 by_reflexivity
+
+namespace Omega
+
+theorem ite_eq_left {c : Prop} {h : Decidable c} (hc : c) {α : Sort u} {t e : α} : Eq (@ite α c h t e) t :=
+  Decidable.rec (motive := fun d => Eq (@ite α c d t e) t) (fun bit =>
+    Bool.casesOn (motive := fun bit => ∀ reflected : Bool.Reflects bit c,
+        Eq (@ite α c (Decidable.intro bit reflected) t e) t) bit
+      (fun no => False.elim (no hc)) (fun _ => Omega.rfl)) h
+
+theorem ite_eq_right {c : Prop} {h : Decidable c} (hnc : Not c) {α : Sort u} {t e : α} : Eq (@ite α c h t e) e :=
+  Decidable.rec (motive := fun d => Eq (@ite α c d t e) e) (fun bit =>
+    Bool.casesOn (motive := fun bit => ∀ reflected : Bool.Reflects bit c,
+        Eq (@ite α c (Decidable.intro bit reflected) t e) e) bit
+      (fun _ => Omega.rfl) (fun yes => False.elim (hnc yes))) h
+
+end Omega
+
+port_proof if_pos
+port_proof if_neg
+
+port_inductive ForInStep
+port_native_records ForIn, ForIn'
+
+port_inductive PSum
+port_inductive DoResultPRBC
+port_inductive DoResultPR
+port_inductive DoResultBC
+port_inductive DoResultSBC
+port_inductive PNonScalar
+port_native_records NonScalar
+port_definition instDecidableEqProd.match_3 with_native_code
+port_definition Prod.map with_native_code
+port_definition PSum.inhabitedLeft with_native_code
+port_definition PSum.inhabitedRight with_native_code
+port_definition Sum.inhabitedLeft with_native_code
+port_definition Sum.inhabitedRight with_native_code
+port_definition Subtype.instBEq with_native_code
+port_definition instBEqOption.beq with_native_code
+port_definition instBEqOption with_native_code
+port_definition instBEqProd with_native_code
+port_definition instDecidableEqPUnit with_native_code
+port_definition instDecidableFalse with_native_code
+port_definition instDecidableTrue with_native_code
+port_definition instInhabitedForInStep.default with_native_code
+port_definition instInhabitedForInStep with_native_code
+port_definition instInhabitedMProd with_native_code
+port_definition instInhabitedNonScalar.default with_native_code
+port_definition instInhabitedNonScalar with_native_code
+port_definition instInhabitedPNonScalar.default with_native_code
+port_definition instInhabitedPNonScalar with_native_code
+port_definition instInhabitedPProd with_native_code
+port_definition instInhabitedPUnit with_native_code
+port_definition instInhabitedProd with_native_code
+port_definition instInhabitedProp with_native_code
+port_proof instInhabitedTrue.default
+port_definition instInhabitedTrue with_native_code
+port_definition strictAnd with_native_code
+port_definition strictOr with_native_code
+port_definition toBoolUsing with_native_code
+port_definition bne with_native_code
+
+port_constructor_eliminators PSum, Sum, ForInStep, DoResultBC, DoResultPR, DoResultPRBC, DoResultSBC
+
+port_definition decidable_of_decidable_of_iff.match_1
+port_proof decidable_of_decidable_of_iff._proof_1
+port_definition decidable_of_decidable_of_iff with_native_code
+port_proof decidable_of_decidable_of_eq._proof_1
+port_definition decidable_of_decidable_of_eq with_native_code
+
+port_definition instDecidableEqProd.match_1 with_native_code
+port_proof instDecidableEqProd._proof_1
+port_definition instDecidableEqProd with_native_code
+port_definition instDecidableEqSum.decEq.match_1 with_native_code
+port_proof instDecidableEqSum.decEq._proof_1
+port_definition Sum.noConfusionType
+port_definition Sum.noConfusion
+port_definition Sum.inl.noConfusion
+port_proof instDecidableEqSum.decEq._proof_3
+port_proof instDecidableEqSum.decEq._proof_4
+port_proof instDecidableEqSum.decEq._proof_5
+port_proof instDecidableEqSum.decEq._proof_2
+port_definition Sum.inr.noConfusion
+port_proof instDecidableEqSum.decEq._proof_6
+port_definition instDecidableEqSum.decEq with_native_code
+port_definition instDecidableEqSum with_native_code
+port_definition instDecidableEqPEmpty with_native_code
+port_definition instDecidableEqEmpty with_native_code
+port_definition Subtype.instDecidableEq.match_1 with_native_code
+port_proof Subtype.instDecidableEq._proof_3
+port_proof Subtype.instDecidableEq._proof_1
+port_definition Subtype.instDecidableEq with_native_code
+port_definition Prod.lexLt
+port_proof Prod.lexLtDec._proof_1
+port_definition Prod.lexLtDec with_native_code
+port_native_records Equivalence, Setoid
+port_proof equivalence_true
+port_definition Setoid.trivial with_native_code
+port_inductive ReflBEq
+port_inductive LawfulBEq
+port_definition instDecidableEqOfLawfulBEq.match_1 with_native_code
+port_proof ReflBEq.rfl
+port_proof BEq.rfl
+port_proof not_eq_of_beq_eq_false
+port_proof LawfulBEq.toReflBEq
+port_proof LawfulBEq.eq_of_beq
+port_proof instDecidableEqOfLawfulBEq._proof_1
+port_definition instDecidableEqOfLawfulBEq with_native_code
+port_definition instDecidableIff.match_1 with_native_code
+port_proof instDecidableIff._proof_1
+port_definition instDecidableIff with_native_code
+
+port_native_records Thunk
+port_definition Thunk.pure with_native_code
+port_definition Thunk.get with_native_code
+port_definition Thunk.fnImpl with_native_code
+port_proof Thunk.fn_eq_fnImpl
+port_thunk_field_code
+port_definition Thunk.map with_native_code
+port_definition Thunk.bind with_native_code
+port_definition instInhabitedThunk with_native_code
+attribute [instance] Omega.instInhabitedThunk Omega.LawfulBEq.toReflBEq Omega.instBEqProd
+
+namespace Omega
+export _root_ (Thunk)
+end Omega
+
+namespace Omega.Thunk
+export _root_.Thunk (mk get fn pure rec recOn casesOn)
+end Omega.Thunk
+
+namespace Thunk
+export _root_.Omega.Thunk (fnImpl fn_eq_fnImpl map bind)
+end Thunk
+
+port_native_records Sigma
+port_definition instDecidableEqSigma.match_5 with_native_code
+port_definition instDecidableEqSigma.match_3 with_native_code
+port_definition instDecidableEqSigma.match_1 with_native_code
+port_proof instDecidableEqSigma._proof_1
+port_definition Sigma.noConfusionType
+port_definition Sigma.noConfusion
+port_proof instDecidableEqSigma._proof_2
+port_proof instDecidableEqSigma._proof_3
+port_definition instDecidableEqSigma with_native_code
+port_native_records PSigma
+port_definition instDecidableEqPSigma.match_5 with_native_code
+port_definition instDecidableEqPSigma.match_3 with_native_code
+port_definition instDecidableEqPSigma.match_1 with_native_code
+port_proof instDecidableEqPSigma._proof_1
+port_definition PSigma.noConfusionType
+port_definition PSigma.noConfusion
+port_proof instDecidableEqPSigma._proof_2
+port_proof instDecidableEqPSigma._proof_3
+port_definition instDecidableEqPSigma with_native_code
+
+port_definition Decidable.byCases.match_1 with_native_code
+port_definition iteInduction with_native_code
+port_definition instDecidableDite with_native_code
+port_native_records HasEquiv
+port_definition instHasEquivOfSetoid with_native_code
+
+port_proof Quot.liftBeta
+port_proof Quot.indBeta
+port_proof Quot.inductionOn
+port_proof Quot.exists_rep
+port_definition Quot.indep
+
+/- Quot.indepCoherent, Quot.liftIndepPr1, Quot.rec and Quot.recOn transport a
+branch along Quot.sound. Their pinned coherence premise requires that path even
+when the motive has a constant result. The unit-motive specialization in
+HeterogeneousQuotient.soundFromUnitCoherence recovers Quot.sound from coherence. -/
+port_definition Quotient
+port_definition Quotient.mk with_native_code
+port_definition Quotient.mk' with_native_code
+port_definition Quotient.lift with_native_code
+port_proof Quotient.ind
+port_definition Quotient.liftOn with_native_code
+port_proof Quotient.inductionOn
+port_proof Quotient.exists_rep
+port_proof Setoid.refl
+port_proof Setoid.symm
+port_proof Setoid.trans
+port_proof Quotient.lift₂._proof_1
+port_proof Quotient.lift₂._proof_2
+port_definition Quotient.lift₂ with_native_code
+port_definition Quotient.liftOn₂ with_native_code
+port_proof Quotient.ind₂
+port_proof Quotient.inductionOn₂
+port_proof Quotient.inductionOn₃
+port_alternative_definition Quot.hrecOn from OmegaChecks.InitPort.Alternatives.Logic.Quotient
+port_definition Quotient.hrecOn with_native_code
+/- Quotient.sound identifies false and true for Setoid.trivial Bool.
+RepresentativeQuotient.refuteSound separates those representatives while preserving
+the four quotient primitives and both computation rules. Quotient.rec and
+Quotient.recOn require this equality in the type of the branch coherence proof.
+Quotient.decidableEq also returns a positive decision on these two representatives
+with the pinned always-true relation test (RepresentativeQuotient.refutePositiveDecision). -/
+
+/- Quot.pliftOn computes the supplied branch at each representative. In
+TwoStepQuotient.incompatible the path 0 → 1 → 2 gives a quotient interpretation
+preserving both primitive computation rules. Ambient quotient soundness identifies
+the endpoint classes, where the required branch returns false and true. This
+relative obstruction uses a nontransitive relation. The case of Quotient.pliftOn
+for setoids remains open. -/
+port_definition Squash
+port_definition Squash.mk with_native_code
+port_proof Squash.ind
+port_proof Squash.lift._proof_1
+port_definition Squash.lift with_native_code
+/- instSubsingletonSquash would identify Squash.mk false with Squash.mk true.
+RepresentativeQuotient.refuteSquash checks these two distinct representatives. -/
+port_definition instTransIff with_native_code
+port_definition noConfusionTypeEnum
+port_proof noConfusionEnum._proof_1
+port_proof noConfusionEnum._proof_2
+port_definition noConfusionEnum with_native_code
+
+namespace Omega
+export _root_ (noConfusionTypeEnum noConfusionEnum)
+end Omega
+
+namespace Omega.Lean
+public opaque opaqueId {α : Sort u} (x : α) : α := x
+end Omega.Lean
+
+public section
+namespace Bool
+export _root_.Omega.Bool (of_not_eq_false of_not_eq_true)
+end Bool
+namespace Eq
+export _root_.Omega.Eq (comm mp mpr ndrecOn substr to_iff)
+end Eq
+namespace HEq
+export _root_.Omega.HEq (comm ndrec ndrecOn subst symm trans)
+end HEq
+namespace Nat
+export _root_.Omega.Nat (add_zero)
+end Nat
+namespace Nat.succ
+export _root_.Omega.Nat.succ (inj)
+end Nat.succ
+namespace Not
+export _root_.Omega.Not (elim imp intro)
+end Not
+namespace Omega.id
+export _root_.id (eq_1)
+end Omega.id
+namespace PUnit
+export _root_.Omega.PUnit (eq_punit ext subsingleton)
+end PUnit
+
+port_definition InvImage
+
+port_proof dite_eq_left
+port_proof dite_eq_right
+port_definition Decidable.byCases
+port_proof Decidable.em
+
+public section
+namespace Decidable
+export _root_.Omega.Decidable (byCases em)
+end Decidable
+
+port_proof instSubsingletonPUnit
+attribute [instance] Omega.instSubsingletonPUnit
+
+port_definition Subrelation
+port_proof Sum.inl.inj
+port_proof Sum.inr.inj
+port_proof Option.some.inj
+
+port_prop_record Std.IdempotentOp
+port_prop_record Std.LeftIdentity
+port_prop_record Std.RightIdentity
+port_native_records Std.LawfulLeftIdentity, Std.LawfulRightIdentity, Std.Identity
+port_proof Std.Identity.toRightIdentity
+port_native_records Std.LawfulIdentity
+
+attribute [instance] Omega.Std.LawfulLeftIdentity.toLeftIdentity
+attribute [instance] Omega.Std.LawfulRightIdentity.toRightIdentity
+attribute [instance] Omega.Std.Identity.toLeftIdentity
+attribute [instance] Omega.Std.Identity.toRightIdentity
+attribute [instance] Omega.Std.LawfulIdentity.toIdentity
+attribute [instance] Omega.Std.LawfulIdentity.toLawfulLeftIdentity
+attribute [instance] Omega.Std.LawfulIdentity.toLawfulRightIdentity
+
+port_proof gt_iff_lt by_constructive_casts
+port_proof Decidable.byContradiction by_constructive_casts
+port_proof Decidable.of_not_not by_constructive_casts
+
+public section
+namespace Decidable
+export _root_.Omega.Decidable (byContradiction of_not_not)
+end Decidable

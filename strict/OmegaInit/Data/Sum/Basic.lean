@@ -6,6 +6,7 @@ Authors: Mario Carneiro, Yury G. Kudryashov
 module
 prelude
 public import OmegaInit.Core
+public import OmegaInit.PropLemmas
 
 noncomputable section
 
@@ -77,3 +78,40 @@ theorem swap_inr {α : Type u} {β : Type v} {x : β} :
     Eq (Sum.swap (Sum.inr x : Sum α β)) (Sum.inl x) := Omega.rfl
 
 end Omega.Sum
+
+end
+end
+
+namespace Omega.Sum
+
+@[expose, implicit_reducible] public def getLeft {α : Type u} {β : Type v} :
+    (ab : Sum α β) → Eq ab.isLeft Bool.true → α :=
+  fun ab => Sum.casesOn (motive := fun x => Eq x.isLeft Bool.true → α) ab
+    (fun a _ => a) (fun _ h => False.elim (Bool.decEq._proof_1 Bool.false Bool.true h))
+
+@[expose, implicit_reducible] public def getRight {α : Type u} {β : Type v} :
+    (ab : Sum α β) → Eq ab.isRight Bool.true → β :=
+  fun ab => Sum.casesOn (motive := fun x => Eq x.isRight Bool.true → β) ab
+    (fun _ h => False.elim (Bool.decEq._proof_1 Bool.false Bool.true h)) (fun b _ => b)
+
+end Omega.Sum
+
+port_proof Sum.getLeft_inl by_reflexivity
+port_proof Sum.getRight_inr by_reflexivity
+port_proof Sum.getLeft.congr_simp
+port_proof Sum.getRight.congr_simp
+
+port_inductive Sum.LiftRel
+port_inductive Sum.Lex
+port_proof Sum.liftRel_inl_inl
+port_proof Sum.liftRel_inr_inr
+port_proof Sum.not_liftRel_inl_inr
+port_proof Sum.not_liftRel_inr_inl
+port_proof Sum.lex_inl_inl
+port_proof Sum.lex_inr_inr
+port_proof Sum.lex_inr_inl
+port_definition Sum.instDecidableLiftRel.match_1
+port_definition Sum.instDecidableLiftRel with_native_code
+port_definition Sum.instDecidableRelSumLex.match_1
+port_definition Sum.instDecidableRelSumLex with_native_code
+attribute [instance] Omega.Sum.instDecidableLiftRel Omega.Sum.instDecidableRelSumLex

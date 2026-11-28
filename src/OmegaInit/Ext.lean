@@ -10,3 +10,6 @@ end Omega
 namespace Omega.PUnit
 export _root_.PUnit (ext_iff)
 end Omega.PUnit
+namespace Omega.Thunk
+export _root_.Thunk (ext ext_iff)
+end Omega.Thunk

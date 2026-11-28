@@ -562,3 +562,22 @@ port_proof forall_const
 port_proof ne_of_apply_ne
 port_proof nonempty_prop
 port_proof Exists.nonempty
+
+port_definition decidable_of_iff with_native_code
+port_definition decidable_of_iff' with_native_code
+
+port_definition exists_prop_decidable.match_3 by_constructive_casts
+port_definition exists_prop_decidable.match_5 by_constructive_casts
+port_proof forall_prop_decidable._proof_1 by_constructive_casts
+port_definition forall_prop_decidable by_constructive_casts
+attribute [instance] Omega.forall_prop_decidable
+port_proof Decidable.by_contra by_constructive_casts
+port_proof Decidable.of_not_imp by_constructive_casts
+port_proof Decidable.not_imp_iff_and_not by_constructive_casts
+port_proof Decidable.not_and_iff_not_or_not by_constructive_casts
+port_proof Decidable.not_imp_not by_constructive_casts
+
+public section
+namespace Decidable
+export _root_.Omega.Decidable (by_contra of_not_imp not_imp_iff_and_not not_and_iff_not_or_not not_imp_not)
+end Decidable
