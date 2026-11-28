@@ -33,100 +33,112 @@ def A : ArithmeticFunction ℤ :=
 /-- A210826 via its Lambert series: μ convolved with the cube indicator. -/
 def B : ArithmeticFunction ℤ := μ * liftPow 3 ζ
 
+/-- The lift recovers the original coefficient at an exact power. -/
+theorem liftPow_apply_pow (k : ℕ) (hk : k ≠ 0) (f : ArithmeticFunction ℤ) (m : ℕ) :
+    liftPow k f (m ^ k) = f m := by
+  simp [liftPow, Nat.floorRoot_pow_self hk]
+
+/-- The lift vanishes outside the exact powers. -/
+theorem liftPow_apply_nonpow (k : ℕ) (f : ArithmeticFunction ℤ) (n : ℕ)
+    (hn : ¬ ∃ m, m ^ k = n) : liftPow k f n = 0 := by
+  simp [liftPow, show (Nat.floorRoot k n) ^ k ≠ n from fun h => hn ⟨_, h⟩]
+
+/-- A positive power lift preserves multiplicativity. -/
+theorem liftPow_isMultiplicative (k : ℕ) (hk : k ≠ 0) (f : ArithmeticFunction ℤ)
+    (hf : f.IsMultiplicative) : (liftPow k f).IsMultiplicative := by
+  refine ⟨?_, ?_⟩
+  · simpa using (liftPow_apply_pow k hk f 1).trans hf.1
+  intro a b hab
+  by_cases ha : ∃ r, r ^ k = a
+  · obtain ⟨r, rfl⟩ := ha
+    by_cases hb : ∃ s, s ^ k = b
+    · obtain ⟨s, rfl⟩ := hb
+      rw [← mul_pow, liftPow_apply_pow k hk, liftPow_apply_pow k hk,
+        liftPow_apply_pow k hk]
+      exact hf.2 ((Nat.coprime_pow_right_iff (Nat.pos_of_ne_zero hk) _ _).mp
+        ((Nat.coprime_pow_left_iff (Nat.pos_of_ne_zero hk) _ _).mp hab))
+    · rw [liftPow_apply_nonpow k f b hb, mul_zero]
+      apply liftPow_apply_nonpow
+      rintro ⟨s, hs⟩
+      obtain ⟨t, ht⟩ := exists_eq_pow_of_mul_eq_pow
+        (show IsUnit (gcd b (r ^ k)) from by
+          change IsUnit (Nat.gcd b (r ^ k))
+          rw [hab.symm.gcd_eq_one]
+          exact isUnit_one)
+        (show b * r ^ k = s ^ k from (mul_comm ..).trans hs.symm)
+      exact hb ⟨t, ht.symm⟩
+  · rw [liftPow_apply_nonpow k f a ha, zero_mul]
+    apply liftPow_apply_nonpow
+    rintro ⟨s, hs⟩
+    obtain ⟨t, ht⟩ := exists_eq_pow_of_mul_eq_pow
+      (show IsUnit (gcd a b) from by
+        change IsUnit (Nat.gcd a b)
+        rw [hab.gcd_eq_one]
+        exact isUnit_one) hs.symm
+    exact ha ⟨t, ht.symm⟩
+
+/-- The lift at a prime power is selected by divisibility of the exponent. -/
+theorem liftPow_prime_pow (k : ℕ) (hk : k ≠ 0) (f : ArithmeticFunction ℤ)
+    (p e : ℕ) (hp : p.Prime) :
+    liftPow k f (p ^ e) = if k ∣ e then f (p ^ (e / k)) else 0 := by
+  by_cases he : k ∣ e
+  · rw [if_pos he]
+    have hpow : p ^ e = (p ^ (e / k)) ^ k := by
+      rw [← pow_mul, Nat.div_mul_cancel he]
+    rw [hpow, liftPow_apply_pow k hk]
+  · rw [if_neg he]
+    apply liftPow_apply_nonpow
+    rintro ⟨m, hm⟩
+    have hmdvd : m ∣ p ^ e := hm ▸ dvd_pow_self m hk
+    obtain ⟨i, hi, hmi⟩ := (Nat.dvd_prime_pow hp).mp hmdvd
+    have hie : i * k = e := Nat.pow_right_injective hp.one_lt (by
+      change p ^ (i * k) = p ^ e
+      rw [pow_mul, ← hmi, hm])
+    exact he (hie ▸ dvd_mul_left k i)
+
+/-- Dirichlet convolution at a prime power is a sum over complementary exponents. -/
+theorem conv_prime_pow (f g : ArithmeticFunction ℤ) (p e : ℕ) (hp : p.Prime) :
+    (f * g) (p ^ e) = ∑ i ∈ Finset.range (e + 1), f (p ^ i) * g (p ^ (e - i)) := by
+  rw [ArithmeticFunction.mul_apply, Nat.sum_divisorsAntidiagonal (fun a b => f a * g b),
+    Nat.sum_divisors_prime_pow hp]
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [← Nat.pow_div (by simpa using hi) hp.pos]
+
+/-- Lifted Möbius coefficients have two nonzero prime-power exponent terms. -/
+theorem lift_moebius_prime_pow (k : ℕ) (hk : k ≠ 0) (p e : ℕ) (hp : p.Prime) :
+    liftPow k μ (p ^ e) = (if e = 0 then (1 : ℤ) else 0) - (if e = k then 1 else 0) := by
+  rw [liftPow_prime_pow k hk μ p e hp]
+  by_cases he0 : e = 0
+  · subst e
+    simp [Ne.symm hk]
+  by_cases hek : e = k
+  · subst e
+    simp [hk, Nat.div_self (Nat.pos_of_ne_zero hk), ArithmeticFunction.moebius_apply_prime hp]
+  by_cases hke : k ∣ e
+  · rw [if_pos hke, ArithmeticFunction.moebius_apply_prime_pow hp]
+    · have he1 : e / k ≠ 1 := by
+        intro h
+        have := Nat.div_mul_cancel hke
+        rw [h, one_mul] at this
+        exact hek this.symm
+      simp [he0, hek, he1]
+    · intro h
+      have := Nat.div_mul_cancel hke
+      rw [h, zero_mul] at this
+      exact he0 this.symm
+  · simp [hke, he0, hek]
+
+/-- Lifted zeta coefficients detect exponent divisibility on prime powers. -/
+theorem lift_zeta_prime_pow (k : ℕ) (hk : k ≠ 0) (p e : ℕ) (hp : p.Prime) :
+    liftPow k ζ (p ^ e) = if k ∣ e then (1 : ℤ) else 0 := by
+  rw [liftPow_prime_pow k hk ζ p e hp]
+  simp [natCoe_apply, hp.ne_zero]
+
 set_option maxHeartbeats 1000000 in
 /-- Schulte's A299406 product identity at every positive natural index. -/
 theorem result (n : ℕ) (hn : 0 < n) :
     A n = liouville n * B n := by
-  have liftPow_apply_pow (k : ℕ) (hk : k ≠ 0) (f : ArithmeticFunction ℤ) (m : ℕ) :
-      liftPow k f (m ^ k) = f m := by
-    simp [liftPow, Nat.floorRoot_pow_self hk]
-
-  have liftPow_apply_nonpow (k : ℕ) (f : ArithmeticFunction ℤ) (n : ℕ)
-      (hn : ¬ ∃ m, m ^ k = n) : liftPow k f n = 0 := by
-    simp [liftPow, show (Nat.floorRoot k n) ^ k ≠ n from fun h => hn ⟨_, h⟩]
-
-  have liftPow_isMultiplicative (k : ℕ) (hk : k ≠ 0) (f : ArithmeticFunction ℤ)
-      (hf : f.IsMultiplicative) : (liftPow k f).IsMultiplicative := by
-    refine ⟨?_, ?_⟩
-    · simpa using (liftPow_apply_pow k hk f 1).trans hf.1
-    intro a b hab
-    by_cases ha : ∃ r, r ^ k = a
-    · obtain ⟨r, rfl⟩ := ha
-      by_cases hb : ∃ s, s ^ k = b
-      · obtain ⟨s, rfl⟩ := hb
-        rw [← mul_pow, liftPow_apply_pow k hk, liftPow_apply_pow k hk,
-          liftPow_apply_pow k hk]
-        exact hf.2 ((Nat.coprime_pow_right_iff (Nat.pos_of_ne_zero hk) _ _).mp
-          ((Nat.coprime_pow_left_iff (Nat.pos_of_ne_zero hk) _ _).mp hab))
-      · rw [liftPow_apply_nonpow k f b hb, mul_zero]
-        apply liftPow_apply_nonpow
-        rintro ⟨s, hs⟩
-        obtain ⟨t, ht⟩ := exists_eq_pow_of_mul_eq_pow
-          (show IsUnit (gcd b (r ^ k)) from by
-            change IsUnit (Nat.gcd b (r ^ k))
-            rw [hab.symm.gcd_eq_one]
-            exact isUnit_one)
-          (show b * r ^ k = s ^ k from (mul_comm ..).trans hs.symm)
-        exact hb ⟨t, ht.symm⟩
-    · rw [liftPow_apply_nonpow k f a ha, zero_mul]
-      apply liftPow_apply_nonpow
-      rintro ⟨s, hs⟩
-      obtain ⟨t, ht⟩ := exists_eq_pow_of_mul_eq_pow
-        (show IsUnit (gcd a b) from by
-          change IsUnit (Nat.gcd a b)
-          rw [hab.gcd_eq_one]
-          exact isUnit_one) hs.symm
-      exact ha ⟨t, ht.symm⟩
-
-  have liftPow_prime_pow (k : ℕ) (hk : k ≠ 0) (f : ArithmeticFunction ℤ)
-      (p e : ℕ) (hp : p.Prime) :
-      liftPow k f (p ^ e) = if k ∣ e then f (p ^ (e / k)) else 0 := by
-    by_cases he : k ∣ e
-    · rw [if_pos he]
-      have hpow : p ^ e = (p ^ (e / k)) ^ k := by
-        rw [← pow_mul, Nat.div_mul_cancel he]
-      rw [hpow, liftPow_apply_pow k hk]
-    · rw [if_neg he]
-      apply liftPow_apply_nonpow
-      rintro ⟨m, hm⟩
-      have hmdvd : m ∣ p ^ e := hm ▸ dvd_pow_self m hk
-      obtain ⟨i, hi, hmi⟩ := (Nat.dvd_prime_pow hp).mp hmdvd
-      have hie : i * k = e := Nat.pow_right_injective hp.one_lt (by
-        change p ^ (i * k) = p ^ e
-        rw [pow_mul, ← hmi, hm])
-      exact he (hie ▸ dvd_mul_left k i)
-
-  have conv_prime_pow (f g : ArithmeticFunction ℤ) (p e : ℕ) (hp : p.Prime) :
-      (f * g) (p ^ e) = ∑ i ∈ Finset.range (e + 1), f (p ^ i) * g (p ^ (e - i)) := by
-    rw [ArithmeticFunction.mul_apply, Nat.sum_divisorsAntidiagonal (fun a b => f a * g b),
-      Nat.sum_divisors_prime_pow hp]
-    apply Finset.sum_congr rfl
-    intro i hi
-    rw [← Nat.pow_div (by simpa using hi) hp.pos]
-
-  have lift_moebius_prime_pow (k : ℕ) (hk : k ≠ 0) (p e : ℕ) (hp : p.Prime) :
-      liftPow k μ (p ^ e) = (if e = 0 then (1 : ℤ) else 0) - (if e = k then 1 else 0) := by
-    rw [liftPow_prime_pow k hk μ p e hp]
-    by_cases he0 : e = 0
-    · subst e
-      simp [Ne.symm hk]
-    by_cases hek : e = k
-    · subst e
-      simp [hk, Nat.div_self (Nat.pos_of_ne_zero hk), ArithmeticFunction.moebius_apply_prime hp]
-    by_cases hke : k ∣ e
-    · rw [if_pos hke, ArithmeticFunction.moebius_apply_prime_pow hp]
-      · have he1 : e / k ≠ 1 := by
-          intro h
-          have := Nat.div_mul_cancel hke
-          rw [h, one_mul] at this
-          exact hek this.symm
-        simp [he0, hek, he1]
-      · intro h
-        have := Nat.div_mul_cancel hke
-        rw [h, zero_mul] at this
-        exact he0 this.symm
-    · simp [hke, he0, hek]
-
   have conv_lift_moebius (f : ArithmeticFunction ℤ) (k : ℕ) (hk : k ≠ 0)
       (p e : ℕ) (hp : p.Prime) :
       (f * liftPow k μ) (p ^ e) = f (p ^ e) - if k ≤ e then f (p ^ (e - k)) else 0 := by
@@ -151,11 +163,6 @@ theorem result (n : ℕ) (hn : 0 < n) :
     simp_rw [zeta_lift_two_prime_pow p _ hp, add_mul, ite_mul, one_mul, zero_mul]
     rw [Finset.sum_add_distrib]
     simp [Finset.sum_ite_eq', Nat.succ_le_iff]
-
-  have lift_zeta_prime_pow (k : ℕ) (hk : k ≠ 0) (p e : ℕ) (hp : p.Prime) :
-      liftPow k ζ (p ^ e) = if k ∣ e then (1 : ℤ) else 0 := by
-    rw [liftPow_prime_pow k hk ζ p e hp]
-    simp [natCoe_apply, hp.ne_zero]
 
   have B_prime_pow (p e : ℕ) (hp : p.Prime) :
       B (p ^ e) = (if 3 ∣ e then (1 : ℤ) else 0) -
