@@ -84,6 +84,10 @@ $$\forall n,k \in \mathbb{N}, n \geq 3 \implies (\operatorname{Finite}\left(X_{n
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.latticePointCount_terminalSum` (`✓ std3`). ∎
 
+*Resolves.* `Problems/olairez-2026-dihedral-permutohedron-lattice-points` (proved) by `D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.latticePointCount_terminalSum`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"olairez-2026-dihedral-permutohedron-lattice-points","declaration_gid":"D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.latticePointCount_terminalSum","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Colin Olairez (2026). *Triangulation, Volume, and Symmetries of a Dihedral Group Analogue of the Permutohedron*. DOI: [10.48550/arXiv.2610.28672](https://doi.org/10.48550/arXiv.2610.28672). URL: <https://arxiv.org/html/2610.28672v2#S6.Thmquestion2>.
@@ -92,7 +96,7 @@ $$\forall n,k \in \mathbb{N}, n \geq 3 \implies (\operatorname{Finite}\left(X_{n
 
 Every source point corresponds to one terminal prefix of length n, and every such prefix recovers one source point. The sum counts the prefixes with multiplicity across states. Taking k = 1 gives the undilated count, and k = 0 gives the singleton at the origin. This resolves the lattice-point alternative of Question 6.1. An explicit Ehrhart coefficient formula remains open here.
 
-At n = 4 and k = 1, kernel evaluation counts 22 occurrences passing the terminal filter. Applying the cardinality theorem gives 22 points in the original source lattice.
+On the named input fourOneInput = (4, 1), kernel evaluation counts 22 occurrences passing the terminal filter. An anonymous application of the cardinality theorem and the recurrence identity gives 22 points in the original source lattice.
 
 **Definition 1.7 (Four coordinates at unit dilation).**
 
@@ -106,7 +110,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.fourOneI
 
 *Commentary.*
 
-The input pair (4, 1) gives the coordinate count and dilation for the recurrence check.
+The input pair (4, 1) gives the coordinate count and dilation for the anonymous checker application.
 
 ## References
 

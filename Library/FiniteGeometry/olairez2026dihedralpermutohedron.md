@@ -54,9 +54,12 @@ recurrence. It uses the source-coordinate conjugacy already formalized
 for Question 6.2. The integral cyclic difference satisfies
 W(d) ≡ −kn(n+1)/2 modulo n, including residue n/2 for even n and odd k.
 Each feasible difference has exactly one least feasible integer translate.
-The recurrence gives 22 at n = 4 and k = 1, and the zero dilation has
-one point. An explicit formula for the coefficients of the Ehrhart
-polynomial remains a separate open question here.
+The named input `OlairezCount.fourOneInput` supplies (n, k) = (4, 1).
+An anonymous Lean application combines the uniform theorem with the
+computed recurrence value to give 22 points in the original lattice.
+At zero dilation the singleton origin gives one point for every n ≥ 3.
+An explicit formula for the coefficients of the Ehrhart polynomial
+remains open here.
 [Question 6.1](https://arxiv.org/html/2610.28672v2#S6.Thmquestion1)
 
 ## Related classifications
