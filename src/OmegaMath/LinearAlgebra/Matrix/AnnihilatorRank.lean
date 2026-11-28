@@ -148,8 +148,9 @@ theorem leftWitness_iff_rank (A B : Matrix ι ι F) :
         simpa only [Matrix.transpose_mul, Matrix.transpose_transpose] using
           Matrix.transpose_eq_zero.mpr h
   have hRank := rightWitness_iff_rank Bᵀ Aᵀ
-  rw [← Matrix.transpose_mul, ← Matrix.transpose_fromCols, Matrix.rank_transpose,
-    Matrix.rank_transpose, Matrix.rank_transpose] at hRank
+  rw [← Matrix.transpose_mul] at hTranspose
+  simp only [← Matrix.transpose_mul, ← Matrix.transpose_fromCols,
+    Matrix.rank_transpose] at hRank
   exact hTranspose.trans hRank
 
 /-- The expanded nonzero one-sided annihilator predicate for a square matrix
