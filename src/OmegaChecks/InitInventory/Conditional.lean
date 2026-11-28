@@ -102,6 +102,9 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     if let some witness := flat then
       return ("∀ P : Prop, P ∨ ¬P", witness,
         "Unfold strict admissibility at the pinned flat partial order, quantifying over every chain supremum without requiring a choice of supremum")
+  if owner == `Init.Grind.Ring.CommSolver && name == ``Lean.Grind.CommRing.inv_split then
+    return ("∀ P : Prop, ¬¬ P → P", ``OmegaChecks.InitBoundaries.FieldNormalization.eliminateDoubleNegationFromFieldZero,
+      "The conditional in the original statement uses a zero decision for every field element. The residue field construction uses propext and Quot.sound")
   if owner == `Init.Grind.Ring.Field || owner == `Init.Grind.FieldNormNum then
     let quotient := "The field construction uses propext and Quot.sound"
     let entry := match name with

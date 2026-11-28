@@ -135,6 +135,34 @@ private theorem castNotZero (P : Prop) (i : R) (odd : parity i ≠ 0) (e : mk P 
   have eq : rel P i 0 := Quotient.exact (s := residueSetoid P) e
   exact eq.elim (fun h => odd (congrArg parity h)) (fun h => odd h.2)
 
+/-- The inverse split itself is constructive for every supplied zero decision. -/
+public theorem inverseSplitWithDecision {α : Type u} [Field α] (a : α) (d : Decidable (a = 0)) :
+    @ite Prop (a = 0) d (a⁻¹ = 0) (a * a⁻¹ = 1) := by
+  cases d with
+  | isTrue h => cases h; exact Field.inv_zero
+  | isFalse h => exact Field.mul_inv_cancel h
+
+/-- A decision for the zero test occurring in every pinned inverse split decides
+equality of any two elements by applying it to their difference. -/
+public def fieldEquality (zero : ∀ {α : Type u} [Field α] (a : α), Decidable (a = 0))
+    {α : Type u} [Field α] (a b : α) : Decidable (a = b) :=
+  match zero (a - b) with
+  | .isTrue h => .isTrue ((AddCommGroup.sub_eq_iff.mp h).trans (AddCommMonoid.zero_add b))
+  | .isFalse h => .isFalse (fun eq => h (eq ▸ AddCommGroup.sub_self a))
+
+open scoped Classical in
+example : type_of% @CommRing.inv_split.{u} := fun {_} _ a =>
+  inverseSplitWithDecision a (Classical.propDecidable _)
+
+/-- In the residue field, two is zero exactly when the proposition identifies
+the even residues. A zero decision therefore eliminates double negation. -/
+public theorem eliminateDoubleNegationFromFieldZero
+    (zero : ∀ {α : Type} [Field α] (a : α), Decidable (a = 0)) (P : Prop) (nn : ¬¬ P) : P := by
+  letI := quotientField P nn
+  cases zero (mk P 2) with
+  | isTrue h => exact propositionOfEquality P (i := 2) (j := 0) (by decide) h
+  | isFalse h => exact False.elim (nn (fun p => h (Quotient.sound (s := residueSetoid P) (Or.inr ⟨p, rfl⟩))))
+
 /-- The even residues expose product, power, and division laws that distinguish the quotient
 before its parity classes are identified. -/
 public theorem inverseProduct (rule : type_of% @Field.inv_mul.{0}) (P : Prop) (nn : ¬¬ P) : P := by
@@ -211,8 +239,11 @@ public theorem power (op : Rat → Int → Rat) (compute : op twoThirds (-1) = t
 
 
 run_cmd
+  for witness in #[``inverseSplitWithDecision, ``fieldEquality] do
+    unless (← Lean.collectAxioms witness).isEmpty do
+      throwError "the supplied field decision needs extra axioms at {witness}"
   for witness in #[``inverseProduct, ``inverseNegative, ``productZero, ``powerZero, ``divideLeft, ``divideRight,
-      ``inverse, ``verifyInv, ``divide, ``power] do
+      ``inverse, ``verifyInv, ``divide, ``power, ``eliminateDoubleNegationFromFieldZero] do
     let axioms ← Lean.collectAxioms witness
     unless axioms.all (#[`propext, `Quot.sound].contains ·) do
       throwError "field normalization reduction {witness} uses extra axioms: {axioms}"
