@@ -6,6 +6,7 @@ import all Lean.Util.CollectAxioms
 import all Init.Grind.Ring.Envelope
 import all Init.Grind.Module.Envelope
 import all Init.Prelude
+import all Init.WF
 public import OmegaChecks.InitInventory.Logic
 
 public section
@@ -97,8 +98,32 @@ theorem ofFixEquation (eq : type_of% @WellFounded.Nat.fix_eq.{u+1, u+1}) :
     eq (motive := Result B) (fun _ => 0) (branch empty k) none
   exact (step f).symm.trans (step g)
 
+variable {α : Sort u} {motive : α → Sort v} (h : α → Nat)
+variable (F : (x : α) → ((y : α) → InvImage (· < ·) h y x → motive y) → motive x)
+
+/-- The step preserves pointwise agreement of recursive calls on smaller arguments. -/
+def RespectsCalls : Prop :=
+  ∀ x f g, (∀ y hy, f y hy = g y hy) → F x f = F x g
+
+theorem goCongrOfRespectsCalls (step : RespectsCalls h F) (x : α)
+    (n m : Nat) (hn : h x < n) (hm : h x < m) :
+    WellFounded.Nat.fix.go h F n x hn = WellFounded.Nat.fix.go h F m x hm := by
+  induction n generalizing x m with
+  | zero => exact (Nat.not_lt_zero _ hn).elim
+  | succ n ih =>
+    cases m with
+    | zero => exact (Nat.not_lt_zero _ hm).elim
+    | succ m => exact step x _ _ fun y _ => ih y m _ _
+
+theorem fixEqOfRespectsCalls (step : RespectsCalls h F) (x : α) :
+    WellFounded.Nat.fix h F x = F x (fun y _ => WellFounded.Nat.fix h F y) := by
+  unfold WellFounded.Nat.fix
+  apply Eq.trans (b := WellFounded.Nat.fix.go h F (h x + 1) x (Nat.lt_succ_self _))
+  · apply goCongrOfRespectsCalls h F step
+  · exact step x _ _ fun y _ => goCongrOfRespectsCalls h F step y _ _ _ _
+
 run_cmd
-  for n in [``ofFuelCongruence, ``ofFixEquation] do
+  for n in [``ofFuelCongruence, ``ofFixEquation, ``goCongrOfRespectsCalls, ``fixEqOfRespectsCalls] do
     unless (← collectAxioms n).isEmpty do throwError "measured recursion witness {n} uses axioms"
 
 end MeasuredRecursion

@@ -40,3 +40,10 @@ port_definition WellFounded.Nat.fix.go
 port_proof WellFounded.Nat.eager_eq
 port_proof WellFounded.Nat.fix._proof_2
 port_definition WellFounded.Nat.fix
+
+/- WellFounded.Nat.fix.go_congr and WellFounded.Nat.fix_eq quantify over all
+steps F. With the pinned fuel recursion both imply equality of all dependent
+functions on an empty domain (MeasuredRecursion.ofFuelCongruence and
+ofFixEquation). For a step preserving pointwise agreement of its smaller
+recursive calls, goCongrOfRespectsCalls and fixEqOfRespectsCalls establish the
+two conclusions with no axioms. The unrestricted statements remain open. -/
