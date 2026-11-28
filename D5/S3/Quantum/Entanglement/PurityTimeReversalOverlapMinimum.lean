@@ -18,6 +18,7 @@ Direct frozen dependencies: D5/S3/Quantum/FiniteDimensional (`qubitX`, `qubitZ`)
 
 import D5.S3.Quantum.FiniteDimensional
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import Mathlib.Algebra.Order.Chebyshev
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

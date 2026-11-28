@@ -20,6 +20,7 @@
 -/
 
 import D5.S3.Divergence.ClassicalDPI
+import Mathlib.Algebra.BigOperators.Field
 
 namespace D5.S3.Divergence.ChainRule
 

@@ -11,6 +11,7 @@
    This shared helper supplies no new content or escape credit. -/
 
 import D5.S3.Quantum.Information.Pauli.PauliMatrix
+import Mathlib.Analysis.Matrix.Order
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
