@@ -137,6 +137,7 @@ Include complete inductive families so that replay can regenerate their primitiv
 private def replayWitnesses (env : Environment) : IO Unit := do
   let official ← importModules #[{module := `Lean}] {} (level := .private)
   let roots := (reductions.map fun (_, _, _, witness) => witness) ++
+    [``MeasuredRecursion.goCongrOfRespectsCalls, ``MeasuredRecursion.fixEqOfRespectsCalls] ++
     ClassicalConsequences.witnesses.map Prod.snd ++ [``ClassicalConsequences.ofTypeDecidableEq] ++
     [``MacroReferences.noQueryRoundTrip, ``MacroReferences.noRoundTrip] ++
     [``DynamicRoundTrip.noRoundTrip, ``FactoryCarriers.noCarrierEmbedding, ``FactoryCarriers.noGetCast] ++
