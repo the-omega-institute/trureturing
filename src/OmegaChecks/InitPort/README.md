@@ -78,6 +78,8 @@ python3 src/OmegaChecks/InitPort/report.py .lake/init-port-all --require-complet
 
 逐项登记位于 `src/OmegaChecks/InitInventory/Reductions.lean` 的 `OmegaChecks.InitBoundaries.reductions`。条目包含官方定义模块、声明、目标公理和见证。Lean 核对指定模块内保存的声明类型，并检查见证可将该类型的任意实现转为目标公理的同类型实现，并从空内核重放见证及其传递依赖。受理的结论为任意类型的选择、命题外延性，或由任意类型的无条件取值推出矛盾。编译器公理中也有可构造的类型，例如可以用任意已有类型实现 `lcAny : Type`。例如，对两个等价命题分别应用 `Classical.propComplete`，在同真或同假两种情形下得到命题相等。将 `WellFounded.extrinsicFix` 用于自关联的单位类型，令递归分支直接自调用，原接口就必须从 `Nonempty α` 返回 `α`。给定可在安全证明中使用的 `unsafeCast` 原类型实现，可以将单位类型的元素送到任意类型，得到 `sorryAx`。官方声明带有 `unsafe` 标记，内核拒绝把它传给此见证。该声明及三个带有相同限制的 ST 接口仍须检查符合原安全级别的实现。报告中的 `reductionWitness` 指向对应 Lean 声明。原证明的公理闭包、未支持原语和编译器限制保留在缺口明细中，完整性验收只接受有见证的缺口。
 
+`Lean.Loop.forIn` 和 `Lean.instForInLoopUnitOfMonad` 的选择规约使用官方固定点方程。测试循环每步继续，并在成功结果中翻转布尔标记。对任意非空异常类型，存在一个始终返回异常值的固定点，因此官方方程适用。成功结果的标记不可能等于自身的否定，循环结果只能携带该异常类型的一个值。`WhileChoice` 在空内核中验证从满足这条方程的实现到 `Classical.choice` 的规约。
+
 `formationArgument` 标出原陈述中须提供证明的实参。`Quot.liftIndepPr1` 的等式左端投影自 `Quot.lift`。盘点程序用常值单位类型特化其官方接口，从部分应用读出 `Quot.indepCoherent` 所在参数的类型，并以空内核重放对应见证。能统一提供该参数就能推出 `Quot.sound`。给定所需的一致性证明后，第一投影等式本身可由商归纳证明。
 
 `transportPathType` 记录四个商递归器的一致性前提中，`Eq.ndrec` 所需的路径类型。用单位类型作为纤维，并取第一代表元的商类作预先给定的商点后，`Quot.rec` 和 `Quot.recOn` 的路径须对任意关系给出 `Quot.sound`。在 `Quotient.rec` 和 `Quotient.recOn` 中，路径只涉及等价关系，其类型为 `Quotient.sound`，这两个接口保留在未移植清单中。

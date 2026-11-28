@@ -242,6 +242,11 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
   if owner == `Init.Classical && (OmegaChecks.InitBoundaries.ClassicalDecisionEquations.rules.lookup name).isSome then
     return ((``Classical.em).toString, ``OmegaChecks.InitBoundaries.ClassicalConsequences.ofDecidableNot,
       "The right-hand side supplies a decision for p from a decision for its negation at every proposition")
+  if owner == `Init.While && [``Lean.Loop.forIn, ``Lean.instForInLoopUnitOfMonad].contains name then
+    let witness := if name == ``Lean.Loop.forIn then ``OmegaChecks.InitBoundaries.WhileChoice.choiceFromLoop
+      else ``OmegaChecks.InitBoundaries.WhileChoice.choiceFromInstance
+    return ((``Classical.choice).toString, witness,
+      "The pinned fixed-point equation equates the loop result with its parity flip for every nonempty exception type")
   if owner == `Init.Core && name == ``Quot.liftIndepPr1 then
     return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfLiftArgument,
       "The first projection in the original statement requires the lift's coherence argument at the constant unit motive")

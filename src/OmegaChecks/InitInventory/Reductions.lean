@@ -11,6 +11,8 @@ public import OmegaChecks.InitInventory.PostconditionIdentity
 import all OmegaChecks.InitInventory.PostconditionIdentity
 public import OmegaChecks.InitInventory.ChoiceOperands
 import all OmegaChecks.InitInventory.ChoiceOperands
+public import OmegaChecks.InitInventory.WhileChoice
+import all OmegaChecks.InitInventory.WhileChoice
 public import OmegaChecks.InitInventory.Traversal
 import all OmegaChecks.InitInventory.Traversal
 public import OmegaChecks.InitInventory.MacroReferences
@@ -118,6 +120,8 @@ def reductions : List (Name × Name × Name × Name) := [
   (`Init.Internal.Order.Basic, `Lean.Order.flat_csup, `Classical.choice, ``InternalOrder.choiceFromFlatPresence),
   (`Init.Grind.Injective, `Lean.Grind.leftInv, `Classical.choice, ``choiceFromLeftInv),
   (`Init.While, `repeatM, `Classical.choice, ``choiceFromRepeatM),
+  (`Init.While, `Lean.Loop.forIn, `Classical.choice, ``WhileChoice.choiceFromLoop),
+  (`Init.While, `Lean.instForInLoopUnitOfMonad, `Classical.choice, ``WhileChoice.choiceFromInstance),
   (`Init.Prelude, `unsafeCast, `sorryAx, ``sorryAxFromUnsafeCast)] ++
   (OptionSelector.laws.map fun (owner, name, witness) => (owner, name, ``Classical.choice, witness)) ++
   (InternalOrder.implicationOrders.map fun (name, witness) => (`Init.Internal.Order.Basic, name, ``propext, witness))
@@ -346,18 +350,23 @@ run_cmd
         ``Grind.CommRing.lt_norm_expr, ``Grind.CommRing.lt_norm_expr_nc].contains source.name then
       Elab.Command.liftCoreM <| Meta.MetaM.run' do
         mkArrow (← translatedComparisonType source) target.type
-    else if source.name == ``Order.flat_csup then
+    else if [``Order.flat_csup, ``Lean.Loop.forIn, ``Lean.instForInLoopUnitOfMonad].contains source.name then
       Elab.Command.liftCoreM <| Meta.MetaM.run' do
-        let [u] := levels | throwError "unexpected flat choice universe"
-        let sourceLevels := [Level.succ u]
-        let presence := mkConst ``InternalOrder.returnsFlatSome [u]
-        let pinned ← getConstInfo ``InternalOrder.officialFlatPresence
+        let [u] := levels | throwError "unexpected choice universe for {source.name}"
+        let (sourceLevels, observation, reference) := if source.name == ``Order.flat_csup then
+          ([Level.succ u], ``InternalOrder.returnsFlatSome, ``InternalOrder.officialFlatPresence)
+        else if source.name == ``Lean.Loop.forIn then
+          ([u, u], ``WhileChoice.fixed, ``WhileChoice.officialFixed)
+        else
+          ([u, u], ``WhileChoice.instanceFixed, ``WhileChoice.officialInstanceFixed)
+        let behavior := mkConst observation [u]
+        let pinned ← getConstInfo reference
         unless Kernel.isDefEqGuarded env {} (pinned.type.instantiateLevelParams pinned.levelParams [u])
-            (mkApp presence (mkConst source.name sourceLevels)) do
-          throwError "invalid pinned option observation for {source.name}"
-        Meta.withLocalDeclD `pick (source.type.instantiateLevelParams source.levelParams sourceLevels) fun pick => do
+            (mkApp behavior (mkConst source.name sourceLevels)) do
+          throwError "invalid pinned observation for {source.name}"
+        Meta.withLocalDeclD `port (source.type.instantiateLevelParams source.levelParams sourceLevels) fun port => do
           let conclusion := target.type.instantiateLevelParams target.levelParams [u]
-          Meta.mkForallFVars #[pick] (← mkArrow (mkApp presence pick) conclusion)
+          Meta.mkForallFVars #[port] (← mkArrow (mkApp behavior port) conclusion)
     else if source.name == ``Quot.indepCoherent then
       Elab.Command.liftCoreM <| Meta.MetaM.run' do
         let [u] := levels | throwError "unexpected quotient universe parameters"
