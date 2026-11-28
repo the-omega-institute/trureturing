@@ -18,23 +18,25 @@ Take the family with $G_{t,0}=1$, $G_{t,1}=0$ and
 $G_{t,n+2}=tG_{t,n+1}-t^2G_{t,n}$ for each integer $t$ with $|t|\ge 2$.
 For any characteristic-zero field $K$ and positive integer $k$, determine
 whether there are coefficients $c_0,\ldots,c_k\in K$ and bits
-$\varepsilon_0,\ldots,\varepsilon_k\in\{0,1\}$, all fixed independently of $n$,
-such that the following holds for every natural $n$, including zero.
+$\varepsilon_0,\ldots,\varepsilon_k\in\mathrm{Bool}$, all fixed independently of $n$,
+such that the following holds for every natural $n$, including zero. The function
+$\mathrm{bit}$ decodes a Boolean value as zero for false and one for true.
+$\mathrm{IntCast}_K$ denotes the canonical integer-to-$K$ cast.
 
 $$
-\operatorname{IntCast}_K(G_{t,kn})
-= \sum_{i=0}^k c_i\,(-1:K)^{n\varepsilon_i}\,
-       \operatorname{IntCast}_K(G_{t,n})^i.
+\mathrm{IntCast}_K(G_{t,kn})
+= \sum_{i=0}^k c_i (-1:K)^{n\mathrm{bit}(\varepsilon_i)}
+       \mathrm{IntCast}_K(G_{t,n})^i.
 $$
 
-This specializes the multiplier question on pa\ge 2, equations (9)–(10).
+This specializes the multiplier question on page 2, equations (9)–(10).
 [Versioned source and locator](../Library/RecurrenceAlgebraic/glampe2026polynomial.md)
 
 ## Motivation
 
 A classification for this family gives an explicit criterion on $k$ and an
 explicit coefficient vector in every admitted residue. It includes rational
-coefficients by taking $K=mathbb Q$.
+coefficients by taking $K=\mathbb{Q}$.
 
 ## Gap
 
@@ -80,8 +82,8 @@ missing. [Issue disclosure](https://github.com/the-omega-institute/trureturing/i
 ## Triage
 
 Tier 1. For this family, `multipliers_iff` proves existence exactly when
-$k\equiv 1\pmod 6$. The witness has $c_k=1$, all other coefficients zero,
-and all sign bits zero.
+$k\equiv 1\pmod 6$. One witness has $c_k=1$, all other coefficients zero,
+and an all-false mask. Either mask value works in degrees with zero coefficient.
 [Theorem](../Blueprint/D5/S1/Recurrence/GlampeSixPeriodMultipliers.md)
 
 ### What the settlement shows

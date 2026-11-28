@@ -22,7 +22,7 @@ For every integer scale t, write G(t,n) for scaledGibonacci t n, the integer seq
 
 **Theorem 1.2 (Classification with a fixed sign bit per degree).**
 
-$$\forall K: Type*, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)], \forall t\in\mathbb{Z}, \forall k\in\mathbb{N}, \left(2 \leq \lvert t\rvert \land k>0\right) \Rightarrow \left(\left(\exists c: \operatorname{Fin}\left(k+1\right) \to K, \exists \varepsilon: \operatorname{Fin}\left(k+1\right) \to \{0,1\}, \forall n\in\mathbb{N}, \operatorname{IntCast}_{K}\left(G_{t,kn}\right)=\sum_{i=0}^{k} c_{i}\left(-1: K\right)^{n\varepsilon_{i}}\operatorname{IntCast}_{K}\left(G_{t,n}\right)^{i}\right) \iff k\equiv1\pmod{6}\right)$$
+$$\forall K: Type*, [\mathrm{Field}\left(K\right)] [\mathrm{CharZero}\left(K\right)], \forall t\in\mathbb{Z}, \forall k\in\mathbb{N}, \left(2 \leq \lvert t\rvert \land k>0\right) \Rightarrow \left(\left(\exists c: \mathrm{Fin}\left(k+1\right) \to K, \exists \varepsilon: \mathrm{Fin}\left(k+1\right) \to \mathrm{Bool}, \forall n\in\mathbb{N}, \mathrm{IntCast}_{K}\left(G_{t,kn}\right)=\sum_{i=0}^{k} c_{i}\left(-1: K\right)^{n\mathrm{bit}\left(\varepsilon_{i}\right)}\mathrm{IntCast}_{K}\left(G_{t,n}\right)^{i}\right) \iff k\equiv1\pmod{6}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/GlampeSixPeriodMultipliers.multipliers_iff` (`✓ std3`). ∎
 
@@ -36,13 +36,13 @@ $$\forall K: Type*, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero
 
 *Commentary.*
 
-Fix any characteristic-zero field K, an integer t with absolute value at least two, and a positive natural multiplier k. IntCast_K is the canonical integer-to-K cast, and the sign base -1 is an element of K. Each bit is zero for the false Boolean mask value and one for true. The coefficients and bits are fixed for all natural indices, including zero, and the bound k includes every smaller degree.
+Fix any characteristic-zero field K, an integer t with absolute value at least two, and a positive natural multiplier k. IntCast_K is the canonical integer-to-K cast, and the sign base -1 is an element of K. The function bit decodes a Bool value as zero for false and one for true. The coefficients and mask are fixed for all natural indices, including zero, and the bound k includes every smaller degree.
 
 At indices 1 and 7, the inputs are both zero and the two signs agree for each bit. The outputs must therefore agree. Since h(7k)=h(k) and the powers of t have distinct values at distinct exponents, h(k)=0. Only residues 1 and 4 modulo six give that value.
 
 Every sign factor is one at an even index. At indices 6j, the resulting even-index polynomial agrees with X^k at the infinitely many distinct points t^(6j), so it equals X^k. If k is congruent to four, then G(2k)=-t^(2k) while G(2)^k=t^(2k). The scale bound and characteristic zero make those values distinct.
 
-If k is congruent to one, then h(kn)=h(n) and k is odd. Each entry of the period is fixed by raising it to the kth power, so G(kn)=G(n)^k. Take the coefficient of degree k to be one, every other coefficient to be zero, and every sign bit to be zero.
+If k is congruent to one, then h(kn)=h(n) and k is odd. Each entry of the period is fixed by raising it to the kth power, so G(kn)=G(n)^k. One witness uses coefficient one in degree k, zero coefficients in every other degree, and an all-false mask. Either mask value works in degrees with zero coefficient.
 
 ## References
 

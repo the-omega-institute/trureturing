@@ -38,8 +38,8 @@ internal sealed class GlampeSixPeriodMultipliersDocument : IScribeDocumentDefini
                     Paragraph(Text("Fix any characteristic-zero field K, an integer t with "
                         + "absolute value at least two, and a positive natural multiplier k. "
                         + "IntCast_K is the canonical integer-to-K cast, and the sign base -1 "
-                        + "is an element of K. Each bit is zero for the false Boolean mask value "
-                        + "and one for true. The coefficients and bits are fixed for all natural "
+                        + "is an element of K. The function bit decodes a Bool value as zero "
+                        + "for false and one for true. The coefficients and mask are fixed for all natural "
                         + "indices, including zero, and the bound k includes every smaller degree.")),
                     Paragraph(Text("At indices 1 and 7, the inputs are both zero and the two signs "
                         + "agree for each bit. The outputs must therefore agree. Since h(7k)=h(k) "
@@ -52,8 +52,9 @@ internal sealed class GlampeSixPeriodMultipliersDocument : IScribeDocumentDefini
                         + "zero make those values distinct.")),
                     Paragraph(Text("If k is congruent to one, then h(kn)=h(n) and k is odd. "
                         + "Each entry of the period is fixed by raising it to the kth power, "
-                        + "so G(kn)=G(n)^k. Take the coefficient of degree k to be one, "
-                        + "every other coefficient to be zero, and every sign bit to be zero."))),
+                        + "so G(kn)=G(n)^k. One witness uses coefficient one in degree k, "
+                        + "zero coefficients in every other degree, and an all-false mask. "
+                        + "Either mask value works in degrees with zero coefficient."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("glampe-2026-six-period-multipliers"),
@@ -65,8 +66,9 @@ internal sealed class GlampeSixPeriodMultipliersDocument : IScribeDocumentDefini
     private static Formula G(Formula index) => Sub(F.Id("G"), Seq(F.Id("t"), Comma, index));
     private static Formula Par(Formula body) => Seq(Left, Open, body, Right, Close);
     private static Formula Pow(Formula value, Formula exponent) => new Formula.Power(value, exponent);
+    private static Formula Roman(string value) => Seq(Mathrm, Grp(F.Id(value)));
     private static Formula CastTo(Formula value, Formula field) =>
-        new Formula.Apply(Sub(Seq(Operatorname, Grp(F.Id("IntCast"))), field), [value]);
+        new Formula.Apply(Sub(Roman("IntCast"), field), [value]);
 
     private static Formula Recurrence()
     {
@@ -86,15 +88,15 @@ internal sealed class GlampeSixPeriodMultipliersDocument : IScribeDocumentDefini
         var t = F.Id("t");
         var c = F.Id("c");
         var field = F.Id("K");
-        var bits = Seq(OpenBrace, D(0), Comma, D(1), CloseBrace);
-        var indices = new Formula.Apply(Seq(Operatorname, Grp(F.Id("Fin"))), [Seq(k, Plus, D(1))]);
-        var fieldHypothesis = new Formula.Apply(Seq(Operatorname, Grp(F.Id("Field"))), [field]);
-        var charZeroHypothesis = new Formula.Apply(Seq(Operatorname, Grp(F.Id("CharZero"))), [field]);
+        var bit = new Formula.Apply(Roman("bit"), [Sub(Varepsilon, i)]);
+        var indices = new Formula.Apply(Roman("Fin"), [Seq(k, Plus, D(1))]);
+        var fieldHypothesis = new Formula.Apply(Roman("Field"), [field]);
+        var charZeroHypothesis = new Formula.Apply(Roman("CharZero"), [field]);
         var signBase = Par(Seq(Minus, D(1), Colon, Sp, field));
         var signedSum = Seq(Sum, Underscore, Grp(i, Eq, D(0)), Caret, Grp(k), Sp,
-            Sub(c, i), Pow(signBase, Seq(n, Sub(Varepsilon, i))), Pow(CastTo(G(n), field), i));
+            Sub(c, i), Pow(signBase, Seq(n, bit)), Pow(CastTo(G(n), field), i));
         var identity = Seq(Exists, Sp, c, Colon, Sp, indices, Sp, To, Sp, field, Comma, Sp,
-            Exists, Sp, Varepsilon, Colon, Sp, indices, Sp, To, Sp, bits, Comma, Sp,
+            Exists, Sp, Varepsilon, Colon, Sp, indices, Sp, To, Sp, Roman("Bool"), Comma, Sp,
             Forall, Sp, n, InMacro, Naturals, Comma, Sp, CastTo(G(Seq(k, n)), field), Eq, signedSum);
         return Seq(Forall, Sp, field, Colon, Sp, F.Id("Type"), Star, Comma, Sp,
             OpenBracket, fieldHypothesis, CloseBracket, Sp,
