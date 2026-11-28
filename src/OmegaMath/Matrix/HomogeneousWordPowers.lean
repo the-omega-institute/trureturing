@@ -765,6 +765,42 @@ private theorem isUnit_of_span_columns (P : Mat)
   Matrix.mulVec_surjective_iff_isUnit.1
     (LinearMap.range_eq_top.1 ((Matrix.range_mulVecLin P).trans h))
 
+private theorem periodic_outer_five_linearIndependent (x y z : K)
+    (hxy : x ≠ 0 ∨ y ≠ 0) :
+    LinearIndependent K ![
+      (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 0),
+      x • (Matrix.stdBasis K (Fin 3) (Fin 3)) (2, 0) +
+        y • (Matrix.stdBasis K (Fin 3) (Fin 3)) (1, 0) +
+        z • (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 0),
+      x • (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 2) +
+        y • (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 1) +
+        z • (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 0),
+      (Matrix.stdBasis K (Fin 3) (Fin 3)) (2, 1),
+      (Matrix.stdBasis K (Fin 3) (Fin 3)) (1, 2)] := by
+  rw [Fintype.linearIndependent_iff]
+  intro g hg
+  have h00 := congrFun₂ hg 0 0
+  have h20 := congrFun₂ hg 2 0
+  have h10 := congrFun₂ hg 1 0
+  have h02 := congrFun₂ hg 0 2
+  have h01 := congrFun₂ hg 0 1
+  have h21 := congrFun₂ hg 2 1
+  have h12 := congrFun₂ hg 1 2
+  simp [Fin.sum_univ_succ, Matrix.stdBasis, Pi.single_apply] at h00 h20 h10 h02 h01 h21 h12
+  have g1 : g 1 = 0 := by
+    rcases hxy with hx | hy
+    · exact h20.resolve_right hx
+    · exact h10.resolve_right hy
+  have g2 : g 2 = 0 := by
+    rcases hxy with hx | hy
+    · exact h02.resolve_right hx
+    · exact h01.resolve_right hy
+  have g0 : g 0 = 0 := by simpa [g1, g2] using h00
+  have g3 : g 3 = 0 := by simpa using h21
+  have g4 : g 4 = 0 := by simpa using h12
+  intro i
+  fin_cases i <;> assumption
+
 /-- A nonzero first return and zero second return force at least five independent
 matrices in the exact cube of an eventually full span with an invertible generator. -/
 theorem five_le_finrank_cube_of_first_return
@@ -896,6 +932,210 @@ theorem five_le_finrank_cube_of_first_return
     ((Submodule.span_singleton_le_iff_mem _ _).2 (Submodule.pow_mem_pow L hP 3))
   have hdim := (Submodule.finrank_lt_finrank_of_lt hlt).trans_le (Submodule.finrank_mono hW'L)
   omega
+
+/-- A zero first return and nonzero second return give five independent
+matrices in the exact fourth power, provided the characteristic-polynomial
+coefficients do not both vanish. -/
+theorem five_le_finrank_four_of_second_return
+    (L : Submodule K Mat) (A : Matˣ) (u v : Fin 3 → K)
+    (hL : L = Submodule.span K ({(A : Mat), Matrix.vecMulVec u v} : Set Mat))
+    (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤)
+    (h0 : v ⬝ᵥ u = 0) (h1 : v ⬝ᵥ ((A : Mat) *ᵥ u) = 0)
+    (h2 : v ⬝ᵥ ((A : Mat) ^ 2 *ᵥ u) ≠ 0)
+    {x y : K} (hrel : (A : Mat) ^ 3 = x • (A : Mat) ^ 2 + y • (A : Mat) +
+      (A : Mat).det • (1 : Mat)) (hxy : x ≠ 0 ∨ y ≠ 0) :
+    5 ≤ Module.finrank K ↥(L ^ 4) := by
+  classical
+  let P : Mat := A
+  let B := Matrix.vecMulVec u v
+  let w (i : Fin 3) := P ^ (i : ℕ) *ᵥ u
+  let r (j : Fin 3) := v ᵥ* P ^ (j : ℕ)
+  have hu : u ≠ 0 := by
+    rintro rfl
+    simp at h2
+  have hv : v ≠ 0 := by
+    rintro rfl
+    simp at h2
+  obtain ⟨U, hU⟩ := isUnit_of_span_columns (Matrix.of fun i j => w j i)
+    (span_column_orbit L hu hL hfull)
+  have hVunit : IsUnit (Matrix.of r : Mat) :=
+    (Matrix.isUnit_transpose (Matrix.of r : Mat)).1 (isUnit_of_span_columns (Matrix.of r)ᵀ
+      (span_row_orbit L hv hL hfull))
+  obtain ⟨V, hV⟩ := hVunit
+  have hcol (i : Fin 3) : (U : Mat).col i = w i := by rw [hU]; rfl
+  have hrow (j : Fin 3) : (V : Mat).row j = r j := by rw [hV]; rfl
+  let e := (U.mulLeftLinearEquiv K Mat).trans (V.mulRightLinearEquiv K)
+  let b := (Matrix.stdBasis K (Fin 3) (Fin 3)).map e
+  have hb (i j : Fin 3) : b (i, j) = Matrix.vecMulVec (w i) (r j) := by
+    change e (Matrix.stdBasis K _ _ (i, j)) = _
+    rw [Matrix.stdBasis_eq_single, Matrix.single_eq_single_vecMulVec_single]
+    change (U : Mat) * Matrix.vecMulVec (Pi.single i 1) (Pi.single j 1) * (V : Mat) = _
+    rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.mulVec_single_one,
+      Matrix.single_one_vecMul, hcol, hrow]
+  have hbcoord (i j a c : Fin 3) :
+      (e.symm (b (a, c))) i j = if i = a ∧ j = c then 1 else 0 := by
+    dsimp [b]
+    by_cases hia : i = a <;> by_cases hjc : j = c <;>
+      simp [Matrix.stdBasis, Pi.single_apply, hia, hjc]
+  have hP : P ∈ L := hL.symm ▸ Submodule.subset_span (Set.mem_insert _ _)
+  have hP1 : P ∈ L ^ 1 := by simpa using hP
+  have hB : B ∈ L := hL.symm ▸ Submodule.subset_span (by simp [B])
+  have hmul {m n : ℕ} {X Y : Mat} (hX : X ∈ L ^ m) (hY : Y ∈ L ^ n) :
+      X * Y ∈ L ^ (m + n) := by
+    rw [pow_add]
+    exact Submodule.mul_mem_mul hX hY
+  have hB1 : B ∈ L ^ 1 := by simpa using hB
+  have hB4 : B ∈ L ^ 4 := by
+    let c : K := v ⬝ᵥ (P ^ 2 *ᵥ u)
+    have hc : c ≠ 0 := h2
+    have hw := hmul (hmul hB1 (Submodule.pow_mem_pow L hP 2)) hB1
+    rw [return_product P u v 2] at hw
+    change c • B ∈ L ^ 4 at hw
+    simpa only [smul_smul, inv_mul_cancel₀ hc, one_smul] using (L ^ 4).smul_mem c⁻¹ hw
+  have hqmem (i : Fin 5) :
+      (![B, P ^ 3 * B, B * P ^ 3, P ^ 2 * B * P, P * B * P ^ 2] i) ∈ L ^ 4 := by
+    fin_cases i
+    · exact hB4
+    · change P ^ 3 * B ∈ L ^ 4
+      simpa only [Nat.reduceAdd] using
+        (hmul (Submodule.pow_mem_pow L hP 3) hB1)
+    · change B * P ^ 3 ∈ L ^ 4
+      simpa only [Nat.reduceAdd] using
+        (hmul hB1 (Submodule.pow_mem_pow L hP 3))
+    · change P ^ 2 * B * P ∈ L ^ 4
+      simpa only [Nat.reduceAdd] using
+        (hmul (hmul (Submodule.pow_mem_pow L hP 2) hB1) hP1)
+    · change P * B * P ^ 2 ∈ L ^ 4
+      simpa only [Nat.reduceAdd] using
+        (hmul (hmul hP1 hB1) (Submodule.pow_mem_pow L hP 2))
+  let q : Fin 5 → Mat := ![B, P ^ 3 * B, B * P ^ 3, P ^ 2 * B * P, P * B * P ^ 2]
+  have he00 : e.symm B = (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 0) := by
+    have h : B = b (0, 0) := by simpa [B, hb, w, r]
+    rw [h]
+    ext a c
+    rw [hbcoord]
+    by_cases hia : a = 0 <;> by_cases hjc : c = 0 <;>
+      simp [Matrix.stdBasis, Matrix.single_apply, Pi.single_apply, hia, hjc]
+  have he20 : e.symm (P ^ 2 * B) = (Matrix.stdBasis K (Fin 3) (Fin 3)) (2, 0) := by
+    have h : P ^ 2 * B = b (2, 0) := by
+      change P ^ 2 * Matrix.vecMulVec u v = b (2, 0)
+      rw [Matrix.mul_vecMulVec]
+      simpa [B, hb, w, r]
+    rw [h]
+    ext a c
+    rw [hbcoord]
+    by_cases hia : a = 2 <;> by_cases hjc : c = 0 <;>
+      simp [Matrix.stdBasis, Matrix.single_apply, Pi.single_apply, hia, hjc]
+  have he10 : e.symm (P * B) = (Matrix.stdBasis K (Fin 3) (Fin 3)) (1, 0) := by
+    have h : P * B = b (1, 0) := by
+      change P * Matrix.vecMulVec u v = b (1, 0)
+      rw [Matrix.mul_vecMulVec]
+      simpa [B, hb, w, r]
+    rw [h]
+    ext a c
+    rw [hbcoord]
+    by_cases hia : a = 1 <;> by_cases hjc : c = 0 <;>
+      simp [Matrix.stdBasis, Matrix.single_apply, Pi.single_apply, hia, hjc]
+  have he02 : e.symm (B * P ^ 2) = (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 2) := by
+    have h : B * P ^ 2 = b (0, 2) := by
+      change Matrix.vecMulVec u v * P ^ 2 = b (0, 2)
+      rw [Matrix.vecMulVec_mul]
+      simpa [B, hb, w, r]
+    rw [h]
+    ext a c
+    rw [hbcoord]
+    by_cases hia : a = 0 <;> by_cases hjc : c = 2 <;>
+      simp [Matrix.stdBasis, Matrix.single_apply, Pi.single_apply, hia, hjc]
+  have he01 : e.symm (B * P) = (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 1) := by
+    have h : B * P = b (0, 1) := by
+      change Matrix.vecMulVec u v * P = b (0, 1)
+      rw [Matrix.vecMulVec_mul]
+      simpa [B, hb, w, r]
+    rw [h]
+    ext a c
+    rw [hbcoord]
+    by_cases hia : a = 0 <;> by_cases hjc : c = 1 <;>
+      simp [Matrix.stdBasis, Matrix.single_apply, Pi.single_apply, hia, hjc]
+  have he21 : e.symm (P ^ 2 * B * P) = (Matrix.stdBasis K (Fin 3) (Fin 3)) (2, 1) := by
+    have h : P ^ 2 * B * P = b (2, 1) := by
+      change P ^ 2 * Matrix.vecMulVec u v * P = b (2, 1)
+      rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul]
+      simpa [B, hb, w, r]
+    rw [h]
+    ext a c
+    rw [hbcoord]
+    by_cases hia : a = 2 <;> by_cases hjc : c = 1 <;>
+      simp [Matrix.stdBasis, Matrix.single_apply, Pi.single_apply, hia, hjc]
+  have he12 : e.symm (P * B * P ^ 2) = (Matrix.stdBasis K (Fin 3) (Fin 3)) (1, 2) := by
+    have h : P * B * P ^ 2 = b (1, 2) := by
+      change P * Matrix.vecMulVec u v * P ^ 2 = b (1, 2)
+      rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul]
+      simpa [B, hb, w, r]
+    rw [h]
+    ext a c
+    rw [hbcoord]
+    by_cases hia : a = 1 <;> by_cases hjc : c = 2 <;>
+      simp [Matrix.stdBasis, Matrix.single_apply, Pi.single_apply, hia, hjc]
+  have hqrepr :
+      (fun i => e.symm (q i)) = ![
+        (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 0),
+        x • (Matrix.stdBasis K (Fin 3) (Fin 3)) (2, 0) +
+          y • (Matrix.stdBasis K (Fin 3) (Fin 3)) (1, 0) +
+          P.det • (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 0),
+        x • (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 2) +
+          y • (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 1) +
+          P.det • (Matrix.stdBasis K (Fin 3) (Fin 3)) (0, 0),
+        (Matrix.stdBasis K (Fin 3) (Fin 3)) (2, 1),
+        (Matrix.stdBasis K (Fin 3) (Fin 3)) (1, 2)] := by
+    funext i
+    fin_cases i
+    · ext a c
+      change (e.symm B) a c = _
+      rw [he00]
+      simp [Matrix.stdBasis]
+    · ext a c
+      change (e.symm (P ^ 3 * B)) a c = _
+      have hrelP : P ^ 3 = x • P ^ 2 + y • P + P.det • (1 : Mat) := by
+        simpa [P] using hrel
+      have h : P ^ 3 * B = x • (P ^ 2 * B) + y • (P * B) + P.det • B := by
+        rw [hrelP]
+        simp only [add_mul, smul_mul_assoc, one_mul]
+      rw [h]
+      simp only [map_add, map_smul, he20, he10, he00]
+      simp [Matrix.stdBasis]
+    · ext a c
+      change (e.symm (B * P ^ 3)) a c = _
+      have hrelP : P ^ 3 = x • P ^ 2 + y • P + P.det • (1 : Mat) := by
+        simpa [P] using hrel
+      have h : B * P ^ 3 = x • (B * P ^ 2) + y • (B * P) + P.det • B := by
+        rw [hrelP]
+        simp only [mul_add, mul_smul_comm, mul_one]
+      rw [h]
+      simp only [map_add, map_smul, he02, he01, he00]
+      simp [Matrix.stdBasis]
+    · ext a c
+      change (e.symm (P ^ 2 * B * P)) a c = _
+      rw [he21]
+      simp [Matrix.stdBasis]
+    · ext a c
+      change (e.symm (P * B * P ^ 2)) a c = _
+      rw [he12]
+      simp [Matrix.stdBasis]
+  have hq : LinearIndependent K q := by
+    have hq' := periodic_outer_five_linearIndependent x y P.det hxy
+    rw [← hqrepr] at hq'
+    have hm := hq'.map' e.toLinearMap (by simp)
+    simpa [Function.comp_def] using hm
+  let W := Submodule.span K (Set.range q)
+  have hdimW : Module.finrank K W = 5 := by
+    simpa [W] using finrank_span_eq_card hq
+  have hWL : W ≤ L ^ 4 := by
+    apply Submodule.span_le.2
+    rintro _ ⟨i, rfl⟩
+    exact hqmem i
+  have hdim := Submodule.finrank_mono hWL
+  rw [hdimW] at hdim
+  exact hdim
 
 /-- In the invertible-generator case, a proper seventh power requires the
 second return to be the unique nonzero return of order one or two. -/
