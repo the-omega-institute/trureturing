@@ -1249,5 +1249,143 @@ theorem pow_seven_eq_top_of_singular_alternatives
   apply Submodule.eq_of_le_of_finrank_le le_top
   simpa [Module.finrank_matrix] using hdim7
 
+private theorem exists_diagonal_rank_normal_form (A : Mat) :
+    ∃ P Q : Matˣ, (P : Mat) * A * (Q : Mat) =
+      Matrix.diagonal (fun i : Fin 3 => if i.val < A.rank then 1 else 0) := by
+  obtain ⟨V, U, e, hV, hU, hA⟩ := Matrix.exists_rank_normal_form A
+  have hsize : A.rank + (Fintype.card (Fin 3) - A.rank) = 3 := by
+    have hr := A.rank_le_width
+    simp only [Fintype.card_fin]
+    omega
+  let f : Fin A.rank ⊕ Fin (Fintype.card (Fin 3) - A.rank) ≃ Fin 3 :=
+    finSumFinEquiv.trans (finCongr hsize)
+  let σ : Fin 3 ≃ Fin 3 := f.symm.trans e.symm
+  let S : Mat := (1 : Mat).submatrix σ id
+  let T : Mat := (1 : Mat).submatrix id σ
+  have hST : S * T = 1 := by
+    change (1 : Mat).submatrix σ (Equiv.refl _) * T = 1
+    rw [Matrix.one_submatrix_mul]
+    simp [T, Matrix.submatrix_submatrix]
+  obtain ⟨P, hP⟩ := ((isUnit_iff_exists_inv).2 ⟨T, hST⟩).mul hV
+  obtain ⟨Q, hQ⟩ := hU.mul ((isUnit_iff_exists_inv').2 ⟨S, hST⟩)
+  refine ⟨P, Q, ?_⟩
+  rw [hP, hQ, mul_assoc S V A, ← mul_assoc (S * (V * A)) U T,
+    mul_assoc S (V * A) U]
+  change (1 : Mat).submatrix σ (Equiv.refl _) * (V * A * U) *
+    (1 : Mat).submatrix (Equiv.refl _) σ = _
+  rw [Matrix.one_submatrix_mul, Matrix.mul_submatrix_one, hA]
+  ext i j
+  obtain ⟨i, rfl⟩ := f.surjective i
+  obtain ⟨j, rfl⟩ := f.surjective j
+  simp only [Matrix.submatrix_apply, Function.comp_apply, id_eq, Equiv.refl_symm,
+    Equiv.refl_apply, σ, Equiv.trans_apply, Equiv.symm_apply_apply, Equiv.apply_symm_apply,
+    Matrix.diagonal_apply, f.injective.eq_iff]
+  rcases i with i | i <;> rcases j with j | j
+  · simp [f, Matrix.one_apply, i.isLt]
+  · simp [f]
+  · simp [f]
+  · simp [f, show ¬ A.rank + i.val < A.rank by omega]
+
+/-- A size-three matrix subspace of upper rank one has a nonzero common right or left
+kernel vector. The rank bound applies to every member of the subspace. -/
+theorem rank_le_one_common_kernel_or_left_kernel (L : Submodule K Mat)
+    (hrank : ∀ A ∈ L, A.rank ≤ 1) :
+    (∃ v : Fin 3 → K, v ≠ 0 ∧ ∀ A ∈ L, A *ᵥ v = 0) ∨
+    (∃ v : Fin 3 → K, v ≠ 0 ∧ ∀ A ∈ L, v ᵥ* A = 0) := by
+  classical
+  let v : Fin 3 → K := Pi.single (1 : Fin 3) 1
+  have hv : v ≠ 0 := by
+    intro h
+    simpa [v] using congrFun h 1
+  by_cases hex : ∃ A ∈ L, A ≠ 0
+  swap
+  · push Not at hex
+    exact Or.inl ⟨v, hv, fun A hA => by simp [hex A hA]⟩
+  obtain ⟨A, hA, hne⟩ := hex
+  have hrA : A.rank = 1 := by
+    have hpos : A.rank ≠ 0 := by
+      intro hz
+      rw [Matrix.rank, Submodule.finrank_eq_zero, LinearMap.range_eq_bot] at hz
+      exact hne (Matrix.toLin'.injective (by simpa [Matrix.toLin'_apply'] using hz))
+    have := hrank A hA
+    omega
+  obtain ⟨P, Q, hpivot⟩ := exists_diagonal_rank_normal_form A
+  let e := (P.mulLeftLinearEquiv K Mat).trans (Q.mulRightLinearEquiv K)
+  let M := L.map e.toLinearMap
+  have he (B : Mat) : e B = (P : Mat) * B * (Q : Mat) := rfl
+  let E : Mat := Matrix.diagonal (fun i : Fin 3 => if i.val < 1 then 1 else 0)
+  have hE : E ∈ M := by
+    refine Submodule.mem_map.mpr ⟨A, hA, ?_⟩
+    change e A = E
+    simpa only [he, E, hrA] using hpivot
+  have hminor (B : Mat) (hB : B ∈ M) (i j : Fin 3) :
+      B 0 0 * B i j - B 0 j * B i 0 = 0 := by
+    obtain ⟨C, hC, rfl⟩ := Submodule.mem_map.mp hB
+    have hr : (e C).rank ≤ 1 := by
+      rw [he, Matrix.rank_mul_eq_left_of_isUnit_det, Matrix.rank_mul_eq_right_of_isUnit_det]
+      · exact hrank C hC
+      · exact (Matrix.isUnit_iff_isUnit_det _).mp P.isUnit
+      · exact (Matrix.isUnit_iff_isUnit_det _).mp Q.isUnit
+    let N := (e C).submatrix (![0, i] : Fin 2 → Fin 3) (![0, j] : Fin 2 → Fin 3)
+    have hn : N.det = 0 := by
+      by_contra h
+      have hle := (Matrix.rank_submatrix_le (e C) (![0, i] : Fin 2 → Fin 3)
+        (![0, j] : Fin 2 → Fin 3)).trans hr
+      change N.rank ≤ 1 at hle
+      rw [Matrix.rank_of_det_ne_zero h, Fintype.card_fin] at hle
+      omega
+    rw [Matrix.det_fin_two] at hn
+    exact hn
+  have hblock (B : Mat) (hB : B ∈ M) (i j : Fin 3) (hi : i ≠ 0) (hj : j ≠ 0) :
+      B i j = 0 := by
+    have h : (1 + B 0 0) * B i j - B 0 j * B i 0 = 0 := by
+      simpa [E, Matrix.diagonal_apply, hi, Ne.symm hj] using
+        hminor (E + B) (M.add_mem hE hB) i j
+    linear_combination h - hminor B hB i j
+  have hcross (B : Mat) (hB : B ∈ M) (i j : Fin 3) (hi : i ≠ 0) (hj : j ≠ 0) :
+      B 0 j * B i 0 = 0 := by
+    simpa [hblock B hB i j hi hj] using hminor B hB i j
+  by_cases hrows : ∀ B ∈ M, ∀ i : Fin 3, i ≠ 0 → B i 0 = 0
+  · refine Or.inr ⟨v ᵥ* (P : Mat), ?_, ?_⟩
+    · intro h
+      apply hv
+      simpa [Matrix.vecMul_vecMul] using congrArg (fun w => w ᵥ* (↑P⁻¹ : Mat)) h
+    · intro B hB
+      have hmem : e B ∈ M := Submodule.mem_map.mpr ⟨B, hB, rfl⟩
+      have hkill : v ᵥ* e B = 0 := by
+        change Pi.single (1 : Fin 3) 1 ᵥ* e B = 0
+        rw [Matrix.single_one_vecMul]
+        funext j
+        by_cases hj : j = 0
+        · simpa [hj] using hrows (e B) hmem 1 (by decide)
+        · exact hblock (e B) hmem 1 j (by decide) hj
+      have hcancel := congrArg (fun w => w ᵥ* (↑Q⁻¹ : Mat)) hkill
+      simpa only [he, Matrix.vecMul_vecMul, mul_assoc, Units.mul_inv, mul_one,
+        Matrix.zero_vecMul] using hcancel
+  · push Not at hrows
+    obtain ⟨C, hC, i, hi, hCi⟩ := hrows
+    have hcols (B : Mat) (hB : B ∈ M) (j : Fin 3) (hj : j ≠ 0) : B 0 j = 0 := by
+      by_contra hBj
+      have hCj := (mul_eq_zero.mp (hcross C hC i j hi hj)).resolve_right hCi
+      have hBi := (mul_eq_zero.mp (hcross B hB i j hi hj)).resolve_left hBj
+      have hsum := hcross (C + B) (M.add_mem hC hB) i j hi hj
+      exact (mul_ne_zero hBj hCi) (by simpa [hCj, hBi] using hsum)
+    refine Or.inl ⟨(Q : Mat) *ᵥ v, ?_, ?_⟩
+    · intro h
+      apply hv
+      simpa [Matrix.mulVec_mulVec] using congrArg (fun w => (↑Q⁻¹ : Mat) *ᵥ w) h
+    · intro B hB
+      have hmem : e B ∈ M := Submodule.mem_map.mpr ⟨B, hB, rfl⟩
+      have hkill : e B *ᵥ v = 0 := by
+        change e B *ᵥ Pi.single (1 : Fin 3) 1 = 0
+        rw [Matrix.mulVec_single_one]
+        funext i
+        by_cases hi : i = 0
+        · simpa [hi] using hcols (e B) hmem 1 (by decide)
+        · exact hblock (e B) hmem i 1 hi (by decide)
+      have hcancel := congrArg (fun w => (↑P⁻¹ : Mat) *ᵥ w) hkill
+      simpa only [he, Matrix.mulVec_mulVec, ← mul_assoc, Units.inv_mul, one_mul,
+        Matrix.mulVec_zero] using hcancel
+
 end SizeThree
 end OmegaMath.HomogeneousWordPowers
