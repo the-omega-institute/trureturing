@@ -18,7 +18,7 @@ open Std Std.PRange
 
 namespace OmegaChecks.InitPort.Alternatives
 
-private theorem enumerableImage {α β : Type u} [UpwardEnumerable α] [UpwardEnumerable β]
+private theorem enumerableImage {α : Type u} {β : Type v} [UpwardEnumerable α] [UpwardEnumerable β]
     [LawfulUpwardEnumerable α] (f : α → β) (g : β → α)
     (left : ∀ a, g (f a) = a) (right : ∀ b, f (g b) = b)
     (next : ∀ a, succ? (f a) = (succ? a).map f)
@@ -46,7 +46,7 @@ private theorem enumerableImage {α β : Type u} [UpwardEnumerable α] [UpwardEn
     | none => rfl
     | some y => exact (next y).symm
 
-private theorem closedSizeImage {α β : Type u} [UpwardEnumerable α] [UpwardEnumerable β]
+private theorem closedSizeImage {α : Type u} {β : Type v} [UpwardEnumerable α] [UpwardEnumerable β]
     [LE α] [LE β] [Rxc.HasSize α] [Rxc.HasSize β] [Rxc.LawfulHasSize α]
     (f : α → β) (g : β → α) (left : ∀ a, g (f a) = a) (right : ∀ b, f (g b) = b)
     (next : ∀ a, succ? (f a) = (succ? a).map f)
@@ -112,6 +112,73 @@ public theorem USize.instLawfulUpwardEnumerable : LawfulUpwardEnumerable USize :
 public theorem USize.instLawfulHasSize : Rxc.LawfulHasSize USize :=
   closedSizeImage USize.ofBitVec USize.toBitVec (fun _ => rfl) (fun _ => rfl)
     (fun _ => USize.succ?_ofBitVec) (fun _ _ => Iff.rfl) (fun _ _ => rfl)
+
+private theorem encodeOption {α : Type u} {β : Type v} (encode : α → β) (decode : β → α)
+    (cancel : ∀ b, encode (decode b) = b) (o : Option β) : o = (o.map decode).map encode := by
+  cases o with
+  | none => rfl
+  | some b => exact congrArg some (cancel b).symm
+
+public theorem HasModel.succ?_encode.{u,v} :
+    type_of% (private_decl% @_root_.HasModel.succ?_encode.{u,v}) := by
+  intro α le lt β le' lt' next laws weak strict model x
+  exact encodeOption model.encode model.decode (fun _ => model.encode_decode) _
+
+public theorem HasModel.succMany?_encode.{u,v} :
+    type_of% (private_decl% @_root_.HasModel.succMany?_encode.{u,v}) := by
+  intro α le lt β le' lt' next laws weak strict k model x
+  exact encodeOption model.encode model.decode (fun _ => model.encode_decode) _
+
+private theorem reachesEncoded {α : Type u} {β : Type v} (encode : α → β) (decode : β → α)
+    (left : ∀ b, encode (decode b) = b) (right : ∀ a, decode (encode a) = a)
+    (s : Option β) (y : α) : s.map decode = some y ↔ s = some (encode y) := by
+  cases s with
+  | none => exact ⟨(fun h => nomatch h), (fun h => nomatch h)⟩
+  | some b =>
+    exact ⟨fun h => congrArg some ((left b).symm.trans (congrArg encode (Option.some.inj h))),
+      fun h => congrArg some ((congrArg decode (Option.some.inj h)).trans (right y))⟩
+
+public theorem HasModel.le_iff.{u,v} : type_of% (private_decl% @_root_.HasModel.le_iff.{u,v}) := by
+  intro α le lt β le' lt' next laws weak strict model x y
+  have reach := reachesEncoded model.encode model.decode (fun _ => model.encode_decode)
+    (fun _ => model.decode_encode)
+  exact ⟨fun ⟨k, h⟩ => ⟨k, (reach _ y).mp h⟩, fun ⟨k, h⟩ => ⟨k, (reach _ y).mpr h⟩⟩
+
+public theorem HasModel.lt_iff.{u,v} : type_of% (private_decl% @_root_.HasModel.lt_iff.{u,v}) := by
+  intro α le lt β le' lt' next laws weak strict model x y
+  have reach := reachesEncoded model.encode model.decode (fun _ => model.encode_decode)
+    (fun _ => model.decode_encode)
+  exact ⟨fun ⟨k, h⟩ => ⟨k, (reach _ y).mp h⟩, fun ⟨k, h⟩ => ⟨k, (reach _ y).mpr h⟩⟩
+
+public theorem HasModel.instLawfulUpwardEnumerable.{u,v} :
+    type_of% (private_decl% @_root_.HasModel.instLawfulUpwardEnumerable.{u,v}) := by
+  intro α le lt β le' lt' next laws weak strict model
+  exact @enumerableImage β α next _root_.HasModel.instUpwardEnumerable laws
+    model.decode model.encode (fun _ => model.encode_decode) (fun _ => model.decode_encode)
+    (fun _ => _root_.HasModel.succ?_decode) (fun _ _ => _root_.HasModel.succMany?_decode)
+
+public theorem HasModel.instRxcLawfulHasSize.{u,v} :
+    type_of% (private_decl% @_root_.HasModel.instRxcLawfulHasSize.{u,v}) := by
+  intro α le lt β le' lt' next laws weak strict model size sizeLaws
+  exact @closedSizeImage β α next _root_.HasModel.instUpwardEnumerable le' le size
+    _root_.HasModel.instRxcHasSize sizeLaws model.decode model.encode (fun _ => model.encode_decode)
+    (fun _ => model.decode_encode) (fun _ => _root_.HasModel.succ?_decode)
+    (fun _ _ => model.le_iff_encode_le) (fun _ _ => rfl)
+
+public theorem HasModel.instRxiLawfulHasSize.{u,v} :
+    type_of% (private_decl% @_root_.HasModel.instRxiLawfulHasSize.{u,v}) := by
+  intro α le lt β le' lt' next laws weak strict model size sizeLaws
+  refine @Rxi.LawfulHasSize.mk α _root_.HasModel.instUpwardEnumerable _root_.HasModel.instRxiHasSize ?_ ?_
+  · intro x term
+    apply Rxi.LawfulHasSize.size_eq_one_of_succ?_eq_none (model.encode x)
+    change (succ? (model.encode x)).map model.decode = none at term
+    cases h : succ? (model.encode x) with
+    | none => rfl
+    | some y => rw [h] at term; cases term
+  · intro x y reaches
+    apply Rxi.LawfulHasSize.size_eq_succ_of_succ?_eq_some (model.encode x) (model.encode y)
+    exact (reachesEncoded model.encode model.decode (fun _ => model.encode_decode)
+      (fun _ => model.decode_encode) _ y).mp reaches
 
 public theorem BitVec.Signed.rotate_map_eq_iff :
     type_of% (private_decl% @_root_.BitVec.Signed.rotate_map_eq_iff) := by
