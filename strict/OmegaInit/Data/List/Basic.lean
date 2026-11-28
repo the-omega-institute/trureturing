@@ -93,6 +93,13 @@ def reverseAux {α : Type u} : List α → List α → List α := fun xs acc =>
         List.below (motive := fun _ : List α => List α → List α) ys → List α)
       ys (fun _ => acc) (fun a _ prior => prior.fst (cons a acc)) below) acc
 
+end Omega.List
+
+port_definition List.reverseAux.match_1 with_native_code
+port_structural_code List.reverseAux on_arg 2
+
+namespace Omega.List
+
 def reverse {α : Type u} (as : List α) : List α := reverseAux as nil
 
 theorem append_assoc {α : Type u} (as bs cs : List α) :

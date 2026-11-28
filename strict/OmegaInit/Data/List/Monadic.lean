@@ -8,6 +8,14 @@ prelude
 public import OmegaInit.Data.List.Control
 import all OmegaInit.Data.Nat.Bitwise.Basic
 
+port_definition List.mapM'.match_1 with_native_code
+port_definition List.mapM'._f
+port_definition List.mapM'
+port_structural_code List.mapM' on_arg 6
+port_proof List.mapM'_nil by_reflexivity
+port_proof List.mapM'_cons by_reflexivity
+port_proof List.mapM_nil by_reflexivity
+
 port_definition List.zipWithM'._sparseCasesOn_1
 port_definition List.zipWithM'.match_1
 port_definition List.zipWithM'._f
