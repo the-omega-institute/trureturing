@@ -678,3 +678,12 @@ attribute [instance] Omega.Std.Identity.toRightIdentity
 attribute [instance] Omega.Std.LawfulIdentity.toIdentity
 attribute [instance] Omega.Std.LawfulIdentity.toLawfulLeftIdentity
 attribute [instance] Omega.Std.LawfulIdentity.toLawfulRightIdentity
+
+port_proof gt_iff_lt by_constructive_casts
+port_proof Decidable.byContradiction by_constructive_casts
+port_proof Decidable.of_not_not by_constructive_casts
+
+public section
+namespace Decidable
+export _root_.Omega.Decidable (byContradiction of_not_not)
+end Decidable

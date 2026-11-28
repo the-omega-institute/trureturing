@@ -174,3 +174,11 @@ end Omega.Std.RightIdentity
 namespace Omega.Std.IdempotentOp
 export _root_.Std.IdempotentOp (casesOn idempotent mk rec recOn)
 end Omega.Std.IdempotentOp
+
+namespace Omega
+export _root_ (gt_iff_lt)
+end Omega
+
+namespace Omega.Decidable
+export _root_.Decidable (byContradiction of_not_not)
+end Omega.Decidable

@@ -14,3 +14,15 @@ end Omega.And
 namespace Omega.Exists
 export _root_.Exists (imp imp' nonempty)
 end Omega.Exists
+
+namespace Omega.exists_prop_decidable
+export _root_.exists_prop_decidable (match_3 match_5)
+end Omega.exists_prop_decidable
+
+namespace Omega
+export _root_ (forall_prop_decidable)
+end Omega
+
+namespace Omega.Decidable
+export _root_.Decidable (by_contra not_and_iff_not_or_not not_imp_iff_and_not not_imp_not of_not_imp)
+end Omega.Decidable

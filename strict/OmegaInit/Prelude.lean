@@ -334,6 +334,10 @@ attribute [irreducible] lengthTR
 
 end Omega.List
 
+port_native_records Inhabited
+port_proof instNonemptyOfInhabited by_constructive_casts
+attribute [instance] Omega.instNonemptyOfInhabited
+
 port_definition List.concat.match_1 with_native_code
 port_structural_code List.concat on_arg 2
 
@@ -441,7 +445,7 @@ port_definition instHOrOfOrOp with_native_code
 port_definition instHShiftLeftOfShiftLeft with_native_code
 port_definition instHShiftRightOfShiftRight with_native_code
 
-port_native_records Inhabited, PLift, ULift, MProd
+port_native_records PLift, ULift, MProd
 port_native_records Bind, Pure, Functor, Seq, SeqLeft, SeqRight
 port_native_records MonadLift, MonadLiftT, MonadEval, MonadEvalT, MonadFunctor, MonadFunctorT
 port_native_records MonadReader, MonadReaderOf, MonadWithReader, MonadWithReaderOf
@@ -927,4 +931,16 @@ port_proof Nat.succ_pos
 public section
 namespace Nat
 export _root_.Omega.Nat (lt_of_le_of_lt pred_le_pred succ_pos)
+end Nat
+
+port_definition DecidablePred by_constructive_casts
+port_private_declaration decide_eq_true.match_1_1
+port_proof decide_eq_true by_constructive_casts
+port_private_declaration of_decide_eq_false.match_1_1
+port_proof of_decide_eq_false by_constructive_casts
+port_private_declaration Nat.lt_of_le_of_ne.match_1_1
+port_proof Nat.lt_of_le_of_ne by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (lt_of_le_of_ne)
 end Nat
