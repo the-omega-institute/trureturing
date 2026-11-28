@@ -19,7 +19,16 @@
      coordinate and then by the output coordinate.
 -/
 
-import Mathlib
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+
+/-! # Classical information monotonicity -/
+
+@[expose] public section
 
 namespace D5.S3.Divergence.ClassicalDPI
 
