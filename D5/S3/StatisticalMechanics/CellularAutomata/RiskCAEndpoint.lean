@@ -3,12 +3,12 @@
    mirror-B: D5/B/S3/StatisticalMechanics/CellularAutomata/RiskCAEndpoint
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
+   utility: none
    digest: The deterministic RiskCA has a collision at the highest threshold on complete boards. -/
 
 import Lean.Elab.Tactic.Omega
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Combinatorics.SimpleGraph.Basic
 import OmegaBuild.Commands
 
 /-!
@@ -56,16 +56,11 @@ structure Params where
   Nmax : Nat
   g : Nat
   θ : Nat
-  p : Nat      -- ρ = p / q
-  q : Nat
   fortify : Bool := true
 
 structure State where
   o : Nat → Nat
   n : Nat → Nat
-
-/-- ⌈x / y⌉ for y > 0. -/
-def ceilDiv (x y : Nat) : Nat := (x + y - 1) / y
 
 /-- First element of `l` minimising `key` lexicographically. -/
 def argminBy (key : Nat → Nat × Nat) : List Nat → Option Nat
@@ -117,14 +112,8 @@ def committed (s : State) (i : Nat) : Bool :=
   | none => false
 
 /-- A battle realisation: (attacker, target, committed force a, defence d) ↦
-    (attacker wins, survivors). For the deterministic operator it is `detBat`; for dice it is the
-    outcome drawn with the random numbers of the step held fixed. -/
+    (attacker wins, survivors). -/
 abbrev Bat := Nat → Nat → Nat → Nat → Bool × Nat
-
-/-- The deterministic operator R_ρ, ρ = p/q. -/
-def detBat : Bat := fun _ _ a d =>
-  if P.p * a > P.q * d then (true, min P.Nmax (max 1 (a - ceilDiv (d * P.q) P.p)))
-  else (false, max 1 (d - (P.p * a) / P.q))
 
 /-- (R) resolution with battle realisation `bat`. Input: state after (G). -/
 def resolve (bat : Bat) (s : State) : State :=
@@ -162,8 +151,7 @@ def fortify (s : State) : State :=
     { s with n := fun k => min P.Nmax (s.n k - sent B prio s k + inflow B prio s k) }
   else s
 
-/-- One synchronous step Φ = F ∘ R ∘ D ∘ G with battle realisation `bat`;
-    the deterministic rule is `step B P prio (detBat P)`. -/
+/-- One synchronous step Φ = F ∘ R ∘ D ∘ G with battle realisation `bat`. -/
 def step (bat : Bat) (s : State) : State :=
   fortify B P prio (resolve B P prio bat (grow P s))
 
@@ -187,7 +175,7 @@ def decode {N owners cap : Nat} (howners : 0 < owners) (hcap : 0 < cap)
     ⟨min (cap - 1) (s.n i.val - 1), by omega⟩)
 
 def endpointParams (cap : Nat) (enabled : Bool) : Params :=
-  { Nmax := cap, g := 0, θ := cap - 1, p := 3, q := 2, fortify := enabled }
+  { Nmax := cap, g := 0, θ := cap - 1, fortify := enabled }
 
 /-- The author's indexed step on the paper's full finite product at zero growth. -/
 def indexedStep {N owners cap : Nat} (howners : 0 < owners) (hcap : 0 < cap)
@@ -195,27 +183,6 @@ def indexedStep {N owners cap : Nat} (howners : 0 < owners) (hcap : 0 < cap)
     Config (Fin N) owners cap → Config (Fin N) owners cap :=
   fun x => decode howners hcap
     (step (completeBoard N) (endpointParams cap enabled) priority bat (encode x))
-
-def probeX : Config (Fin 2) 2 3 :=
-  fun i => if i = 0 then (0, 2) else (1, 0)
-
-def probeY : Config (Fin 2) 2 3 := fun _ => (0, 0)
-
-/-- On the legal two-cell board both flags give the same exhibited collision. -/
-theorem probe (enabled : Bool) :
-    probeX ≠ probeY ∧
-    indexedStep (by decide) (by decide) id enabled
-      (detBat (endpointParams 3 enabled)) probeX = probeY ∧
-    indexedStep (by decide) (by decide) id enabled
-      (detBat (endpointParams 3 enabled)) probeY = probeY := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro h
-    have h0 := congrFun h 0
-    change ((0, 2) : Fin 2 × Fin 3) = (0, 0) at h0
-    exact (by decide : ((0, 2) : Fin 2 × Fin 3) ≠ (0, 0)) h0
-  all_goals
-    cases enabled <;> funext i <;>
-      refine Fin.cases ?_ (fun j => Fin.cases ?_ (fun k => Fin.elim0 k) j) i <;> decide
 
 /-! The list-membership and homogeneous-state lemmas are from Prop4, Prop6 and Prop3. -/
 
@@ -303,7 +270,7 @@ private theorem argmaxBy_mem (key : Nat → Nat × Nat) : ∀ (l : List Nat) (x 
       · cases h; exact List.mem_cons_of_mem _ (argmaxBy_mem key js _ hk)
 
 /-- Adjacency lists without repetitions and with cells below N. -/
-def WF (B : Board) : Prop := ∀ k, k < B.N → (B.nbr k).Nodup ∧ ∀ j ∈ B.nbr k, j < B.N
+private def WF (B : Board) : Prop := ∀ k, k < B.N → (B.nbr k).Nodup ∧ ∀ j ∈ B.nbr k, j < B.N
 
 private def Symm (B : Board) : Prop := ∀ i j, j ∈ B.nbr i → i ∈ B.nbr j
 
@@ -411,7 +378,7 @@ private theorem single_attack (hB : WF B) (hs : Symm B) (a : State) (u v : Nat) 
 end
 
 /-- Faction 1 at v, faction 0 elsewhere; m units at u, d0 at v, one elsewhere. -/
-def edgeState (u v m d0 : Nat) : State :=
+private def edgeState (u v m d0 : Nat) : State :=
   { o := fun x => if x = v then 1 else 0
     n := fun x => if x = u then m else if x = v then d0 else 1 }
 
@@ -490,12 +457,6 @@ private theorem real_endpoint_battle (cap : Nat) (hcap : 3 ≤ cap)
   simpa only [realDetBat, Nat.cast_one, ite_eq_left hwin, hceil, Prod.mk.injEq,
     true_and] using (show max 1 (cap - 1 - 1) = cap - 2 by omega)
 
-private theorem rational_endpoint_battle (cap : Nat) (hcap : 3 ≤ cap) (enabled : Bool)
-    (i j : Nat) : detBat (endpointParams cap enabled) i j (cap - 1) 1 = (true, cap - 2) := by
-  have hwin : 2 < 3 * (cap - 1) := by omega
-  simp [detBat, endpointParams, hwin, ceilDiv]
-  omega
-
 private theorem accepted_endpoint (B : Board) (cap : Nat) (enabled : Bool)
     (prio : Nat → Nat) (s : State) (hvalid : ∀ i, 1 ≤ s.n i) (hbound : ∀ i, s.n i ≤ cap)
     {i j : Nat} (h : accepted B (endpointParams cap enabled) prio s j = some i) :
@@ -509,19 +470,6 @@ private theorem accepted_endpoint (B : Board) (cap : Nat) (enabled : Bool)
   have hj := hvalid j
   have hj1 : s.n j = 1 := by omega
   exact ⟨by omega, by simp [hj1]⟩
-
-private theorem resolve_endpoint_congr (B : Board) (cap : Nat) (enabled : Bool)
-    (prio : Nat → Nat) (s : State) (hvalid : ∀ i, 1 ≤ s.n i) (hbound : ∀ i, s.n i ≤ cap)
-    (a b : Bat) (hbat : ∀ i j, a i j (cap - 1) 1 = b i j (cap - 1) 1) :
-    resolve B (endpointParams cap enabled) prio a s =
-      resolve B (endpointParams cap enabled) prio b s := by
-  simp only [resolve, State.mk.injEq]
-  constructor <;> funext j <;> split
-  all_goals try rfl
-  all_goals
-    rename_i i ha
-    obtain ⟨hforce, hdefence⟩ := accepted_endpoint B cap enabled prio s hvalid hbound ha
-    simp only [hforce, hdefence, hbat i j]
 
 private theorem encode_legal {N owners cap : Nat} (hp : 0 < owners) (hm : 0 < cap)
     (x : Config (Fin N) owners cap) (i : Nat) :
@@ -562,42 +510,31 @@ private theorem decode_at {N owners cap : Nat} (hp : 0 < owners) (hm : 0 < cap)
   simp only [decode, Prod.mk.injEq]
   omega
 
-/-- The on-board values recovered after a real step are the raw output values.
-In particular the finite constructors never clip the raw output of a legal input. -/
-theorem indexed_real_step_values {N owners cap : Nat} (hp : 0 < owners) (hcap : 3 ≤ cap)
+/-- On legal endpoint inputs the complete-board step reduces to battle resolution. -/
+private theorem step_eq_resolve (N owners cap : Nat) (hcap : 3 ≤ cap)
+    (prio : Nat → Nat) (enabled : Bool) (ρ : ℝ) (hρ : 1 ≤ ρ)
+    (s : State) (hs : ∀ i, s.o i < owners ∧ 1 ≤ s.n i ∧ s.n i ≤ cap) :
+    step (completeBoard N) (endpointParams cap enabled) prio (realDetBat ρ) s =
+      resolve (completeBoard N) (endpointParams cap enabled) prio (realDetBat ρ) s := by
+  have hr := resolve_endpoint_legal (completeBoard N) owners cap hcap enabled prio _
+    (real_endpoint_battle cap hcap ρ hρ) s hs
+  unfold step
+  rw [grow_zero _ cap enabled (fun i => (hs i).2.2)]
+  exact fortify_complete N cap enabled prio _ (fun i => (hr i).2.2)
+
+/-- Decoding a legal real step on the complete board preserves its raw output values. -/
+private theorem indexed_real_step_values {N owners cap : Nat} (hp : 0 < owners) (hcap : 3 ≤ cap)
     (prio : Nat → Nat) (enabled : Bool) (ρ : ℝ) (hρ : 1 ≤ ρ)
     (x : Config (Fin N) owners cap) (i : Fin N) :
     let y := indexedStep hp (by omega) prio enabled (realDetBat ρ) x
     let s := step (completeBoard N) (endpointParams cap enabled) prio (realDetBat ρ) (encode x)
     ((y i).1.val, (y i).2.val + 1) = (s.o i, s.n i) := by
   have hs := encode_legal hp (by omega) x
-  let r := resolve (completeBoard N) (endpointParams cap enabled) prio (realDetBat ρ) (encode x)
   have hr := resolve_endpoint_legal (completeBoard N) owners cap hcap enabled prio _
-    (real_endpoint_battle cap hcap ρ hρ) (encode x) hs
-  have heq :
-      step (completeBoard N) (endpointParams cap enabled) prio (realDetBat ρ) (encode x) = r := by
-    unfold step
-    rw [grow_zero _ cap enabled (fun i => (hs i).2.2)]
-    exact fortify_complete N cap enabled prio r (fun i => (hr i).2.2)
+    (real_endpoint_battle cap hcap ρ hρ) (encode x) hs i
   change ((decode hp (by omega) _ i).1.val, (decode hp (by omega) _ i).2.val + 1) = _
-  rw [heq]
-  exact decode_at hp (by omega) r i (hr i).1 (hr i).2.1 (hr i).2.2
-
-/-- On every legal indexed input, the real step agrees with the fixed rational step. -/
-theorem indexed_real_eq_rational {N owners cap : Nat} (hp : 0 < owners) (hcap : 3 ≤ cap)
-    (prio : Nat → Nat) (enabled : Bool) (ρ : ℝ) (hρ : 1 ≤ ρ) (x : Config (Fin N) owners cap) :
-    indexedStep hp (by omega) prio enabled (realDetBat ρ) x =
-    indexedStep hp (by omega) prio enabled (detBat (endpointParams cap enabled)) x := by
-  let B := completeBoard N
-  let K := endpointParams cap enabled
-  have hs := encode_legal hp (by omega) x
-  have heq := resolve_endpoint_congr B cap enabled prio (encode x)
-    (fun i => (hs i).2.1) (fun i => (hs i).2.2)
-    (realDetBat ρ) (detBat K) (fun i j =>
-      (real_endpoint_battle cap hcap ρ hρ i j).trans
-        (rational_endpoint_battle cap hcap enabled i j).symm)
-  unfold indexedStep step
-  rw [grow_zero _ cap enabled (fun i => (hs i).2.2), heq]
+  rw [step_eq_resolve N owners cap hcap prio enabled ρ hρ (encode x) hs]
+  exact decode_at hp (by omega) _ i hr.1 hr.2.1 hr.2.2
 
 private theorem encode_decode {N owners cap : Nat} (hp : 0 < owners) (hm : 0 < cap)
     (s : State) (hs : ∀ i, s.o i < owners ∧ 1 ≤ s.n i ∧ s.n i ≤ cap)
@@ -666,10 +603,6 @@ private theorem indexed_collision {N owners cap : Nat} (hN : 2 ≤ N)
     rw [hbat] at h
     by_cases hi1 : i = 1 <;> by_cases hi0 : i = 0 <;>
       simp_all [x, y, edgeState]
-  let r := resolve B K prio bat x
-  have hr : ∀ i, r.n i ≤ cap := fun i =>
-    (resolve_endpoint_legal B owners cap hm enabled prio bat
-      (real_endpoint_battle cap hm ρ hρ) x hx i).2.2
   refine ⟨dx, dy, ?_, ?_, ?_⟩
   · intro h
     have hxy := congrArg encode h
@@ -677,27 +610,19 @@ private theorem indexed_collision {N owners cap : Nat} (hN : 2 ≤ N)
     have h0 := congrArg (fun s : State => s.n 0) hxy
     simp [x, y, edgeState] at h0
     omega
-  · change decode (by omega) (by omega) (step B K prio bat (encode dx)) = dy
-    rw [hex]
-    unfold step
-    rw [grow_zero _ cap enabled (fun i => (hx i).2.2), fortify_complete N cap enabled prio r hr]
-    funext i
+  · funext i
+    have hstep := indexed_real_step_values (by omega) hm prio enabled ρ hρ dx i
+    change (_, _) = ((step B K prio bat (encode dx)).o i,
+      (step B K prio bat (encode dx)).n i) at hstep
+    rw [hex, step_eq_resolve N owners cap hm prio enabled ρ hρ x hx] at hstep
     obtain ⟨ho, hn⟩ := hres i i.isLt
-    simp [dy, decode, r, ho, hn]
+    have hdy := decode_at (by omega) (by omega) y i (hy i).1 (hy i).2.1 (hy i).2.2
+    have h := (hstep.trans (Prod.ext ho hn)).trans hdy.symm
+    exact Prod.ext (Fin.ext (congrArg Prod.fst h))
+      (Fin.ext (Nat.add_right_cancel (congrArg Prod.snd h)))
   · change decode (by omega) (by omega) (step B K prio bat (encode dy)) = dy
     rw [hey, prop4a_homogeneous B K prio bat y 0 (fun _ => rfl),
       grow_zero _ cap enabled (fun i => (hy i).2.2)]
-
-/-- The indexer's neighbour relation is the pullback of the complete simple graph. -/
-theorem completeBoard_adj {V : Type*} {N : Nat} (e : V ≃ Fin N) (i j : V) :
-    (e j).val ∈ (completeBoard N).nbr (e i).val ↔ (⊤ : SimpleGraph V).Adj i j := by
-  rw [mem_completeBoard, SimpleGraph.top_adj]
-  simp only [(e i).isLt, (e j).isLt, true_and]
-  constructor
-  · intro h heq
-    exact h (congrArg (fun v => (e v).val) heq.symm)
-  · intro h heq
-    exact h (e.injective (Fin.ext heq.symm))
 
 /-- The indexer's rank is the index of the image under the paper's priority permutation. -/
 private def indexedPriority {V : Type*} {N : Nat} (e : V ≃ Fin N)
@@ -751,26 +676,5 @@ theorem paper_noninjective {V : Type*} [Fintype V] (hV : 2 ≤ Fintype.card V)
   obtain ⟨x, y, hne, hx, hy⟩ :=
     paper_collision_fixed_image hV hp hm priority enabled ρ hρ₁.le
   exact ⟨x, y, hne, hx.trans hy.symm⟩
-
-/-- The exact rational probe is also a check of the real step at ρ = 3/2. -/
-theorem real_probe (enabled : Bool) :
-    probeX ≠ probeY ∧
-    indexedStep (by decide) (by decide) id enabled (realDetBat (3 / 2)) probeX = probeY ∧
-    indexedStep (by decide) (by decide) id enabled (realDetBat (3 / 2)) probeY = probeY := by
-  have hρ : (1 : ℝ) ≤ 3 / 2 := (le_div_iff₀ (by exact zero_lt_two)).2 (by
-    rw [one_mul]
-    exact_mod_cast (by decide : (2 : Nat) ≤ 3))
-  obtain ⟨hne, hx, hy⟩ := probe enabled
-  exact ⟨hne,
-    (indexed_real_eq_rational _ (by decide) id enabled _ hρ probeX).trans hx,
-    (indexed_real_eq_rational _ (by decide) id enabled _ hρ probeY).trans hy⟩
-
-#print axioms completeBoard_adj
-#print axioms probe
-#print axioms real_probe
-#print axioms indexed_real_step_values
-#print axioms indexed_real_eq_rational
-#print axioms paper_collision_fixed_image
-#print axioms paper_noninjective
 
 end D5.S3.StatisticalMechanics.CellularAutomata.RiskCAEndpoint
