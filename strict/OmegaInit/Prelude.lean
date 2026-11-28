@@ -733,6 +733,12 @@ port_definition List.beq._f
 port_definition List.beq
 port_structural_code List.beq on_arg 3
 port_definition List.hasDecEq.go.match_3
+port_definition PLift.noConfusionType
+port_definition PLift.noConfusion
+port_definition PLift.up.noConfusion
+port_definition ULift.noConfusionType
+port_definition ULift.noConfusion
+port_definition ULift.up.noConfusion
 port_definition List.noConfusionType
 port_definition List.noConfusion
 port_definition List.hasDecEq.go.match_1

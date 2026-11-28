@@ -20,6 +20,8 @@ namespace Omega
 end Omega
 
 port_prop_record Iff
+port_prop_record Subsingleton
+port_proof Subsingleton.elim
 
 namespace Omega
 

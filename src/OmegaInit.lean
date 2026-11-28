@@ -30,10 +30,12 @@ public import OmegaInit.Data.Option.Basic
 public import OmegaInit.Data.Option.Lemmas
 public import OmegaInit.Data.Option.Monadic
 public import OmegaInit.Data.Ord.Basic
+public import OmegaInit.Data.PLift
 public import OmegaInit.Data.String.Decode
 public import OmegaInit.Data.String.Slice
 public import OmegaInit.Data.Sum.Basic
 public import OmegaInit.Data.Sum.Lemmas
+public import OmegaInit.Data.ULift
 public import OmegaInit.Ext
 public import OmegaInit.Grind.Lemmas
 public import OmegaInit.Grind.Norm
