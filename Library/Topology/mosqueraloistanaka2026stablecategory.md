@@ -50,6 +50,7 @@ strata_touched:
   - D5/S3/Topology/StableCategory/ProductRigidCores
   - D5/S3/Topology/StableCategory/ProductStableCover
   - D5/S3/Topology/StableCategory/ProductStableLower
+  - D5/S3/Topology/StableCategory/DisjointCoverObstruction
 license: citation-only
 triage: anchor
 ---
@@ -1267,3 +1268,19 @@ This determines ((\operatorname{cat}_w,\operatorname{cat}_s,
 in Question 6.3 remains open.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
 [Strong homotopy types, nerves and collapses](https://arxiv.org/abs/0907.2954)
+
+## A categorical cover transport obstruction at every ordinary depth
+
+In a four-dimensional complex obtained by adding one simplex and its free
+tetrahedral facet, the retained first subdivision has a disjoint vertex
+partition into two induced categorical regions. Either assignment of the new
+chamber barycentre forces a six-edge cycle in the chosen region. A retraction
+projects that cycle to a subdivided two-dimensional complex in which two
+original cycle vertices stay fixed throughout every contiguity chain.
+
+The same witness subdivides through every later ordinary depth. For either
+colour, any full region containing its retained part and all exterior vertices
+contains that subdivided witness. Thus any full categorical two-cover
+containing the inherited regions must distribute the exterior between its
+pieces. The arbitrary contractible four-complex case of Question 6.3 remains
+open. [Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
