@@ -133,6 +133,10 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
       else ``OmegaChecks.InitBoundaries.ArrayCasts.mapIndexed
     return ("False", witness,
       "On Array Unit with word length zero and a callback returning none : Option Empty, the zero-step exit returns some output of the original natural length")
+  if owner == `Init.Data.List.Control && name == ``List.findM?_eq_findSomeM? then
+    return ((``OmegaChecks.InitBoundaries.MonadicTraversal.SingletonSearch.PredicateFusion).toString,
+      ``OmegaChecks.InitBoundaries.MonadicTraversal.SingletonSearch.predicateOfList,
+      "On the singleton Unit list the Boolean reader branches directly in findM? and through an Option in findSomeM?")
   if owner == `Init.Data.List.ToArray || owner == `Init.Data.Array.Lemmas then
     let entry := match owner, name with
       | `Init.Data.List.ToArray, ``List.findM?_toArray

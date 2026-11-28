@@ -192,6 +192,22 @@ def BoolFusion : Prop := finish (boolStep readBool) = boolResult readBool
 /-- The two singleton option searches as complete reader functions. -/
 def OptionFusion : Prop := finish (optionStep readOption) = optionResult readOption
 
+private def taggedPredicate : ReaderM Bool (Option Unit) := do
+  let tagged ← (do return if (← readBool) then some () else none)
+  match tagged with
+  | some a => return some a
+  | none => return none
+
+/-- On a singleton, the conversion equates the direct Boolean branch with an
+option branch on the tagged result of that same predicate. -/
+def PredicateFusion : Prop := boolResult readBool = taggedPredicate
+
+example (b : Bool) : boolResult readBool b = taggedPredicate b := by cases b <;> rfl
+
+theorem predicateOfList (rule : type_of% @List.findM?_eq_findSomeM?.{0}) : PredicateFusion := by
+  letI := lawful Bool
+  with_unfolding_all exact rule (m := ReaderM Bool) (p := fun _ : Unit => readBool) (as := [()])
+
 def BoolSingleton := ∀ {m : Type → Type} [Monad m] [LawfulMonad m] (p : m Bool),
   finish (boolStep p) = boolResult p
 def OptionSingleton := ∀ {m : Type → Type} [Monad m] [LawfulMonad m] (p : m (Option Bool)),
@@ -223,12 +239,12 @@ example (v : Option Bool) : finish (optionStep readOption) v = optionResult read
 
 run_cmd
   let env ← getEnv
-  for name in [``BoolFusion, ``OptionFusion] do
+  for name in [``BoolFusion, ``OptionFusion, ``PredicateFusion] do
     let some (.defnInfo law) := env.find? name | throwError "missing singleton search law {name}"
     let some (_, left, right) := law.value.eq? | throwError "expected an equality in {name}"
     if Kernel.isDefEqGuarded env {} left right then
       throwError "the two readers in {name} are now definitionally equal"
-  for witness in [``boolOfSingleton, ``optionOfSingleton] do
+  for witness in [``boolOfSingleton, ``optionOfSingleton, ``predicateOfList] do
     unless (← collectAxioms witness).isEmpty do throwError "singleton search witness {witness} uses axioms"
 
 end SingletonSearch

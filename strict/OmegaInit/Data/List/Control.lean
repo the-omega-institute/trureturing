@@ -42,3 +42,7 @@ port_structural_code List.findSomeM? on_arg 6
 port_definition List.findSomeM?_cons.match_1 with_native_code
 port_proof List.findSomeM?_nil by_reflexivity
 port_proof List.findSomeM?_cons by_reflexivity
+
+/- Open: the pinned proof of List.findM?_eq_findSomeM? uses bind_map_left and
+function extensionality. Even on [()] its statement equates the reader that branches directly on the Boolean
+with the reader that first tags the result with Option. -/
