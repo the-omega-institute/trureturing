@@ -162,6 +162,14 @@ public import D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing
 public import D5.S3.Quantum.Subentropy.GaussianMatrix
 public import D5.S3.Quantum.Subentropy.GaussianQuadratic
 public import D5.S3.StatisticalMechanics.RandomWalks.RenewalMinorantMaximalityRefutation
+public import Mathlib.Probability.Distributions.Exponential
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.PolarCoord
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.NumberTheory.Harmonic.GammaDeriv
+public import Mathlib.MeasureTheory.Integral.Gamma
 
 /-! Conditional subentropy is at most the guessing min-entropy of a finite c-q state. -/
 
