@@ -2,6 +2,7 @@ module
 public import Init.Grind.FieldNormNum
 public import OmegaChecks.InitInventory.KripkeModels
 import all OmegaChecks.InitInventory.KripkeModels
+import OmegaChecks.InitPort.StrictReplay
 import Init.GrindInstances
 public import Lean
 import all Lean.Util.CollectAxioms
@@ -21,8 +22,9 @@ official operations.
 The finite two-world interpretation checks the same residue operations directly.
 Its root uses equality modulo eight and its leaf uses equality of parities.
 It computes failures of the inverse product, inverse negation, zero product, zero
-power and nested division formulas at the root. Each finite-stage witness has an
-empty axiom closure.
+power and nested division formulas at the root. The rational normalization cases
+use the pinned inverse, quotient and integer power on rationals. The complete
+strict inventory replays all these witnesses with the published rational operations.
 -/
 
 open Lean.Grind
@@ -423,12 +425,50 @@ theorem powerAndDivisionCounterexamples :
   unfold equalAt
   decide
 
+/-- Interpret the pinned `NormNum.ofRat` formula by dividing the two residue casts. -/
+@[expose] def ratResidue (a : Rat) := divideAt (intResidue a.num) (natResidue a.den)
+
+/-- Counterexamples to `NormNum.ofRat_inv` and `NormNum.inv_eq` at two thirds. -/
+theorem rationalInverseCounterexamples :
+    ¬equalAt (ratResidue twoThirds⁻¹) (valInv (ratResidue twoThirds)) false ∧
+    (threeHalves == twoThirds⁻¹) = true ∧
+      ¬equalAt (valInv (ratResidue twoThirds)) (ratResidue threeHalves) false := by
+  unfold equalAt
+  decide +kernel
+
+/-- `NormNum.ofRat_div'` fails at one divided by three halves, with both nonzero tests forced. -/
+theorem rationalDivisionCounterexample :
+    TwoWorlds.neg (equalAt (natResidue (1 : Rat).den) (natResidue 0)) false ∧
+    TwoWorlds.neg (equalAt (intResidue threeHalves.num) (natResidue 0)) false ∧
+    ¬equalAt (ratResidue (1 / threeHalves)) (divideAt (ratResidue 1) (ratResidue threeHalves)) false := by
+  refine ⟨(rootApart ..).mpr (by decide), (rootApart ..).mpr (by decide), ?_⟩
+  unfold equalAt
+  decide +kernel
+
+/-- `NormNum.ofRat_zpow'` fails at two thirds raised to negative one, with its denominator apart from zero. -/
+theorem rationalPowerCounterexample :
+    TwoWorlds.neg (equalAt (natResidue twoThirds.den) (natResidue 0)) false ∧
+    ¬equalAt (ratResidue (twoThirds ^ (-1 : Int))) (intPower (ratResidue twoThirds) (-1)) false := by
+  refine ⟨(rootApart ..).mpr (by decide), ?_⟩
+  unfold equalAt
+  decide +kernel
+
 run_cmd
   for witness in #[``rootApart, ``persists, ``ringLaws, ``operations, ``cancel, ``inverseLaws,
       ``powerLaws, ``powerRespectsParity, ``residueRing, ``fieldLaws, ``counterexamples,
       ``powerAndDivisionCounterexamples] do
     unless (← Lean.collectAxioms witness).isEmpty do
       throwError "finite residue model {witness} uses an axiom"
+
+/-- Recheck the algebra and all ten root counterexamples with the published strict operations. -/
+def replay (source strict : Lean.Environment) : IO Unit := do
+  let mut kernel := strict.toKernelEnv
+  let roots := #[``residueRing, ``fieldLaws, ``operations, ``powerRespectsParity, ``counterexamples,
+    ``powerAndDivisionCounterexamples, ``rationalInverseCounterexamples, ``rationalDivisionCounterexample,
+    ``rationalPowerCounterexample]
+  for root in roots do
+    kernel ← OmegaChecks.InitPort.restoreEvidence source kernel root
+  discard <| OmegaChecks.InitPort.replayStrict kernel (roots.map InitKernelPort.portName)
 
 end
 end FiniteStages

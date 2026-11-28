@@ -19,6 +19,8 @@ meta import OmegaChecks.InitPort.EffectRun
 import Lean.Compiler.LCNF.PhaseExt
 import OmegaChecks.InitInventory.Conditional
 meta import OmegaChecks.InitInventory.Conditional
+import OmegaChecks.InitInventory.FieldNormalization
+meta import OmegaChecks.InitInventory.FieldNormalization
 meta import OmegaChecks.InitInventory.ChoiceOperands
 import OmegaChecks.InitInventory.Quotient
 import OmegaChecks.InitInventory.RefinedQuotient
@@ -948,7 +950,8 @@ def main (args : List String) : IO Unit := do
   let witnesses ← importModules #[
     {module := `OmegaChecks.InitInventory.ChoiceOperands}, {module := `OmegaChecks.InitInventory.Quotient},
     {module := `OmegaChecks.InitInventory.RefinedQuotient}, {module := `OmegaChecks.InitInventory.StateFactory},
-    {module := `OmegaChecks.InitInventory.ByteArrayReads}] {} (level := .private)
+    {module := `OmegaChecks.InitInventory.ByteArrayReads},
+    {module := `OmegaChecks.InitInventory.FieldNormalization}] {} (level := .private)
   let lib ← getLibDir sysroot
   searchPathRef.set [lib]
   let modules ← installedModules lib `Init
@@ -965,6 +968,8 @@ def main (args : List String) : IO Unit := do
   let strictImports := basis.map fun mod => {module := mod : Import}
   let strict ← importModules strictImports {} (level := .exported)
   let full ← importModules strictImports {} (level := .private)
+  if basis.contains `OmegaInit then
+    OmegaChecks.InitBoundaries.FieldNormalization.FiniteStages.replay witnesses full
   for owner in strict.allImportedModuleNames do
     unless owner.getRoot == `OmegaInit do
       throw <| IO.userError s!"expected a strict OmegaInit build, found import {owner}"
