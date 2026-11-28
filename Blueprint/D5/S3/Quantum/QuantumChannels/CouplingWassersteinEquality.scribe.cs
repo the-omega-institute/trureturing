@@ -31,7 +31,10 @@ internal sealed class CouplingWassersteinEqualityDocument : IScribeDocumentDefin
                     Paragraph(Text("Proposition 16 establishes finite attainment in the paper. Here the two marginal matrices and the cost form a joint moment. Finite partial sums with leftover mass on a fixed pure pair put every countable plan moment in the closed convex hull of the pure-pair moment set. The moment set and its finite-dimensional convex hull are compact. The spectral product plan makes the fixed-marginal slice nonempty. Minimizing its cost coordinate and enumerating the resulting finite convex combination gives an optimizer for the original infimum.")),
                     Paragraph(Text("For necessity, use the Hermitian sign of the difference in a finite optimizer. Group the stationary entries into the same positive semidefinite sum R in both marginals. Reindex the remaining positive-weight entries by Fin m. Each moving pair has parameter equal to its ground distance and has the stated swapped amplitudes in the strict spectral subspaces.")),
                     Paragraph(Text("For sufficiency, assign the nonnegative eigenvalues of R as weights of stationary pairs, then add the specified moving pairs. The extremal eigenspaces of the sign are orthogonal. This gives unit vectors in the two displayed projectors and gives ground distance t for each moving pair. Taking the trace of a marginal gives total weight one. Every positive-weight entry attains the sign test, so the countable-plan infimum equals half the trace norm. For equal marginals one can take m equal to zero and R equal to the common matrix."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("beatty-stilck-franca-2024-eq62-trace-ground"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);

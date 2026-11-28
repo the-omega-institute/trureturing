@@ -22,6 +22,10 @@ $$\forall n: \mathbb{N}, \forall \rho: \operatorname{Matrix}\left(\operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/CouplingWassersteinEquality.wasserstein_eq_traceNorm_iff` (`✓ std3`). ∎
 
+*Resolves.* `Problems/beatty-stilck-franca-2024-eq62-trace-ground` (proved) by `D5/S3/Quantum/QuantumChannels/CouplingWassersteinEquality.wasserstein_eq_traceNorm_iff`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"beatty-stilck-franca-2024-eq62-trace-ground","declaration_gid":"D5/S3/Quantum/QuantumChannels/CouplingWassersteinEquality.wasserstein_eq_traceNorm_iff","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* E. Beatty; D. Stilck França (2025). *Order p quantum Wasserstein distances from couplings*. DOI: [10.1007/s00023-025-01557-z](https://doi.org/10.1007/s00023-025-01557-z). URL: <https://arxiv.org/abs/2402.16477v2>.
