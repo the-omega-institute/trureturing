@@ -35,6 +35,17 @@ private def installCompiledCode (compiled : Environment) (name : Name) : CoreM U
     if isDeclPublic compiled n then modifyEnv (setDeclPublic · n)
     modifyEnv (recordFinalImpureDecl · n)
 
+private def compileStructuralEquation (name : Name) (tmp : DefinitionVal) : CoreM Unit := do
+  -- Lean uses this reserved name for executable recursive equations. The safe one-step
+  -- definition can call the already checked total function. Its environment is disposable.
+  let compiled ← withoutModifyingEnv do
+    modifyEnv (noncomputableExt.modifyState · (·.erase name))
+    Lean.addDecl (.defnDecl tmp) (forceExpose := true)
+    withOptions (fun o => (Elab.async.set o false).setBool `compiler.postponeCompile false) do
+      Lean.compileDecls #[name] (logErrors := true)
+    return ← getEnv
+  installCompiledCode compiled name
+
 @[command_parser, builtin_command_parser] def quotientInterfaces := leading_parser "port_quotient_interfaces"
 @[builtin_command_elab quotientInterfaces] def elabQuotientInterfaces : CommandElab := fun _ => do
   unless (← getMainModule) == `OmegaInit.Prelude do throwError "expected OmegaInit.Prelude"
@@ -151,13 +162,14 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
 
 /-- Use a checked constructive implementation of an official theorem or definition. -/
 @[command_parser, builtin_command_parser] def portAlternativeProof := leading_parser
-  ("port_alternative_proof " <|> "port_alternative_definition ") >> ident >> " from " >> ident
+  ("port_alternative_proof " <|> "port_alternative_definition ") >> ident >> " from " >> ident >> optional " with_recursor_code"
 
 @[builtin_command_elab portAlternativeProof] def elabPortAlternativeProof : CommandElab := fun stx => do
   let (src, info) ← officialDeclaration stx[1]
   let scope := `OmegaChecks.InitPort.Alternatives
   let owner := stx[3].getId
   let isProof := stx[0].getAtomVal == "port_alternative_proof"
+  if isProof && !stx[4].isNone then throwError "recursor code requires a definition"
   unless scope.isPrefixOf owner && info.isTheorem == isProof do throwError "unexpected alternative kind or module"
   let model ← importModules #[{module := owner}] {} (level := .private)
   let name := scope ++ info.name
@@ -183,10 +195,16 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
       withExporting <| Lean.addDecl (.thmDecl {info.toConstantVal with name := target, type, value, all := [target]})
     else
       let .defnInfo original := info | throwError "expected a safe definition"
-      withoutExporting <| Lean.addDecl (.defnDecl {original with name := target, type, value, all := [target]})
+      let d := {original with name := target, type, value, all := [target]}
+      withoutExporting <| Lean.addDecl (.defnDecl d)
       setReducibilityStatus target .irreducible
-      withExporting <| withOptions (fun o => Elab.async.set o false) do
-        Lean.compileDecls #[target] (logErrors := true)
+      withExporting do
+        if stx[4].isNone then
+          withOptions (fun o => Elab.async.set o false) do Lean.compileDecls #[target] (logErrors := true)
+        else
+          let body ← Meta.MetaM.run' <| directRecursorEquation d
+          let name := Compiler.mkUnsafeRecName target
+          compileStructuralEquation target {d with name, all := [name], value := body, safety := .safe}
     if isProtected src info.name then modifyEnv (addProtected · target)
 
 @[command_parser, builtin_command_parser] def portCompilerMarkers := leading_parser "port_compiler_markers"
@@ -414,13 +432,5 @@ open Compiler.LCNF in
     let some pos := stx[4].isNatLit? | throwErrorAt stx[4] "expected a structural argument position"
     if pos == 0 then throwErrorAt stx[4] "argument positions start at one"
     Meta.MetaM.run' <| checkConstructorEquations name tmp.levelParams tmp.type body (pos - 1)
-    -- Lean uses this reserved name for executable recursive equations. The safe one-step
-    -- definition can call the already checked total function. Its environment is disposable.
-    let compiled ← withoutModifyingEnv do
-      modifyEnv (noncomputableExt.modifyState · (·.erase name))
-      Lean.addDecl (.defnDecl tmp) (forceExpose := true)
-      withOptions (fun o => (Elab.async.set o false).setBool `compiler.postponeCompile false) do
-        Lean.compileDecls #[name] (logErrors := true)
-      return ← getEnv
-    installCompiledCode compiled name
+    compileStructuralEquation name tmp
 end OmegaChecks.InitCompiler

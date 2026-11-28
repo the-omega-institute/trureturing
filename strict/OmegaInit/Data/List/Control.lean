@@ -61,15 +61,12 @@ port_definition List.firstM._f
 port_definition List.firstM
 port_structural_code List.firstM on_arg 6
 port_definition List.anyM._f
-port_definition List.anyM
-port_structural_code List.anyM on_arg 5
+port_alternative_definition List.anyM from OmegaChecks.InitPort.Alternatives.BoolSearch with_recursor_code
 port_definition List.allM._f
-port_definition List.allM
-port_structural_code List.allM on_arg 5
+port_alternative_definition List.allM from OmegaChecks.InitPort.Alternatives.BoolSearch with_recursor_code
 
 port_definition List.findM?._f
-port_definition List.findM?
-port_structural_code List.findM? on_arg 5
+port_alternative_definition List.findM? from OmegaChecks.InitPort.Alternatives.BoolSearch with_recursor_code
 port_definition List.findSomeM?._f
 port_definition List.findSomeM?
 port_structural_code List.findSomeM? on_arg 6

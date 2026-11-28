@@ -87,4 +87,30 @@ public def checkConstructorEquations (name : Name) (levelParams : List Name) (ty
           break
       unless matchesField do throwError "recursive equation does not match {name} at {ctorName}"
 
+/-- Specialize each kernel recursor rule to the actual branches before compiling.
+The recursive call then stays inside its original continuation for short-circuiting folds. -/
+public def directRecursorEquation (d : DefinitionVal) : MetaM Expr :=
+  Meta.forallTelescope d.type fun params _ => do
+    let rhs := d.value.beta params
+    let .const recName levels := rhs.getAppFn | throwError "expected a recursor application"
+    let .recInfo r ← getConstInfo recName | throwError "expected a recursor"
+    let indName := r.getMajorInduct
+    let .inductInfo ind ← getConstInfo indName | throwError "expected an inductive"
+    let args := rhs.getAppArgs
+    unless r.numIndices == 0 && r.numMotives == 1 && !ind.isNested && ind.all == [indName] &&
+        recName == indName ++ `rec && r.rules.map (·.ctor) == ind.ctors &&
+        args.size == r.getMajorIdx + 1 && !params.isEmpty && params.back! == args.back! do
+      throwError "expected a single unindexed family on the final argument"
+    let original := rhs.appFn!
+    let self := mkAppN (mkConst d.name (d.levelParams.map Level.param)) params.pop
+    let mut cases := mkAppN (mkConst (indName ++ `casesOn) levels)
+      (args[:r.getFirstMinorIdx].toArray.push args.back!)
+    for rule in r.rules do
+      let equation := (rule.rhs.instantiateLevelParams r.levelParams levels).beta args.pop
+      let branch := equation.replace fun e => if e == original then some self else none
+      cases := mkApp cases (← Core.betaReduce branch)
+    let body ← Meta.mkLambdaFVars params cases
+    OmegaChecks.InitCompiler.checkConstructorEquations d.name d.levelParams d.type body (params.size - 1)
+    return body
+
 end OmegaChecks.InitCompiler

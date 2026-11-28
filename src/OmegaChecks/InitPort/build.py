@@ -447,6 +447,9 @@ def main():
                 run("lean", HERE / "consumers/ThunkExtConsumer.lean", env=hosted_env)
             if (hosted / "OmegaInit/Data/Erased.olean").is_file():
                 run("lean", HERE / "consumers/ErasedConsumer.lean", env=hosted_env)
+            search_modules = ("Data/Array/Lemmas", "Data/List/Monadic", "Data/Vector/Lemmas", "Internal/Order/Lemmas")
+            if not args.exclude and all((hosted / "OmegaInit" / (module + ".olean")).is_file() for module in search_modules):
+                run("lean", HERE / "consumers/ListSearchConsumer.lean", env=hosted_env)
             if (hosted / "OmegaInit/Data/List/Scan/Basic.olean").is_file():
                 run("lean", HERE / "consumers/ListScanConsumer.lean", env=hosted_env)
         product.rename(target)
