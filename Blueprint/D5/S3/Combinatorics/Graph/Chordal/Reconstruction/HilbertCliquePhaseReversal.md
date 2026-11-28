@@ -18,7 +18,21 @@ On a finite chordal graph whose cliques have at most four vertices, let skew gai
 
 Eliminate a simplicial vertex and put it back using the enclosing center of the earlier candidates. Center the three old residuals and the three triangle defects by their opposite means. Their sum gives the candidate edge energy. Contact weights control the variance using the total candidate energy and, when needed, a single short edge. Two rational polynomial certificates preserve the triangle invariant 23 over 5 while the new edge residuals stay below the stated bound.
 
-**Theorem 1.2 (Hilbert bound at clique number five).**
+**Theorem 1.2 (A single-interval Hilbert bound at clique number four).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.exists_cliqueFour_hilbert_gain_potential_zeroSplit`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.exists_cliqueFour_hilbert_gain_potential_zeroSplit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The same chordal graphs and real inner-product targets admit an edge error at most 13 over 10 times the triangle-defect budget.
+
+Use the same three-candidate center with triangle invariant 93 over 20. The numerator and quartic are nonnegative combinations of products of powers of the squared defect and its complement on the full unit interval.
+
+**Theorem 1.3 (Hilbert bound at clique number five).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.exists_cliqueFive_hilbert_gain_potential`
 
@@ -32,7 +46,7 @@ For every finite chordal graph with cliques of size at most five, skew gains in 
 
 Along reverse simplicial elimination, maintain triangle energy at most 329 over 50 and tetrahedron energy at most 621 over 50 after normalizing the budget. On a four-neighbor clique, the cycle projection has energy equal to one quarter of the total squared face holonomy. Removing that cycle component bounds the candidate diameter energy. The contact-weight estimate then improves the enclosing radius. For each new tetrahedron, the old triangle energy and the candidate face estimate preserve the invariant. A candidate inside the ball is included by adjusting the squared distances by its slack. Budget zero uses exact reconstruction.
 
-**Theorem 1.3 (The clique-four comparison).**
+**Theorem 1.4 (The clique-four comparison).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.hilbert_cliqueFour_phase_separation`
 
@@ -46,7 +60,7 @@ The uniform Hilbert coefficient is at least two over the square root of three an
 
 The lower estimate uses the regular-simplex family on chordal powers of finite paths of width three. The Hilbert upper estimate supplies an admissible uniform bound. The existing Banach lower estimate uses the same width. The exact coefficient one for nonzero real L1 at this cutoff is the previously frozen l1_clique_four_exact theorem.
 
-**Theorem 1.4 (The clique-five comparison).**
+**Theorem 1.5 (The clique-five comparison).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.hilbert_cliqueFive_phase_separation`
 
@@ -60,7 +74,21 @@ The uniform Hilbert coefficient is at most the square root of 10275 over 4576, s
 
 All finite powers of paths of width four meet the clique cutoff. Apply the existing even-width real L1 obstruction to the balanced-cut coordinate space on this family. The Hilbert upper bound gives the opposite order from the clique-four comparison.
 
-**Theorem 1.5 (The Euclidean plane bound).**
+**Theorem 1.6 (The Hilbert and real L1 coefficient reversal).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.realL1_hilbert_banach_phase_reversal`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.realL1_hilbert_banach_phase_reversal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At clique number four, the real L1 coefficient is one and the Hilbert coefficient is strictly larger. At clique number five, the Hilbert coefficient is strictly less than three halves, and three halves is a lower bound for the real L1 coefficient, which is at most the Banach coefficient.
+
+Every finite real L1 coordinate space is isometric to the L1 space of its counting measure, so the width-four lower bound survives in the uniform real L1 class. Real L1 spaces are Banach spaces. The clique-five group reconstruction gives a finite uniform upper bound for both classes.
+
+**Theorem 1.7 (The Euclidean plane bound).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.exists_euclideanPlane_gain_potential`
 
@@ -74,7 +102,7 @@ For every finite chordal graph and every skew Euclidean-plane gain with triangle
 
 For each scalar direction, the triangle estimate bounds each simple cycle by its length minus two. Shortest directed walk costs then give a scalar potential. Removing nonnegative closed subwalks reduces the minimum to finitely many paths, so the scalar potentials depend continuously on the direction. Averaging them with a rotationally invariant Gaussian weight recovers the vector gain in the plane and yields four over pi from the radial and absolute coordinate moments.
 
-**Theorem 1.6 (The three-dimensional Euclidean bound).**
+**Theorem 1.8 (The three-dimensional Euclidean bound).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.exists_euclideanSpaceThree_gain_potential`
 
@@ -92,9 +120,11 @@ The same continuous scalar potentials and rotational averaging reduce the estima
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.exists_cliqueFive_hilbert_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.exists_cliqueFour_hilbert_gain_potential`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.exists_cliqueFour_hilbert_gain_potential_zeroSplit`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.exists_euclideanPlane_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.exists_euclideanSpaceThree_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.hilbert_cliqueFive_phase_separation`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.hilbert_cliqueFour_phase_separation`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal.realL1_hilbert_banach_phase_reversal`
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata](ChordalBanachExactStrata.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/ThreeTreeBanachSharpBounds](../ThreeTreeBanachSharpBounds.md)
