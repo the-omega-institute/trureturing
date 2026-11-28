@@ -24,7 +24,7 @@ $$(\exists (a: R), a \neq 0) \land (\forall (e: R), \exists (a: R), e \cdot a \n
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Zachary Mesyan (2026). *Quantales Arising From Rings*. URL: <https://arxiv.org/abs/2611.31109v1>.
+*Acknowledgement.* Zachary Mesyan (2026). *Quantales Arising From Rings*. DOI: [10.48550/arXiv.2611.31109](https://doi.org/10.48550/arXiv.2611.31109). URL: <https://arxiv.org/abs/2611.31109v1>.
 
 *Commentary.*
 

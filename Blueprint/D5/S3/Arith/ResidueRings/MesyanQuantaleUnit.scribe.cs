@@ -29,7 +29,7 @@ internal sealed class MesyanQuantaleUnitDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Arith/ResidueRings/MesyanQuantaleUnit.finiteSupportSubring_properties"),
                 H("Identity laws for the prime-residue direct sum"),
                 StatementSource.FromAuthor(DirectSumStatement()),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Arith/mesyan2026quantales")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/ArithUnits/mesyan2026quantales")),
                 Blocks(
                     Paragraph(Text("R is the carrier of "), Ref(FiniteSupportSubring),
                         Text(". The tuple supported at 2 with value one there is nonzero. "
