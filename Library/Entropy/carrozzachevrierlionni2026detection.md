@@ -14,6 +14,14 @@ triage: anchor
 
 # Detection of genuine multipartite entanglement by means of entanglement monotones
 
+## Verified locator
+
+Sylvain Carrozza, Johann Chevrier and Luca Lionni, arXiv:2611.27660v1, the paragraph immediately after Corollary 7.
+
+[DOI](https://doi.org/10.48550/arXiv.2611.27660) · [Pinned version](https://arxiv.org/abs/2611.27660v1) · [Corollary 7](https://arxiv.org/html/2611.27660v1#Thmtheo7)
+
+## Converse question and scope
+
 The paragraph immediately after Corollary 7 in arXiv:2611.27660v1 asks:
 
 > In general, whether the converse implication also holds (for $R_{\sigma}^{(n)}$ or its color-symmetric version $R^{(n)}$) remains an open question.

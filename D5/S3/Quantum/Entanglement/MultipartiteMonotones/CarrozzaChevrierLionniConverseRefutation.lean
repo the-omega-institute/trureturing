@@ -6,6 +6,14 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/MultipartiteMonotones/CarrozzaChevrierLionniConverseRefutation.claim; result=D5/S3/Quantum/Entanglement/MultipartiteMonotones/CarrozzaChevrierLionniConverseRefutation.result; claim=D5/S3/Quantum/Entanglement/MultipartiteMonotones/CarrozzaChevrierLionniConverseRefutation.claim
    digest: A four-qubit cluster state refutes both converses of Corollary 7. -/
 
+/- result
+   proof_shape: content
+   escape_witness: The normalized cluster tensor has no proper-support factorization
+   under common local isometries. The prime singleton ranks and rank-one stripping
+   force a proper cut of rank at most one, contrary to the explicit cluster minors.
+   admission_basis: open-problem-resolution (#35139)
+   Direct frozen dependencies: none in result's declaration or proof term. -/
+
 import OmegaBuild.Commands
 import D5.S3.Combinatorics.SubspaceCodes.MRDDensityColumnTensor
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
@@ -196,7 +204,7 @@ private def corners (scale : ℚ) (out input : BitPair) : ℚ :=
 private def Distinct (a b c d : Fin 4) : Prop :=
   a ≠ b ∧ a ≠ c ∧ a ≠ d ∧ b ≠ c ∧ b ≠ d ∧ c ≠ d
 
-instance (a b c d : Fin 4) : Decidable (Distinct a b c d) := by
+private instance distinctDecidable (a b c d : Fin 4) : Decidable (Distinct a b c d) := by
   unfold Distinct
   infer_instance
 
