@@ -6,6 +6,7 @@
    utility: none
    digest: The inverse-twisted restricted dual has the actual conformal energy spectrum. -/
 
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qCubicMonodromy
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeDualBorcherds
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeRestrictedDualPairing
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeVirasoro
@@ -15,7 +16,7 @@ import Mathlib.LinearAlgebra.Dual.Lemmas
 import Batteries.Tactic.OpenPrivate
 import OmegaBuild.Commands
 
-/-! The conformal zero mode and its eigenspaces on the actual P48q restricted dual. -/
+/-! The conformal zero mode, its eigenspaces, and conformal rotation on the P48q restricted dual. -/
 
 compile_only_with_mathlib
 
@@ -32,13 +33,15 @@ open LatticeActualConformalState (omega)
 open LatticeActualConformalWard (omega_product)
 open LatticeSugawaraCurrents (sugawaraMode)
 open P48qAllJetWickField (nativeField)
+open P48qCubicMonodromy
+  (conformalMonodromy conformalMonodromy_totalLZero_eigenvector conformalMonodromy_cube)
 open P48qFiniteEnergyEigenspaces (totalLZero_eigenspace_finiteDimensional)
 open P48qFullEnergySpectrum (totalLZero_exact_eigenvalues)
 open P48qNativeConformalZero (native_conformal_coeff_neg_six_eq_totalLZero)
 open P48qNativeDualCoefficients (bpzTerm)
 open P48qNativeDualLinearField (dualField)
 open P48qNativeRestrictedDualField (ActualGrade GradeDual RestrictedDual gradedPairing
-  gradedPairing_apply_grade gradedPairing_dualField_coeff gradedPairing_ext)
+  gradedPairing_apply_grade gradedPairing_dualField_coeff gradedPairing_ext stateDecompose)
 open P48qThirdTwistedField (State)
 open P48qTwistedChargeAction (lattice)
 open P48qTwistedStateEnergy (totalLZero totalLZero_eigenvalues totalLZero_vacuum_spectrum totalWeight)
@@ -106,6 +109,58 @@ def dualLZero : Module.End ℂ RestrictedDual :=
 @[simp] theorem dualLZero_apply (f : RestrictedDual) (w : ℝ) :
     dualLZero f w = (w : ℂ) • f w := by
   simp only [dualLZero, DirectSum.lmap_apply, LinearMap.smul_apply, LinearMap.id_apply]
+
+/-- Positive conformal rotation on the inverse-twisted restricted dual. -/
+def dualConformalMonodromy : Module.End ℂ RestrictedDual :=
+  DirectSum.lmap fun w : ℝ =>
+    Complex.exp (2 * (Real.pi : ℂ) * Complex.I * (w : ℂ)) •
+      (LinearMap.id : Module.End ℂ (GradeDual w))
+
+/-- The positive dual rotation transposes native conformal monodromy. -/
+theorem gradedPairing_dual_conformal_monodromy (f : RestrictedDual) (v : State) :
+    gradedPairing (dualConformalMonodromy f) v =
+      gradedPairing f (conformalMonodromy v) := by
+  let assemble := DirectSum.coeLinearMap (fun w : ℝ => totalLZero.eigenspace (w : ℂ))
+  have hAssemble : assemble (stateDecompose v) = v :=
+    stateDecompose.symm_apply_apply v
+  have hState : (gradedPairing (dualConformalMonodromy f)).comp assemble =
+      ((gradedPairing f).comp conformalMonodromy).comp assemble := by
+    apply DirectSum.linearMap_ext
+    intro w
+    apply LinearMap.ext
+    intro x
+    simp only [LinearMap.comp_apply, assemble, DirectSum.coeLinearMap_lof]
+    have hx : totalLZero (x : State) = (w : ℂ) • (x : State) :=
+      Module.End.mem_eigenspace_iff.mp x.property
+    rw [conformalMonodromy_totalLZero_eigenvector (x : State) (w : ℂ) hx, map_smul,
+      gradedPairing_apply_grade (dualConformalMonodromy f) w x, gradedPairing_apply_grade f w x] <;>
+      simp only [dualConformalMonodromy, DirectSum.lmap_apply, LinearMap.smul_apply,
+        LinearMap.id_apply]
+  simpa only [LinearMap.comp_apply, hAssemble] using
+    LinearMap.congr_fun hState (stateDecompose v)
+
+/-- The cube of the positive dual rotation is the same third-root scalar
+as on the native state space. -/
+theorem dualConformalMonodromy_cube :
+    dualConformalMonodromy ^ 3 =
+      (ThirdTwistedChargeCocycle.zeta : ℂ) • (1 : Module.End ℂ RestrictedDual) := by
+  apply LinearMap.ext
+  intro f
+  apply gradedPairing_ext
+  intro w x
+  calc
+    gradedPairing ((dualConformalMonodromy ^ 3) f) (x : State) =
+        gradedPairing f ((conformalMonodromy ^ 3) (x : State)) := by
+      simp only [pow_succ, pow_zero, Module.End.mul_apply, Module.End.one_apply,
+        gradedPairing_dual_conformal_monodromy]
+    _ = _ := by
+      simp only [conformalMonodromy_cube, LinearMap.smul_apply, Module.End.one_apply, map_smul]
+
+run_cmd do
+  for name in [``gradedPairing_dual_conformal_monodromy, ``dualConformalMonodromy_cube] do
+    let axioms ← Lean.collectAxioms name
+    unless axioms.all (fun ax => [``propext, ``Classical.choice, ``Quot.sound].contains ax) do
+      throwError "Unexpected axiom closure for {name}: {axioms}"
 
 /-- The actual inverse-twisted conformal coefficient at x⁻⁶ = z⁻² is the
 weight diagonal on the restricted dual. -/
