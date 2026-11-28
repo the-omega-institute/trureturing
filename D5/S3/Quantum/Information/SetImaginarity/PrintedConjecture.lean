@@ -6,7 +6,16 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/SetImaginarity/PrintedConjecture.claim; result=D5/S3/Quantum/Information/SetImaginarity/PrintedConjecture.result; claim=D5/S3/Quantum/Information/SetImaginarity/PrintedConjecture.claim
    digest: Three diagonal qubit states refute the printed set-imaginarity biconditional. -/
 
+/-
+result
+proof_shape: bind-only
+escape_witness: none
+admission_basis: open-problem-resolution (#35040; Refuted)
+Direct frozen dependencies: none
+-/
+
 import OmegaBuild.Commands
+import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.Complex.Order
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.LinearAlgebra.Matrix.Trace
@@ -14,7 +23,11 @@ import Mathlib.LinearAlgebra.UnitaryGroup
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 
+/-! The printed set-imaginarity biconditional fails for three diagonal qubit states. -/
+
 compile_only_with_mathlib
+
+set_option linter.style.longLine false
 
 namespace D5.S3.Quantum.Information.SetImaginarity.PrintedConjecture
 
@@ -54,7 +67,7 @@ private def states (j : Fin 3) : Matrix (Fin 2) (Fin 2) ℂ :=
 private theorem states_injective : Function.Injective states := by
   intro i j hij
   have h := congrArg (fun A : Matrix (Fin 2) (Fin 2) ℂ => (A 0 0).re) hij
-  fin_cases i <;> fin_cases j <;> norm_num [states, realStates, weights] at h ⊢
+  fin_cases i <;> fin_cases j <;> norm_num [states, realStates, weights] at h <;> rfl
 
 private theorem states_density (j : Fin 3) : (states j).PosSemidef ∧ (states j).trace = 1 := by
   have hdiag : states j = diagonal (fun i => (weights j i : ℂ)) := by
@@ -73,11 +86,13 @@ private theorem states_real_words {k : ℕ} (w : Fin k → Fin 3) :
   let f := RingHom.mapMatrix (m := Fin 2) Complex.ofRealHom
   let word := List.ofFn fun t => realStates (w t)
   have hw : List.ofFn (fun t => states (w t)) = word.map f := by
-    simp [word, states, f, List.map_ofFn]
+    rw [List.map_ofFn]
+    rfl
   change (trace (List.ofFn (fun t => states (w t))).prod).im = 0
   rw [hw, ← map_list_prod]
-  change (trace (word.prod.map Complex.ofReal)).im = 0
-  rw [← AddMonoidHom.map_trace Complex.ofRealHom.toAddMonoidHom]
+  change (trace (word.prod.map (⇑Complex.ofRealHom))).im = 0
+  have ht := AddMonoidHom.map_trace Complex.ofRealHom word.prod
+  rw [← ht]
   exact Complex.ofReal_im _
 
 /-- The printed biconditional fails already for three distinct diagonal qubit states. -/

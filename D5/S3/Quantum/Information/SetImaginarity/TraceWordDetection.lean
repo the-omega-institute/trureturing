@@ -6,9 +6,23 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/SetImaginarity/TraceWordDetection.claim; result=D5/S3/Quantum/Information/SetImaginarity/TraceWordDetection.result; claim=D5/S3/Quantum/Information/SetImaginarity/TraceWordDetection.claim
    digest: Four positive definite states have real trace words of every length but no common real basis. -/
 
+/-
+result
+proof_shape: content
+escape_witness: the quaternionic intertwiner makes every ordered word trace real, while
+  the generator constraints force every common intertwiner to be a scalar multiple of a
+  skew-symmetric matrix.
+admission_basis: escape-witness (#35040)
+Direct frozen dependencies: none
+-/
+
 import D5.S3.Quantum.Information.SetImaginarity.PrintedConjecture
 import Mathlib.Data.Matrix.Block
-import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.Abel
+
+/-! A four-state quaternionic obstruction to detection by ordered trace words. -/
+
+set_option linter.style.longLine false
 
 namespace D5.S3.Quantum.Information.SetImaginarity.TraceWordDetection
 
@@ -29,7 +43,7 @@ private abbrev Block := Matrix (Fin 2) (Fin 2) ℂ
 private abbrev Index := Fin 2 ⊕ Fin 2
 private abbrev Mat := Matrix Index Index ℂ
 
-local notation "bar" => (starRingEnd ℂ).mapMatrix
+local notation "bar" => RingHom.mapMatrix (starRingEnd ℂ)
 
 private def X : Block := !![0, 1; 1, 0]
 private def Z : Block := !![1, 0; 0, -1]
@@ -47,17 +61,14 @@ private def states (j : Fin 4) : Mat :=
 private def Q : Mat := fromBlocks J 0 0 J
 
 private theorem generator_adjoint (j : Fin 4) : (generator j)ᴴ = generator j := by
-  fin_cases j <;> rw [show generator _ = _ from rfl, fromBlocks_conjTranspose] <;>
-    simp only [fromBlocks_inj] <;>
-    norm_num [X, Z, Matrix.ext_iff, Fin.forall_fin_two, Complex.star_def]
+  fin_cases j <;> ext (i | i) (l | l) <;> fin_cases i <;> fin_cases l <;>
+    norm_num [generator, X, Z, conjTranspose_apply, Matrix.one_apply, Complex.star_def]
 
 private theorem generator_sq (j : Fin 4) : generator j * generator j = 1 := by
-  rw [← fromBlocks_one (l := Fin 2) (m := Fin 2) (α := ℂ)]
   fin_cases j <;>
-    simp only [generator, Matrix.cons_val_zero, Matrix.cons_val_succ, fromBlocks_multiply,
-      fromBlocks_inj] <;>
-    norm_num [X, Z, Matrix.ext_iff, Fin.forall_fin_two, Matrix.mul_apply,
-      Fin.sum_univ_two, Matrix.one_apply, Complex.I_mul_I]
+    ext (i | i) (l | l) <;> fin_cases i <;> fin_cases l <;>
+      norm_num [generator, X, Z, Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two,
+        Matrix.one_apply, Complex.I_mul_I]
 
 private theorem generator_trace (j : Fin 4) : (generator j).trace = 0 := by
   fin_cases j <;>
@@ -68,8 +79,8 @@ private theorem states_injective : Function.Injective states := by
   have h := congrArg (fun A : Mat =>
     (A (Sum.inl 0) (Sum.inl 0), A (Sum.inl 0) (Sum.inr 0), A (Sum.inl 0) (Sum.inr 1))) hij
   fin_cases i <;> fin_cases j <;>
-    norm_num [states, generator, X, Z, Matrix.one_apply] at h ⊢ <;>
-    simp_all [Complex.ext_iff]
+    norm_num [states, generator, X, Z, Matrix.one_apply] at h <;>
+    first | rfl | simp_all [Complex.ext_iff]
 
 private theorem states_posDef (j : Fin 4) : (states j).PosDef := by
   let H : Mat := 1 + generator j
@@ -78,13 +89,15 @@ private theorem states_posDef (j : Fin 4) : (states j).PosDef := by
     abel
   have hgram : states j = (1 / 8 : ℂ) • 1 + (1 / 16 : ℂ) • (Hᴴ * H) := by
     rw [hH, smul_smul]
-    norm_num [states, smul_add, ← add_smul]
+    norm_num [states, smul_add, ← add_assoc, ← add_smul]
   rw [hgram]
   apply PosDef.add_posSemidef
   · exact PosDef.one.smul (show (0 : ℂ) < 1 / 8 by
-      exact_mod_cast (show (0 : ℝ) < 1 / 8 by norm_num))
+      rw [Complex.lt_def]
+      norm_num [Complex.div_re, Complex.div_im, Complex.normSq])
   · exact (posSemidef_conjTranspose_mul_self H).smul (show (0 : ℂ) ≤ 1 / 16 by
-      exact_mod_cast (show (0 : ℝ) ≤ 1 / 16 by norm_num))
+      rw [Complex.le_def]
+      norm_num [Complex.div_re, Complex.div_im, Complex.normSq])
 
 private theorem states_trace (j : Fin 4) : (states j).trace = 1 := by
   norm_num [states, trace_add, trace_smul, trace_one, generator_trace, Fintype.card_sum]
@@ -96,27 +109,25 @@ private theorem affine_intertwine_iff (g C : Mat) :
   have map_scale (a : ℂ) (A : Mat) :
       bar (a • A) = (starRingEnd ℂ a) • bar A := by
     exact Matrix.map_smul' _ _ _ (map_mul _)
-  simp only [map_add, map_one, map_scale, map_div₀, map_natCast, add_mul, mul_add, smul_mul,
+  simp only [map_add, map_one, map_scale, map_div₀, map_ofNat, add_mul, mul_add, smul_mul,
     Matrix.mul_smul, one_mul, mul_one, add_right_inj]
-  exact (smul_right_injective (div_ne_zero one_ne_zero (by norm_num : (8 : ℂ) ≠ 0))).eq_iff
+  exact (smul_right_injective Mat (div_ne_zero one_ne_zero (by norm_num : (8 : ℂ) ≠ 0))).eq_iff
 
 private theorem Q_right_inverse : Q * (-Q) = 1 := by
-  rw [← fromBlocks_one (l := Fin 2) (m := Fin 2) (α := ℂ)]
-  simp only [Q, ← fromBlocks_neg, fromBlocks_multiply, fromBlocks_inj, neg_zero, zero_mul,
-    mul_zero, add_zero, zero_add, and_true, true_and]
-  norm_num [J, Matrix.ext_iff, Fin.forall_fin_two, Matrix.mul_apply, Fin.sum_univ_two,
-    Matrix.one_apply]
+  ext (i | i) (j | j) <;> fin_cases i <;> fin_cases j <;>
+    norm_num [Q, J, Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two, Matrix.one_apply]
 
 private theorem Q_skew : Qᵀ = -Q := by
-  rw [Q, fromBlocks_transpose, ← fromBlocks_neg]
-  norm_num [J, Matrix.ext_iff, Fin.forall_fin_two]
+  rw [Q, fromBlocks_transpose, fromBlocks_neg]
+  have hJ : Jᵀ = -J := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> norm_num [J, transpose_apply]
+  simp [hJ]
 
 private theorem Q_intertwines (j : Fin 4) : generator j * Q = Q * bar (generator j) := by
-  fin_cases j <;>
-    simp only [generator, Matrix.cons_val_zero, Matrix.cons_val_succ, RingHom.mapMatrix_apply,
-      Q, fromBlocks_map, fromBlocks_multiply, fromBlocks_inj] <;>
-    norm_num [X, Z, J, Matrix.ext_iff, Fin.forall_fin_two, Matrix.mul_apply, Fin.sum_univ_two,
-      Matrix.one_apply, Complex.star_def]
+  fin_cases j <;> ext (i | i) (l | l) <;> fin_cases i <;> fin_cases l <;>
+    norm_num [generator, Q, X, Z, J, RingHom.mapMatrix_apply, Matrix.mul_apply,
+      Fintype.sum_sum_type, Fin.sum_univ_two, Matrix.one_apply, Complex.star_def]
 
 private theorem all_words_real (k : ℕ) (w : Fin k → Fin 4) : (traceWord states w).im = 0 := by
   have intertwines (word : List (Fin 4)) :
@@ -125,8 +136,9 @@ private theorem all_words_real (k : ℕ) (w : Fin k → Fin 4) : (traceWord stat
     | nil => simp
     | cons j word ih =>
       simp only [List.map_cons, List.prod_cons, map_mul, mul_assoc, ih]
-      rw [← mul_assoc, (affine_intertwine_iff (generator j) Q).mpr (Q_intertwines j),
-        mul_assoc]
+      have hj : states j * Q = Q * bar (states j) :=
+        (affine_intertwine_iff (generator j) Q).mpr (Q_intertwines j)
+      rw [← mul_assoc, hj, mul_assoc]
   let W : Mat := (List.ofFn fun t => states (w t)).prod
   have h := intertwines (List.ofFn w)
   rw [List.map_ofFn] at h
@@ -156,34 +168,28 @@ private theorem intertwiner_form (C : Mat)
   have h₃ := h 2
   have h₄ := h 3
   have h₁bar : bar (generator 0) = generator 0 := by
-    change bar (fromBlocks (1 : Block) 0 0 (-1)) = _
-    simp [RingHom.mapMatrix_apply, fromBlocks_map, Matrix.map_one, Matrix.map_zero,
-      Matrix.map_neg]
+    ext (i | i) (j | j) <;> fin_cases i <;> fin_cases j <;>
+      norm_num [generator, RingHom.mapMatrix_apply, Matrix.one_apply, Complex.star_def]
   have h₂bar : bar (generator 1) = generator 1 := by
-    change bar (fromBlocks (0 : Block) 1 1 0) = _
-    simp [RingHom.mapMatrix_apply, fromBlocks_map, Matrix.map_one, Matrix.map_zero, generator]
+    ext (i | i) (j | j) <;> fin_cases i <;> fin_cases j <;>
+      norm_num [generator, RingHom.mapMatrix_apply, Matrix.one_apply, Complex.star_def]
   have h₃bar : bar (generator 2) = -(generator 2) := by
-    change (fromBlocks ((0 : Block)) (-Complex.I • X) (Complex.I • X) 0).map
-      (starRingEnd ℂ) = _
-    rw [fromBlocks_map, generator, Matrix.cons_val_succ, Matrix.cons_val_succ,
-      Matrix.cons_val_zero, ← fromBlocks_neg]
-    simp only [fromBlocks_inj]
-    norm_num [X, Matrix.ext_iff, Fin.forall_fin_two, Complex.star_def]
+    ext (i | i) (j | j) <;> fin_cases i <;> fin_cases j <;>
+      norm_num [generator, X, RingHom.mapMatrix_apply, Complex.star_def]
   have h₄bar : bar (generator 3) = -(generator 3) := by
-    change (fromBlocks ((0 : Block)) (-Complex.I • Z) (Complex.I • Z) 0).map
-      (starRingEnd ℂ) = _
-    rw [fromBlocks_map, generator, Matrix.cons_val_succ, Matrix.cons_val_succ,
-      Matrix.cons_val_succ, Matrix.cons_val_zero, ← fromBlocks_neg]
-    simp only [fromBlocks_inj]
-    norm_num [Z, Matrix.ext_iff, Fin.forall_fin_two, Complex.star_def]
+    ext (i | i) (j | j) <;> fin_cases i <;> fin_cases j <;>
+      norm_num [generator, Z, RingHom.mapMatrix_apply, Complex.star_def]
   rw [h₁bar, ← hblocks] at h₁
   rw [h₂bar, ← hblocks] at h₂
   have hb : B = -B := by
     simpa [generator, fromBlocks_multiply] using congrArg Matrix.toBlocks₁₂ h₁
   have hd : -D = D := by
     simpa [generator, fromBlocks_multiply] using congrArg Matrix.toBlocks₂₁ h₁
-  have hB : B = 0 := CharZero.neg_eq_self_iff.mp hb.symm
-  have hD : D = 0 := CharZero.neg_eq_self_iff.mp hd
+  have neg_self {M : Block} (hn : -M = M) : M = 0 := by
+    ext i j
+    exact CharZero.neg_eq_self_iff.mp (congrArg (fun T : Block => T i j) hn)
+  have hB := neg_self hb.symm
+  have hD := neg_self hd
   have hE : E = A := by
     simpa [generator, fromBlocks_multiply] using congrArg Matrix.toBlocks₁₂ h₂
   have hdiag : fromBlocks A 0 0 A = C := by simpa [hB, hD, hE] using hblocks
@@ -191,30 +197,29 @@ private theorem intertwiner_form (C : Mat)
   rw [h₄bar, ← hdiag] at h₄
   have cancel_I (P : Block) (hp : (-Complex.I : ℂ) • (P * A) = (-Complex.I : ℂ) • -(A * P)) :
       P * A = -(A * P) :=
-    smul_right_injective (neg_ne_zero.mpr Complex.I_ne_zero) hp
+    smul_right_injective Block (neg_ne_zero.mpr Complex.I_ne_zero) hp
   have hx : X * A = -(A * X) := by
     apply cancel_I
-    simpa [generator, ← fromBlocks_neg, fromBlocks_multiply, smul_mul, Matrix.mul_smul,
+    simpa [generator, fromBlocks_neg, fromBlocks_multiply, smul_mul, Matrix.mul_smul,
       smul_neg, neg_smul] using congrArg Matrix.toBlocks₁₂ h₃
   have hz : Z * A = -(A * Z) := by
     apply cancel_I
-    simpa [generator, ← fromBlocks_neg, fromBlocks_multiply, smul_mul, Matrix.mul_smul,
+    simpa [generator, fromBlocks_neg, fromBlocks_multiply, smul_mul, Matrix.mul_smul,
       smul_neg, neg_smul] using congrArg Matrix.toBlocks₁₂ h₄
   have ha₀ : A 0 0 = 0 := by
     have he := congrArg (fun M : Block => M 0 0) hz
     simp [Z, mul_apply, Fin.sum_univ_two] at he
     exact CharZero.neg_eq_self_iff.mp he.symm
   have ha₁ : A 1 1 = 0 := by
-    have he := congrArg (fun M : Block => M 1 1) hz
-    simp [Z, mul_apply, Fin.sum_univ_two] at he
-    exact CharZero.neg_eq_self_iff.mp he
+    apply CharZero.neg_eq_self_iff.mp
+    simpa [Z, mul_apply, Fin.sum_univ_two] using congrArg (fun M : Block => M 1 1) hz
   have ha₂ : A 1 0 = -(A 0 1) := by
     simpa [X, mul_apply, Fin.sum_univ_two] using congrArg (fun M : Block => M 0 0) hx
   have ha : A = A 0 1 • J := by
     ext i j
     fin_cases i <;> fin_cases j <;> simp [J, ha₀, ha₁, ha₂]
   refine ⟨A 0 1, ?_⟩
-  rw [Q, fromBlocks_smul, smul_zero, smul_zero, ← ha, hdiag]
+  simpa only [Q, fromBlocks_smul, smul_zero, ← ha] using hdiag.symm
 
 private theorem no_common_basis : ¬ CommonRealBasis states := by
   rintro ⟨U, hreal⟩
@@ -228,12 +233,12 @@ private theorem no_common_basis : ¬ CommonRealBasis states := by
     rw [← hVt]
     exact UnitaryGroup.star_mul_self (UnitaryGroup.map_star U)
   have hCsymm : Cᵀ = C := by
-    rw [show Vᴴ = (bar V)ᵀ from rfl]
-    simp [C, transpose_mul, conjTranspose, RingHom.mapMatrix_apply]
+    change ((bar V)ᵀ * bar V)ᵀ = (bar V)ᵀ * bar V
+    rw [transpose_mul, transpose_transpose]
   have hC (j : Fin 4) : generator j * C = C * bar (generator j) := by
     have hj : bar (V * states j * Vᴴ) = V * states j * Vᴴ := by
       ext i l
-      apply Complex.ext <;> simp [RingHom.mapMatrix_apply, Complex.star_def, V, hreal]
+      apply Complex.ext <;> simp [RingHom.mapMatrix_apply, V, hreal]
     have hVbar : bar Vᴴ = Vᵀ := by
       ext i l
       simp [RingHom.mapMatrix_apply]
@@ -251,7 +256,8 @@ private theorem no_common_basis : ¬ CommonRealBasis states := by
     have hneg : -C = C := calc
       -C = Cᵀ := by rw [hb, transpose_smul, Q_skew, smul_neg]
       _ = C := hCsymm
-    exact CharZero.neg_eq_self_iff.mp hneg
+    ext i j
+    exact CharZero.neg_eq_self_iff.mp (congrArg (fun T : Mat => T i j) hneg)
   have hunit : C ∈ unitaryGroup Index ℂ := (U⁻¹ * UnitaryGroup.map_star U).property
   have hOne : C * star C = 1 := mem_unitaryGroup_iff.mp hunit
   rw [hzero, zero_mul] at hOne
