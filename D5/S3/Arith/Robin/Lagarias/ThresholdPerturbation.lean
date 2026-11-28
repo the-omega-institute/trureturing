@@ -15,9 +15,6 @@ import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
 compile_only_with_mathlib
-import OmegaBuild.Commands
-
-compile_only_with_mathlib
 
 /-! The harmonic threshold as a vanishing perturbation of the Robin threshold. -/
 
