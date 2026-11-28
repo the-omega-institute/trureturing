@@ -22,6 +22,10 @@ SELECTOR_SPECIFICATIONS = {
     ("Init.Classical", "Classical.epsilon_spec_aux"): "Classical.epsilon",
 }
 
+FORMATION_TARGETS = {
+    ("Init.Core", "Quot.liftIndepPr1"): ("Quot.indepCoherent", "Quot.sound"),
+    ("Init.Internal.Order.While", "Lean.Loop.forIn.eq_1"): ("Lean.Loop.forIn", "Classical.choice"),
+}
 
 UNSAFE_OBSERVERS = {
     ("Init.Util", "ptrAddrUnsafe"): "lean_ptr_addr",
@@ -125,8 +129,8 @@ def check_coverage(official):
         if bool(argument) != bool(formation) or (argument and formation !=
                 (argument, row.get("logicalConsequence"), row.get("logicalConsequenceWitness"))):
             raise ValueError(f"uncertified statement formation argument for {owner}/{name}")
-        if argument and (site != ("Init.Core", "Quot.liftIndepPr1") or argument != "Quot.indepCoherent" or
-                         row["kind"] != "theorem" or row.get("logicalConsequence") != "Quot.sound" or
+        if argument and (FORMATION_TARGETS.get(site) != (argument, row.get("logicalConsequence")) or
+                         row["kind"] != "theorem" or row.get("unsafe") or row.get("partial") or
                          not row.get("requiredBehavior") or port or witness or strict or runtime or endpoint):
             raise ValueError(f"inconsistent statement formation argument for {owner}/{name}")
         path = row.get("transportPathType")
@@ -236,7 +240,7 @@ def verify_complete(official, product, reductions, unresolved):
         raise ValueError(f"{len(unresolved)} unresolved public non-axiom definition sites; "
                          f"{reductions} checked axiom reductions, {runtime} unmatched sites with observed conflicts for pure replacements, "
                          f"{endpoints} official statements with choice-valued equality endpoints, "
-                         f"{formations} official statements requiring an axiom to supply a quotient argument, "
+                         f"{formations} statements requiring an excluded axiom to form a faithful argument or endpoint, "
                          f"{models} statements, required paths or computations refuted in the representative quotient model. "
                          f"Examples: {examples}. See init-gaps.tsv.")
     if any(row["matchingNameAndModule"] and row.get("originalTypeChecked") is not True

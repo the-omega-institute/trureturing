@@ -208,6 +208,20 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "statement formation argument"):
                 check_coverage(inventory(row | mismatch) | certificate)
 
+    def test_loop_unfolding_requires_the_complete_endpoint_and_its_behavior(self):
+        owner = "Init.Internal.Order.While"
+        name = "Lean.Loop.forIn.eq_1"
+        op = "Lean.Loop.forIn"
+        proof = "OmegaChecks.InitBoundaries.WhileChoice.choiceFromLoop"
+        row = site(owner, name, formationArgument=op, logicalConsequence="Classical.choice",
+                   logicalConsequenceWitness=proof, requiredBehavior="the pinned fixed-point observation")
+        cert = {"certifiedFormationArguments": [[owner, name, op, "Classical.choice", proof]]}
+        self.assertEqual(check_coverage(inventory(row) | cert), (0, []))
+        for change in ({"name": "Lean.Loop.forIn_eq_of_monadTail"}, {"formationArgument": "repeatM"},
+                       {"requiredBehavior": None}, {"unsafe": True}):
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, "statement formation argument"):
+                check_coverage(inventory(row | change) | cert)
+
     def test_setoid_transport_path_requires_its_representative_counterexample(self):
         for carrier in ("Quot", "Quotient"):
             for recursor in (".rec", ".recOn"):

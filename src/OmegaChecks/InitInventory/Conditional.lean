@@ -262,6 +262,9 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
   if owner == `Init.Core && name == ``Quot.liftIndepPr1 then
     return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfLiftArgument,
       "The first projection in the original statement requires the lift's coherence argument at the constant unit motive")
+  if owner == `Init.Internal.Order.While && name == `Lean.Loop.forIn.eq_1 then
+    return ((``Classical.choice).toString, ``OmegaChecks.InitBoundaries.WhileChoice.choiceFromLoop,
+      "The left endpoint accepts every argument of the pinned loop. Its fixed-point equation on the parity action makes it return an element of each nonempty exception type")
   if owner == `Init.Core && name == ``Quotient.decidableEq then
     return ((``funext).toString, ``OmegaChecks.InitBoundaries.QuotientDecision.funextOfPositiveDecision,
       "The official equality decision computes true on the false and true representatives of the indiscrete Boolean quotient")

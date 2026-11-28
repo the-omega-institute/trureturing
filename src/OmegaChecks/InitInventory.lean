@@ -732,6 +732,13 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
           (``Quot.indepCoherent).toString, (``Quot.sound).toString,
           (``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfLiftArgument).toString]
         pure (some (``Quot.indepCoherent).toString)
+      else if owner == `Init.Internal.Order.While && name == `Lean.Loop.forIn.eq_1 then do
+        let certify := OmegaChecks.InitBoundaries.ChoiceOperands.checkLoopEndpoint visible info
+        (Meta.MetaM.run' certify).toIO' {fileName := "<public loop endpoint>", fileMap := default} {env := visible}
+        certifiedFormationArguments := certifiedFormationArguments.push #[owner.toString, name.toString,
+          (``Lean.Loop.forIn).toString, (``Classical.choice).toString,
+          (``OmegaChecks.InitBoundaries.WhileChoice.choiceFromLoop).toString]
+        pure (some (``Lean.Loop.forIn).toString)
       else pure none
       let direct := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
       let consequence := conditional.map (fun (target, witness, _) => (target, witness)) <|> direct

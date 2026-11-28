@@ -214,6 +214,30 @@ public def hasChoiceEndpoints (owner : Name) (source : ConstantInfo) : Bool :=
   congruenceSites.contains (owner, source.name) ||
     (owner == `Init.Classical && (specification? source.name).isSome)
 
+/-- The left side of this equation, abstracted over its actual telescope, is the
+entire loop at independent universe levels. The loop's fixed-point observation
+and the reduction to choice are checked at its definition site in Reductions. -/
+public def checkLoopEndpoint (visible : Environment) (source : ConstantInfo) : MetaM Unit := do
+  let owner := `Init.Internal.Order.While
+  let loop := ``Lean.Loop.forIn
+  unless source.isTheorem && source.name == `Lean.Loop.forIn.eq_1 &&
+      visible.getModuleIdxFor? source.name == visible.getModuleIdx? owner &&
+      (visible.find? source.name).any (fun entry => entry.type.equal source.type) do
+    throwError "missing public loop unfolding equation in its pinned module"
+  let entry ← getConstInfo loop
+  let levels := source.levelParams.map Level.param
+  unless levels.length == 2 && entry.numLevelParams == levels.length do
+    throwError "unexpected loop universe parameters"
+  Meta.forallTelescope source.type fun xs conclusion => do
+    let some (_, lhs, rhs) := conclusion.eq? | throwError "expected the loop equality"
+    let operation := mkConst loop levels
+    unless lhs.getAppFn == operation && lhs.getAppArgs == xs && rhs.getAppFn.isConstOf ``repeatM do
+      throwError "unfolding equation does not expose the full pinned loop"
+    let endpoint ← Meta.mkLambdaFVars xs lhs
+    let type ← Lean.ofExceptKernelException (Kernel.check visible {} endpoint)
+    unless Kernel.isDefEqGuarded visible {} type (entry.type.instantiateLevelParams entry.levelParams levels) &&
+        Kernel.isDefEqGuarded visible {} endpoint operation do throwError "incomplete loop endpoint"
+
 public def certifyEndpoints (official : Environment) (source : ConstantInfo) (op : Operand) : MetaM Unit :=
   if (specification? source.name).isSome then checkSpecification official source op
   else checkCongruenceEndpoints official source op
