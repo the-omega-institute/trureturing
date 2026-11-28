@@ -28,19 +28,21 @@ open HalfFockSpectralFiberSource (actualInverse actualInverse_left actualInverse
 open LatticeActualConformalWard (omega_product)
 open LatticeHalfFockFiniteCorrection (sourceWeight)
 open LatticePositiveEnergy (grade grade_finiteDimensional grade_zero actualL0_eigen_iff_grade
-  gradeProjection_mem stateEnergies sum_gradeProjections)
+  carrierCoeffEquiv chargeEnergy_nonneg energy gradeProjection_mem mem_grade_iff
+  stateEnergies sum_gradeProjections)
 open LatticeSugawaraCurrents (sugawaraMode)
 open P48qConformalVectorDecomposition (actualInverse_eq_complexInverse)
 open P48qFixedSourceBPZ (fixedGrade fixedGradeForm fixedGradeForm_nondegenerate)
 open P48qGramPositivity (nebeGram_posDef)
 open P48qNativeConformalSector
   (fixedStates sector fixedField fixedField_coeff_val fixedOmega fixedProduct fixedVacuum)
-open P48qNativeDualCoefficients (bpzTerm)
+open P48qNativeDualCoefficients (bpzTerm sourceLOne_pow_eq_zero_of_lt)
 open P48qNativeDualIteratePairing (sum_range_iterate_simplex_reindex)
 open P48qNativeDualLinearField (dualField dualField_homogeneous)
 open P48qNativeFixedInvertedIterate
   (fixedSourceLOne sectorLOne sectorLOne_divided_inverted_iterate)
 open P48qNativeFixedRightInsertion (rightInsertion sectorTranslation)
+open P48qNativeFixedRightJacobi (rightInsertion_borcherds)
 open P48qNativeOppositeGrade
   (fixedMode_weight fixedMode_eq_zero_of_below_minimum invertedCoeff_grade_of_ne_zero)
 open P48qNativeOppositeVacuum
@@ -51,12 +53,13 @@ open P48qNativeRestrictedDualField (ActualGrade GradeDual coeff_lof
   gradedPairing_dualField_coeff oppositeField_coeff shiftedWeight stateDecompose)
 open P48qThirdTwistedField (State)
 open P48qTwistedChargeAction (lattice)
-open P48qTwistedStateEnergy (totalLZero)
+open P48qTwistedStateEnergy (totalLZero totalLZero_minimum)
 open SourceBPZ.AllStateTranspose (sourcePairing_allState)
 open SourceBPZ.OriginalSourcePairing (sourcePairing sourcePairing_vacuum)
 open SourceBPZ.SourcePairingLaws (sourcePairing_grade)
 open StateField.BorcherdsPermutations (dividedTranslation)
-open StateFieldResidueReconstruction (integerBinomial)
+open StateFieldResidueReconstruction (epsilon integerBinomial)
+open SourceMobius (sectorL1_degree_bound sugawara_pow_single)
 open private gram_det_unit from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConformalVectorDecomposition
 open private restrictedDualJacobi_iterate_reindex from
@@ -73,7 +76,8 @@ open private rightMode sourceMode from
 open private dividedConformal_weight gradeProjection_eq_zero gradeProjection_self inversionTerm
   inversionTerm_eq_zero_of_le rightInsertionEval rightInsertionEval_apply from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeOppositeVacuum
-open private finsum_range from D5.S3.VertexAlgebra.StateField.BorcherdsPermutations
+open private finsum_range epsilon_add sign_square from
+  D5.S3.VertexAlgebra.StateField.BorcherdsPermutations
 
 noncomputable section
 
@@ -225,6 +229,30 @@ theorem invertedCoeff_iterate_cutoff (s : Fin 3) (a : fixedStates) (u : sector s
   have hBelow : h + 9 * (e - (m + (t : ℤ)) - 1) < 16 := by omega
   rw [fixedMode_eq_zero_of_below_minimum s a u e h ha hu _ hBelow, invertedCoeff_zero_input]
 
+private theorem lowered_iterate_eq_zero (s : Fin 3) (a : fixedStates) (u : sector s)
+    (e h : ℤ) (ha : L₀ a.val = (e : ℂ) • a.val)
+    (hu : totalLZero u.val = ((h : ℂ) / 9) • u.val)
+    (r : ℤ) (i l n : ℕ)
+    (hBelow : h - 9 * (l : ℤ) + 9 * (e - (i : ℤ) - (r + (n : ℤ)) - 1) < 16) :
+    ((fixedField s (dividedTranslation fixedSourceLOne i a))[[r + (n : ℤ)]])
+      (dividedTranslation (sectorLOne s) l u) = 0 := by
+  let aDiv := dividedTranslation fixedSourceLOne
+  let uDiv := dividedTranslation (sectorLOne s)
+  have haDiv : L₀ (aDiv i a).val = ((e - (i : ℤ) : ℤ) : ℂ) • (aDiv i a).val := by
+    simp only [aDiv, dividedTranslation, LinearMap.smul_apply, Submodule.coe_smul,
+      fixedSourceLOne_pow_val, map_smul, sourceLOne_pow_weight a.val _ ha i,
+      Int.cast_sub, Int.cast_natCast, smul_smul]
+    rw [mul_comm]
+  have huDiv : totalLZero (uDiv l u).val =
+      (((h - 9 * (l : ℤ) : ℤ) : ℂ) / 9) • (uDiv l u).val := by
+    have hWeight := dividedConformal_weight s 1 u ((h : ℂ) / 9) hu l
+    have hScalar : (h : ℂ) / 9 - (l : ℂ) * ((1 : ℤ) : ℂ) =
+        (((h - 9 * (l : ℤ) : ℤ) : ℂ) / 9) := by push_cast; ring
+    rw [hScalar] at hWeight
+    exact hWeight
+  exact fixedMode_eq_zero_of_below_minimum s (aDiv i a) (uDiv l u)
+    (e - (i : ℤ)) (h - 9 * (l : ℤ)) haDiv huDiv (r + (n : ℤ)) hBelow
+
 set_option maxHeartbeats 3000000 in
 /-- The outer opposite iterate, paired with a fixed test state, equals the
 paired native right-insertion iterate. With mode origin `2h/9`, the
@@ -325,26 +353,14 @@ theorem invertedCoeff_iterate_sum_pairing (s : Fin 3) (a : fixedStates) (u : sec
       Submodule.subtype_apply, hMode, hCoeff, hTop]
     ring
   have hTail (i l n : ℕ) (hn : K - i - l ≤ n) : native i l n = 0 := by
-    have haDiv : L₀ (aDiv i a).val = ((e - (i : ℤ) : ℤ) : ℂ) • (aDiv i a).val := by
-      simp only [aDiv, dividedTranslation, LinearMap.smul_apply, Submodule.coe_smul,
-        fixedSourceLOne_pow_val, map_smul, sourceLOne_pow_weight a.val _ ha i,
-        Int.cast_sub, Int.cast_natCast, smul_smul]
-      rw [mul_comm]
-    have huDiv : totalLZero (uDiv l u).val =
-        (((h - 9 * (l : ℤ) : ℤ) : ℂ) / 9) • (uDiv l u).val := by
-      have hWeight := dividedConformal_weight s 1 u ((h : ℂ) / 9) hu l
-      have hScalar : (h : ℂ) / 9 - (l : ℂ) * ((1 : ℤ) : ℂ) =
-          (((h - 9 * (l : ℤ) : ℤ) : ℂ) / 9) := by push_cast; ring
-      rw [hScalar] at hWeight
-      exact hWeight
     have hBelow : h - 9 * (l : ℤ) + 9 * (e - (i : ℤ) - (r + (n : ℤ)) - 1) < 16 := by
       have hlt := hCutoff (i + l + n) (by omega)
       dsimp only [H₀] at hlt
       omega
-    have hz := fixedMode_eq_zero_of_below_minimum s (aDiv i a) (uDiv l u)
-      (e - (i : ℤ)) (h - 9 * (l : ℤ)) haDiv huDiv (r + (n : ℤ)) hBelow
+    have hz := lowered_iterate_eq_zero s a u e h ha hu r i l n hBelow
     change rightMode s (pNative i + qNative l - (n : ℤ))
       (((fixedField s (aDiv i a))[[r + (n : ℤ)]]) (uDiv l u)) b = 0
+    change ((fixedField s (aDiv i a))[[r + (n : ℤ)]]) (uDiv l u) = 0 at hz
     rw [hz, map_zero, LinearMap.zero_apply]
   change (∑ᶠ j : ℕ, integerBinomial p j *
     invertedCoeff s (H j) w (((fixedField s a)[[r + (j : ℤ)]]) u) f b (k j)) =
@@ -588,6 +604,376 @@ theorem dual_product_pairing (s : Fin 3) (h : ℤ) (w : ℝ) (u : sector s)
         (3 * (-l - 2 * (e : ℤ) + (i : ℤ))) v.val))
   rw [bpzTerm, hi]
 
+private def sourceLoweringCutoff (e : ℤ) (a : fixedGrade e) : ℕ :=
+  a.val.support.sup (fun α => MvPolynomial.weightedTotalDegree (sourceWeight lattice) (a.val α)) + 1
+
+private theorem sourceLowering_eq_zero (e : ℤ) (a : fixedGrade e) (i : ℕ)
+    (hi : sourceLoweringCutoff e a ≤ i) :
+    dividedTranslation fixedSourceLOne i (fixedGradeInclusion e a) = 0 := by
+  have hpow : (L₁ ^ i) a.val = 0 := by
+    rw [← Finsupp.sum_single a.val]
+    change (L₁ ^ i) (∑ α ∈ a.val.support, Finsupp.single α (a.val α)) = 0
+    rw [map_sum]
+    apply Finset.sum_eq_zero
+    intro α hα
+    rw [sugawara_pow_single lattice (actualInverse lattice)
+      (actualInverse_left lattice gram_det_unit) (actualInverse_right lattice gram_det_unit)]
+    have hdeg : MvPolynomial.weightedTotalDegree (sourceWeight lattice) (a.val α) + 1 ≤ i :=
+      (Nat.add_le_add_right
+        (Finset.le_sup (f := fun α =>
+          MvPolynomial.weightedTotalDegree (sourceWeight lattice) (a.val α)) hα) 1).trans hi
+    rw [Module.End.pow_map_zero_of_le hdeg (sectorL1_degree_bound lattice α (a.val α)),
+      Finsupp.single_zero]
+  apply Subtype.ext
+  simp only [dividedTranslation, LinearMap.smul_apply, Submodule.coe_smul,
+    fixedSourceLOne_pow_val, fixedGradeInclusion, Submodule.coe_inclusion,
+    hpow, smul_zero, Submodule.coe_zero]
+
+private theorem sectorLowering_eq_zero (s : Fin 3) (h : ℤ) (u : sector s)
+    (hu : totalLZero u.val = ((h : ℂ) / 9) • u.val)
+    (l : ℕ) (hl : ((h - 16) / 9).toNat + 1 ≤ l) :
+    dividedTranslation (sectorLOne s) l u = 0 := by
+  let v := dividedTranslation (sectorLOne s) l u
+  have hInt : h - 16 < 9 * (l : ℤ) := by omega
+  have hReal : (h : ℝ) - 16 < 9 * (l : ℝ) := by exact_mod_cast hInt
+  have he : totalLZero v.val = (((h : ℝ) / 9 - (l : ℝ) : ℝ) : ℂ) • v.val := by
+    simp only [Complex.ofReal_sub, Complex.ofReal_div, Complex.ofReal_intCast,
+      Complex.ofReal_natCast, Complex.ofReal_ofNat]
+    rw [← mul_one (l : ℂ), ← Int.cast_one]
+    exact dividedConformal_weight s 1 u ((h : ℂ) / 9) hu l
+  by_contra hv
+  have hmin := totalLZero_minimum.2 ⟨v.val, (fun hz => hv (Subtype.ext hz)), he⟩
+  linarith
+
+private theorem fixedProduct_zero_left (b : fixedStates) (n : ℤ) : fixedProduct 0 b n = 0 :=
+  LinearMap.map_zero₂ (sourceMode n) b
+
+set_option maxHeartbeats 8000000 in
+-- Comparing both products requires elaborating the reflected mode indices at each cutoff.
+/-- The homogeneous mixed Jacobi identity for the actual opposite evaluation,
+paired with a homogeneous fixed test state. The dual mode uses the integral
+index on the base coordinate, with its coefficient on the cubic cover. -/
+theorem evaluation_mixedJacobi_pairing (s : Fin 3) (e : ℤ) (a : fixedGrade e)
+    (h : ℤ) (u : sector s) (hu : totalLZero u.val = ((h : ℂ) / 9) • u.val)
+    (w : ℝ) (f : GradeDual w) (p q r d : ℤ) (b : fixedGrade d)
+    (hw : (w : ℂ) = (h : ℂ) / 9 + (d : ℂ) + (p : ℂ) + (q : ℂ) -
+      (e : ℂ) + (r : ℂ) + 2) :
+    let A := fixedGradeInclusion e a
+    let output (j : ℕ) :=
+      let m : ℤ := p + r - (j : ℤ)
+      let g : ℤ := d - e + m + 1
+      sourcePairing lattice
+        (fixedProduct A (fixedGradeInclusion g
+          (evaluation s h (w : ℂ) u f (-q - (j : ℤ) - 1) g)) m).val b.val
+    let dual (j : ℕ) :=
+      let m : ℤ := -(p + (j : ℤ)) - 1
+      let w' := shiftedWeight w e.toNat (3 * m)
+      let g := C (dualField a.val) (3 * m) (DirectSum.lof ℂ ℝ GradeDual w f)
+      fixedGradeForm d (evaluation s h (w' : ℂ) u (g w') (-q - r + (j : ℤ) - 1) d) b
+    let weight (j : ℕ) := (-1 : ℂ) ^ j * integerBinomial r j
+    (∑ᶠ j : ℕ, integerBinomial p j *
+      sourcePairing lattice
+        (evaluation s (h + 9 * (e - (r + (j : ℤ)) - 1)) (w : ℂ)
+          (((fixedField s A)[[r + (j : ℤ)]]) u) f
+          (-p - q + 2 * e - 2 * r - 3 - (j : ℤ)) d).val b.val) =
+      (∑ᶠ j : ℕ, weight j * output j) - epsilon r * (∑ᶠ j : ℕ, weight j * dual j) := by
+  classical
+  by_cases he : 0 ≤ e
+  swap
+  · have ha0 : a = 0 := by
+      apply Subtype.ext
+      apply (carrierCoeffEquiv lattice).injective
+      apply Finsupp.ext
+      intro x
+      rw [Submodule.coe_zero, map_zero, Finsupp.zero_apply]
+      change (a.val x.1).coeff x.2 = 0
+      apply (mem_grade_iff lattice e a.val).mp a.property.2 x
+      have hx := chargeEnergy_nonneg lattice nebeGram_posDef x.1
+      dsimp only [energy]
+      omega
+    subst a
+    intro A output dual weight
+    have hA : A = 0 := map_zero (fixedGradeInclusion e)
+    have hOut (j : ℕ) : output j = 0 := by
+      dsimp only [output]
+      rw [hA, fixedProduct_zero_left, Submodule.coe_zero, map_zero, LinearMap.zero_apply]
+    have hDual (j : ℕ) : dual j = 0 := by
+      simp [dual, evaluation_pairing, invertedCoeff, inversionTerm]
+    have hIter (j : ℕ) :
+        sourcePairing lattice
+          (evaluation s (h + 9 * (e - (r + (j : ℤ)) - 1)) (w : ℂ)
+            (((fixedField s A)[[r + (j : ℤ)]]) u) f
+            (-p - q + 2 * e - 2 * r - 3 - (j : ℤ)) d).val b.val = 0 := by
+      rw [hA]
+      simp only [map_zero, Pi.zero_apply, LinearMap.zero_apply]
+      change fixedGradeForm d (evaluation s _ (w : ℂ) 0 f _ d) b = 0
+      rw [evaluation_pairing, invertedCoeff_zero_input]
+    simp only [hIter, hOut, hDual, mul_zero, finsum_zero, sub_zero]
+  lift e to ℕ using he
+  intro A output dual weight
+  simp only [Int.cast_natCast] at hw
+  let B := fixedGradeInclusion d b
+  let H₀ : ℤ := h + 9 * ((e : ℤ) - r - 1)
+  let K : ℕ := ((H₀ - 16) / 9 + 1).toNat
+  let I := max K (max (sourceLoweringCutoff (e : ℤ) a) (e + 1))
+  let U := ((h - 16) / 9).toNat + 1
+  let J := max K U
+  let pNative (i : ℕ) : ℤ := 2 * (e : ℤ) - r - (i : ℤ) - 2 - p
+  let qNative (l : ℕ) : ℤ := -q - r - (l : ℤ) - 2
+  let R (m : ℤ) (v : sector s) (c : fixedStates) :=
+    (rightInsertion s v c).coeff (-m - 1)
+  let F := (f.comp (gradeProjection (w : ℂ))).comp (sector s).subtype
+  let aDiv (i : ℕ) := dividedTranslation fixedSourceLOne i A
+  let uDiv (l : ℕ) := dividedTranslation (sectorLOne s) l u
+  let iter (i l n : ℕ) : sector s :=
+    integerBinomial (pNative i) n •
+      R (pNative i + qNative l - (n : ℤ)) (((fixedField s (aDiv i))[[r + (n : ℤ)]]) (uDiv l)) B
+  let first (i l j : ℕ) : sector s :=
+    weight j • ((fixedField s (aDiv i))[[pNative i + r - (j : ℤ)]])
+      (R (qNative l + (j : ℤ)) (uDiv l) B)
+  let second (i l j : ℕ) : sector s :=
+    weight j • (epsilon r •
+      R (qNative l + r - (j : ℤ)) (uDiv l) (fixedProduct (aDiv i) B (pNative i + (j : ℤ))))
+  let phase := Complex.exp ((Real.pi : ℂ) * Complex.I * ((h : ℂ) / 9))
+  let phaseIter := Complex.exp ((Real.pi : ℂ) * Complex.I * ((H₀ : ℂ) / 9))
+  have ha : L₀ A.val = ((e : ℤ) : ℂ) • A.val := sourceGrade_weight (e : ℤ) a
+  have hKI : K ≤ I := le_max_left _ _
+  have hKJ : K ≤ J := le_max_left _ _
+  have hUI : sourceLoweringCutoff (e : ℤ) a ≤ I :=
+    (le_max_left _ _).trans (le_max_right _ _)
+  have heI : e + 1 ≤ I := (le_max_right _ _).trans (le_max_right _ _)
+  have hUJ : U ≤ J := le_max_right _ _
+  have hRead (v : sector s) : F v = f (gradeProjection (w : ℂ) v.val) := rfl
+  have hR (m : ℤ) (v : sector s) (c : fixedStates) : R m v c = rightMode s m v c := rfl
+  have hAPow (i : ℕ) :
+      aDiv i = (i.factorial : ℂ)⁻¹ • (sourceLOneOnFixed ^ i) A := rfl
+  have hAWeight (i : ℕ) (hi : e + 1 ≤ i) : aDiv i = 0 := by
+    have hz := sourceLOne_pow_eq_zero_of_lt a.val e
+      (by simpa only [A, fixedGradeInclusion, Submodule.coe_inclusion, Int.cast_natCast] using ha)
+      i (by omega)
+    apply Subtype.ext
+    simp only [aDiv, dividedTranslation, LinearMap.smul_apply, Submodule.coe_smul,
+      fixedSourceLOne_pow_val, Submodule.coe_zero]
+    change (i.factorial : ℂ)⁻¹ • (L₁ ^ i) a.val = 0
+    rw [hz, smul_zero]
+  have hU (l : ℕ) (hl : U ≤ l) : uDiv l = 0 := sectorLowering_eq_zero s h u hu l hl
+  have hProdZero (i l j : ℕ) (hz : aDiv i = 0 ∨ uDiv l = 0) :
+      first i l j = 0 ∧ second i l j = 0 := by
+    rcases hz with hai | hul
+    · simp only [first, second, hai, fixedProduct_zero_left, hR, map_zero, Pi.zero_apply,
+        LinearMap.zero_apply, smul_zero, and_self]
+    · simp only [first, second, hul, hR, map_zero, LinearMap.zero_apply, smul_zero, and_self]
+  have hNative (i l : ℕ) :
+      Function.HasFiniteSupport (first i l) ∧ Function.HasFiniteSupport (second i l) ∧
+      F (∑ᶠ n : ℕ, iter i l n) =
+        (∑ᶠ j : ℕ, F (first i l j)) - (∑ᶠ j : ℕ, F (second i l j)) := by
+    obtain ⟨_, hf, hs, hsum⟩ :=
+      rightInsertion_borcherds s (aDiv i) B (uDiv l) (pNative i) (qNative l) r
+    change Function.HasFiniteSupport (first i l) at hf
+    change Function.HasFiniteSupport (second i l) at hs
+    refine ⟨hf, hs, ?_⟩
+    have hsum' : (∑ᶠ n : ℕ, iter i l n) =
+        ∑ᶠ j : ℕ, (first i l j - second i l j) := by
+      simpa only [iter, first, second, smul_sub] using hsum
+    rw [hsum', finsum_sub_distrib hf hs, map_sub, map_finsum F hf, map_finsum F hs]
+  have hIterZero (i l : ℕ) (hil : K ≤ i + l) : F (∑ᶠ n : ℕ, iter i l n) = 0 := by
+    rw [finsum_eq_zero_of_forall_eq_zero, map_zero]
+    intro n
+    have hBelow : h - 9 * (l : ℤ) +
+        9 * ((e : ℤ) - (i : ℤ) - (r + (n : ℤ)) - 1) < 16 := by
+      dsimp only [K, H₀] at hil
+      omega
+    have hz := lowered_iterate_eq_zero s A u (e : ℤ) h ha hu r i l n hBelow
+    change ((fixedField s (aDiv i))[[r + (n : ℤ)]]) (uDiv l) = 0 at hz
+    simp only [iter, hz, hR, map_zero, LinearMap.zero_apply, smul_zero]
+  have hTriangle :
+      (∑ i ∈ Finset.range K, ∑ l ∈ Finset.range (K - i), F (∑ᶠ n : ℕ, iter i l n)) =
+        ∑ i ∈ Finset.range I, ∑ l ∈ Finset.range J, F (∑ᶠ n : ℕ, iter i l n) := by
+    calc
+      _ = ∑ i ∈ Finset.range K, ∑ l ∈ Finset.range J, F (∑ᶠ n : ℕ, iter i l n) := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        apply Finset.sum_subset (Finset.range_mono ((Nat.sub_le K i).trans hKJ))
+        intro l _ hl
+        exact hIterZero i l (by simp only [Finset.mem_range, not_lt] at hl; omega)
+      _ = _ := by
+        apply Finset.sum_subset (Finset.range_mono hKI)
+        intro i _ hi
+        apply Finset.sum_eq_zero
+        intro l _
+        exact hIterZero i l (by simp only [Finset.mem_range, not_lt] at hi; omega)
+  let cells := (Finset.range I) ×ˢ (Finset.range J)
+  let firstSum := ∑ i ∈ Finset.range I, ∑ l ∈ Finset.range J, ∑ᶠ j : ℕ, F (first i l j)
+  let secondSum := ∑ i ∈ Finset.range I, ∑ l ∈ Finset.range J, ∑ᶠ j : ℕ, F (second i l j)
+  have hFirstSum :
+      (∑ᶠ j : ℕ, ∑ i ∈ Finset.range I, ∑ l ∈ Finset.range J, F (first i l j)) = firstSum := by
+    have hFinite (c : ℕ × ℕ) : Function.HasFiniteSupport (fun j => F (first c.1 c.2 j)) :=
+      (hNative c.1 c.2).1.subset (by
+        intro j hj hz
+        apply hj
+        change F (first c.1 c.2 j) = 0
+        rw [show first c.1 c.2 j = 0 from hz, map_zero])
+    simpa only [firstSum, cells, Finset.sum_product] using
+      (finsum_sum_comm cells (fun j c => F (first c.1 c.2 j)) (fun c _ => hFinite c))
+  have hSecondSum :
+      (∑ᶠ j : ℕ, ∑ i ∈ Finset.range I, ∑ l ∈ Finset.range J, F (second i l j)) = secondSum := by
+    have hFinite (c : ℕ × ℕ) : Function.HasFiniteSupport (fun j => F (second c.1 c.2 j)) :=
+      (hNative c.1 c.2).2.1.subset (by
+        intro j hj hz
+        apply hj
+        change F (second c.1 c.2 j) = 0
+        rw [show second c.1 c.2 j = 0 from hz, map_zero])
+    simpa only [secondSum, cells, Finset.sum_product] using
+      (finsum_sum_comm cells (fun j c => F (second c.1 c.2 j)) (fun c _ => hFinite c))
+  have hPadProduct (term : ℕ → ℕ → ℂ) (N : ℕ) (hN : N ≤ I)
+      (hA : ∀ i l, N ≤ i → term i l = 0) (hB : ∀ i l, U ≤ l → term i l = 0) :
+      (∑ i ∈ Finset.range N, ∑ l ∈ Finset.range U, term i l) =
+        ∑ i ∈ Finset.range I, ∑ l ∈ Finset.range J, term i l := by
+    calc
+      _ = ∑ i ∈ Finset.range N, ∑ l ∈ Finset.range J, term i l := by
+        apply Finset.sum_congr rfl
+        intro i _
+        apply Finset.sum_subset (Finset.range_mono hUJ)
+        intro l _ hl
+        exact hB i l (by simpa only [Finset.mem_range, not_lt] using hl)
+      _ = _ := by
+        apply Finset.sum_subset (Finset.range_mono hN)
+        intro i _ hi
+        exact Finset.sum_eq_zero (fun l _ =>
+          hA i l (by simpa only [Finset.mem_range, not_lt] using hi))
+  have hOutput (j : ℕ) : weight j * output j =
+      (phase * epsilon (e : ℤ) * epsilon r) *
+        ∑ i ∈ Finset.range I, ∑ l ∈ Finset.range J, F (second i l j) := by
+    let m : ℤ := p + r - (j : ℤ)
+    let g : ℤ := d - (e : ℤ) + m + 1
+    let k : ℤ := -q - (j : ℤ) - 1
+    have hWeight : (w : ℂ) = (h : ℂ) / 9 + (g : ℂ) - (k : ℂ) := by
+      rw [hw]
+      dsimp only [g, m, k]
+      push_cast
+      ring
+    change weight j * sourcePairing lattice
+      (fixedProduct A (fixedGradeInclusion g (evaluation s h (w : ℂ) u f k g)) m).val B.val = _
+    rw [output_product_pairing s h (w : ℂ) u hu f k g m hWeight (e : ℤ) a B,
+      ← hPadProduct (fun i l => F (second i l j)) (sourceLoweringCutoff (e : ℤ) a) hUI
+        (fun i l hi => by rw [(hProdZero i l j (Or.inl (sourceLowering_eq_zero (e : ℤ) a i hi))).2,
+          map_zero])
+        (fun i l hl => by rw [(hProdZero i l j (Or.inr (hU l hl))).2, map_zero])]
+    simp only [sourceLoweringCutoff, U, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro l _
+    have hm : 2 * (e : ℤ) - (i : ℤ) - m - 2 = pNative i + (j : ℤ) := by
+      dsimp only [m, pNative]
+      omega
+    have hk : -(qNative l + r - (j : ℤ)) - 1 = (l : ℤ) - k := by
+      dsimp only [qNative, k]
+      omega
+    let c := fixedProduct ((sourceLOneOnFixed ^ i) A) B (pNative i + (j : ℤ))
+    have hc : fixedProduct (aDiv i) B (pNative i + (j : ℤ)) = (i.factorial : ℂ)⁻¹ • c := by
+      rw [hAPow]
+      change sourceMode _ _ B = (i.factorial : ℂ)⁻¹ • sourceMode _ _ B
+      rw [map_smul, LinearMap.smul_apply]
+    rw [hm]
+    simp only [second, hR, hc, map_smul, smul_eq_mul]
+    simp only [hRead]
+    change weight j * ((-1 : ℂ) ^ (e : ℤ) *
+      ((i.factorial : ℂ)⁻¹ * (phase * f (gradeProjection (w : ℂ)
+        ((rightInsertion s (uDiv l) c).coeff ((l : ℤ) - k)).val)))) =
+      phase * epsilon (e : ℤ) * epsilon r *
+        (weight j * (epsilon r * ((i.factorial : ℂ)⁻¹ * f (gradeProjection (w : ℂ)
+          ((rightInsertion s (uDiv l) c).coeff (-(qNative l + r - (j : ℤ)) - 1)).val))))
+    rw [hk, ← epsilon]
+    linear_combination -(phase * epsilon (e : ℤ) * weight j * (i.factorial : ℂ)⁻¹ *
+      f (gradeProjection (w : ℂ) ((rightInsertion s (uDiv l) c).coeff ((l : ℤ) - k)).val)) *
+        sign_square r
+  have hDual (j : ℕ) : weight j * dual j =
+      (phase * epsilon (e : ℤ)) *
+        ∑ i ∈ Finset.range I, ∑ l ∈ Finset.range J, F (first i l j) := by
+    let m : ℤ := -(p + (j : ℤ)) - 1
+    let k : ℤ := -q - r + (j : ℤ) - 1
+    let w' := shiftedWeight w e (3 * m)
+    let g := C (dualField a.val) (3 * m) (DirectSum.lof ℂ ℝ GradeDual w f)
+    change weight j * fixedGradeForm d (evaluation s h (w' : ℂ) u (g w') k d) b = _
+    rw [dual_product_pairing s h w u f k m d e a b,
+      ← hPadProduct (fun i l => F (first i l j)) (e + 1) heI
+        (fun i l hi => by rw [(hProdZero i l j (Or.inl (hAWeight i hi))).1, map_zero])
+        (fun i l hl => by rw [(hProdZero i l j (Or.inr (hU l hl))).1, map_zero])]
+    simp only [U, Finset.mul_sum]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro l _
+    have hm : -m - 2 * (e : ℤ) + (i : ℤ) = -(pNative i + r - (j : ℤ)) - 1 := by
+      dsimp only [m, pNative]
+      omega
+    have hk : -(qNative l + (j : ℤ)) - 1 = (l : ℤ) - k := by
+      dsimp only [qNative, k]
+      omega
+    rw [hm]
+    simp only [first, hAPow, map_smul, Pi.smul_apply, LinearMap.smul_apply, smul_eq_mul]
+    simp only [hRead]
+    change _ = phase * epsilon (e : ℤ) *
+      (weight j * ((i.factorial : ℂ)⁻¹ * f (gradeProjection (w : ℂ)
+        (C (fixedField s ((sourceLOneOnFixed ^ i) A)) (-(pNative i + r - (j : ℤ)) - 1)
+          (R (qNative l + (j : ℤ)) (uDiv l) B)).val)))
+    have hRindex : R (qNative l + (j : ℤ)) (uDiv l) B =
+        (rightInsertion s (uDiv l) B).coeff ((l : ℤ) - k) := by
+      dsimp only [R]
+      rw [hk]
+    rw [hRindex, epsilon, zpow_natCast]
+    let readout := f (gradeProjection (w : ℂ)
+      (C (fixedField s ((sourceLOneOnFixed ^ i) A)) (-(pNative i + r - (j : ℤ)) - 1)
+        ((rightInsertion s (uDiv l) B).coeff ((l : ℤ) - k))).val)
+    change weight j * (phase * ((-1 : ℂ) ^ e * ((i.factorial : ℂ)⁻¹ * readout))) =
+      phase * (-1 : ℂ) ^ e * (weight j * ((i.factorial : ℂ)⁻¹ * readout))
+    ring
+  have hPhase : phaseIter = -(phase * epsilon (e : ℤ) * epsilon r) := by
+    have hArg : (Real.pi : ℂ) * Complex.I * ((H₀ : ℂ) / 9) =
+        (Real.pi : ℂ) * Complex.I * ((h : ℂ) / 9) +
+          (((e : ℤ) - r - 1 : ℤ) : ℂ) * ((Real.pi : ℂ) * Complex.I) := by
+      dsimp only [H₀]
+      push_cast
+      ring
+    have hSign : epsilon ((e : ℤ) - r - 1) = -(epsilon (e : ℤ) * epsilon r) := by
+      rw [sub_eq_add_neg (↑e : ℤ) r, sub_eq_add_neg, epsilon_add, epsilon_add]
+      have hr : epsilon (-r) = epsilon r := by
+        rw [epsilon, zpow_neg, ← inv_zpow]
+        norm_num [epsilon]
+      rw [hr, show epsilon (-1) = -1 by norm_num [epsilon], mul_neg, mul_one]
+    rw [show phaseIter = Complex.exp ((Real.pi : ℂ) * Complex.I * ((H₀ : ℂ) / 9)) from rfl,
+      hArg, Complex.exp_add, Complex.exp_int_mul, Complex.exp_pi_mul_I, ← epsilon, hSign]
+    change phase * -(epsilon (e : ℤ) * epsilon r) = _
+    ring
+  have hIter := evaluation_iterate_sum_pairing s A u (e : ℤ) h ha hu p q r d (w : ℂ) f
+    (by simpa only [Int.cast_natCast] using hw) B
+  change _ = phaseIter *
+    (∑ i ∈ Finset.range K, ∑ l ∈ Finset.range (K - i), F (∑ᶠ n : ℕ, iter i l n)) at hIter
+  change (∑ᶠ j : ℕ, integerBinomial p j *
+    sourcePairing lattice
+      (evaluation s (h + 9 * ((e : ℤ) - (r + (j : ℤ)) - 1)) (w : ℂ)
+        (((fixedField s A)[[r + (j : ℤ)]]) u) f
+        (-p - q + 2 * (e : ℤ) - 2 * r - 3 - (j : ℤ)) d).val B.val) =
+    (∑ᶠ j : ℕ, weight j * output j) - epsilon r * (∑ᶠ j : ℕ, weight j * dual j)
+  have hNativeRead (i l : ℕ) :
+      F (∑ᶠ n : ℕ, iter i l n) =
+        (∑ᶠ j : ℕ, F (first i l j)) - (∑ᶠ j : ℕ, F (second i l j)) := (hNative i l).2.2
+  rw [hIter, hTriangle]
+  simp_rw [hNativeRead, Finset.sum_sub_distrib]
+  have hOutSum : (∑ᶠ j : ℕ, weight j * output j) =
+      phase * epsilon (e : ℤ) * epsilon r * secondSum := by
+    simp_rw [hOutput]
+    rw [← mul_finsum, hSecondSum]
+  have hDualSum : (∑ᶠ j : ℕ, weight j * dual j) =
+      phase * epsilon (e : ℤ) * firstSum := by
+    simp_rw [hDual]
+    rw [← mul_finsum, hFirstSum]
+  change phaseIter * (firstSum - secondSum) = _
+  rw [hPhase, hOutSum, hDualSum]
+  ring
+
 /-- Translating the twisted input differentiates the opposite evaluation
 with the physical exponents of the coordinate inversion. -/
 theorem evaluation_translation (s : Fin 3) (h : ℤ) (w : ℂ) (u : sector s)
@@ -641,6 +1027,7 @@ theorem evaluation_ground_ne_zero :
 #print axioms dual_product_pairing
 #print axioms invertedCoeff_iterate_sum_pairing
 #print axioms evaluation_iterate_sum_pairing
+#print axioms evaluation_mixedJacobi_pairing
 #print axioms evaluation_translation
 #print axioms evaluation_ground_vacuum
 #print axioms evaluation_ground_ne_zero
