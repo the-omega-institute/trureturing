@@ -106,6 +106,9 @@ python3 src/OmegaChecks/InitPort/report.py .lake/init-port-all --require-complet
 
 `publicProjectionTypeChecked` 标出使用蕴涵偏序关系、半环包络投影或零次幂规约后，完整命题在两个公开内核中都与对应定理定义等价的接口。两侧普通导入编译显式命题，也核对错误结论的拒绝结果。蕴涵偏序定理仍保留原文字典依赖的证明，统计可调用命题时每个定义地址只计一次。[公开投影核验](PublicConsumerCheck.lean)
 
+`moduleBodyStrictImport` 标出官方调用端需要 `import all` 展开切片或模包络定义才能通过类型转换的定理。严格调用端通过普通导入时标为 `ordinary`，同样须展开定义时标为 `all`。核验器编译各定义模块的正反调用，同时检验隐藏定义后的真实拒绝结果，并在严格空内核中重放这些定理。要求两侧都能普通导入的验收仍保留这些缺口。[导入范围核验](ScopedConsumerCheck.lean)
+
+
 
 
 

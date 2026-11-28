@@ -11,6 +11,7 @@ import tempfile
 import fin_bounds
 import finite_consumers
 import order_consumers
+import scoped_consumers
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
@@ -165,6 +166,8 @@ def check_coverage(official):
     candidates = finite_consumers.candidates(official["declarations"])
     projections = finite_consumers.sites(official.get("certifiedProjectionTypes", []))
     projected_candidates = finite_consumers.candidates(official["declarations"], "projection")
+    scopes = scoped_consumers.scopes(official.get("certifiedModuleBodyTypes", []))
+    scoped_candidates = scoped_consumers.candidates(official["declarations"])
     sites = set()
     direct = 0
     matched = 0
@@ -342,6 +345,12 @@ def check_coverage(official):
                 any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")) or
                 (owner == ORDER_OWNER and not orders) or private_type or equivalent or choice_operand or pointwise or finite)):
             raise ValueError(f"uncertified public projection proposition for {site}")
+        scope = scopes.get(site)
+        if row.get("moduleBodyStrictImport") != scope or (scope and (
+                site not in scoped_candidates or row["kind"] != "theorem" or
+                any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")) or
+                private_type or equivalent or choice_operand or pointwise or finite or projected)):
+            raise ValueError(f"uncertified module-body import requirement for {site}")
         if port:
             if axiom or witness or (runtime and not (unsafe_runtime or effect or comparison or pointer_hash)) or row["strictModule"] != "Omega" + owner:
                 raise ValueError(f"inconsistent strict match for {owner}/{name}")
@@ -362,6 +371,8 @@ def check_coverage(official):
             reductions += 1
         elif not endpoint and not argument and not refuter and path != "Quot.sound":
             unresolved.append(site)
+    if not scopes.keys() <= sites:
+        raise ValueError("module-body evidence has no definition site")
     if not projections <= sites:
         raise ValueError("public projection certificate has no definition site")
     if not finite_sites <= sites:
@@ -400,6 +411,8 @@ def check_coverage(official):
         raise ValueError("finite consumer count does not agree with the checked sites")
     if summary.get("publicProjectionTypesChecked", 0) != len(projections):
         raise ValueError("public projection count does not agree with the checked sites")
+    if summary.get("moduleBodyTypesChecked", 0) != len(scopes):
+        raise ValueError("module-body count does not agree with the checked sites")
     return reductions, unresolved
 
 
@@ -591,6 +604,10 @@ def report(product, require_complete=False):
         official["certifiedProjectionTypes"] = projection_checks
         official["summary"]["publicProjectionTypesChecked"] = len(projection_checks)
         projections = finite_consumers.sites(projection_checks)
+        scope_checks = scoped_consumers.certificates(product, official["declarations"])
+        official["certifiedModuleBodyTypes"] = scope_checks
+        official["summary"]["moduleBodyTypesChecked"] = len(scope_checks)
+        scopes = scoped_consumers.scopes(scope_checks)
         strict_choices = check_strict_reference_choices(product, stage, attempts)
         strict_matches = check_strict_longest_matches(product, stage)
         strict_folds = check_strict_fin_folds(product, stage)
@@ -604,6 +621,8 @@ def report(product, require_complete=False):
         pending.update({site: (*result, "strictEquivalenceWitness") for site, result in strict_equivalences.items()})
         for row in official["declarations"]:
             site = (row["module"], row["name"])
+            if site in scopes:
+                row["moduleBodyStrictImport"] = scopes[site]
             if site in projections:
                 row["publicProjectionTypeChecked"] = True
             if site in finite_sites:
@@ -655,7 +674,7 @@ def report(product, require_complete=False):
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
                              "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap",
                              "importAllOriginalTypeChecked", "originalTypeOrderDependencies", "originalTypeChoiceDependency", "finBoundProofReplacementChecked",
-                             "pointwiseOrderTypeChecked", "finiteConsumerTypeChecked", "publicProjectionTypeChecked"])
+                             "pointwiseOrderTypeChecked", "finiteConsumerTypeChecked", "publicProjectionTypeChecked", "moduleBodyStrictImport"])
             for row in official["declarations"]:
                 if row["originalTypeChecked"] or row["kind"] == "axiom":
                     continue
@@ -706,7 +725,7 @@ def report(product, require_complete=False):
                                  "true" if row.get("finBoundProofReplacementChecked") else "",
                                  "true" if row.get("pointwiseOrderTypeChecked") else "",
                                  "true" if row.get("finiteConsumerTypeChecked") else "",
-                                 "true" if row.get("publicProjectionTypeChecked") else ""])
+                                 "true" if row.get("publicProjectionTypeChecked") else "", row.get("moduleBodyStrictImport")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")

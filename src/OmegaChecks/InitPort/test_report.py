@@ -294,6 +294,22 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, "public projection"):
                 check_coverage(data | {"declarations": [row | bad]})
 
+    def test_module_body_conversion_retains_the_missing_ordinary_upstream_client(self):
+        owner, name = "Init.Data.Slice.List.Lemmas", "List.toList_mkSlice_rco"
+        row = site(owner, name, matchingNameAndModule=True, strictModule="Omega" + owner,
+                   originalTypeChecked=False, originalTypeGap="missing type dependencies: Omega.Std.Slice.toList. "
+                   "The upstream public interface hides the body of Std.Slice.toList.")
+        data = inventory(row)
+        data["schemaVersion"] = 6
+        data["summary"]["originalTypesChecked"] = 0
+        row["moduleBodyStrictImport"] = "ordinary"
+        data["certifiedModuleBodyTypes"] = [[owner, name, "ordinary"]]
+        data["summary"]["moduleBodyTypesChecked"] = 1
+        self.assertEqual(check_coverage(data), (0, [(owner, name)]))
+        for invalid in ([], [[owner, name, "all"]], [[owner, name, "invalid"]]):
+            with self.subTest(invalid=invalid), self.assertRaisesRegex(ValueError, "module-body"):
+                check_coverage(data | {"certifiedModuleBodyTypes": invalid})
+
     def test_strict_excluded_middle_is_a_logical_consequence(self):
         row = site("Init.Data.String.Lemmas.Pattern.Basic", "String.Slice.Pattern.Model.IsMatch.exists_isLongestMatch",
                    logicalConsequence="Classical.em", strictLogicalConsequence="Classical.em",
