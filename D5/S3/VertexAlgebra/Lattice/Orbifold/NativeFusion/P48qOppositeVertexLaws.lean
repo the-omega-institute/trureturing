@@ -18,7 +18,9 @@ set_option maxRecDepth 4096
 namespace D5.S3.VertexAlgebra.Lattice.Orbifold.NativeFusion
 
 open scoped BigOperators DirectSum VertexOperator
-open HalfFockSpectralFiberSource (actualInverse)
+open HalfFockSpectralFiberSource (actualInverse actualInverse_left actualInverse_right)
+open LatticePositiveEnergy (actualL0_eigen_iff_grade gradeProjection gradeProjection_mem
+  stateEnergies sum_gradeProjections)
 open LatticeSugawaraCurrents (sugawaraMode)
 open P48qFixedSourceBPZ (fixedGrade)
 open P48qNativeConformalSector (fixedStates sector fixedField fixedOmega fixedProduct)
@@ -37,7 +39,13 @@ open private fixedGradeInclusion fixedGrade_eq_zero_of_lt sourceGrade_weight fix
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeOppositeEvaluation
 open private conformalMode_weight from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeOppositeVacuum
-open private sourceMode from D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeFixedRightJacobi
+open private sourceMode sectorMode from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeFixedRightJacobi
+open private gram_det_unit from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConformalVectorDecomposition
+open private fixedProjection fixedProjection_eq_self fixedProjection_fixed lift_fixed
+  mem_fixedStates_iff sourceLZero_fixedProjection from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalSector
 
 noncomputable section
 
@@ -294,6 +302,157 @@ theorem oppositeVertex_mixedJacobi_off_grade (s : Fin 3) (e : ℤ) (a : fixedGra
     · rw [fixedGrade_eq_zero_of_lt (lt_of_not_ge he) a]
       simp only [Submodule.coe_zero, map_zero, Pi.zero_apply, LinearMap.zero_apply]
 
+private abbrev MixedCoefficientFamilies :=
+  (ℕ → fixedStates) × (ℕ → fixedStates) × (ℕ → fixedStates)
+
+private def mixedCoefficients (s : Fin 3) (p r : ℤ) (Q : ℚ) :
+    fixedStates →ₗ[ℂ] sector s →ₗ[ℂ] RestrictedDual →ₗ[ℂ] MixedCoefficientFamilies := by
+  let read (x : ℚ) : sector s →ₗ[ℂ] RestrictedDual →ₗ[ℂ] fixedStates :=
+    ((LinearMap.proj x).comp C).comp (oppositeVertex s)
+  let dualMode (k : ℤ) : fixedStates →ₗ[ℂ] Module.End ℂ RestrictedDual :=
+    ((LinearMap.proj k).comp C).comp (dualField.comp fixedStates.subtype)
+  let coeffs (a : fixedStates) (u : sector s) (f : RestrictedDual) : MixedCoefficientFamilies :=
+    (fun j => read (-(p : ℚ) - Q - 1 + j) (sectorMode s (r + (j : ℤ)) a u) f,
+     fun j => sourceMode (p + r - (j : ℤ)) a (read (-Q - j - 1) u f),
+     fun j => read (-Q - (r : ℚ) + j - 1) u (dualMode (3 * (-(p + (j : ℤ)) - 1)) a f))
+  let atSource (a : fixedStates) := LinearMap.mk₂ ℂ (coeffs a)
+    (by intros; simp only [coeffs, map_add, LinearMap.add_apply]; rfl)
+    (by intros; simp only [coeffs, map_smul, LinearMap.smul_apply]; rfl)
+    (by intros; simp only [coeffs, map_add]; rfl)
+    (by intros; simp only [coeffs, map_smul]; rfl)
+  refine { toFun := atSource, map_add' := ?_, map_smul' := ?_ }
+  · intro a b
+    apply LinearMap.ext fun u => LinearMap.ext fun f => ?_
+    change coeffs (a + b) u f = coeffs a u f + coeffs b u f
+    simp only [coeffs, map_add, LinearMap.add_apply]
+    rfl
+  · intro z a
+    apply LinearMap.ext fun u => LinearMap.ext fun f => ?_
+    change coeffs (z • a) u f = z • coeffs a u f
+    simp only [coeffs, map_smul, LinearMap.smul_apply]
+    rfl
+
+private def weightedSum (c : ℕ → ℂ) (v : ℕ → fixedStates) : fixedStates :=
+  ∑ᶠ j, c j • v j
+
+private theorem weightedSupport (c : ℕ → ℂ) {v : ℕ → fixedStates}
+    (hv : Function.HasFiniteSupport v) : Function.HasFiniteSupport (fun j => c j • v j) :=
+  hv.subset (Function.support_smul_subset_right c v)
+
+private theorem weightedSum_add (c : ℕ → ℂ) {v w : ℕ → fixedStates}
+    (hv : Function.HasFiniteSupport v) (hw : Function.HasFiniteSupport w) :
+    weightedSum c (v + w) = weightedSum c v + weightedSum c w := by
+  simpa only [weightedSum, Pi.add_apply, smul_add] using
+    finsum_add_distrib (weightedSupport c hv) (weightedSupport c hw)
+
+private theorem weightedSum_smul (c : ℕ → ℂ) (z : ℂ) {v : ℕ → fixedStates}
+    (hv : Function.HasFiniteSupport v) : weightedSum c (z • v) = z • weightedSum c v := by
+  simpa only [weightedSum, Pi.smul_apply, smul_comm _ z] using
+    (smul_finsum' z (weightedSupport c hv)).symm
+
+private def mixedJacobiSubmodule (p r : ℤ) : Submodule ℂ MixedCoefficientFamilies := by
+  let weight (j : ℕ) := (-1 : ℂ) ^ j * integerBinomial r j
+  refine {
+    carrier := {v | Function.HasFiniteSupport v.1 ∧ Function.HasFiniteSupport v.2.1 ∧
+      Function.HasFiniteSupport v.2.2 ∧
+        weightedSum (integerBinomial p) v.1 =
+          weightedSum weight v.2.1 - epsilon r • weightedSum weight v.2.2}
+    zero_mem' := by simp [weightedSum, Function.HasFiniteSupport]
+    add_mem' := ?_
+    smul_mem' := ?_ }
+  · rintro a b ⟨ai, ao, ad, ha⟩ ⟨bi, bo, bd, hb⟩
+    refine ⟨ai.add bi, ao.add bo, ad.add bd, ?_⟩
+    change weightedSum (integerBinomial p) (a.1 + b.1) =
+      weightedSum weight (a.2.1 + b.2.1) - epsilon r • weightedSum weight (a.2.2 + b.2.2)
+    rw [weightedSum_add _ ai bi, weightedSum_add _ ao bo, weightedSum_add _ ad bd, ha, hb, smul_add]
+    abel
+  · rintro z a ⟨ai, ao, ad, ha⟩
+    refine ⟨weightedSupport (fun _ => z) ai, weightedSupport (fun _ => z) ao,
+      weightedSupport (fun _ => z) ad, ?_⟩
+    change weightedSum (integerBinomial p) (z • a.1) =
+      weightedSum weight (z • a.2.1) - epsilon r • weightedSum weight (z • a.2.2)
+    rw [weightedSum_smul _ z ai, weightedSum_smul _ z ao, weightedSum_smul _ z ad,
+      ha, smul_sub, smul_comm z (epsilon r)]
+
+private theorem fixedGrade_span :
+    Submodule.span ℂ {a : fixedStates |
+      ∃ (e : ℤ) (v : fixedGrade e), fixedGradeInclusion e v = a} = ⊤ := by
+  classical
+  apply top_unique
+  intro a _
+  let component (e : ℤ) : fixedGrade e := by
+    let v := gradeProjection lattice e a.val
+    have hv := (actualL0_eigen_iff_grade lattice (actualInverse lattice)
+      (actualInverse_left lattice gram_det_unit) (actualInverse_right lattice gram_det_unit)
+      e v).mpr (gradeProjection_mem lattice e a.val)
+    refine ⟨fixedProjection v, (mem_fixedStates_iff _).mpr (fixedProjection_fixed v), ?_⟩
+    apply (actualL0_eigen_iff_grade lattice (actualInverse lattice)
+      (actualInverse_left lattice gram_det_unit) (actualInverse_right lattice gram_det_unit) e _).mp
+    rw [sourceLZero_fixedProjection, hv, map_smul]
+  have hsum : (∑ e ∈ stateEnergies lattice a.val, fixedGradeInclusion e (component e)) = a := by
+    apply Subtype.ext
+    simpa only [Submodule.coe_sum, component, fixedGradeInclusion, Submodule.coe_inclusion,
+      map_sum, fixedProjection_eq_self _ (lift_fixed a)] using
+      congrArg fixedProjection (sum_gradeProjections lattice a.val)
+  rw [← hsum]
+  exact Submodule.sum_mem _ fun e _ => Submodule.subset_span ⟨e, component e, rfl⟩
+
+set_option maxHeartbeats 2000000 in
+-- Match the concrete coefficient channels with the trilinear map during the span argument.
+/-- The mixed coefficient Jacobi law of the actual BPZ opposite vertex operator on the
+fixed source, twisted sector and restricted dual. All three families are finitely
+supported before weighting, and the dual coefficient is read on the cubic cover. -/
+theorem oppositeVertex_mixedJacobi_allStates (s : Fin 3) (a : fixedStates)
+    (u : sector s) (f : RestrictedDual) (p r : ℤ) (Q : ℚ) :
+    let iterate (j : ℕ) :=
+      C (oppositeVertex s (((fixedField s a)[[r + (j : ℤ)]]) u)) (-(p : ℚ) - Q - 1 + j) f
+    let output (j : ℕ) :=
+      fixedProduct a (C (oppositeVertex s u) (-Q - j - 1) f) (p + r - (j : ℤ))
+    let dual (j : ℕ) :=
+      C (oppositeVertex s u) (-Q - (r : ℚ) + j - 1)
+        (C (dualField a.val) (3 * (-(p + (j : ℤ)) - 1)) f)
+    let weight (j : ℕ) := (-1 : ℂ) ^ j * integerBinomial r j
+    Function.HasFiniteSupport iterate ∧ Function.HasFiniteSupport output ∧
+      Function.HasFiniteSupport dual ∧
+      (∑ᶠ j : ℕ, integerBinomial p j • iterate j) =
+        (∑ᶠ j : ℕ, weight j • output j) - epsilon r • (∑ᶠ j : ℕ, weight j • dual j) := by
+  classical
+  let coeffs := mixedCoefficients s p r Q
+  let law := mixedJacobiSubmodule p r
+  change coeffs a u f ∈ law
+  have sourceSpan : Submodule.span ℂ
+      {A : fixedStates | ∃ (e : ℤ) (v : fixedGrade e), fixedGradeInclusion e v = A} ≤
+        law.comap ((coeffs.flip u).flip f) := by
+    apply Submodule.span_le.mpr
+    rintro A ⟨e, v, rfl⟩
+    have sectorSpan : Submodule.span ℂ
+        {U : sector s | ∃ h : ℤ, totalLZero U.val = ((h : ℂ) / 9) • U.val} ≤
+          law.comap ((coeffs (fixedGradeInclusion e v)).flip f) := by
+      apply Submodule.span_le.mpr
+      rintro U ⟨h, hU⟩
+      change f ∈ law.comap (coeffs (fixedGradeInclusion e v) U)
+      rw [← DirectSum.sum_support_of f]
+      apply Submodule.sum_mem
+      intro w _
+      by_cases hm : ∃ q d : ℤ, Q = (q : ℚ) + 2 * (h : ℚ) / 9 ∧
+          (w : ℂ) = (h : ℂ) / 9 + (d : ℂ) + (p : ℂ) + (q : ℂ) -
+            (e : ℂ) + (r : ℂ) + 2
+      · obtain ⟨q, d, hQ, hw⟩ := hm
+        exact oppositeVertex_mixedJacobi s e v h U hU w (f w) p q r d Q hQ hw
+      · have hz (j : ℕ) := oppositeVertex_mixedJacobi_off_grade s e v h U hU w (f w) p r Q hm j
+        let hc := coeffs (fixedGradeInclusion e v) U (DirectSum.lof ℂ ℝ GradeDual w (f w))
+        have hi : hc.1 = 0 := funext fun j => (hz j).1
+        have ho : hc.2.1 = 0 := funext fun j => (hz j).2.1
+        have hd : hc.2.2 = 0 := funext fun j => (hz j).2.2
+        change hc ∈ law
+        change Function.HasFiniteSupport hc.1 ∧ Function.HasFiniteSupport hc.2.1 ∧
+          Function.HasFiniteSupport hc.2.2 ∧ _
+        simp [hi, ho, hd, weightedSum, Function.HasFiniteSupport]
+    rw [sector_homogeneous_span s] at sectorSpan
+    exact sectorSpan (show u ∈ (⊤ : Submodule ℂ (sector s)) from Submodule.mem_top)
+  rw [fixedGrade_span] at sourceSpan
+  exact sourceSpan (show a ∈ (⊤ : Submodule ℂ fixedStates) from Submodule.mem_top)
+
 set_option maxHeartbeats 2000000 in
 -- Compare the dependent coefficient selections on both sides of translation.
 private theorem oppositeVertex_translation_lof (s : Fin 3) (h : ℤ) (u : sector s)
@@ -358,6 +517,7 @@ theorem oppositeVertex_translation (s : Fin 3) (u : sector s) (x : ℚ) :
 
 #print axioms oppositeVertex_mixedJacobi
 #print axioms oppositeVertex_mixedJacobi_off_grade
+#print axioms oppositeVertex_mixedJacobi_allStates
 #print axioms oppositeVertex_translation
 
 end
