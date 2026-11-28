@@ -356,6 +356,65 @@ theorem counterexamples :
 /-- The interpreted division is multiplication by the interpreted inverse. -/
 @[expose] def divideAt (a b : Fin 8) := a * valInv b
 
+@[expose] def natResidue : Nat → Fin 8
+  | 0 => r0
+  | n + 1 => natResidue n + r1
+
+@[expose] def intResidue : Int → Fin 8
+  | .ofNat n => natResidue n
+  | .negSucc n => -natResidue (n + 1)
+
+theorem intResidue_neg : ∀ n : Int, intResidue (-n) = -intResidue n
+  | .ofNat 0 => rfl
+  | .ofNat (_ + 1) => rfl
+  | .negSucc n => ((by decide : ∀ x : Fin 8, - -x = x) (natResidue (n + 1))).symm
+
+/-- The root operations realize every field of the pinned commutative ring interface. -/
+@[expose, instance_reducible] def residueRing : CommRing (Fin 8) where
+  add := (· + ·)
+  mul := (· * ·)
+  neg := (- ·)
+  sub a b := a + -b
+  npow := ⟨natPower⟩
+  ofNat n := ⟨natResidue n⟩
+  natCast := ⟨natResidue⟩
+  intCast := ⟨intResidue⟩
+  nsmul := ⟨fun n a => natResidue n * a⟩
+  zsmul := ⟨fun i a => intResidue i * a⟩
+  add_zero := fun a => (ringLaws.2.2 a).1
+  add_comm := fun a b => (ringLaws.2.1 a b).1
+  add_assoc := fun a b c => (ringLaws.1 a b c).1
+  mul_assoc := fun a b c => (ringLaws.1 a b c).2.1
+  mul_comm := fun a b => (ringLaws.2.1 a b).2
+  mul_one := fun a => (ringLaws.2.2 a).2.1
+  one_mul := by decide
+  mul_zero := by decide
+  right_distrib := by decide
+  left_distrib := fun a b c => (ringLaws.1 a b c).2.2
+  zero_mul := by decide
+  pow_zero _ := rfl
+  pow_succ _ _ := rfl
+  neg_add_cancel := fun a => (ringLaws.2.2 a).2.2
+  sub_eq_add_neg _ _ := rfl
+  neg_zsmul i a := (congrArg (· * a) (intResidue_neg i)).trans
+    ((by decide : ∀ x y : Fin 8, (-x) * y = -(x * y)) _ _)
+  intCast_neg := intResidue_neg
+
+/-- The seven additional fields of the pinned field interface hold at both worlds,
+with inequality interpreted as persistent negation. -/
+theorem fieldLaws (w : Bool) :
+    (∀ a b, equalAt (divideAt a b) (a * valInv b) w) ∧
+    TwoWorlds.neg (equalAt r0 r1) w ∧ equalAt (valInv r0) r0 w ∧
+    (∀ a, TwoWorlds.neg (equalAt a r0) w → equalAt (a * valInv a) r1 w) ∧
+    (∀ a, equalAt (intPower a 0) r1 w) ∧
+    (∀ a (n : Nat), equalAt (intPower a (n + 1 : Int)) (intPower a (n : Int) * a) w) ∧
+    (∀ a (n : Int), equalAt (intPower a (-n)) (valInv (intPower a n)) w) := by
+  have rootLe (v : Bool) : false ≤ v := fun h => nomatch h
+  have lift {a b : Fin 8} (h : a = b) : equalAt a b w := persists (w := false) (rootLe w) a b h
+  exact ⟨fun _ _ => lift rfl, fun v _ => inverseLaws.2.2 v (rootLe v), lift inverseLaws.1,
+    fun a => cancel a w, fun a => lift (powerLaws a).1, fun a n => lift ((powerLaws a).2.1 n),
+    fun a n => lift ((powerLaws a).2.2 n)⟩
+
 /-- Root counterexamples to `Field.of_pow_eq_zero`, `Field.div_div_left` and `Field.div_div_right`. -/
 theorem powerAndDivisionCounterexamples :
     equalAt (natPower r2 3) r0 false ∧ ¬equalAt r2 r0 false ∧
@@ -366,7 +425,8 @@ theorem powerAndDivisionCounterexamples :
 
 run_cmd
   for witness in #[``rootApart, ``persists, ``ringLaws, ``operations, ``cancel, ``inverseLaws,
-      ``powerLaws, ``powerRespectsParity, ``counterexamples, ``powerAndDivisionCounterexamples] do
+      ``powerLaws, ``powerRespectsParity, ``residueRing, ``fieldLaws, ``counterexamples,
+      ``powerAndDivisionCounterexamples] do
     unless (← Lean.collectAxioms witness).isEmpty do
       throwError "finite residue model {witness} uses an axiom"
 
