@@ -6,6 +6,8 @@
    utility: none
    digest: Reflected Li kernels have a summable quadratic tail and converge uniformly on a fixed disk. -/
 
+module
+
 import OmegaBuild.Commands
 import D5.S3.Weil.ZetaBridge.ClassicExplicitFormula
 import Mathlib.Analysis.Normed.Group.FunctionSeries
@@ -17,6 +19,8 @@ import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
 compile_only_with_mathlib
+
+public section
 
 /-! Reflection cancels the first-order reciprocal-zero terms in the Li
 resolvent. The resulting quadratic tail is summable without a critical-line
@@ -37,10 +41,11 @@ open D5.S3.Weil.ZetaBridge.ClassicExplicitFormula
 private def ratio (rho : ℂ) : ℂ := 1 - 1 / rho
 
 /-- The multiplicity-weighted Li resolvent averaged over reflection. -/
+@[expose]
 def reflectedLiKernel (Z : ZeroData) (k : ℕ) (z : ℂ) : ℂ :=
   (Z.multiplicity k : ℂ) / 2 *
-    (2 * (1 - z)⁻¹ - ratio (Z.zero k) * (1 - ratio (Z.zero k) * z)⁻¹ -
-      ratio (1 - Z.zero k) * (1 - ratio (1 - Z.zero k) * z)⁻¹)
+    (2 * (1 - z)⁻¹ - (1 - 1 / Z.zero k) * (1 - (1 - 1 / Z.zero k) * z)⁻¹ -
+      (1 - 1 / (1 - Z.zero k)) * (1 - (1 - 1 / (1 - Z.zero k)) * z)⁻¹)
 
 private theorem zero_ne (Z : ZeroData) (k : ℕ) :
     Z.zero k ≠ 0 ∧ 1 - Z.zero k ≠ 0 := by
