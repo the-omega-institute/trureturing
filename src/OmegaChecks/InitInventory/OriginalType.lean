@@ -106,23 +106,43 @@ private def recursorBinders (rules : List RecursorRule) : Expr → Expr
     .forallE label type (recursorBinders rules body) bi
   | body => body
 
+private inductive FiniteConsumerType where
+  | notApplicable
+  | checked
+  | gap (reason : String)
+
 /-- At a finite use, the official total consumer projects the iterator out of its
 wrapper. Elaborate the finite instance at the use in the pinned statement, then
 check the complete statement in both ordinary export environments. -/
-private def checkedFiniteConsumer (official visible strict : Environment) (owner : Name)
-    (source : ConstantInfo) (pinned target : Expr) (missing : Array Name) : IO Bool := do
+private def checkFiniteConsumer (official visible strict : Environment) (owner : Name)
+    (source : ConstantInfo) (pinned target : Expr) (missing : Array Name) : IO FiniteConsumerType := do
   let consumers := [``Std.Iter.toList, ``Std.Iter.toListRev, ``Std.Iter.toArray, ``Std.Iter.atIdxSlow?,
     ``Std.IterM.toList, ``Std.IterM.toListRev, ``Std.IterM.toArray,
     ``Std.Slice.toList, ``Std.Slice.toListRev, ``Std.Slice.toArray]
   unless !source.isAxiom && !source.isUnsafe && !source.isPartial &&
       missing.all (fun n => consumers.contains (InitKernelPort.originalName n)) &&
       visible.getModuleIdxFor? source.name == visible.getModuleIdx? owner &&
-      (visible.find? source.name).any (fun entry => entry.type.equal source.type) do return false
+      (visible.find? source.name).any (fun entry => entry.type.equal source.type) do return .notApplicable
   let specialized ← OmegaChecks.InitCompiler.finiteCollectors official pinned
+  if specialized.equal pinned || !(Kernel.check visible {} pinned).isOk then return .notApplicable
   let expected := InitKernelPort.translate InitKernelPort.portName specialized
-  return !specialized.equal pinned && (Kernel.check visible {} pinned).isOk &&
-    (Kernel.check visible {} specialized).isOk && Kernel.isDefEqGuarded visible {} pinned specialized &&
-    (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target
+  let upstreamChecks := (Kernel.check visible {} specialized).isOk
+  let upstreamConverts := upstreamChecks && Kernel.isDefEqGuarded visible {} pinned specialized
+  let strictConverts := (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target
+  if upstreamConverts && strictConverts then return .checked
+  let hiddenSlices := missing.map InitKernelPort.originalName |>.filter fun n =>
+    [``Std.Slice.toList, ``Std.Slice.toListRev, ``Std.Slice.toArray].contains n &&
+      (visible.find? n).any (fun ci => (ci.value? (allowOpaque := true)).isNone)
+  if hiddenSlices.isEmpty || upstreamConverts || expected.getUsedConstants.any missing.contains then
+    return .notApplicable
+  let sourceResult := if upstreamChecks then
+    "The exported upstream kernel checks the finite-iterator signature but it does not convert to the pinned type."
+    else "The exported upstream kernel rejects the finite-iterator signature."
+  let strictResult := if strictConverts then "It checks and converts to the exported strict signature."
+    else "It fails to check or convert to the exported strict signature."
+  let names := fun (ns : Array Name) => String.intercalate ", " (ns.toList.map Name.toString)
+  return .gap (s!"missing type dependencies: {names missing}. The upstream public interface hides the body of " ++
+    s!"{names hiddenSlices}. {sourceResult} {strictResult}")
 
 /-- Compare the concrete forward or backward skip call with the model call wherever it
 occurs in the full signature. The character and predicate instances and the pattern
@@ -173,7 +193,10 @@ public def originalTypeGap? (official visible strict : Environment) (owner : Nam
         checkedEnvelopePowZero visible strict owner source pinned target.type ||
         checkedOrderFields visible strict owner source pinned target.type missing ||
         EnvelopePublicTypes.checked visible strict owner source pinned target.type then return none
-    if ← checkedFiniteConsumer official visible strict owner source pinned target.type missing then return none
+    match ← checkFiniteConsumer official visible strict owner source pinned target.type missing with
+    | .checked => return none
+    | .gap reason => return some reason
+    | .notApplicable => pure ()
     if let some gap ← patternSkipGap? official visible strict owner source pinned target.type missing then
       return some gap
     return some ("missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString))
