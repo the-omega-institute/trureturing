@@ -28,4 +28,7 @@ is equivalent to deciding existence of a signal in every Boolean stream
 Std.Slice.toList, .toArray and .toListRev also accept arbitrary iterators.
 A total implementation of any one of these three that agrees on every finite
 slice decides whether an arbitrary Boolean stream ever returns true, as shown
-in OmegaChecks.InitBoundaries.Collector. -/
+in OmegaChecks.InitBoundaries.Collector. In the adaptive query model, a terminating
+run on an all-false stream would return the same length on an iterator that
+stops strictly later. noTerminatingThresholdCounter proves the obstruction and
+noTerminatingCollectorOnZero checks the lengths against the official collector. -/
