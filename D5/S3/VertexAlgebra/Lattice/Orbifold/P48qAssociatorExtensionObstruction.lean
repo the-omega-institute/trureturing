@@ -4,19 +4,18 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The type-one ambient associator obstructs extremal P48q extensions. -/
+   digest: Cubic vacuum monodromy obstructs extremal P48q extensions. -/
 
-import D5.S3.FiniteGroups.Cyclic.CyclicAssociatorObstruction
+import D5.S3.FiniteGroups.Cyclic.CyclicProjectiveMonodromy
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFiniteActionObstruction
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedStateEnergy
 import OmegaBuild.Commands
 
 /-!
-Evans–Gannon, arXiv:1804.11145, equation (2.13), use the cyclic carry
-representative with phase `exp(2πi/n)`. By equation (2.14) the weight in
-generator flux is congruent to `q/n²` modulo `1/n`, after removing the central
-charge contribution. The P48q spectral residue `16/9` modulo `1/3` therefore
-selects `q = 1` in that convention. The comparison of the actual ambient
-associator with this representative is an external hypothesis.
+The remaining open comparison is to realize the projective centralizer
+operators on the native cubic state space after transport, with the slant
+product law for the ambient associator and phase `exp(2πi(16/9))` on the
+lowest-weight vacuum.
 
 The inclusion of fixed states uses the vacuum inclusion interface of
 `P48qHolomorphicExtensionObstruction.p48q_holomorphic_extension_obstruction`.
@@ -28,8 +27,8 @@ set_option autoImplicit false
 
 namespace D5.S3.VertexAlgebra.Lattice.Orbifold.P48qAssociatorExtensionObstruction
 
-open FiniteGroups.Cyclic.CyclicAssociatorObstruction
-  (carryPhase cyclicPowerHom not_mem_of_nonzero_type twoCoboundary)
+open FiniteGroups.Cyclic.CyclicAssociatorObstruction (twoCoboundary)
+open FiniteGroups.Cyclic.CyclicProjectiveMonodromy (not_mem_of_order_three_monodromy)
 open ExtremalC48 (SL47)
 open HalfFockSpectralFiberSource (actualInverse)
 open LatticeActualConformalState (omega)
@@ -38,6 +37,7 @@ open LatticePositiveEnergy (grade)
 open DiagonalCharacterConjugacy (PreservesModes ground)
 open P48qFiniteActionObstruction (p48q_finite_action_obstruction)
 open P48qTwistedChargeAction (lattice)
+open P48qTwistedStateEnergy (vacuum vacuum_ne_zero)
 
 local notation "V" => Carrier lattice
 local notation "fixedStates(" U ", " K ")" =>
@@ -48,9 +48,8 @@ local notation "fixedStates(" U ", " K ")" =>
 /-- An injective weight-two-preserving inclusion of the P48q fixed states
 forces target weight-two dimension at least two. The subgroup may be any
 subgroup whose cochain trivializes the ambient associator. For each ambient
-order-three element with an order-three charge isometry, the external type
-comparison identifies the associator pullback with type one up to a
-two-coboundary. -/
+order-three element with an order-three charge isometry, the cubic branch
+uses the transported projective operators and their lowest-weight vacuum phase. -/
 theorem p48q_associator_extension_obstruction
     (realization : Additive SL47 →+ AddAut (Charge lattice))
     (hFaithful : Function.Injective realization)
@@ -65,13 +64,13 @@ theorem p48q_associator_extension_obstruction
       omega lattice (actualInverse lattice))
     (α : G → G → G → ℂˣ) (γ : K → K → ℂˣ)
     (hRestricted : ∀ a b c : K, α a.val b.val c.val = twoCoboundary γ a b c)
-    (ζ : ℂˣ) (hζ : orderOf ζ = 3)
-    (hType : ∀ (g : G) (hg : orderOf g = 3) (s : Additive SL47)
+    (hMonodromy : ∀ (g : G) (_hg : orderOf g = 3) (s : Additive SL47)
       (phase : Charge lattice → ℂˣ), addOrderOf (realization s) = 3 →
       (∀ a, U g (ground lattice a) = (phase a : ℂ) • ground lattice (realization s a)) →
-      ∃ β : Multiplicative (ZMod 3) → Multiplicative (ZMod 3) → ℂˣ,
-        ∀ a b c, α (cyclicPowerHom g hg a) (cyclicPowerHom g hg b) (cyclicPowerHom g hg c) =
-          carryPhase ζ hζ (1 : ZMod 3) a b c * twoCoboundary β a b c)
+      ∃ T : G → Module.End ℂ P48qThirdTwistedField.State,
+        T 1 = 1 ∧
+        (∀ i : ℕ, T (g ^ i) * T g = (α g (g ^ i) g : ℂ) • T (g ^ i * g)) ∧
+        T g vacuum = Complex.exp (2 * (Real.pi : ℂ) * Complex.I * (16 / 9)) • vacuum)
     {W : Type*} [AddCommGroup W] [Module ℂ W] (L_W : Module.End ℂ W)
     [FiniteDimensional ℂ (L_W.eigenspace (2 : ℂ))]
     (vacuumInclusion : fixedStates(U, K) →ₗ[ℂ] W)
@@ -96,10 +95,11 @@ theorem p48q_associator_extension_obstruction
   · let g : G := K.subtype k
     have hg : orderOf g = 3 :=
       (orderOf_injective K.subtype Subtype.val_injective k).trans hOrder
-    obtain ⟨β, hCompare⟩ :=
-      hType g hg (Additive.ofMul (π k)) (phase k) hChargeOrder (hGround k)
-    exact (not_mem_of_nonzero_type (by decide) α g hg ζ hζ (1 : ZMod 3)
-      (by decide) β hCompare K γ hRestricted k.property).elim
+    obtain ⟨T, hOne, hMul, hVacuumPhase⟩ :=
+      hMonodromy g hg (Additive.ofMul (π k)) (phase k) hChargeOrder (hGround k)
+    exact (not_mem_of_order_three_monodromy α g T hOne hMul hg 0 vacuum_ne_zero
+      (by simpa only [Nat.cast_zero, zero_div, add_zero] using hVacuumPhase)
+      K γ hRestricted k.property).elim
 
 #print axioms p48q_associator_extension_obstruction
 
