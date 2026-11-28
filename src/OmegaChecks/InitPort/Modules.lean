@@ -271,13 +271,6 @@ unsafe def main (args : List String) : IO Unit := do
         (official == `Init.System.IO && i.module == `Init.Data.String.TakeDrop)
     let mut mappedImports := retained.map fun i =>
       { i with module := i.module.replacePrefix `Init `OmegaInit }
-    -- The translated subarray signatures mention the finite list collector explicitly.
-    if official == `Init.Data.Slice.Array.Lemmas then
-      let collector := renamed `Std.Iter.Total.toList
-      if (groups.getD official #[]).any (fun (_, ci) => ci.type.getUsedConstants.contains collector) then
-        let collectModule := `OmegaInit.Data.Iterators.Consumers.Collect
-        mappedImports := (mappedImports.filter (·.module != collectModule)).push
-          {module := collectModule, isExported := true}
     let baseImports := mergeImports orig[2]!.imports mappedImports
     let officialImports := source.header.moduleData[idx]!.imports.map fun i =>
       (i.module.replacePrefix `Init `OmegaInit).toString

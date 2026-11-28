@@ -66,6 +66,10 @@ public unsafe def main (args : List String) : IO Unit := do
     let expanded ← importModules #[{module := owner, importAll := true}] {}
     searchPathRef.set [lib]
     let strict ← importModules #[{module := strictOwner}] {} (level := .exported)
+    let collectOwner := `OmegaInit.Data.Iterators.Consumers.Collect
+    let withCollect ← if owner == `Init.Data.Slice.Array.Lemmas then
+      importModules #[{module := strictOwner}, {module := collectOwner}] {} (level := .exported)
+      else pure strict
     let full ← importModules #[{module := strictOwner, importAll := true}] {}
     let mut roots := #[]
     for line in (← IO.FS.lines (entry.path / "sites.txt")) do
@@ -83,28 +87,31 @@ public unsafe def main (args : List String) : IO Unit := do
           (strict.find? dst.name).any (fun s => s.type.equal dst.type) &&
           !converts visible common pinned && converts expanded common pinned && converts full lifted dst.type do continue
       let ordinary := converts strict lifted dst.type
-      if ordinary then
+      let ordinaryWithCollect := !ordinary && converts withCollect lifted dst.type
+      let mode := if ordinary then "ordinary" else if ordinaryWithCollect then "with-collect" else "all"
+      if ordinary || ordinaryWithCollect then
         if let some base := rangeContents? owner name then
-          checkExtractedRange visible strict src dst pinned base
+          checkExtractedRange visible withCollect src dst pinned base
           roots := roots.push (portName base)
       let wrong := changedResult common
       unless (Kernel.check expanded {} wrong).isOk && !Kernel.isDefEqGuarded expanded {} common wrong do
         throw <| IO.userError s!"unexpected unchanged result for {name}"
       roots := roots.push dst.name
-      let target := entry.path / (if ordinary then "ordinary" else "all")
+      let target := entry.path / mode
       IO.FS.createDirAll target
-      let modeOf := fun (isStrict : Bool) => if isStrict && ordinary then "import " else "import all "
       for (isStrict, mod, n, ty, bad) in [(false,owner,name,common,wrong),
           (true,strictOwner,dst.name,lifted,translate portName wrong)] do
         let variant := if isStrict then "Strict" else "Official"
-        let requiresAll := !isStrict || !ordinary
+        let singleImport := isStrict && ordinary
         for (suffix, formula) in [("",ty), ("Changed",bad), ("Ordinary",ty)] do
           let file := target / (variant ++ suffix ++ ".lean")
-          if suffix == "Ordinary" && !requiresAll then continue
-          let access := if suffix == "Ordinary" then "import " else modeOf isStrict
+          if suffix == "Ordinary" && singleImport then continue
+          let access := if suffix == "Ordinary" || singleImport then s!"import {mod}"
+            else if isStrict && ordinaryWithCollect then s!"import {mod}\nimport {collectOwner}"
+            else s!"import all {mod}"
           if !(← file.pathExists) then
-            IO.FS.writeFile file s!"module\nprelude\n{access}{mod}\nset_option autoImplicit false\nset_option linter.unusedVariables false\n"
+            IO.FS.writeFile file s!"module\nprelude\n{access}\nset_option autoImplicit false\nset_option linter.unusedVariables false\n"
           let handle ← IO.FS.Handle.mk file .append
           handle.putStr (PublicTypeClient.client formula n dst.levelParams)
-      IO.println (toJson #[owner.toString,name.toString,if ordinary then "ordinary" else "all"]).compress
+      IO.println (toJson #[owner.toString,name.toString,mode]).compress
     let _ ← replayStrict full.toKernelEnv roots

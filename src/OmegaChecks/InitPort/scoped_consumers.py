@@ -20,7 +20,10 @@ MODULES = SLICE_MODULES | {"Init.Grind.Module.Envelope"}
 def scopes(checks):
     result = {}
     for owner, name, mode in checks:
-        if owner not in MODULES or mode not in {"ordinary", "all"} or (owner, name) in result:
+        valid_modes = {"ordinary", "all"}
+        if owner == "Init.Data.Slice.Array.Lemmas":
+            valid_modes.add("with-collect")
+        if owner not in MODULES or mode not in valid_modes or (owner, name) in result:
             raise ValueError(f"invalid module-body conversion certificate at {owner}/{name}")
         result[owner, name] = mode
     return result
@@ -77,6 +80,6 @@ def certificates(product, rows):
             directory = Path(temp) / owner / mode
             public_clients.check(library, directory, names, "Changed")
             _reject_ordinary(library, directory / "OfficialOrdinary.lean", names, False)
-            if mode == "all":
+            if mode != "ordinary":
                 _reject_ordinary(library, directory / "StrictOrdinary.lean", names, True)
         return checks
