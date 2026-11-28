@@ -9,6 +9,7 @@
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedChargeAction
 import D5.S3.VertexAlgebra.Lattice.Automorphisms.InvariantQuadraticConformalState
 import D5.S3.VertexAlgebra.LatticeHalfFockChargedMonodromy
+import D5.S3.VertexAlgebra.Characters.LatticeThetaCharacter
 
 /-!
 The actual standard lift of a period-three even lattice isometry on the
@@ -201,6 +202,162 @@ theorem standardLift_omega (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
 
 #print axioms standardLift_orderOf
 #print axioms standardLift_omega
+
+section TwiningTrace
+
+open LatticeThetaCharacter LatticePositiveEnergy
+open LatticeSugawaraCurrents (gramComplex sugawaraMode)
+
+private theorem standardLift_charge (a : Charge D) (v : Carrier D) :
+    (standardLift D g h3 hg v) (g a) =
+      (nativeStandardEta D g a : ℂ) • IsometryLift.oscillator D g (v a) := by
+  classical
+  let L : Carrier D →ₗ[ℂ] Oscillator D :=
+    (Finsupp.lapply (g a)).comp (standardLift D g h3 hg).toLinearMap
+  let R : Carrier D →ₗ[ℂ] Oscillator D :=
+    (nativeStandardEta D g a : ℂ) •
+      ((IsometryLift.oscillator D g).toLinearMap.comp (Finsupp.lapply a))
+  suffices L = R from LinearMap.congr_fun this v
+  apply Finsupp.lhom_ext
+  intro b p
+  change (standardLift D g h3 hg (Finsupp.single b p)) (g a) =
+    (nativeStandardEta D g a : ℂ) • IsometryLift.oscillator D g (Finsupp.single b p a)
+  rw [standardLift_single, Finsupp.smul_apply]
+  by_cases hb : b = a
+  · subst b
+    simp
+  · have hgb : g b ≠ g a := fun h => hb (g.injective h)
+    simp [Finsupp.single_eq_of_ne (Ne.symm hb), Finsupp.single_eq_of_ne hgb.symm]
+
+variable (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+
+private theorem standardLift_mem_cutoff (hHG : H * gramComplex D = 1)
+    (C : Finset (Charge D)) (n : ℤ) (hC : ∀ a ∈ C, g a ∈ C)
+    (v : cutoffActualGrade D H C n) :
+    standardLift D g h3 hg v.1 ∈ cutoffActualGrade D H C n := by
+  refine ⟨?_, ?_⟩
+  · apply (chargeSupported_mem_iff D C _).mpr
+    have hv := (chargeSupported_mem_iff D C v.1).mp v.2.1
+    intro a ha
+    have hpre : g.symm a.1 ∉ C := fun hc => ha (by simpa using hC _ hc)
+    have hz : v.1 (g.symm a.1) = 0 := by
+      ext d
+      exact hv (g.symm a.1, d) hpre
+    change ((standardLift D g h3 hg v.1) a.1).coeff a.2 = 0
+    rw [← g.apply_symm_apply a.1, standardLift_charge D g h3 hg, hz, map_zero, smul_zero]
+    rfl
+  · have hv := (Module.End.mem_eigenspace_iff.mp v.2.2)
+    apply Module.End.mem_eigenspace_iff.mpr
+    have hmode : ((Y D (LatticeActualConformalState.omega D H))[[1]]) =
+        sugawaraMode D H 0 := LatticeActualConformalState.omega_modes D H 0
+    have h := (standardLift_compatible D g h3 hg).2.1
+      (LatticeActualConformalState.omega D H) 1 v.1
+    rw [standardLift_omega D g h3 hg H hHG, hmode, hv, map_smul] at h
+    exact h.symm
+
+/-- The native lift restricted to the actual Sugawara grade with charges in `C`. -/
+def cutoffStandardLift (hHG : H * gramComplex D = 1)
+    (C : Finset (Charge D)) (n : ℤ) (hC : ∀ a ∈ C, g a ∈ C) :
+    Module.End ℂ (cutoffActualGrade D H C n) :=
+  (standardLift D g h3 hg).toLinearMap.restrict
+    (fun v hv => standardLift_mem_cutoff D g h3 hg H hHG C n hC ⟨v, hv⟩)
+
+/-- The finite grade trace of the restricted native lift. -/
+def cutoffStandardLiftTrace (hHG : H * gramComplex D = 1)
+    (C : Finset (Charge D)) (n : ℤ) (hC : ∀ a ∈ C, g a ∈ C) : ℂ := by
+  letI : Finite (CutoffIndex D C n) := cutoffIndex_finite D C n
+  letI : Fintype (CutoffIndex D C n) := Fintype.ofFinite _
+  exact LinearMap.trace ℂ _ (cutoffStandardLift D g h3 hg H hHG C n hC)
+
+/-- The oscillator trace at integral energy `n`, realized on the actual neutral
+charge sector. The native phase on that sector is one. -/
+def standardOscillatorTrace (hHG : H * gramComplex D = 1) (n : ℤ) : ℂ :=
+  cutoffStandardLiftTrace D g h3 hg H hHG {0} n (by simp)
+
+private theorem cutoffStandardLiftTrace_diagonal (hHG : H * gramComplex D = 1)
+    (hGH : gramComplex D * H = 1)
+    (C : Finset (Charge D)) (n : ℤ) (hC : ∀ a ∈ C, g a ∈ C)
+    [Fintype (CutoffIndex D C n)] :
+    cutoffStandardLiftTrace D g h3 hg H hHG C n hC =
+      ∑ i : CutoffIndex D C n, if g i.1.1 = i.1.1 then
+        (IsometryLift.oscillator D g (MvPolynomial.monomial i.1.2 1)).coeff i.1.2 else 0 := by
+  classical
+  unfold cutoffStandardLiftTrace
+  rw [LinearMap.trace_eq_matrix_trace ℂ (cutoffBasis D H hHG hGH C n)]
+  simp only [Matrix.trace, Matrix.diag, LinearMap.toMatrix_apply]
+  apply Finset.sum_congr rfl
+  intro i _
+  change cutoffCoeffEquiv D H hHG hGH C n
+    (cutoffStandardLift D g h3 hg H hHG C n hC (cutoffBasis D H hHG hGH C n i)) i = _
+  rw [cutoffCoeffEquiv_apply]
+  have hb : (cutoffBasis D H hHG hGH C n i).1 = carrierBasis D i.1 := by
+    apply (carrierCoeffEquiv D).injective
+    rw [carrierCoeffEquiv_basis, cutoffBasis_carrierCoeff]
+  change ((standardLift D g h3 hg (cutoffBasis D H hHG hGH C n i).1) i.1.1).coeff i.1.2 = _
+  rw [hb, carrierBasis_apply, standardLift_single, Finsupp.smul_apply]
+  by_cases hi : g i.1.1 = i.1.1
+  · rw [ite_eq_left hi, nativeStandardEta_fixed D g hg _ hi, Units.val_one, one_smul, hi,
+      Finsupp.single_eq_same]
+  · rw [ite_eq_right hi, Finsupp.single_eq_of_ne (Ne.symm hi), smul_zero]
+    rfl
+
+/-- Each energy-`n` cutoff label splits into its charge and a neutral label at
+the remaining oscillator energy. -/
+private def cutoffNeutralEquiv (C : Finset (Charge D)) (n : ℤ) :
+    CutoffIndex D C n ≃ Σ a : C, CutoffIndex D {0} (n - chargeEnergy D a.1) where
+  toFun i := ⟨⟨i.1.1, i.2.1⟩, ⟨(0, i.1.2), by simp, by
+    have he := i.2.2
+    simp only [energy, chargeEnergy_zero, zero_add] at he ⊢
+    omega⟩⟩
+  invFun i := ⟨(i.1.1, i.2.1.2), i.1.2, by
+    have hzero : i.2.1.1 = 0 := Finset.mem_singleton.mp i.2.2.1
+    have he := i.2.2.2
+    simp only [energy, hzero, chargeEnergy_zero, zero_add] at he ⊢
+    omega⟩
+  left_inv i := Subtype.ext (Prod.eta _)
+  right_inv := by
+    rintro ⟨a, ⟨⟨b, d⟩, hb, _⟩⟩
+    have hzero : b = 0 := Finset.mem_singleton.mp hb
+    subst b
+    rfl
+
+/-- On each finite actual Sugawara grade, only fixed charges contribute to
+the native cubic twining trace. Their contributions are neutral oscillator
+traces shifted by their charge energies. -/
+theorem cutoff_standardLift_trace_fixed_charges (hHG : H * gramComplex D = 1)
+    (hGH : gramComplex D * H = 1)
+    (C : Finset (Charge D)) (n : ℤ) (hC : ∀ a ∈ C, g a ∈ C) :
+    cutoffStandardLiftTrace D g h3 hg H hHG C n hC =
+      ∑ a ∈ C.filter (fun a => g a = a),
+        standardOscillatorTrace D g h3 hg H hHG (n - chargeEnergy D a) := by
+  classical
+  let : Finite (CutoffIndex D C n) := cutoffIndex_finite D C n
+  let (a : C) : Finite (CutoffIndex D {0} (n - chargeEnergy D a.1)) :=
+    cutoffIndex_finite D {0} _
+  let : Fintype (CutoffIndex D C n) := Fintype.ofFinite _
+  let (a : C) : Fintype (CutoffIndex D {0} (n - chargeEnergy D a.1)) := Fintype.ofFinite _
+  rw [cutoffStandardLiftTrace_diagonal D g h3 hg H hHG hGH C n hC,
+    Finset.sum_filter, ← Finset.sum_attach C]
+  refine (Fintype.sum_equiv (cutoffNeutralEquiv D C n) _
+    (fun i => if g i.1.1 = i.1.1 then
+      (IsometryLift.oscillator D g (MvPolynomial.monomial i.2.1.2 1)).coeff i.2.1.2 else 0)
+    (fun _ => rfl)).trans ?_
+  rw [Fintype.sum_sigma]
+  change (∑ a : C, ∑ i : CutoffIndex D {0} (n - chargeEnergy D a.1), _) = _
+  apply Finset.sum_congr rfl
+  intro a _
+  by_cases ha : g a.1 = a.1
+  · simp only [ite_eq_left ha, standardOscillatorTrace]
+    rw [cutoffStandardLiftTrace_diagonal D g h3 hg H hHG hGH]
+    apply Finset.sum_congr rfl
+    intro i _
+    have hi : i.1.1 = 0 := Finset.mem_singleton.mp i.2.1
+    simp [hi]
+  · simp [ha]
+
+#print axioms cutoff_standardLift_trace_fixed_charges
+
+end TwiningTrace
 
 end
 end D5.S3.VertexAlgebra.Lattice.Orbifold.NativeStandardThirdLift

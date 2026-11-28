@@ -7,7 +7,7 @@
    digest: Decompose the native conformal state in fixed and opposite-eigenvalue bases. -/
 
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMomentumEnergy
-import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairingDraft
+import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairing
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMovingPairIterate
 import D5.S3.VertexAlgebra.LatticeActualConformalState
 import D5.S3.VertexAlgebra.LatticeHalfFockChargedLZero

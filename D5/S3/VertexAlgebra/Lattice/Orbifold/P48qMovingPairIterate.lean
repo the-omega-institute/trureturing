@@ -7,7 +7,8 @@
    digest: The moving-pair iterate comparison in native current and binomial coordinates. -/
 
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedQuadratic
-import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairingDraft
+import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairing
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramCertificateDraft
 import D5.S3.VertexAlgebra.LatticeActualConformalState
 
 /-! Bakalov–Kac (3.13) at n = -1 for a normalized order-three moving pair. -/
