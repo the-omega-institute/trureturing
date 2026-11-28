@@ -10,8 +10,10 @@ namespace D5.S3.VertexAlgebra.Lattice.Orbifold.P48qCubicOscillatorTrace
 
 open Module MvPolynomial LatticeGeneratingFieldLocality LatticePositiveEnergy
 open LatticeThetaCharacter
-open LatticeSugawaraCurrents (gramComplex)
+open LatticeSugawaraCurrents (gramComplex sugawaraMode)
 open P48qTwistedChargeAction (lattice g g_cube g_isometry)
+open P48qGramCertificate (gram_inverse_certificate)
+open HalfFockSpectralFiberSource (actualInverse actualInverse_left actualInverse_right)
 open P48qCubicOscillatorBasis NativeStandardThirdLift
 open D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation (integerEnergy)
 open ThirdTwistedChargeAction (nativeStandardEta_fixed)
@@ -313,9 +315,86 @@ theorem standardOscillatorTrace_eq_occupationCount (n : ℤ) :
   rw [standardOscillatorTrace_eq_fixed H hHG (mul_eq_one_comm.mp hHG),
     Nat.card_congr (fixedOccupationEquiv n).symm]
 
+private theorem p48q_gramUnit : IsUnit lattice.G.det := by
+  change IsUnit P48qGramCertificate.nebeGram.det
+  exact Matrix.isUnit_det_of_left_inverse gram_inverse_certificate
+
+private theorem p48q_chargeEnergy_isometry (a : Charge lattice) :
+    chargeEnergy lattice (g a) = chargeEnergy lattice a := by
+  simp only [chargeEnergy]
+  rw [g_isometry a a]
+
+private theorem p48q_positiveCutoff_stable (n : ℤ) :
+    ∀ a ∈ positiveChargeCutoff lattice P48qGramPositivity.nebeGram_posDef n,
+      g a ∈ positiveChargeCutoff lattice P48qGramPositivity.nebeGram_posDef n := by
+  intro a ha
+  have ha' : chargeEnergy lattice a ≤ n.toNat := by
+    simpa [positiveChargeCutoff] using ha
+  have hga : chargeEnergy lattice (g a) ≤ n.toNat := by
+    rw [p48q_chargeEnergy_isometry]
+    exact ha'
+  simpa [positiveChargeCutoff] using hga
+
+/-- The actual native cubic lift restricted to the full Sugawara eigenspace. -/
+noncomputable def actualFullGradeStandardLift (n : ℤ) :
+    Module.End ℂ ((sugawaraMode lattice (actualInverse lattice) 0).eigenspace (n : ℂ)) := by
+  let hHG : actualInverse lattice * gramComplex lattice = 1 :=
+    actualInverse_left lattice p48q_gramUnit
+  let hGH : gramComplex lattice * actualInverse lattice = 1 :=
+    actualInverse_right lattice p48q_gramUnit
+  let C := positiveChargeCutoff lattice P48qGramPositivity.nebeGram_posDef n
+  let e := LinearEquiv.ofEq _ _
+    (positive_full_grade_eq_cutoff lattice (actualInverse lattice) hHG hGH
+      P48qGramPositivity.nebeGram_posDef n)
+  exact e.symm.conj
+    (cutoffStandardLift lattice g g_cube g_isometry (actualInverse lattice) hHG C n
+      (p48q_positiveCutoff_stable n))
+
+/-- The full-grade native cubic twining trace, with its literal Sugawara trace. -/
+noncomputable def actualFullGradeStandardLiftTrace (n : ℤ) : ℂ := by
+  let hHG : actualInverse lattice * gramComplex lattice = 1 :=
+    actualInverse_left lattice p48q_gramUnit
+  let hGH : gramComplex lattice * actualInverse lattice = 1 :=
+    actualInverse_right lattice p48q_gramUnit
+  let C := positiveChargeCutoff lattice P48qGramPositivity.nebeGram_posDef n
+  letI : FiniteDimensional ℂ
+      ((sugawaraMode lattice (actualInverse lattice) 0).eigenspace (n : ℂ)) := by
+    rw [positive_full_grade_eq_cutoff lattice (actualInverse lattice) hHG hGH
+      P48qGramPositivity.nebeGram_posDef n]
+    exact cutoffActualGrade_finiteDimensional lattice (actualInverse lattice) hHG hGH C n
+  exact LinearMap.trace ℂ _ (actualFullGradeStandardLift n)
+
+/-- Every full Sugawara-grade coefficient is the fixed-charge convolution of the
+literal sixteen-colour cubic occupation count. -/
+theorem actual_full_grade_trace_eq_fixed_occupation (n : ℤ) :
+    actualFullGradeStandardLiftTrace n =
+      ∑ a ∈ (positiveChargeCutoff lattice P48qGramPositivity.nebeGram_posDef n).filter
+          (fun a => g a = a),
+        (Nat.card {d : (Fin 16 × ℕ) →₀ ℕ //
+          3 * (integerEnergy (Fin 16) d : ℤ) = n - chargeEnergy lattice a} : ℂ) := by
+  let hHG : actualInverse lattice * gramComplex lattice = 1 :=
+    actualInverse_left lattice p48q_gramUnit
+  let hGH : gramComplex lattice * actualInverse lattice = 1 :=
+    actualInverse_right lattice p48q_gramUnit
+  let C := positiveChargeCutoff lattice P48qGramPositivity.nebeGram_posDef n
+  let e := LinearEquiv.ofEq _ _
+    (positive_full_grade_eq_cutoff lattice (actualInverse lattice) hHG hGH
+      P48qGramPositivity.nebeGram_posDef n)
+  have htrace : actualFullGradeStandardLiftTrace n =
+      cutoffStandardLiftTrace lattice g g_cube g_isometry (actualInverse lattice) hHG C n
+        (p48q_positiveCutoff_stable n) := by
+    unfold actualFullGradeStandardLiftTrace actualFullGradeStandardLift
+    rw [LinearMap.trace_conj']
+    · simp [C, cutoffStandardLiftTrace]
+  rw [htrace, cutoff_standardLift_trace_fixed_charges lattice g g_cube g_isometry
+    (actualInverse lattice) hHG hGH C n (p48q_positiveCutoff_stable n)]
+  simp_rw [standardOscillatorTrace_eq_occupationCount]
+  rfl
+
 run_cmd do
   for name in [``standardOscillatorTrace_eq_occupationCount,
-      ``cutoff_standardLift_trace_fixed_charges] do
+      ``cutoff_standardLift_trace_fixed_charges,
+      ``actual_full_grade_trace_eq_fixed_occupation] do
     let axioms ← Lean.collectAxioms name
     unless axioms.all (fun ax => [``propext, ``Classical.choice, ``Quot.sound].contains ax) do
       throwError "Unexpected axiom closure for {name}: {axioms}"
