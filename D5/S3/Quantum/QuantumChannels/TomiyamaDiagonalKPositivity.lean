@@ -57,9 +57,13 @@
    enumeration, checker, numerical reduction or certified fixed instance.
 -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausChannel
-import Mathlib.Algebra.Order.Chebyshev
-import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
+module
+
+public import D5.S3.Quantum.Foundation.FiniteKrausChannel
+public import Mathlib.Algebra.Order.Chebyshev
+public import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
