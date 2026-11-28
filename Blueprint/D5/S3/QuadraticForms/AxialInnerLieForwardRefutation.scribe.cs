@@ -64,7 +64,7 @@ internal sealed class AxialInnerLieForwardRefutationDocument : IScribeDocumentDe
             Call("IsAxis", l, u)));
         var innerSimple = Call("IsSimple", q, Parens(Call("selectedLie", l, x)));
         return All("A", Name("Type"),
-            All("L", new Formula.TypeArrow(a, Call("End", q, a)),
+            All("L", Call("LinearMap", q, a, Call("End", q, a)),
                 All("X", Call("Set", a),
                     Imp(symmetric, Imp(axes, Imp(Call("Generates", l, x),
                         Imp(Call("AlgebraSimple", l), innerSimple)))))));
