@@ -52,10 +52,11 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
       ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromOpenRangeLoop,
       "For the natural successor and the comparison g k = false, the identity-monad loop satisfies its official step equation whenever the range is finite")
   if owner == `Init.Data.Slice.Operations && [``Std.Slice.LawfulSliceSize,
-      ``Std.Slice.LawfulSliceSize.mk, ``Std.Slice.LawfulSliceSize.lawful].contains name then
+      ``Std.Slice.LawfulSliceSize.mk, ``Std.Slice.LawfulSliceSize.lawful, ``Std.Slice.LawfulSliceSize.rec,
+      ``Std.Slice.LawfulSliceSize.recOn, ``Std.Slice.LawfulSliceSize.casesOn].contains name then
     return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
       ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromSliceSizeLoop,
-      "The unrestricted default loop in the slice-size field computes the official length for every finite slice")
+      "The unrestricted default loop in the field must count every finite slice. For the length observation alone streamDecisionIffSliceLength gives the equivalence using completed traversals")
   if owner == `Init.Data.BitVec.Lemmas then
     if name == ``BitVec.getElem_of_getLsbD_eq_true then
       return ("(true = true) = True", ``OmegaChecks.InitBoundaries.BooleanReflection.successfulBitRead,
@@ -397,7 +398,7 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
         "the official array of each slice with a finite iterator. A Boolean-stream decision suffices by sliceArrayOfStreamDecision_eq")
     | `Init.Data.Slice.Operations, ``Std.Slice.toListRev =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromSliceReverse,
-        "the official reversed list of each slice whose underlying iterator is finite")
+        "the official reversed list of each finite slice. A Boolean-stream decision suffices by sliceReverseOfStreamDecision_eq")
     | `Init.Data.Iterators.Consumers.Access, ``Std.Iter.atIdxSlow? =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromLookup,
         "the official result of the optional lookup at each natural index")

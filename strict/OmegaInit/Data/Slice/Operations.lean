@@ -14,7 +14,12 @@ port_definition Std.Slice.size with_native_code
 Std.Iter.length at Std.IteratorLoop.defaultImplementation for every slice. Its
 parameters supply an iterator and omit a termination proof. LawfulSliceSize.mk,
 .lawful, .rec, .recOn, and .casesOn all mention that field in their pinned
-types. A finite loop provides this computation when the iterator is finite.
+types. The private .mk._flat_ctor also requires the original record.
+For finite iterators, lawfulSliceSizeIffFiniteLength identifies the original
+field with the length of (ToIterator.iter s).ensureTermination.toList. The
+length observation for arbitrary iterators, agreeing on every finite slice,
+is equivalent to deciding existence of a signal in every Boolean stream
+(streamDecisionIffSliceLength).
 
 Std.Slice.toList, .toArray and .toListRev also accept arbitrary iterators.
 A total implementation of any one of these three that agrees on every finite
