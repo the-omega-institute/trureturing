@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.Lagarias;
 internal sealed class ThresholdPerturbationDocument : IScribeDocumentDefinition
 {
     private const string Root = "D5/S3/Arith/Robin/Lagarias/ThresholdPerturbation.";
+    private static readonly LibraryNoteRef AsymptoticSource =
+        LibraryNoteRef.Create("D5/L/Analytic/lucapomerancesole2025robin");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The Lagarias threshold has an exact leading perturbation and preserves the sharp Robin margin.",
@@ -46,7 +48,7 @@ internal sealed class ThresholdPerturbationDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(Seq(Lim, Underscore, Grp(Id("n"), To, Infty), Sp,
                     Multiply(C("log", Id("n")), C("delta", Id("n"))), Sp, Eq, Sp,
                     Multiply(Id("E"), Id("gamma"))))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(AsymptoticSource),
                 Blocks(Paragraph(Text("This limit is unconditional. For n>=3, put x=log(n), a=H(n)-x and b=exp(H(n))/n-E. "
                     + "The two Euler sequences imply E*n<exp(H(n))<E*(n+1), so 0<b<E/n. For x>1, "
                     + "H(n)<=x+1 and 0<=log(H(n))<=x+1. The bounds 1-u^(-1)<=log(u)<=u-1, "
@@ -70,8 +72,10 @@ internal sealed class ThresholdPerturbationDocument : IScribeDocumentDefinition
                     + "provide the boundedness and coboundedness required for the real liminf.")),
                     Paragraph(Text("The threshold comparison is classical: Jeffrey C. Lagarias, "
                     + "An Elementary Problem Equivalent to the Riemann Hypothesis, arXiv:math/0008177, "
-                    + "Lemmas 3.1-3.2. The exact coefficient and the transfer of the existing sharp endpoint "
-                    + "are the derivations here. This result asserts no independent proof of RH and no finite cutoff at 5040."))),
+                    + "Lemmas 3.1-3.2. The leading coefficient also appears in Luca, Pomerance and Sole, "
+                    + "Correction to: On Robin's inequality, Integers 25 (2025), A8 Corrigendum, Section 3. "
+                    + "The harmonic asymptotic transfers the existing sharp Robin endpoint to the Lagarias margin. "
+                    + "This result asserts no independent proof of RH and no finite cutoff at 5040."))),
                 DescribeRole.Theorem))));
 
     private static Formula Id(string name) => F.Id(name);
