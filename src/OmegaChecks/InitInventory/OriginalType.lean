@@ -114,7 +114,8 @@ private def checkedFiniteConsumer (official visible strict : Environment) (owner
   let consumers := [``Std.Iter.toList, ``Std.Iter.toListRev, ``Std.Iter.toArray, ``Std.Iter.atIdxSlow?,
     ``Std.IterM.toList, ``Std.IterM.toListRev, ``Std.IterM.toArray,
     ``Std.Slice.toList, ``Std.Slice.toListRev, ``Std.Slice.toArray]
-  unless source.isTheorem && missing.all (fun n => consumers.contains (InitKernelPort.originalName n)) &&
+  unless !source.isAxiom && !source.isUnsafe && !source.isPartial &&
+      missing.all (fun n => consumers.contains (InitKernelPort.originalName n)) &&
       visible.getModuleIdxFor? source.name == visible.getModuleIdx? owner &&
       (visible.find? source.name).any (fun entry => entry.type.equal source.type) do return false
   let specialized ← OmegaChecks.InitCompiler.finiteCollectors official pinned
