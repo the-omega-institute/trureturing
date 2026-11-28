@@ -156,6 +156,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     InternalOrder.decisionChains.map Prod.snd ++ InternalOrder.tailDecisionChains.map Prod.snd ++
     OrderTags.equivalences.map (fun row => row.2.2) ++ [``OrderTags.propextFromOrderRules] ++
     [``RangeSize.emOfClosed, ``RangeSize.emOfOpen, ``RangeSize.closedOfEM, ``RangeSize.openOfEM] ++
+    linearCertificates.map (fun (_, _, _, proof) => proof) ++
     IntegerCancellation.witnesses.map (fun row => row.2.2) ++
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
     [``MonadicTraversal.IndexedMap.singleton, ``MonadicTraversal.IndexedMap.fromList, ``MonadicTraversal.IndexedMap.fromArray] ++

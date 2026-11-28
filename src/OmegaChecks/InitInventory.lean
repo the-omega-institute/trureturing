@@ -203,6 +203,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   if owner == `Init.Sym.Lemmas then
     if let some result := OmegaChecks.InitBoundaries.NaturalComparison.equivalences.lookup name then
       return result
+  if owner == `Init.Data.Nat.Internal.Linear || owner == `Init.Data.Int.Linear then
+    if let some (_, target, proof, _) := OmegaChecks.InitBoundaries.linearCertificates.find?
+        (fun row => row.1 == name) then
+      return (target, proof)
   if owner == `Init.Data.Int.Linear then
     if let some (_, target, witness) := OmegaChecks.InitBoundaries.IntegerCancellation.witnesses.find?
         (fun row => row.1 == name) then

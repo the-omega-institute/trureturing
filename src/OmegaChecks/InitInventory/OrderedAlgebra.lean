@@ -352,6 +352,184 @@ theorem exprLt (rule : type_of% @Expr.of_cancel_lt) : SuccLtEq := by
 
 end NaturalCancellation
 
+namespace NaturalCertificates
+
+open Nat.Internal.Linear
+
+/- The pinned `Poly.isZero` uses a general bitwise operation in its wildcard matcher.
+Only its two list-constructor equations enter these proofs. -/
+variable (zeroTest : Poly → Bool) (nilTest : zeroTest [] = true)
+  (consTest : ∀ head tail, zeroTest (head :: tail) = false)
+
+abbrev valid (c : PolyCnstr) :=
+  bif c.eq then zeroTest c.lhs && zeroTest c.rhs else zeroTest c.lhs
+
+abbrev unsat (c : PolyCnstr) :=
+  bif c.eq then (zeroTest c.lhs && c.rhs.isNonZero) || (c.lhs.isNonZero && zeroTest c.rhs)
+  else c.lhs.isNonZero && zeroTest c.rhs
+
+abbrev ValidRule := ∀ (ctx : Context) {c : PolyCnstr}, valid zeroTest c = true → c.denote ctx = True
+abbrev UnsatRule := ∀ (ctx : Context) {c : PolyCnstr}, unsat zeroTest c = true → c.denote ctx = False
+
+/-- The empty polynomial compares with zero and with every nonnegative value. -/
+def ZeroTrue := ((0 : Nat) = 0) = True ∧ ∀ n : Nat, (0 ≤ n) = True
+
+/-- A positive polynomial can occur on either side of equality, or below zero. -/
+def PositiveFalse := ∀ n : Nat,
+  ((0 = n.succ) = False) ∧ ((n.succ = 0) = False) ∧ ((n.succ ≤ 0) = False)
+
+private theorem andParts (a b : Bool) (h : (a && b) = true) : a = true ∧ b = true := by
+  cases a <;> cases b <;> first | exact ⟨rfl, rfl⟩ | contradiction
+
+private theorem orParts (a b : Bool) (h : (a || b) = true) : a = true ∨ b = true := by
+  cases a <;> cases b <;> first | exact .inl rfl | exact .inr rfl | contradiction
+
+include consTest in
+private theorem zeroValue (ctx : Context) (p : Poly) (h : zeroTest p = true) : p.denote ctx = 0 := by
+  cases p with
+  | nil => rfl
+  | cons term tail => exact Bool.noConfusion ((consTest term tail).symm.trans h)
+
+private theorem positiveValue (ctx : Context) (p : Poly) (h : p.isNonZero = true) : 0 < p.denote ctx := by
+  induction p with
+  | nil => contradiction
+  | cons term tail ih =>
+    obtain ⟨k, v⟩ := term
+    change (bif v == fixedVar then decide (k > 0) else Poly.isNonZero tail) = true at h
+    change 0 < k * Var.denote ctx v + Poly.denote ctx tail
+    cases fixed : (v == fixedVar) with
+    | true =>
+      rw [fixed] at h
+      have val : Var.denote ctx v = 1 := congrArg (Bool.rec (motive := fun _ => Nat) (ctx.get v) 1) fixed
+      rw [val, Nat.mul_one]
+      exact Nat.lt_of_lt_of_le (of_decide_eq_true h) (Nat.le_add_right ..)
+    | false =>
+      rw [fixed] at h
+      exact Nat.lt_of_lt_of_le (ih h) (Nat.le_add_left ..)
+
+private abbrev literal (n : Nat) : Poly := [(n, fixedVar)]
+private theorem literalValue (n : Nat) : (literal n).denote (.leaf 0) = n := Nat.mul_one n
+
+include nilTest consTest in
+theorem validCertificateIff : ValidRule zeroTest ↔ ZeroTrue := by
+  constructor
+  · intro rule
+    refine ⟨rule (.leaf 0) (c := ⟨true, [], []⟩) (by
+      change (zeroTest [] && zeroTest []) = true
+      rw [nilTest]
+      rfl), fun n => ?_⟩
+    have result := rule (.leaf 0) (c := ⟨false, [], literal n⟩) nilTest
+    change (0 ≤ (literal n).denote (.leaf 0)) = True at result
+    rwa [literalValue] at result
+  · intro tags ctx c cert
+    obtain ⟨kind, l, r⟩ := c
+    cases kind with
+    | false =>
+      change (l.denote ctx ≤ r.denote ctx) = True
+      rw [zeroValue zeroTest consTest ctx l cert]
+      exact tags.2 _
+    | true =>
+      have both := andParts (zeroTest l) (zeroTest r) cert
+      change (l.denote ctx = r.denote ctx) = True
+      rw [zeroValue zeroTest consTest ctx l both.1, zeroValue zeroTest consTest ctx r both.2]
+      exact tags.1
+
+include nilTest consTest in
+theorem unsatCertificateIff : UnsatRule zeroTest ↔ PositiveFalse := by
+  constructor
+  · intro rule n
+    have pos : (literal n.succ).isNonZero = true := decide_eq_true (Nat.zero_lt_succ n)
+    have left := rule (.leaf 0) (c := ⟨true, [], literal n.succ⟩) (by
+      change (zeroTest [] && (literal n.succ).isNonZero || false && zeroTest (literal n.succ)) = true
+      rw [nilTest, pos]
+      rfl)
+    have right := rule (.leaf 0) (c := ⟨true, literal n.succ, []⟩) (by
+      change (zeroTest (literal n.succ) && false || (literal n.succ).isNonZero && zeroTest []) = true
+      rw [nilTest, consTest, pos]
+      rfl)
+    have order := rule (.leaf 0) (c := ⟨false, literal n.succ, []⟩) (by
+      change ((literal n.succ).isNonZero && zeroTest []) = true
+      rw [nilTest, pos]
+      rfl)
+    change (0 = (literal n.succ).denote (.leaf 0)) = False at left
+    change ((literal n.succ).denote (.leaf 0) = 0) = False at right
+    change ((literal n.succ).denote (.leaf 0) ≤ 0) = False at order
+    rw [literalValue] at left right order
+    exact ⟨left, right, order⟩
+  · intro tags ctx c cert
+    obtain ⟨kind, l, r⟩ := c
+    have positive (p : Poly) (h : p.isNonZero = true) : ∃ n : Nat, p.denote ctx = n.succ := by
+      have pos := positiveValue ctx p h
+      cases e : p.denote ctx with
+      | zero => exact (Nat.ne_zero_of_lt pos e).elim
+      | succ n => exact ⟨n, rfl⟩
+    cases kind with
+    | false =>
+      have both := andParts l.isNonZero (zeroTest r) cert
+      obtain ⟨n, e⟩ := positive l both.1
+      change (l.denote ctx ≤ r.denote ctx) = False
+      rw [e, zeroValue zeroTest consTest ctx r both.2]
+      exact (tags n).2.2
+    | true =>
+      change (l.denote ctx = r.denote ctx) = False
+      cases orParts _ _ cert with
+      | inl both =>
+        have parts := andParts (zeroTest l) r.isNonZero both
+        obtain ⟨n, e⟩ := positive r parts.2
+        rw [zeroValue zeroTest consTest ctx l parts.1, e]
+        exact (tags n).1
+      | inr both =>
+        have parts := andParts l.isNonZero (zeroTest r) both
+        obtain ⟨n, e⟩ := positive l parts.1
+        rw [e, zeroValue zeroTest consTest ctx r parts.2]
+        exact (tags n).2.1
+
+/-- Ordinary official imports reduce the empty test on both list constructors. -/
+theorem validIff : (type_of% @PolyCnstr.eq_true_of_isValid) ↔ ZeroTrue :=
+  validCertificateIff Poly.isZero rfl (fun _ _ => rfl)
+
+theorem unsatIff : (type_of% @PolyCnstr.eq_false_of_isUnsat) ↔ PositiveFalse :=
+  unsatCertificateIff Poly.isZero rfl (fun _ _ => rfl)
+
+/-- Cancelling identical variables produces a zero polynomial on both sides. -/
+def ReflexiveTrue := ∀ n : Nat, ((n = n) = True) ∧ ((n ≤ n) = True)
+
+/-- Cancelling a variable from its successor leaves the constant one. -/
+def SuccessorFalse := ∀ n : Nat,
+  ((n.succ = n) = False) ∧ ((n = n.succ) = False) ∧ ((n.succ ≤ n) = False)
+
+include nilTest in
+theorem exprValid (rule : ∀ (ctx : Context) (c : ExprCnstr),
+    valid zeroTest c.toNormPoly = true → c.denote ctx = True) : ReflexiveTrue := by
+  intro n
+  have both : (zeroTest [] && zeroTest []) = true := by rw [nilTest]; rfl
+  exact ⟨rule (.leaf n) ⟨true, .var 0, .var 0⟩ both,
+    rule (.leaf n) ⟨false, .var 0, .var 0⟩ nilTest⟩
+
+include nilTest consTest in
+theorem exprUnsat (rule : ∀ (ctx : Context) (c : ExprCnstr),
+    unsat zeroTest c.toNormPoly = true → c.denote ctx = False) : SuccessorFalse := by
+  intro n
+  let x : Nat.Internal.Linear.Expr := .var 0
+  let succ : Nat.Internal.Linear.Expr := .add x (.num 1)
+  have positiveLeft : (zeroTest [(1, fixedVar)] && false || true && zeroTest []) = true := by
+    rw [nilTest, consTest]
+    rfl
+  have positiveRight : (zeroTest [] && true || false && zeroTest [(1, fixedVar)]) = true := by
+    rw [nilTest]
+    rfl
+  have order : (true && zeroTest []) = true := by rw [nilTest]; rfl
+  exact ⟨rule (.leaf n) ⟨true, succ, x⟩ positiveLeft,
+    rule (.leaf n) ⟨true, x, succ⟩ positiveRight, rule (.leaf n) ⟨false, succ, x⟩ order⟩
+
+theorem ofExprValid : (type_of% @ExprCnstr.eq_true_of_isValid) → ReflexiveTrue :=
+  exprValid Poly.isZero rfl
+
+theorem ofExprUnsat : (type_of% @ExprCnstr.eq_false_of_isUnsat) → SuccessorFalse :=
+  exprUnsat Poly.isZero rfl (fun _ _ => rfl)
+
+end NaturalCertificates
+
 namespace IntegerCancellation
 
 open Int.Internal.Linear
@@ -414,6 +592,38 @@ def AddOneEqOne := ∀ a : Int, (a + 1 = 1) = (a = 0)
 theorem addOneEqOne (rule : type_of% @norm_eq_var_const) : AddOneEqOne :=
   fun a => rule (.leaf a) (.add (.var 0) (.num 1)) (.num 1) 0 0 rfl
 
+/-- Normalizing a variable against itself leaves the constant zero. -/
+def ReflexiveEq := ∀ z : Int, (z = z) = True
+
+def ReflexiveLE := ∀ z : Int, (z ≤ z) = True
+
+/-- Normalizing a successor against the original variable leaves the constant one. -/
+def SuccessorLEFalse := ∀ z : Int, (z + 1 ≤ z) = False
+
+theorem reflexiveEqOfTest (test : Poly → Bool) (zero : test (.num 0) = true)
+    (rule : ∀ (ctx : Context) (lhs rhs : Int.Internal.Linear.Expr),
+      test (lhs.sub rhs).norm = true → (lhs.denote ctx = rhs.denote ctx) = True) : ReflexiveEq :=
+  fun z => rule (.leaf z) (.var 0) (.var 0) zero
+
+theorem reflexiveLEOfTest (test : Poly → Bool) (zero : test (.num 0) = true)
+    (rule : ∀ (ctx : Context) (lhs rhs : Int.Internal.Linear.Expr),
+      test (lhs.sub rhs).norm = true → (lhs.denote ctx ≤ rhs.denote ctx) = True) : ReflexiveLE :=
+  fun z => rule (.leaf z) (.var 0) (.var 0) zero
+
+theorem successorLEOfTest (test : Poly → Bool) (one : test (.num 1) = true)
+    (rule : ∀ (ctx : Context) (lhs rhs : Int.Internal.Linear.Expr),
+      test (lhs.sub rhs).norm = true → (lhs.denote ctx ≤ rhs.denote ctx) = False) : SuccessorLEFalse :=
+  fun z => rule (.leaf z) (plusOne 0) (.var 0) one
+
+theorem ofValidEq : (type_of% @eq_eq_true) → ReflexiveEq :=
+  reflexiveEqOfTest Poly.isValidEq rfl
+
+theorem ofValidLE : (type_of% @le_eq_true) → ReflexiveLE :=
+  reflexiveLEOfTest Poly.isValidLe rfl
+
+theorem ofUnsatLE : (type_of% @le_eq_false) → SuccessorLEFalse :=
+  successorLEOfTest Poly.isUnsatLe rfl
+
 /-- Tightening an odd bound divides by two and rounds its constant upward. -/
 def OddBound := ∀ a : Int, (2 * a + 1 ≤ 0) = (a + 1 ≤ 0)
 
@@ -435,5 +645,18 @@ def witnesses : List (Name × Name × Name) := [
   (``dvd_eq_false, ``TwoDividesOneFalse, ``twoDividesOneFalse)]
 
 end IntegerCancellation
+
+open Nat.Internal.Linear Int.Internal.Linear NaturalCertificates IntegerCancellation in
+/-- Each row gives the official site, consequence, specialized proof and the proof over an
+arbitrary Boolean test. Empty-kernel replay uses the latter because the official matcher
+carries an axiom dependency in the implementation of its constructor mask. -/
+def linearCertificates : List (Name × Name × Name × Name) := [
+  (``PolyCnstr.eq_true_of_isValid, ``ZeroTrue, ``validIff, ``validCertificateIff),
+  (``PolyCnstr.eq_false_of_isUnsat, ``PositiveFalse, ``unsatIff, ``unsatCertificateIff),
+  (``ExprCnstr.eq_true_of_isValid, ``ReflexiveTrue, ``ofExprValid, ``exprValid),
+  (``ExprCnstr.eq_false_of_isUnsat, ``NaturalCertificates.SuccessorFalse, ``ofExprUnsat, ``exprUnsat),
+  (``eq_eq_true, ``ReflexiveEq, ``ofValidEq, ``reflexiveEqOfTest),
+  (``le_eq_true, ``ReflexiveLE, ``ofValidLE, ``reflexiveLEOfTest),
+  (``le_eq_false, ``SuccessorLEFalse, ``ofUnsatLE, ``successorLEOfTest)]
 
 end OmegaChecks.InitBoundaries
