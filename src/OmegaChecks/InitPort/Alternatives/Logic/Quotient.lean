@@ -1,6 +1,20 @@
 module
 public import Init.Core
 
+/-!
+The native quotient supplies induction into propositions and a nondependent lift.
+For `Quot.rec`, `Quot.recOn` and the two `Quotient` versions, even the official
+coherence premise uses quotient soundness to transport between fibers.
+
+The original types of `Quot.recOnSubsingleton`, `Quotient.recOnSubsingleton`,
+`Quotient.recOnSubsingleton₂` and both `pliftOn` operations admit direct terms in
+the representative model: the quotient point itself supplies a representative.
+That operation is unavailable on the native carrier. These five interfaces remain open
+there. For `Quotient.exact`, decidability of the setoid relation suffices by
+`QuotientDecision.exactOfDecidable` in `OmegaChecks.InitInventory.Quotient`.
+The official type quantifies over arbitrary setoids.
+-/
+
 namespace OmegaChecks.InitPort.Alternatives
 
 /-- Lift the value together with its fiber type. Heterogeneous equality makes these pairs equal. -/
