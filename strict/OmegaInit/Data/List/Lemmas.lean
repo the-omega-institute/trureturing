@@ -499,4 +499,7 @@ a ≠ b. List.eq_replicate_or_eq_replicate_append_cons and List.replicateRecOn
 make the same distinction on [a, b]. Their exact converse constructions for
 any element type with equality cases are in OmegaChecks.InitBoundaries.FiniteMembership.
 List.isEqv_eq identifies the boolean test's truth proposition with list equality.
-Its cross-type equality normalization is checked by ContainerEquality.ofList. -/
+The comparison gives a zero-axiom logical equivalence pointwise. Equality of
+those proposition types is equivalent to cross-type normalization of list
+equalities together with its empty/empty and empty/singleton values on PUnit
+(ContainerEquality.listComparisonNormalizationIff). -/
