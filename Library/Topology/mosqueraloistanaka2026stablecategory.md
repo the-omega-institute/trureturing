@@ -38,6 +38,10 @@ strata_touched:
   - D5/S3/Topology/BarycentricRealization
   - D5/S3/Topology/StableCategory/FourPieceCategoricalCover
   - D5/S3/Topology/StableCategory/DimensionFourCategoricalColour
+  - D5/S3/Topology/StableCategory/LebesgueStarAssignment
+  - D5/S3/Topology/StableCategory/TetrahedralOneSidedRefinement
+  - D5/S3/Topology/StableCategory/TetrahedralAsymmetricIteration
+  - D5/S3/Topology/StableCategory/ThreePieceCategoricalCover
 license: citation-only
 triage: anchor
 ---
@@ -1112,7 +1116,39 @@ then pull back by the face intersections at a common ordinary subdivision
 depth. The Lean theorem gives four categorical lower sets in the face
 poset at that depth.
 
-For a connected complex of weak category two, the Lebesgue number of
-the two categorical opens and the shrinking barycentric mesh give such
-a star assignment after an initial subdivision. This last passage from
-the open cover to the star assignment is a geometric deduction.
+For a connected complex of weak category two, the Lean theorem proves
+the star assignment from the categorical open cover. In the original
+coordinate metric each barycentric subdivision shrinks the mesh by at
+most four fifths. Once the mesh is smaller than the Lebesgue number,
+each closed vertex star lies in one categorical open. The proof
+transports the two homotopies to the subcomplexes of faces carried into
+the respective opens. For a finite poset with connected order-complex
+realization and order-complex dimension at most four, this gives four
+categorical lower sets in some ordinary iterated chain poset.
+
+## Three-piece bound for contractible complexes
+
+For a nullhomotopic realization inclusion of a subcomplex of dimension
+at most five, the one-sided tetrahedral refinement gives a paper
+proof of a relative three-piece cover. The lowest two face ranks form
+a bipartite graph. Fold the other ranks to one apex when reading the
+tetrahedral colouring. The graph parameter gains four levels for
+every three ambient levels, and the other parameter retains the
+ambient depth. Its exceptions contract through single graph edges
+and enter the next parameter as isolated vertices. At the terminal
+depth the graph region contracts. The remaining parameter has
+dimension at most three and gives two pieces by the relative theorem.
+Pulling back through the meeting-face maps gives the three-piece
+cover at a single ambient depth. The Lean theorem proves the absolute
+version for every finite simplicial complex of dimension at most five
+with contractible realization. The relative version above remains a
+paper deduction.
+
+In dimension four the two-piece bound for contractible realization
+remains open. A PL four-ball with 19 vertices and 69 maximal simplexes
+admits a three-piece cover with strongly collapsible intersections
+for which each pairwise union contains a domination-free ambient
+retract. The retracts persist under common subdivision, so every
+pairwise union remains noncategorical. This ball has another
+two-piece cover obtained by redistributing parts of the original
+three pieces.
