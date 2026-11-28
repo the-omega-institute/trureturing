@@ -380,4 +380,123 @@ theorem prefixEqualityOfCons (inject : type_of% @List.cons.injEq.{u}) : PrefixEq
 
 end ConstructorNormalization
 
+namespace ContainerEquality
+
+/-- Equality of the propositions obtained before and after prepending one common head. -/
+def CommonHead : Prop := ∀ {α : Type u} (a : α) (xs ys : List α), (a :: xs = a :: ys) = (xs = ys)
+
+/-- Equality of the propositions obtained before and after appending one common element. -/
+def CommonLast : Prop := ∀ {α : Type u} (a : α) (xs ys : List α), (xs ++ [a] = ys ++ [a]) = (xs = ys)
+
+theorem leftIff : (type_of% @List.append_cancel_left_eq.{u}) ↔ CommonHead.{u} := by
+  constructor
+  · intro rule α a xs ys
+    exact rule [a] xs ys
+  · intro rule α s xs ys
+    induction s with
+    | nil => rfl
+    | cons a s ih => exact (rule a (s ++ xs) (s ++ ys)).trans ih
+
+private theorem snocAppend (l : List α) (x : α) (r : List α) : (l ++ [x]) ++ r = l ++ x :: r := by
+  induction l with
+  | nil => rfl
+  | cons a l ih => exact congrArg (List.cons a) ih
+
+private theorem appendNil (l : List α) : l ++ [] = l := by
+  induction l with
+  | nil => rfl
+  | cons a l ih => exact congrArg (List.cons a) ih
+
+
+theorem rightIff : (type_of% @List.append_cancel_right_eq.{u}) ↔ CommonLast.{u} := by
+  constructor
+  · intro rule α a xs ys
+    exact rule xs [a] ys
+  · intro rule α xs s ys
+    induction s generalizing xs ys with
+    | nil => rw [appendNil, appendNil]
+    | cons a s ih =>
+      rw [← snocAppend xs a s, ← snocAppend ys a s]
+      exact (ih (xs ++ [a]) (ys ++ [a])).trans (rule a xs ys)
+
+private theorem bitEq {b c : Bool} (h : (b = true) ↔ (c = true)) : b = c := by
+  cases b <;> cases c
+  · rfl
+  · cases h.mpr rfl
+  · cases h.mp rfl
+  · rfl
+
+private theorem coherent {b c : Bool} {p q : Prop} (hb : (b = true) = p)
+    (hc : (c = true) = q) (h : p ↔ q) : p = q := by
+  have eq := bitEq ((Iff.of_eq hb).trans (h.trans (Iff.of_eq hc.symm)))
+  exact hb.symm.trans ((congrArg (fun t : Bool => t = true) eq).trans hc)
+
+/-- Logically equivalent list equalities have equal proposition types across element types. -/
+def ListEquality : Prop := ∀ {α β : Type u} [BEq α] [LawfulBEq α] [BEq β] [LawfulBEq β]
+    (a b : List α) (c d : List β), (a = b ↔ c = d) → (a = b) = (c = d)
+
+theorem ofList (rule : type_of% @List.isEqv_eq.{u}) : ListEquality.{u} := by
+  intro α β _ _ _ _ a b c d h
+  exact coherent (@rule α _ _ a b) (@rule β _ _ c d) h
+
+/-- The two compared pairs of arrays may have different element types. -/
+def ArrayEquality : Prop := ∀ {α β : Type u} [BEq α] [LawfulBEq α] [BEq β] [LawfulBEq β]
+    (a b : Array α) (c d : Array β), (a = b ↔ c = d) → (a = b) = (c = d)
+
+theorem ofArray (rule : type_of% @Array.isEqv_eq.{u}) : ArrayEquality.{u} := by
+  intro α β _ _ _ _ a b c d h
+  exact coherent (@rule α _ _ a b) (@rule β _ _ c d) h
+
+/-- The two pairs of vectors may have different element types and different lengths. -/
+def VectorEquality : Prop := ∀ {α β : Type u} [BEq α] [LawfulBEq α] [BEq β] [LawfulBEq β]
+    {m n : Nat} (a b : Vector α m) (c d : Vector β n), (a = b ↔ c = d) → (a = b) = (c = d)
+/-- The bounds in the public vector comparison are proof-irrelevant. -/
+def vectorComparison {α : Type u} [BEq α] {n : Nat} (xs ys : Vector α n) : Bool :=
+  Array.isEqvAux xs.toArray ys.toArray (xs.size_toArray.trans ys.size_toArray.symm)
+    (· == ·) n (Nat.le_of_eq xs.size_toArray.symm)
+
+abbrev VectorRule : Prop := ∀ {α : Type u} {n : Nat} [BEq α] [LawfulBEq α] {xs ys : Vector α n},
+  (vectorComparison xs ys = true) = (xs = ys)
+
+theorem ofVector (rule : VectorRule.{u}) : VectorEquality.{u} := by
+  intro α β _ _ _ _ m n a b c d h
+  exact coherent (rule (xs := a) (ys := b)) (rule (xs := c) (ys := d)) h
+
+example : (type_of% @Vector.isEqv_eq.{u}) = VectorRule.{u} := rfl
+
+/-- Equivalent nonmembership propositions have equal types across lists. -/
+def ListAbsence : Prop := ∀ {α β : Type u} [BEq α] [LawfulBEq α] [BEq β] [LawfulBEq β]
+    (a : α) (xs : List α) (b : β) (ys : List β), (a ∉ xs ↔ b ∉ ys) → (a ∉ xs) = (b ∉ ys)
+
+theorem ofListSearch (rule : type_of% @List.isNone_idxOf?.{u}) : ListAbsence.{u} := by
+  intro α β _ _ _ _ a xs b ys h
+  exact coherent (rule (a := a) (l := xs)) (rule (a := b) (l := ys)) h
+
+/-- Equivalent nonmembership propositions have equal types across arrays. -/
+def ArrayAbsence : Prop := ∀ {α β : Type u} [BEq α] [LawfulBEq α] [BEq β] [LawfulBEq β]
+    (a : α) (xs : Array α) (b : β) (ys : Array β), (a ∉ xs ↔ b ∉ ys) → (a ∉ xs) = (b ∉ ys)
+
+/-- The observer can be specialized to the pinned array search, including its hidden bound proofs. -/
+abbrev ArraySearchRule (observe : {α : Type u} → [BEq α] → Array α → α → Bool) : Prop :=
+  ∀ {α : Type u} [BEq α] [LawfulBEq α] {xs : Array α} {a : α}, (observe xs a = true) = (a ∉ xs)
+
+theorem ofArraySearch (observe : {α : Type u} → [BEq α] → Array α → α → Bool)
+    (rule : ArraySearchRule @observe) : ArrayAbsence.{u} := by
+  intro α β _ _ _ _ a xs b ys h
+  exact coherent (rule (a := a) (xs := xs)) (rule (a := b) (xs := ys)) h
+
+example : (type_of% @Array.isNone_idxOf?.{u}) =
+    ArraySearchRule.{u} (fun {α} [beq : BEq α] xs a => (@Array.idxOf? α beq xs a).isNone) := rfl
+
+def witnesses : List (Name × Name × Name) := [
+  (``List.append_cancel_left_eq, ``CommonHead, ``leftIff),
+  (``List.append_cancel_right_eq, ``CommonLast, ``rightIff),
+  (``List.isEqv_eq, ``ListEquality, ``ofList),
+  (``Array.isEqv_eq, ``ArrayEquality, ``ofArray),
+  (``Vector.isEqv_eq, ``VectorEquality, ``ofVector),
+  (``List.isNone_idxOf?, ``ListAbsence, ``ofListSearch),
+  (``Array.isNone_idxOf?, ``ArrayAbsence, ``ofArraySearch)]
+
+end ContainerEquality
+
 end OmegaChecks.InitBoundaries

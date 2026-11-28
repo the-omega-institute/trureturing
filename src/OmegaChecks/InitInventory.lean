@@ -110,6 +110,8 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 /-- Additional logical consequences with separate proof terms. These do not discharge a
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
+  if let some entry := OmegaChecks.InitBoundaries.ContainerEquality.witnesses.lookup name then
+    return entry
   if owner == `Init.Data.Option.Monadic then
     if let some entry := OmegaChecks.InitBoundaries.TransformerLaws.OptionIteration.directConsequences.lookup name then
       return entry

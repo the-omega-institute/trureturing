@@ -185,6 +185,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
      ``QuotientDecision.exactOfDecidable, ``QuotientDecision.decisionsOnRepresentatives,
      ``QuotientDecision.soundFromAgreement, ``QuotientDecision.funextOfPositiveDecision] ++
     [``ClassicalOrderDecisions.fromLawfulBEq, ``ClassicalOrderDecisions.fromLawfulOrd] ++
+    ContainerEquality.witnesses.map (fun row => row.2.2) ++
     [``ConstructorNormalization.propextOfDecision, ``ConstructorNormalization.addCancelOfSucc,
      ``ConstructorNormalization.prefixEqualityOfCons] ++
     [``EmbeddingRange.ofExists, ``EmbeddingRange.ofLeftInverse,
