@@ -23,6 +23,9 @@ internal sealed class FivePointTransportedContrastDocument : IScribeDocumentDefi
                 Paragraph(Text("For t at most one half, the bound is (1 − t²)². "
                     + "For t greater than one half with (t − 1/2)² at most 1 − t², "
                     + "it is (5/4 − t)². In the remaining case it is (2t − 1)²(1 − t²).")),
+                Paragraph(Text("The same classification and witnesses hold over every linearly "
+                    + "ordered field. The rational specialization fixes the scalar domain "
+                    + "used for the five local transport readings.")),
                 Paragraph(Text("Exchange x with y and w with v to reverse the contrast. "
                     + "For a nonnegative contrast, delete v and split the four-point form "
                     + "using the simultaneous exchanges of x with z and y with w. The resulting "
