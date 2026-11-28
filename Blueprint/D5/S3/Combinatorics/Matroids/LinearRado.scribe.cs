@@ -12,6 +12,10 @@ internal sealed class LinearRadoDocument : IScribeDocumentDefinition
         Blocks(
             Node("spanning_representatives", Spanning(),
                 "The linear form of Rado's theorem selects one vector from each subspace. Its deficit version gives a spanning family: add an auxiliary space of dimension k − Module.finrank F W, choose independent representatives there, and project to W. The finite-set proof separates a proper set with equality in the dimension inequality; otherwise it passes to the quotient by a line.", false),
+            Node("deficit_representatives", Deficit(),
+                "The target rank r can be any natural number at most k. Pad the ambient space by k − r dimensions. "
+                + "Independent choices in the padded space have span of dimension k. "
+                + "The projection kernel has dimension at most k − r, so the projected representatives have rank at least r.", true),
             Node("exists_nonsingular_rows", Minor(),
                 "A finite family spanning a coordinate space contains a basis. Selecting its row indices gives a square submatrix with nonzero determinant.", true),
             Node("independent_support_matching", Matching(),
@@ -38,6 +42,30 @@ internal sealed class LinearRadoDocument : IScribeDocumentDefinition
         Some("l", Arrow(Fin(V("k")), V("W")),
             And(All("i", Fin(V("k")), Member(A(V("l"), V("i")), A(V("L"), V("i")))),
                 Equal(A(Q("Submodule", "span"), V("F"), A(Q("Set", "range"), V("l"))), Q("Top", "top"))))))))))))));
+    private static Formula Deficit()
+    {
+        var f = V("F");
+        var v = V("V");
+        var k = V("k");
+        var r = V("r");
+        var family = V("L");
+        var j = V("J");
+        var i = V("i");
+        var l = V("l");
+        var restrictedIndices = A(V("Subtype"), Lam("a", Fin(k), Member(V("a"), j)));
+        var restrictedSum = A(V("iSup"), Lam("i", restrictedIndices, A(family, A(V("val"), i))));
+        var hall = All("J", A(V("Finset"), Fin(k)),
+            Rel(Add(r, Card(j)), FormulaRelationOperator.LessThanOrEqual, Add(k, Rank(f, restrictedSum))));
+        var span = A(Q("Submodule", "span"), f, A(Q("Set", "range"), l));
+        var representatives = Some("l", Arrow(Fin(k), v),
+            And(All("i", Fin(k), Member(A(l, i), A(family, i))),
+                Rel(r, FormulaRelationOperator.LessThanOrEqual, Rank(f, span))));
+        var conclusion = All("L", Arrow(Fin(k), Sub(f, v)),
+            Imp(Rel(r, FormulaRelationOperator.LessThanOrEqual, k), Imp(hall, representatives)));
+        return All("F", V("Type"), Inst(A(V("Field"), f),
+            All("V", V("Type"), Inst(A(V("AddCommGroup"), v), Inst(A(V("Module"), f, v),
+            Inst(A(V("FiniteDimensional"), f, v), All("k", N, All("r", N, conclusion))))))));
+    }
     private static Formula Minor() => All("F", Type, Inst(A(V("Field"), V("F")),
         All("k", N, All("t", N, All("M", A(V("Matrix"), Fin(V("k")), Fin(V("t")), V("F")),
         Imp(Equal(A(Q("Submodule", "span"), V("F"), A(Q("Set", "range"), A(Q("Matrix", "row"), V("M")))), Q("Top", "top")),

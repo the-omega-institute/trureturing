@@ -18,6 +18,16 @@ internal sealed class QTransversalRepresentabilityDocument : IScribeDocumentDefi
                 "Section 3.2, page 7: “Given some n × m matrix G over a field K extending F_q, we can define the q-matroid represented by G as follows: if a subspace of F_q^m is the row space of matrix X, then its rank in the matroid is the rank of matrix G Xᵀ.” The columns of the second factor are the vectors of Module.finBasis F U, with each coordinate mapped to K by algebraMap. This is the transpose of the matrix whose rows form that basis.", DescribeRole.Definition, false),
             Node("claim", IffFormula(V("claim"), ClaimBody()),
                 "Section 4.2, page 14: “Conjecture 3. All q-transversal matroids are representable.” The field F is arbitrary and finite, X is an arbitrary finite family of subspaces, and the same G represents the ranks of every U. The field extension K is finite dimensional over F.", DescribeRole.Definition, false),
+            Describe.Lean(DescribeId.Create("presentation-hall-minimum"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Matroids/QTransversalRepresentability.presentation_rank_eq_hallMinimum"),
+                H("Rank as a minimum of Hall bounds"),
+                StatementSource.FromAuthor(Disp(HallMinimum())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each subset J of the indexed slots, the bound is the codimension "
+                    + "in U of their common intersection with U, plus the number of omitted slots. "
+                    + "The Hall criterion bounds the dimension of every partial q-transversal by each cost. "
+                    + "Restricted annihilator representatives supplied by the deficit form of linear Rado "
+                    + "attain the minimum rank."))), DescribeRole.Theorem),
             Node("result", ClaimBody(),
                 "One finite extension preserves a nonzero generic minor for every partial q-transversal. The rows are functionals vanishing on the corresponding subspaces. A determinant support matching gives the converse implication, and independent columns yield a subspace attaining the represented rank. Consequently the two rank functions agree on every subspace. The proof gives a finite extension; no sharp formula for its degree is asserted.", DescribeRole.Theorem, true))));
 
@@ -52,6 +62,21 @@ internal sealed class QTransversalRepresentabilityDocument : IScribeDocumentDefi
                 Some("T", Sub(V("F"), Ambient),
                     And(Rel(V("T"), FormulaRelationOperator.LessThanOrEqual, V("U")),
                         And(A(V("IsPartialQTransversal"), V("X"), V("T")), Equal(Rank(V("F"), V("T")), V("d"))))), CloseBrace)))));
+    private static Formula HallMinimum()
+    {
+        var f = V("F");
+        var u = V("U");
+        var j = V("J");
+        var k = V("k");
+        var indices = A(V("Subtype"), Lam("a", Fin(k), Member(V("a"), j)));
+        var common = A(V("iInf"), Lam("i", indices, A(V("X"), A(V("val"), V("i")))));
+        var intersection = A(V("inf"), u, common);
+        var bound = Add(Parenthesized(Seq(Rank(f, u), Sp, Minus, Sp, Rank(f, intersection))),
+            Parenthesized(Seq(k, Sp, Minus, Sp, A(Q("Finset", "card"), j))));
+        var costs = A(Q("Set", "range"), Lam("J", A(V("Finset"), Fin(k)), bound));
+        return Base(All("U", Sub(f, Ambient),
+            Equal(A(V("qTransversalRank"), V("X"), u), A(V("sInf"), costs))), finite: true);
+    }
     private static Formula RepresentedDefinition() => All("F", Type,
         Inst(A(V("Field"), V("F")),
         All("K", Type, Inst(A(V("Field"), V("K")), Inst(A(V("Algebra"), V("F"), V("K")),
