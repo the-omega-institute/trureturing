@@ -1,9 +1,46 @@
 module
 public import Init.Data.Nat.Gcd
+public import OmegaInit.Data.Nat.Div.Basic
 public import OmegaInit.Prelude
 
 /-! Namespace aliases to the pinned public interface. -/
 public section
 namespace Omega.Nat
-export _root_.Nat (gcd gcd_one_left gcd_zero_right)
+export _root_.Nat (gcd gcd_add_one gcd_one_left gcd_one_right gcd_rec gcd_succ gcd_zero_left gcd_zero_right)
+end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (dvdProdDvdOfDvdProd dvd_gcd eq_zero_of_gcd_eq_zero_left
+  eq_zero_of_gcd_eq_zero_right gcd_assoc gcd_comm gcd_div gcd_dvd gcd_dvd_gcd_mul_left_left
+  gcd_dvd_gcd_mul_left_right gcd_dvd_gcd_mul_right_right gcd_dvd_gcd_of_dvd_left
+  gcd_dvd_gcd_of_dvd_right gcd_dvd_left gcd_dvd_right gcd_eq_left gcd_eq_zero_iff gcd_mul_left
+  gcd_mul_left_left gcd_mul_right gcd_mul_right_dvd_mul_gcd gcd_mul_right_left gcd_mul_right_right
+  gcd_pos_of_pos_left gcd_self)
+end Omega.Nat
+
+namespace Omega.Nat.gcd
+export _root_.Nat.gcd (induction)
+end Omega.Nat.gcd
+
+namespace Omega.Nat
+export _root_.Nat (div_gcd_pos_of_pos_left div_gcd_pos_of_pos_right dvd_gcd_iff
+  dvd_gcd_mul_gcd_iff_dvd_mul dvd_gcd_mul_iff_dvd_mul dvd_mul dvd_mul_gcd_iff_dvd_mul
+  gcd_add_left_left_of_dvd gcd_add_left_right_of_dvd gcd_add_mul_left_left gcd_add_mul_left_right
+  gcd_add_mul_right_left gcd_add_mul_right_right gcd_add_right_left_of_dvd
+  gcd_add_right_right_of_dvd gcd_add_self_left gcd_add_self_right gcd_def
+  gcd_div_gcd_div_gcd_of_pos_left gcd_div_gcd_div_gcd_of_pos_right gcd_dvd_gcd_mul_right_left
+  gcd_eq_iff gcd_eq_left_iff_dvd gcd_eq_one_iff gcd_eq_right gcd_eq_right_iff_dvd
+  gcd_gcd_self_left_left gcd_gcd_self_left_right gcd_gcd_self_right_left gcd_gcd_self_right_right
+  gcd_le_left gcd_le_right gcd_left_comm gcd_left_eq_iff gcd_mul_left_add_left
+  gcd_mul_left_add_right gcd_mul_left_dvd_mul_gcd gcd_mul_left_left_of_gcd_eq_one gcd_mul_left_right
+  gcd_mul_left_right_of_gcd_eq_one gcd_mul_left_sub_left gcd_mul_left_sub_right
+  gcd_mul_right_add_left gcd_mul_right_add_right gcd_mul_right_left_of_gcd_eq_one
+  gcd_mul_right_right_of_gcd_eq_one gcd_mul_right_sub_left gcd_mul_right_sub_right gcd_ne_zero_left
+  gcd_ne_zero_right gcd_pos_iff gcd_pos_of_pos_right gcd_pow_left_of_gcd_eq_one
+  gcd_pow_right_of_gcd_eq_one gcd_right_eq_iff gcd_self_add_left gcd_self_add_right
+  gcd_self_sub_left gcd_self_sub_right gcd_sub_left_left_of_dvd gcd_sub_left_right_of_dvd
+  gcd_sub_mul_left_left gcd_sub_mul_left_right gcd_sub_mul_right_left gcd_sub_mul_right_right
+  gcd_sub_right_left_of_dvd gcd_sub_right_right_of_dvd gcd_sub_self_left gcd_sub_self_right
+  instAssociativeGcd instCommutativeGcd instIdempotentOpGcd instLawfulIdentityGcdOfNat
+  pow_dvd_pow_iff pow_gcd_pow pow_gcd_pow_of_gcd_eq_one)
 end Omega.Nat

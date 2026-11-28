@@ -1,0 +1,155 @@
+/-
+Copyright (c) 2020 Microsoft Corporation. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Leonardo de Moura, Mario Carneiro
+-/
+module
+prelude
+public import OmegaInit.Prelude
+
+/-! The strict compiler registers the pinned prefix parsers for isolated prelude imports.
+Ordinary imports share the elaborator's three physical coercion classes with Lean. -/
+
+port_native_records Coe, CoeTC, CoeOut, CoeOTC, CoeHead, CoeHTC, CoeTail, CoeHTCT, CoeDep, CoeT, CoeFun, CoeSort
+
+port_definition Coe.noConfusionType
+port_definition Coe.noConfusion
+port_definition Coe.mk.noConfusion
+port_definition Coe.ctorIdx with_native_code
+
+port_definition CoeTC.noConfusionType
+port_definition CoeTC.noConfusion
+port_definition CoeTC.mk.noConfusion
+port_definition CoeTC.ctorIdx with_native_code
+
+port_definition CoeOut.noConfusionType
+port_definition CoeOut.noConfusion
+port_definition CoeOut.mk.noConfusion
+port_definition CoeOut.ctorIdx with_native_code
+
+port_definition CoeOTC.noConfusionType
+port_definition CoeOTC.noConfusion
+port_definition CoeOTC.mk.noConfusion
+port_definition CoeOTC.ctorIdx with_native_code
+
+port_definition CoeHead.noConfusionType
+port_definition CoeHead.noConfusion
+port_definition CoeHead.mk.noConfusion
+port_definition CoeHead.ctorIdx with_native_code
+
+port_definition CoeHTC.noConfusionType
+port_definition CoeHTC.noConfusion
+port_definition CoeHTC.mk.noConfusion
+port_definition CoeHTC.ctorIdx with_native_code
+
+port_definition CoeTail.noConfusionType
+port_definition CoeTail.noConfusion
+port_definition CoeTail.mk.noConfusion
+port_definition CoeTail.ctorIdx with_native_code
+
+port_definition CoeHTCT.noConfusionType
+port_definition CoeHTCT.noConfusion
+port_definition CoeHTCT.mk.noConfusion
+port_definition CoeHTCT.ctorIdx with_native_code
+
+port_definition CoeDep.noConfusionType
+port_definition CoeDep.noConfusion
+port_definition CoeDep.mk.noConfusion
+port_definition CoeDep.ctorIdx with_native_code
+
+port_definition CoeT.noConfusionType
+port_definition CoeT.noConfusion
+port_definition CoeT.mk.noConfusion
+port_definition CoeT.ctorIdx with_native_code
+
+port_definition CoeFun.noConfusionType
+port_definition CoeFun.noConfusion
+port_definition CoeFun.mk.noConfusion
+port_definition CoeFun.ctorIdx with_native_code
+
+port_definition CoeSort.noConfusionType
+port_definition CoeSort.noConfusion
+port_definition CoeSort.mk.noConfusion
+port_definition CoeSort.ctorIdx with_native_code
+
+port_definition instCoeTCOfCoe with_native_code
+port_definition instCoeTCOfCoe_1 with_native_code
+port_definition instCoeTC with_native_code
+port_definition instCoeOTCOfCoeOut with_native_code
+port_definition instCoeOTCOfCoeTC with_native_code
+port_definition instCoeOTC with_native_code
+port_definition instCoeHTCOfCoeHeadOfCoeOTC with_native_code
+port_definition instCoeHTCOfCoeOTC with_native_code
+port_definition instCoeHTC with_native_code
+port_definition instCoeHTCTOfCoeTailOfCoeHTC with_native_code
+port_definition instCoeHTCTOfCoeHTC with_native_code
+port_definition instCoeHTCT with_native_code
+port_definition instCoeTOfCoeHTCT with_native_code
+port_definition instCoeTOfCoeDep with_native_code
+port_definition instCoeT with_native_code
+port_definition instCoeOutOfCoeFun with_native_code
+port_definition instCoeOutOfCoeSort with_native_code
+port_definition boolToProp with_native_code
+port_definition boolToSort with_native_code
+port_definition decPropToBool with_native_code
+port_definition subtypeCoe with_native_code
+
+attribute [instance] Omega.instCoeTCOfCoe Omega.instCoeTCOfCoe_1 Omega.instCoeTC
+attribute [instance] Omega.instCoeOTCOfCoeOut Omega.instCoeOTCOfCoeTC Omega.instCoeOTC
+attribute [instance] Omega.instCoeHTCOfCoeHeadOfCoeOTC Omega.instCoeHTCOfCoeOTC Omega.instCoeHTC
+attribute [instance] Omega.instCoeHTCTOfCoeTailOfCoeHTC Omega.instCoeHTCTOfCoeHTC Omega.instCoeHTCT
+attribute [instance] Omega.instCoeTOfCoeHTCT Omega.instCoeTOfCoeDep Omega.instCoeT
+attribute [instance] Omega.instCoeOutOfCoeFun Omega.instCoeOutOfCoeSort Omega.boolToProp
+attribute [instance] Omega.boolToSort Omega.decPropToBool Omega.subtypeCoe
+
+port_definition Lean.Internal.liftCoeM with_native_code
+port_definition Lean.Internal.coeM with_native_code
+port_definition coeNotation with_native_code
+port_definition coeFunNotation with_native_code
+port_definition coeSortNotation with_native_code
+
+public section
+namespace Omega
+export _root_ (CoeT CoeFun CoeSort)
+end Omega
+
+namespace Omega.CoeT
+export _root_.CoeT (mk rec recOn casesOn coe)
+end Omega.CoeT
+
+namespace CoeT
+export _root_.Omega.CoeT (noConfusionType noConfusion ctorIdx)
+end CoeT
+
+namespace CoeT.mk
+export _root_.Omega.CoeT.mk (noConfusion)
+end CoeT.mk
+
+namespace Omega.CoeFun
+export _root_.CoeFun (mk rec recOn casesOn coe)
+end Omega.CoeFun
+
+namespace CoeFun
+export _root_.Omega.CoeFun (noConfusionType noConfusion ctorIdx)
+end CoeFun
+
+namespace CoeFun.mk
+export _root_.Omega.CoeFun.mk (noConfusion)
+end CoeFun.mk
+
+namespace Omega.CoeSort
+export _root_.CoeSort (mk rec recOn casesOn coe)
+end Omega.CoeSort
+
+namespace CoeSort
+export _root_.Omega.CoeSort (noConfusionType noConfusion ctorIdx)
+end CoeSort
+
+namespace CoeSort.mk
+export _root_.Omega.CoeSort.mk (noConfusion)
+end CoeSort.mk
+
+attribute [coe_decl] Omega.Coe.coe Omega.CoeTC.coe Omega.CoeOut.coe Omega.CoeOTC.coe
+attribute [coe_decl] Omega.CoeHead.coe Omega.CoeHTC.coe Omega.CoeTail.coe Omega.CoeHTCT.coe
+attribute [coe_decl] Omega.CoeDep.coe Omega.CoeT.coe Omega.CoeFun.coe Omega.CoeSort.coe
+attribute [coe_decl] Omega.Lean.Internal.liftCoeM Omega.Lean.Internal.coeM

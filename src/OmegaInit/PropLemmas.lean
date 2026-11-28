@@ -5,6 +5,7 @@ public import OmegaInit.Core
 /-! Namespace aliases to the pinned public interface. -/
 public section
 namespace Omega
+export _root_ (decidable_of_iff decidable_of_iff')
 export _root_ (and_and_and_comm and_and_left and_and_right and_congr and_congr_left' and_congr_right' and_exists_self and_iff_left and_iff_right and_imp_left_iff_true and_imp_right_iff_true and_left_comm and_not_self_iff and_or_left and_or_right and_right_comm and_rotate and_self_iff cast_cast eq_mp_eq_cast eq_mpr_eq_cast exists_and_left exists_and_right exists_and_self exists_apply_eq_apply exists_comm exists_congr exists_const exists_eq exists_eq' exists_eq_left exists_eq_left' exists_eq_or_imp exists_eq_or_imp' exists_eq_right exists_eq_right' exists_eq_right_right exists_eq_right_right' exists_false exists_idem exists_imp exists_or exists_or_eq_imp exists_or_eq_imp' exists_or_eq_left exists_or_eq_left' exists_or_eq_right exists_or_eq_right' exists_prop exists_prop' exists_prop_congr exists_prop_eq exists_prop_eq' exists_prop_of_true exists_true_left exists₂_congr exists₂_imp exists₃_congr exists₄_congr exists₅_congr forall_and forall_apply_eq_imp_iff forall_apply_eq_imp_iff₂ forall_comm forall_congr' forall_const forall_eq forall_eq' forall_eq_apply_imp_iff forall_eq_or_imp forall_eq_or_imp' forall_exists_index forall_imp forall_not_of_not_exists forall_or_eq_imp forall_or_eq_imp' forall_or_imp_or_self_left_left forall_or_imp_or_self_left_right forall_or_imp_or_self_right_left forall_or_imp_or_self_right_right forall_prop_of_false forall_prop_of_true forall_self_imp forall₂_congr forall₃_congr forall₄_congr forall₅_congr imp_and imp_or_left_iff_true imp_or_right_iff_true ne_of_apply_ne nonempty_prop not_and' not_and_of_not_left not_and_of_not_or_not not_and_of_not_right not_and_self_iff not_exists not_exists_of_forall_not not_forall_of_exists_not not_imp_of_and_not not_not_em not_or not_or_intro or_and_left or_and_right or_congr or_congr_left or_congr_right or_iff_left or_iff_right or_imp or_left_comm or_or_distrib_left or_or_distrib_right or_or_or_comm or_right_comm or_rotate or_self_iff peirce')
 end Omega
 namespace Omega.And
@@ -13,3 +14,15 @@ end Omega.And
 namespace Omega.Exists
 export _root_.Exists (imp imp' nonempty)
 end Omega.Exists
+
+namespace Omega.exists_prop_decidable
+export _root_.exists_prop_decidable (match_3 match_5)
+end Omega.exists_prop_decidable
+
+namespace Omega
+export _root_ (forall_prop_decidable)
+end Omega
+
+namespace Omega.Decidable
+export _root_.Decidable (by_contra not_and_iff_not_or_not not_imp_iff_and_not not_imp_not of_not_imp)
+end Omega.Decidable

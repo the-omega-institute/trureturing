@@ -1,7 +1,7 @@
 """Run from anywhere in this checkout. --incremental temporarily edits two clean sources."""
 import argparse
-import csv
 from functools import cache
+from graphlib import TopologicalSorter
 import hashlib
 import json
 import os
@@ -13,7 +13,7 @@ import tempfile
 import portable
 import scope as affected_scope
 from portable import BASIS, closure, import_graph, root
-from strict_lake import BUILD, COMMON_SRC, lake_layout, strict_config
+from strict_lake import BUILD, COMMON_SRC, build_profiles, lake_layout, strict_config, isolated_config
 
 ROOT = Path(__file__).resolve().parents[2]
 LIB = ROOT / BUILD / "lib/lean"
@@ -35,11 +35,13 @@ def run(*args):
 
 
 def build(targets):
-    run("lake", "-f", strict_config(), "build", *("+" + target for target in targets))
+    selections = {"+" + name: {name} for name in targets}
+    result = build_profiles(library_graph(), selections)
+    if result:
+        raise subprocess.CalledProcessError(result, ["lake", "build", *selections])
 
 
-def strict_import_graph(lean, targets=()):
-    _, graph = import_graph(lean, ("strict/*.lean", "src/*.lean"))
+def extend_project_imports(lean, graph, targets=()):
     # A witness can reach a marked project module through the public umbrella.
     # Read the requested project branches without scanning every unrelated D5 source.
     pending = set(targets).union(*graph.values())
@@ -51,6 +53,11 @@ def strict_import_graph(lean, targets=()):
         _, extra = import_graph(lean, paths)
         graph.update(extra)
         pending = set().union(*extra.values())
+
+
+def strict_import_graph(lean, targets=()):
+    _, graph = import_graph(lean, (*portable.STRICT_LIBRARIES, "src/*.lean"))
+    extend_project_imports(lean, graph, targets)
     return graph
 
 
@@ -121,7 +128,7 @@ def check_library(selected=()):
 
 def lake_environment():
     script = "import json, os; print(json.dumps(dict(os.environ)))"
-    output = subprocess.run(["lake", "-f", strict_config(), "env", sys.executable, "-c", script], cwd=ROOT,
+    output = subprocess.run(["lake", "-f", isolated_config(), "env", sys.executable, "-c", script], cwd=ROOT,
                             stdout=subprocess.PIPE, text=True, check=True).stdout
     return json.loads(output)
 
@@ -157,6 +164,11 @@ def check_audits():
     build(["OmegaChecks.ModuleSurface"])
     with tempfile.TemporaryDirectory(prefix="omega-olean-") as tmp:
         tmp = Path(tmp)
+        other_quot = tmp / "OtherQuot.lean"
+        other_quot.write_text("module\nprelude\npublic inductive Eq {α : Sort u} : α → α → Prop where\n"
+                              "  | refl (a : α) : Eq a a\ninit_quot\n")
+        lean("-R", tmp, "-o", other_quot.with_suffix(".olean"), other_quot)
+        audit("OtherQuot", ["OtherQuot"], [tmp], "unexpected native quotient support OtherQuot/")
         for name, source, reason in [
             ("UnusedAxiom", "module\nprelude\nimport OmegaInit.Prelude\npublic axiom hiddenAssumption : Prop\n",
              "hiddenAssumption"),
@@ -164,7 +176,10 @@ def check_audits():
         ]:
             source_file = tmp / f"{name}.lean"
             source_file.write_text(source)
-            lean("-R", tmp, "-o", tmp / f"{name}.olean", source_file)
+            if name == "ImplicitInit":
+                run("lake", "-f", strict_config(), "env", "lean", "-R", tmp, "-o", tmp / f"{name}.olean", source_file)
+            else:
+                lean("-R", tmp, "-o", tmp / f"{name}.olean", source_file)
             audit(name, ["OmegaInit.Prelude", name], [tmp, LIB], reason)
     check_standard_admission()
     check_module_surface()
@@ -178,24 +193,26 @@ def check_consumer_exports():
     alias = "namespace Visible\nexport A (item)\nend Visible\n"
     generated = "public inductive Choice where | first | second\n"
     size_of = ("public import Init\npublic import OmegaInit.Prelude\n"
-               "public structure Wrapper where value : Omega.Nat\n"
-               "public noncomputable def derivedSize : Nat := sizeOf (Wrapper.mk Omega.Nat.zero.succ)\n")
+               "public structure Wrapper where value : Omega.Option Omega.Nat\n"
+               "public noncomputable def derivedSize : Nat := sizeOf (Wrapper.mk Omega.Option.none)\n")
     field = ("public import OmegaInit.Prelude\npublic section\n"
-             "abbrev FieldReceiver := Omega.Nat\n"
-             "def Omega.Nat.projectField (value : FieldReceiver) := value\n")
-    field_alias = "namespace Nat\nexport _root_.Omega.Nat (projectField)\nend Nat\n"
-    alias_method = (field.replace("def Omega.Nat.", "def Example.")
-                    + "namespace Omega.Nat\nexport _root_.Example (projectField)\nend Omega.Nat\n")
+             "abbrev FieldReceiver := Omega.Option Omega.Nat\n"
+             "def Omega.Option.projectField (value : FieldReceiver) := value\n")
+    field_alias = "namespace Option\nexport _root_.Omega.Option (projectField)\nend Option\n"
+    alias_method = (field.replace("def Omega.Option.", "def Example.")
+                    + "namespace Omega.Option\nexport _root_.Example (projectField)\nend Omega.Option\n")
     official = audit_environment()
+    hosted_path = portable.output("lake", "-f", strict_config(), "env", "printenv", "LEAN_PATH").strip()
+    hosted = {**ENV, "LEAN_PATH": hosted_path}
     with tempfile.TemporaryDirectory(prefix="omega-exports-") as directory:
         tmp = Path(directory)
         for strict_code, official_code, error, marker in [
             (field + field_alias, field + field_alias, False, "Compared"),
-            (field, field, True, "field resolution mismatch for Omega.Nat.projectField"),
-            (alias_method, alias_method, True, "field resolution mismatch for Omega.Nat.projectField"),
-            ((field + field_alias).replace("projectField", "gcd"),
-             (field + field_alias).replace("projectField", "gcd"), True,
-             "field resolution mismatch for Omega.Nat.gcd"),
+            (field, field, True, "field resolution mismatch for Omega.Option.projectField"),
+            (alias_method, alias_method, True, "field resolution mismatch for Omega.Option.projectField"),
+            ((field + field_alias).replace("projectField", "filter"),
+             (field + field_alias).replace("projectField", "filter"), True,
+             "field resolution mismatch for Omega.Option.filter"),
             (local + alias, local + alias, False, "Compared"),
             (local + alias, local, True, "missing consumer alias Visible.item for A.item"),
             (local, local + alias, True, "additional official-side consumer alias Visible.item for A.item"),
@@ -222,7 +239,8 @@ def check_consumer_exports():
              "additional official-side consumer export Choice.ctorIdx"),
         ]:
             paths = []
-            for side, header, body, env in [("strict", "module\nprelude\n", strict_code, ENV),
+            strict_env = hosted if strict_code.startswith("public import Init\n") else ENV
+            for side, header, body, env in [("strict", "module\nprelude\n", strict_code, strict_env),
                                             ("official", "module\n", official_code, official)]:
                 base = tmp / side
                 base.mkdir(exist_ok=True)
@@ -238,6 +256,7 @@ def check_consumer_exports():
 
 
 def check_representation():
+    run("lake", "build", "+OmegaMathlib.Data.Nat.Fib.Basic")
     # Legacy importers load private .olean data. Cover ordinary elaboration in both file formats.
     examples = [
         ("p", "Omega.And.left h", None),
@@ -273,7 +292,7 @@ def check_fibonacci_reduction():
     profiles = {"publication": (False, None), "common": (False, COMMON_SRC), "strict": (True, None)}
     module = "OmegaMathlib.Data.Nat.Fib.Basic"
     for mode, (strict, common_dir) in profiles.items():
-        lake, _ = lake_layout(strict, False, common_dir)
+        lake = ["lake", "-f", strict_config()] if strict else lake_layout(False, False, common_dir)[0]
         path = subprocess.check_output([*lake, "env", "printenv", "LEAN_PATH"], cwd=ROOT, text=True).strip()
         for header in ("", "module\n"):
             prefix = header + f"import {module}\n"
@@ -309,19 +328,25 @@ def check_module_surface():
         for name, imports, body, reason in [
             ("OmegaMathlib.EmptyModuleProbe", [], "", "no official module Mathlib.EmptyModuleProbe"),
             ("OmegaInit.EmptyModuleProbe", [], "", "no official module Init.EmptyModuleProbe"),
-            (port, [prelude], "namespace And\nexport Omega.And (left)\nend And", None),
-            (core, [prelude], "namespace And\nexport Omega.And (left)\nend And", None),
-            (core, [prelude], "import all OmegaInit.Prelude\nattribute [local semireducible] Omega.Nat.add", None),
+            (port, [prelude], "namespace And\nexport Omega.And (left)\nend And",
+             "unmatched public alias And.left"),
+            (core, [prelude], "namespace And\nexport Omega.And (left)\nend And",
+             "unmatched public alias And.left"),
+            (core, [prelude], "public theorem Omega.Bool.of_not_eq_false {b : Bool} : "
+             "Not (Eq b Bool.false) → Eq b Bool.true := Omega.Bool.eq_true_of_ne_false\n"
+             "namespace Bool\nexport Omega.Bool (of_not_eq_false)\nend Bool", None),
+            (core, [prelude], "import all OmegaInit.Prelude\nattribute [local semireducible] Nat.div", None),
+            (core, [prelude], "attribute [default_instance 77] Omega.instDecidableAnd",
+             "unmatched default instance Omega.instDecidableAnd"),
             (port, [prelude], "attribute [class] Omega.True", "public class registration mismatch for Omega.True"),
             (core, [prelude], "attribute [class] Omega.True", "public class registration mismatch for Omega.True"),
             ("OmegaInit", [prelude], "attribute [class] Omega.True", "unmatched class registration"),
             (core, [prelude], "import all OmegaInit.Prelude\nset_option allowUnsafeReducibility true in\n"
-             "attribute [semireducible] Omega.Nat.add",
-             "unverified public reducibility override for Omega.Nat.add"),
+             "attribute [semireducible] Nat.div",
+             "unverified public reducibility override for Nat.div"),
             ("OmegaInit.Data.Nat.Basic", [prelude],
-             "import all OmegaInit.Prelude\nattribute [local semireducible] Omega.Nat.mul\n"
-             "public theorem Omega.Nat.mul_zero (n : Omega.Nat) : "
-             "Omega.Eq (n.mul Omega.Nat.zero) Omega.Nat.zero := Omega.rfl",
+             "import all OmegaInit.Prelude\n"
+             "public theorem Omega.Nat.mul_zero (n : Nat) : Eq (Nat.mul n Nat.zero) Nat.zero := Eq.refl Nat.zero",
              "protected modifier mismatch for Omega.Nat.mul_zero"),
             (core, [prelude], "@[expose, match_pattern] public def Omega.Iff (a b : Prop) := "
              "Omega.And (a → b) (b → a)", "unmatched match_pattern attribute for Omega.Iff"),
@@ -398,14 +423,14 @@ def main (args : List String) : IO Unit := do
                         (not accepted and "public class registration mismatch" not in result.stderr)):
                     raise RuntimeError(f"Unexpected class metadata for {body}: {result.stdout}{result.stderr}")
         for name, body, kind in [
-            (port, 'notation "$$$" => Omega.True', "parser"),
-            (core, 'notation "$$$" => Omega.True', "parser"),
-            (core, 'public instance : Inhabited Omega.Nat := ⟨Omega.Nat.zero⟩', "instance"),
-            (core, '@[deprecated "use Omega.True.intro" (since := "1")] public theorem '
-             'Omega.oldIntro : Omega.True := Omega.True.intro', "environment extension"),
+            (port, 'notation "$$$" => True', "parser"),
+            (core, 'notation "$$$" => True', "parser"),
+            (core, 'public instance Omega.extraNat : Inhabited Nat := ⟨Nat.zero⟩', "instance"),
+            (core, '@[deprecated "use True.intro" (since := "1")] public theorem '
+             'Omega.oldIntro : True := True.intro', "environment extension"),
         ]:
             source = tmp.joinpath(*name.split(".")).with_suffix(".lean")
-            source.write_text(f"module\nprelude\npublic import Lean\npublic import {prelude}\n{body}\n")
+            source.write_text(f"module\nprelude\npublic import Lean\n{body}\n")
             lean("-R", tmp, "-o", source.with_suffix(".olean"), source)
             result = subprocess.run([ENV["LEAN"], "--run", probe, tmp, name], cwd=ROOT, env=ENV,
                                     capture_output=True, text=True)
@@ -423,12 +448,13 @@ def check_standard_admission():
         prelude = "OmegaInit.Prelude"
         source = tmp / "OmegaInit/Prelude.lean"
         source.parent.mkdir()
-        source.write_text("module\nprelude\n@[expose] public section\nnamespace Omega\n"
+        source.write_text("module\nprelude\n@[expose] public section\nset_option genCtorIdx false\n"
                           "inductive Nat where\n  | zero\n  | succ (n : Nat)\n"
                           "@[no_expose] noncomputable def Nat.pred : Nat → Nat := Nat.rec Nat.zero (fun n _ => n)\n"
-                          "end Omega\n")
+                          "namespace Omega\nexport _root_ (Nat)\nend Omega\n"
+                          "namespace Omega.Nat\nexport _root_.Nat (zero succ rec pred)\nend Omega.Nat\n")
         lean("-R", tmp, "-o", source.with_suffix(".olean"), source)
-        audit(prelude, [prelude], [tmp], "legacy importer can unfold the hidden implementation of Omega.Nat.pred")
+        audit(prelude, [prelude], [tmp], "invalid Lean.OLeanLevel.private natural bootstrap declaration OmegaInit.Prelude/Nat.pred")
     with tempfile.TemporaryDirectory(prefix="omega-name-") as tmp:
         tmp = Path(tmp)
         for name, declaration, error in [
@@ -445,7 +471,10 @@ def check_standard_admission():
             source.parent.mkdir(parents=True, exist_ok=True)
             marker = "/-! Omega original. -/\n" if name == original else ""
             body = "" if declaration.startswith("axiom ") else " := ∀ p : Prop, p → p"
-            source.write_text(f"module\nprelude\n{marker}public {declaration} : Prop{body}\n")
+            field = declaration.removeprefix("def Omega.Nat.")
+            alias = (f"public section\nnamespace Nat\nexport Omega.Nat ({field})\nend Nat\n"
+                     if declaration.startswith("def Omega.Nat.") and field != "add" else "")
+            source.write_text(f"module\nprelude\n{marker}public {declaration} : Prop{body}\n{alias}")
             lean("-R", tmp, "-o", source.with_suffix(".olean"), source)
             audit(name, [name], [tmp], error)
     with tempfile.TemporaryDirectory(prefix="omega-interface-") as directory:
@@ -454,18 +483,18 @@ def check_standard_admission():
         always_prime.parent.mkdir(parents=True)
         always_prime.write_text("module\nprelude\npublic import OmegaInit.Prelude\n"
                                 "/-! Omega original. -/\n"
-                                "public def Omega.Nat.Prime (_ : Omega.Nat) : Prop := Omega.True\n")
+                                "public def Omega.Nat.Prime (_ : Omega.Nat) : Prop := Omega.True\npublic section\nnamespace Nat\nexport Omega.Nat (Prime)\nend Nat\n")
         lean("-R", tmp, "-o", always_prime.with_suffix(".olean"), always_prime)
         audit(prime, ["OmegaInit.Prelude", prime], [tmp, LIB], "certificate statement mismatch for Omega.Nat.Prime")
         fib = "OmegaMathlib.Data.Nat.Fib.Basic"
         altered = tmp / "OmegaMathlib/Data/Nat/Fib/Basic.lean"
         altered.parent.mkdir(parents=True)
         altered.write_text("module\nprelude\npublic import OmegaInit.Prelude\n"
-                           "public def Omega.Nat.fib (n : Omega.Nat) : Omega.Nat := n\n")
+                           "public def Omega.Nat.fib (n : Omega.Nat) : Omega.Nat := n\npublic section\nnamespace Nat\nexport Omega.Nat (fib)\nend Nat\n")
         lean("-R", tmp, "-o", altered.with_suffix(".olean"), altered)
         audit(fib, ["OmegaInit.Prelude", fib], [tmp, LIB], "certificate statement mismatch for Omega.Nat.fib")
         altered.write_text("module\nprelude\npublic import OmegaInit.Prelude\n"
-                           f"public noncomputable def Omega.Nat.fib (n : Omega.Nat) : Omega.Nat := {FIB_ITERATOR}\n")
+                           f"public noncomputable def Omega.Nat.fib (n : Omega.Nat) : Omega.Nat := {FIB_ITERATOR}\npublic section\nnamespace Nat\nexport Omega.Nat (fib)\nend Nat\n")
         lean("-R", tmp, "-o", altered.with_suffix(".olean"), altered)
         audit(fib, ["OmegaInit.Prelude", fib], [tmp, LIB],
               "legacy importer can unfold the hidden implementation of Omega.Nat.fib")
@@ -560,12 +589,45 @@ example {p q : Prop} (h : p ∧ q) : p := OmegaChecks.Portable.Common.projectLef
 def check_generated_init():
     with tempfile.TemporaryDirectory(prefix="omega-generated-init-") as directory:
         product = Path(directory) / "port"
-        run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product,
-            "Init.Prelude", "Init.Data.List.Impl", "Init.Data.List.TakeDrop", "Init.Data.Nat.Coprime")
+        consumers, imports = import_graph(ENV["LEAN"], ("strict/OmegaChecks/InitPort/*.lean",))
+        roots = {"Init.Prelude", "Init.Data.Function", "Init.Data.List.Impl", "Init.Data.List.TakeDrop",
+                 "Init.Data.Nat.Coprime"}
+        for dependencies in imports.values():
+            roots.update(name.removeprefix("Omega") for name in dependencies if root(name) == "OmegaInit")
+        run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product, *sorted(roots))
         environment = {**ENV, "LEAN_PATH": str(product / "lib")}
+        hosted = {**ENV, "LEAN_PATH": str(product / "hosted")}
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, env=hosted, text=True, check=True,
+                       input="""import OmegaInit.Prelude
+example (n : Nat) : Omega.Nat.mod 0 n = 0 := rfl
+example (n : Nat) : Omega.Nat.mod 3 (n + 4) = 3 := rfl
+#guard Omega.Nat.mod 17 5 == 2
+#guard Omega.Nat.modCore 17 5 == 2
+""")
+        clients = Path(directory) / "clients"
+        clients.mkdir()
+        sources = {source.stem: source for source in consumers.values()}
+        deps = {source.stem: imports[name] & sources.keys() for name, source in consumers.items()}
+        client_env = {**environment, "LEAN_PATH": os.pathsep.join((str(clients), environment["LEAN_PATH"]))}
+        for name in TopologicalSorter(deps).static_order():
+            source = sources[name]
+            subprocess.run([ENV["LEAN"], "-R", source.parent, "-o", clients / (name + ".olean"), source],
+                           cwd=ROOT, env=client_env, check=True)
+        run("lean", "--run", SRC / "OmegaChecks/InitPort/NativeConsumer.lean", product / "lib")
+        quotient = """module
+prelude
+import OmegaInit.Prelude
+example {α : Sort u} {r : α → α → Prop} {β : Sort v} (a : α) (f : α → β)
+    (h : ∀ a b, r a b → Omega.Eq (f a) (f b)) :
+    Omega.Eq (Omega.Quot.lift f h (Omega.Quot.mk r a)) (f a) := Omega.rfl
+example {α : Sort u} {r : α → α → Prop} {p : Omega.Quot r → Prop}
+    (f : ∀ a, p (Omega.Quot.mk r a)) (a : α) :
+    Omega.Eq (Omega.Quot.ind f (Omega.Quot.mk r a)) (f a) := Omega.rfl
+"""
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, env=environment, text=True,
+                       input=quotient, check=True)
         # The upstream addition helper must preserve the strict seed's definitional reduction.
         source = ("module\nprelude\nimport all OmegaInit.Prelude\n"
-                  "attribute [local semireducible] Omega.Nat.add\n"
                   "example (x : Omega.Nat) : Omega.Eq (x.add .zero) x := Omega.rfl\n")
         subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=source, check=True,
                        env=environment)
@@ -591,18 +653,17 @@ example {α : Type} (a : α) :
         subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, check=True,
                        input=official_import + coprime, env={**ENV, "LEAN_PATH": ""})
         strict_import = "module\nprelude\nimport OmegaInit.Data.Nat.Coprime\nopen Omega\n"
-        strict = subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, capture_output=True,
-                                input=strict_import + coprime, env=environment)
-        if strict.returncode:
-            if "Nat.gcd" not in strict.stdout or "not exposed" not in strict.stdout:
-                raise RuntimeError(strict.stdout + strict.stderr)
-            run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/report.py", product)
-            with (product / "init-public-reductions.tsv").open() as stream:
-                boundaries = {row["declaration"]: row for row in csv.DictReader(stream, delimiter="\t")}
-            row = boundaries["Nat.Coprime"]
-            if (row["strictDependencyPath"] != "Omega.Nat.Coprime -> Omega.Nat.gcd" or
-                    row["officialReductionMechanism"] != "builtin natural-number reduction"):
-                raise RuntimeError(f"Unreported public reduction difference: {row}")
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=strict_import + coprime,
+                       env=environment, check=True)
+        large_arithmetic = """
+example : Omega.Eq (Omega.Nat.gcd 18446744073709551616 27670116110564327424) 9223372036854775808 := Omega.rfl
+example : Omega.Eq (Omega.Nat.div 1208925819614629174706177 65536) 18446744073709551616 := Omega.rfl
+example : Omega.Eq (Omega.Nat.mod 1208925819614629174706177 65536) 1 := Omega.rfl
+example : Omega.Eq (Omega.Nat.div 1208925819614629174706177 0) 0 := Omega.rfl
+example : Omega.Eq (Omega.Nat.mod 1208925819614629174706177 0) 1208925819614629174706177 := Omega.rfl
+"""
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=strict_import + large_arithmetic,
+                       env=environment, check=True)
 
 
 def full_check(incremental=False):
@@ -675,6 +736,7 @@ if __name__ == "__main__":
         print(f"Omega scope: {len(targets)} cache roots, {len(scope['consumers'])} consumer targets, "
               f"{len(scope['common'])} common targets", flush=True)
     elif args.library is not None:
+        run("lake", "build", "omegaAudit")
         ENV.update(lake_environment())
         check_library(args.library)
     elif args.full or args.incremental or not (args.scope or args.changed):

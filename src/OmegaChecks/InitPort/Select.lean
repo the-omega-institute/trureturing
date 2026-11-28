@@ -6,11 +6,13 @@ open Lean
 
 /-- Bisect a rejected group. A successful check certifies all its roots in one pass. -/
 partial def rejectedRoots (strict visible standard : Environment) (rows : Array (Name × Name))
-    (log : IO.FS.Handle) (pending : System.FilePath) : IO Unit := do
+    (log : IO.FS.Handle) (pending : System.FilePath)
+    (checked : IO.Ref OmegaChecks.Interface.CheckedSites) : IO Unit := do
   if rows.isEmpty then return
   IO.FS.writeFile pending (toJson (rows.map (·.1.toString))).compress
   try
-    OmegaChecks.Interface.check strict visible standard rows
+    let next ← OmegaChecks.Interface.checkSites strict visible standard rows (← checked.get)
+    checked.set next
     return
   catch err =>
     if rows.size == 1 then
@@ -18,8 +20,8 @@ partial def rejectedRoots (strict visible standard : Environment) (rows : Array 
       log.putStrLn (toJson #[name.toString, err.toString]).compress
       return
     let mid := rows.size / 2
-    rejectedRoots strict visible standard (rows.extract 0 mid) log pending
-    rejectedRoots strict visible standard (rows.extract mid rows.size) log pending
+    rejectedRoots strict visible standard (rows.extract 0 mid) log pending checked
+    rejectedRoots strict visible standard (rows.extract mid rows.size) log pending checked
 
 def main (args : List String) : IO Unit := do
   let path :: seed :: transfer :: report :: roots := args | throw <| IO.userError "expected target path, seed, transfer, report and modules"
@@ -37,7 +39,7 @@ def main (args : List String) : IO Unit := do
   let owners ← OmegaChecks.ModuleSurface.officialModules strict lib
   let mut official := owners.map fun n => {module := n : Import}
   if roots.contains "OmegaInit" then
-    let sourceDir := System.FilePath.mk "strict"
+    let sourceDir ← IO.currentDir
     let mut downstream := #[]
     for file in ← (sourceDir / "OmegaMathlib").walkDir do
       if file.extension == some "lean" then
@@ -75,7 +77,8 @@ def main (args : List String) : IO Unit := do
     let some idx := strict.getModuleIdxFor? n | throw <| IO.userError s!"no owner for {n}"
     rows := rows.push (n, strict.header.moduleNames[idx]!.replacePrefix `OmegaInit `Init)
   let pending := (System.FilePath.mk report).withExtension "pending"
+  let checked ← IO.mkRef {}
   let mut i := 0
   while i < rows.size do
-    rejectedRoots strict visible standard (rows.extract i (i + 32)) log pending
+    rejectedRoots strict visible standard (rows.extract i (i + 32)) log pending checked
     i := i + 32

@@ -9,30 +9,28 @@ noncomputable section
 
 @[expose] public section
 
+set_option linter.unusedVariables.funArgs false in
+@[reducible] def optParam (α : Sort u) (default : α) : Sort u := α
+
+@[reducible] def outParam (α : Sort u) : Sort u := α
+
+@[reducible] def semiOutParam (α : Sort u) : Sort u := α
+
+port_compiler_markers
+port_kernel_naturals
+init_quot
+port_quotient_interfaces
+port_definition Quot.liftOn with_native_code
+
+set_option genCtorIdx false
+
 port_inductive Option
 port_inductive List
-port_inductive PProd
-port_definition PProd.fst
-port_definition PProd.snd
+port_inductive Prod
+port_definition Prod.fst with_native_code
+port_definition Prod.snd with_native_code
 
 namespace Omega
-
-/-- Equality and its eliminator are available in the strict environment. -/
-inductive Eq {α : Sort u} : α → α → Prop where
-  | refl (a : α) : Eq a a
-
-@[match_pattern] abbrev rfl {α : Sort u} {a : α} : Eq a a := Eq.refl a
-
-namespace Eq
-theorem symm {a b : α} (h : Eq a b) : Eq b a :=
-  Eq.rec (motive := fun b _ => Eq b a) rfl h
-
-theorem trans {a b c : α} (h₁ : Eq a b) (h₂ : Eq b c) : Eq a c :=
-  Eq.rec (motive := fun c _ => Eq a c) h₁ h₂
-
-theorem subst {motive : α → Prop} {a b : α} (h₁ : Eq a b) (h₂ : motive a) : motive b :=
-  Eq.rec (motive := fun b _ => motive b) h₂ h₁
-end Eq
 
 theorem congrArg {α : Sort u} {β : Sort v} {a₁ a₂ : α} (f : α → β) (h : Eq a₁ a₂) : Eq (f a₁) (f a₂) :=
   Eq.rec (motive := fun a₂ _ => Eq (f a₁) (f a₂)) rfl h
@@ -40,180 +38,84 @@ theorem congrArg {α : Sort u} {β : Sort v} {a₁ a₂ : α} (f : α → β) (h
 inductive True : Prop where
   | intro
 
-inductive False : Prop
 
-def False.elim {C : Sort u} (h : False) : C := False.rec (motive := fun _ => C) h
+end Omega
 
-def Not (a : Prop) : Prop := a → False
 
-/-- Constructive conjunction with propositional elimination. -/
-@[no_expose] def And (a b : Prop) : Prop := ∀ r : Prop, (a → b → r) → r
+namespace Omega
 
-namespace And
-theorem intro {a b : Prop} (left : a) (right : b) : And a b :=
-  fun _ use => use left right
+def False.elim {C : Sort u} (h : False) : C := False.casesOn (fun _ => C) h
 
-theorem left {a b : Prop} (self : And a b) : a := self a (fun ha _ => ha)
 
-theorem right {a b : Prop} (self : And a b) : b := self b (fun _ hb => hb)
-@[no_expose] def rec {a b : Prop} {motive : And a b → Sort u}
-    (intro : ∀ left right, motive (And.intro left right)) (t : And a b) : motive t :=
-  intro t.left t.right
+end Omega
 
-abbrev casesOn {a b : Prop} {motive : And a b → Sort u} (t : And a b)
-    (intro : ∀ left right, motive (And.intro left right)) : motive t :=
-  intro t.left t.right
+port_prop_record And
 
-protected abbrev recOn.{u} := @And.casesOn.{u}
-end And
+namespace Omega
 
-/-- Constructive disjunction with propositional elimination. -/
-@[no_expose] def Or (a b : Prop) : Prop := ∀ r : Prop, (a → r) → (b → r) → r
+inductive Or (a b : Prop) : Prop where
+  | inl (h : a) : Or a b
+  | inr (h : b) : Or a b
 
-namespace Or
-theorem inl {a b : Prop} (h : a) : Or a b := fun _ left _ => left h
 
-theorem inr {a b : Prop} (h : b) : Or a b := fun _ _ right => right h
+theorem Or.elim {a b c : Prop} (h : Or a b) (left : a → c) (right : b → c) : c :=
+  Or.rec (motive := fun _ => c) left right h
 
-theorem elim {a b c : Prop} (h : Or a b) (left : a → c) (right : b → c) : c :=
-  h c left right
-theorem rec {a b : Prop} {motive : Or a b → Prop}
-    (inl : ∀ h, motive (Or.inl h)) (inr : ∀ h, motive (Or.inr h))
-    (t : Or a b) : motive t :=
-  t (motive t) inl inr
 
-abbrev casesOn {a b : Prop} {motive : Or a b → Prop} (t : Or a b)
-    (inl : ∀ h, motive (Or.inl h)) (inr : ∀ h, motive (Or.inr h)) : motive t :=
-  Or.rec (motive := motive) inl inr t
+end Omega
 
-protected abbrev recOn := @Or.casesOn
-end Or
+port_inductive Nat.le
 
-attribute [irreducible] And And.rec Or
-
-inductive Bool where
-  | false
-  | true
-
-inductive Nat where
-  | zero
-  | succ (n : Nat)
-
+namespace Omega
 namespace Nat
-
-@[no_expose] def pred : Nat → Nat :=
-  Nat.rec zero (fun n _ => n)
-
-@[no_expose] protected def sub : Nat → Nat → Nat :=
-  fun a => Nat.rec a (fun _ r => pred r)
-
-/-- Comparison by removing one successor from both sides. -/
-@[no_expose] protected def le (n : Nat) : Nat → Prop :=
-  Nat.rec (motive := fun _ => Nat → Prop) (fun _ => True)
-    (fun _ smaller n => Nat.rec (motive := fun _ => Prop) False (fun k _ => smaller k) n) n
 
 protected def lt (n m : Nat) : Prop := Nat.le (succ n) m
 
-theorem zero_le (n : Nat) : Nat.le zero n := True.intro
+theorem zero_le (n : Nat) : Nat.le zero n :=
+  Nat.rec (motive := fun k => Nat.le zero k) Nat.le.refl (fun _ h => Nat.le.step h) n
 
-theorem succ_le_succ {n m : Nat} : Nat.le n m → Nat.le (succ n) (succ m) := fun h => h
+theorem succ_le_succ {n m : Nat} : Nat.le n m → Nat.le (succ n) (succ m) := fun h =>
+  Nat.le.rec (motive := fun k _ => Nat.le (succ n) (succ k)) Nat.le.refl
+    (fun _ ih => Nat.le.step ih) h
 
-theorem le_of_succ_le_succ {n m : Nat} : Nat.le (succ n) (succ m) → Nat.le n m := fun h => h
+private theorem weakenLeft {n m : Nat} (h : Nat.le (succ n) m) : Nat.le n m :=
+  Nat.le.rec (motive := fun k _ => Nat.le n k) (Nat.le.step Nat.le.refl)
+    (fun _ ih => Nat.le.step ih) h
 
-theorem not_succ_le_zero (n : Nat) : Not (Nat.le (succ n) zero) := fun h => h
+theorem le_of_succ_le_succ {n m : Nat} : Nat.le (succ n) (succ m) → Nat.le n m := fun h =>
+  Nat.le.rec (n := succ n) (motive := fun k _ => Nat.le n (pred k)) Nat.le.refl (fun evidence _ => weakenLeft evidence) h
 
-protected theorem le_refl (n : Nat) : Nat.le n n :=
-  Nat.rec (motive := fun k => Nat.le k k) True.intro (fun _ h => h) n
+theorem not_succ_le_zero (n : Nat) : Not (Nat.le (succ n) zero) := fun h =>
+  Nat.le.rec (n := succ n) (motive := fun k _ => Nat.casesOn (motive := fun _ => Prop) k False (fun _ => True))
+    True.intro (fun _ _ => True.intro) h
 
-theorem le.refl {n : Nat} : Nat.le n n := Nat.le_refl n
-
-theorem le.step {n m : Nat} : Nat.le n m → Nat.le n (succ m) := fun h =>
-  (Nat.rec (motive := fun i => ∀ m, Nat.le i m → Nat.le i (succ m))
-    (fun _ _ => True.intro)
-    (fun n step m => Nat.rec (motive := fun x₀ => Nat.le (succ n) x₀ → Nat.le (succ n) (succ x₀))
-      (fun h => False.elim h) (fun x₀ _ => step x₀) m) n) m h
+protected theorem le_refl (n : Nat) : Nat.le n n := Nat.le.refl
 
 protected theorem le_trans {n m k : Nat} : Nat.le n m → Nat.le m k → Nat.le n k := fun h g =>
-  (Nat.rec (motive := fun n => ∀ m k, Nat.le n m → Nat.le m k → Nat.le n k)
-    (fun _ _ _ _ => True.intro)
-    (fun n trans m => Nat.rec (motive := fun m => ∀ k, Nat.le (succ n) m → Nat.le m k → Nat.le (succ n) k)
-      (fun _ h _ => False.elim h)
-      (fun m _ k => Nat.rec (motive := fun k =>
-        Nat.le (succ n) (succ m) → Nat.le (succ m) k → Nat.le (succ n) k)
-        (fun _ g => g) (fun k _ => trans m k) k) m) n) m k h g
+  Nat.le.rec (motive := fun k _ => Nat.le n k) h (fun _ ih => Nat.le.step ih) g
 
 protected theorem le_antisymm {n m : Nat} (h₁ : Nat.le n m) (h₂ : Nat.le m n) : Eq n m :=
   (Nat.rec (motive := fun n => ∀ m, Nat.le n m → Nat.le m n → Eq n m)
     (fun m => Nat.rec (motive := fun m => Nat.le zero m → Nat.le m zero → Eq zero m)
-      (fun _ _ => rfl) (fun _ _ _ h₁ => False.elim h₁) m)
-    (fun n antisymm m => Nat.rec (motive := fun m => Nat.le (succ n) m → Nat.le m (succ n) → Eq (succ n) m)
-      (fun h₁ _ => False.elim h₁)
-      (fun m _ h₁ h₂ => congrArg succ (antisymm m h₁ h₂)) m) n) m h₁ h₂
-
-/-- Induct upward from the lower bound. Cancellation of two successors reduces
-the lower bound, while preserving the predicate on the upper bound. -/
-private theorem fromLowerBound (n : Nat) :
-    ∀ (P : Nat → Prop), P n → (∀ m, Nat.le n m → P m → P (succ m)) →
-      ∀ a, Nat.le n a → P a :=
-  Nat.rec (motive := fun n =>
-      ∀ (P : Nat → Prop), P n → (∀ m, Nat.le n m → P m → P (succ m)) →
-        ∀ a, Nat.le n a → P a)
-    (fun P start step a _ =>
-      Nat.rec (motive := P) start (fun m ih => step m (zero_le m) ih) a)
-    (fun n smaller P start step a =>
-      Nat.rec (motive := fun a => Nat.le (succ n) a → P a)
-        (fun h => False.elim (not_succ_le_zero n h))
-        (fun b _ h => smaller (fun k => P (succ k)) start
-          (fun m hm ih => step (succ m) (succ_le_succ hm) ih) b (le_of_succ_le_succ h)) a) n
-
-private theorem leRec {n : Nat} {motive : (a : Nat) → Nat.le n a → Prop}
-    (refl : motive n Nat.le.refl)
-    (step : ∀ {m : Nat} (h : Nat.le n m), motive m h → motive (succ m) (Nat.le.step h))
-    {a : Nat} (t : Nat.le n a) : motive a t :=
-  fromLowerBound n (fun m => ∀ h : Nat.le n m, motive m h) (fun _ => refl)
-    (fun _ h ih _ => step h (ih h)) a t t
-
-port_proof Nat.le.rec using leRec
-port_proof Nat.le.casesOn
-port_proof Nat.le.recOn
+      (fun _ _ => rfl) (fun k _ _ h => False.elim (not_succ_le_zero k h)) m)
+    (fun n smaller m => Nat.rec (motive := fun m => Nat.le (succ n) m → Nat.le m (succ n) → Eq (succ n) m)
+      (fun h _ => False.elim (not_succ_le_zero n h))
+      (fun m _ h g => congrArg succ (smaller m (le_of_succ_le_succ h) (le_of_succ_le_succ g))) m) n) m h₁ h₂
 
 theorem succ_sub_succ_eq_sub (n m : Nat) : Eq (Nat.sub (succ n) (succ m)) (Nat.sub n m) :=
   Nat.rec (motive := fun i => Eq (pred (Nat.sub (succ n) i)) (Nat.sub n i))
     rfl (fun _ h => congrArg pred h) m
 
-@[no_expose] protected def add : Nat → Nat → Nat :=
-  fun a b => Nat.rec a (fun _ r => succ r) b
-
-@[no_expose] protected def mul : Nat → Nat → Nat :=
-  fun a => Nat.rec zero (fun _ r => Nat.add r a)
-
-@[no_expose] protected def pow (m : Nat) : Nat → Nat :=
-  Nat.rec (succ zero) (fun _ p => Nat.mul p m)
-
-attribute [irreducible] Nat.add Nat.mul Nat.sub Nat.le Nat.pred Nat.pow
-
 end Nat
-
-set_option bootstrap.inductiveCheckResultingUniverse false in
-inductive PUnit : Sort u where
-  | unit : PUnit
-
-abbrev Unit : Type := PUnit
-
-@[match_pattern] abbrev Unit.unit : Unit := PUnit.unit
 
 inductive Empty : Type
 
 set_option bootstrap.inductiveCheckResultingUniverse false in
 inductive PEmpty : Sort u where
 
-inductive HEq : {α : Sort u} → α → {β : Sort u} → β → Prop where
-  | refl (a : α) : HEq a a
-
 set_option linter.defProp false in
 @[match_pattern] protected def HEq.rfl {α : Sort u} {a : α} : HEq a a := HEq.refl a
 
-def id {α : Sort u} (a : α) : α := a
 
 theorem id_eq (a : α) : Eq (id a) a := Omega.rfl
 
@@ -222,15 +124,10 @@ def Function.comp {α : Sort u} {β : Sort v} {δ : Sort w}
 
 def Function.const {α : Sort u} (β : Sort v) (a : α) : β → α := fun _ => a
 
-abbrev Eq.ndrec.{u1, u2} {α : Sort u2} {a : α} {motive : α → Sort u1}
-    (m : motive a) {b : α} (h : Eq a b) : motive b :=
-  Eq.rec (motive := fun b _ => motive b) m h
+end Omega
 
-abbrev Eq.ndrec_symm.{u1, u2} {α : Sort u2} {a : α} {motive : α → Sort u1}
-    (m : motive a) {b : α} (h : Eq b a) : motive b := Eq.ndrec m h.symm
 
-def cast {α β : Sort u} (h : Eq α β) (a : α) : β :=
-  Eq.rec (motive := fun β _ => β) a h
+namespace Omega
 
 theorem congrFun {α : Sort u} {β : α → Sort v} {f g : (x : α) → β x}
     (h : Eq f g) (a : α) : Eq (f a) (g a) := congrArg (fun f : (x : α) → β x => f a) h
@@ -241,11 +138,6 @@ theorem congrFun' {α : Sort u} {β : Sort v} {f g : α → β}
 theorem congr {α : Sort u} {β : Sort v} {f₁ f₂ : α → β} {a₁ a₂ : α}
     (h₁ : Eq f₁ f₂) (h₂ : Eq a₁ a₂) : Eq (f₁ a₁) (f₂ a₂) :=
   (congrFun h₁ a₁).trans (congrArg f₂ h₂)
-
-theorem heq_of_eq (h : Eq a a') : HEq a a' :=
-  Eq.subst h (HEq.refl a)
-
-def absurd {a : Prop} {b : Sort v} (h₁ : a) (h₂ : Not a) : b := False.elim (h₂ h₁)
 
 theorem Or.intro_left (b : Prop) (h : a) : Or a b := Or.inl h
 
@@ -259,26 +151,12 @@ theorem Or.neg_resolve_left (h : Or (Not a) b) (ha : a) : b := h.elim (absurd ha
 
 theorem Or.neg_resolve_right (h : Or a (Not b)) (nb : b) : a := h.elim id (absurd nb)
 
-/-- Constructive nonemptiness with elimination into propositions. -/
-@[class, no_expose] def Nonempty (α : Sort u) : Prop := ∀ p : Prop, (α → p) → p
+class inductive Nonempty (α : Sort u) : Prop where
+  | intro (val : α) : Nonempty α
 
-theorem Nonempty.intro {α : Sort u} (val : α) : Nonempty α := fun _ f => f val
 
 protected theorem Nonempty.elim {α : Sort u} {p : Prop} (h₁ : Nonempty α) (h₂ : α → p) : p :=
-  h₁ p h₂
-
-theorem Nonempty.rec {α : Sort u} {motive : Nonempty α → Prop}
-    (intro : ∀ val, motive (Nonempty.intro val)) (t : Nonempty α) : motive t :=
-  t.elim intro
-
-attribute [irreducible] Nonempty
-
-theorem eq_of_heq {α : Sort u} {a a' : α} (h : HEq a a') : Eq a a' :=
-  let align : ∀ (α β : Sort u) (a : α) (b : β), HEq a b → (h : Eq α β) → Eq (cast h a) b :=
-    fun α β a b he => @HEq.rec _ a
-      (fun {β} b _ => (h : Eq α β) → Eq (cast h a) b)
-      (fun _ => Eq.refl a) β b he
-  align α α a a' h Omega.rfl
+  Nonempty.rec (motive := fun _ => p) h₂ h₁
 
 set_option checkBinderAnnotations false in
 abbrev inferInstance {α : Sort u} [i : α] : α := i
@@ -287,68 +165,33 @@ set_option checkBinderAnnotations false in
 abbrev «inferInstanceAs» (α : Sort u) [i : α] : α := i
 
 set_option linter.unusedVariables.funArgs false in
-@[reducible] def optParam (α : Sort u) (default : α) : Sort u := α
-
-@[reducible] def outParam (α : Sort u) : Sort u := α
-
-@[reducible] def semiOutParam (α : Sort u) : Sort u := α
-
-set_option linter.unusedVariables.funArgs false in
 @[reducible] def namedPattern {α : Sort u} (x a : α) (h : Eq x a) : α := a
 
-abbrev PUnit.casesOn.{v,u} {motive : (t : PUnit.{u}) → Sort v} (t : PUnit)
-    (unit : motive PUnit.unit) : motive t := PUnit.rec unit t
 
-abbrev Empty.casesOn (motive : (t : Empty) → Sort u) (t : Empty) : motive t :=
-  Empty.rec motive t
+end Omega
 
-abbrev PEmpty.casesOn.{v,u} (motive : (t : PEmpty.{u}) → Sort v) (t : PEmpty) : motive t :=
-  PEmpty.rec motive t
 
-abbrev Eq.casesOn.{v,u} := @Eq.recOn.{v,u}
+namespace Omega
 
-abbrev HEq.casesOn.{v,u} := @HEq.recOn.{v,u}
 
-protected abbrev Nonempty.recOn {α : Sort u} {motive : (t : Nonempty α) → Prop}
-    (t : Nonempty α) (intro : ∀ val, motive (Nonempty.intro val)) : motive t :=
-  Nonempty.rec intro t
 
-abbrev Nonempty.casesOn {α : Sort u} {motive : (t : Nonempty α) → Prop}
-    (t : Nonempty α) (intro : ∀ val, motive (Nonempty.intro val)) : motive t :=
-  Nonempty.rec intro t
 
-set_option linter.unusedVariables.funArgs false in
-protected abbrev Empty.noConfusionType (P : Sort u) (t t' : Empty) : Sort u :=
-  Empty.casesOn (fun _ => Sort u) t
+end Omega
 
-protected abbrev Empty.noConfusion {P : Sort u} {t t' : Empty} (eq : Eq t t') :
-    Empty.noConfusionType P t t' :=
-  Eq.rec (motive := fun t' _ => Empty.noConfusionType P t t')
-    (Empty.casesOn (fun t => Empty.noConfusionType P t t) t) eq
 
-set_option linter.unusedVariables.funArgs false in
-protected abbrev PEmpty.noConfusionType.{v,u} (P : Sort v) (t t' : PEmpty.{u}) : Sort v :=
-  PEmpty.casesOn (fun _ => Sort v) t
+namespace Omega
 
-protected abbrev PEmpty.noConfusion.{v,u} {P : Sort v} {t t' : PEmpty.{u}} (eq : Eq t t') :
-    PEmpty.noConfusionType P t t' :=
-  Eq.rec (motive := fun t' _ => PEmpty.noConfusionType P t t')
-    (PEmpty.casesOn (fun t => PEmpty.noConfusionType P t t) t) eq
-
-open Bool (false true)
-
-def cond {α : Sort u} (c : Bool) (x y : α) : α := Bool.rec y x c
 
 protected def Bool.dcond {α : Sort u} (c : Bool)
     (x : Eq c true → α) (y : Eq c false → α) : α :=
   Bool.rec (motive := fun b => (Eq b true → α) → (Eq b false → α) → α)
     (fun _ no => no Omega.rfl) (fun yes _ => yes Omega.rfl) c x y
 
-def Bool.or (x y : Bool) : Bool := Bool.rec y true x
+def Bool.or (x y : Bool) : Bool := Bool.casesOn x y true
 
-def Bool.and (x y : Bool) : Bool := Bool.rec false y x
+def Bool.and (x y : Bool) : Bool := Bool.casesOn x false y
 
-def Bool.not (x : Bool) : Bool := Bool.rec true false x
+def Bool.not (x : Bool) : Bool := Bool.casesOn x true false
 
 def Bool.Internal.or (x y : Bool) : Bool := Bool.or x y
 
@@ -364,10 +207,7 @@ theorem Bool.not_eq_internalNot : Eq Bool.not Bool.Internal.not := Omega.rfl
 
 open Bool (or and not)
 
-def Bool.beq (a b : Bool) : Bool := Bool.rec (Bool.not a) a b
-
-abbrev Bool.Reflects : Bool → Prop → Prop :=
-  fun b p => Bool.rec (motive := fun _ => Prop) (Not p) p b
+def Bool.beq (a b : Bool) : Bool := Bool.casesOn b (Bool.not a) a
 
 theorem Bool.eq_false_of_ne_true : {b : Bool} → Not (Eq b true) → Eq b false :=
   fun {b} => Bool.rec (motive := fun b => Not (Eq b true) → Eq b false)
@@ -412,62 +252,40 @@ end Omega.Option
 
 namespace Omega.Nat
 
-@[no_expose] def beq : Nat → Nat → Bool :=
-  Nat.rec (motive := fun _ => Nat → Bool) (Nat.rec Bool.true (fun _ _ => Bool.false))
-    (fun _ smaller => Nat.rec Bool.false (fun k _ => smaller k))
+protected theorem lt_irrefl (n : Nat) : Not (Nat.lt n n) :=
+  Nat.rec (motive := fun k => Not (Nat.lt k k)) (not_succ_le_zero zero)
+    (fun _ ih h => ih (le_of_succ_le_succ h)) n
 
-@[no_expose] def ble : Nat → Nat → Bool :=
-  Nat.rec (motive := fun _ => Nat → Bool) (fun _ => Bool.true)
-    (fun _ smaller => Nat.rec Bool.false (fun k _ => smaller k))
+theorem le_of_ble_eq_true {n m : Nat} (h : Eq (Nat.ble n m) Bool.true) : Nat.le n m :=
+  Nat.rec (motive := fun n => ∀ m, Eq (Nat.ble n m) Bool.true → Nat.le n m)
+    (fun m _ => zero_le m)
+    (fun n ih m => Nat.rec (motive := fun m => Eq (Nat.ble (succ n) m) Bool.true → Nat.le (succ n) m)
+      (fun e => False.elim (Bool.ne_true_of_eq_false Omega.rfl e))
+      (fun k _ e => succ_le_succ (ih k e)) m) n m h
+
+theorem ble_eq_true_of_le {n m : Nat} (h : Nat.le n m) : Eq (Nat.ble n m) Bool.true :=
+  Nat.rec (motive := fun n => ∀ m, Nat.le n m → Eq (Nat.ble n m) Bool.true)
+    (fun _ _ => Omega.rfl)
+    (fun n ih m => Nat.rec (motive := fun m => Nat.le (succ n) m → Eq (Nat.ble (succ n) m) Bool.true)
+      (fun e => False.elim (not_succ_le_zero n e)) (fun k _ e => ih k (le_of_succ_le_succ e)) m) n m h
 
 /-- Subtract a positive divisor at most once per remaining fuel unit. -/
-@[no_expose] protected def div (x y : Nat) : Nat :=
+@[extern "lean_nat_div", no_expose] protected def _root_.Nat.div (x y : @& Nat) : Nat :=
   Nat.rec zero (fun d _ =>
     Nat.rec (motive := fun _ => Nat → Nat) (fun _ => zero)
       (fun _ previous n => Bool.rec zero (succ (previous (Nat.sub n (succ d)))) (Nat.ble (succ d) n))
       (succ x) x) y
 
-@[no_expose] protected def mod : Nat → Nat → Nat :=
-  fun x y => Nat.rec zero (fun k _ =>
-    Nat.rec (succ k) (fun d _ =>
-      Nat.rec (motive := fun _ => Nat → Nat) (fun _ => zero)
-        (fun _ previous n => Bool.rec n (previous (Nat.sub n (succ d))) (Nat.ble (succ d) n))
-        (succ (succ k)) (succ k)) y) x
-
-private theorem lt_of_ble_false (a : Nat) : ∀ b, Eq (Nat.ble b a) Bool.false → Nat.lt a b :=
-  Nat.rec (motive := fun a => ∀ b, Eq (Nat.ble b a) Bool.false → Nat.lt a b)
-    (fun b => Nat.rec (motive := fun b => Eq (Nat.ble b zero) Bool.false → Nat.lt zero b)
-      (fun h => False.elim (Bool.ne_false_of_eq_true Omega.rfl h))
-      (fun k _ _ => Nat.succ_le_succ (Nat.zero_le k)) b)
-    (fun a smaller b => Nat.rec (motive := fun b => Eq (Nat.ble b (succ a)) Bool.false → Nat.lt (succ a) b)
-      (fun h => False.elim (Bool.ne_false_of_eq_true Omega.rfl h))
-      (fun k _ h => Nat.succ_le_succ (smaller k h)) b) a
+export _root_.Nat (div)
 
 private def remainder (d fuel n : Nat) : Nat :=
   Nat.rec (motive := fun _ => Nat → Nat) (fun _ => zero)
     (fun _ previous n => Bool.rec n (previous (Nat.sub n (succ d))) (Nat.ble (succ d) n)) fuel n
 
-private theorem remainder_lt (d fuel : Nat) : ∀ x, Nat.lt (remainder d fuel x) (succ d) :=
-  Nat.rec (motive := fun fuel => ∀ x, Nat.lt (remainder d fuel x) (succ d))
-    (fun _ => Nat.succ_le_succ (Nat.zero_le d))
-    (fun fuel smaller x =>
-      let next := remainder d fuel (Nat.sub x (succ d))
-      let branch : ∀ bit : Bool, Eq (Nat.ble (succ d) x) bit →
-          Nat.lt (@Bool.rec (fun _ => Nat) x next bit) (succ d) :=
-        Bool.rec (motive := fun bit => Eq (Nat.ble (succ d) x) bit → Nat.lt (@Bool.rec (fun _ => Nat) x next bit) (succ d))
-          (lt_of_ble_false x (succ d)) (fun _ => smaller _)
-      branch (Nat.ble (succ d) x) Omega.rfl) fuel
-
-theorem mod_lt (x : Nat) {y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.mod x y) y :=
-  (Nat.rec (motive := fun x => ∀ y, Nat.lt zero y → Nat.lt (Nat.mod x y) y)
-    (fun _ h => h)
-    (fun k _ y => Nat.rec (motive := fun y => Nat.lt zero y → Nat.lt (Nat.mod (succ k) y) y)
-      (fun h => False.elim (Nat.not_succ_le_zero zero h))
-      (fun d _ _ => remainder_lt d (succ (succ k)) (succ k)) y) x) y hy
-
-attribute [irreducible] beq ble Nat.div Nat.mod
+attribute [irreducible] Nat.div
 
 end Omega.Nat
+
 
 port_definition List.below
 port_definition List.brecOn.go
@@ -486,4 +304,643 @@ namespace Omega.List
         List.below (motive := fun _ : List α => List α → List α) l → List α)
       l (fun _ => ys) (fun a _ prev => cons a (prev.fst ys)) prior) ys
 
+@[implicit_reducible] def concat {α : Type u} : List α → α → List α := fun l b =>
+  List.brecOn (motive := fun _ : List α => α → List α) l (fun xs below b =>
+    List.casesOn (motive := fun xs => List.below (motive := fun _ : List α => α → List α) xs → List α)
+      xs (fun _ => cons b nil) (fun a _ prior => cons a (prior.fst b)) below) b
+
+@[implicit_reducible] def map {α : Type u} {β : Type v} (f : α → β) (l : List α) : List β :=
+  List.brecOn (motive := fun _ : List α => List β) l (fun xs below =>
+    List.casesOn (motive := fun xs => List.below (motive := fun _ : List α => List β) xs → List β)
+      xs (fun _ => nil) (fun a _ prior => cons (f a) prior.fst) below)
+
+def foldl {α : Type u} {β : Type v} (f : α → β → α) : (init : α) → List β → α := fun init l =>
+  List.brecOn (motive := fun _ : List β => α → α) l (fun xs below acc =>
+    List.casesOn (motive := fun xs => List.below (motive := fun _ : List β => α → α) xs → α)
+      xs (fun _ => acc) (fun b _ prior => prior.fst (f acc b)) below) init
+
+def lengthTRAux {α : Type u} : List α → Nat → Nat := fun xs n =>
+  List.brecOn (motive := fun _ : List α => Nat → Nat) xs (fun ys below acc =>
+    List.casesOn (motive := fun ys => List.below (motive := fun _ : List α => Nat → Nat) ys → Nat)
+      ys (fun _ => acc) (fun _ _ prior => prior.fst (Nat.succ acc)) below) n
+
+@[no_expose] def lengthTR {α : Type u} (as : List α) : Nat := length as
+attribute [irreducible] lengthTR
+
+@[implicit_reducible] def flatten {α : Type u} : List (List α) → List α := fun l =>
+  List.brecOn (motive := fun _ : List (List α) => List α) l (fun xs below =>
+    List.casesOn (motive := fun xs => List.below (motive := fun _ : List (List α) => List α) xs → List α)
+      xs (fun _ => nil) (fun head _ prior => List.append head prior.fst) below)
+
 end Omega.List
+
+port_native_records Inhabited
+port_proof instNonemptyOfInhabited by_constructive_casts
+attribute [instance] Omega.instNonemptyOfInhabited
+
+port_definition List.concat.match_1 with_native_code
+port_structural_code List.concat on_arg 2
+
+port_inductive LE
+port_definition LE.le
+port_inductive LT
+port_definition LT.lt
+
+port_definition Decidable.isFalse
+port_definition Decidable.isTrue
+port_definition ite
+
+
+namespace Omega
+
+theorem instDecidableAnd._proof_1 {p q : Prop} [dp : Decidable p] [dq : Decidable q] :
+    Bool.Reflects (Bool.and (@Decidable.decide p dp) (@Decidable.decide q dq)) (And p q) :=
+  have reflect : ∀ a b : Bool, Bool.Reflects a p → Bool.Reflects b q → Bool.Reflects (Bool.and a b) (And p q) :=
+    fun a => Bool.casesOn (motive := fun a => ∀ b : Bool, Bool.Reflects a p → Bool.Reflects b q →
+        Bool.Reflects (Bool.and a b) (And p q)) a
+      (fun _ hp _ both => hp (And.left both))
+      (fun b => Bool.casesOn (motive := fun b => p → Bool.Reflects b q → Bool.Reflects b (And p q))
+        b (fun _ hq both => hq (And.right both)) And.intro)
+  reflect _ _ (@Decidable.reflects_decide p dp) (@Decidable.reflects_decide q dq)
+
+instance instDecidableAnd {p q : Prop} [dp : Decidable p] [dq : Decidable q] : Decidable (And p q) :=
+  Decidable.intro (Bool.and (@Decidable.decide p dp) (@Decidable.decide q dq)) instDecidableAnd._proof_1
+
+end Omega
+
+port_definition instDecidableOr.match_3 with_native_code
+port_definition instDecidableOr.match_1 with_native_code
+port_proof instDecidableOr._proof_1
+port_definition instDecidableOr with_native_code
+attribute [instance] Omega.instDecidableOr
+
+port_definition instDecidableNot.match_1 with_native_code
+port_proof instDecidableNot._proof_1
+port_definition instDecidableNot with_native_code
+attribute [instance] Omega.instDecidableNot
+
+port_native_records Trans
+port_definition instTransEq with_native_code
+port_definition instTransEq_1 with_native_code
+
+namespace Omega
+attribute [instance] _root_.instOfNatNat instTransEq instTransEq_1 _root_.instHAdd _root_.instAddNat
+
+instance instLENat : LE Nat := LE.mk Nat.le
+instance instLTNat : LT Nat := LT.mk Nat.lt
+
+instance Nat.decLe (n m : Nat) : Decidable (@LE.le Nat instLENat n m) :=
+  Decidable.intro (Nat.ble n m)
+    (Bool.casesOn (motive := fun b => Eq (Nat.ble n m) b → Bool.Reflects b (Nat.le n m)) (Nat.ble n m)
+      (fun e h => Bool.ne_false_of_eq_true (Nat.ble_eq_true_of_le h) e) Nat.le_of_ble_eq_true Omega.rfl)
+
+instance Nat.decLt (n m : Nat) : Decidable (@LT.lt Nat instLTNat n m) := Nat.decLe (Nat.succ n) m
+
+end Omega
+
+port_inductive Array
+port_definition Array.toList
+port_definition List.toArray
+port_definition Array.push with_native_code
+port_definition Array.emptyWithCapacity with_native_code
+port_definition Array.mkEmpty
+
+namespace Omega
+def Array.empty {α : Type u} : Array α := Array.emptyWithCapacity Nat.zero
+end Omega
+
+port_inductive Append
+port_definition Append.append
+port_inductive HAppend
+port_definition HAppend.hAppend
+port_definition instHAppendOfAppend
+
+port_native_records Sub, HSub
+port_definition instHSub with_native_code
+port_definition instSubNat
+
+end
+end
+
+-- Lean's pattern elaborator uses these root names for patterns, cases and argument-free branches.
+
+port_native_records Neg, Dvd
+port_native_records Zero, One
+port_native_records Mul, Div, Mod, Pow, NatPow, HomogeneousPow, SMul
+port_native_records HMul, HDiv, HMod, HPow, HSMul
+port_native_records OrElse, AndThen, AndOp, XorOp, OrOp, Complement, ShiftLeft, ShiftRight
+port_native_records HOrElse, HAndThen, HAnd, HXor, HOr, HShiftLeft, HShiftRight
+
+port_definition instHMul with_native_code
+port_definition instHDiv with_native_code
+port_definition instHMod with_native_code
+port_definition instHPow with_native_code
+port_definition instHSMul with_native_code
+port_definition instPowNat with_native_code
+port_definition instHOrElseOfOrElse with_native_code
+port_definition instHAndThenOfAndThen with_native_code
+port_definition instHAndOfAndOp with_native_code
+port_definition instHXorOfXorOp with_native_code
+port_definition instHOrOfOrOp with_native_code
+port_definition instHShiftLeftOfShiftLeft with_native_code
+port_definition instHShiftRightOfShiftRight with_native_code
+
+port_native_records PLift, ULift, MProd
+port_native_records Bind, Pure, Functor, Seq, SeqLeft, SeqRight
+port_native_records MonadLift, MonadLiftT, MonadEval, MonadEvalT, MonadFunctor, MonadFunctorT
+port_native_records MonadReader, MonadReaderOf, MonadWithReader, MonadWithReaderOf
+port_native_records MonadState, MonadStateOf, MonadExcept, MonadExceptOf
+port_inductive Except
+port_inductive EStateM.Result
+port_definition EStateM
+port_native_records EStateM.Backtrackable
+port_definition instInhabitedSort with_native_code
+port_definition instInhabitedForall with_native_code
+port_definition instInhabitedBool.default with_native_code
+port_definition instInhabitedBool with_native_code
+port_definition instInhabitedNat with_native_code
+port_definition instInhabitedOption with_native_code
+port_definition instInhabitedList with_native_code
+port_definition instInhabitedULift with_native_code
+port_definition instInhabitedReaderT with_native_code
+port_definition instInhabitedExcept with_native_code
+port_definition instMonadLiftT with_native_code
+port_definition instMonadLiftTOfMonadLift with_native_code
+port_definition instMonadEvalOfMonadLift with_native_code
+port_definition instMonadEvalT with_native_code
+port_definition instMonadEvalTOfMonadEval with_native_code
+port_definition instMonadFunctorTOfMonadFunctor with_native_code
+port_definition monadFunctorRefl with_native_code
+port_definition throwThe with_native_code
+port_definition tryCatchThe with_native_code
+port_definition instMonadExceptOfMonadExceptOf with_native_code
+port_definition readThe with_native_code
+port_definition instMonadReaderOfMonadReaderOf with_native_code
+port_definition liftM with_native_code
+port_definition instMonadReaderOfOfMonadLift with_native_code
+port_definition withTheReader with_native_code
+port_definition instMonadWithReaderOfMonadWithReaderOf with_native_code
+port_definition instMonadWithReaderOfOfMonadFunctor with_native_code
+port_definition instMonadWithReaderOfReaderT with_native_code
+port_definition getThe with_native_code
+port_definition instMonadStateOfMonadStateOf with_native_code
+port_definition instMonadStateOfOfMonadLift with_native_code
+port_definition ReaderT.instMonadLift with_native_code
+port_definition ReaderT.instMonadExceptOf with_native_code
+port_definition ReaderT.instMonadFunctor with_native_code
+port_definition EStateM.pure with_native_code
+port_definition EStateM.set with_native_code
+port_definition EStateM.get with_native_code
+port_definition EStateM.modifyGet.match_1 with_native_code
+port_definition EStateM.modifyGet with_native_code
+port_definition EStateM.throw with_native_code
+port_definition EStateM.run with_native_code
+port_definition EStateM.dummyRestore with_native_code
+port_definition EStateM.dummySave with_native_code
+port_definition EStateM.nonBacktrackable with_native_code
+port_definition EStateM.instInhabitedResult with_native_code
+port_definition EStateM.instInhabited with_native_code
+port_definition EStateM.instMonadStateOf with_native_code
+
+port_native_records Applicative, Monad
+
+port_definition instInhabitedForallOfMonad with_native_code
+port_definition instInhabitedOfMonad with_native_code
+port_definition ReaderT.read with_native_code
+port_definition ReaderT.pure with_native_code
+port_definition ReaderT.bind with_native_code
+port_definition ReaderT.instFunctorOfMonad with_native_code
+port_definition ReaderT.instApplicativeOfMonad with_native_code
+port_definition ReaderT.instMonad with_native_code
+port_definition instMonadReaderOfReaderTOfMonad with_native_code
+port_definition EStateM.adaptExcept.match_1 with_native_code
+port_definition EStateM.adaptExcept with_native_code
+port_definition EStateM.bind.match_1 with_native_code
+port_definition EStateM.bind with_native_code
+port_definition EStateM.map with_native_code
+port_definition EStateM.tryCatch.match_1 with_native_code
+port_definition EStateM.tryCatch with_native_code
+port_definition EStateM.orElse with_native_code
+port_definition EStateM.seqRight with_native_code
+port_definition EStateM.run' with_native_code
+port_definition EStateM.instMonad with_native_code
+port_definition EStateM.instMonadExceptOfOfBacktrackable with_native_code
+port_definition EStateM.instOrElseOfBacktrackable with_native_code
+port_definition MonadExcept.ofExcept.match_1 with_native_code
+port_definition MonadExcept.ofExcept with_native_code
+port_definition MonadExcept.orElse with_native_code
+port_definition MonadExcept.instOrElse with_native_code
+
+port_native_records BEq, Membership
+
+port_inductive Subtype
+port_definition Subtype.val with_native_code
+port_proof Subtype.property
+port_definition DecidableEq
+
+port_constructor_eliminators Bool, Nat, Option, List, Except, EStateM.Result
+
+port_native_records Min, Max
+port_definition getModify with_native_code
+port_definition modify with_native_code
+port_definition modifyThe with_native_code
+port_definition modifyGetThe with_native_code
+port_definition Pi.instInhabited with_native_code
+port_definition instSMulOfMul with_native_code
+port_definition instPowOfHomogeneousPow with_native_code
+port_definition instBEqOfDecidableEq with_native_code
+
+port_definition NonemptyType with_native_code
+port_definition instInhabitedNonemptyType with_native_code
+
+namespace Omega
+
+public theorem Bool.decEq._proof_1 (a b : Bool) : Bool.Reflects (Bool.beq a b) (Eq a b) :=
+  Bool.casesOn (motive := fun a => Bool.Reflects (Bool.beq a b) (Eq a b)) a
+    (Bool.casesOn (motive := fun b => Bool.Reflects (Bool.beq Bool.false b) (Eq Bool.false b)) b
+      Omega.rfl (Bool.ne_true_of_eq_false Omega.rfl))
+    (Bool.casesOn (motive := fun b => Bool.Reflects (Bool.beq Bool.true b) (Eq Bool.true b)) b
+      (Bool.ne_false_of_eq_true Omega.rfl) Omega.rfl)
+
+end Omega
+
+port_definition Bool.decEq with_native_code
+port_definition instDecidableEqBool with_native_code
+
+port_definition DecidableRel
+port_definition Option.noConfusionType
+port_definition Option.noConfusion
+port_definition Option.some.noConfusion
+
+port_definition List.append.match_1 with_native_code
+port_structural_code List.append on_arg 2
+port_definition instDecidableEqList.match_1 with_native_code
+port_structural_code List.map on_arg 4
+port_structural_code List.flatten on_arg 2 using
+  fun {α} xs => Omega.List.casesOn (motive := fun _ => Omega.List α) xs Omega.List.nil
+    (fun head rest => Omega.List.append head (Omega.List.flatten rest))
+port_definition List.flatMap with_native_code
+port_definition List.foldl.match_1 with_native_code
+port_structural_code List.foldl on_arg 5
+port_definition List.lengthTRAux.match_1 with_native_code
+port_structural_code List.lengthTRAux on_arg 2
+port_structural_code List.length on_arg 2
+
+port_definition instMulNat with_native_code
+port_definition instNatPowNat with_native_code
+port_definition minOfLe with_native_code
+port_definition maxOfLe with_native_code
+port_definition instMinNat with_native_code
+port_definition Decidable.falseTrueCases with_native_code
+namespace Omega
+
+end Omega
+
+port_definition instDecidableEqNat with_native_code
+
+port_definition Array.size with_native_code
+port_definition Array.mkArray0 with_native_code
+port_definition Array.mkArray1 with_native_code
+port_definition Array.mkArray2 with_native_code
+port_definition Array.mkArray3 with_native_code
+port_definition Array.mkArray4 with_native_code
+port_definition Array.mkArray5 with_native_code
+port_definition Array.mkArray6 with_native_code
+port_definition Array.mkArray7 with_native_code
+port_definition Array.mkArray8 with_native_code
+
+port_inductive Fin
+port_definition Fin.val with_native_code
+port_proof Fin.isLt
+port_definition instLTFin with_native_code
+port_definition instLEFin with_native_code
+port_definition Fin.decLt with_native_code
+port_definition Fin.decLe with_native_code
+attribute [coe] Omega.Fin.val
+
+port_native_records BitVec
+port_definition BitVec.toNat with_native_code
+port_definition BitVec.ofNatLT with_native_code
+port_definition instLTBitVec with_native_code
+port_definition instLEBitVec with_native_code
+port_proof instDecidableLtBitVec._proof_1
+port_definition instDecidableLtBitVec with_native_code
+port_proof instDecidableLeBitVec._proof_1
+port_definition instDecidableLeBitVec with_native_code
+
+port_proof Fin.eq_of_val_eq
+port_proof Fin.val_eq_of_eq
+port_definition instDecidableEqFin.match_1
+port_proof instDecidableEqFin._proof_1
+port_definition instDecidableEqFin with_native_code
+port_definition BitVec.decEq.match_1
+port_definition BitVec.noConfusionType
+port_definition BitVec.noConfusion
+port_proof BitVec.decEq._proof_1
+port_definition BitVec.decEq with_native_code
+port_definition instDecidableEqBitVec with_native_code
+
+port_native_records UInt8
+port_definition UInt8.decEq.match_1
+port_definition UInt8.noConfusionType
+port_definition UInt8.noConfusion
+port_proof UInt8.decEq._proof_1
+port_definition UInt8.decEq with_native_code
+port_definition instDecidableEqUInt8 with_native_code
+port_definition UInt8.lt
+port_definition UInt8.le
+port_definition instLTUInt8 with_native_code
+port_proof UInt8.decLt._proof_1
+port_definition UInt8.decLt with_native_code
+port_definition instLEUInt8 with_native_code
+port_proof UInt8.decLe._proof_1
+port_definition UInt8.decLe with_native_code
+
+port_native_records UInt16
+port_definition UInt16.decEq.match_1
+port_definition UInt16.noConfusionType
+port_definition UInt16.noConfusion
+port_proof UInt16.decEq._proof_1
+port_definition UInt16.decEq with_native_code
+port_definition instDecidableEqUInt16 with_native_code
+
+port_native_records UInt32
+port_definition UInt32.decEq.match_1
+port_definition UInt32.noConfusionType
+port_definition UInt32.noConfusion
+port_proof UInt32.decEq._proof_1
+port_definition UInt32.decEq with_native_code
+port_definition instDecidableEqUInt32 with_native_code
+port_definition UInt32.toNat with_native_code
+port_definition instLTUInt32 with_native_code
+port_proof UInt32.decLt._proof_1
+port_definition UInt32.decLt with_native_code
+port_definition instLEUInt32 with_native_code
+port_proof UInt32.decLe._proof_1
+port_definition UInt32.decLe with_native_code
+
+port_native_records UInt64
+port_definition UInt64.decEq.match_1
+port_definition UInt64.noConfusionType
+port_definition UInt64.noConfusion
+port_proof UInt64.decEq._proof_1
+port_definition UInt64.decEq with_native_code
+port_definition instDecidableEqUInt64 with_native_code
+
+port_definition instMinUInt32 with_native_code
+port_definition instMaxUInt32 with_native_code
+port_native_records ByteArray
+port_definition ByteArray.emptyWithCapacity with_native_code
+port_definition ByteArray.empty with_native_code
+port_definition ByteArray.push.match_1 with_native_code
+port_definition ByteArray.push with_native_code
+port_definition ByteArray.size.match_1 with_native_code
+port_definition ByteArray.size with_native_code
+port_definition List.toByteArray.match_1 with_native_code
+port_definition List.toByteArray.loop._f
+port_definition List.toByteArray.loop
+port_structural_code List.toByteArray.loop on_arg 1
+port_definition List.toByteArray with_native_code
+
+port_proof noConfusion_of_Nat
+port_definition List.get.match_1 with_native_code
+port_definition List.get._f
+port_definition List.get
+port_structural_code List.get on_arg 2
+port_definition Array.getInternal with_native_code
+port_definition Array.getD with_native_code
+port_definition List.set.match_1 with_native_code
+port_definition List.set._f
+port_definition List.set
+port_structural_code List.set on_arg 2
+port_definition Array.appendCore.loop.match_1 with_native_code
+port_definition Array.appendCore.loop._f
+port_definition Array.appendCore.loop
+port_structural_code Array.appendCore.loop on_arg 3
+port_definition Array.appendCore with_native_code
+port_definition Array.extract.loop._f
+port_definition Array.extract.loop
+port_structural_code Array.extract.loop on_arg 3
+port_definition Array.extract with_native_code
+
+port_definition List.beq.match_1 with_native_code
+port_definition List.beq._f
+port_definition List.beq
+port_structural_code List.beq on_arg 3
+port_definition List.hasDecEq.go.match_3
+port_definition PLift.noConfusionType
+port_definition PLift.noConfusion
+port_definition PLift.up.noConfusion
+port_definition ULift.noConfusionType
+port_definition ULift.noConfusion
+port_definition ULift.up.noConfusion
+port_definition List.noConfusionType
+port_definition List.noConfusion
+port_definition List.hasDecEq.go.match_1
+port_proof List.hasDecEq._proof_1
+port_definition List.hasDecEq.go._f
+port_proof List.hasDecEq.go
+port_definition List.hasDecEq with_native_code
+port_proof instDecidableEqList._proof_1
+port_proof instDecidableEqList._proof_2
+port_proof instDecidableEqList._proof_3
+port_definition instDecidableEqList.match_5 with_native_code
+port_definition decEq with_native_code
+port_definition instDecidableEqList.match_3 with_native_code
+port_proof instDecidableEqList._proof_4
+port_proof instDecidableEqList._proof_5
+port_proof instDecidableEqList._proof_6
+port_definition instDecidableEqList with_native_code
+port_definition List.instDecidableEqNil with_native_code
+port_definition List.instDecidableNilEq with_native_code
+
+port_definition Prod.noConfusionType
+port_definition Prod.noConfusion
+port_definition Subtype.noConfusionType
+port_definition Subtype.noConfusion
+
+port_proof Nat.lt_add_one
+port_proof Nat.lt_succ_self
+port_proof Nat.le_succ
+port_proof Nat.pred_le
+port_proof Nat.sub_le
+port_proof Nat.lt_succ_of_le
+port_proof Nat.sub_lt
+port_proof Nat.lt_of_lt_of_le
+port_proof Nat.div_rec_lemma
+port_proof Nat.le_of_lt_succ
+port_proof Nat.div_rec_fuel_lemma
+port_definition Nat.div.go.match_1
+port_definition Nat.modCore.go._f
+port_definition Nat.modCore.go
+
+namespace Omega.Nat
+
+@[expose, irreducible] public protected noncomputable def modCore (x y : @& Nat) : Nat :=
+  dite (LT.lt zero y) (fun hy => Nat.modCore.go y hy (succ x) x (Nat.lt_succ_self x)) (fun _ => x)
+
+@[extern "lean_nat_mod", expose] public protected def _root_.Nat.mod : @& Nat → @& Nat → Nat := fun x y =>
+  Nat.casesOn x zero (fun k => ite (LE.le y (succ k)) (Nat.modCore (succ k) y) (succ k))
+
+export _root_.Nat (mod)
+
+private def modCoreGoImpl (y : Nat) (_ : LT.lt 0 y) (fuel x : Nat) (_ : LT.lt x fuel) : Nat := Nat.mod x y
+
+attribute [implemented_by modCoreGoImpl] Nat.modCore.go
+attribute [implemented_by _root_.Nat.mod] Nat.modCore
+
+end Omega.Nat
+
+port_definition GE.ge
+port_definition Nat.eq_or_lt_of_le._f
+port_proof Nat.eq_or_lt_of_le
+port_proof Nat.le_succ_of_le
+port_definition Nat.lt_or_ge._f
+port_proof Nat.lt_or_ge
+port_proof Nat.lt_of_not_le
+port_proof Nat.not_lt_zero
+port_proof Nat.modCoreGo_lt
+port_proof Nat.modCore_lt
+
+namespace Omega.Nat
+
+public theorem mod_lt (x : Nat) {y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.mod x y) y :=
+  Nat.casesOn (motive := fun n => Nat.lt (Nat.mod n y) y) x hy (fun k =>
+    let dec := Nat.decLe y (succ k)
+    let check : (d : Decidable (LE.le y (succ k))) →
+        Nat.lt (@ite Nat (LE.le y (succ k)) d (Nat.modCore (succ k) y) (succ k)) y :=
+      fun d => Decidable.casesOn d fun p =>
+        Bool.casesOn (motive := fun bit => (h : Bool.Reflects bit (LE.le y (succ k))) →
+            Nat.lt (@ite Nat (LE.le y (succ k)) (Decidable.intro bit h) (Nat.modCore (succ k) y) (succ k)) y)
+          p (fun h => Nat.lt_of_not_le h) (fun _ => Nat.modCore_lt hy)
+    check dec)
+
+end Omega.Nat
+
+public section
+namespace Bool
+export _root_.Omega.Bool (and and_eq_internalAnd beq ctorElim ctorElimType ctorIdx dcond decEq eq_false_of_ne_true eq_true_of_ne_false ne_false_of_eq_true ne_true_of_eq_false not not_eq_internalNot or or_eq_internalOr)
+end Bool
+namespace Bool.false
+export _root_.Omega.Bool.false (elim)
+end Bool.false
+namespace Bool.true
+export _root_.Omega.Bool.true (elim)
+end Bool.true
+namespace Decidable
+export _root_.Omega.Decidable (falseTrueCases isFalse isTrue)
+end Decidable
+namespace False
+export _root_.Omega.False (elim)
+end False
+namespace HEq
+export _root_.Omega.HEq (rfl)
+end HEq
+namespace Nat
+export _root_.Omega.Nat (ble_eq_true_of_le ctorElim ctorElimType ctorIdx decLe decLt le le_antisymm le_of_ble_eq_true le_of_succ_le_succ le_refl le_trans lt lt_irrefl modCore modCore_lt mod_lt not_succ_le_zero succ_le_succ succ_sub_succ_eq_sub zero_le)
+end Nat
+namespace Nat.succ
+export _root_.Omega.Nat.succ (elim)
+end Nat.succ
+namespace Nat.zero
+export _root_.Omega.Nat.zero (elim)
+end Nat.zero
+
+
+port_definition GT.gt
+port_proof Nat.lt_trans
+port_proof decide_eq_false
+port_proof of_decide_eq_true
+port_proof Nat.brecOn.eq
+
+public section
+namespace Nat
+export _root_.Omega.Nat (div_rec_fuel_lemma div_rec_lemma eq_or_lt_of_le le_of_lt_succ le_succ le_succ_of_le lt_add_one lt_of_lt_of_le lt_of_not_le lt_or_ge lt_succ_of_le lt_succ_self lt_trans modCoreGo_lt not_lt_zero pred_le sub_le sub_lt)
+end Nat
+namespace Nat.brecOn
+export _root_.Omega.Nat.brecOn (eq)
+end Nat.brecOn
+
+port_definition Nat.isValidChar
+port_definition UInt32.isValidChar
+port_native_records Char, String.Pos.Raw
+port_definition Char.ctorIdx
+port_definition Char.noConfusionType
+port_definition Char.noConfusion
+port_definition Char.mk.noConfusion
+port_definition String.Pos.Raw.ctorIdx
+port_definition String.Pos.Raw.noConfusionType
+port_definition String.Pos.Raw.noConfusion
+port_definition String.Pos.Raw.mk.noConfusion
+port_proof Char.ext
+port_proof Char.val_eq_of_eq
+port_proof Char.ne_of_val_ne
+port_proof Char.val_ne_of_ne
+port_definition instDecidableEqChar.match_1
+port_proof instDecidableEqChar._proof_1
+port_definition instDecidableEqChar with_native_code
+attribute [instance] Omega.instDecidableEqChar
+
+namespace Nat
+export _root_.Omega.Nat (isValidChar)
+end Nat
+
+port_definition UInt32.size
+port_definition UInt32.ofNatLT with_native_code
+port_proof Char.ofNatAux._private_1
+port_definition Char.ofNatAux with_native_code
+port_proof Char.ofNat._proof_1
+port_proof Char.ofNat._proof_2
+port_definition Char.ofNat with_native_code
+port_proof Char.utf8Size._proof_1
+port_proof Char.utf8Size._proof_2
+port_proof Char.utf8Size._proof_3
+port_definition Char.utf8Size with_native_code
+attribute [match_pattern] Omega.Char.ofNat
+
+port_proof Nat.zero_lt_succ
+port_proof Nat.add_pos_right
+port_proof Nat.mul_pos
+port_proof Nat.pow_pos._f
+port_proof Nat.pow_pos
+port_definition Nat.instMod with_native_code
+port_definition Nat.instDiv with_native_code
+
+namespace Nat
+export _root_.Omega.Nat (add_pos_right instDiv instMod mul_pos pow_pos zero_lt_succ)
+end Nat
+port_definition Fin.Internal.ofNat with_native_code
+port_proof BitVec.ofNat._proof_1
+port_definition BitVec.ofNat with_native_code
+port_definition UInt8.ofNat with_native_code
+port_definition String.utf8EncodeChar with_native_code
+port_definition List.utf8Encode with_native_code
+port_inductive ByteArray.IsValidUTF8
+port_native_records String
+port_proof String.ofList._proof_1
+port_definition String.ofList with_native_code
+port_inductive Lean.Name
+port_definition Lean.Name.mkStr1 with_native_code
+port_definition Lean.SyntaxNodeKind
+port_inductive Lean.ParserDescr
+
+port_proof Nat.lt_of_le_of_lt
+port_proof Nat.pred_le_pred
+port_proof Nat.succ_pos
+
+public section
+namespace Nat
+export _root_.Omega.Nat (lt_of_le_of_lt pred_le_pred succ_pos)
+end Nat
+
+port_definition DecidablePred by_constructive_casts
+port_private_declaration decide_eq_true.match_1_1
+port_proof decide_eq_true by_constructive_casts
+port_private_declaration of_decide_eq_false.match_1_1
+port_proof of_decide_eq_false by_constructive_casts
+port_private_declaration Nat.lt_of_le_of_ne.match_1_1
+port_proof Nat.lt_of_le_of_ne by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (lt_of_le_of_ne)
+end Nat

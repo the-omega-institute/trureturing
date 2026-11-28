@@ -1,6 +1,8 @@
 module
 public import Init.Data.Nat.Basic
 public import OmegaInit.Core
+public import OmegaInit.Data.NeZero
+public import OmegaInit.SimpLemmas
 
 /-! Namespace aliases to the pinned public interface. -/
 public section
@@ -8,5 +10,38 @@ namespace Omega
 export _root_ (Nat.lt.step)
 end Omega
 namespace Omega.Nat
-export _root_.Nat (add_assoc add_comm add_le_add add_le_add_iff_left add_le_add_iff_right add_le_add_left add_le_add_right add_left_cancel add_left_comm add_mul add_one add_one_inj add_one_le_add_one_iff add_one_le_iff add_one_le_of_lt add_one_lt_add_one_iff add_one_mul add_one_ne_add_one_iff add_one_ne_zero add_one_sub_one add_right_cancel add_right_comm add_sub_add_left add_sub_add_right add_sub_cancel add_sub_cancel_left add_succ and_forall_add_one beq_refl eq_zero_of_add_eq_zero eq_zero_of_add_eq_zero_left eq_zero_or_eq_succ_pred le_add_left le_add_left_of_le le_add_right le_add_right_of_le le_of_add_le_add_left le_of_add_le_add_right le_of_add_left_le le_of_add_right_le le_of_lt_add_one le_step le_total le_zero left_distrib lt_add_one_iff lt_add_one_of_le lt_add_one_of_lt lt_of_add_one_le lt_succ lt_succ_iff lt_succ_of_lt mul_add mul_add_one mul_assoc mul_comm mul_left_comm mul_one mul_pow mul_succ mul_two mul_zero not_add_one_le_zero one_lt_two one_mul or_exists_add_one pow_add_one pow_one pow_succ pow_zero pred_succ pred_zero right_distrib sub_add_eq sub_le_of_le_add sub_self sub_self_add sub_sub sub_succ sub_zero succ_add succ_eq_add_one succ_inj succ_le_succ_iff succ_lt_succ succ_lt_succ_iff succ_mul succ_ne_succ_iff succ_ne_zero succ_pred_eq_of_ne_zero succ_sub_succ two_mul two_pos zero_add zero_lt_one zero_lt_two zero_mul zero_ne_add_one zero_sub zero_sub_one)
+export _root_.Nat (add_assoc add_comm add_le_add add_le_add_iff_left add_le_add_iff_right add_le_add_left add_le_add_right add_left_cancel add_left_comm add_lt_add_left add_lt_add_right add_mul add_one add_one_inj add_one_le_add_one_iff add_one_le_iff add_one_le_of_lt add_one_lt_add_one_iff add_one_mul add_one_ne_add_one_iff add_one_ne_zero add_one_sub_one add_right_cancel add_right_comm add_sub_add_left add_sub_add_right add_sub_cancel add_sub_cancel_left add_sub_of_le add_sub_self_left add_succ and_forall_add_one beq_refl casesAuxOn eq_of_mul_eq_mul_left eq_zero_of_add_eq_zero eq_zero_of_add_eq_zero_left eq_zero_or_eq_succ_pred eq_zero_or_pos ge_of_not_lt instMax instNeZeroSucc le_add_left le_add_left_of_le le_add_right le_add_right_of_le le_of_add_le_add_left le_of_add_le_add_right le_of_add_left_le le_of_add_right_le le_of_eq le_of_lt le_of_lt_add_one le_of_mul_le_mul_left le_of_not_gt le_of_not_le le_of_succ_le le_step le_sub_of_add_le le_total le_zero left_distrib lt_add_one_iff lt_add_one_of_le lt_add_one_of_lt lt_of_add_one_le lt_of_not_ge lt_of_succ_le lt_of_succ_lt_succ lt_succ lt_succ_iff lt_succ_of_lt max max_def min min_def mul_add mul_add_one mul_assoc mul_comm mul_le_mul mul_le_mul_left mul_le_mul_right mul_left_comm mul_lt_mul_of_pos_left mul_lt_mul_of_pos_right mul_one mul_pow mul_sub mul_sub_left_distrib mul_sub_right_distrib mul_succ mul_two mul_zero ne_of_gt ne_of_lt not_add_one_le_zero not_le not_le_of_gt not_le_of_lt not_lt not_lt_of_ge one_lt_two one_mul or_exists_add_one pos_iff_ne_zero pos_of_neZero pos_of_ne_zero pow_add_one pow_le_pow_right pow_one pow_succ pow_zero pred_lt pred_mul pred_succ pred_zero recAux right_distrib sub_add_cancel sub_add_eq sub_eq_iff_eq_add sub_eq_zero_of_le sub_le_of_le_add sub_le_sub_left sub_le_sub_right sub_lt_left_of_lt_add sub_lt_right_of_lt_add sub_ne_zero_of_lt sub_pos_of_lt sub_self sub_self_add sub_sub sub_succ sub_succ_lt_self sub_zero succ_add succ_eq_add_one succ_inj succ_le_of_lt succ_le_succ_iff succ_lt_succ succ_lt_succ_iff succ_mul succ_ne_self succ_ne_succ_iff succ_ne_zero succ_pred_eq_of_ne_zero succ_pred_eq_of_pos succ_sub succ_sub_succ two_mul two_pos two_pow_pos zero_add zero_lt_one zero_lt_sub_of_lt zero_lt_two zero_mul zero_ne_add_one zero_ne_one zero_sub zero_sub_one «repeat»)
+end Omega.Nat
+namespace Omega.Nat.le
+export _root_.Nat.le (dest intro)
+end Omega.Nat.le
+
+namespace Omega.Nat
+export _root_.Nat (eq_of_mul_eq_mul_right)
+end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (lt_trichotomy ne_of_lt' pow_left_inj pow_lt_pow_left zero_lt_of_ne_zero
+  zero_pow_of_pos)
+end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_le_of_le_sub add_lt_of_lt_sub add_sub_assoc eq_add_of_sub_eq le_add_of_sub_le
+  le_antisymm_iff le_iff_lt_or_eq le_of_mul_le_mul_right le_of_sub_eq_zero lt_add_of_pos_left
+  lt_add_of_pos_right lt_of_sub_eq_succ lt_of_sub_ne_zero lt_of_sub_pos lt_or_eq_of_le
+  lt_sub_of_add_lt lt_succ_iff_lt_or_eq ne_zero_of_lt pow_le_pow_left pred_lt_of_lt sub_eq_of_eq_add
+  sub_one_lt sub_one_lt_of_lt zero_lt_of_lt)
+end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (eq_of_le_of_lt_succ lt_iff_le_and_ne lt_of_succ_lt lt_one_iff not_lt_of_le
+  succ_le_iff)
+end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (eq_zero_of_le_zero le_of_not_lt)
+end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_lt_add)
 end Omega.Nat
