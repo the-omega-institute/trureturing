@@ -394,4 +394,8 @@ public theorem List.of_toArrayAux_eq_toArrayAux :
       cases heads
       exact ⟨congrArg (a :: ·) tails, arrays⟩
 
+public theorem List.of_toArrayAux_eq_toArrayAux._f :
+    type_of% (private_decl% @_root_.List.of_toArrayAux_eq_toArrayAux._f) :=
+  fun {_ _} _ {_ _ _} same sizes => List.of_toArrayAux_eq_toArrayAux same sizes
+
 end OmegaChecks.InitPort.Alternatives

@@ -47,6 +47,11 @@ public theorem List.filterMap_eq_filterMapTR.go.{v,u} :
       rw [ih, _root_.Array.toList_push, _root_.List.append_assoc]
       rfl
 
+public theorem List.filterMap_eq_filterMapTR.go._f.{v,u} :
+    type_of% (private_decl% @_root_.List.filterMap_eq_filterMapTR.go._f.{v,u}) := by
+  intro α β f xs _ acc
+  exact List.filterMap_eq_filterMapTR.go α β f xs acc
+
 @[expose] public def List.mapTR : type_of% @_root_.List.mapTR := @_root_.List.map
 
 public theorem List.map_eq_mapTR : @_root_.List.map = @List.mapTR := rfl
