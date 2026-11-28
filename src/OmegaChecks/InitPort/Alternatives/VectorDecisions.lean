@@ -2,6 +2,8 @@ module
 import all Init.Data.Vector.Lemmas
 import all Init.Data.Vector.Basic
 import all Init.Data.Array.Lemmas
+import all Init.Data.Array.Basic
+import all Init.WF
 
 /-! Decisions and lookups for vectors retain their size witnesses. -/
 namespace OmegaChecks.InitPort.Alternatives
@@ -110,20 +112,90 @@ public theorem Vector.lawfulBEq_iff : type_of% @_root_.Vector.lawfulBEq_iff := b
       intro xs ys eq
       exact _root_.Vector.toArray_inj.mp (eq_of_beq (_root_.Vector.toArray_beq_toArray.trans eq))
 
-/-- The strict array map computes on the underlying list. Observing the head of a
-constant-length input recovers the full element function by definitional equality. -/
-public theorem Vector.map_inj {n : Nat} {α : Type u} {β : Type v} {f g : α → β} [nz : NeZero n] :
-    (fun xs : _root_.Vector α n => _root_.Vector.mk ((xs.toArray.toList.map f).toArray)
-      ((_root_.List.length_map (f := f)).trans xs.size_toArray)) =
-    (fun xs => _root_.Vector.mk ((xs.toArray.toList.map g).toArray)
-      ((_root_.List.length_map (f := g)).trans xs.size_toArray)) ↔ f = g := by
+private def mapMeasure (n : Nat) (s : (_ : Nat) ×' Array β) := n - s.1
+
+private def mapStep (n : Nat) (read : (i : Nat) → i < n → β) (s : (_ : Nat) ×' Array β)
+    (recur : ∀ (t : (_ : Nat) ×' Array β), mapMeasure n t < mapMeasure n s → Array β) : Array β :=
+  PSigma.casesOn (motive := fun s => (∀ (t : (_ : Nat) ×' Array β), mapMeasure n t < mapMeasure n s → Array β) → Array β)
+    s (fun i acc recur => if h : i < n then
+      recur ⟨i+1, acc.push (read i h)⟩ (Nat.sub_succ_lt_self _ _ h) else acc) recur
+
+private def runMap (n : Nat) (read : (i : Nat) → i < n → β) : Array β :=
+  WellFounded.Nat.fix (mapMeasure n) (mapStep n read) ⟨0, #[]⟩
+
+private theorem yesUnder {p : Prop} [d : Decidable p] (h : p) (obs : α → β → γ)
+    (yes : p → α → β) (no : ¬p → α → β) :
+    (fun x => obs x (dite p (fun hp => yes hp x) (fun hn => no hn x))) = fun x => obs x (yes h x) := by
+  cases d with
+  | isTrue => rfl
+  | isFalse hn => exact (hn h).elim
+
+private theorem noUnder {p : Prop} [d : Decidable p] (h : ¬p) (obs : α → β → γ)
+    (yes : p → α → β) (no : ¬p → α → β) :
+    (fun x => obs x (dite p (fun hp => yes hp x) (fun hn => no hn x))) = fun x => obs x (no h x) := by
+  cases d with
+  | isTrue hp => exact (h hp).elim
+  | isFalse => rfl
+
+/-- After the first push, every recursive map step preserves the head for the whole input function. -/
+private theorem nonemptyHead (n : Nat) (read : α → (i : Nat) → i < n+1 → β) (dflt : α → β) :
+    (fun x => (runMap (n+1) (read x)).toList.headD (dflt x)) = fun x => read x 0 (Nat.zero_lt_succ n) := by
+  let head (x : α) := read x 0 (Nat.zero_lt_succ n)
+  let obs (x : α) (xs : Array β) := xs.toList.headD (dflt x)
+  have keep (fuel i : Nat) (h : n+1-i < fuel) (tail : α → List β) :
+      (fun x => obs x (WellFounded.Nat.fix.go (mapMeasure (n+1)) (mapStep (n+1) (read x))
+        fuel ⟨i, ⟨head x :: tail x⟩⟩ h)) = head := by
+    induction fuel generalizing i tail with
+    | zero => exact (Nat.not_lt_zero _ h).elim
+    | succ fuel ih =>
+      dsimp only [WellFounded.Nat.fix.go, mapStep]
+      by_cases inside : i < n+1
+      · apply (yesUnder inside obs _ _).trans
+        exact ih (i+1) (Nat.lt_of_lt_of_le (Nat.sub_succ_lt_self _ _ inside) (Nat.le_of_lt_succ h)) _
+      · exact noUnder inside obs _ _
+  let fuel := WellFounded.Nat.eager (n+1+1)
+  have h : n+1 < fuel := by
+    dsimp only [fuel]
+    rw [WellFounded.Nat.eager_eq]
+    exact Nat.lt_succ_self _
+  change (fun x => obs x (WellFounded.Nat.fix.go (mapMeasure (n+1)) (mapStep (n+1) (read x)) fuel ⟨0, #[]⟩ h)) = head
+  generalize hf : fuel = fuel' at h ⊢
+  cases fuel' with
+  | zero => exact (Nat.not_lt_zero _ h).elim
+  | succ fuel =>
+    dsimp only [WellFounded.Nat.fix.go, mapStep]
+    apply (yesUnder (Nat.zero_lt_succ n) obs _ _).trans
+    exact keep fuel 1 (Nat.lt_of_lt_of_le (Nat.sub_succ_lt_self _ _ (Nat.zero_lt_succ n)) (Nat.le_of_lt_succ h)) (fun _ => [])
+
+private theorem familyHead (n : Nat) (size : α → Nat) (same : size = fun _ => n+1)
+    (read : (x : α) → (i : Nat) → i < size x → β) (dflt answer : α → β)
+    (first : ∀ h : ∀ x, 0 < size x, (fun x => read x 0 (h x)) = answer) :
+    (fun x => (runMap (size x) (read x)).toList.headD (dflt x)) = answer := by
+  cases same
+  exact (nonemptyHead n read dflt).trans (first _)
+
+private theorem sizeRepeat {α : Type u} (n : Nat) :
+    (fun x : α => (List.replicate n x).length) = fun _ => n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => exact congrArg (fun (k : α → Nat) x => (k x).succ) ih
+
+public theorem Vector.map_inj : type_of% @_root_.Vector.map_inj := by
+  intro n α β f g nz
   constructor
-  · intro h
+  · intro eq
     cases n with
     | zero => exact (nz.out rfl).elim
     | succ n =>
-      exact congrArg (fun k x => (k (_root_.Vector.mk ((x :: List.replicate n x).toArray)
-        (congrArg Nat.succ List.length_replicate))).toArray.toList.headD (f x)) h
+      let pack (x : α) : _root_.Vector α (n+1) :=
+        ⟨⟨x :: List.replicate n x⟩, congrArg Nat.succ List.length_replicate⟩
+      let obs (k : _root_.Vector α (n+1) → _root_.Vector β (n+1)) x :=
+        (k (pack x)).toArray.toList.headD (f x)
+      have reads (q : α → β) : obs (_root_.Vector.map q) = q := by
+        with_unfolding_all exact (familyHead n (fun x => (pack x).toArray.size)
+          (congrArg (fun (k : α → Nat) x => (k x).succ) (sizeRepeat n))
+          (fun x i h => q ((pack x).toArray[i])) f q (fun _ => rfl))
+      exact (reads f).symm.trans ((congrArg obs eq).trans (reads g))
   · rintro rfl
     rfl
 

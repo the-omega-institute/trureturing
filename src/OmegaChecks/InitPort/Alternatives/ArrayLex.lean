@@ -1,5 +1,6 @@
 module
 public import Init.Data.Vector.Lex
+import all Init.Data.Array.Lex.Lemmas
 
 /-! The list, array and vector comparators inspect the same elements in order. -/
 namespace OmegaChecks.InitPort.Alternatives
@@ -12,6 +13,12 @@ namespace OmegaChecks.InitPort.Alternatives
 
 public theorem List.lex_toArray {α : Type u} [BEq α] {lt : α → α → Bool} {xs ys : _root_.List α} :
     Array.lex xs.toArray ys.toArray lt = xs.lex ys lt := rfl
+
+public theorem Array.cons_lex_cons : type_of% (private_decl% @_root_.Array.cons_lex_cons) := by
+  intro α inst lt a b xs ys
+  rw [← _root_.Array.lex_toList, ← _root_.Array.lex_toList,
+    _root_.Array.toList_append, _root_.Array.toList_append]
+  rfl
 
 public theorem Array.lex_empty {α : Type u} [BEq α] {lt : α → α → Bool} {xs : _root_.Array α} :
     Array.lex xs #[] lt = false := _root_.List.lex_nil

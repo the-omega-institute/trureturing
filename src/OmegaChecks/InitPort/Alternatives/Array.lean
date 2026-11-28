@@ -12,6 +12,7 @@ public import Init.Data.RArray
 import all Init.Data.RArray
 public import Init.Data.Array.DecidableEq
 public import Init.Data.Array.Basic
+import all Init.Data.Array.Basic
 public import Init.Data.Nat.Basic
 import all Init.Data.Array.Basic
 import all Init.Data.List.ToArray
@@ -87,11 +88,11 @@ public theorem Array.mem_ite_empty_left : type_of% @_root_.Array.mem_ite_empty_l
   · rw [ite_eq_right h]
     exact ⟨fun m => ⟨h, m⟩, And.right⟩
 
-/-- Use the list representation of array map from the checked strict basis. -/
-public theorem Array.map_inj {α : Type u} {β : Type v} {f g : α → β} :
-    (fun xs : Array α => (xs.toList.map f).toArray) = (fun xs => (xs.toList.map g).toArray) ↔ f = g := by
+public theorem Array.map_inj : type_of% @_root_.Array.map_inj := by
+  intro α β f g
   constructor
-  · exact fun eq => congrArg (fun k x => (k #[x]).toList.headD (f x)) eq
+  · intro eq
+    with_unfolding_all exact congrArg (fun k x => (k #[x]).toList.headD (f x)) eq
   · rintro rfl
     rfl
 
