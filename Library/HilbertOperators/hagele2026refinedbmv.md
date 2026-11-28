@@ -38,6 +38,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/MiddleGapReplay
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/SeparatedFourKernel
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortGapTenThirds
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ClearedMiddleSign
   - D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic
   - D5/S3/Quantum/Analysis/RefinedBMVUniformCorner
   - D5/S3/Quantum/Analysis/RefinedBMVThreeSpectrumReduction
@@ -446,6 +447,12 @@ coordinate at least ten thirds and all positive gaps through two. The
 proof combines the certified curvature and slope of the short-gap profile
 with a bound for the radical derivative. The fourth moment strengthens
 the marginal slope estimate for gaps at least one.
+
+For every degree at least eleven, the mixed derivative is strictly
+negative throughout the closed middle band with lower coordinate from
+one half to four and gap from one to four. The proof covers the band
+with 39 cells and verifies the original derivative on each cell using
+exact Taylor bounds and uniform estimates in the degree.
 
 ## Quantitative degree-three gap for finite traces
 
