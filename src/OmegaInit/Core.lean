@@ -140,3 +140,37 @@ end Omega.imp
 namespace Omega.Option.some
 export _root_.Option.some (inj)
 end Omega.Option.some
+
+namespace Omega.Std.LeftIdentity
+export _root_.Std.LeftIdentity (casesOn mk rec recOn)
+end Omega.Std.LeftIdentity
+
+namespace Omega.Std
+export _root_.Std (IdempotentOp Identity LawfulIdentity LawfulLeftIdentity LawfulRightIdentity
+  LeftIdentity RightIdentity)
+end Omega.Std
+
+namespace Omega.Std.Identity
+export _root_.Std.Identity (casesOn mk rec recOn toLeftIdentity toRightIdentity)
+end Omega.Std.Identity
+
+namespace Omega.Std.LawfulLeftIdentity
+export _root_.Std.LawfulLeftIdentity (casesOn left_id mk rec recOn toLeftIdentity)
+end Omega.Std.LawfulLeftIdentity
+
+namespace Omega.Std.LawfulIdentity
+export _root_.Std.LawfulIdentity (casesOn mk rec recOn toIdentity toLawfulLeftIdentity
+  toLawfulRightIdentity)
+end Omega.Std.LawfulIdentity
+
+namespace Omega.Std.LawfulRightIdentity
+export _root_.Std.LawfulRightIdentity (casesOn mk rec recOn right_id toRightIdentity)
+end Omega.Std.LawfulRightIdentity
+
+namespace Omega.Std.RightIdentity
+export _root_.Std.RightIdentity (casesOn mk rec recOn)
+end Omega.Std.RightIdentity
+
+namespace Omega.Std.IdempotentOp
+export _root_.Std.IdempotentOp (casesOn idempotent mk rec recOn)
+end Omega.Std.IdempotentOp

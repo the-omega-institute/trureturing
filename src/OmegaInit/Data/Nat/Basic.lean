@@ -19,3 +19,8 @@ end Omega.Nat.le
 namespace Omega.Nat
 export _root_.Nat (eq_of_mul_eq_mul_right)
 end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (lt_trichotomy ne_of_lt' pow_left_inj pow_lt_pow_left zero_lt_of_ne_zero
+  zero_pow_of_pos)
+end Omega.Nat

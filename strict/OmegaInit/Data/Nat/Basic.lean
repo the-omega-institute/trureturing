@@ -631,3 +631,19 @@ port_proof Nat.eq_of_mul_eq_mul_right by_constructive_casts
 namespace Nat
 export _root_.Omega.Nat (eq_of_mul_eq_mul_right)
 end Nat
+
+port_private_declaration Nat.zero_lt_of_ne_zero.match_1_1
+port_proof Nat.zero_lt_of_ne_zero by_constructive_casts
+port_proof Nat.zero_pow_of_pos by_constructive_casts
+port_private_declaration Nat.pow_left_inj.match_1_1
+port_alternative_proof Nat.pow_lt_pow_left from OmegaChecks.InitPort.Alternatives.Powers
+port_proof Nat.ne_of_lt' by_constructive_casts
+port_private_declaration Nat.lt_trichotomy.match_1_1
+port_private_declaration Nat.lt_trichotomy.match_1_3
+port_proof Nat.lt_trichotomy by_constructive_casts
+port_proof Nat.pow_left_inj by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (lt_trichotomy ne_of_lt' pow_left_inj pow_lt_pow_left zero_lt_of_ne_zero
+  zero_pow_of_pos)
+end Nat
