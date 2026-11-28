@@ -18,6 +18,8 @@ Fix rational t between zero and one and a rational contrast d. Use the point ord
 
 For t at most one half, the bound is (1 − t²)². For t greater than one half with (t − 1/2)² at most 1 − t², it is (5/4 − t)². In the remaining case it is (2t − 1)²(1 − t²).
 
+The same classification and witnesses hold over every linearly ordered field. The rational specialization fixes the scalar domain used for the five local transport readings.
+
 Exchange x with y and w with v to reverse the contrast. For a nonnegative contrast, delete v and split the four-point form using the simultaneous exchanges of x with z and y with w. The resulting two binary forms restrict the contrast. In each range a four-point witness can be chosen with the yw entry zero and b at most both t and a.
 
 For the fifth point take its projection in the span of y and z with coefficients (a − bt)/(1 − b²) and (t − ba)/(1 − b²). The witnesses have b strictly below one, and both coefficients are nonnegative. Testing the residual of x with the coefficients reversed shows that the fifth diagonal can be filled by nonnegative slack. The construction is on the five prescribed Gram readings. Extending them to a kernel on an entire heap is a separate existence problem.
