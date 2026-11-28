@@ -62,7 +62,8 @@ class Schedule:
             raise ValueError("unknown or duplicate pending compiler unit")
         if not valid_ids(lanes, lambda n: type(n) is int and 0 <= n < len(plan["lanes"])):
             raise ValueError("unknown or duplicate pending physical lane")
-        self.waiting = set(keys) - self.done
+        self.required = set(keys)
+        self.waiting = self.required - self.done
         self.lanes = set(lanes)
         self.lane_units = pending["lane_units"]
         if set(self.lane_units) != {str(n) for n in lanes}:
@@ -157,10 +158,10 @@ class GitHub:
 
     def matches(self, row, title):
         return (row.get("workflow_id") == self.workflow_id and row.get("display_title") == title
-                and row.get("actor", {}).get("login") == "github-actions[bot]"
+                and (row.get("actor") or {}).get("login") == "github-actions[bot]"
                 and row.get("event") == "workflow_dispatch" and row.get("head_branch") == "dev"
-                and row.get("repository", {}).get("full_name") == self.repo
-                and row.get("head_repository", {}).get("full_name") == self.repo)
+                and (row.get("repository") or {}).get("full_name") == self.repo
+                and (row.get("head_repository") or {}).get("full_name") == self.repo)
 
     def dispatch(self, batch, phase, assignment):
         time.sleep(max(0, self.last_dispatch + 1.0 - time.monotonic()))
@@ -242,22 +243,31 @@ def coordinate(github, schedule, maximum, unit_size, shard_size, refresh=None):
         recent = {row["id"]: row for row in github.runs(min(oldest.values()), all_pages=len(active) > 80)}
         completed = False
         for identifier, (batch, phase, values) in list(active.items()):
-            row = recent.get(identifier) or github.json(f"actions/runs/{identifier}")
-            if not github.matches(row, github.title(batch, phase)):
-                raise ValueError(f"untrusted compiler workflow run {identifier}")
-            if row["status"] != "completed":
+            row = recent.get(identifier)
+            if row is not None and row.get("status") != "completed":
                 continue
+            title = github.title(batch, phase)
+            # A dispatched run can be listed before its identity metadata is populated.
+            if row is None or not github.matches(row, title):
+                row = github.json(f"actions/runs/{identifier}")
+            if row.get("status") != "completed":
+                continue
+            if row.get("id") != identifier or not github.matches(row, title):
+                raise ValueError(f"untrusted compiler workflow run {identifier}")
             if row["conclusion"] == "success":
                 schedule.accept(phase, values, github.result(identifier, batch))
             else:
                 outstanding = set(values)
                 if refresh:
                     receipts, pending = refresh(phase)
-                    if phase == "units":
+                    if receipts is not None:
                         validate_receipts(schedule.plan, receipts)
-                        recovered = outstanding.intersection(receipts)
-                        schedule.done.update(recovered)
-                        outstanding.difference_update(recovered)
+                        running = {k for other, (_, kind, batch_keys) in active.items()
+                                   if other != identifier and kind == "units" for k in batch_keys}
+                        schedule.done = set(receipts)
+                        schedule.waiting = schedule.required - schedule.done - running
+                    if phase == "units":
+                        outstanding.difference_update(schedule.done)
                     else:
                         outstanding.intersection_update(pending["lanes"])
                 for value in sorted(outstanding):
@@ -291,7 +301,7 @@ def main():
     parser.add_argument("--directory", type=Path)
     parser.add_argument("--pending", type=Path)
     parser.add_argument("--max-active", type=positive)
-    parser.add_argument("--units-per-batch", type=positive, default=8)
+    parser.add_argument("--units-per-batch", type=positive, default=1)
     parser.add_argument("--shards-per-batch", type=positive, default=1)
     args = parser.parse_args()
     if args.prepare_only:
@@ -313,12 +323,12 @@ def main():
         schedule = Schedule(plan, read(args.pending), read(receipts))
 
         def refresh(phase):
+            cache("compiler-receipts", args.plan, receipts)
             if phase == "units":
-                cache("compiler-receipts", args.plan, receipts)
                 return read(receipts), None
             pending = Path(directory) / "pending.json"
             cache("compiler-pending-shards", args.plan, pending)
-            return None, read(pending)
+            return read(receipts), read(pending)
 
         if schedule.waiting or schedule.lanes:
             coordinate(GitHub(source), schedule, args.max_active, args.units_per_batch, args.shards_per_batch, refresh)
