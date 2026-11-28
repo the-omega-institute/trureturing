@@ -136,6 +136,10 @@ $$\forall (s: \mathbb{R}), (1 \le s) \Rightarrow (\forall (N: \mathbb{N})(M: \ma
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/FockSpace/EvninQuantumSector.top_finite_sector_eigenvalue` (`✓ std3`). ∎
 
+*Resolves.* `Problems/evnin-2026-quantum-sector-maximum` (proved) by `D5/S3/Quantum/FockSpace/EvninQuantumSector.top_finite_sector_eigenvalue`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"evnin-2026-quantum-sector-maximum","declaration_gid":"D5/S3/Quantum/FockSpace/EvninQuantumSector.top_finite_sector_eigenvalue","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Oleg Evnin (2026). *Quantum estimates for classical polynomial optimization*. DOI: [10.1088/1751-8121/aebddd](https://doi.org/10.1088/1751-8121/aebddd). URL: <https://arxiv.org/html/2607.25445v3>.

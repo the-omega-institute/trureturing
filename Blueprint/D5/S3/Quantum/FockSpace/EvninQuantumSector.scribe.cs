@@ -86,7 +86,9 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
                         + "positive before casting to complex numbers, so v is nonzero in every nonempty "
                         + "sector. This gives the eigenvalue E and proves attainment. With fewer than two "
                         + "particles the nonempty sectors have zero energy."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("evnin-2026-quantum-sector-maximum"), ResolutionKind.Proved)))));
 
     private static DocumentBlock.Describe Definition(
         string id, string declaration, string title, Formula body, string explanation) => Describe.Lean(
