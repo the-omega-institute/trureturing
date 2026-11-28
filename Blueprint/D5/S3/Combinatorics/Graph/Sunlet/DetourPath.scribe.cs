@@ -8,7 +8,7 @@ internal sealed class DetourPathDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/Graph/Sunlet/DetourPath.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/AdjacencyProduct/alsinai2026detour");
+        LibraryNoteRef.Create("D5/L/Combinatorics/alsinai2026detour");
     private static readonly Formula N = Seq(Mathbb, Grp(F.Id("N")));
     private static readonly Formula n = F.Id("n");
     private static readonly Formula i = F.Id("i");
