@@ -355,12 +355,27 @@ theorem star_capacity_eq_mixtureFusion
           ((𝔼 σ : Equiv.Perm I, rawRatio P Q σ yz.1 yz.2) -
             channelMargin P.table yz.1 * channelMargin Q.table yz.2) := by
     unfold mixtureFusion
-    rw [← Fintype.sum_prod_type]
-    rw [Finset.sum_comm]
-    apply Finset.sum_congr rfl
-    intro yz _
-    rw [weighted_orbitFusion_raw P Q yz.1 yz.2]
-    ring
+    calc
+      _ = ∑ z, ∑ y, channelMargin Q.table z *
+            (channelMargin P.table y *
+              orbitFusion (channelPosterior P.table y)
+                (channelPosterior Q.table z)) := by
+        simp_rw [Finset.mul_sum]
+      _ = ∑ y, ∑ z, channelMargin Q.table z *
+            (channelMargin P.table y *
+              orbitFusion (channelPosterior P.table y)
+                (channelPosterior Q.table z)) := by
+        rw [Finset.sum_comm]
+      _ = ∑ yz : Y × Z, channelMargin Q.table yz.2 *
+            (channelMargin P.table yz.1 *
+              orbitFusion (channelPosterior P.table yz.1)
+                (channelPosterior Q.table yz.2)) := by
+        rw [Fintype.sum_prod_type]
+      _ = _ := by
+        apply Finset.sum_congr rfl
+        intro yz _
+        rw [weighted_orbitFusion_raw P Q yz.1 yz.2]
+        ring
 
   rw [hmix]
   rw [Finset.sum_sub_distrib]
@@ -376,8 +391,12 @@ theorem star_capacity_eq_mixtureFusion
       (∑ y, channelMargin P.table y) *
           (∑ z, channelMargin Q.table z) = 1 := by
     rw [margin_sum_one P, margin_sum_one Q, one_mul]
-  rw [← Fintype.sum_mul_sum, hweights]
-  exact hcapacity_raw.symm
+  have hpair :
+      (∑ yz : Y × Z,
+          channelMargin P.table yz.1 * channelMargin Q.table yz.2) = 1 := by
+    rw [Fintype.sum_prod_type, ← Fintype.sum_mul_sum, hweights]
+  rw [hpair]
+  exact hcapacity_raw
 
 /-- The actual finite-channel local estimate, with the registered `8 q⁴ + q` candidate. -/
 theorem star_capacity_local_subadditivity
