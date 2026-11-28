@@ -178,6 +178,30 @@ def envelope_instance_sites(checks, expected_owner, expected_names, expected_ins
     return sites
 
 
+SPECIFIED_SELECTION = {
+    ("Init.Data.Option.Lemmas", "Option.choice_eq_" + suffix):
+        ("Option.choice", "Option.isSome_choice", "OmegaChecks.InitBoundaries.OptionSelector.fromSome")
+    for suffix in ("some", "default")
+} | {
+    ("Init.Internal.Order.Basic", "Lean.Order.flat_csup_" + suffix):
+        ("Lean.Order.flat_csup", "OmegaChecks.InitBoundaries.InternalOrder.officialFlatPresence",
+         "OmegaChecks.InitBoundaries.InternalOrder.choiceFromFlatPresence")
+    for suffix in ("eq", "is_sup")
+}
+
+
+def specified_choice_sites(checks, rows):
+    sites = {}
+    reductions = {(r["module"], r["name"]): r["reductionWitness"] for r in rows
+                  if r["impliesAxiom"] == "Classical.choice" and r.get("requiredBehavior") and not r["matchingNameAndModule"]}
+    for owner, name, operand, law, witness in checks:
+        site = (owner, name)
+        if site in sites or SPECIFIED_SELECTION.get(site) != (operand, law, witness) or reductions.get((owner, operand)) != witness:
+            raise ValueError(f"invalid specified selector certificate for {site}")
+        sites[site] = (operand, law)
+    return sites
+
+
 def envelope_type_dependencies(checks):
     return envelope_instance_sites(checks, MODULE_ENVELOPE, EMBEDDINGS, ENVELOPE_INSTANCE)
 
@@ -270,6 +294,7 @@ def check_coverage(official):
     embeddings = envelope_type_dependencies(official.get("certifiedEnvelopeTypeDependencies", []))
     if embeddings and by_refutation.get((MODULE_ENVELOPE, ENVELOPE_INSTANCE)) != (ENVELOPE_INSTANCE, ENVELOPE_REFUTER):
         raise ValueError("module embedding certificates lack the counterexample for their instance")
+    specified = specified_choice_sites(official.get("certifiedSpecifiedChoice", []), official["declarations"])
     comparison_formations = envelope_order_formations(official.get("certifiedEnvelopeOrderFormations", []))
     ring_formations = ring_instance_sites(official.get("certifiedRingInstanceFormations", []))
     if ring_formations and by_refutation.get((RING_ENVELOPE, RING_INSTANCE)) != (RING_INSTANCE, ENVELOPE_REFUTER):
@@ -437,6 +462,11 @@ def check_coverage(official):
                     any(row.get(flag) is not expected_safety for flag in ("strictUnsafe", "strictPartial")) or
                     private_type or orders):
                 raise ValueError(f"uncertified choice operand of the pinned type for {site}")
+        selection = specified.pop(site, None)
+        if (row.get("specifiedChoiceOperand"), row.get("specifiedChoiceObservation")) != (selection or (None, None)) or (
+                selection and (port or row["kind"] != "theorem" or row["unsafe"] or row["partial"] or
+                               row.get("originalTypeChecked") is not False or row.get("originalTypeGap") is not None)):
+            raise ValueError(f"uncertified specified selector in {site}")
         embedding = site in embeddings
         if row.get("originalTypeEnvelopeInstance") != (ENVELOPE_INSTANCE if embedding else None) or (embedding and (
                 not port or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
@@ -510,8 +540,10 @@ def check_coverage(official):
             # These Lean reductions take a value usable by safe code. The kernel
             # prohibits supplying an unsafe implementation to such a witness.
             reductions += 1
-        elif not choice_operand and not endpoint and not argument and not refuter and not order_formation and not ring_formation and path != "Quot.sound":
+        elif not selection and not choice_operand and not endpoint and not argument and not refuter and not order_formation and not ring_formation and path != "Quot.sound":
             unresolved.append(site)
+    if specified:
+        raise ValueError("specified selector certificate has no declaration")
     if not ring_formations <= sites:
         raise ValueError("ring formation certificate has no declaration")
     if not comparison_formations.keys() <= sites:
@@ -596,6 +628,9 @@ def verify_complete(official, product, reductions, unresolved):
     formations = official.get("certifiedEnvelopeOrderFormations", [])
     if formations and envelope_formation_certificates(product) != formations:
         raise ValueError("live quotient order formation certificates differ from inventory")
+    specified = official.get("certifiedSpecifiedChoice", [])
+    if specified and envelope_formation_certificates(product, "SpecifiedChoiceCheck.lean") != specified:
+        raise ValueError("live specified selector certificates differ from inventory")
     ring_formations = official.get("certifiedRingInstanceFormations", [])
     if ring_formations and envelope_formation_certificates(product, "RingInstanceFormation.lean") != ring_formations:
         raise ValueError("live quotient ring formation certificates differ from inventory")
@@ -760,6 +795,9 @@ def report(product, require_complete=False):
         order_formations = envelope_formation_certificates(product)
         official["certifiedEnvelopeOrderFormations"] = order_formations
         comparison_formations = envelope_order_formations(order_formations)
+        specified_checks = envelope_formation_certificates(product, "SpecifiedChoiceCheck.lean")
+        official["certifiedSpecifiedChoice"] = specified_checks
+        specified = specified_choice_sites(specified_checks, official["declarations"])
         ring_checks = envelope_formation_certificates(product, "RingInstanceFormation.lean")
         official["certifiedRingInstanceFormations"] = ring_checks
         ring_formations = ring_instance_sites(ring_checks)
@@ -813,6 +851,8 @@ def report(product, require_complete=False):
                 row["originalTypeChoiceDependency"] = choice_operands[site]
             if site in comparison_formations:
                 row["quotientOrderFormation"] = comparison_formations[site]
+            if site in specified:
+                row["specifiedChoiceOperand"], row["specifiedChoiceObservation"] = specified[site]
             if site in ring_formations:
                 row["quotientRingFormation"] = RING_INSTANCE
             if site in comparisons:
@@ -860,7 +900,8 @@ def report(product, require_complete=False):
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
                              "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap",
                              "importAllOriginalTypeChecked", "originalTypeOrderDependencies", "originalTypeChoiceDependency", "finBoundProofReplacementChecked",
-                             "pointwiseOrderTypeChecked", "finiteConsumerTypeChecked", "publicProjectionTypeChecked", "moduleBodyStrictImport", "originalTypeEnvelopeInstance", "originalTypeEnvelopeOrderInstance", "quotientOrderFormation", "quotientRingFormation"])
+                             "pointwiseOrderTypeChecked", "finiteConsumerTypeChecked", "publicProjectionTypeChecked", "moduleBodyStrictImport", "originalTypeEnvelopeInstance", "originalTypeEnvelopeOrderInstance", "quotientOrderFormation", "quotientRingFormation",
+                             "specifiedChoiceOperand", "specifiedChoiceObservation"])
             for row in official["declarations"]:
                 if row["originalTypeChecked"] or row["kind"] == "axiom":
                     continue
@@ -912,7 +953,8 @@ def report(product, require_complete=False):
                                  "true" if row.get("pointwiseOrderTypeChecked") else "",
                                  "true" if row.get("finiteConsumerTypeChecked") else "",
                                  "true" if row.get("publicProjectionTypeChecked") else "", row.get("moduleBodyStrictImport"), row.get("originalTypeEnvelopeInstance"),
-                                 row.get("originalTypeEnvelopeOrderInstance"), row.get("quotientOrderFormation"), row.get("quotientRingFormation")])
+                                 row.get("originalTypeEnvelopeOrderInstance"), row.get("quotientOrderFormation"), row.get("quotientRingFormation"),
+                                 row.get("specifiedChoiceOperand"), row.get("specifiedChoiceObservation")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")

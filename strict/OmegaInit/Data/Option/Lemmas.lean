@@ -148,3 +148,8 @@ port_proof Option.pelim_some'
 port_proof Option.pmap_congr
 port_proof Option.pmap_none'
 port_proof Option.pmap_some'
+
+/- The public types of choice_eq_some and choice_eq_default use Option.choice.
+Both singleton laws are equivalent to returning some on inhabited subsingletons
+(OptionSelector.eqSomeIff and eqDefaultIff). Preserving Option.isSome_choice
+on every inhabited type yields Classical.choice by OptionSelector.fromSome. -/
