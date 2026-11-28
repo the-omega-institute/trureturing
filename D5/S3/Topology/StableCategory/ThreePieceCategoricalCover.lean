@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Three categorical subcomplexes cover a subdivision of a contractible complex of dimension at most five. -/
+   digest: A three-piece categorical cover of contractible complexes through dimension five. -/
 
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Topology.StableCategory.FourPieceCategoricalCover
@@ -318,8 +318,8 @@ private theorem two_pieces_of_supported_rank_nonempty [Fintype U] [Fintype Y]
       point point (null gLe) (null hLe)
 
   let A := (iteratedAmbient B n).2
-  letI : Finite (iteratedAmbient B n).1 := finite_at_depth B n
-  letI := Fintype.ofFinite (iteratedAmbient B n).1
+  let : Finite (iteratedAmbient B n).1 := finite_at_depth B n
+  let := Fintype.ofFinite (iteratedAmbient B n).1
   let a := iterate total htotal n
   let e := iterate total htotal (n + 1)
   have eq : (mapAt f hf (n + 1)).val = ofTotal e.val e.property :=
@@ -413,8 +413,10 @@ private theorem contractible_at_depth [Fintype X] (K : PreAbstractSimplicialComp
     ContractibleSpace (Space (iteratedAmbient K n).2)
   have h : C (depthFintype K n, depthDecEq K n) :=
     (iteratedRealization K n).contractibleSpace
-  exact (Subsingleton.elim (depthFintype K n, depthDecEq K n)
-    (inferInstance, Classical.decEq U)) ▸ h
+  have e : C (depthFintype K n, depthDecEq K n) =
+      C ((inferInstance : Fintype U), Classical.decEq U) :=
+    congrArg C (Subsingleton.elim _ _)
+  exact e.mp h
 
 private theorem cover_of_contractible_rank [Fintype X]
     (K : PreAbstractSimplicialComplex X) [ContractibleSpace (Space K)]
@@ -507,8 +509,8 @@ private theorem cover_of_contractible_rank [Fintype X]
   obtain ⟨q, ⟨null⟩⟩ := (id_nullhomotopic (Space T)).comp_left postReal
   have null' : postReal.Homotopy (ContinuousMap.const (Space B) q) := by
     simpa only [ContinuousMap.id_comp] using null
-  obtain ⟨d, cover⟩ :=
-    three_pieces_of_rank_factor f hf label c left pre' hpre' post hpost right rB prB q null' connected
+  obtain ⟨d, cover⟩ := three_pieces_of_rank_factor f hf label c left pre' hpre' post hpost
+    right rB prB q null' connected
   have eq : (mapAt f hf d).val = id :=
     (map_at_congr fid hf id_simplicial d).trans (map_at_id T id_simplicial d)
   rw [eq] at cover
@@ -526,6 +528,9 @@ theorem three_pieces_of_contractible [Fintype X]
     ∃ n, CategoricalMapCover (Fin 3) (K := (iteratedAmbient K n).2)
       (L := (iteratedAmbient K n).2) id := by
   let : Fintype (Face K) := Fintype.ofFinite _
+  let : Fintype (iteratedAmbient K 1).1 := by
+    change Fintype (Face K)
+    infer_instance
   have : ContractibleSpace (Space (sd K)) := contractible_at_depth K 1
   obtain ⟨rank, proper⟩ := (ColourGraphJoin.subdivision_rank_colouring K dimension).2
   obtain ⟨d, cover⟩ := cover_of_contractible_rank (sd K) rank proper

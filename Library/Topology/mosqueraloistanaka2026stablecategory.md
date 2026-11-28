@@ -1139,8 +1139,10 @@ and enter the next parameter as isolated vertices. At the terminal
 depth the graph region contracts. The remaining parameter has
 dimension at most three and gives two pieces by the relative theorem.
 Pulling back through the meeting-face maps gives the three-piece
-cover at a single ambient depth. The final three-piece deduction is
-currently a paper result.
+cover at a single ambient depth. The Lean theorem proves the absolute
+version for every finite simplicial complex of dimension at most five
+with contractible realization. The relative version above remains a
+paper deduction.
 
 In dimension four the two-piece bound for contractible realization
 remains open. A PL four-ball with 19 vertices and 69 maximal simplexes
