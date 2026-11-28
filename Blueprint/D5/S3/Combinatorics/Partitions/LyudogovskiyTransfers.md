@@ -12,7 +12,7 @@ $$\forall k \in Nat,\; \operatorname{part}\left(k\right) = \operatorname{positiv
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiyTransfers.part` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ $$\forall n \in Nat,\; \forall p \in \operatorname{Partition}\left(n\right),\; \
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiyTransfers.UnitTransfer` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ $$\forall n \in Nat,\; \forall p \in \operatorname{Partition}\left(n\right),\; \
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiyTransfers.graph` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -50,7 +50,7 @@ $$\forall k \in Nat,\; \operatorname{sum}\left(\operatorname{part}\left(k\right)
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -64,7 +64,7 @@ $$\forall n \in Nat,\; \operatorname{Injective}\left(\operatorname{ofPartitionOn
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -78,7 +78,7 @@ $$\forall d \in YoungDiagram,\; \forall H \in Nat,\; \operatorname{colLen}\left(
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -92,7 +92,7 @@ $$\forall n \in Nat,\; \forall p \in \operatorname{Partition}\left(n\right),\; \
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
