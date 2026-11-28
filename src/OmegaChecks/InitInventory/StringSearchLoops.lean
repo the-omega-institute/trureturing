@@ -61,37 +61,41 @@ private theorem signalUnroll {α β : Type} [Iterator α Id β]
 
 open String.Slice.Pattern
 
+private theorem hitAtSignalResult {α β : Type} [Iterator α Id β] (run : IteratorLoop α Id Id)
+    {it : IterM (α := α) Id β} {out : β} (repeats : it.step.run.inflate.val = .yield it out)
+    (noSkip : ∀ i j : IterM (α := α) Id β, ¬i.IsPlausibleStep (.skip j))
+    (correct : ∀ g, IteratorLoop.WellFounded α Id (signalStep g) → ∀ k,
+      signalRun run it g k = signalRun .defaultImplementation it g k)
+    {g : Nat → Bool} (sticky : ∀ k, g k = true → g (k+1) = true)
+    {n : Nat} (hit : g n = true) (k : Nat) : g (signalRun run it g k) = true := by
+  have wf := signalWellFounded noSkip sticky hit
+  have unroll (k : Nat) : signalRun run it g k = if g k then k else signalRun run it g (k+1) := by
+    have h := signalUnroll repeats g wf k
+    rwa [← correct g wf k, ← correct g wf (k+1)] at h
+  generalize eq : n - k = fuel
+  induction fuel generalizing k with
+  | zero =>
+    have yes := signal_after sticky hit (Nat.le_of_sub_eq_zero eq)
+    rw [unroll, ite_eq_left yes]
+    exact yes
+  | succ fuel ih =>
+    rw [unroll]
+    split
+    · assumption
+    · exact ih (k+1) (by omega)
+
 private def signalDecision {α β : Type} [Iterator α Id β] (run : IteratorLoop α Id Id)
     {it : IterM (α := α) Id β} {out : β} (repeats : it.step.run.inflate.val = .yield it out)
     (noSkip : ∀ i j : IterM (α := α) Id β, ¬i.IsPlausibleStep (.skip j))
     (correct : ∀ g, IteratorLoop.WellFounded α Id (signalStep g) → ∀ k,
       signalRun run it g k = signalRun .defaultImplementation it g k)
     (f : Nat → Bool) : Decidable (∃ k, f k = true) := by
-  let g := seen f
-  let result k := signalRun run it g k
-  cases e : g (result 0) with
+  cases e : seen f (signalRun run it (seen f) 0) with
   | true => exact isTrue (hit_of_seen f _ e)
   | false =>
     refine isFalse fun ⟨n, hit⟩ => ?_
-    have found := seen_of_hit f n hit
-    have wf := signalWellFounded noSkip (seenSticky f) found
-    have unroll (k : Nat) : result k = if g k then k else result (k+1) := by
-      have h := signalUnroll repeats g wf k
-      rw [← correct g wf k, ← correct g wf (k+1)] at h
-      exact h
-    have terminates (k : Nat) : g (result k) = true := by
-      generalize eq : n - k = fuel
-      induction fuel generalizing k with
-      | zero =>
-        have yes := signal_after (seenSticky f) found (Nat.le_of_sub_eq_zero eq)
-        rw [unroll, ite_eq_left yes]
-        exact yes
-      | succ fuel ih =>
-        rw [unroll]
-        split
-        · assumption
-        · exact ih (k+1) (by omega)
-    exact Bool.noConfusion (e.symm.trans (terminates 0))
+    exact Bool.noConfusion (e.symm.trans
+      (hitAtSignalResult run repeats noSkip correct (seenSticky f) (seen_of_hit f n hit) 0))
 
 @[instance_reducible] private def emptyForward : ForwardPattern () where
   skipPrefix? s := some s.startPos
@@ -157,6 +161,44 @@ def limitedOmniscienceFromBackwardSearchLoop
   letI := emptyBackward
   refine signalDecision (@run Unit () sample _) backwardRepeats (fun _ _ skip => skip) ?_ f
   intro g wf k
+  letI := @run Unit () sample _
+  letI := correct () (s := sample)
+  exact LawfulIteratorLoop.lawful _ _ _ _ _ wf _
+
+/-- Accumulator returned when a zero-width forward search repeatedly calls the signal callback. -/
+def forwardStopIndex (run : type_of% @ToForwardSearcher.DefaultForwardSearcher.instIteratorLoopIdSearchStep) (g : Nat → Bool) : Nat :=
+  letI := emptyForward
+  signalRun (@run Unit () sample _) (ToForwardSearcher.DefaultForwardSearcher.iter () sample).toIterM g 0
+
+theorem hitAtForwardStopIndex
+    (run : type_of% @ToForwardSearcher.DefaultForwardSearcher.instIteratorLoopIdSearchStep)
+    (correct : ∀ {ρ : Type} (pat : ρ) {s : String.Slice} [inst : ForwardPattern pat],
+      letI := @run ρ pat s inst
+      LawfulIteratorLoop (ToForwardSearcher.DefaultForwardSearcher pat s) Id Id)
+    {g : Nat → Bool} (sticky : ∀ k, g k = true → g (k+1) = true)
+    {n : Nat} (hit : g n = true) : g (forwardStopIndex @run g) = true := by
+  letI := emptyForward
+  refine hitAtSignalResult (@run Unit () sample _) forwardRepeats (fun _ _ skip => skip) ?_ sticky hit 0
+  intro signal wf k
+  letI := @run Unit () sample _
+  letI := correct () (s := sample)
+  exact LawfulIteratorLoop.lawful _ _ _ _ _ wf _
+
+/-- Accumulator returned when a zero-width backward search repeatedly calls the signal callback. -/
+def backwardStopIndex (run : type_of% @ToBackwardSearcher.DefaultBackwardSearcher.instIteratorLoopIdSearchStep) (g : Nat → Bool) : Nat :=
+  letI := emptyBackward
+  signalRun (@run Unit () sample _) (ToBackwardSearcher.DefaultBackwardSearcher.iter () sample).toIterM g 0
+
+theorem hitAtBackwardStopIndex
+    (run : type_of% @ToBackwardSearcher.DefaultBackwardSearcher.instIteratorLoopIdSearchStep)
+    (correct : ∀ {ρ : Type} (pat : ρ) {s : String.Slice} [inst : BackwardPattern pat],
+      letI := @run ρ pat s inst
+      LawfulIteratorLoop (ToBackwardSearcher.DefaultBackwardSearcher pat s) Id Id)
+    {g : Nat → Bool} (sticky : ∀ k, g k = true → g (k+1) = true)
+    {n : Nat} (hit : g n = true) : g (backwardStopIndex @run g) = true := by
+  letI := emptyBackward
+  refine hitAtSignalResult (@run Unit () sample _) backwardRepeats (fun _ _ skip => skip) ?_ sticky hit 0
+  intro signal wf k
   letI := @run Unit () sample _
   letI := correct () (s := sample)
   exact LawfulIteratorLoop.lawful _ _ _ _ _ wf _
