@@ -4,7 +4,7 @@ import OmegaChecks.InitPort.PublicTypeClient
 meta import OmegaChecks.InitPort.StrictReplay
 meta import OmegaChecks.InitPort.PublicTypeClient
 
-open Lean InitKernelPort OmegaChecks.InitPort
+open Lean Meta InitKernelPort OmegaChecks.InitPort
 
 private def changedResult : Expr → Expr
   | .forallE n type body bi => .forallE n type (changedResult body) bi
@@ -12,6 +12,47 @@ private def changedResult : Expr → Expr
 
 private def converts (env : Environment) (common pinned : Expr) : Bool :=
   (Kernel.check env {} common).isOk && (Kernel.check env {} pinned).isOk && Kernel.isDefEqGuarded env {} common pinned
+
+/-- Compose the public range theorem with the public description of the slice contents.
+The strict proof supplies its own finite collector at the intermediate equality. -/
+private def extractedRange (decl : ConstantInfo) (originalType : Expr) (base : Name)
+    (port : Name → Name) : MetaM (Expr × Expr × Expr) := do
+  forallTelescope decl.type fun xs body => do
+    let some (_, _, rhs) := body.eq? | throwError "expected a range equation"
+    let some (_, lhs, _) := (originalType.getForallBody.instantiateRev xs).eq?
+      | throwError "expected an original range equation"
+    unless lhs.getAppFn.isConstOf (port `Std.Slice.toList) do throwError "expected the pinned slice collector"
+    let contents ← mkAppOptM (port base) #[none, lhs.getAppArgs.back!]
+    let some (_, _, extracted) := (← inferType contents).eq? | throwError "expected a slice contents equation"
+    let law := mkAppN (mkConst decl.name (decl.levelParams.map Level.param)) xs
+    let inverse ← mkAppM (port `Eq.symm) #[contents]
+    let proof ← mkLambdaFVars xs (← mkAppM (port `Eq.trans) #[inverse, law])
+    let expected ← mkForallFVars xs (← mkEq extracted rhs)
+    let shortened ← mkForallFVars xs (← mkEq extracted (← mkAppM (port `List.tail) #[rhs]))
+    return (proof, expected, shortened)
+
+private def rangeContents? (owner name : Name) : Option Name := do
+  let (container, base) ← match owner with
+    | `Init.Data.Slice.List.Lemmas => some (`List, `ListSlice.toList_eq)
+    | `Init.Data.Slice.Array.Lemmas => some (`Array, `Subarray.toList_eq)
+    | _ => none
+  guard (["rco", "rcc", "rci", "roo", "roc", "roi", "rio", "ric", "rii"].any fun r =>
+    name == container.str ("toList_mkSlice_" ++ r))
+  return base
+
+private def checkExtractedRange (visible strict : Environment) (src dst : ConstantInfo)
+    (pinned : Expr) (base : Name) : IO Unit := do
+  let ctx := {fileName := "<slice range>", fileMap := default : Core.Context}
+  let (officialProof, expected, wrong) ← ((extractedRange src src.type base id).run').toIO' ctx {env := visible}
+  let (strictProof, _, _) ← ((extractedRange dst (translate portName pinned) base portName).run').toIO' ctx {env := strict}
+  let specialize := fun (t : Expr) => translate portName
+    (t.instantiateLevelParams src.levelParams (dst.levelParams.map Level.param))
+  for (env, proof, ty, shortened) in [(visible, officialProof, expected, wrong),
+      (strict, strictProof, specialize expected, specialize wrong)] do
+    let .ok actual := Kernel.check env {} proof | throw <| IO.userError s!"invalid range proof at {src.name}"
+    unless converts env actual ty && (Kernel.check env {} shortened).isOk &&
+        !Kernel.isDefEqGuarded env {} actual shortened do
+      throw <| IO.userError s!"the extracted range differs at {src.name}"
 
 public unsafe def main (args : List String) : IO Unit := do
   let [lib, dir] := args | throw <| IO.userError "expected the strict library and client directory"
@@ -42,6 +83,10 @@ public unsafe def main (args : List String) : IO Unit := do
           (strict.find? dst.name).any (fun s => s.type.equal dst.type) &&
           !converts visible common pinned && converts expanded common pinned && converts full lifted dst.type do continue
       let ordinary := converts strict lifted dst.type
+      if ordinary then
+        if let some base := rangeContents? owner name then
+          checkExtractedRange visible strict src dst pinned base
+          roots := roots.push (portName base)
       let wrong := changedResult common
       unless (Kernel.check expanded {} wrong).isOk && !Kernel.isDefEqGuarded expanded {} common wrong do
         throw <| IO.userError s!"unexpected unchanged result for {name}"
