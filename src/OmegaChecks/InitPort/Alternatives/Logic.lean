@@ -36,6 +36,18 @@ public theorem Erased.mk_inj : type_of% @_root_.Erased.mk_inj := by
   · intro h
     exact congrArg _root_.Erased.mk h
 
+public theorem eqRec_heq_iff._simp_1.{u,v} :
+    type_of% @_root_.eqRec_heq_iff._simp_1.{u,v} := by
+  intro β α a motive b base h c
+  cases h
+  rfl
+
+public theorem heq_eqRec_iff._simp_1.{u,v} :
+    type_of% @_root_.heq_eqRec_iff._simp_1.{u,v} := by
+  intro β α a motive b base h c
+  cases h
+  rfl
+
 public theorem let_congr : type_of% @_root_.let_congr :=
   fun {_ _ a _ _ _} ha hb => ha ▸ hb a
 
