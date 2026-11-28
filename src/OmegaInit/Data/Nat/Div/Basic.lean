@@ -19,3 +19,8 @@ end Omega.Nat
 namespace Omega.Nat
 export _root_.Nat (add_mul_mod_self_right)
 end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_mod_left div_eq_of_eq_mul_right div_le_of_le_mul mul_div_left mul_div_mul_left
+  mul_div_right)
+end Omega.Nat

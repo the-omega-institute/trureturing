@@ -647,3 +647,46 @@ namespace Nat
 export _root_.Omega.Nat (lt_trichotomy ne_of_lt' pow_left_inj pow_lt_pow_left zero_lt_of_ne_zero
   zero_pow_of_pos)
 end Nat
+
+port_proof Nat.eq_add_of_sub_eq by_constructive_casts
+port_private_declaration Nat.add_le_of_le_sub.match_1_1
+port_proof Nat.add_le_of_le_sub by_constructive_casts
+port_proof Nat.add_lt_of_lt_sub by_constructive_casts
+port_proof Nat.lt_or_eq_of_le by_constructive_casts
+port_private_declaration Nat.le_iff_lt_or_eq.match_1_1
+port_proof Nat.le_iff_lt_or_eq by_constructive_casts
+port_proof Nat.lt_succ_iff_lt_or_eq by_constructive_casts
+port_proof Nat.le_of_mul_le_mul_right by_constructive_casts
+port_private_declaration Nat.le_antisymm_iff.match_1_1
+port_proof Nat.le_antisymm_iff by_constructive_casts
+port_proof Nat.sub_eq_of_eq_add by_constructive_casts
+port_private_declaration Nat.zero_lt_of_lt.match_1_1
+port_definition Nat.zero_lt_of_lt._f by_constructive_casts
+port_proof Nat.zero_lt_of_lt by_constructive_casts
+port_proof Nat.lt_add_of_pos_left by_constructive_casts
+port_proof Nat.lt_add_of_pos_right by_constructive_casts
+port_proof Nat.lt_sub_of_add_lt by_constructive_casts
+port_private_declaration Nat.pow_le_pow_left.match_1_1
+port_definition Nat.pow_le_pow_left._f by_constructive_casts
+port_proof Nat.pow_le_pow_left by_constructive_casts
+port_proof Nat.lt_of_sub_ne_zero by_constructive_casts
+port_proof Nat.lt_of_sub_pos by_constructive_casts
+port_proof Nat.lt_of_sub_eq_succ by_constructive_casts
+port_proof Nat.ne_zero_of_lt by_constructive_casts
+port_proof Nat.sub_one_lt by_constructive_casts
+port_proof Nat.sub_one_lt_of_lt by_constructive_casts
+port_private_declaration Nat.le_of_sub_eq_zero.match_1_1
+port_definition Nat.le_of_sub_eq_zero._f by_constructive_casts
+port_proof Nat.le_of_sub_eq_zero by_constructive_casts
+port_proof Nat.add_sub_assoc by_constructive_casts
+port_private_declaration Nat.le_add_of_sub_le.match_1_1
+port_proof Nat.le_add_of_sub_le by_constructive_casts
+port_proof Nat.pred_lt_of_lt by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (add_le_of_le_sub add_lt_of_lt_sub add_sub_assoc eq_add_of_sub_eq
+  le_add_of_sub_le le_antisymm_iff le_iff_lt_or_eq le_of_mul_le_mul_right le_of_sub_eq_zero
+  lt_add_of_pos_left lt_add_of_pos_right lt_of_sub_eq_succ lt_of_sub_ne_zero lt_of_sub_pos
+  lt_or_eq_of_le lt_sub_of_add_lt lt_succ_iff_lt_or_eq ne_zero_of_lt pow_le_pow_left pred_lt_of_lt
+  sub_eq_of_eq_add sub_one_lt sub_one_lt_of_lt zero_lt_of_lt)
+end Nat
