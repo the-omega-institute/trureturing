@@ -27,7 +27,8 @@ port_definition List.forA
 port_structural_code List.forA on_arg 4
 
 port_definition List.zipWithM._sparseCasesOn_1
-port_definition List.zipWithM.match_1
+port_definition List.zipWithM.match_1 with_native_code
 port_definition List.zipWithM.loop._f
 port_definition List.zipWithM.loop
-port_definition List.zipWithM
+port_structural_code List.zipWithM.loop on_arg 7
+port_definition List.zipWithM with_native_code

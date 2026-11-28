@@ -17,9 +17,10 @@ port_proof List.mapM'_cons by_reflexivity
 port_proof List.mapM_nil by_reflexivity
 
 port_definition List.zipWithM'._sparseCasesOn_1
-port_definition List.zipWithM'.match_1
+port_definition List.zipWithM'.match_1 with_native_code
 port_definition List.zipWithM'._f
 port_definition List.zipWithM'
+port_structural_code List.zipWithM' on_arg 7
 port_proof List.zipWithM'_nil_left by_reflexivity
 port_proof List.zipWithM'_cons_cons by_reflexivity
 port_proof List.zipWithM_nil_left by_reflexivity

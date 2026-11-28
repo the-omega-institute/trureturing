@@ -12,6 +12,7 @@ import OmegaChecks.InitPort.RandomState
 import Lean.Elab.ParseImportsFast
 import Lean.Compiler.LCNF.SpecInfo
 import all Lean.Structure
+import all Lean.AuxRecursor
 
 public section
 
@@ -84,7 +85,7 @@ extension kinds therefore require a correspondence before a port can expose them
 private def supportedExtension (name : Name) : Bool :=
   [-- Compiled interface registrations checked by the port and kernel-interface audits.
    externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.defaultInstanceExtension.name,
-   Meta.simpExtension.ext.name, auxRecExt.name, noConfusionExt.name, Meta.completionBlackListExt.name,
+   Meta.simpExtension.ext.name, auxRecExt.name, noConfusionExt.name, sparseCasesOnExt.name, Meta.completionBlackListExt.name,
    protectedExt.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, neverExtractAttr.ext.name, reducibilityCoreExt.name,
    privateToUserName structureExt.name, projectionFnInfoExt.name, Meta.Match.Extension.extension.name,
    -- Module provenance, compiled representation and kernel bookkeeping in the pinned toolchain.
@@ -373,6 +374,12 @@ private def checkStructures (port ref : Environment) (owner : Name) (idx : Modul
         return lexical.replacePrefix `_private.OmegaInit `_private.Init ++
           (privateToUserName n).replacePrefix `Omega .anonymous
     return n.replacePrefix `Omega .anonymous
+  for name in sparseCasesOnExt.getModuleEntries port idx do
+    let original := rename name
+    unless port.getModuleIdxFor? name == some idx &&
+        ref.getModuleIdxFor? original == ref.getModuleIdx? (counterpart owner) &&
+        isSparseCasesOn ref original do
+      throw <| IO.userError s!"unmatched sparse cases registration for {owner}/{name}"
   for name in Meta.completionBlackListExt.getModuleEntries port idx do
     unless port.getModuleIdxFor? name == some idx &&
         ref.getModuleIdxFor? (rename name) == ref.getModuleIdx? (counterpart owner) &&

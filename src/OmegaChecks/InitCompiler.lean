@@ -165,6 +165,7 @@ private def installByteExtern (src : Environment) (name : Name) : CoreM Unit := 
     let name := omegaName defn.name
     Lean.addDecl (.defnDecl {defn with name, type, value, all := defn.all.map omegaName}) (forceExpose := true)
     if isAuxRecursor src defn.name then modifyEnv (markAuxRecursor · name)
+    if isSparseCasesOn src defn.name then modifyEnv (markSparseCasesOn · name)
     installByteExtern src defn.name
     -- Unfold before compiling arguments, so untaken branches of the pinned ite stay lazy.
     if Compiler.hasMacroInlineAttribute src defn.name then
