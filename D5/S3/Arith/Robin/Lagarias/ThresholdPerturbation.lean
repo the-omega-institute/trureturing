@@ -95,6 +95,11 @@ private lemma gap_bounds (n : ℕ) (hn : 1 < Real.log (n : ℝ)) :
     field_simp [hN.ne']
     ring
   have hloeq : E * a / (1 + a / x) = E * x * (1 - x / H) := by
+    have hden : 1 + a / x = H / x := by
+      dsimp [a]
+      field_simp [hx.ne']
+      ring
+    rw [hden]
     dsimp [a]
     field_simp [hx.ne', hH.ne']
     ring
