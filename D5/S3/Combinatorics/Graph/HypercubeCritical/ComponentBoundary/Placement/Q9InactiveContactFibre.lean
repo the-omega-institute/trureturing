@@ -1,4 +1,6 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9MinimumDistanceOperator
+import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9FiveAxisFibreCapacity
+import D5.S3.Combinatorics.Graph.HypercubeCritical.HuangUnitSupportGap
 
 /-! A shared midpoint keeps both contact rows inside one inactive-coordinate fibre. -/
 
@@ -92,6 +94,81 @@ theorem shared_midpoint_neighbors_preserved
   exact ⟨directions_restrictToFibre_eq hCactive,
     directions_restrictToFibre_eq hDactive⟩
 
+open private even_diff_of_parity_eq from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.HuangUnitSupportGap
+
+open Classical in
+/-- A five-axis fibre containing no realized distance-two contact mask has room
+for at most six selected vertices of a fixed parity if both components occur. -/
+theorem mixed_five_axis_fibre_capacity {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
+    (e : Fin 5 ↪ Fin 9)
+    (hsep : ∀ x ∈ C, ∀ y ∈ D, 2 ≤ hammingDist x y)
+    (hmask : ∀ T ∈ minimumDisplacements C D b 2, ¬ T ⊆ univ.map e) :
+    let A := univ.map e
+    let L := (restrictToFibre C A z).filter (fun x => parity x = b)
+    let R := (restrictToFibre D A z).filter (fun x => parity x = b)
+    L.Nonempty → R.Nonempty → L.card + R.card ≤ 6 := by
+  intro A L R hL hR
+  let project (x : Q 9) : Fin 5 → Bool := fun i => x (e i)
+  have hmem {S : Finset (Q 9)} {x : Q 9}
+      (h : x ∈ (restrictToFibre S A z).filter (fun x => parity x = b)) :
+      x ∈ S ∧ sameFibre A z x ∧ parity x = b := by
+    obtain ⟨hx, hp⟩ := mem_filter.mp h
+    obtain ⟨hs, hf⟩ := mem_filter.mp hx
+    exact ⟨hs, hf, hp⟩
+  have hdist {x y : Q 9} (hx : sameFibre A z x) (hy : sameFibre A z y) :
+      hammingDist (project x) (project y) = hammingDist x y := by
+    unfold hammingDist
+    apply card_bij (fun i _ => e i)
+    · intro i hi
+      exact mem_filter.mpr ⟨mem_univ _, (mem_filter.mp hi).2⟩
+    · intro i _ j _ hij
+      exact e.injective hij
+    · intro j hj
+      have hd := (mem_filter.mp hj).2
+      have hA : j ∈ A := by
+        by_contra hn
+        exact hd ((hx j hn).trans (hy j hn).symm)
+      obtain ⟨i, _, rfl⟩ := mem_map.mp hA
+      exact ⟨i, mem_filter.mpr ⟨mem_univ _, hd⟩, rfl⟩
+  have hcard (S : Finset (Q 9))
+      (hS : ∀ x ∈ S, sameFibre A z x) : (S.image project).card = S.card := by
+    apply card_image_of_injOn
+    intro x hx y hy he
+    funext j
+    by_cases hj : j ∈ A
+    · obtain ⟨i, _, rfl⟩ := mem_map.mp hj
+      exact congrFun he i
+    · exact (hS x hx j hj).trans (hS y hy j hj).symm
+  have hcross : ∀ u ∈ L.image project, ∀ v ∈ R.image project, hammingDist u v = 4 := by
+    intro u hu v hv
+    obtain ⟨x, hx, rfl⟩ := mem_image.mp hu
+    obtain ⟨y, hy, rfl⟩ := mem_image.mp hv
+    obtain ⟨hxC, hxA, hxb⟩ := hmem hx
+    obtain ⟨hyD, hyA, hyb⟩ := hmem hy
+    rw [hdist hxA hyA]
+    have hle : hammingDist x y ≤ 5 := by
+      rw [← hdist hxA hyA]
+      simpa using (hammingDist_le_card_fintype
+        (x := project x) (y := project y))
+    have hge := hsep x hxC y hyD
+    have heven : hammingDist x y % 2 = 0 :=
+      Nat.mod_eq_zero_of_dvd (even_diff_of_parity_eq x y (hxb.trans hyb.symm)).two_dvd
+    have hne : hammingDist x y ≠ 2 := by
+      intro he
+      have hm : differingAxes x y ∈ minimumDisplacements C D b 2 :=
+        mem_minimumDisplacements.mpr ⟨x, hxC, y, hyD, hxb, he, rfl⟩
+      apply hmask _ hm
+      intro j hj
+      by_contra hn
+      exact (mem_filter.mp hj).2 ((hxA j hn).trans (hyA j hn).symm)
+    omega
+  have hbound := Q9FiveAxisFibreCapacity.cross_distance_four_card_bound
+    (L.image project) (R.image project) (hL.image _) (hR.image _) hcross
+  rw [hcard L (fun x hx => (hmem hx).2.1), hcard R (fun x hx => (hmem hx).2.1)] at hbound
+  exact hbound.2.2.1
+
 #print axioms shared_midpoint_neighbors_preserved
+#print axioms mixed_five_axis_fibre_capacity
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9InactiveContactFibre
