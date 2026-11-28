@@ -7,6 +7,9 @@ module
 prelude
 public import OmegaInit.Prelude
 
+/-! The strict compiler registers the pinned prefix parsers for isolated prelude imports.
+Ordinary imports share the elaborator's three physical coercion classes with Lean. -/
+
 port_native_records Coe, CoeTC, CoeOut, CoeOTC, CoeHead, CoeHTC, CoeTail, CoeHTCT, CoeDep, CoeT, CoeFun, CoeSort
 
 port_definition Coe.noConfusionType
@@ -104,3 +107,49 @@ port_definition Lean.Internal.coeM with_native_code
 port_definition coeNotation with_native_code
 port_definition coeFunNotation with_native_code
 port_definition coeSortNotation with_native_code
+
+public section
+namespace Omega
+export _root_ (CoeT CoeFun CoeSort)
+end Omega
+
+namespace Omega.CoeT
+export _root_.CoeT (mk rec recOn casesOn coe)
+end Omega.CoeT
+
+namespace CoeT
+export _root_.Omega.CoeT (noConfusionType noConfusion ctorIdx)
+end CoeT
+
+namespace CoeT.mk
+export _root_.Omega.CoeT.mk (noConfusion)
+end CoeT.mk
+
+namespace Omega.CoeFun
+export _root_.CoeFun (mk rec recOn casesOn coe)
+end Omega.CoeFun
+
+namespace CoeFun
+export _root_.Omega.CoeFun (noConfusionType noConfusion ctorIdx)
+end CoeFun
+
+namespace CoeFun.mk
+export _root_.Omega.CoeFun.mk (noConfusion)
+end CoeFun.mk
+
+namespace Omega.CoeSort
+export _root_.CoeSort (mk rec recOn casesOn coe)
+end Omega.CoeSort
+
+namespace CoeSort
+export _root_.Omega.CoeSort (noConfusionType noConfusion ctorIdx)
+end CoeSort
+
+namespace CoeSort.mk
+export _root_.Omega.CoeSort.mk (noConfusion)
+end CoeSort.mk
+
+attribute [coe_decl] Omega.Coe.coe Omega.CoeTC.coe Omega.CoeOut.coe Omega.CoeOTC.coe
+attribute [coe_decl] Omega.CoeHead.coe Omega.CoeHTC.coe Omega.CoeTail.coe Omega.CoeHTCT.coe
+attribute [coe_decl] Omega.CoeDep.coe Omega.CoeT.coe Omega.CoeFun.coe Omega.CoeSort.coe
+attribute [coe_decl] Omega.Lean.Internal.liftCoeM Omega.Lean.Internal.coeM

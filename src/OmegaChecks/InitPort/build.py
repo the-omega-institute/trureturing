@@ -448,6 +448,8 @@ def main():
             hosted_env = {**os.environ, "LEAN_PATH": str(hosted)}
             run("lean", "--stdin", text=True, input=probe, env=hosted_env)
             run("lean", HERE / "consumers/QuotientConsumer.lean", env=hosted_env)
+            if (hosted / "OmegaInit/Coe.olean").is_file():
+                run("lean", HERE / "consumers/CoercionConsumer.lean", env=hosted_env)
             if (hosted / "OmegaInit/Core.olean").is_file():
                 run("lean", HERE / "consumers/SetoidQuotientConsumer.lean", env=hosted_env)
             if (hosted / "OmegaInit/Ext.olean").is_file():

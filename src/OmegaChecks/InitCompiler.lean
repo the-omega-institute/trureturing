@@ -14,6 +14,21 @@ import OmegaChecks.InitCompiler.CompilerMarkers
 open Lean Parser Elab Command
 namespace OmegaChecks.InitCompiler
 
+/-- Compile the pinned coercion prefix descriptors for isolated clients of the strict front end. -/
+private def coercionParser (descr : Lean.ParserDescr) : Parser :=
+  match descr with
+  | .node kind prec (.binary `andthen (.symbol glyph) (.cat category argPrec)) =>
+    let p := leadingNode kind prec (symbol glyph >> categoryParser category argPrec)
+    {p with fn := fun ctx state =>
+      if ctx.env.contains (`Omega ++ kind) then p.fn ctx state
+      else state.mkUnexpectedError "coercion notation requires OmegaInit.Coe"}
+  | _ => panic! "unexpected pinned coercion parser"
+
+builtin_initialize
+  for (name, descr) in [(`coeNotation, coeNotation), (`coeFunNotation, coeFunNotation),
+      (`coeSortNotation, coeSortNotation)] do
+    addBuiltinLeadingParser `term (`OmegaChecks.InitCompiler ++ name) (coercionParser descr) 1000
+
 @[command_parser, builtin_command_parser] def physicalNaturals := leading_parser "port_kernel_naturals"
 @[builtin_command_elab physicalNaturals] def elabPhysicalNaturals : CommandElab := fun _ => installNaturalBootstrap
 
