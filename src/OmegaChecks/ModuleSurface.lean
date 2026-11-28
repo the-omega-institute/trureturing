@@ -77,6 +77,8 @@ private def checkUmbrella (env : Environment) (port : Name) (idx : ModuleIdx) : 
       throw <| IO.userError s!"unmatched {port} umbrella import {dep.module}"
   unless (aliasExtension.getModuleEntries env idx).isEmpty do
     throw <| IO.userError s!"unmatched export alias in the {port} umbrella"
+  unless (Meta.coeDeclAttr.ext.getModuleEntries env idx).isEmpty do
+    throw <| IO.userError s!"unmatched coe_decl registration in the {port} umbrella"
   unless (classExtension.getModuleEntries env idx).isEmpty do
     throw <| IO.userError s!"unmatched class registration in the {port} umbrella"
 
@@ -86,7 +88,7 @@ private def supportedExtension (name : Name) : Bool :=
   [-- Compiled interface registrations checked by the port and kernel-interface audits.
    externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.defaultInstanceExtension.name,
    Meta.simpExtension.ext.name, auxRecExt.name, noConfusionExt.name, privateToUserName sparseCasesOnExt.name, Meta.completionBlackListExt.name,
-   protectedExt.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, neverExtractAttr.ext.name, reducibilityCoreExt.name,
+   protectedExt.name, Meta.coeDeclAttr.ext.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, neverExtractAttr.ext.name, reducibilityCoreExt.name,
    privateToUserName structureExt.name, projectionFnInfoExt.name, Meta.Match.Extension.extension.name,
    -- Module provenance, compiled representation and kernel bookkeeping in the pinned toolchain.
    `Lean.namespacesExt, `Lean.noncomputableExt, `Lean.Compiler.inlineAttrs, `Lean.exportedAxiomsExt,
@@ -568,6 +570,15 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
       let data := strict.header.moduleData[idx]!
       checkStructures strict reference owner idx
       checkInstances strict reference owner idx
+      let coercions := Meta.coeDeclAttr.ext
+      let upstreamOwner := counterpart owner
+      let expected := (reference.getModuleIdx? upstreamOwner).map fun i =>
+        (coercions.getModuleEntries reference i).filterMap fun n =>
+          let ported := InitKernelPort.portName n
+          if strict.contains ported then some ported else none
+      let actual := coercions.getModuleEntries strict idx
+      unless actual.qsort Name.quickLt == (expected.getD #[]).qsort Name.quickLt do
+        throw <| IO.userError s!"coe_decl registrations differ from {upstreamOwner} in {owner}"
       checkClasses strict reference owner idx strictClasses officialClasses
       checkSimp strict reference owner idx
       if data.imports.any (fun dep => dep.isExported && dep.importAll) then

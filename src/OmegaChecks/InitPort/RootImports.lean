@@ -63,7 +63,7 @@ def main (args : List String) : IO Unit := do
       if expected && (official.getProjectionFnInfo? upstream).isSome && (env.getProjectionFnInfo? name).isNone then
         throw <| IO.userError s!"missing projection metadata for {name} under import {root}"
       if expected then
-        for (label, hasTag) in [("match_pattern", hasMatchPatternAttribute),
+        for (label, hasTag) in [("match_pattern", hasMatchPatternAttribute), ("coe_decl", Meta.isCoeDecl),
             ("elab_as_elim", Elab.Term.elabAsElim.hasTag), ("never_extract", hasNeverExtractAttribute), ("auxiliary recursor", isAuxRecursor)] do
           unless hasTag env name == hasTag official upstream do
             throw <| IO.userError s!"{label} mismatch for {name} under import {root}"
