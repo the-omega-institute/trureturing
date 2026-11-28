@@ -443,6 +443,8 @@ def main():
             run("lean", HERE / "consumers/QuotientConsumer.lean", env=hosted_env)
             if (hosted / "OmegaInit/Core.olean").is_file():
                 run("lean", HERE / "consumers/SetoidQuotientConsumer.lean", env=hosted_env)
+            if (hosted / "OmegaInit/Data/Erased.olean").is_file():
+                run("lean", HERE / "consumers/ErasedConsumer.lean", env=hosted_env)
             if (hosted / "OmegaInit/Data/List/Scan/Basic.olean").is_file():
                 run("lean", HERE / "consumers/ListScanConsumer.lean", env=hosted_env)
         product.rename(target)
