@@ -71,7 +71,10 @@ internal sealed class StronglyCospectralTwinAmplitudeBoundDocument : IScribeDocu
                     + "of five, with respective projector weights 1/10, 1/5, and 1/5. The irrational gap "
                     + "ratio rules out a positive period. The relation (1, 2, 2) gives D = 50 and a "
                     + "certified floor of 1/25."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("meagher-monterde-nguyen-2026-strongly-cospectral-twins"),
+                    ResolutionKind.Proved))),
         []));
 
     private static Formula Result()

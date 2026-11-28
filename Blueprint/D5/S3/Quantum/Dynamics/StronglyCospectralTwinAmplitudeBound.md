@@ -36,6 +36,10 @@ $$\forall (n: \mathbb{N}), (\forall (G: \operatorname{SimpleGraph}\left(\operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/StronglyCospectralTwinAmplitudeBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/meagher-monterde-nguyen-2026-strongly-cospectral-twins` (proved) by `D5/S3/Quantum/Dynamics/StronglyCospectralTwinAmplitudeBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"meagher-monterde-nguyen-2026-strongly-cospectral-twins","declaration_gid":"D5/S3/Quantum/Dynamics/StronglyCospectralTwinAmplitudeBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Karen Meagher, Hermie Monterde, Tung T. Nguyen (2026). *Sedentariness in Cayley graphs*. DOI: [10.48550/arXiv.2611.00567](https://doi.org/10.48550/arXiv.2611.00567). URL: <https://arxiv.org/abs/2611.00567v1>.
