@@ -363,7 +363,6 @@ private theorem original_B : wholePairBalls cone unit := by
   rw [← ha, ← hb]
   exact ⟨segmentChart a b hab⟩
 
-/-- The convex hull of a nonempty compact set in a finite-dimensional real space is compact. -/
 theorem compact_hull {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [FiniteDimensional ℝ E] {S : Set E} (hc : IsCompact S) (hne : S.Nonempty) :
     IsCompact (convexHull ℝ S) := by

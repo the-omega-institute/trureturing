@@ -1,13 +1,21 @@
+/- GID: D5/S3/Quantum/QuantumChannels/CouplingWassersteinEquality
+   generality: I
+   mirror-B: D5/B/S3/Quantum/QuantumChannels/CouplingWassersteinEquality
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: none
+   digest: Equality with half the trace norm for order-one pure trace-ground transport. -/
+
 import D5.S3.Quantum.GleasonComplexRepresentation
 import D5.S3.Quantum.QuantumChannels.CouplingWassersteinTriangleRefutation
 import D5.S3.Quantum.Foundation.TrigonometricMomentGap
 import D5.S3.Quantum.Foundation.FiniteHermitianTraceDuality
+import D5.S3.Quantum.Foundation.FiniteHermitianSign
 
 /-!
 # Equality in trace-ground coupling transport
 
 Beatty and Stilck França, arXiv:2402.16477v2, Eqs. (62) and (81).
-Preregistration: https://github.com/the-omega-institute/trureturing/issues/35123
 -/
 
 set_option autoImplicit false
@@ -493,7 +501,8 @@ private theorem finite_realization {ι : Type} [Fintype ι]
     ∃ Q : Plan (∑ i, (w i : ℂ) • rankOneDensity (x i).val)
         (∑ i, (w i : ℂ) • rankOneDensity (y i).val),
       (∃ s : Finset ℕ, ∀ j ∉ s, Q.weight j = 0) ∧
-      cost Q = ∑ i, w i * ground (x i) (y i) := by
+      (cost Q = ∑ i, w i * ground (x i) (y i)) ∧
+      ∀ j, 0 < Q.weight j → ∃ i, Q.source j = x i ∧ Q.target j = y i := by
   classical
   obtain ⟨e, he⟩ := Countable.exists_injective_nat ι
   let w' := Function.extend e w 0
@@ -525,14 +534,21 @@ private theorem finite_realization {ι : Type} [Fintype ι]
         simpa [w', he.extend_apply] using hw i
       · simp [w_zero j hj],
       x', y', marginal x, marginal y, mass⟩
-  refine ⟨Q, ⟨Finset.univ.image e, fun j hj => w_zero j (by simpa [Set.mem_range] using hj)⟩, ?_⟩
-  have hs : HasSum (fun j => w' j * ground (x' j) (y' j)) (∑ i, w i * ground (x i) (y i)) := by
-    apply extend_sum
-    · intro i
-      simp [w', x', y', he.extend_apply]
-    · intro j hj
-      simp [w_zero j hj]
-  exact hs.tsum_eq
+  refine ⟨Q, ⟨Finset.univ.image e, ?_⟩, ?_, ?_⟩
+  · exact fun j hj => w_zero j (by simpa [Set.mem_range] using hj)
+  · have hs : HasSum (fun j => w' j * ground (x' j) (y' j)) (∑ i, w i * ground (x i) (y i)) := by
+      apply extend_sum
+      · intro i
+        simp [w', x', y', he.extend_apply]
+      · intro j hj
+        simp [w_zero j hj]
+    exact hs.tsum_eq
+  · intro j hj
+    have hmem : j ∈ Set.range e := by
+      by_contra h
+      exact hj.ne' (w_zero j h)
+    obtain ⟨i, rfl⟩ := hmem
+    exact ⟨i, he.extend_apply x (fun _ => padding) i, he.extend_apply y (fun _ => padding) i⟩
 
 /-- A point of the finite convex hull gives an actual finitely supported
 countable plan with the specified marginals and cost. -/
@@ -555,7 +571,8 @@ theorem convexHull_realized_as_plan {ρ σ : Matrix (Fin n) (Fin n) ℂ} {c : �
     simpa [pureMoment, Prod.snd_sum, smul_eq_mul] using
       congrArg (fun p : TransportMoment n => p.2.2) hp
   rw [← hl, ← hr, ← hc]
-  exact finite_realization padding w hw hm x y
+  obtain ⟨Q, hfin, hcost, _⟩ := finite_realization padding w hw hm x y
+  exact ⟨Q, hfin, hcost⟩
 
 /-- Compactness of the pure-pair hull gives finite attainment for the original
 countable-plan infimum as soon as a single admissible plan exists. -/
@@ -681,7 +698,7 @@ theorem plan_nonempty_of_density (hn : 0 < n) {ρ σ : Matrix (Fin n) (Fin n) �
       ← Finset.sum_smul, ← Complex.ofReal_sum, hr, Complex.ofReal_one, one_smul]
     simpa [s, spectralVector, rankOneDensity, Gleason.rankOne, Complex.real_smul] using
       hσ.isHermitian.eq_sum_eigenvalues_smul_rankOne.symm
-  obtain ⟨Q, _, _⟩ := finite_realization (spectralVector hρ.isHermitian ⟨0, hn⟩) w hw hm x y
+  obtain ⟨Q, _, _, _⟩ := finite_realization (spectralVector hρ.isHermitian ⟨0, hn⟩) w hw hm x y
   exact ⟨hl ▸ hright ▸ Q⟩
 
 /-- The original countable-plan infimum of two finite-dimensional density
@@ -734,6 +751,209 @@ theorem wasserstein_eq_pairing_iff {ρ σ : Matrix (Fin n) (Fin n) ℂ}
     exact le_antisymm
       (csInf_le ⟨_, by rintro _ ⟨P, rfl⟩; exact hl P⟩ ⟨Q, hc⟩)
       (le_csInf ⟨cost Q, Q, rfl⟩ (by rintro _ ⟨P, rfl⟩; exact hl P))
+
+open D5.S3.Quantum.Foundation.FiniteHermitianSign
+  (hermitianSign positiveSubspace negativeSubspace hermitianSign_eigenspaces hermitianSign_spec)
+
+private def blend (a b : ℝ) (u v : UnitVector n) : Fin n → ℂ :=
+  (a : ℂ) • u.val + (b : ℂ) • v.val
+
+private theorem blend_inner (a b c d : ℝ) (u v : UnitVector n) (huv : ip u.val v.val = 0) :
+    ip (blend a b u v) (blend c d u v) = (a * c + b * d : ℝ) := by
+  have hvu : ip v.val u.val = 0 := by rw [← ip_conj, huv, star_zero]
+  simp [blend, star_add, add_dotProduct, dotProduct_add, ip_self, huv, hvu, mul_comm]
+
+private def blendUnit (a b : ℝ) (u v : UnitVector n) (huv : ip u.val v.val = 0)
+    (hab : a ^ 2 + b ^ 2 = 1) : UnitVector n :=
+  ⟨blend a b u v, unit_of_ip (by
+    rw [blend_inner a b a b u v huv, ← pow_two, ← pow_two, hab]
+    norm_num)⟩
+
+private theorem ground_blends {t : ℝ} (ht : 0 ≤ t) (ht' : t ≤ 1)
+    (u v : UnitVector n) (huv : ip u.val v.val = 0) :
+    ground (blendUnit (upper t) (lower t) u v huv (amplitudes ht ht').1)
+      (blendUnit (lower t) (upper t) u v huv
+        (by rw [add_comm]; exact (amplitudes ht ht').1)) = t := by
+  rw [← sq_eq_sq₀ (ground_nonneg _ _) ht, ground_sq]
+  change 1 - ‖ip (blend (upper t) (lower t) u v) (blend (lower t) (upper t) u v)‖ ^ 2 = t ^ 2
+  rw [blend_inner _ _ _ _ u v huv, Complex.norm_real, Real.norm_eq_abs, sq_abs]
+  have hsum := (amplitudes ht ht').1
+  have hdiff := (amplitudes ht ht').2
+  calc
+    1 - (upper t * lower t + lower t * upper t) ^ 2 =
+        (upper t ^ 2 + lower t ^ 2) ^ 2 -
+          (upper t * lower t + lower t * upper t) ^ 2 := by rw [hsum, one_pow]
+    _ = (upper t ^ 2 - lower t ^ 2) ^ 2 := by ring
+    _ = t ^ 2 := by rw [hdiff]
+
+private theorem extremal_orthogonal {H : Matrix (Fin n) (Fin n) ℂ} (hH : H.IsHermitian)
+    {u v : Fin n → ℂ} (hu : H *ᵥ u = u) (hv : H *ᵥ v = -v) : ip u v = 0 := by
+  have h : ip u (H *ᵥ v) = ip (H *ᵥ u) v := by
+    unfold ip
+    rw [star_mulVec, hH.eq, dotProduct_mulVec]
+  rw [hu, hv, show ip u (-v) = -ip u v by simp [ip]] at h
+  linear_combination -h / 2
+
+/-- A shared positive semidefinite remainder and finitely many moving pairs
+with strictly positive weights and shared swapped amplitudes. -/
+def HasSpectralCertificate {ρ σ : Matrix (Fin n) (Fin n) ℂ} (hΔ : (ρ - σ).IsHermitian) : Prop :=
+  ∃ (R : Matrix (Fin n) (Fin n) ℂ) (m : ℕ) (w t : Fin m → ℝ)
+    (u v : Fin m → UnitVector n),
+    R.PosSemidef ∧
+    (∀ i, 0 < w i ∧ 0 < t i ∧ t i ≤ 1 ∧
+      (u i).val ∈ positiveSubspace hΔ ∧ (v i).val ∈ negativeSubspace hΔ) ∧
+    ρ = R + ∑ i, (w i : ℂ) • rankOneDensity (blend (upper (t i)) (lower (t i)) (u i) (v i)) ∧
+    σ = R + ∑ i, (w i : ℂ) • rankOneDensity (blend (lower (t i)) (upper (t i)) (u i) (v i))
+
+private theorem certificate_of_saturating_plan {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+    (hΔ : (ρ - σ).IsHermitian) (Q : Plan ρ σ) (s : Finset ℕ)
+    (hs : ∀ j ∉ s, Q.weight j = 0)
+    (hat : ∀ j, 0 < Q.weight j → SaturatedAtom (hermitianSign hΔ) (Q.source j) (Q.target j)) :
+    HasSpectralCertificate hΔ := by
+  classical
+  let left (j : ℕ) := rankOneDensity (Q.source j).val
+  let right (j : ℕ) := rankOneDensity (Q.target j).val
+  let active := s.filter fun j => 0 < Q.weight j
+  let stationary := active.filter fun j => left j = right j
+  let moving := active.filter fun j => left j ≠ right j
+  let R := ∑ j ∈ stationary, (Q.weight j : ℂ) • left j
+  have hR : R.PosSemidef := by
+    apply posSemidef_sum
+    intro j _
+    have hj : (0 : ℂ) ≤ Q.weight j := Complex.nonneg_iff.mpr ⟨Q.nonneg j, rfl⟩
+    exact (posSemidef_vecMulVec_self_star (Q.source j).val).smul hj
+  have hzero (j : ℕ) (hj : j ∉ active) : Q.weight j = 0 := by
+    by_cases hjs : j ∈ s
+    · exact le_antisymm (le_of_not_gt fun hp => hj (Finset.mem_filter.mpr ⟨hjs, hp⟩)) (Q.nonneg j)
+    · exact hs j hjs
+  have split (f : ℕ → Matrix (Fin n) (Fin n) ℂ) (M : Matrix (Fin n) (Fin n) ℂ)
+      (hf : HasSum (fun j => (Q.weight j : ℂ) • f j) M) :
+      M = (∑ j ∈ stationary, (Q.weight j : ℂ) • f j) +
+        ∑ j ∈ moving, (Q.weight j : ℂ) • f j := by
+    rw [← hf.tsum_eq, tsum_eq_sum (s := active) (fun j hj => by simp [hzero j hj])]
+    exact (Finset.sum_filter_add_sum_filter_not active (fun j => left j = right j) _).symm
+  let e := moving.equivFin.symm
+  let w (i : Fin moving.card) := Q.weight (e i)
+  let t (i : Fin moving.card) := ground (Q.source (e i)) (Q.target (e i))
+  have hne (i : Fin moving.card) : left (e i) ≠ right (e i) :=
+    (Finset.mem_filter.mp (e i).property).2
+  have hw (i : Fin moving.card) : 0 < w i :=
+    (Finset.mem_filter.mp (Finset.mem_filter.mp (e i).property).1).2
+  obtain ⟨_, hm, hp, _⟩ := hermitianSign_spec hΔ
+  have hat' (i : Fin moving.card) : ∃ u v : UnitVector n,
+      u.val ∈ positiveSubspace hΔ ∧ v.val ∈ negativeSubspace hΔ ∧
+      left (e i) = rankOneDensity (blend (upper (t i)) (lower (t i)) u v) ∧
+      right (e i) = rankOneDensity (blend (lower (t i)) (upper (t i)) u v) := by
+    rcases hat (e i) (hw i) with heq | ⟨u, v, _, hu, hv, hx, hy⟩
+    · exact (hne i heq).elim
+    · exact ⟨u, v, (hermitianSign_eigenspaces hΔ u.val).2.1.mp hu,
+        (hermitianSign_eigenspaces hΔ v.val).2.2.mp hv, hx, hy⟩
+  choose u v huv using hat'
+  have reindex (f : ℕ → Matrix (Fin n) (Fin n) ℂ) :
+      (∑ j ∈ moving, f j) = ∑ i, f (e i) := by
+    rw [← Finset.sum_coe_sort]
+    exact (e.sum_comp (fun j : moving => f j)).symm
+  refine ⟨R, moving.card, w, t, u, v, hR, ?_, ?_, ?_⟩
+  · intro i
+    exact ⟨hw i, (fixed_pair_equality _ _ (hne i) _ hm hp).1, ground_le_one _ _,
+      (huv i).1, (huv i).2.1⟩
+  · rw [split left ρ Q.left, reindex]
+    simp only [R, w, (huv _).2.2.1]
+  · have heq : (∑ j ∈ stationary, (Q.weight j : ℂ) • right j) = R := by
+      apply Finset.sum_congr rfl
+      intro j hj
+      rw [(Finset.mem_filter.mp hj).2]
+    rw [split right σ Q.right, heq, reindex]
+    simp only [w, (huv _).2.2.2]
+
+private theorem saturating_plan_of_certificate {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+    (hn : 0 < n) (hρtr : ρ.trace = 1) (hΔ : (ρ - σ).IsHermitian)
+    (hcert : HasSpectralCertificate hΔ) :
+    ∃ Q : Plan ρ σ, (∃ s : Finset ℕ, ∀ j ∉ s, Q.weight j = 0) ∧
+      ∀ j, 0 < Q.weight j → SaturatedAtom (hermitianSign hΔ) (Q.source j) (Q.target j) := by
+  obtain ⟨R, m, w, t, u, v, hR, hat, hρ, hσ⟩ := hcert
+  obtain ⟨hH, _, _, _⟩ := hermitianSign_spec hΔ
+  have hu (i : Fin m) : hermitianSign hΔ *ᵥ (u i).val = (u i).val :=
+    (hermitianSign_eigenspaces hΔ _).2.1.mpr (hat i).2.2.2.1
+  have hv (i : Fin m) : hermitianSign hΔ *ᵥ (v i).val = -(v i).val :=
+    (hermitianSign_eigenspaces hΔ _).2.2.mpr (hat i).2.2.2.2
+  have huv (i : Fin m) : ip (u i).val (v i).val = 0 :=
+    extremal_orthogonal hH (hu i) (hv i)
+  let x (i : Fin m) := blendUnit (upper (t i)) (lower (t i)) (u i) (v i) (huv i)
+    (amplitudes (hat i).2.1.le (hat i).2.2.1).1
+  let y (i : Fin m) := blendUnit (lower (t i)) (upper (t i)) (u i) (v i) (huv i)
+    (by rw [add_comm]; exact (amplitudes (hat i).2.1.le (hat i).2.2.1).1)
+  let r := hR.isHermitian.eigenvalues
+  let z := spectralVector hR.isHermitian
+  let W : Fin n ⊕ Fin m → ℝ := Sum.elim r w
+  let X : Fin n ⊕ Fin m → UnitVector n := Sum.elim z x
+  let Y : Fin n ⊕ Fin m → UnitVector n := Sum.elim z y
+  have hdecomp : ∑ j, (r j : ℂ) • rankOneDensity (z j).val = R := by
+    simpa [r, z, spectralVector, rankOneDensity, Gleason.rankOne, Complex.real_smul] using
+      hR.isHermitian.eq_sum_eigenvalues_smul_rankOne.symm
+  have hw (k : Fin n ⊕ Fin m) : 0 ≤ W k := by
+    cases k with
+    | inl j => exact hR.eigenvalues_nonneg j
+    | inr i => exact (hat i).1.le
+  have hl : ∑ k, (W k : ℂ) • rankOneDensity (X k).val = ρ := by
+    rw [Fintype.sum_sum_type]
+    change (∑ j, (r j : ℂ) • rankOneDensity (z j).val) +
+      (∑ i, (w i : ℂ) • rankOneDensity (x i).val) = ρ
+    rw [hdecomp]
+    exact hρ.symm
+  have hr : ∑ k, (W k : ℂ) • rankOneDensity (Y k).val = σ := by
+    rw [Fintype.sum_sum_type]
+    change (∑ j, (r j : ℂ) • rankOneDensity (z j).val) +
+      (∑ i, (w i : ℂ) • rankOneDensity (y i).val) = σ
+    rw [hdecomp]
+    exact hσ.symm
+  have hm : ∑ k, W k = 1 := by
+    have htrace (a : UnitVector n) : (rankOneDensity a.val).trace = 1 := by
+      rw [rankOneDensity, trace_vecMulVec, dotProduct_comm]
+      exact ip_self a
+    have ht := congrArg Matrix.trace hl
+    simp only [trace_sum, trace_smul, htrace, smul_eq_mul, mul_one, hρtr] at ht
+    exact_mod_cast ht
+  have hpair (k : Fin n ⊕ Fin m) : SaturatedAtom (hermitianSign hΔ) (X k) (Y k) := by
+    cases k with
+    | inl j => exact Or.inl rfl
+    | inr i =>
+      change SaturatedAtom (hermitianSign hΔ) (x i) (y i)
+      have ht : ground (x i) (y i) = t i := ground_blends (hat i).2.1.le (hat i).2.2.1 _ _ (huv i)
+      exact Or.inr ⟨u i, v i, huv i, hu i, hv i, by rw [ht]; rfl, by rw [ht]; rfl⟩
+  obtain ⟨Q, hfin, _, hsrc⟩ := finite_realization (z ⟨0, hn⟩) W hw hm X Y
+  have hs j (hj : 0 < Q.weight j) : SaturatedAtom (hermitianSign hΔ) (Q.source j) (Q.target j) := by
+    obtain ⟨k, hX, hY⟩ := hsrc j hj
+    rw [hX, hY]
+    exact hpair k
+  have hplan : ∃ P : Plan (∑ k, (W k : ℂ) • rankOneDensity (X k).val)
+      (∑ k, (W k : ℂ) • rankOneDensity (Y k).val),
+      (∃ s : Finset ℕ, ∀ j ∉ s, P.weight j = 0) ∧
+        ∀ j, 0 < P.weight j → SaturatedAtom (hermitianSign hΔ) (P.source j) (P.target j) :=
+    ⟨Q, hfin, hs⟩
+  exact Eq.mp (congrArg₂ (fun a b => ∃ P : Plan a b,
+    (∃ s : Finset ℕ, ∀ j ∉ s, P.weight j = 0) ∧
+      ∀ j, 0 < P.weight j → SaturatedAtom (hermitianSign hΔ) (P.source j) (P.target j)) hl hr) hplan
+
+/-- Equality in Beatty–Stilck França Eq. (62), for order one and the pure trace
+ground, holds exactly when the two marginals have a shared PSD remainder and
+the stated moving pairs in their difference's strict spectral subspaces. -/
+theorem wasserstein_eq_traceNorm_iff {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+    (hn : 0 < n) (hρ : ρ.PosSemidef) (hρtr : ρ.trace = 1)
+    (hσ : σ.PosSemidef) (hσtr : σ.trace = 1) :
+    wasserstein ρ σ = traceNorm (ρ - σ) / 2 ↔
+      HasSpectralCertificate (hρ.isHermitian.sub hσ.isHermitian) := by
+  let hΔ := hρ.isHermitian.sub hσ.isHermitian
+  obtain ⟨Q₀⟩ := plan_nonempty_of_density hn hρ hρtr hσ hσtr
+  obtain ⟨_, hm, hp, htrace⟩ := hermitianSign_spec hΔ
+  have hpair : pairing (hermitianSign hΔ) (ρ - σ) = traceNorm (ρ - σ) / 2 := by
+    unfold pairing
+    rw [htrace]
+  rw [← hpair, wasserstein_eq_pairing_iff Q₀ _ hm hp]
+  constructor
+  · rintro ⟨Q, ⟨s, hs⟩, hat⟩
+    exact certificate_of_saturating_plan hΔ Q s hs hat
+  · exact saturating_plan_of_certificate hn hρtr hΔ
 
 private def phaseX : UnitVector 2 :=
   ⟨![4 / 5, (3 / 5) * Complex.I], by
