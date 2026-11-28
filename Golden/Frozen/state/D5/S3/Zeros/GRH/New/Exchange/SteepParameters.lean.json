@@ -1,0 +1,1 @@
+{"statement_id":"sha256:7dce3c218623632cf5b3769808446bd06ebb727338a18edfdcd8ee7f589db34f","declarations":[{"declaration_name_key":"ns(ns(n0,4:Data),14:exists_isSteep)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
