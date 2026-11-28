@@ -29,6 +29,11 @@ theorem transition_counts (s : Fin 32) (hs : 5 ≤ s.val ∧ s.val < 6) :
         then (1 : ℤ) else 0) = T (cl p d.val) s := by
   have h : s = 5 := by omega
   subst s
+  have budget (a b d : Nat) : a + b ≤ d ↔ a ≤ d ∧ b ≤ d - a := by omega
+  have reorder (p : Boundary) (r : Row) :
+      cross p r + bondDefects horizontal r r = bondDefects horizontal r r + cross p r :=
+    Nat.add_comm _ _
+  simp only [reorder, budget, ite_and, ← Nat.sub_sub]
   intro p d
   fin_cases d <;> revert p <;> decide +kernel
 

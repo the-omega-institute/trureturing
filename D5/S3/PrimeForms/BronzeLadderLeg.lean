@@ -5,7 +5,8 @@
    anchors: []
    digest: The bronze ladder p is the integer sequence p 0 = 1, p 1 = 3, p (n+2) = 3·p(n+1) + p n, whose k-th term is the top-left entry of the k-th power of the crossing matrix [[3,1],[1,0]] of trace 3 and determinant -1. Its Cassini identity p n·p(n+2) - p(n+1)² = (-1)^n has right side (det T)^n = (-1)^n, and the leg identity 13·p(n+1)² - (3·p(n+1)+2·p n)² = 4·(-1)^(n+1) = -4·(-1)^n places the ladder points on the indefinite Pell conic 13x² - y² = ±4. -/
 
-import Mathlib
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.NormNum
 
 namespace D5.S3.PrimeForms.BronzeLadderLeg
 

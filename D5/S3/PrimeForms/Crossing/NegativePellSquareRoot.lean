@@ -5,7 +5,10 @@
    anchors: []
    digest: A trace-zero negative-Pell square root yields a determinant-negative-one matrix. -/
 
-import Mathlib
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NoncommRing
 
 open Matrix
 

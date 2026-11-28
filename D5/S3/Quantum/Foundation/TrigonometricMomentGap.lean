@@ -363,7 +363,7 @@ private theorem original_B : wholePairBalls cone unit := by
   rw [← ha, ← hb]
   exact ⟨segmentChart a b hab⟩
 
-private theorem compact_hull {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+theorem compact_hull {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [FiniteDimensional ℝ E] {S : Set E} (hc : IsCompact S) (hne : S.Nonempty) :
     IsCompact (convexHull ℝ S) := by
   classical

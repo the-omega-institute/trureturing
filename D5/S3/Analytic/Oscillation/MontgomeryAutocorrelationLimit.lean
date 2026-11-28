@@ -465,7 +465,7 @@ open Filter MeasureTheory Set Finset
 open D5.S3.Analytic.Oscillation.OrdinateCounting
 open scoped Topology FourierTransform SchwartzMap
 
-private lemma copies_pair_sum (S : Spectrum) (H : ℝ) (q : S.index → S.index → ℝ) :
+lemma copies_pair_sum (S : Spectrum) (H : ℝ) (q : S.index → S.index → ℝ) :
     (∑ p ∈ CutDensity.copies (S.cut H) S.mult, ∑ r ∈ CutDensity.copies (S.cut H) S.mult,
       q p.1 r.1) =
         ∑ j ∈ S.cut H, ∑ k ∈ S.cut H, (S.mult j : ℝ) * (S.mult k : ℝ) * q j k := by

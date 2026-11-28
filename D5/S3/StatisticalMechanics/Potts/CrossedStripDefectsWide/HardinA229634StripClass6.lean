@@ -42,6 +42,12 @@ theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
         cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 26
         then (1 : ℤ) else 0) = T (cl p d.val) 26 := by
     unfold Canonical
+    have budget (a b d : Nat) : a + b ≤ d ↔ a ≤ d ∧ b ≤ d - a := by omega
+    have reorder (p r : Row) :
+        bondDefects between p r + bondDefects horizontal r r =
+          bondDefects horizontal r r + bondDefects between p r :=
+      Nat.add_comm _ _
+    simp only [reorder, budget, ite_and, ← Nat.sub_sub]
     intro p d
     fin_cases d <;> revert p <;> decide +kernel
   intro p d hp hn

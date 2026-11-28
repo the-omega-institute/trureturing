@@ -41,4 +41,4 @@ Section V, page 13: “Another observation that holds for d ≤ 4, and should be
 
 Matrices use zero-based indices in Fin d. Matrix.circulant has entries v(i−j), giving the same class as Definition 5. Unistochasticity uses RHLinalg.normSqMatrix of a complex unitary matrix. The bracelet predicate includes bistochasticity and both inequalities for distinct pairs; finite indexed suprema represent the displayed maxima.
 
-The repository contains a d = 12 bracelet-sufficiency refutation and a d = 10 refutation of Conjecture 19; it leaves the source's d ≤ 4 statements intact and does not decide Conjecture 9.
+The repository contains a d = 12 bracelet-sufficiency refutation and a d = 10 refutation of Conjecture 19. The source's d ≤ 4 statements remain intact. The same paper's monoid conjecture has a [Conjecture 9 reading note](../Convexity/rajchelkorzekwapuchalazyczkowski2021monoid.md).

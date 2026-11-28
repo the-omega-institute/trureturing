@@ -5,7 +5,8 @@
    anchors: []
    digest: An affordable finite-region patch forces agreement for a loss-minimal candidate. -/
 
-import Mathlib
+import Mathlib.Data.Finset.Basic
+import Mathlib.Data.Set.Basic
 
 namespace D5.S0.Computability.DescriptionComplexity.AffordableRegionAgreement
 

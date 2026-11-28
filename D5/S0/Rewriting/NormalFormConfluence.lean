@@ -5,7 +5,7 @@
    anchors: []
    digest: Confluence makes reachable or equivalent normal forms unique. -/
 
-import Mathlib
+import Mathlib.Logic.Relation
 
 namespace NormalFormConfluence
 

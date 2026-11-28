@@ -5,7 +5,11 @@
    anchors: []
    digest: For odd fiber capacity, multiplying the row amplitude by v plus one removes its singular factor and gives a regularized polynomial whose value at minus one is exactly plus or minus one. -/
 
-import Mathlib
+import Mathlib.Algebra.Ring.GeomSum
+import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
 
 /- Library-search audit trail (2026-09-04):
    * D5 keyword and generalized searches found

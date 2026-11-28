@@ -105,9 +105,10 @@ jobs:
       - name: Verify the changed generation transport
         shell: bash
         run: |
-          if grep -zEq '^(Meta/tools-release.json$|\.github/(actions/lean-(cache-shards|compile-layer)/|scripts/(test-)?read-module-reports\.py$|workflows/(ci-current|ci-lean-generation-compile|ci-lean-module-publication|ci-lean-module-verify|ci-publication-verify|lean-cache-publish|cache-release-publish|report-release-publish|truth-release-publish)\.yml$))' "$RUNNER_TEMP/changed-paths"; then
+          if grep -zEq '^(Meta/tools-release.json$|\.github/(actions/lean-(cache-shards|compile-layer)/|scripts/(test-)?(read-module-reports|compiler-release-coordinator)\.py$|workflows/(ci-current|ci-lean-generation-compile|ci-lean-module-publication|ci-lean-module-verify|ci-publication-verify|lean-cache-publish|cache-release-publish|report-release-publish|truth-release-publish)\.yml$))' "$RUNNER_TEMP/changed-paths"; then
             node --test .github/actions/lean-cache-shards/test-generation.mjs
             python3 -B .github/scripts/test-read-module-reports.py
+            python3 -B .github/scripts/test-compiler-release-coordinator.py
           fi
           if grep -zEq '^\.github/(scripts/(test-)?omega-audit-results\.py|workflows/ci-current\.yml)$' "$RUNNER_TEMP/changed-paths"; then
             python3 -B .github/scripts/test-omega-audit-results.py
@@ -482,7 +483,8 @@ jobs:
         env:
           CI: 'true'
           OMEGA_SCOPE_FILE: ${{ runner.temp }}/omega-scope.json
-        run: python3 tools/scripts/workflow/ci_checks.py unit omega
+          LEAN_NUM_THREADS: '1'
+        run: bash .github/actions/lean-compile-layer/measure.sh --compile python3 tools/scripts/workflow/ci_checks.py unit omega
       - name: Publish official declaration axiom dependencies
         if: steps.omega_scope.outputs.report-file != ''
         uses: actions/upload-artifact@v4
