@@ -296,3 +296,66 @@ public theorem drop_eq_nil_of_le {α : Type u} {as : List α} {i : Nat} (h : Nat
       (fun n bound => ih n (Nat.le_of_succ_le_succ bound))) as i h
 
 end Omega.List
+
+port_definition List.filter.match_1 with_native_code
+port_definition List.getLast?.match_1 with_native_code
+port_definition List.find?._f
+port_definition List.find?
+port_structural_code List.find? on_arg 3
+port_proof List.find?_cons by_reflexivity
+port_proof List.find?_nil by_reflexivity
+port_definition List.findSome?.match_1 with_native_code
+port_definition List.findSome?._f
+port_definition List.findSome?
+port_structural_code List.findSome? on_arg 4
+port_proof List.findSome?_cons by_reflexivity
+port_proof List.findSome?_nil by_reflexivity
+port_definition List.findRev?._f
+port_definition List.findRev?
+port_structural_code List.findRev? on_arg 3
+port_definition List.findSomeRev?._f
+port_definition List.findSomeRev?
+port_structural_code List.findSomeRev? on_arg 4
+port_definition List.findIdx.go.match_1 with_native_code
+port_definition List.findIdx.go._f
+port_definition List.findIdx.go
+port_structural_code List.findIdx.go on_arg 3
+port_definition List.findIdx with_native_code
+port_proof List.findIdx_nil by_reflexivity
+port_definition List.idxOf with_native_code
+port_proof List.idxOf_nil by_reflexivity
+port_definition List.findIdx?.go._f
+port_definition List.findIdx?.go
+port_structural_code List.findIdx?.go on_arg 3
+port_definition List.findIdx? with_native_code
+port_definition List.idxOf? with_native_code
+port_proof List.findFinIdx?._proof_4 by_reflexivity
+
+namespace Omega.List.findFinIdx?
+
+private theorem indexBound {α : Type u} (l : List α) (a : α) (tail : List α) (i : Nat)
+    (h : Eq (Nat.add (length (cons a tail)) i) (length l)) : Nat.lt i (length l) :=
+  Eq.subst (motive := Nat.lt i) ((Nat.succ_add (length tail) i).symm.trans h)
+    (Nat.succ_le_succ (Nat.le_add_left i (length tail)))
+
+private theorem nextLength {α : Type u} (l : List α) (a : α) (tail : List α) (i : Nat)
+    (h : Eq (Nat.add (length (cons a tail)) i) (length l)) :
+    Eq (Nat.add (length tail) (Nat.succ i)) (length l) :=
+  (Nat.succ_add (length tail) i).symm.trans h
+
+end Omega.List.findFinIdx?
+
+port_proof List.findFinIdx?._proof_1 using Omega.List.findFinIdx?.indexBound
+port_proof List.findFinIdx?._proof_3 using Omega.List.findFinIdx?.nextLength
+port_definition List.findFinIdx?.go.match_1 with_native_code
+port_definition List.findFinIdx?.go._f
+port_definition List.findFinIdx?.go
+port_structural_code List.findFinIdx?.go on_arg 4
+port_definition List.findFinIdx? with_native_code
+
+port_definition List.lookup.match_1 with_native_code
+port_definition List.lookup._f
+port_definition List.lookup
+port_structural_code List.lookup on_arg 5
+port_proof List.lookup_nil by_reflexivity
+port_proof List.lookup_cons by_reflexivity
