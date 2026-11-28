@@ -99,6 +99,82 @@ theorem ofRunInduction (rec : type_of% (@List.replicateRecOn.{u})) : EqualityCas
   · intro a b n l ne pos _
     exact .inr (.inr ⟨n, a, b, l, rfl, pos, ne⟩)
 
+/-- A comparison of two elements suffices to split at the first occurrence. -/
+theorem firstListMemberOfEqualityCases {α : Type u} (casesEq : ∀ a b : α, a = b ∨ a ≠ b) :
+    type_of% (@List.eq_append_cons_of_mem α) := by
+  intro a xs mem
+  induction mem with
+  | head xs => exact ⟨[], xs, rfl, List.not_mem_nil⟩
+  | tail b mem ih =>
+    cases casesEq a b with
+    | inl eq => cases eq; exact ⟨[], _, rfl, List.not_mem_nil⟩
+    | inr ne =>
+      obtain ⟨before, after, eq, absent⟩ := ih
+      refine ⟨b :: before, after, congrArg (b :: ·) eq, ?_⟩
+      intro h
+      cases h with
+      | head => exact ne rfl
+      | tail _ inside => exact absent inside
+
+/-- Extending a nonempty run only requires comparing its first entry with the new head. -/
+theorem runDecompositionOfEqualityCases {α : Type u} (casesEq : ∀ a b : α, a = b ∨ a ≠ b) :
+    type_of% (@List.eq_replicate_or_eq_replicate_append_cons α) := by
+  intro l
+  induction l with
+  | nil => exact .inl rfl
+  | cons a l ih =>
+    apply Or.inr
+    rcases ih with rfl | ⟨n, b, rfl, pos⟩ | ⟨n, b, c, rest, rfl, pos, ne⟩
+    · exact .inl ⟨1, a, rfl, Nat.zero_lt_succ _⟩
+    · cases n with
+      | zero => exact False.elim (Nat.lt_irrefl 0 pos)
+      | succ n =>
+        rcases casesEq a b with rfl | ne
+        · exact .inl ⟨n+2, a, rfl, Nat.zero_lt_succ _⟩
+        · exact .inr ⟨1, a, b, List.replicate n b, rfl, Nat.zero_lt_succ _, ne⟩
+    · cases n with
+      | zero => exact False.elim (Nat.lt_irrefl 0 pos)
+      | succ n =>
+        rcases casesEq a b with rfl | ne'
+        · exact .inr ⟨n+2, a, c, rest, rfl, Nat.zero_lt_succ _, ne⟩
+        · exact .inr ⟨1, a, b, List.replicate n b ++ c :: rest, rfl, Nat.zero_lt_succ _, ne'⟩
+
+/-- Removing the first nonempty run strictly decreases the length. -/
+theorem runInductionOfDecomposition {α : Type u}
+    (split : type_of% (@List.eq_replicate_or_eq_replicate_append_cons α)) :
+    type_of% (@List.replicateRecOn α) := by
+  intro p l base repeated step
+  have longer (n : Nat) (a : α) (rest : List α) :
+      rest.length ≤ (List.replicate n a ++ rest).length := by
+    induction n with
+    | zero => exact Nat.le_refl _
+    | succ n ih => exact Nat.le_succ_of_le ih
+  suffices all : ∀ (bound : Nat) (xs : List α), xs.length < bound → p xs from all _ l (Nat.lt_succ_self _)
+  intro bound
+  induction bound with
+  | zero => exact fun _ small => False.elim (Nat.not_lt_zero _ small)
+  | succ bound ih =>
+    intro xs small
+    rcases split xs with rfl | ⟨n, a, rfl, pos⟩ | ⟨n, a, b, rest, rfl, pos, ne⟩
+    · exact base
+    · exact repeated a n pos
+    · apply step a b n rest ne pos
+      apply ih
+      cases n with
+      | zero => exact False.elim (Nat.lt_irrefl 0 pos)
+      | succ n =>
+        exact Nat.lt_of_lt_of_le (Nat.lt_succ_of_le (longer n a (b :: rest))) (Nat.le_of_lt_succ small)
+
+theorem firstListMemberIffEqualityCases : (type_of% @List.eq_append_cons_of_mem.{u}) ↔ EqualityCases.{u} :=
+  ⟨ofFirstListMember, fun h {α} => @firstListMemberOfEqualityCases α h⟩
+
+theorem runDecompositionIffEqualityCases :
+    (type_of% @List.eq_replicate_or_eq_replicate_append_cons.{u}) ↔ EqualityCases.{u} :=
+  ⟨ofRunDecomposition, fun h {α} => @runDecompositionOfEqualityCases α h⟩
+
+theorem runInductionIffEqualityCases : (type_of% @List.replicateRecOn.{u}) ↔ EqualityCases.{u} :=
+  ⟨ofRunInduction, fun h {α} => @runInductionOfDecomposition α (runDecompositionOfEqualityCases h)⟩
+
 /-- Equality of vector values ignores their length proof. These kernels build the same
 array data with length proofs that replay without axioms. -/
 theorem sizeAfterPush {α : Type u} (xs : Array α) (v : α) :

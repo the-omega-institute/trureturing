@@ -214,7 +214,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
      ``ConstructorNormalization.prefixEqualityOfCons] ++
     [``EmbeddingRange.ofExists, ``EmbeddingRange.ofLeftInverse, ``EmbeddingRange.existsIff, ``EmbeddingRange.leftInverseIff,
       ``LexicographicOrder.ofListNotLE, ``LexicographicOrder.ofArrayNotLE, ``LexicographicOrder.ofVectorNotLE,
-      ``FiniteMembership.ofRunDecomposition, ``FiniteMembership.ofRunInduction,
+      ``FiniteMembership.firstListMemberIffEqualityCases, ``FiniteMembership.runDecompositionIffEqualityCases,
+      ``FiniteMembership.runInductionIffEqualityCases, ``FiniteMembership.ofRunDecomposition, ``FiniteMembership.ofRunInduction,
       ``FiniteMembership.ofListMember, ``FiniteMembership.ofArrayMember,
       ``FiniteMembership.ofFirstListMember, ``FiniteMembership.ofFirstArrayMember,
       ``FiniteMembership.ofVectorMember, ``FiniteMembership.ofFirstVectorMember,
