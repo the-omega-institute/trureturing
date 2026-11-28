@@ -5,7 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 prelude
 public import OmegaInit.Prelude
-import OmegaInit.Data.Nat.Div.Basic
+public import OmegaInit.Data.Nat.Div.Basic
 import all OmegaInit.Prelude
 
 noncomputable section
@@ -57,6 +57,17 @@ theorem gcd_succ (x y : Nat) : Eq (gcd (succ x) y) (gcd (Nat.mod y (succ x)) (su
   steps_agree (succ x) (succ (Nat.mod y (succ x))) (Nat.mod y (succ x)) (succ x)
     (Nat.mod_lt y (succ_le_succ (zero_le x))) (Nat.le_refl _)
 
+theorem gcd_one_right (n : Nat) : Eq (gcd n (succ zero)) (succ zero) :=
+  Nat.casesOn (motive := fun a => Eq (gcd a (succ zero)) (succ zero)) n
+    (gcd_zero_left (succ zero))
+    (fun k => Nat.casesOn (motive := fun a => Eq (gcd (succ a) (succ zero)) (succ zero)) k
+      (gcd_one_left (succ zero))
+      (fun j =>
+        have lt : Nat.lt (succ zero) (succ (succ j)) := succ_le_succ (succ_le_succ (zero_le j))
+        (gcd_succ (succ j) (succ zero)).trans
+          ((congrArg (fun r => gcd r (succ (succ j))) (mod_eq_of_lt lt)).trans
+            (gcd_one_left (succ (succ j))))))
+
 theorem gcd_add_one (x y : Nat) : Eq (gcd (Nat.add x (succ zero)) y)
     (gcd (Nat.mod y (Nat.add x (succ zero))) (Nat.add x (succ zero))) := gcd_succ x y
 
@@ -72,5 +83,5 @@ end Omega.Nat
 
 public section
 namespace Nat
-export _root_.Omega.Nat (gcd_add_one gcd_one_left gcd_rec gcd_succ gcd_zero_left gcd_zero_right)
+export _root_.Omega.Nat (gcd_add_one gcd_one_left gcd_one_right gcd_rec gcd_succ gcd_zero_left gcd_zero_right)
 end Nat
