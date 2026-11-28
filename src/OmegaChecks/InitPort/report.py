@@ -32,6 +32,8 @@ for arity in ("", "₂", "₃"):
     for base in ("extrinsicFix", "partialExtrinsicFix"):
         operator = "WellFounded." + base + arity
         suffixes = ["_eq_fix", "_eq_apply"]
+        if operator == "WellFounded.extrinsicFix":
+            suffixes.append("_invImage")
         if base == "partialExtrinsicFix":
             suffixes.append("_eq_apply_of_acc")
             if arity:

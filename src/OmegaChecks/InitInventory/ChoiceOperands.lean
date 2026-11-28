@@ -94,8 +94,31 @@ private def check (env : Environment) (owner : Name) (source : ConstantInfo) (op
 
 public def isFixFormation (owner : Name) (source : ConstantInfo) (operand : Operand) : Bool :=
   owner == `Init.WFExtrinsicFix && (fixWitness? operand.name).isSome &&
-    ["_eq_apply", "_eq_fix", "_eq_apply_of_acc", "_eq_partialExtrinsicFix"].any
-      (source.name == operand.name.appendAfter ·)
+    (source.name == ``WellFounded.extrinsicFix_invImage ||
+      ["_eq_apply", "_eq_fix", "_eq_apply_of_acc", "_eq_partialExtrinsicFix"].any
+        (source.name == operand.name.appendAfter ·))
+
+open Meta in
+/-- Specialize the inverse-image equation to the identity map and the same
+recursion step on both sides. Its compatibility premise then follows by reflexivity. -/
+private def inverseImageEndpoint (visible : Environment) (source : ConstantInfo) : MetaM (Expr × List Level) := do
+  let [_, value, domain] := source.levelParams | throwError "unexpected inverse-image universes"
+  let u := Level.param domain
+  let levels := [u, .param value, u]
+  forallTelescope (source.type.instantiateLevelParams source.levelParams levels) fun xs _ => do
+    let #[α, family, _, inh, rel, _, step, _, _, _, wf] := xs | throwError "unexpected inverse-image telescope"
+    withLocalDeclD `point α fun point => do
+      let sameMap := mkApp (mkConst ``id [u]) α
+      let partialApp := mkAppN (mkConst source.name levels) #[α, family, α, inh, rel, sameMap, step, step]
+      let .forallE _ coherence _ _ ← inferType partialApp | throwError "missing compatibility premise"
+      let agreement ← forallTelescope coherence fun ys target => do
+        let some (_, lhs, rhs) := target.eq? | throwError "expected equality of recursion steps"
+        unless ← isDefEq lhs rhs do throwError "recursion steps differ under the identity map"
+        mkLambdaFVars ys (← mkEqRefl lhs)
+      let applied := mkApp3 partialApp agreement point wf
+      let type ← Lean.ofExceptKernelException (Kernel.check visible (← getLCtx) applied)
+      let some (_, _, rhs) := type.headBeta.eq? | throwError "expected specialized inverse-image equation"
+      return (← mkLambdaFVars #[α, family, inh, rel, step, point] rhs, [u, .param value])
 
 open Meta in
 /-- Abstract only the arguments actually occurring at the left endpoint. The
@@ -109,7 +132,9 @@ public def checkFixFormation (visible : Environment) (source : ConstantInfo) (op
     throwError "unexpected public fixed-point equation {source.name}"
   let entry ← getConstInfo op.name
   let choice ← getConstInfo ``Classical.choice
-  forallTelescope source.type fun xs conclusion => do
+  let (endpoint, levels) ← if source.name == ``WellFounded.extrinsicFix_invImage then
+    inverseImageEndpoint visible source
+  else forallTelescope source.type fun xs conclusion => do
     let some (_, lhs, _) := conclusion.eq? | throwError "expected an equality at {source.name}"
     let args := lhs.getAppArgs
     let omitted := xs.filter (!args.contains ·)
@@ -118,14 +143,14 @@ public def checkFixFormation (visible : Environment) (source : ConstantInfo) (op
     unless (required.isConstOf ``Acc || required.isConstOf ``WellFounded) &&
         lhs.getAppFn == mkConst op.name op.levels && args == xs.filter (· != premise) do
       throwError "the endpoint at {source.name} depends on the termination premise or specializes its operator"
-    let endpoint ← mkLambdaFVars args lhs
-    let actual ← Lean.ofExceptKernelException (Kernel.check visible {} endpoint)
-    let result := mkApp (mkConst op.witness op.levels) endpoint
-    let selected ← Lean.ofExceptKernelException (Kernel.check env {} result)
-    unless !endpoint.hasFVar && Kernel.isDefEqGuarded visible {} endpoint lhs.getAppFn &&
-        Kernel.isDefEqGuarded visible {} actual (entry.type.instantiateLevelParams entry.levelParams op.levels) &&
-        Kernel.isDefEqGuarded env {} selected (choice.type.instantiateLevelParams choice.levelParams [op.levels.getLast!]) do
-      throwError "the complete endpoint at {source.name} does not yield the pinned choice type"
+    return (← mkLambdaFVars args lhs, op.levels)
+  let actual ← Lean.ofExceptKernelException (Kernel.check visible {} endpoint)
+  let result := mkApp (mkConst op.witness levels) endpoint
+  let selected ← Lean.ofExceptKernelException (Kernel.check env {} result)
+  unless !endpoint.hasFVar && Kernel.isDefEqGuarded visible {} endpoint (mkConst op.name levels) &&
+      Kernel.isDefEqGuarded visible {} actual (entry.type.instantiateLevelParams entry.levelParams levels) &&
+      Kernel.isDefEqGuarded env {} selected (choice.type.instantiateLevelParams choice.levelParams [levels.getLast!]) do
+    throwError "the complete endpoint at {source.name} does not yield the pinned choice type"
 
 open Meta in
 /-- Specialize a congruence using the arguments of the existing reduction. Under an arbitrary
