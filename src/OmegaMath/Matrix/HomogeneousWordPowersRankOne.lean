@@ -462,7 +462,7 @@ theorem third_power_eq (A : Mat) :
   simp only [neg_smul, neg_add]
   abel
 
-private theorem span_column_orbit
+theorem span_column_orbit
     (L : Submodule K Mat) {A : Mat} {u v : Fin 3 → K} (hu : u ≠ 0)
     (hL : L = Submodule.span K ({A, Matrix.vecMulVec u v} : Set Mat))
     (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤) :
@@ -501,7 +501,7 @@ private theorem span_column_orbit
     · exact hA
     · exact hB)
 
-private theorem span_row_orbit
+theorem span_row_orbit
     (L : Submodule K Mat) {A : Mat} {u v : Fin 3 → K} (hv : v ≠ 0)
     (hL : L = Submodule.span K ({A, Matrix.vecMulVec u v} : Set Mat))
     (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤) :

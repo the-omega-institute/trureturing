@@ -499,6 +499,37 @@ theorem compression_word_estimates [Infinite K] [NeZero (2 : K)]
   exact transport_compression_estimates e L
     (compression_estimates_of_zero_plane_block M hfullM hzero)
 
+/-- Linear estimates close either the alternating-square branch or the compression
+    certificate branch of the size-three singular classification. -/
+private theorem pow_seven_eq_top_of_singular_alternatives
+    (L : Submodule K Mat)
+    (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤)
+    (halt : (L ^ 2 = ⊤) ∨
+      (∃ U : Matˣ, (U : Mat) ∈ L ^ 2 ∧
+        7 ≤ Module.finrank K ↥(L ^ 3))) :
+    L ^ 7 = ⊤ := by
+  rcases halt with hsq | ⟨U, hU, hdim⟩
+  · exact pow_eq_top_of_le L (by decide) hsq (by decide)
+  by_cases h3 : L ^ 3 = ⊤
+  · exact pow_eq_top_of_le L (by decide) h3 (by decide)
+  by_cases h5 : L ^ 5 = ⊤
+  · exact pow_eq_top_of_le L (by decide) h5 (by decide)
+  have hg3 := finrank_pow_lt_of_unit_mem L 3 2 U hfull (by decide) hU h3
+  have hg5 := finrank_pow_lt_of_unit_mem L 5 2 U hfull (by decide) hU h5
+  have hdim7 : 9 ≤ Module.finrank K ↥(L ^ 7) := by
+    have h3le : 7 ≤ Module.finrank K ↥(L ^ 3) := hdim
+    have h5le : Module.finrank K ↥(L ^ 5) ≥ Module.finrank K ↥(L ^ 3) + 1 := by
+      have hg3' : Module.finrank K ↥(L ^ 3) < Module.finrank K ↥(L ^ 5) := by
+        simpa using hg3
+      omega
+    have h7le : Module.finrank K ↥(L ^ 7) ≥ Module.finrank K ↥(L ^ 5) + 1 := by
+      have hg5' : Module.finrank K ↥(L ^ 5) < Module.finrank K ↥(L ^ 7) := by
+        simpa using hg5
+      omega
+    omega
+  apply Submodule.eq_of_le_of_finrank_le le_top
+  simpa [Module.finrank_matrix] using hdim7
+
 /-- An all-singular size-three matrix space with a positive full exact power
 already has a full seventh power. -/
 theorem all_singular_pow_seven_eq_top [Infinite K] [NeZero (2 : K)]

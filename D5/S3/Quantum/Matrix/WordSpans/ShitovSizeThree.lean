@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Matrix/WordSpans/ShitovSizeThree
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
+   utility: none
    digest: The least positive universal exact word length in the complex three-by-three matrix algebra is seven. -/
 
 import OmegaMath.Matrix.HomogeneousWordPowersSharpThree
