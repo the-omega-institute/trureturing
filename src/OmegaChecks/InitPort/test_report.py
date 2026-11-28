@@ -325,6 +325,19 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(change=change), self.assertRaisesRegex(ValueError, "choice operand"):
                 check_coverage(data | {"declarations": [row | change]})
 
+    def test_missing_equation_requires_a_replayed_choice_operand(self):
+        owner, name, dep = "Init.Grind.Injective", "Lean.Grind.leftInv_eq", "Lean.Grind.leftInv"
+        row = site(owner, name, strictUnsafe=None, strictPartial=None)
+        data = inventory(row)
+        self.assertEqual(check_coverage(data), (0, [(owner, name)]))
+        row["originalTypeChoiceDependency"] = dep
+        data["certifiedChoiceTypeDependencies"] = [
+            [owner, name, dep, "OmegaChecks.InitBoundaries.choiceFromLeftInv"]]
+        self.assertEqual(check_coverage(data), (0, []))
+        for change in ({"strictUnsafe": False}, {"unsafe": True}, {"originalTypeChecked": True}):
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, "choice operand"):
+                check_coverage(data | {"declarations": [row | change]})
+
     def test_finite_index_bound_proof_change_preserves_the_whole_statement(self):
         owner, name = "Init.Data.List.Find", "List.findFinIdx?_eq_pmap_findIdx?"
         checked = [[owner, name]]
