@@ -5,7 +5,7 @@ year: 2026
 title: "Rank-One Loss Maximizes the Spectral Response Strength of Passive Full-Order Exceptional Points"
 doi: 10.1103/5451-5wd1
 url: https://arxiv.org/pdf/2610.31268v1
-claim: "The final paragraph of Section VII asks for passive response bounds and optimal loss rank when several Jordan chains are present."
+claim: "The final paragraph of Section VIII asks for passive response bounds and optimal loss rank when several Jordan chains are present."
 strata_touched:
   - D5/S1/Eigenstructure/WiersigFragmentedResponse
 license: citation-only; source distributed under the arXiv non-exclusive distribution license
@@ -16,14 +16,15 @@ triage: anchor
 
 ## Verified locator
 
-The source question is the closing paragraph of Section VII, page 6 of
+The source question is the closing paragraph of Section VIII (Conclusion), page 6 of
 [arXiv:2610.31268v1](https://arxiv.org/pdf/2610.31268v1). The version of
-record is *Physical Review Research* 8, 043166 (2026).
+record is *Physical Review Research* 8, 043166 (2026), Section VIII,
+page 043166-6.
 [DOI](https://doi.org/10.1103/5451-5wd1)
 
 ## Source question and scope
 
-Page 6, Section VII of arXiv:2610.31268v1 asks whether a sharp bound of the
+Page 6, Section VIII of arXiv:2610.31268v1 asks whether a sharp bound of the
 kind obtained for a single Jordan chain survives fragmentation, and whether
 rank-one loss remains optimal when several chains are present. Equations
 (6), (10), and (14)–(16) fix the resolvent, operator norm, decay operator, and

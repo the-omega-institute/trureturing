@@ -9,7 +9,7 @@ internal sealed class WiersigFragmentedResponseDocument : IScribeDocumentDefinit
     private const string Handle =
         "D5/S1/Eigenstructure/WiersigFragmentedResponse.sharp_passive_fragmented_response";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Eigenstructure/wiersig2026fragmentedresponse");
+        LibraryNoteRef.Create("D5/L/HilbertOperators/wiersig2026fragmentedresponse");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The sharp linewidth bound and minimum loss rank for each fragmented Jordan partition.",
@@ -22,23 +22,30 @@ internal sealed class WiersigFragmentedResponseDocument : IScribeDocumentDefinit
             AssessedProvenance.FromRepo(Source),
             Blocks(
                 Paragraph(Text(
-                    "The closing paragraph of Wiersig's Section VII asks whether the passive "
+                    "The closing paragraph of Wiersig's Section VIII (Conclusion) asks whether the passive "
                     + "response bound and rank-one optimality extend to fragmented exceptional "
                     + "points. The resolution here concerns a collision at a sole eigenvalue E "
                     + "with strictly positive linewidth, two or more blocks, and a largest "
                     + "block of size at least two.")),
                 Paragraph(Text(
-                    "The entire partition is prescribed by a positive size function m on Fin(b). The largest size p "
+                    "The entire partition is prescribed by a positive size function m on Fin(b). "
+                    + "Write m_j for m(j). The largest size p "
                     + "bounds every size and occurs among them. Positions(m) is the dependent sum "
                     + "of Fin(m(j)) over the block labels j. The complex matrices use orthonormal "
                     + "coordinates indexed by Positions(m).")),
                 Paragraph(Text(
-                    "Write N(H,E) = H − EI, linewidth(E) = −2 Im E, and Γ(H) = i(H − H*), "
-                    + "where * denotes conjugate transpose. The chain basis B is a complex linear "
-                    + "basis of the coordinate space. The conditional chain step sends B(j,a) "
-                    + "to B(j,a+k) when a+k is in the block and to zero otherwise. "
-                    + "The function pred is natural predecessor and the matrix norm is the "
-                    + "Euclidean operator norm.")),
+                    "Write N_H = H − EI, β = −2 Im E, and Γ(H) = i(H − H*), "
+                    + "where * denotes conjugate transpose. The matrix norm is the Euclidean operator norm, "
+                    + "and rank is over the complex numbers. The admissible class 𝒜(E,m) consists of complex "
+                    + "square matrices on Positions(m) with positive semidefinite Γ(H) and a complex linear "
+                    + "basis B of the entire coordinate space indexed by Positions(m). For every natural r, "
+                    + "every block label j, and every position a in Fin(m(j)), the basis satisfies "),
+                    Math(In(Seq(Power(Seq(F.Id("N"), Underscore, Grp(F.Id("H"))), F.Id("r")), Sp,
+                        BasisVector(F.Id("a")), Sp, Eq, Sp, BasisVector(Seq(F.Id("a"), Plus, F.Id("r")))))),
+                    Text(" when a+r < m(j), and "),
+                    Math(In(Seq(Power(Seq(F.Id("N"), Underscore, Grp(F.Id("H"))), F.Id("r")), Sp,
+                        BasisVector(F.Id("a")), Sp, Eq, Sp, D(0)))),
+                    Text(" otherwise.")),
                 Paragraph(Text(
                     "For every passive matrix of the given partition, E is the sole eigenvalue. "
                     + "The resolvent is the finite Laurent sum away from E and its highest-order "
@@ -63,76 +70,51 @@ internal sealed class WiersigFragmentedResponseDocument : IScribeDocumentDefinit
                 ProblemSlugRef.Create("wiersig-2026-passive-fragmented-response"),
                 ResolutionKind.Proved)))));
 
-    private static Formula Call(string name, params Formula[] args) =>
-        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
-    private static Formula.BoundVariable Bound(string name, Formula domain) =>
-        new(FormulaIdentifier.Create(name), domain);
-    private static Formula Equal(Formula left, Formula right) =>
-        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
-    private static Formula And(Formula left, Formula right) =>
-        new Formula.Logic(left, FormulaLogicOperator.And, right);
-    private static Formula Implies(Formula left, Formula right) =>
-        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+    private static Formula Power(Formula value, Formula exponent) =>
+        Seq(value, Caret, Grp(exponent));
 
-    private static Formula Admissible(Formula matrix, Formula energy, Formula sizes, Formula blocks)
-    {
-        Formula basis = F.Id("B"), iterate = F.Id("r"), block = F.Id("j"), position = F.Id("a");
-        Formula size = Call("size", sizes, block), next = Call("add", position, iterate);
-        Formula chainAction = Equal(
-            Call("mulVec", Call("pow", Call("N", matrix, energy), iterate),
-                Call("basisAt", basis, block, position)),
-            Call("ite",
-                new Formula.Relation(next, FormulaRelationOperator.LessThan, size),
-                Call("basisAt", basis, block, next), D(0)));
-        return And(Call("PosSemidef", Call("Gamma", matrix)),
-            new Formula.BindMany(FormulaQuantifier.Exists,
-                [Bound("B", Call("Basis", Call("Positions", sizes), Call("Complex")))],
-                new Formula.BindMany(FormulaQuantifier.ForAll,
-                    [Bound("r", Call("Nat")), Bound("j", Call("Fin", blocks)),
-                     Bound("a", Call("Fin", size))], chainAction)));
-    }
+    private static Formula BasisVector(Formula position) =>
+        Seq(F.Id("B"), Underscore, Grp(F.Id("j"), Comma, position));
 
     private static Formula TheoremFormula()
     {
         Formula b = F.Id("b"), p = F.Id("p"), m = F.Id("m"), e = F.Id("E");
         Formula h = F.Id("H"), w = F.Id("W"), j = F.Id("j"), z = F.Id("z"), k = F.Id("k");
-        Formula linewidth = Call("linewidth", e), top = Call("pred", p);
-        Formula bound = Call("pow", linewidth, top);
-        Formula n = Call("N", h, e);
-        Formula matrices = Call("ComplexMatrix", Call("Positions", m));
-        Formula size = Call("size", m, j);
-        Formula spectralExpansion = Equal(
-            Call("inv", Call("sub", Call("scalarMatrix", z), h)),
-            Seq(Sum, Underscore, Grp(k, Sp, InMacro, Sp, Call("range", p)), Sp,
-                Call("smul", Call("pow", Call("inv", Call("sub", z, e)), Call("succ", k)),
-                    Call("pow", n, k))));
-        Formula resolvent = new Formula.BindMany(FormulaQuantifier.ForAll,
-            [Bound("z", Call("Complex"))], Implies(Seq(z, Sp, Neq, Sp, e), spectralExpansion));
-        Formula spectrum = new Formula.BindMany(FormulaQuantifier.ForAll,
-            [Bound("z", Call("Complex"))],
-            new Formula.Logic(Call("not", Call("IsUnit", Call("sub", Call("scalarMatrix", z), h))),
-                FormulaLogicOperator.Iff, Equal(z, e)));
-        Formula upper = new Formula.BindMany(FormulaQuantifier.ForAll,
-            [Bound("H", matrices)], Implies(Admissible(h, e, m, b),
-                And(Seq(Call("pow", n, top), Sp, Neq, Sp, D(0)),
-                    And(Seq(Call("opNorm", Call("pow", n, top)), Sp, Le, Sp, bound),
-                        And(Seq(b, Sp, Le, Sp, Call("rank", Call("Gamma", h))), And(spectrum, resolvent))))));
-        Formula witness = new Formula.BindMany(FormulaQuantifier.Exists,
-            [Bound("W", matrices)],
-            And(Admissible(w, e, m, b),
-                And(Equal(Call("opNorm", Call("pow", Call("N", w, e), top)), bound),
-                    Equal(Call("rank", Call("Gamma", w)), b))));
-        Formula sizesBounded = new Formula.BindMany(FormulaQuantifier.ForAll,
-            [Bound("j", Call("Fin", b))], Seq(size, Sp, Le, Sp, p));
-        Formula maxOccurs = new Formula.BindMany(FormulaQuantifier.Exists,
-            [Bound("j", Call("Fin", b))], Equal(size, p));
-        return Disp(new Formula.BindMany(FormulaQuantifier.ForAll,
-            [Bound("b", Call("Nat")), Bound("p", Call("Nat")),
-             Bound("m", Call("Function", Call("Fin", b), Call("PNat"))),
-             Bound("E", Call("Complex"))],
-            Implies(And(Seq(D(2), Sp, Le, Sp, b),
-                And(Seq(D(2), Sp, Le, Sp, p),
-                    And(sizesBounded, And(maxOccurs, Seq(D(0), Sp, Lt, Sp, linewidth))))),
-                And(upper, witness))));
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula complexes = Seq(Mathbb, Grp(F.Id("C")));
+        Formula blocks = Seq(Mathrm, Grp(F.Id("Fin")), Open, b, Close);
+        Formula size = Seq(m, Underscore, Grp(j));
+        Formula admissible = Seq(Mathcal, Grp(F.Id("A")), Open, e, Comma, m, Close);
+        Formula top = Seq(p, Minus, D(1));
+        Formula bound = Power(Beta, top);
+        Formula n = Seq(F.Id("N"), Underscore, Grp(h));
+        Formula nw = Seq(F.Id("N"), Underscore, Grp(w));
+        Formula lossRankH = Seq(Operatorname, Grp(F.Id("rank")), Gamma, Open, h, Close);
+        Formula lossRankW = Seq(Operatorname, Grp(F.Id("rank")), Gamma, Open, w, Close);
+        Formula pencil = Seq(z, F.Id("I"), Minus, h);
+        Formula resolvent = Seq(Sum, Underscore, Grp(k, Eq, D(0)), Caret, Grp(top),
+            Frac, Grp(Power(n, k)), Grp(Power(Seq(Open, z, Minus, e, Close), Seq(k, Plus, D(1)))));
+
+        return Disp(new Formula.Aligned([
+            Seq(Amp, Forall, Sp, b, Comma, p, InMacro, Sp, naturals, Comma, Quad, Sp,
+                m, Colon, blocks, To, Sp, Seq(naturals, Underscore, Grp(Gt, Sp, D(0))), Comma, Quad, Sp,
+                e, InMacro, Sp, complexes, Comma),
+            Seq(Amp, OpenBracket, D(2), Le, Sp, b, Land, Sp, D(2), Le, Sp, p, Land, Sp, Beta, Gt, Sp, D(0),
+                Land, Sp, Open, Forall, Sp, j, InMacro, Sp, blocks, Comma, size, Le, Sp, p, Close),
+            Seq(Amp, Quad, Sp, Land, Sp, Open, Exists, Sp, j, InMacro, Sp, blocks, Comma, size, Eq, p,
+                Close, CloseBracket, Longrightarrow),
+            Seq(Amp, OpenBracket, Open, Forall, Sp, h, InMacro, Sp, admissible, Comma),
+            Seq(Amp, Quad, Sp, Power(n, top), Neq, Sp, D(0), Land, Sp,
+                new Formula.Norm(Power(n, top)), Le, Sp, bound, Land, Sp, lossRankH, Ge, Sp, b),
+            Seq(Amp, Quad, Sp, Land, Sp, Open, Forall, Sp, z, InMacro, Sp, complexes, Comma, Sp,
+                Neg, Sp, Operatorname, Grp(F.Id("IsUnit")), Open, pencil, Close,
+                Leftrightarrow, Sp, z, Eq, e, Close),
+            Seq(Amp, Quad, Sp, Land, Sp, Open, Forall, Sp, z, InMacro, Sp, complexes, Comma, Sp,
+                z, Neq, Sp, e, Rightarrow, Sp, Power(Seq(Open, pencil, Close), Seq(Minus, D(1))), Eq,
+                resolvent, Close, Close),
+            Seq(Amp, Land, Sp, Open, Exists, Sp, w, InMacro, Sp, admissible, Comma, Sp,
+                new Formula.Norm(Power(nw, top)), Eq, bound, Land, Sp, lossRankW, Eq, b,
+                Close, CloseBracket, Dot),
+        ]));
     }
 }

@@ -12,11 +12,11 @@ motivation_gids:
 
 ## Problem
 
-Jan Wiersig asks in the closing paragraph of §VII, p. 6, of *Rank-One Loss
+Jan Wiersig asks in the closing paragraph of §VIII (Conclusion), p. 6, of *Rank-One Loss
 Maximizes the Spectral Response Strength of Passive Full-Order Exceptional
 Points* whether analogous passive response bounds exist for fragmented
 exceptional points and whether rank-one loss remains optimal.
-[Versioned paper](https://arxiv.org/pdf/2610.31268v1#page=6) · [Version of record](https://doi.org/10.1103/5451-5wd1) · [Library note](../Library/Eigenstructure/wiersig2026fragmentedresponse.md)
+[Versioned paper](https://arxiv.org/pdf/2610.31268v1#page=6) · [Version of record](https://doi.org/10.1103/5451-5wd1) · [Library note](../Library/HilbertOperators/wiersig2026fragmentedresponse.md)
 
 Prescribe any $E\in\mathbb C$ with $\beta=-2\operatorname{Im}E>0$ and any
 partition $(m_1,\ldots,m_b)$ with $b\ge 2$, all $m_j\ge 1$, and
