@@ -279,39 +279,6 @@ theorem sunlet_isGreatest_pathLength_of_index_ne {n : ℕ} (hn : 3 ≤ n)
     change L ≤ _
     omega
 
-private theorem isGreatest_pathLength_leaf_core {n : ℕ} (i : Fin n) :
-    IsGreatest {L : ℕ | ∃ p : (sunlet n).Walk (i, 1) (i, 0), p.IsPath ∧ p.length = L} 1 := by
-  constructor
-  · exact ⟨(core_to_leaf_adj i).symm.toWalk, (core_to_leaf_adj i).symm.isPath_toWalk, rfl⟩
-  · rintro L ⟨p, hp, rfl⟩
-    cases p with
-    | @cons _ x _ h p =>
-      have hx := neighbor_of_leaf h
-      subst x
-      have hnil := (Walk.isPath_iff_nil.mp hp.of_cons).eq_nil
-      simp [hnil]
-
-/-- At a single cycle index the detour is zero on the diagonal and one across the leaf edge. -/
-theorem sunlet_isGreatest_pathLength_same_index {n : ℕ} (i : Fin n) (a b : Fin 2) :
-    IsGreatest {L : ℕ | ∃ p : (sunlet n).Walk (i, a) (i, b), p.IsPath ∧ p.length = L}
-      (if a = b then 0 else 1) := by
-  by_cases hab : a = b
-  · subst b
-    rw [ite_eq_left rfl]
-    refine ⟨⟨nil, IsPath.nil, rfl⟩, ?_⟩
-    rintro L ⟨p, hp, rfl⟩
-    rw [(Walk.isPath_iff_nil.mp hp).eq_nil]
-    exact Nat.le_refl 0
-  · rw [ite_eq_right hab]
-    rcases fin_two a with rfl | rfl <;> rcases fin_two b with rfl | rfl
-    · exact (hab rfl).elim
-    · obtain ⟨⟨p, hp, hlen⟩, hmax⟩ := isGreatest_pathLength_leaf_core i
-      refine ⟨⟨p.reverse, hp.reverse, by simpa using hlen⟩, ?_⟩
-      rintro L ⟨q, hq, hqLen⟩
-      exact hmax ⟨q.reverse, hq.reverse, by simpa using hqLen⟩
-    · exact isGreatest_pathLength_leaf_core i
-    · exact (hab rfl).elim
-
 /-- The detour distance in the sunlet is the greatest native simple-path length. -/
 noncomputable def detourDistance {n : ℕ} (x y : Fin n × Fin 2) : ℕ :=
   sSup {L : ℕ | ∃ p : (sunlet n).Walk x y, p.IsPath ∧ p.length = L}

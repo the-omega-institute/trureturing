@@ -8,7 +8,7 @@ internal sealed class DetourPathDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/Graph/Sunlet/DetourPath.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/alsinai2026detour");
+        LibraryNoteRef.Create("D5/L/AdjacencyProduct/alsinai2026detour");
     private static readonly Formula N = Seq(Mathbb, Grp(F.Id("N")));
     private static readonly Formula n = F.Id("n");
     private static readonly Formula i = F.Id("i");
@@ -32,7 +32,8 @@ internal sealed class DetourPathDocument : IScribeDocumentDefinition
         H("Detour Different-Distance Numbers of Sunlets"),
         Blocks(
             Paragraph(DefinitionDsl.Text(
-                "Alsinai and Ahmed ask for both numbers for sunlets in Section 4, Problem 4.3. "
+                "Alsinai and Ahmed state Problem 4.3 on page 13. “Determine ddD for lollipops, barbells "
+                + "and tadpoles, and both numbers for grids, sunlets, snakes and generalized Petersen graphs.” "
                 + "Their Theorem 2.14(i), applied to the triangle, gives both numbers for the three-index sunlet. "
                 + "Their Lemma 3.4 gives the core–leaf pair at each index. "
                 + "The result below gives both extrema for every cycle length n at least four.")),
@@ -45,16 +46,14 @@ internal sealed class DetourPathDocument : IScribeDocumentDefinition
                 DistinctPath(),
                 "Simple walks have no repeated vertices. Removing any leaf endpoint edges leaves one of "
                 + "the two directed cycle arcs. Each arc extends to a simple path with the prescribed "
-                + "leaf endpoints. Subtraction of indices is in Fin n and val gives the residue as a natural number.",
-                DescribeRole.Theorem),
-            Node("path-length-same", "A single index", "sunlet_isGreatest_pathLength_same_index",
-                SamePath(),
-                "A simple path with identical endpoints is the trivial path. At unequal heights the "
-                + "leaf edge is the unique simple path, since leaving the leaf leads directly to its core vertex.",
+                + "leaf endpoints. The proof of Theorem 2.1 gives the longer-arc length in the bare cycle. "
+                + "The block sum of Lemma 3.3 accounts for the endpoint edges. Subtraction of indices is "
+                + "in Fin n and val gives the residue as a natural number.",
                 DescribeRole.Theorem),
             Node("detour-distance", "Detour distance", "detourDistance", Detour(),
-                "The greatest edge count exists by the two path-length formulas at n at least three. "
-                + "The trivial path gives the published zero diagonal.",
+                "For n at least three the distinct-index path formula gives a greatest length. At a "
+                + "single index, the trivial path gives the published zero diagonal. The pendant edge "
+                + "is itself the unique simple path between the two heights, so their distance is one.",
                 DescribeRole.Definition),
             Node("different-distance-set", "Detour different-distance sets", "IsDDD", DifferentDistance(),
                 "The set is nonempty, proper, and distinguished in detour distance by every outside vertex, "
@@ -67,9 +66,10 @@ internal sealed class DetourPathDocument : IScribeDocumentDefinition
                 "A detour tie from a third index forces both vertices there into the set. Color vertices "
                 + "by height for odd n and by index plus height modulo two for even n. Two selected "
                 + "vertices of one color at different indices force a full pair via the center of a "
-                + "cycle arc. Any other selected index then forces a second full pair. A closest pair "
-                + "of full indices must be adjacent because an interior midpoint would force a closer "
-                + "pair. Adjacent full pairs force every index, violating properness. This bounds "
+                + "cycle arc. Any other selected index then forces a second full pair. If the closest "
+                + "full indices are nonadjacent, an interior central vertex of a shortest arc has endpoint "
+                + "distances differing by at most one. The two available heights allow a tie there, forcing "
+                + "a closer full index. Adjacent full pairs force every index, violating properness. This bounds "
                 + "every DDD set by two. Each singleton extends to its core–leaf pair, so the orders "
                 + "of the inclusion-maximal sets form the singleton set containing two.",
                 DescribeRole.Theorem))));
@@ -102,13 +102,6 @@ internal sealed class DetourPathDocument : IScribeDocumentDefinition
                     Call("IsGreatest", PathLengths(Tuple(i, a), Tuple(j, b)),
                         Seq(Call("max", Call("val", Seq(i, Minus, j)),
                             Call("val", Seq(j, Minus, i))), Plus, Call("val", a), Plus, Call("val", b))))))))));
-
-    private static Formula SamePath() =>
-        All(n, N, All(i, Index, All(a, Height, All(b, Height,
-            Call("IsGreatest", PathLengths(Tuple(i, a), Tuple(i, b)),
-                Seq(Operatorname, Grp(F.Id("if")), Sp, Equal(a, b),
-                    Sp, Operatorname, Grp(F.Id("then")), Sp, D(0),
-                    Sp, Operatorname, Grp(F.Id("else")), Sp, D(1)))))));
 
     private static Formula Detour() =>
         All(n, N, All(u, Vertex, All(v, Vertex,
