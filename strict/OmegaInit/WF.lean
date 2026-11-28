@@ -5,6 +5,9 @@ Author: Leonardo de Moura
 -/
 module
 prelude
+public import OmegaInit.Core
+import OmegaInit.SimpLemmas
+import OmegaInit.Data.Nat.Basic
 
 noncomputable section
 
@@ -17,3 +20,11 @@ namespace Omega
 @[expose, implicit_reducible] public def wfParam {α : Sort u} (a : α) : α := a
 
 end Omega
+
+port_definition WellFounded.Nat.eager
+port_proof WellFounded.Nat.fix.go._proof_1
+port_proof WellFounded.Nat.fix._proof_1
+port_definition WellFounded.Nat.fix.go
+port_proof WellFounded.Nat.eager_eq
+port_proof WellFounded.Nat.fix._proof_2
+port_definition WellFounded.Nat.fix

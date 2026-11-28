@@ -1,8 +1,10 @@
 import Lean
 import Lean.Replay
+import OmegaChecks.InitPort.HostedProjection
 import OmegaChecks.AuditCache
 import OmegaChecks.Interface
 import OmegaChecks.ModuleSurface
+import OmegaChecks.InitPort.UnsafeRuntime
 
 open Lean
 
@@ -24,13 +26,16 @@ private def checkLayers (env : Environment) : IO Unit := do
 private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := do
   let sysroot ← findSysroot
   let lib ← getLibDir sysroot
+  let physical ← OmegaChecks.InitCompiler.naturalNames
   let mut bindings := #[]
   let mut owners ← OmegaChecks.ModuleSurface.officialModules strict lib
   for (name, _) in strict.constants.toList do
     let some idx := strict.getModuleIdxFor? name | continue
     let owner := strict.header.moduleNames[idx]!
     if !isStrict owner || isPrivateName name || name.isInternal then continue
-    unless name.getRoot == `Omega do
+    if OmegaChecks.InitPort.NativeQuot.isSupport owner name then continue
+    unless name.getRoot == `Omega || OmegaChecks.InitCompiler.RootNames.isPrimitive owner name ||
+        (owner == `OmegaInit.Prelude && physical.contains name) do
       throw <| IO.userError s!"public name outside Omega: {name} in {owner}"
     if owner.getRoot == `OmegaMath then continue
     let upstream := if owner.getRoot == `OmegaInit then `Init else `Mathlib
@@ -39,7 +44,7 @@ private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := 
     if !owners.contains official then owners := owners.push official
   if owners.isEmpty then
     initSearchPath sysroot [lib]
-    discard <| OmegaChecks.ModuleSurface.check publicStrict
+    discard <| OmegaChecks.ModuleSurface.check publicStrict (some strict)
     return
   let targets := (owners.filter (·.getRoot == `Mathlib)).map fun name => s!"@mathlib/+{name}:olean"
   let proc ← IO.Process.spawn { cmd := "lake", args := #["build", "+OmegaChecks.Interface.Equations"] ++ targets }
@@ -59,20 +64,20 @@ private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := 
       if actual == owner then
         throw <| IO.userError s!"the active official declaration {counterpart} differs from the entry stored in {owner}"
       throw <| IO.userError s!"official owner of {counterpart} is {actual}, expected {owner}"
-  let reexports ← OmegaChecks.ModuleSurface.check publicStrict
+  let reexports ← OmegaChecks.ModuleSurface.check publicStrict (some strict)
   OmegaChecks.Interface.check strict publicStrict reference (bindings ++ reexports)
   IO.println s!"Upstream names and owning modules matched for {bindings.size} declarations in {owners}."
 
 private def replayStrict (env : Environment) : IO Unit := do
   let check : CoreM Unit := do
     for (name, info) in env.constants.toList do
-      if info.isUnsafe || info matches .axiomInfo _ | .quotInfo _ then
+      if (info.isUnsafe && !OmegaChecks.InitPort.UnsafeRuntime.isOriginal info true) || info.isPartial || info.isAxiom then
         throwError "inadmissible declaration {name}"
       let axioms ← collectAxioms name
       unless axioms.isEmpty do
         throwError "{name} depends on {axioms}"
   check.toIO' {fileName := "<audit>", fileMap := default} {env}
-  discard <| (← mkEmptyEnvironment).toKernelEnv.replay env.constants.map₁
+  discard <| OmegaChecks.InitPort.UnsafeRuntime.replay env.constants.map₁
 
 /-- Replay the imported artifacts in an empty kernel environment. -/
 private def audit (roots : List String) (path label : String)
@@ -82,8 +87,11 @@ private def audit (roots : List String) (path label : String)
   let env ← importModules imports {}
   -- Each basis module is independently importable, including privately imported dependencies.
   let basis := env.allImportedModuleNames.filter OmegaChecks.ModuleSurface.isBasis
-  let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
+  -- Server imports also load the separately persisted editor extension entries.
+  let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .server)
   checkLayers env
+  OmegaChecks.InitPort.NativeQuot.checkSupport env
+  OmegaChecks.InitPort.NativeQuot.checkSupport publicStrict .exported
   let actual := env.allImportedModuleNames.toList.map Name.toString
   if let some modules := expected then
     unless actual.mergeSort == modules.mergeSort do
@@ -159,6 +167,9 @@ private def testLibrary (selected : List String) : IO Unit := do
   unless (← proc.wait) == 0 do throw <| IO.userError "Omega library test failed"
 
 def main (args : List String) : IO Unit := do
+  let (projection?, args) := match args with
+    | "--hosted-consumer" :: raw :: view :: rest => (some (raw, view), "--consumer" :: rest)
+    | _ => (none, args)
   if let "--consumer" :: strictPath :: officialPath :: names := args then
     let clients := names.takeWhile (· != "--basis")
     let modules := clients.toArray.map String.toName
@@ -174,13 +185,24 @@ def main (args : List String) : IO Unit := do
     -- use Lean's legacy format, which cannot be imported in an exported context.
     let basis := strict.allImportedModuleNames.filter fun name =>
       name.getRoot == `OmegaInit || name.getRoot == `OmegaMathlib
-    let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
+    let isolated ← if let some (raw, view) := projection? then do
+      let foundations := strict.allImportedModuleNames.filter isStrict
+      unless strictSearchPath.head? == some (System.FilePath.mk view) do
+        throw <| IO.userError "expected the verified projection first on the hosted import path"
+      OmegaChecks.HostedProjection.verify raw view foundations (System.SearchPath.parse officialPath)
+      searchPathRef.set [raw]
+      let isolated ← importModules (foundations.map fun name => {module := name}) {}
+      checkLayers isolated
+      pure isolated
+    else pure strict
+    let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .server)
     let mode ← IO.getEnv "OMEGA_CACHE_CONSUMER_MODE"
     let report := (← IO.getEnv "OMEGA_OFFICIAL_AXIOM_REPORT").map System.FilePath.mk
     let cacheable := (← IO.getEnv "OMEGA_AUDIT_CACHE").isSome &&
       (← IO.getEnv "OMEGA_FROZEN_INVENTORY").isNone && (← IO.getEnv "OMEGA_FROZEN_CERTIFICATE").isNone &&
       ((mode == some "common-interface" && report.isNone) || (mode == some "official-interface" && report.isSome))
     let strictFiles ← if cacheable then OmegaChecks.AuditCache.artifacts strict else pure #[]
+    let basisFiles ← if cacheable && projection?.isSome then OmegaChecks.AuditCache.artifacts isolated else pure #[]
     searchPathRef.set (System.SearchPath.parse officialPath)
     let official ← importModules (imports.push { module := `OmegaChecks.Interface.Equations }) {}
     let compare : IO Unit := do
@@ -191,17 +213,18 @@ def main (args : List String) : IO Unit := do
       let inventory : Array OmegaChecks.Interface.FrozenInventory ←
         if let some path ← IO.getEnv "OMEGA_FROZEN_INVENTORY" then
           -- Strict foundation modules may not be official alias facades.
-          checkLayers strict
+          checkLayers isolated
           IO.ofExcept (Json.parse (← IO.FS.readFile path) >>= fromJson?)
         else pure #[]
-      let certified ← OmegaChecks.Interface.checkConsumers strict publicStrict official modules strictSearchPath inventory
+      let certified ← OmegaChecks.Interface.checkConsumers strict publicStrict official modules strictSearchPath inventory (some isolated)
       if let some path ← IO.getEnv "OMEGA_FROZEN_CERTIFICATE" then
         IO.FS.writeFile path ((toJson certified).compress ++ "\n")
       if let some report := report then
-        reportOfficialAxioms strict official modules report.toString
+        reportOfficialAxioms isolated official modules report.toString
     if cacheable then
       let officialFiles ← OmegaChecks.AuditCache.artifacts official
-      let files := strictFiles.map (fun (name, file) => ("strict/" ++ name, file)) ++
+      let files := basisFiles.map (fun (name, file) => ("basis/" ++ name, file)) ++
+        strictFiles.map (fun (name, file) => ("strict/" ++ name, file)) ++
         officialFiles.map (fun (name, file) => ("reference/" ++ name, file))
       OmegaChecks.AuditCache.withResult mode.get! names.toArray files compare report
     else compare

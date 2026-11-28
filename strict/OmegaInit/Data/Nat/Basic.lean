@@ -10,11 +10,9 @@ public import OmegaInit.Core
 
 @[expose] public section
 
-attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Nat.sub Omega.Nat.pred Omega.Nat.pow
 
 namespace Omega.Nat
 
-attribute [local semireducible] Nat.beq
 
 theorem beq_refl (a : Nat) : Eq (Nat.beq a a) Bool.true :=
   Nat.rec (motive := fun n => Eq (Nat.beq n n) Bool.true)
@@ -445,3 +443,96 @@ protected theorem mul_pow (a b n : Nat) :
             (Nat.mul_assoc (Nat.pow a k) a (Nat.mul (Nat.pow b k) b)).symm))) n
 
 end Omega.Nat
+
+namespace Omega.Nat
+
+theorem le.dest {n m : Nat} : Nat.le n m → Exists (fun k => Eq (Nat.add n k) m) := fun h =>
+  Nat.le.rec (motive := fun m _ => Exists (fun k => Eq (Nat.add n k) m))
+    (Exists.intro zero Omega.rfl) (fun {_} _ ih => ih.elim (fun k e => Exists.intro (succ k) (congrArg succ e))) h
+
+theorem le.intro {n m k : Nat} (h : Eq (Nat.add n k) m) : Nat.le n m :=
+  Eq.subst (motive := Nat.le n) h (le_add_right n k)
+
+protected theorem not_le_of_lt {a b : Nat} : Nat.lt a b → Not (Nat.le b a) :=
+  fun h bound => Nat.lt_irrefl a (Nat.le_trans h bound)
+
+protected theorem lt_of_not_ge {a b : Nat} : Not (Nat.le a b) → Nat.lt b a :=
+  Nat.rec (motive := fun a => ∀ b, Not (Nat.le a b) → Nat.lt b a)
+    (fun b h => False.elim (h (zero_le b)))
+    (fun a ih b => Nat.casesOn (motive := fun b => Not (Nat.le (succ a) b) → Nat.lt b (succ a)) b
+      (fun _ => succ_le_succ (zero_le a)) (fun b h => succ_le_succ (ih b (fun e => h (succ_le_succ e))))) a b
+
+protected theorem not_le {a b : Nat} : Iff (Not (Nat.le a b)) (Nat.lt b a) :=
+  Iff.intro Nat.lt_of_not_ge Nat.not_le_of_lt
+
+theorem add_sub_self_left (a b : Nat) : Eq (Nat.sub (Nat.add a b) a) b := Nat.add_sub_cancel_left a b
+
+theorem add_sub_of_le {a b : Nat} (h : Nat.le a b) : Eq (Nat.add a (Nat.sub b a)) b :=
+  (le.dest h).elim (fun k e => Eq.subst (motive := fun x => Eq (Nat.add a (Nat.sub x a)) x) e
+    (congrArg (Nat.add a) (Nat.add_sub_cancel_left a k)))
+
+protected theorem sub_add_cancel {n m : Nat} (h : Nat.le m n) : Eq (Nat.add (Nat.sub n m) m) n :=
+  (Nat.add_comm (Nat.sub n m) m).trans (add_sub_of_le h)
+
+theorem le_sub_of_add_le {a b c : Nat} (h : Nat.le (Nat.add a b) c) : Nat.le a (Nat.sub c b) :=
+  Nat.le_of_add_le_add_right (b := b) (Eq.subst (motive := Nat.le (Nat.add a b))
+    (Nat.sub_add_cancel (Nat.le_trans (le_add_left b a) h)).symm h)
+
+theorem zero_lt_sub_of_lt {i a : Nat} (h : Nat.lt i a) : Nat.lt zero (Nat.sub a i) :=
+  (le.dest h).elim (fun k e => Eq.subst (motive := fun n => Nat.lt zero (Nat.sub n i)) e
+    (Eq.subst (motive := Nat.lt zero)
+      ((congrArg (fun n => Nat.sub n i) ((succ_add i k).trans (add_succ i k).symm)).trans
+        (Nat.add_sub_cancel_left i (succ k))).symm (succ_le_succ (zero_le k))))
+
+theorem pred_lt {n : Nat} : Ne n zero → Nat.lt (pred n) n :=
+  Nat.casesOn (motive := fun n => Ne n zero → Nat.lt (pred n) n) n
+    (fun h => False.elim (h Omega.rfl)) (fun k _ => Nat.le_refl (succ k))
+
+theorem sub_succ_lt_self (a i : Nat) (h : Nat.lt i a) : Nat.lt (Nat.sub a (succ i)) (Nat.sub a i) :=
+  pred_lt (fun e => Nat.lt_irrefl zero (Eq.subst (motive := Nat.lt zero) e (zero_lt_sub_of_lt h)))
+
+theorem mul_le_mul_left {n m : Nat} (k : Nat) (h : Nat.le n m) : Nat.le (Nat.mul k n) (Nat.mul k m) :=
+  (le.dest h).elim (fun d e => le.intro ((Nat.mul_add k n d).symm.trans (congrArg (Nat.mul k) e)))
+
+theorem mul_le_mul_right {n m : Nat} (k : Nat) (h : Nat.le n m) : Nat.le (Nat.mul n k) (Nat.mul m k) :=
+  Eq.subst (motive := fun z => Nat.le z (Nat.mul m k)) (Nat.mul_comm k n)
+    (Eq.subst (motive := Nat.le (Nat.mul k n)) (Nat.mul_comm k m) (mul_le_mul_left k h))
+
+protected theorem mul_le_mul {n₁ m₁ n₂ m₂ : Nat} (h₁ : Nat.le n₁ n₂) (h₂ : Nat.le m₁ m₂) :
+    Nat.le (Nat.mul n₁ m₁) (Nat.mul n₂ m₂) :=
+  Nat.le_trans (mul_le_mul_right m₁ h₁) (mul_le_mul_left n₂ h₂)
+
+protected theorem mul_lt_mul_of_pos_left {n m k : Nat} (h : Nat.lt n m) (hk : Nat.lt zero k) :
+    Nat.lt (Nat.mul k n) (Nat.mul k m) :=
+  have grow : Nat.lt (Nat.mul k n) (Nat.mul k (succ n)) :=
+    Eq.subst (motive := Nat.lt (Nat.mul k n)) (mul_succ k n).symm (Nat.add_le_add_left hk (Nat.mul k n))
+  Nat.le_trans grow (mul_le_mul_left k h)
+
+protected theorem mul_lt_mul_of_pos_right {n m k : Nat} (h : Nat.lt n m) (hk : Nat.lt zero k) :
+    Nat.lt (Nat.mul n k) (Nat.mul m k) :=
+  Eq.subst (motive := fun z => Nat.lt z (Nat.mul m k)) (Nat.mul_comm k n)
+    (Eq.subst (motive := Nat.lt (Nat.mul k n)) (Nat.mul_comm k m) (Nat.mul_lt_mul_of_pos_left h hk))
+
+protected theorem pow_le_pow_right {n : Nat} (hx : Nat.lt zero n) {i : Nat} :
+    ∀ {j}, Nat.le i j → Nat.le (Nat.pow n i) (Nat.pow n j) := fun {_} h =>
+  Nat.le.rec (motive := fun j _ => Nat.le (Nat.pow n i) (Nat.pow n j))
+    (Nat.le_refl _) (fun {j} _ ih => Nat.le_trans ih
+      (Eq.subst (motive := fun z => Nat.le z (Nat.pow n (succ j))) (Nat.mul_one (Nat.pow n j))
+        (mul_le_mul_left (Nat.pow n j) hx))) h
+
+protected theorem two_pow_pos (w : Nat) : Nat.lt zero (Nat.pow (succ (succ zero)) w) :=
+  Nat.pow_le_pow_right (i := zero) Nat.zero_lt_two (zero_le w)
+
+end Omega.Nat
+
+public section
+namespace Nat
+export _root_.Omega.Nat (add_assoc add_comm add_le_add add_le_add_iff_left add_le_add_iff_right add_le_add_left add_le_add_right add_left_cancel add_left_comm add_mul add_one add_one_inj add_one_le_add_one_iff add_one_le_iff add_one_le_of_lt add_one_lt_add_one_iff add_one_mul add_one_ne_add_one_iff add_one_ne_zero add_one_sub_one add_right_cancel add_right_comm add_sub_add_left add_sub_add_right add_sub_cancel add_sub_cancel_left add_sub_of_le add_sub_self_left add_succ and_forall_add_one beq_refl eq_zero_of_add_eq_zero eq_zero_of_add_eq_zero_left eq_zero_or_eq_succ_pred le_add_left le_add_left_of_le le_add_right le_add_right_of_le le_of_add_le_add_left le_of_add_le_add_right le_of_add_left_le le_of_add_right_le le_of_lt_add_one le_step le_sub_of_add_le le_total le_zero left_distrib lt_add_one_iff lt_add_one_of_le lt_add_one_of_lt lt_of_add_one_le lt_of_not_ge lt_succ lt_succ_iff lt_succ_of_lt mul_add mul_add_one mul_assoc mul_comm mul_le_mul mul_le_mul_left mul_le_mul_right mul_left_comm mul_lt_mul_of_pos_left mul_lt_mul_of_pos_right mul_one mul_pow mul_succ mul_two mul_zero not_add_one_le_zero not_le not_le_of_lt one_lt_two one_mul or_exists_add_one pow_add_one pow_le_pow_right pow_one pow_succ pow_zero pred_lt pred_succ pred_zero right_distrib sub_add_cancel sub_add_eq sub_le_of_le_add sub_self sub_self_add sub_sub sub_succ sub_succ_lt_self sub_zero succ_add succ_eq_add_one succ_inj succ_le_succ_iff succ_lt_succ succ_lt_succ_iff succ_mul succ_ne_succ_iff succ_ne_zero succ_pred_eq_of_ne_zero succ_sub_succ two_mul two_pos two_pow_pos zero_add zero_lt_one zero_lt_sub_of_lt zero_lt_two zero_mul zero_ne_add_one zero_sub zero_sub_one)
+end Nat
+
+port_definition Nat.recAux
+port_proof Nat.ge_of_not_lt
+port_proof Nat.not_le_of_gt
+port_proof Nat.not_lt_of_ge
+port_definition Nat.casesAuxOn
+port_proof Nat.le_of_not_gt

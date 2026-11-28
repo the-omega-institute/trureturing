@@ -1,8 +1,27 @@
 module
 
+public import OmegaChecks.InitInventory.Quotient
+public import Init.WFComputable
+public import Init.Data.Option.Basic
 public import Init.Core
+public import Init.Internal.Order.Basic
+import all Init.Internal.Order.Basic
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem Option.isNone {α : Type u} (x : _root_.Option α) :
+    (!x.isSome) = x.isNone := by cases x <;> rfl
+
+open _root_.Lean.Order in
+public theorem Lean.Order.admissible {α : Sort u} [CCPO α] (P : α → Prop) :
+    (∀ (c : α → Prop), chain c → (∀ x, c x → P x) → ∀ s, is_sup c s → P s) =
+      _root_.Lean.Order.admissible P := by
+  apply propext
+  constructor
+  · intro close c hc h
+    exact close c hc h _ (CCPO.csup_spec hc)
+  · intro close c hc h s hs
+    exact is_sup_unique (CCPO.csup_spec hc) hs ▸ close c hc h
 
 /-- The public conjunction interface represents standard conjunction. -/
 public theorem And (a b : Prop) : (∀ r : Prop, (a → b → r) → r) = (a ∧ b) :=
@@ -56,5 +75,18 @@ public theorem Nat.mul (a b : Nat) :
 /-- The strict elimination principle for nonemptiness characterizes the official proposition. -/
 public theorem Nonempty (α : Sort u) : (∀ p : Prop, (α → p) → p) = _root_.Nonempty α :=
   propext ⟨fun h => h _ _root_.Nonempty.intro, fun h _ f => h.elim f⟩
+
+public theorem Acc.recC.{v,u} {α : Sort u} {r : α → α → Prop} {motive : (a : α) → Acc r a → Sort v}
+    (step : (x : α) → (h : ∀ y, r y x → Acc r y) →
+      ((y : α) → (hr : r y x) → motive y (h y hr)) → motive x (.intro x h))
+    {a : α} (t : Acc r a) :
+    @_root_.Acc.rec α r motive step a t = @_root_.Acc.recC α r motive step a t :=
+  congrArg (fun k => @k α r motive step a t) _root_.Acc.rec_eq_recC
+
+public theorem Quot.hrecOn.{u,v} {α : Sort u} {r : α → α → Prop} {motive : Quot r → Sort v}
+    (q : Quot r) (f : (a : α) → motive (Quot.mk r a))
+    (c : (a b : α) → r a b → HEq (f a) (f b)) :
+    OmegaChecks.InitPort.Alternatives.Quot.hrecOn q f c = _root_.Quot.hrecOn q f c :=
+  OmegaChecks.InitBoundaries.HeterogeneousQuotient.agrees q f c
 
 end OmegaChecks.Interface.Equations

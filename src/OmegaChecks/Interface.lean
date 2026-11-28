@@ -1,5 +1,24 @@
 import Lean
+import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.FieldMethods
+import OmegaChecks.InitPort.NativeQuot
+import OmegaChecks.InitPort.LawfulLoop
+import OmegaChecks.InitPort.PatternMatch
+import OmegaChecks.InitPort.WordFold
+import OmegaChecks.InitPort.WordForIn
+import OmegaChecks.InitPort.ReferenceSwap
+import OmegaChecks.InitPort.ReferenceSpecialization
+import OmegaChecks.InitPort.LogicalHandle
+import OmegaChecks.InitPort.StateToken
+import OmegaChecks.InitPort.TypeName
+import OmegaChecks.InitPort.DynamicValue
+import OmegaChecks.InitPort.SyntaxArray
+import OmegaChecks.InitPort.FloatFraction
+import OmegaChecks.InitPort.BorrowedIndex
+import OmegaChecks.InitPort.ArrayWord
+import OmegaChecks.InitPort.Address
+import OmegaChecks.InitPort.ArrayMap
+import OmegaChecks.InitPort.ArrayModify
 
 /-! Compare compiled public interfaces in independent Lean environments. -/
 
@@ -7,18 +26,81 @@ open Lean
 
 namespace OmegaChecks.Interface
 
-private def official (n : Name) : Name :=
-  n.replacePrefix `Omega Name.anonymous
+private def official (strict : Environment) (n : Name) : Name := Id.run do
+  if let some rule := OmegaChecks.InitPort.LawfulLoop.rules.find? (fun r => InitKernelPort.portName r.helper == n) then
+    return rule.reference
+  if let some rule := OmegaChecks.InitPort.PatternMatch.rules.find? (fun r => InitKernelPort.portName r.helper == n) then
+    return rule.reference
+  if let some user := privateToUserName? n then
+    if let some idx := strict.getModuleIdxFor? n then
+      if strict.header.moduleNames[idx]!.getRoot == `OmegaInit && user.getRoot == `Omega then
+        if let some lexical := privatePrefix? n then
+          if (`_private.OmegaInit).isPrefixOf lexical && isPrivatePrefix lexical then
+            return lexical.replacePrefix `_private.OmegaInit `_private.Init ++
+              user.replacePrefix `Omega .anonymous
+  return n.replacePrefix `Omega .anonymous
 
 private partial def translate (rename : Name → Name) (e : Expr) : Expr := Id.run do
   -- Replace constants and kernel projections, including their target expressions.
   return e.replace fun
     | .const n us => some (.const (rename n) us)
     | .proj n i target => if rename n != n then some (.proj (rename n) i (translate rename target)) else none
+    | .forallE n dom body bi =>
+      -- The kernel names a recursor's branch after its constructor, including private ones.
+      if isPrivateName n && rename n != n then
+        some (.forallE (rename n) (translate rename dom) (translate rename body) bi)
+      else none
     | _ => none
 
 private def same (env : Environment) (lhs rhs : Expr) : Bool :=
   Kernel.isDefEqGuarded env {} lhs rhs
+
+/-- Check each closed literal expansion where it appears. Reducing an enclosing
+fuel-based recursor merely to compare its body can expand millions of steps. -/
+private partial def sameLiterals (env : Environment) (lhs rhs : Expr) : Bool := Id.run do
+  if lhs.equal rhs then return true
+  let go := sameLiterals env
+  match lhs, rhs with
+  | _, .lit lit =>
+    if lhs.hasLooseBVars || lhs.hasFVar || lhs.hasMVar then return false
+    let type := mkConst (match lit with | .natVal _ => `Nat | .strVal _ => `String)
+    return (Kernel.check env {} lhs).toOption.any (same env type) && same env lhs rhs
+  | .app f a, .app g b => return go f g && go a b
+  | .lam n d b i, .lam m e c j | .forallE n d b i, .forallE m e c j =>
+    return n == m && i == j && go d e && go b c
+  | .letE n d v b i, .letE m e w c j =>
+    return n == m && i == j && go d e && go v w && go b c
+  | .proj n i a, .proj m j b => return n == m && i == j && go a b
+  | .mdata x a, .mdata y b => return x == y && go a b
+  | _, _ => return false
+
+/-- Compare implementations that differ in a closed proof argument. The two kernels
+check the proofs separately, since their foundations can implement a relation
+differently. Proof irrelevance applies only after comparing the propositions. -/
+private partial def sameClosedProofs (strict reference : Environment) (rename : Name → Name)
+    (raw lhs rhs : Expr) : Bool := Id.run do
+  if lhs.equal rhs then return true
+  let go := sameClosedProofs strict reference rename
+  let byStructure := match raw, lhs, rhs with
+    | _, _, .lit _ => sameLiterals reference lhs rhs
+    | .app f x, .app g y, .app h z => go f g h && go x y z
+    | .lam _ d b _, .lam n e c i, .lam m t v j
+    | .forallE _ d b _, .forallE n e c i, .forallE m t v j =>
+      n == m && i == j && go d e t && go b c v
+    | .letE _ d v b _, .letE n e w c i, .letE m t x y j =>
+      n == m && i == j && go d e t && go v w x && go b c y
+    | .proj _ _ a, .proj n i b, .proj m j c => n == m && i == j && go a b c
+    | .mdata _ a, .mdata x b, .mdata y c => x == y && go a b c
+    | _, _, _ => false
+  if byStructure then return true
+  if raw.hasLooseBVars || rhs.hasLooseBVars then return false
+  let .ok expected := Kernel.check reference {} rhs | return false
+  unless (Kernel.check reference {} expected).toOption.any (same reference (.sort .zero)) do return false
+  let .ok ported := Kernel.check strict {} raw | return false
+  unless (Kernel.check strict {} ported).toOption.any (same strict (.sort .zero)) do return false
+  let proposition := translate rename ported
+  return (Kernel.check reference {} proposition).toOption.any (same reference (.sort .zero)) &&
+    same reference proposition expected
 
 private def lookup (env : Environment) (name : Name) : IO ConstantInfo := do
   let some info := env.find? name | throw <| IO.userError s!"missing interface declaration {name}"
@@ -49,6 +131,7 @@ def declaredIn (env : Environment) (name owner : Name) : Bool := Id.run do
 /-- Kernel conversion ignores elaborator binder visibility and named-argument labels. -/
 private partial def compatibleBinders (env : Environment) (ctx : LocalContext) (depth : Nat)
     (src dst : Expr) : Bool := Id.run do
+  if src.equal dst then return true
   let .ok a := Kernel.whnf env ctx src | return false
   let .ok b := Kernel.whnf env ctx dst | return false
   match a, b with
@@ -63,8 +146,9 @@ private partial def compatibleBinders (env : Environment) (ctx : LocalContext) (
   | _, _ => return true
 
 private def requireSame (env : Environment) (name : Name) (label : String) (lhs rhs : Expr) : IO Unit := do
-  if let .error _ := Kernel.check env {} lhs then
-    throw <| IO.userError s!"ill-typed translated {label} for {name}"
+  if lhs.equal rhs then return
+  if let .error err := Kernel.check env {} lhs then
+    throw <| IO.userError s!"ill-typed translated {label} for {name}: {← (err.toMessageData {}).toString}"
   unless same env lhs rhs do
     throw <| IO.userError s!"{label} mismatch for {name}"
 
@@ -90,6 +174,12 @@ private def checkEquation (env : Environment) (src dst : ConstantInfo) (body : E
     unless #[`propext, `Classical.choice, `Quot.sound].contains ax do
       throw <| IO.userError s!"inadmissible axiom {ax} in {certName}"
 
+/-- Verify a native operation against the pinned all-input equation for its actual isolated body. -/
+def checkInstalledEquation (strict reference : Environment) (name : Name) : IO Unit := do
+  let some (.defnInfo ported) := strict.find? name | throw <| IO.userError s!"missing isolated definition {name}"
+  let some native := reference.find? name | throw <| IO.userError s!"missing pinned operation {name}"
+  checkEquation reference (.defnInfo ported) native (translate (official strict) ported.value)
+
 private def compare (reference : Environment) (rename : Name → Name) (src dst : ConstantInfo)
     (foundation : Option (Environment × Environment) := none) :
     IO (Array Name) := do
@@ -99,6 +189,30 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       compatibleBinders reference {} 0 (liftTerm src.type) dst.type do
     throw <| IO.userError s!"public binder mismatch for {src.name}"
   requireSame reference src.name "interface type" (liftTerm src.type) dst.type
+  if foundation.isSome && OmegaChecks.InitPort.ArraySafety.names.contains dst.name then
+    unless OmegaChecks.InitPort.ArraySafety.isOriginal src true && OmegaChecks.InitPort.ArraySafety.isOriginal dst false do
+      throw <| IO.userError s!"unsafe array interface mismatch for {src.name}"
+  if foundation.isSome && OmegaChecks.InitPort.CompilerMarkers.names.contains src.name then
+    unless OmegaChecks.InitPort.CompilerMarkers.valid src && dst.name == src.name &&
+        dst.isAxiom && dst.isUnsafe do
+      throw <| IO.userError s!"invalid compiler type marker {src.name}"
+    return #[]
+  if foundation.isSome && dst.name == OmegaChecks.InitPort.RandomState.refName then
+    let .opaqueInfo d := src | throw <| IO.userError "the standard generator reference must be opaque"
+    let .opaqueInfo ref := dst | throw <| IO.userError "expected an initialized official standard generator reference"
+    unless !d.isUnsafe && !ref.isUnsafe && (liftTerm d.value).equal OmegaChecks.InitPort.RandomState.refBody do
+      throw <| IO.userError "standard generator uses a different global"
+    return src.type.getUsedConstants ++ d.value.getUsedConstants
+  if let some owner := foundation.bind fun _ => OmegaChecks.InitPort.ReferenceSpecialization.consumerOwner? dst.name then
+    let .defnInfo d := src | throw <| IO.userError "expected strict reference consumer"
+    let .defnInfo ref := dst | throw <| IO.userError "expected official reference consumer"
+    let expected ← OmegaChecks.InitPort.ReferenceSpecialization.consumerBody reference reference ref
+    if owner != OmegaChecks.InitPort.BufferReference.owner && !(liftTerm d.value).eqv expected then
+      throw <| IO.userError s!"unexpected reference specialization for {src.name}"
+    requireSame reference src.name "specialized reference body"
+      (← OmegaChecks.InitPort.ReferenceSpecialization.restore reference owner (liftTerm d.value))
+      (← OmegaChecks.InitPort.ReferenceSpecialization.restore reference owner expected)
+    return src.type.getUsedConstants ++ d.value.getUsedConstants
   let mut deps := src.type.getUsedConstants
   match src, dst with
   | .thmInfo _, _ =>
@@ -107,6 +221,53 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
     unless (Kernel.check reference {} dst.type).toOption.any (same reference (.sort .zero)) do
       throw <| IO.userError s!"official declaration is not a proof for {src.name}"
   | .defnInfo x, .defnInfo y =>
+    if let some (strict, publicStrict) := foundation then
+      if OmegaChecks.InitPort.DynamicValue.isAlias (.defnInfo x) true then
+        let some publicName := OmegaChecks.InitPort.DynamicValue.operation? y.name | throw <| IO.userError "unexpected dynamic operation"
+        OmegaChecks.InitPort.LogicalHandle.checkOpaqueImplementation `Init.Dynamic publicName reference y (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
+      if x.safety == .unsafe && y.name == `Lean.Macro.getMethodsImp then
+        OmegaChecks.InitPort.LogicalHandle.checkOpaqueImplementation `Init.Prelude `Lean.Macro.getMethods reference y (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
+      if x.safety == .unsafe && y.name == OmegaChecks.InitPort.ReferenceModify.implementation then
+        OmegaChecks.InitPort.ReferenceModify.checkImplementation reference y (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
+      if let some api := (OmegaChecks.InitPort.LogicalHandle.implementation? y.name).filter (fun _ => x.safety == .unsafe) then
+        OmegaChecks.InitPort.LogicalHandle.checkImplementation api reference y (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
+      if OmegaChecks.InitPort.TypeName.isUnsafeConversion (.defnInfo x) true &&
+          OmegaChecks.InitPort.TypeName.isUnsafeConversion (.defnInfo y) false then
+        OmegaChecks.InitPort.TypeName.check strict publicStrict reference y.name (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
+    if let some (strict, _) := foundation then
+      if y.name == `unsafeBaseIO then
+        unless OmegaChecks.InitPort.EffectRun.isOriginal src true && OmegaChecks.InitPort.EffectRun.isOriginal dst false do
+          throw <| IO.userError "unexpected unsafeBaseIO implementation"
+        OmegaChecks.InitPort.EffectRun.checkWorld strict.toKernelEnv
+        return deps ++ x.value.getUsedConstants
+    if foundation.isSome && y.name == `withPtrAddrUnsafe then
+      unless OmegaChecks.InitPort.Address.isOriginal src true && OmegaChecks.InitPort.Address.isOriginal dst false do
+        throw <| IO.userError "unexpected pinned unsafe address callback"
+      OmegaChecks.InitPort.Address.check reference y (mkConst `withPtrAddr (y.levelParams.map Level.param))
+      return deps ++ x.value.getUsedConstants
+    if foundation.isSome && (OmegaChecks.InitPort.ArrayMap.reference? y.name).isSome then
+      OmegaChecks.InitPort.ArrayMap.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
+    if foundation.isSome && y.name == `Array.modifyMUnsafe then
+      OmegaChecks.InitPort.ArrayModify.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
+    if foundation.isSome && y.name == `Array.anyMUnsafe then
+      OmegaChecks.InitPort.ArrayWord.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
+    if foundation.isSome && OmegaChecks.InitPort.WordFold.supported y.name then
+      OmegaChecks.InitPort.WordFold.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
+    if foundation.isSome && OmegaChecks.InitPort.WordForIn.supported y.name then
+      OmegaChecks.InitPort.WordForIn.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
+    if foundation.isSome && x.safety == .unsafe && OmegaChecks.InitPort.SyntaxArray.supported y.name then
+      OmegaChecks.InitPort.SyntaxArray.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
     unless x.safety == y.safety do
       throw <| IO.userError s!"definition safety mismatch for {src.name}"
     if x.safety != .safe then
@@ -117,9 +278,51 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       return deps ++ x.value.getUsedConstants
     deps := deps ++ x.value.getUsedConstants
     compareDefinitionBody
+  | .defnInfo x, .opaqueInfo y =>
+    if let some (strict, publicStrict) := foundation then
+      if y.name == `TypeNameData && x.safety == .safe then
+        OmegaChecks.InitPort.TypeName.check strict publicStrict reference y.name (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
+      if let some api := (OmegaChecks.InitPort.LogicalHandle.forDecl? y.name).filter (fun api => y.name == api.pointed && x.safety == .safe) then
+        if !isPrivateName api.pointed then
+          unless (← lookup publicStrict x.name).isAxiom && getReducibilityStatusCore strict x.name == .irreducible do
+            throw <| IO.userError s!"public handle carrier {x.name} is not sealed"
+        OmegaChecks.InitPort.LogicalHandle.checkBody api strict publicStrict reference y.name liftTerm x.value
+        return deps ++ x.value.getUsedConstants
+      if y.name == `Void.nonemptyType && x.safety == .safe then
+        unless (← lookup publicStrict x.name).isAxiom && getReducibilityStatusCore strict x.name == .irreducible do
+          throw <| IO.userError "public state carrier is not abstract"
+        OmegaChecks.InitPort.StateToken.checkAbstraction strict
+        OmegaChecks.InitPort.StateToken.checkAbstraction publicStrict
+        OmegaChecks.InitPort.StateToken.check reference y (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
+    compareDefinitionBody
+    deps := deps ++ x.value.getUsedConstants
+  | .opaqueInfo x, .opaqueInfo y =>
+    if let some (strict, publicStrict) := foundation then
+      if y.name == `ST.Prim.Ref.swap then
+        OmegaChecks.InitPort.ReferenceSwap.check strict publicStrict reference y (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
+      if let some api := (OmegaChecks.InitPort.LogicalHandle.forDecl? y.name).filter (fun api => y.name == api.allocator && !x.isUnsafe) then
+        OmegaChecks.InitPort.LogicalHandle.checkBody api strict publicStrict reference y.name liftTerm x.value
+        return deps ++ x.value.getUsedConstants
+    if foundation.isSome && !x.isUnsafe && y.name == `Void.mk then
+      OmegaChecks.InitPort.StateToken.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
+    if foundation.isSome && !x.isUnsafe && OmegaChecks.InitPort.FloatFraction.supported y.name then
+      OmegaChecks.InitPort.FloatFraction.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
+    if foundation.isSome && y.name == `Array.get!InternalBorrowed then
+      OmegaChecks.InitPort.BorrowedIndex.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
+    compareDefinitionBody
+    deps := deps ++ x.value.getUsedConstants
   | .defnInfo _, _ | .opaqueInfo _, _ =>
     compareDefinitionBody
     deps := deps ++ (src.value! (allowOpaque := true)).getUsedConstants
+  | .quotInfo x, .quotInfo y =>
+    unless OmegaChecks.InitPort.NativeQuot.isSupport `OmegaInit.Prelude x.name && x == y do
+      throw <| IO.userError s!"invalid native quotient interface {src.name}"
   | .inductInfo x, .inductInfo y =>
     unless x.numParams == y.numParams && x.numIndices == y.numIndices &&
         x.numNested == y.numNested && x.all.map rename == y.all &&
@@ -146,15 +349,28 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
 where
   compareDefinitionBody : IO Unit := do
     let value := src.value! (allowOpaque := true)
-    let body := translate rename (value.instantiateLevelParams src.levelParams (dst.levelParams.map Level.param))
-    if let .error _ := Kernel.check reference {} body then
-      throw <| IO.userError s!"ill-typed translated definition for {src.name}"
+    let raw := value.instantiateLevelParams src.levelParams (dst.levelParams.map Level.param)
+    let body := translate rename raw
+    -- A copy of a checked official body already has its official type. Comparing
+    -- it directly also avoids evaluating large closed computations on both sides.
+    let original := match src, dst with
+      | .defnInfo _, .defnInfo y => some y.value
+      | .opaqueInfo x, .opaqueInfo y =>
+        if x.isUnsafe == y.isUnsafe then some y.value else none
+      | _, _ => none
+    let identical : Bool := original.any (fun target => sameLiterals reference body target ||
+      foundation.any (fun pair => sameClosedProofs pair.1 reference rename raw body target))
+    if !identical then
+      if let .error err := Kernel.check reference {} body then
+        throw <| IO.userError s!"ill-typed translated definition for {src.name}: {← (err.toMessageData {}).toString}"
     let target := mkConst dst.name (dst.levelParams.map Level.param)
     let mut hidden := false
     if let some (_, publicStrict) := foundation then
-      let exposed ← lookup publicStrict src.name
-      hidden := exposed.isAxiom || exposed matches .opaqueInfo _
-    if !same reference body target then
+      if !isPrivateName src.name then
+        let exposed ← lookup publicStrict src.name
+        hidden := exposed.isAxiom || exposed matches .opaqueInfo _
+    let sameBody := identical || (original.any fun value => same reference body value)
+    if !sameBody && !same reference body target then
       unless hidden do
         throw <| IO.userError s!"computed definition mismatch for {src.name}"
       checkEquation reference src dst body
@@ -162,30 +378,76 @@ where
     if let some (strict, _) := foundation then
       if src matches .defnInfo _ then
         if hidden && getReducibilityStatusCore strict src.name != .irreducible then
-          throw <| IO.userError s!"legacy importer can unfold the hidden implementation of {src.name}"
+          -- A physical kernel primitive retains the pinned legacy body and its original
+          -- transparency. Compare the literal terms before admitting that behavior.
+          unless src.name == dst.name && src.type.equal dst.type &&
+              original.any (·.equal value) &&
+              getReducibilityStatusCore strict src.name == getReducibilityStatusCore reference dst.name do
+            throw <| IO.userError s!"legacy importer can unfold the hidden implementation of {src.name}"
 
-/-- Compare every binding and every strict foundation dependency exposed by its interface. -/
-def check (strict publicStrict reference : Environment) (bindings : Array (Name × Name)) : IO Unit := do
+abbrev CheckedSites := Std.HashSet (Name × Name)
+
+/-- Reuse checked dependencies across batches in the same three environments.
+The owning module is part of the key for independently generated declarations. -/
+def checkSites (strict publicStrict reference : Environment) (bindings : Array (Name × Name))
+    (checked : CheckedSites) : IO CheckedSites := do
+  let physical ← OmegaChecks.InitCompiler.naturalNames
   let mut pending := bindings
-  let mut seen : NameSet := {}
+  let mut seen := checked
   while let some (name, owner) := pending.back? do
     pending := pending.pop
-    unless seen.contains name do
-      seen := seen.insert name
-      let dst := official name
-      unless declaredIn reference dst owner do
-        throw <| IO.userError s!"upstream module mismatch for {name}"
-      let deps ← compare reference official (← lookup strict name) (← lookup reference dst)
-        (some (strict, publicStrict))
+    unless seen.contains (name, owner) do
+      seen := seen.insert (name, owner)
+      if let some (original, _) := OmegaChecks.InitPort.ReferenceSpecialization.supportOwners.find? (fun (n, o) =>
+          o == owner && InitKernelPort.portName n == name) then
+        let models ← OmegaChecks.InitPort.ReferenceSpecialization.models reference reference owner
+        let some expected := models.find? (·.name == original)
+          | throw <| IO.userError s!"missing pinned reference specialization {name}"
+        let actual ← lookup strict name
+        let tr := InitKernelPort.translate InitKernelPort.portName
+        unless strict.getModuleIdxFor? name == strict.getModuleIdx? (owner.replacePrefix `Init `OmegaInit) &&
+            !publicStrict.contains name && !actual.isUnsafe && !actual.isPartial && actual.levelParams == expected.levelParams &&
+            actual.type.equal (tr expected.type) && (actual matches .opaqueInfo _) == (expected matches .opaqueInfo _) &&
+            (actual.value? (allowOpaque := true)).any (·.equal (tr (expected.value! (allowOpaque := true)))) do
+          throw <| IO.userError s!"invalid specialized reference operation {name}"
+        -- Check the dependencies of the specialized read or update just like a public body.
+        for dep in actual.type.getUsedConstants ++ (actual.value! (allowOpaque := true)).getUsedConstants do
+          let mod ← ownerOf strict dep
+          unless mod.getRoot == `OmegaInit do throw <| IO.userError s!"invalid reference dependency {dep}"
+          pending := pending.push (dep, mod.replacePrefix `OmegaInit `Init)
+        continue
+      if let some api := (OmegaChecks.InitPort.LogicalHandle.forToken? name).filter (·.owner == owner) then
+        OmegaChecks.InitPort.LogicalHandle.checkToken api strict publicStrict reference (translate (official strict))
+        continue
+      let deps ← if let some rule := OmegaChecks.InitPort.LawfulLoop.rules.find? (fun r =>
+          owner == r.owner && InitKernelPort.portName r.helper == name) then
+        OmegaChecks.InitPort.checkCertifiedFunction strict reference (translate (official strict)) owner name rule.reference rule.agreement
+      else if let some rule := OmegaChecks.InitPort.PatternMatch.rules.find? (fun r =>
+          owner == r.owner && InitKernelPort.portName r.helper == name) then
+        OmegaChecks.InitPort.checkCertifiedFunction strict reference (translate (official strict)) owner name rule.reference rule.agreement
+      else do
+        let dst := official strict name
+        unless declaredIn reference dst owner do
+          throw <| IO.userError s!"upstream module mismatch for {name}"
+        compare reference (official strict) (← lookup strict name) (← lookup reference dst)
+          (some (strict, publicStrict))
       for dep in deps do
         let owner ← ownerOf strict dep
         let target := match owner.getRoot with
           | `OmegaInit => owner.replacePrefix `OmegaInit `Init
           | `OmegaMathlib => owner.replacePrefix `OmegaMathlib `Mathlib
           | _ => Name.anonymous
-        if target.isAnonymous || dep.getRoot != `Omega then
+        if target.isAnonymous || ((privateToUserName dep).getRoot != `Omega &&
+            !OmegaChecks.InitPort.NativeQuot.isSupport owner dep && !OmegaChecks.InitCompiler.RootNames.isPrimitive owner dep &&
+            !(owner == `OmegaInit.Prelude && physical.contains dep)) then
           throw <| IO.userError s!"dependency outside the standard interface: {name} uses {dep} in {owner}"
         pending := pending.push (dep, target)
+  return seen
+
+/-- Compare every binding and every strict foundation dependency exposed by its interface. -/
+def check (strict publicStrict reference : Environment) (bindings : Array (Name × Name)) : IO Unit := do
+  let sites ← checkSites strict publicStrict reference bindings {}
+  let seen := NameSet.ofList (sites.toList.map Prod.fst)
   let roots := NameSet.ofList (bindings.toList.map Prod.fst)
   IO.println s!"Verified the mathematical interfaces of {roots.size} roots and {seen.size} distinct declarations in their closure."
 
@@ -204,18 +466,11 @@ private def consumerAliases (env : Environment) (owner : Name) : IO (Array Alias
   let some idx := env.getModuleIdx? owner | throw <| IO.userError s!"missing consumer module {owner}"
   return (aliasExtension.getModuleEntries env idx).filter fun (name, _) => publicName name
 
-/-- Restore imported name resolution from the isolated environment's compiled alias entries. -/
-private def withImportedAliases (env : Environment) : Environment := Id.run do
-  let mut aliases : AliasState := {}
-  for idx in [:env.header.modules.size] do
-    aliases := (aliasExtension.getModuleEntries env idx).foldl addAliasEntry aliases
-  return aliasExtension.setState env aliases.switch
-
 private def checkConsumerAliases (strict reference : Environment) (rename : Name → Name)
     (modules : Array Name) : IO (Array Name) := do
   let mut targets := #[]
-  let sourceEnv := withImportedAliases strict
-  let targetEnv := withImportedAliases reference
+  let sourceEnv := ModuleSurface.withImportedAliases strict
+  let targetEnv := ModuleSurface.withImportedAliases reference
   for owner in modules do
     OmegaChecks.FieldMethods.check sourceEnv targetEnv owner rename
     let source ← consumerAliases strict owner
@@ -434,11 +689,12 @@ private def sharedConsumerNames (env other : Environment) (modules : Array Name)
 The frozen inventory requires correspondence for every included shared declaration and
 compiler provenance for every one-sided declaration. -/
 def checkConsumers (strict publicStrict reference : Environment) (modules : Array Name)
-    (strictSearchPath : System.SearchPath) (inventory : Array FrozenInventory := #[]) : IO (Array (String × String)) := do
+    (strictSearchPath : System.SearchPath) (inventory : Array FrozenInventory := #[])
+    (isolated? : Option Environment := none) : IO (Array (String × String)) := do
   let rename := fun (name : Name) => Id.run do
     let some idx := strict.getModuleIdxFor? name | return name
     let owner := strict.header.modules[idx]!.module
-    if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then return official name
+    if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then return official strict name
     return name
   let officialOnly ← frozenRoots reference modules inventory (·.officialOnly)
   let strictOnly ← frozenRoots strict modules inventory (·.strictOnly)
@@ -481,7 +737,15 @@ def checkConsumers (strict publicStrict reference : Environment) (modules : Arra
           if modules.contains depOwner then pending := pending.push dep
           else if depOwner.getRoot == `OmegaMath || depOwner.getRoot == `D5 then
             throw <| IO.userError s!"project dependency missing from isolated consumer check: {depOwner}"
-  check strict publicStrict reference basis
+  let isolated := isolated?.getD strict
+  let bindings ← basis.mapM fun (name, owner) => do
+    let raw := if isolated.contains name then name else name.replacePrefix `Omega .anonymous
+    let expectedOwner := if owner.getRoot == `Init then owner.replacePrefix `Init `OmegaInit
+      else owner.replacePrefix `Mathlib `OmegaMathlib
+    unless (← ownerOf isolated raw) == expectedOwner do
+      throw <| IO.userError s!"isolated source owner mismatch for {name}"
+    pure (raw, owner)
+  check isolated publicStrict reference bindings
   let mut generated ← checkDerived reference expected <|
     (consumerExports reference modules).filter fun name => !expected.contains name && !officialOnly.contains name
   unless officialOnly.isEmpty do

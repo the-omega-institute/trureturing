@@ -72,7 +72,7 @@ theorem u90_sq : spinorRing.eqv (spinorRing.square u90) i :=
 
 private theorem i_sq : spinorRing.eqv (spinorRing.square i) (spinorRing.neg spinorRing.one) :=
   let law := scalarRingLaws
-  trans law (alpha_sq law) (And.intro (law.refl _) (law.symm law.neg_zero))
+  QuadPoly.trans law (alpha_sq law) (And.intro (law.refl _) (law.symm law.neg_zero))
 
 private theorem neg_one_sq :
     spinorRing.eqv (spinorRing.square (spinorRing.neg spinorRing.one)) spinorRing.one :=
