@@ -45,6 +45,7 @@ public import OmegaInit.Data.Sum.Lemmas
 public import OmegaInit.Data.ULift
 public import OmegaInit.Ext
 public import OmegaInit.Grind.Lemmas
+public import OmegaInit.Grind.Module.Basic
 public import OmegaInit.Grind.Norm
 public import OmegaInit.Grind.Order
 public import OmegaInit.Grind.PP

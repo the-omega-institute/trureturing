@@ -455,3 +455,8 @@ end Omega.Int
 
 port_proof Int.subNatNat.eq_1 using Omega.Int.subNatNat_eq_cases
 port_proof Ne.eq_1 by_reflexivity
+
+port_proof Int.natCast_zero by_reflexivity
+port_proof Int.natCast_one by_reflexivity
+port_proof Int.natCast_add by_reflexivity
+port_proof Int.natCast_add_one by_reflexivity
