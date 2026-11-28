@@ -11,8 +11,6 @@ import all OmegaInit.Prelude
 
 @[expose] public section
 
-attribute [local semireducible] Omega.Int.subNatNat
-
 namespace Omega.Int
 
 theorem nonneg_def {a : Int} : Iff (NonNeg a) (Exists (fun n : Nat => Eq a (ofNat n))) :=
@@ -146,8 +144,7 @@ theorem natAbs_mul_self {a : Int} : Eq (ofNat (a.natAbs.mul a.natAbs)) (a.mul a)
     (fun _ => rfl) (fun _ => rfl) a
 
 theorem ofNat_succ_pos (n : Nat) : (ofNat Nat.zero).lt (ofNat n.succ) :=
-  Nat.rec (motive := fun k => (ofNat Nat.zero).lt (ofNat k.succ))
-    (NonNeg.mk _) (fun _ _ => NonNeg.mk _) n
+  le.intro n (congrArg ofNat (Nat.add_comm Nat.zero.succ n))
 
 theorem natAbs_natCast (n : Nat) : Eq (ofNat n).natAbs n := Omega.rfl
 

@@ -24,10 +24,13 @@ namespace Int
 def negOfNat : Nat → Int := fun n =>
   Nat.rec (ofNat Nat.zero) (fun k _ => negSucc k) n
 
-/-- Non-truncating subtraction, by deleting a successor from both operands. -/
-@[no_expose] def subNatNat (m n : Nat) : Int :=
-  Nat.rec (motive := fun _ => Nat → Int) negOfNat
-    (fun a diff b => Nat.rec (ofNat (Nat.succ a)) (fun k _ => diff k) b) m n
+end Int
+end Omega
+
+port_definition Int.negOfNat.match_1
+port_definition Int.subNatNat
+
+namespace Omega.Int
 
 protected def neg : Int → Int := fun a =>
   Int.rec negOfNat (fun n => ofNat (Nat.succ n)) a
@@ -64,9 +67,4 @@ protected def le (a b : Int) : Prop := NonNeg (b.sub a)
 
 protected def lt (a b : Int) : Prop := (a.add (ofNat (Nat.succ Nat.zero))).le b
 
-attribute [irreducible] subNatNat
-
-end Int
-end Omega
-
-port_definition Int.negOfNat.match_1
+end Omega.Int
