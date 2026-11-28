@@ -42,6 +42,11 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
       ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromOpenRangeLoop,
       "For the natural successor and the comparison g k = false, the identity-monad loop satisfies its official step equation whenever the range is finite")
+  if owner == `Init.Data.Slice.Operations && [``Std.Slice.LawfulSliceSize,
+      ``Std.Slice.LawfulSliceSize.mk, ``Std.Slice.LawfulSliceSize.lawful].contains name then
+    return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
+      ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromSliceSizeLoop,
+      "The unrestricted default loop in the slice-size field computes the official length for every finite slice")
   if owner == `Init.Data.BitVec.Lemmas then
     if name == ``BitVec.getElem_of_getLsbD_eq_true then
       return ("(true = true) = True", ``OmegaChecks.InitBoundaries.BooleanReflection.successfulBitRead,

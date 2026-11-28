@@ -301,6 +301,19 @@ def limitedOmniscienceFromSliceReverse (collect : type_of% (@Std.Slice.toListRev
   letI := ToIterator.of (γ := Slice (Iter (α := α) β)) α (fun s => s.internalRepresentation)
   exact correct (Slice.mk it)
 
+/-- The default loop occurring in the slice-size field need only reproduce lengths on
+finite slices for the unrestricted field operand to decide existence in a Boolean stream. -/
+def limitedOmniscienceFromSliceSizeLoop (loop : type_of% (@Std.IteratorLoop.defaultImplementation.{0,0,0,0}))
+    (correct : ∀ {γ α β : Type} [ToIterator (Slice γ) Id α β] [inst : Iterator α Id β] [Finite α Id]
+      (s : Slice γ), (letI := @loop β α Id Id _ inst; (ToIterator.iter s).length) = s.toList.length)
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromLength (f := f) (fun {α β} [inst : Iterator α Id β] it =>
+    letI := @loop β α Id Id _ inst
+    it.length)
+  intro α β inst finite it
+  letI := ToIterator.of (γ := Slice (Iter (α := α) β)) α (fun s => s.internalRepresentation)
+  exact correct (Slice.mk it)
+
 /-- Specializing monadic collection to the identity monad preserves the unrestricted pure interface. -/
 def limitedOmniscienceFromMonadicCollector (collect : type_of% (@Std.IterM.toList.{0,0}))
     (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : IterM (α := α) Id β),
