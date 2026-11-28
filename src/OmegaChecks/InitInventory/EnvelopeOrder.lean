@@ -123,9 +123,40 @@ local instance xorNatModule : NatModule Bool where
 theorem propextFromModuleLift (respect : type_of% @IntModule.OfNatModule.instLEQOfOrderedAdd._proof_3.{0}) :
     type_of% @propext := by
   intro p q h
-  exact @respect Bool xorNatModule (testLE p q) (testPreorder p q) (testOrdered h)
+  let ordered : @OrderedAdd Bool (@instHAdd _ xorNatModule.toAddCommMonoid.toAdd)
+      (testLE p q) (testPreorder p q) :=
+    @OrderedAdd.mk Bool (@instHAdd _ xorNatModule.toAddCommMonoid.toAdd) (testLE p q) (testPreorder p q)
+      (fun {a b} c => by cases a <;> cases b <;> cases c <;> first | exact Iff.rfl | exact h | exact h.symm)
+  exact @respect Bool xorNatModule (testLE p q) (testPreorder p q) ordered
     (false,false) (true,false) (true,true) (true,false) ⟨false,rfl⟩ ⟨false,rfl⟩
 
+/-- Propositional extensionality suffices to lift the representative comparison at every universe. -/
+theorem moduleLiftFromPropext (ext : type_of% @propext) :
+    type_of% @IntModule.OfNatModule.instLEQOfOrderedAdd._proof_3.{u} := by
+  intro α module order preorder ordered ⟨a, b⟩ ⟨e, f⟩ ⟨c, d⟩ ⟨g, h⟩ ⟨k, first⟩ ⟨l, second⟩
+  change a + d + k = b + c + k at first
+  change e + h + l = f + g + l at second
+  change (a + f ≤ b + e) = (c + h ≤ d + g)
+  have regroup (a b c d x y : α) :
+      (a + b) + ((c + x) + (d + y)) = ((a + c) + x) + ((b + d) + y) :=
+    let rotate := congrArg (a + ·) (AddCommMonoid.add_left_comm b (c + x) (d + y))
+    let finish := congr (congrArg (· + ·) (AddCommMonoid.add_assoc a c x).symm)
+      (AddCommMonoid.add_assoc b d y).symm
+    (AddCommMonoid.add_assoc a b ((c + x) + (d + y))).trans
+      (rotate.trans ((AddCommMonoid.add_assoc a (c + x) (b + (d + y))).symm.trans finish))
+  have flipPairs (a b c d x y : α) :
+      ((a + c) + x) + ((b + d) + y) = ((c + a) + x) + ((d + b) + y) :=
+    congr (congrArg (· + ·) (congrArg (· + x) (AddCommMonoid.add_comm a c)))
+      (congrArg (· + y) (AddCommMonoid.add_comm b d))
+  have left : (a + f) + ((d + k) + (g + l)) = (c + h) + ((b + k) + (e + l)) :=
+    (regroup a f d g k l).trans ((congr (congrArg (· + ·) first) second.symm).trans
+      ((flipPairs b e c h k l).trans (regroup c h b e k l).symm))
+  have right : (b + e) + ((d + k) + (g + l)) = (d + g) + ((b + k) + (e + l)) :=
+    (regroup b e d g k l).trans ((flipPairs b e d g k l).trans (regroup d g b e k l).symm)
+  apply ext
+  exact (OrderedAdd.add_le_left_iff ((d + k) + (g + l))).trans
+    ((Iff.of_eq (congr (congrArg (· ≤ ·) left) right)).trans
+      (OrderedAdd.add_le_left_iff ((b + k) + (e + l))).symm)
 
 /-- Cancellation identifies the diagonal Boolean representative with zero. -/
 private theorem diagonalEq {A : Type} (mk : Bool × Bool → A)

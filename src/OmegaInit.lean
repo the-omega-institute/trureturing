@@ -47,8 +47,10 @@ public import OmegaInit.Data.ULift
 public import OmegaInit.Ext
 public import OmegaInit.Grind.Lemmas
 public import OmegaInit.Grind.Module.Basic
+public import OmegaInit.Grind.Module.Envelope
 public import OmegaInit.Grind.Norm
 public import OmegaInit.Grind.Order
+public import OmegaInit.Grind.Ordered.Module
 public import OmegaInit.Grind.PP
 public import OmegaInit.Grind.Ring.CommSolver
 public import OmegaInit.Grind.Ring.Envelope
