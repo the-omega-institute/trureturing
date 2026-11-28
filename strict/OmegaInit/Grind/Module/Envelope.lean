@@ -77,6 +77,10 @@ moduleOrderFromPropext reconstructs the entire pinned LE instance with its binar
 quotient lift. The bare LE type also admits the constant-false comparison.
 The public types of instIsPreorderQ and instOrderedAddQ also fix that comparison
 at arbitrary quotient inputs. -/
+/- instIsLinearPreorderQ additionally assumes a linear preorder on the base.
+LinearEnvelopeOrder.propextFromLinearLift uses a total relation on Nat whose
+comparisons at (1,0) and (2,1) reduce to any two equivalent propositions.
+Its converse linearLiftFromPropext constructs precisely the restricted coherence. -/
 /- The lifts nsmul, zsmul, add, sub and neg require related pairs to have equal
 classes. Their equations and the IntModule and ordered instances depend on
 those lifts. Q.exact and toQ_inj remain open under the zero-axiom requirement. -/
