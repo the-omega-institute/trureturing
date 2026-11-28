@@ -176,7 +176,7 @@ theorem mixture_fusion_local_subadditivity
   have ht5 : t ^ 5 = ε := by
     calc
       t ^ 5 = Real.rpow ε ((1 / 5 : ℝ) * (5 : ℝ)) := by
-        rw [Real.rpow_mul hε0.le, Real.rpow_natCast]
+        exact (Real.rpow_mul_natCast hε0.le (1 / 5 : ℝ) 5).symm
       _ = ε := by norm_num
   exact mixture_fusion_bound_fifth_power w p v r t hw0 hw1 hv0 hv1 hp0 hp1 hr0 hr1 ht
     (by simpa only [ht5] using hε)
