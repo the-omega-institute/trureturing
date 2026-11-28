@@ -1,0 +1,1 @@
+{"statement_id":"sha256:29b064b0f7cf246fa9accdf2a6e121a57ebd0a1354b8b74c9731f921536adbad","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:Divergence),23:ChiSquareBilinearFusion),21:bilinear_fusion_bound)","kind":"theorem","libraries":["Batteries","Init","Mathlib","OmegaMath"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
