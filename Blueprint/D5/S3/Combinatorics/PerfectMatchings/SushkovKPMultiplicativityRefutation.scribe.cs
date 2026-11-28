@@ -26,6 +26,9 @@ internal sealed class SushkovKPMultiplicativityRefutationDocument : IScribeDocum
                     Paragraph(Text("Set a(∅) = a((1)) = 1 and set a(ρ) = 0 in every degree at least two. The two supported partitions have z(ρ) = 1, so the weighted Frobenius components are those of 1 + p₁, giving τ(t) = 1 + t₁. The part (1) forces the multiplicative value for size one to be 1. The coefficient of (1,1) is zero although the square of that value is one.")),
                     Paragraph(Text("Put A = 1 + t₁ and B = 1 + s₁. Clearing z⁻² from the shifted product gives (Az − 1)(Bz + 1). The residue is coefficient one of this polynomial times the full exponential. Its value is A − B − (t₁ − s₁) = 0 because the exponential has constant coefficient one and linear coefficient t₁ − s₁. In weight zero the two input pairs (0,1) and (1,0) cancel. Weight one uses (1,1), and every higher weight requires a zero input component.")),
                     Paragraph(Text("Classifying all coefficient families giving KP tau functions remains open here."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sushkov-2026-kp-multiplicativity-necessity"),
+                    ResolutionKind.Refuted))),
         []));
 }

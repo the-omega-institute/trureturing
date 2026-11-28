@@ -26,6 +26,10 @@ Lean statement: `D5/S3/Combinatorics/PerfectMatchings/SushkovKPMultiplicativityR
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PerfectMatchings/SushkovKPMultiplicativityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sushkov-2026-kp-multiplicativity-necessity` (refuted) by `D5/S3/Combinatorics/PerfectMatchings/SushkovKPMultiplicativityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sushkov-2026-kp-multiplicativity-necessity","declaration_gid":"D5/S3/Combinatorics/PerfectMatchings/SushkovKPMultiplicativityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
