@@ -55,6 +55,8 @@ local notation "σ" => standardLift lattice g g_cube g_isometry
 local notation "ζ" => (ThirdTwistedChargeCocycle.zeta : ℂ)
 local notation "C" => HVertexOperator.coeff
 
+private abbrev SourceGrade (n : ℤ) : Type := ↥(LatticePositiveEnergy.grade lattice n)
+
 private theorem source_grade_iff (n : ℤ) (a : NativeStates) :
     L₀ a = (n : ℂ) • a ↔ a ∈ grade lattice n :=
   actualL0_eigen_iff_grade lattice (actualInverse lattice)
@@ -85,7 +87,7 @@ private def bpzReadout (n : ℤ) (w : ℝ) (k : ℤ)
   let term (j : ℕ) : grade lattice n →ₗ[ℂ] State :=
     (LinearMap.applyₗ (R := ℂ) u.val).comp
       ((LinearMap.proj (-k - 6 * (n.toNat : ℤ) + 3 * (j : ℤ))).comp
-        (C.comp (nativeField.comp ((L₁ ^ j).comp (grade lattice n).subtype))))
+        ((C).comp (nativeField.comp ((L₁ ^ j).comp (grade lattice n).subtype))))
   let readout := (-1 : ℂ) ^ n.toNat • ∑ j ∈ Finset.range (n.toNat + 1),
     (j.factorial : ℂ)⁻¹ • term j
   exact readout.codRestrict _ (fun a => by
@@ -150,7 +152,7 @@ theorem dualField_homogeneous (a : NativeStates) (d : ℕ) (ha : L₀ a = (d : �
   let u : grade lattice (d : ℤ) := ⟨a, (source_grade_iff (d : ℤ) a).mp
     (by simpa only [Int.cast_natCast] using ha)⟩
   have h : carrierEnergyDecomposition lattice a =
-      DirectSum.lof ℂ ℤ (grade lattice) (d : ℤ) u := by
+      DirectSum.lof ℂ ℤ SourceGrade (d : ℤ) u := by
     apply (carrierEnergyDecomposition lattice).symm.injective
     rw [LinearEquiv.symm_apply_apply]
     exact (DirectSum.coeLinearMap_lof (grade lattice) (d : ℤ) u).symm
@@ -198,13 +200,13 @@ theorem dualField_inResidue (a : NativeStates) (s : ℤ) (ha : σ a = ζ ^ s •
   let read := ((LinearMap.proj k).comp C).comp
     (DirectSum.toModule ℂ ℤ (VertexOperator ℂ RestrictedDual) gradedField)
   change read x = 0
-  have hsum : (∑ n ∈ x.support, DirectSum.lof ℂ ℤ (grade lattice) n (x n)) = x := by
+  have hsum : (∑ n ∈ x.support, DirectSum.lof ℂ ℤ SourceGrade n (x n)) = x := by
     simpa only [DirectSum.lof_eq_of] using DirectSum.sum_support_of x
   rw [← hsum, map_sum]
   apply Finset.sum_eq_zero
   intro n _
   change C (DirectSum.toModule ℂ ℤ (VertexOperator ℂ RestrictedDual) gradedField
-    (DirectSum.lof ℂ ℤ (grade lattice) n (x n))) k = 0
+    (DirectSum.lof ℂ ℤ SourceGrade n (x n))) k = 0
   rw [DirectSum.toModule_lof]
   change coeff (x n).val n.toNat (source_grade_weight n (x n)) k = 0
   apply DirectSum.linearMap_ext

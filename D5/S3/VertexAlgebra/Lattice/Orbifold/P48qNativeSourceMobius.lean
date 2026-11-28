@@ -256,7 +256,8 @@ theorem sourceLOne_dividedAd_modes (a : Carrier lattice) (d : ℤ)
     rw [← hArg]
     exact Ring.map_choose (Int.castRingHom ℂ) _ _
   rw [coefficient, if_pos (Nat.le_of_lt_succ (Finset.mem_range.mp hj))]
-  simp only [hChoose, div_eq_mul_inv, mul_comm]
+  rw [hChoose]
+  simp only [div_eq_mul_inv, mul_comm]
 
 end
 end D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeSourceMobius

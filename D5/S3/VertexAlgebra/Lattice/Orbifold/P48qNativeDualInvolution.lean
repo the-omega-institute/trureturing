@@ -107,7 +107,7 @@ theorem doubleBPZCoeff_eq_native (a : NativeStates) (d : ℕ) (k : ℤ) :
     doubleBPZCoeff a d k =
         ∑ j ∈ Finset.range (d + 1), ∑ i ∈ Finset.range (d - j + 1), summand j i := by
       unfold doubleBPZCoeff
-      simp_rw [Finset.smul_sum, smul_smul, mul_assoc]
+      simp only [Finset.smul_sum, smul_smul, mul_assoc]
       apply Finset.sum_congr rfl
       intro j hj
       have hj' : j ≤ d := by
@@ -146,7 +146,7 @@ theorem doubleBPZCoeff_eq_native (a : NativeStates) (d : ℕ) (k : ℤ) :
     _ = C (nativeField a) k := by
       rw [Finset.sum_range_succ']
       simp only [pow_succ (0 : ℂ), mul_zero, zero_smul, Finset.sum_const_zero,
-        Nat.factorial_zero, Nat.cast_one, inv_one, pow_zero, one_mul, one_smul, add_zero,
+        Nat.factorial_zero, Nat.cast_one, inv_one, pow_zero, one_mul, one_smul, add_zero, zero_add,
         mode, Module.End.one_apply, Nat.cast_zero]
 
 private theorem sourceLOne_pow_nat_weight (a : NativeStates) (d j : ℕ)
