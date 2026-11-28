@@ -49,7 +49,7 @@ theorem h71_eq_h46plus {L : ℕ} (hL : 5 ≤ L) (Δ : ℂ) (j : Fin L) :
     h71 Δ j = h46plus Δ j := by
   obtain ⟨hlinear, hsquare⟩ := ladder_density_parts hL j
   rw [h46plus_eq_h46minus_neg hL, h46minus, neg_smul, sub_neg_eq_add,
-    hlinear, hsquare, smul_add, h71, mul_add, mul_add, Matrix.mul_smul, Matrix.mul_smul]
+    hsquare, hlinear, smul_add, h71, mul_add, mul_add, Matrix.mul_smul, Matrix.mul_smul]
   ac_rfl
 
 def deltaH {L : ℕ} (μ v₀ : ℂ) (j k : Fin L) : Op L :=
@@ -86,6 +86,7 @@ theorem staggered_last_pair {L : ℕ} (hL : 2 ≤ L) (he : Even L) :
   obtain ⟨m, hm⟩ := he
   dsimp only
   rw [(staggered_pair_indices _).1, (staggered_pair_indices _).2]
+  change 2 * (L / 2 - 1) + 1 = L - 1 ∧ (2 * (L / 2 - 1) + 2) % L = 0
   exact ⟨by omega, by rw [show 2 * (L / 2 - 1) + 2 = L by omega, Nat.mod_self]⟩
 
 def staggeredH (L : ℕ) (μ v₀ : ℂ) : Op L :=
@@ -146,10 +147,17 @@ private theorem delta_kills {L : ℕ} (hL : 5 ≤ L) {x : Config L} (hx : Jammed
     (μ v₀ : ℂ) (j k : Fin L) : Kills (deltaH μ v₀ j k) x := by
   have hX : Kills (T j) x := jammed_kills hL j hx
   have hY : Kills (T k) x := jammed_kills hL k hx
+  have hXX := kills_square hX
+  have hYY := kills_square hY
   unfold deltaH
-  dsimp only
-  repeat first | exact hX | exact hY | apply kills_add | apply kills_smul |
-    apply kills_mul | apply kills_square
+  refine kills_add (kills_add (kills_add (kills_add (kills_add (kills_add ?_ ?_) ?_) ?_) ?_) ?_) ?_
+  · exact kills_smul (kills_mul hY hX)
+  · exact kills_smul (kills_mul hX hY)
+  · exact kills_smul (kills_mul hXX hYY)
+  · exact kills_smul (kills_mul hY hXX)
+  · exact kills_smul (kills_mul hYY hX)
+  · exact kills_smul (kills_mul hX hYY)
+  · exact kills_smul (kills_mul hXX hY)
 
 /-- The normalized density sum in Eq. (57) annihilates the same jammed word. -/
 theorem staggered_kills {L : ℕ} (hL : 5 ≤ L) {x : Config L} (hx : Jammed x)
@@ -217,8 +225,20 @@ theorem staggered_preserves_charge {L : ℕ} (hL : 5 ≤ L) (μ v₀ : ℂ) :
   apply charge_add (ordinary_preserves_charge hL (Complex.cos μ)).1
   apply charge_sum
   intro n
+  have hX := T_preserves_charge hL (staggeredPair n).1
+  have hY := T_preserves_charge hL (staggeredPair n).2
+  have hXX := charge_mul hX hX
+  have hYY := charge_mul hY hY
   simp only [deltaH, pow_two]
-  repeat first | apply T_preserves_charge hL | apply charge_add | apply charge_smul | apply charge_mul
+  refine charge_add (charge_add (charge_add (charge_add (charge_add
+    (charge_add ?_ ?_) ?_) ?_) ?_) ?_) ?_
+  · exact charge_smul (charge_mul hY hX)
+  · exact charge_smul (charge_mul hX hY)
+  · exact charge_smul (charge_mul hXX hYY)
+  · exact charge_smul (charge_mul hY hXX)
+  · exact charge_smul (charge_mul hYY hX)
+  · exact charge_smul (charge_mul hX hYY)
+  · exact charge_smul (charge_mul hXX hY)
 
 abbrev Sector (L q : ℕ) := {x : Config L // charge x = q}
 
@@ -255,7 +275,8 @@ def sectorEmbedding {L : ℕ} (hL : 12 ≤ L) : (Fin (blocks L) → Bool) ↪ Se
   inj' := by
     intro b c h
     apply (jamEmbedding hL).injective
-    exact Subtype.ext (congrArg Subtype.val h)
+    apply Subtype.ext
+    exact congrArg (fun s : Sector L (targetCharge L) => s.val) h
 
 /-- Every vertex in the constructed family has energy zero and a singleton
 component for each ordinary Hamiltonian and for every applicable staggered sum. -/
@@ -265,8 +286,10 @@ theorem tiled_singleton_components {L : ℕ} (hL : 12 ≤ L) :
       let x := sectorEmbedding hL b
       ket x.val ≠ 0 ∧ NP L *ᵥ ket x.val = (targetCharge L : ℂ) • ket x.val ∧
       (∀ Δ : ℂ,
-        (Kills (H46minus L Δ) x.val ∧ ((sectorSupport (H46minus L Δ)).connectedComponentMk x).supp = {x}) ∧
-        (Kills (H46plus L Δ) x.val ∧ ((sectorSupport (H46plus L Δ)).connectedComponentMk x).supp = {x}) ∧
+        (Kills (H46minus L Δ) x.val ∧
+          ((sectorSupport (H46minus L Δ)).connectedComponentMk x).supp = {x}) ∧
+        (Kills (H46plus L Δ) x.val ∧
+          ((sectorSupport (H46plus L Δ)).connectedComponentMk x).supp = {x}) ∧
         (Kills (H71 L Δ) x.val ∧ ((sectorSupport (H71 L Δ)).connectedComponentMk x).supp = {x})) ∧
       (Even L → ∀ μ v₀ : ℂ, Nonsingular μ v₀ →
         Kills (staggeredH L μ v₀) x.val ∧
@@ -279,7 +302,7 @@ theorem tiled_singleton_components {L : ℕ} (hL : 12 ≤ L) :
   have hn : ket x.val ≠ 0 := by
     intro h
     have hz := congrFun h x.val
-    simpa [ket] using hz
+    simp [ket] at hz
   have hq : NP L *ᵥ ket x.val = (targetCharge L : ℂ) • ket x.val := by
     rw [charge_eigenvalue, x.property]
   refine ⟨hn, hq, ?_, ?_⟩
