@@ -1,11 +1,10 @@
 module
 
 public import OmegaMath.InformationTheory.PottsFusion.Mixture
-public import Mathlib.Algebra.Group.Equiv.Basic
-public import Mathlib.Data.Fintype.Perm
-public import Mathlib.Tactic.FieldSimp
-public import Mathlib.Tactic.Linarith
-public import Mathlib.Tactic.Ring
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
 
 /-!
 Omega original.
@@ -14,6 +13,10 @@ Actual finite-channel bridge for the Potts fusion estimate.  A channel carries
 its row-stochastic table together with an actual homomorphism from input
 permutations to output permutations.  The posterior uses the uniform fallback
 on a zero output column, so all displayed identities retain singular columns.
+
+The local subadditivity conclusion is the finite-output form of Gu and
+Polyanskiy, arXiv:2303.14688v2, Lemma 20. It uses the conditionally independent
+outputs of one common uniform input.
 -/
 
 compile_only_with_mathlib
@@ -48,21 +51,18 @@ def productAction
     Equiv.Perm I →* Equiv.Perm (Y × Z) :=
   { toFun := fun σ => (a σ).prodCongr (b σ)
     map_one' := by
-      ext yz
-      simp
+      ext yz <;> simp
     map_mul' := by
       intro σ τ
-      ext yz
-      simp [map_mul] }
+      ext yz <;> simp [map_mul] }
 
 /-- Product of two channels using conditionally independent outputs. -/
 def star (P : FMSChannel I Y) (Q : FMSChannel I Z) : FMSChannel I (Y × Z) where
   table i yz := P.table i yz.1 * Q.table i yz.2
   nonnegative i yz := mul_nonneg (P.nonnegative i yz.1) (Q.nonnegative i yz.2)
   row_stochastic i := by
-    rw [Fintype.sum_prod_type]
-    rw [← Finset.sum_mul]
-    rw [P.row_stochastic, Q.row_stochastic, one_mul]
+    simp [Fintype.sum_prod_type, ← Finset.mul_sum, Q.row_stochastic,
+      P.row_stochastic]
   action := productAction P.action Q.action
   action_preserves σ i yz := by
     simp [productAction, P.action_preserves, Q.action_preserves]
@@ -95,6 +95,7 @@ private lemma input_card_pos : 0 < (Fintype.card I : ℝ) := by
 private lemma input_card_ne : (Fintype.card I : ℝ) ≠ 0 :=
   ne_of_gt input_card_pos
 
+omit [Nonempty I] in
 private lemma sum_column_nonneg (P : FMSChannel I Y) (y : Y) :
     0 ≤ ∑ i, P.table i y :=
   Finset.sum_nonneg (fun i _ => P.nonnegative i y)
@@ -107,7 +108,7 @@ private lemma margin_nonneg (P : FMSChannel I Y) (y : Y) :
 private lemma margin_sum_one (P : FMSChannel I Y) :
     ∑ y, channelMargin P.table y = 1 := by
   unfold channelMargin
-  rw [Finset.sum_div]
+  rw [← Finset.sum_div]
   rw [← Finset.sum_comm]
   simp only [P.row_stochastic, Finset.sum_const, Finset.card_univ,
     nsmul_eq_mul, mul_one]
@@ -136,7 +137,7 @@ private lemma posterior_sum_one (P : FMSChannel I Y) (y : Y) :
   by_cases hy : channelMargin P.table y = 0
   · simp [hy, input_card_ne]
   · simp only [hy, ↓reduceIte]
-    rw [Finset.sum_div]
+    rw [← Finset.sum_div]
     have hm : (∑ i, P.table i y) =
         (Fintype.card I : ℝ) * channelMargin P.table y := by
       unfold channelMargin
@@ -154,17 +155,11 @@ private lemma weighted_posterior_capacity (P : FMSChannel I Y) (y : Y) :
     simp only [hy, div_zero, mul_zero, sub_zero]
     simp [hzero]
   · have hn := input_card_ne (I := I)
-    have hm : (∑ i, P.table i y) =
-        (Fintype.card I : ℝ) * channelMargin P.table y := by
-      unfold channelMargin
-      field_simp
     unfold channelPosterior posteriorCapacity
     simp only [hy, ↓reduceIte]
-    rw [Finset.sum_div]
-    field_simp [hy, hn]
-    ring_nf
-    rw [← hm]
-    ring
+    simp_rw [div_pow]
+    rw [← Finset.sum_div]
+    field_simp [hy, hn] <;> ring
 
 /-- Exact ordinary capacity equals the posterior-mixture capacity. -/
 theorem capacity_eq_mixtureCapacity (P : FMSChannel I Y) :
@@ -174,34 +169,8 @@ theorem capacity_eq_mixtureCapacity (P : FMSChannel I Y) :
   unfold FMSChannel.capacity channelCapacity mixtureCapacity
   have hterm := fun y => weighted_posterior_capacity P y
   simp_rw [hterm]
-  rw [Finset.sum_sub_distrib, Finset.sum_mul]
+  rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
   rw [margin_sum_one P]
-  ring
-
-/-- The posterior is equivariant under the certified simultaneous action. -/
-private lemma posterior_action (P : FMSChannel I Y)
-    (σ : Equiv.Perm I) (y : Y) (i : I) :
-    channelPosterior P.table ((P.action σ) y) (σ i) =
-      channelPosterior P.table y i := by
-  have hmargin : channelMargin P.table ((P.action σ) y) = channelMargin P.table y := by
-    unfold channelMargin
-    congr 1
-    calc
-      (∑ j, P.table j ((P.action σ) y)) =
-          ∑ j, P.table (σ j) ((P.action σ) y) := by
-            symm
-            exact Equiv.sum_comp σ (fun j => P.table j ((P.action σ) y))
-      _ = ∑ j, P.table j y := by
-        apply Finset.sum_congr rfl
-        intro j _
-        exact P.action_preserves σ j y
-  unfold channelPosterior
-  rw [hmargin]
-  by_cases hy : channelMargin P.table y = 0
-  · simp [hy]
-  · simp only [hy, ↓reduceIte]
-    rw [P.action_preserves σ i y]
-    congr 2
 
 /-- A raw product overlap, before posterior normalization. -/
 def rawOverlap (P : FMSChannel I Y) (Q : FMSChannel I Z)
@@ -217,6 +186,7 @@ private def rawRatio (P : FMSChannel I Y) (Q : FMSChannel I Z)
     (σ : Equiv.Perm I) (y : Y) (z : Z) : ℝ :=
   rawOverlapSq P Q σ y z / rawOverlap P Q σ y z
 
+omit [Nonempty I] in
 private lemma raw_ratio_reindex (P : FMSChannel I Y) (Q : FMSChannel I Z)
     (σ : Equiv.Perm I) :
     ∑ yz : Y × Z, rawRatio P Q σ yz.1 yz.2 =
@@ -250,6 +220,12 @@ private lemma raw_ratio_reindex (P : FMSChannel I Y) (Q : FMSChannel I Z)
       rw [hnum, hden]
       rfl
 
+private lemma ratio_div_scale (a b k : ℝ) (hk : k ≠ 0) :
+    (a / k ^ 2) / (b / k) = (a / b) / k := by
+  by_cases hb : b = 0
+  · simp [hb]
+  · field_simp [hb, hk] <;> ring
+
 private lemma weighted_orbitFusion_raw (P : FMSChannel I Y) (Q : FMSChannel I Z)
     (y : Y) (z : Z) :
     channelMargin P.table y * channelMargin Q.table z *
@@ -260,63 +236,60 @@ private lemma weighted_orbitFusion_raw (P : FMSChannel I Y) (Q : FMSChannel I Z)
   by_cases hy : channelMargin P.table y = 0
   · have hp (i : I) := zero_column_entry P y hy i
     simp only [hy, zero_mul, sub_zero]
+    symm
     apply Finset.expect_eq_zero
-    intro σ hσ
-    unfold rawRatio rawOverlap rawOverlapSq
-    simp [hp]
+    intro σ _
+    simp [rawRatio, rawOverlap, rawOverlapSq, hp]
   · by_cases hz : channelMargin Q.table z = 0
     · have hq (i : I) := zero_column_entry Q z hz i
-      simp only [hz, mul_zero, sub_zero]
+      simp only [hz, mul_zero, zero_mul, sub_zero]
+      symm
       apply Finset.expect_eq_zero
-      intro σ hσ
-      unfold rawRatio rawOverlap rawOverlapSq
-      simp [hq]
-    · have hn := input_card_ne (I := I)
-      have hmP : (∑ i, P.table i y) =
-          (Fintype.card I : ℝ) * channelMargin P.table y := by
-        unfold channelMargin
-        field_simp
-      have hmQ : (∑ i, Q.table i z) =
-          (Fintype.card I : ℝ) * channelMargin Q.table z := by
-        unfold channelMargin
-        field_simp
-      unfold orbitFusion
-      simp only [channelPosterior, hy, hz, ↓reduceIte]
+      intro σ _
+      simp [rawRatio, rawOverlap, rawOverlapSq, hq]
+    · let n : ℝ := Fintype.card I
+      let a : ℝ := channelMargin P.table y
+      let b : ℝ := channelMargin Q.table z
+      let k : ℝ := (n * a) * (n * b)
+      have hk : k ≠ 0 := mul_ne_zero
+        (mul_ne_zero input_card_ne hy) (mul_ne_zero input_card_ne hz)
+      have hcoefficient : a * b * n ^ 2 / k = 1 := by
+        have h : a * b * n ^ 2 = k := by dsimp [k]; ring
+        rw [h, div_self hk]
       have hpoint (σ : Equiv.Perm I) :
-          channelMargin P.table y * channelMargin Q.table z *
-              ((Fintype.card I : ℝ) ^ 2 *
-                ((∑ i, (channelPosterior P.table y i *
-                    channelPosterior Q.table z (σ i)) ^ 2) /
-                  (∑ i, channelPosterior P.table y i *
-                    channelPosterior Q.table z (σ i))) - 1) =
-            rawRatio P Q σ y z -
-              channelMargin P.table y * channelMargin Q.table z := by
-        unfold rawRatio rawOverlap rawOverlapSq
-        rw [Finset.sum_div]
-        field_simp [hy, hz, hn]
-        ring_nf
-        rw [hmP, hmQ]
-        ring
-      calc
-        _ = 𝔼 σ : Equiv.Perm I,
-              (channelMargin P.table y * channelMargin Q.table z) *
-                ((Fintype.card I : ℝ) ^ 2 *
-                  ((∑ i, (channelPosterior P.table y i *
-                      channelPosterior Q.table z (σ i)) ^ 2) /
-                    (∑ i, channelPosterior P.table y i *
-                      channelPosterior Q.table z (σ i))) - 1) := by
-          rw [mul_sub, Finset.mul_expect]
-          simp only [Fintype.expect_const]
-          ring
-        _ = 𝔼 σ : Equiv.Perm I, rawRatio P Q σ y z -
-              channelMargin P.table y * channelMargin Q.table z := by
-          apply Finset.expect_congr rfl
-          intro σ hσ
-          exact hpoint σ
-        _ = (𝔼 σ : Equiv.Perm I, rawRatio P Q σ y z) -
-              channelMargin P.table y * channelMargin Q.table z := by
-          rw [Finset.expect_sub_distrib]
-          simp only [Fintype.expect_const]
+          a * b * (n ^ 2 *
+            ((∑ i, (channelPosterior P.table y i *
+                channelPosterior Q.table z (σ i)) ^ 2) /
+              (∑ i, channelPosterior P.table y i *
+                channelPosterior Q.table z (σ i))) - 1) =
+            rawRatio P Q σ y z - a * b := by
+        have hden : (∑ i, channelPosterior P.table y i *
+            channelPosterior Q.table z (σ i)) = rawOverlap P Q σ y z / k := by
+          simp only [channelPosterior, if_neg hy, if_neg hz]
+          simp_rw [div_mul_div_comm]
+          exact (Finset.sum_div _ _ _).symm
+        have hnum : (∑ i, (channelPosterior P.table y i *
+            channelPosterior Q.table z (σ i)) ^ 2) = rawOverlapSq P Q σ y z / k ^ 2 := by
+          simp only [channelPosterior, if_neg hy, if_neg hz]
+          simp_rw [div_mul_div_comm, div_pow]
+          exact (Finset.sum_div _ _ _).symm
+        rw [hnum, hden, ratio_div_scale _ _ _ hk]
+        change a * b * (n ^ 2 * (rawRatio P Q σ y z / k) - 1) =
+          rawRatio P Q σ y z - a * b
+        calc
+          _ = (a * b * n ^ 2 / k) * rawRatio P Q σ y z - a * b := by ring
+          _ = _ := by rw [hcoefficient, one_mul]
+      have hpointAvg := Finset.expect_congr (s := Finset.univ) rfl
+        (fun σ _ => hpoint σ)
+      change a * b * (n ^ 2 *
+          (𝔼 σ : Equiv.Perm I,
+            (∑ i, (channelPosterior P.table y i *
+                channelPosterior Q.table z (σ i)) ^ 2) /
+              (∑ i, channelPosterior P.table y i *
+                channelPosterior Q.table z (σ i))) - 1) =
+        (𝔼 σ : Equiv.Perm I, rawRatio P Q σ y z) - a * b
+      simpa only [Finset.expect_sub_distrib, ← Finset.mul_expect,
+        Fintype.expect_const] using hpointAvg
 
 /-- Exact capacity of the product channel equals the orbit-mixture fusion. -/
 theorem star_capacity_eq_mixtureFusion
@@ -329,7 +302,6 @@ theorem star_capacity_eq_mixtureFusion
         rawOverlap P Q 1 yz.1 yz.2 / (Fintype.card I : ℝ) := by
     unfold channelMargin rawOverlap FMSChannel.star
     simp only [Equiv.Perm.coe_one, id_eq]
-    rfl
   have hratio (yz : Y × Z) :
       (1 / (Fintype.card I : ℝ)) *
           (rawOverlapSq P Q 1 yz.1 yz.2 /
@@ -345,8 +317,9 @@ theorem star_capacity_eq_mixtureFusion
       (P.star Q).capacity =
         ∑ yz : Y × Z, rawRatio P Q 1 yz.1 yz.2 - 1 := by
     unfold FMSChannel.capacity channelCapacity
-    rw [Finset.sum_congr rfl (fun yz _ => hratio yz)]
-    rfl
+    rw [Finset.mul_sum]
+    congr 1
+    exact Finset.sum_congr rfl (fun yz _ => hratio yz)
 
   have hmix :
       mixtureFusion (channelMargin P.table) (channelPosterior P.table)
@@ -374,8 +347,8 @@ theorem star_capacity_eq_mixtureFusion
       _ = _ := by
         apply Finset.sum_congr rfl
         intro yz _
-        rw [weighted_orbitFusion_raw P Q yz.1 yz.2]
-        ring
+        simpa only [mul_assoc, mul_left_comm, mul_comm] using
+          weighted_orbitFusion_raw P Q yz.1 yz.2
 
   rw [hmix]
   rw [Finset.sum_sub_distrib]
@@ -383,9 +356,9 @@ theorem star_capacity_eq_mixtureFusion
       (∑ yz : Y × Z, (𝔼 σ : Equiv.Perm I,
         rawRatio P Q σ yz.1 yz.2)) =
         ∑ yz : Y × Z, rawRatio P Q 1 yz.1 yz.2 := by
-    rw [Finset.expect_sum_comm]
+    rw [← Finset.expect_sum_comm]
     simp_rw [raw_ratio_reindex P Q]
-    rfl
+    exact Fintype.expect_const _
   rw [hexpect]
   have hweights :
       (∑ y, channelMargin P.table y) *
@@ -398,7 +371,7 @@ theorem star_capacity_eq_mixtureFusion
   rw [hpair]
   exact hcapacity_raw
 
-/-- The actual finite-channel local estimate, with the registered `8 q⁴ + q` candidate. -/
+/-- The actual finite-channel local estimate, with coefficient `8 q⁴ + q`. -/
 theorem star_capacity_local_subadditivity
     (P : FMSChannel I Y) (Q : FMSChannel I Z) (ε : ℝ)
     (hε0 : 0 < ε) (hε : P.capacity ≤ ε) :
@@ -425,6 +398,6 @@ theorem star_capacity_local_subadditivity
   · intro z
     exact posterior_sum_one Q z
   · exact hε0
-  · exact hε
+  · simpa only [capacity_eq_mixtureCapacity] using hε
 
 end Omega.InformationTheory.PottsFusion

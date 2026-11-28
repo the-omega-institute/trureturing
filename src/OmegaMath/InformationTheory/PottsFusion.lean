@@ -6,12 +6,11 @@ public import Mathlib.Algebra.BigOperators.Field
 public import Mathlib.Algebra.Group.Equiv.Basic
 public import Mathlib.Analysis.Real.Sqrt
 public import Mathlib.Data.Fintype.Perm
-public import Mathlib.GroupTheory.Perm.Finite
-public import Mathlib.Tactic.FieldSimp
-public import Mathlib.Tactic.Linarith
-public import Mathlib.Tactic.NormNum
-public import Mathlib.Tactic.Positivity
-public import Mathlib.Tactic.Ring
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 
 /-!
 Omega original.
