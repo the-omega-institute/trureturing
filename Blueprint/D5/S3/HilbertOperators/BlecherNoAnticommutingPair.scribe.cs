@@ -26,7 +26,7 @@ internal sealed class BlecherNoAnticommutingPairDocument : IScribeDocumentDefini
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Module + ".result"),
                 H("A faithful sixteen-dimensional matrix representation gives a counterexample"),
-                StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(LocalClaim())))),
+                StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -65,10 +65,7 @@ internal sealed class BlecherNoAnticommutingPairDocument : IScribeDocumentDefini
                         + "diagonal. The representation is faithful in complex matrices of size m²(m + 2), and the same argument "
                         + "proves noncommutativity, the zero-product implication and all amplification "
                         + "norm equalities."))),
-                DescribeRole.Theorem,
-                openProblemResolutionClaim: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("blecher-2025-example-5-5-no-anticommuting-pair"),
-                    ResolutionKind.Refuted)))));
+                DescribeRole.Theorem))));
 
     private static Formula ClaimBody()
     {
