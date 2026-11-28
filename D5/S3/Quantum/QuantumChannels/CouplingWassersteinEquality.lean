@@ -322,7 +322,7 @@ private theorem atom_pairing_le (H : Matrix (Fin n) (Fin n) ℂ)
     (hminus : (1 - H).PosSemidef) (hplus : (1 + H).PosSemidef) (x y : UnitVector n) :
     pairing H (rankOneDensity x.val - rankOneDensity y.val) ≤ ground x y := by
   by_cases h : rankOneDensity x.val = rankOneDensity y.val
-  · simpa [h, pairing] using ground_nonneg x y
+  · simp [h, pairing, ground_eq_zero_of_density_eq x y h]
   · exact (fixed_pair_equality x y h H hminus hplus).2.2.1
 
 private theorem hasSum_cost {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ σ) :
@@ -425,6 +425,174 @@ theorem traceNorm_le_wasserstein {ρ σ : Matrix (Fin n) (Fin n) ℂ}
 #print axioms countable_plan_equality
 #print axioms traceNorm_le_countable_cost
 #print axioms traceNorm_le_wasserstein
+
+/-- Countable barycenters are limits of finite convex combinations formed by
+placing the leftover mass on one fixed point. -/
+private theorem countable_barycenter_mem {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {S : Set E} (hc : IsClosed S) (hv : Convex ℝ S) (z₀ : E) (hz₀ : z₀ ∈ S)
+    (z : ℕ → E) (hz : ∀ j, z j ∈ S)
+    (w : ℕ → ℝ) (hw : ∀ j, 0 ≤ w j) (hm : HasSum w 1)
+    {p : E} (hp : HasSum (fun j => w j • z j) p) : p ∈ S := by
+  classical
+  let rest (k : ℕ) := 1 - ∑ j ∈ Finset.range k, w j
+  let approximant (k : ℕ) := (∑ j ∈ Finset.range k, w j • z j) + rest k • z₀
+  have hrest : Filter.Tendsto rest Filter.atTop (nhds 0) := by
+    simpa [rest] using (tendsto_const_nhds (x := (1 : ℝ))).sub hm.tendsto_sum_nat
+  have hlim : Filter.Tendsto approximant Filter.atTop (nhds p) := by
+    simpa [approximant] using hp.tendsto_sum_nat.add (hrest.smul (tendsto_const_nhds (x := z₀)))
+  refine hc.mem_of_tendsto hlim (Filter.Eventually.of_forall fun k => ?_)
+  let w' (i : ℕ) := if i < k then w i else rest k
+  let z' (i : ℕ) := if i < k then z i else z₀
+  have hw' : ∀ j ∈ Finset.range k, w' j = w j :=
+    fun j hj => ite_eq_left (Finset.mem_range.mp hj)
+  have hz' : ∀ j ∈ Finset.range k, z' j = z j :=
+    fun j hj => ite_eq_left (Finset.mem_range.mp hj)
+  have hmass : ∑ j ∈ Finset.range (k + 1), w' j = 1 := by
+    rw [Finset.sum_range_succ, Finset.sum_congr rfl hw']
+    simp [w', rest]
+  have hmem := hv.sum_mem (t := Finset.range (k + 1)) (w := w') (z := z')
+    (fun j _ => by
+      by_cases hj : j < k
+      · simpa [w', hj] using hw j
+      · simpa [w', hj, rest] using sub_nonneg.mpr (sum_le_hasSum (Finset.range k) (fun i _ => hw i) hm))
+    hmass (fun j _ => by
+      by_cases hj : j < k
+      · simpa [z', hj] using hz j
+      · simpa [z', hj] using hz₀)
+  have hsum : (∑ j ∈ Finset.range (k + 1), w' j • z' j) = approximant k := by
+    rw [Finset.sum_range_succ, Finset.sum_congr rfl (fun j hj => by rw [hw' j hj, hz' j hj])]
+    simp [w', z', approximant]
+  exact hsum ▸ hmem
+
+open scoped Matrix.Norms.Elementwise
+
+private abbrev TransportMoment (n : ℕ) :=
+  Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ × ℝ
+
+private def pureMoment (x y : UnitVector n) : TransportMoment n :=
+  (rankOneDensity x.val, rankOneDensity y.val, ground x y)
+
+private def pureMoments (n : ℕ) : Set (TransportMoment n) :=
+  Set.range (fun xy : UnitVector n × UnitVector n => pureMoment xy.1 xy.2)
+
+/-- The marginals and cost of an arbitrary countable plan lie in the
+closure of the convex hull of the pure-pair moment graph. -/
+theorem countable_plan_mem_closure {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ σ) :
+    ((ρ, σ, cost Q) : TransportMoment n) ∈ closure (convexHull ℝ (pureMoments n)) := by
+  let z := fun j => pureMoment (Q.source j) (Q.target j)
+  have hz (j : ℕ) : z j ∈ closure (convexHull ℝ (pureMoments n)) :=
+    subset_closure (subset_convexHull ℝ _ ⟨(Q.source j, Q.target j), rfl⟩)
+  have hp : HasSum (fun j => Q.weight j • z j) (ρ, σ, cost Q) := by
+    simpa [z, pureMoment, Complex.real_smul, smul_eq_mul] using
+      Q.left.prodMk (Q.right.prodMk (hasSum_cost Q))
+  exact countable_barycenter_mem isClosed_closure (convex_convexHull ℝ _).closure
+    (z 0) (hz 0) z hz Q.weight Q.nonneg Q.mass hp
+
+#print axioms countable_plan_mem_closure
+
+/-- Realize a finite weighted family by extending its weights by zero in the
+original countable plan. The added coordinates use a fixed unit vector. -/
+private theorem finite_realization {ι : Type} [Fintype ι]
+    (padding : UnitVector n) (w : ι → ℝ) (hw : ∀ i, 0 ≤ w i) (hm : ∑ i, w i = 1)
+    (x y : ι → UnitVector n) :
+    ∃ Q : Plan (∑ i, (w i : ℂ) • rankOneDensity (x i).val)
+        (∑ i, (w i : ℂ) • rankOneDensity (y i).val),
+      (∃ s : Finset ℕ, ∀ j ∉ s, Q.weight j = 0) ∧
+      cost Q = ∑ i, w i * ground (x i) (y i) := by
+  classical
+  obtain ⟨e, he⟩ := Countable.exists_injective_nat ι
+  let w' := Function.extend e w 0
+  let x' := Function.extend e x (fun _ => padding)
+  let y' := Function.extend e y (fun _ => padding)
+  have w_zero (j : ℕ) (hj : j ∉ Set.range e) : w' j = 0 :=
+    Function.extend_apply' _ _ _ hj
+  have extend_sum {E : Type} [AddCommMonoid E] [TopologicalSpace E] (f : ι → E)
+      (g : ℕ → E) (heq : ∀ i, g (e i) = f i) (hzero : ∀ j ∉ Set.range e, g j = 0) :
+      HasSum g (∑ i, f i) := by
+    apply (he.hasSum_iff hzero).mp
+    exact (hasSum_fintype f).congr_fun heq
+  have mass : HasSum w' 1 := by
+    rw [← hm]
+    exact extend_sum w w' (he.extend_apply _ _) w_zero
+  have marginal (a : ι → UnitVector n) :
+      HasSum (fun j => (w' j : ℂ) • rankOneDensity (Function.extend e a (fun _ => padding) j).val)
+        (∑ i, (w i : ℂ) • rankOneDensity (a i).val) := by
+    apply extend_sum
+    · intro i
+      simp [w', he.extend_apply]
+    · intro j hj
+      simp [w_zero j hj]
+  let Q : Plan (∑ i, (w i : ℂ) • rankOneDensity (x i).val)
+      (∑ i, (w i : ℂ) • rankOneDensity (y i).val) :=
+    ⟨w', fun j => by
+      by_cases hj : j ∈ Set.range e
+      · obtain ⟨i, rfl⟩ := hj
+        simpa [w', he.extend_apply] using hw i
+      · simp [w_zero j hj],
+      x', y', marginal x, marginal y, mass⟩
+  refine ⟨Q, ⟨Finset.univ.image e, fun j hj => w_zero j (by simpa [Set.mem_range] using hj)⟩, ?_⟩
+  have hs : HasSum (fun j => w' j * ground (x' j) (y' j)) (∑ i, w i * ground (x i) (y i)) := by
+    apply extend_sum
+    · intro i
+      simp [w', x', y', he.extend_apply]
+    · intro j hj
+      simp [w_zero j hj]
+  exact hs.tsum_eq
+
+/-- A point of the finite convex hull gives an actual finitely supported
+countable plan with the specified marginals and cost. -/
+theorem convexHull_realized_as_plan {ρ σ : Matrix (Fin n) (Fin n) ℂ} {c : ℝ}
+    (padding : UnitVector n) (h : ((ρ, σ, c) : TransportMoment n) ∈ convexHull ℝ (pureMoments n)) :
+    ∃ Q : Plan ρ σ, (∃ s : Finset ℕ, ∀ j ∉ s, Q.weight j = 0) ∧ cost Q = c := by
+  classical
+  obtain ⟨ι, _, w, z, hw, hm, hz, hp⟩ := mem_convexHull_iff_exists_fintype.mp h
+  have hz' (i : ι) : ∃ x y : UnitVector n, pureMoment x y = z i := by
+    obtain ⟨xy, hxy⟩ := hz i
+    exact ⟨xy.1, xy.2, hxy⟩
+  choose x y hxy using hz'
+  simp only [← hxy] at hp
+  have hl : ∑ i, (w i : ℂ) • rankOneDensity (x i).val = ρ := by
+    simpa [pureMoment, Prod.fst_sum, Complex.real_smul] using congrArg Prod.fst hp
+  have hr : ∑ i, (w i : ℂ) • rankOneDensity (y i).val = σ := by
+    simpa [pureMoment, Prod.fst_sum, Prod.snd_sum, Complex.real_smul] using
+      congrArg (fun p : TransportMoment n => p.2.1) hp
+  have hc : ∑ i, w i * ground (x i) (y i) = c := by
+    simpa [pureMoment, Prod.snd_sum, smul_eq_mul] using
+      congrArg (fun p : TransportMoment n => p.2.2) hp
+  rw [← hl, ← hr, ← hc]
+  exact finite_realization padding w hw hm x y
+
+/-- Compactness of the pure-pair hull gives finite attainment for the original
+countable-plan infimum as soon as a single admissible plan exists. -/
+theorem finite_attainment_of_compact_hull {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+    (Q₀ : Plan ρ σ) (hcompact : IsCompact (convexHull ℝ (pureMoments n))) :
+    ∃ Q : Plan ρ σ, (∃ s : Finset ℕ, ∀ j ∉ s, Q.weight j = 0) ∧ cost Q = wasserstein ρ σ := by
+  let fiber : Set (TransportMoment n) := {p | p.1 = ρ ∧ p.2.1 = σ}
+  let K := convexHull ℝ (pureMoments n) ∩ fiber
+  let f : TransportMoment n → ℝ := fun p => p.2.2
+  have hclosed : IsClosed fiber :=
+    (isClosed_eq continuous_fst continuous_const).inter
+      (isClosed_eq (continuous_fst.comp continuous_snd) continuous_const)
+  have hK : IsCompact K := hcompact.inter_right hclosed
+  have hmem (Q : Plan ρ σ) : ((ρ, σ, cost Q) : TransportMoment n) ∈ K := by
+    refine ⟨?_, rfl, rfl⟩
+    simpa only [hcompact.isClosed.closure_eq] using countable_plan_mem_closure Q
+  obtain ⟨⟨p, q, c⟩, ⟨hull, hp, hq⟩, hmin⟩ :=
+    hK.exists_isMinOn ⟨_, hmem Q₀⟩ (continuous_snd.comp continuous_snd).continuousOn
+  change p = ρ at hp
+  change q = σ at hq
+  subst p
+  subst q
+  obtain ⟨Q, hfin, hcost⟩ := convexHull_realized_as_plan (Q₀.source 0) hull
+  have hle (P : Plan ρ σ) : c ≤ cost P := hmin (hmem P)
+  have hval : wasserstein ρ σ = c := by
+    apply le_antisymm
+    · exact csInf_le ⟨c, by rintro _ ⟨P, rfl⟩; exact hle P⟩ ⟨Q, hcost⟩
+    · exact le_csInf ⟨c, Q, hcost⟩ (by rintro _ ⟨P, rfl⟩; exact hle P)
+  exact ⟨Q, hfin, hcost.trans hval.symm⟩
+
+#print axioms convexHull_realized_as_plan
+#print axioms finite_attainment_of_compact_hull
 
 private def phaseX : UnitVector 2 :=
   ⟨![4 / 5, (3 / 5) * Complex.I], by
