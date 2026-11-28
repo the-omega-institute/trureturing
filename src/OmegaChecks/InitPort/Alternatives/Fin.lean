@@ -289,6 +289,13 @@ private theorem foldlMShift [Monad m] {n : Nat} (f : α → Fin (n+1) → m α)
     exact congrArg (fun cont => fun a => f a ⟨i+1, Nat.succ_lt_succ hi⟩ >>= cont)
       (ih (i+1) (by omega))
 
+public theorem Fin.foldlM_loop._unary :
+    type_of% (private_decl% @_root_.Fin.foldlM_loop._unary) := by
+  intro m α n inst f p
+  obtain ⟨i, x, h⟩ := p
+  exact (congrFun (foldlMLt f h) x).trans (congrArg
+    (fun cont => f x ⟨i, h⟩ >>= cont) (foldlMShift f (n - i) i (by omega)))
+
 public theorem Fin.foldlM_succ : type_of% @_root_.Fin.foldlM_succ := by
   intro m α n inst f
   exact (foldlMLt f (Nat.zero_lt_succ n)).trans (congrArg
