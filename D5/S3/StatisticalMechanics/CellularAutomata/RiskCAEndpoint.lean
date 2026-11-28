@@ -3,15 +3,13 @@
    mirror-B: D5/B/S3/StatisticalMechanics/CellularAutomata/RiskCAEndpoint
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   digest: The highest active threshold of the deterministic RiskCA has a collision on complete boards. -/
+   digest: The deterministic RiskCA has a collision at the highest threshold on complete boards. -/
 
 import Lean.Elab.Tactic.Omega
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Combinatorics.SimpleGraph.Basic
 import OmegaBuild.Commands
-
-compile_only_with_mathlib
 
 /-!
 # The highest active threshold in RiskCA
@@ -21,6 +19,8 @@ arXiv:2611.34784v1, §3.2 and Appendix B, Algorithm 1. The indexed transition
 through 'step' and the indicated lemmas are adapted from the author's
 MIT-licensed Lean sources at commit 67bb577bd35855cf605e4457ad8795ec0e923991.
 -/
+
+compile_only_with_mathlib
 
 /-
 MIT License
@@ -49,15 +49,15 @@ SOFTWARE.
 namespace D5.S3.StatisticalMechanics.CellularAutomata.RiskCAEndpoint
 
 structure Board where
-  N   : Nat
+  N : Nat
   nbr : Nat → List Nat
 
 structure Params where
   Nmax : Nat
-  g    : Nat
-  θ    : Nat
-  p    : Nat      -- ρ = p / q
-  q    : Nat
+  g : Nat
+  θ : Nat
+  p : Nat      -- ρ = p / q
+  q : Nat
   fortify : Bool := true
 
 structure State where
@@ -153,7 +153,8 @@ def sent (s : State) (i : Nat) : Nat :=
   else 0
 
 def inflow (s : State) (k : Nat) : Nat :=
-  ((B.nbr k).filter (fun i => dest B prio s i == some k)).foldl (fun acc i => acc + sent B prio s i) 0
+  ((B.nbr k).filter (fun i => dest B prio s i == some k)).foldl
+    (fun acc i => acc + sent B prio s i) 0
 
 /-- (F) fortification with overflow lost at the cap. -/
 def fortify (s : State) : State :=
@@ -216,8 +217,6 @@ theorem probe (enabled : Bool) :
     cases enabled <;> funext i <;>
       refine Fin.cases ?_ (fun j => Fin.cases ?_ (fun k => Fin.elim0 k) j) i <;> decide
 
-#print axioms probe
-
 /-! The list-membership and homogeneous-state lemmas are from Prop4, Prop6 and Prop3. -/
 
 private theorem foldl_add_zero (l : List Nat) (f : Nat → Nat) (hf : ∀ i, f i = 0) (init : Nat) :
@@ -235,7 +234,9 @@ private theorem filter_false_nil (l : List Nat) : l.filter (fun _ => false) = []
 private theorem resolve_no_attacks (B : Board) (P : Params) (prio : Nat → Nat) (bat : Bat) (s : State)
     (h : ∀ i, wants B P prio s i = false) : resolve B P prio bat s = s := by
   have hacc : ∀ j, accepted B P prio s j = none := by
-    intro j; unfold accepted; simp only [h, Bool.false_and]; rw [filter_false_nil]; rfl
+    intro j
+    unfold accepted
+    simp only [h, Bool.false_and, filter_false_nil, argmaxBy]
   have hcom : ∀ i, committed B P prio s i = false := by
     intro i; unfold committed; split <;> simp [h]
   cases s with
@@ -267,25 +268,25 @@ private theorem prop4a_homogeneous (B : Board) (P : Params) (prio : Nat → Nat)
   have hs : ∀ i, sent B prio (grow P s) i = 0 := by
     intro i; unfold sent threat
     rw [hhost (grow P s) i (by intro j; simp [grow, hom])]
-    simp only [List.length_nil, beq_self_eq_true, if_true]
+    simp only [List.length_nil, beq_self_eq_true, ite_true]
     split
     · rename_i k _
       rw [hhost (grow P s) k (by intro j; simp [grow, hom])]; rfl
     · rfl
   unfold step
-  rw [resolve_no_attacks B P prio bat _ hw, fortify_no_sends B P prio _ hs (fun i => by simp [grow]; omega)]
+  rw [resolve_no_attacks B P prio bat _ hw, fortify_no_sends B P prio _ hs (fun i => by simp [grow])]
 
 private theorem argminBy_mem (key : Nat → Nat × Nat) : ∀ (l : List Nat) (x : Nat), argminBy key l = some x → x ∈ l
   | [], x, h => by simp [argminBy] at h
   | j :: js, x, h => by
     simp only [argminBy] at h
     cases hk : argminBy key js with
-    | none => rw [hk] at h; cases h; exact List.mem_cons_self _ _
+    | none => rw [hk] at h; cases h; exact List.mem_cons_self
     | some k =>
       rw [hk] at h
       dsimp only at h
       split at h
-      · cases h; exact List.mem_cons_self _ _
+      · cases h; exact List.mem_cons_self
       · cases h; exact List.mem_cons_of_mem _ (argminBy_mem key js _ hk)
 
 private theorem argmaxBy_mem (key : Nat → Nat × Nat) : ∀ (l : List Nat) (x : Nat), argmaxBy key l = some x → x ∈ l
@@ -293,12 +294,12 @@ private theorem argmaxBy_mem (key : Nat → Nat × Nat) : ∀ (l : List Nat) (x 
   | j :: js, x, h => by
     simp only [argmaxBy] at h
     cases hk : argmaxBy key js with
-    | none => rw [hk] at h; cases h; exact List.mem_cons_self _ _
+    | none => rw [hk] at h; cases h; exact List.mem_cons_self
     | some k =>
       rw [hk] at h
       dsimp only at h
       split at h
-      · cases h; exact List.mem_cons_self _ _
+      · cases h; exact List.mem_cons_self
       · cases h; exact List.mem_cons_of_mem _ (argmaxBy_mem key js _ hk)
 
 /-- Adjacency lists without repetitions and with cells below N. -/
@@ -369,7 +370,7 @@ private theorem single_attack (hB : WF B) (hs : Symm B) (a : State) (u v : Nat) 
     intro j hj
     unfold accepted
     by_cases hjv : j = v
-    · rw [if_pos hjv, hjv]
+    · rw [ite_eq_left hjv, hjv]
       apply argmaxBy_all
       · exact List.mem_filter.mpr ⟨hs u v hvn, by simp [hw, ht]⟩
       · intro i hi
@@ -377,7 +378,7 @@ private theorem single_attack (hB : WF B) (hs : Symm B) (a : State) (u v : Nat) 
         by_cases hiu : i = u
         · exact hiu
         · rw [hno i ((hB v hvN).2 i hin) hiu] at hc; simp at hc
-    · rw [if_neg hjv]
+    · rw [ite_eq_right hjv]
       have : (B.nbr j).filter (fun i => wants B P prio a i && target B prio a i == some j) = [] := by
         apply List.filter_eq_nil_iff.mpr
         intro i hi
@@ -397,7 +398,7 @@ private theorem single_attack (hB : WF B) (hs : Symm B) (a : State) (u v : Nat) 
   by_cases hxv : x = v
   · rw [hxv]
     have hc := hcom v hvN
-    simp only [decide_eq_true_eq, hvu, decide_False] at hc
+    simp [hvu] at hc
     simp [resolve, hacc v hvN, hc]
   · have hc := hcom x hx
     by_cases hxu : x = u
@@ -411,7 +412,8 @@ end
 
 /-- Faction 1 at v, faction 0 elsewhere; m units at u, d0 at v, one elsewhere. -/
 def edgeState (u v m d0 : Nat) : State :=
-  { o := fun x => if x = v then 1 else 0, n := fun x => if x = u then m else if x = v then d0 else 1 }
+  { o := fun x => if x = v then 1 else 0
+    n := fun x => if x = u then m else if x = v then d0 else 1 }
 
 private theorem mem_completeBoard {N i j : Nat} :
     j ∈ (completeBoard N).nbr i ↔ i < N ∧ j < N ∧ j ≠ i := by
@@ -419,8 +421,11 @@ private theorem mem_completeBoard {N i j : Nat} :
 
 private theorem completeBoard_wf (N : Nat) : WF (completeBoard N) := by
   intro i hi
-  exact ⟨by simpa [completeBoard, hi] using (List.nodup_range (n := N)).filter _,
-    fun _ hj => (mem_completeBoard.mp hj).2.1⟩
+  change i < N at hi
+  refine ⟨?_, fun _ hj => (mem_completeBoard.mp hj).2.1⟩
+  change (if i < N then (List.range N).filter (fun j => j != i) else []).Nodup
+  rw [ite_eq_left hi]
+  exact (List.nodup_range (n := N)).filter (fun j => j != i)
 
 private theorem completeBoard_symm (N : Nat) : Symm (completeBoard N) := by
   intro i j h
@@ -430,9 +435,9 @@ private theorem completeBoard_symm (N : Nat) : Symm (completeBoard N) := by
 private theorem grow_zero (s : State) (cap : Nat) (enabled : Bool)
     (hb : ∀ i, s.n i ≤ cap) : grow (endpointParams cap enabled) s = s := by
   cases s
-  congr
+  simp only [grow, endpointParams, Nat.add_zero, State.mk.injEq, true_and]
   funext i
-  simpa [grow, endpointParams] using Nat.min_eq_right (hb i)
+  exact Nat.min_eq_right (hb i)
 
 private theorem fortify_complete (N cap : Nat) (enabled : Bool) (prio : Nat → Nat)
     (s : State) (hb : ∀ i, s.n i ≤ cap) :
@@ -448,7 +453,7 @@ private theorem fortify_complete (N cap : Nat) (enabled : Bool) (prio : Nat → 
       have howner (j : Nat) (hj : j < N) : s.o j = s.o i := by
         by_cases hji : j = i
         · simp [hji]
-        · have hjn := mem_completeBoard.mpr (N := N) ⟨hi, hj, hji⟩
+        · have hjn := (mem_completeBoard (N := N)).mpr ⟨hi, hj, hji⟩
           have hh := List.filter_eq_nil_iff.mp hhost j hjn
           simpa using hh
       split
@@ -482,8 +487,8 @@ private theorem real_endpoint_battle (cap : Nat) (hcap : 3 ≤ cap)
   have hceil : ⌈(1 : ℝ) / ρ⌉₊ = 1 := by
     apply (Nat.ceil_eq_iff one_ne_zero).mpr
     simpa using And.intro (div_pos zero_lt_one hpos) ((div_le_one hpos).mpr hρ)
-  simp [realDetBat, hwin, hceil]
-  omega
+  simpa only [realDetBat, Nat.cast_one, ite_eq_left hwin, hceil, Prod.mk.injEq,
+    true_and] using (show max 1 (cap - 1 - 1) = cap - 2 by omega)
 
 private theorem rational_endpoint_battle (cap : Nat) (hcap : 3 ≤ cap) (enabled : Bool)
     (i j : Nat) : detBat (endpointParams cap enabled) i j (cap - 1) 1 = (true, cap - 2) := by
@@ -497,10 +502,9 @@ private theorem accepted_endpoint (B : Board) (cap : Nat) (enabled : Bool)
     s.n i - 1 = cap - 1 ∧ (if committed B (endpointParams cap enabled) prio s j
       then 1 else s.n j) = 1 := by
   obtain ⟨hw, ht, _⟩ := accepted_spec B (endpointParams cap enabled) prio s j i h
-  have hgap : s.n j + (cap - 1) ≤ s.n i := by
-    simpa [wants, ht, endpointParams] using (Bool.and_eq_true.mp
-      (show (decide (2 ≤ s.n i) && decide (s.n j + (cap - 1) ≤ s.n i)) = true from
-        by simpa only [wants, ht, endpointParams] using hw)).2
+  simp only [wants, ht, endpointParams, Bool.and_eq_true, decide_eq_true_eq] at hw
+  have hgap : s.n j + (cap - 1) ≤ s.n i := of_decide_eq_true hw.2
+  have htwo : 2 ≤ s.n i := hw.1
   have hi := hbound i
   have hj := hvalid j
   have hj1 : s.n j = 1 := by omega
@@ -517,7 +521,7 @@ private theorem resolve_endpoint_congr (B : Board) (cap : Nat) (enabled : Bool)
   all_goals
     rename_i i ha
     obtain ⟨hforce, hdefence⟩ := accepted_endpoint B cap enabled prio s hvalid hbound ha
-    rw [hforce, hdefence, hbat i j]
+    simp only [hforce, hdefence, hbat i j]
 
 private theorem encode_legal {N owners cap : Nat} (hp : 0 < owners) (hm : 0 < cap)
     (x : Config (Fin N) owners cap) (i : Nat) :
@@ -525,7 +529,7 @@ private theorem encode_legal {N owners cap : Nat} (hp : 0 < owners) (hm : 0 < ca
   by_cases hi : i < N
   · have ho := (x ⟨i, hi⟩).1.isLt
     have hn := (x ⟨i, hi⟩).2.isLt
-    simp only [encode, dif_pos hi]
+    simp only [encode, dite_eq_left hi]
     omega
   · simp [encode, hi]
     omega
@@ -540,15 +544,16 @@ private theorem resolve_endpoint_legal (B : Board) (owners cap : Nat) (hcap : 3 
   simp only [resolve]
   cases ha : accepted B (endpointParams cap enabled) prio s j with
   | none =>
-    rw [ha]
+    let n := if committed B (endpointParams cap enabled) prio s j then 1 else s.n j
+    change s.o j < owners ∧ 1 ≤ n ∧ n ≤ cap
     obtain ⟨ho, hn, hc⟩ := hs j
+    dsimp only [n]
     split <;> omega
   | some i =>
     obtain ⟨hforce, hdefence⟩ :=
       accepted_endpoint B cap enabled prio s (fun k => (hs k).2.1) (fun k => (hs k).2.2) ha
-    rw [ha, hforce, hdefence, hbat i j]
     have ho := (hs i).1
-    simp
+    simp [hforce, hdefence, hbat i j]
     omega
 
 private theorem decode_at {N owners cap : Nat} (hp : 0 < owners) (hm : 0 < cap)
@@ -569,7 +574,8 @@ theorem indexed_real_step_values {N owners cap : Nat} (hp : 0 < owners) (hcap : 
   let r := resolve (completeBoard N) (endpointParams cap enabled) prio (realDetBat ρ) (encode x)
   have hr := resolve_endpoint_legal (completeBoard N) owners cap hcap enabled prio _
     (real_endpoint_battle cap hcap ρ hρ) (encode x) hs
-  have heq : step (completeBoard N) (endpointParams cap enabled) prio (realDetBat ρ) (encode x) = r := by
+  have heq :
+      step (completeBoard N) (endpointParams cap enabled) prio (realDetBat ρ) (encode x) = r := by
     unfold step
     rw [grow_zero _ cap enabled (fun i => (hs i).2.2)]
     exact fortify_complete N cap enabled prio r (fun i => (hr i).2.2)
@@ -592,5 +598,179 @@ theorem indexed_real_eq_rational {N owners cap : Nat} (hp : 0 < owners) (hcap : 
         (rational_endpoint_battle cap hcap enabled i j).symm)
   unfold indexedStep step
   rw [grow_zero _ cap enabled (fun i => (hs i).2.2), heq]
+
+private theorem encode_decode {N owners cap : Nat} (hp : 0 < owners) (hm : 0 < cap)
+    (s : State) (hs : ∀ i, s.o i < owners ∧ 1 ≤ s.n i ∧ s.n i ≤ cap)
+    (hpad : ∀ i, ¬ i < N → s.o i = 0 ∧ s.n i = 1) :
+    encode (decode hp hm s : Config (Fin N) owners cap) = s := by
+  have h (i : Nat) :
+      (encode (decode hp hm s : Config (Fin N) owners cap)).o i = s.o i ∧
+      (encode (decode hp hm s : Config (Fin N) owners cap)).n i = s.n i := by
+    by_cases hi : i < N
+    · obtain ⟨ho, hn, hb⟩ := hs i
+      simpa only [encode, dite_eq_left hi, Prod.mk.injEq] using
+        decode_at hp hm s (⟨i, hi⟩ : Fin N) ho hn hb
+    · simpa [encode, hi] using And.intro (hpad i hi).1.symm (hpad i hi).2.symm
+  exact congrArg₂ State.mk (funext fun i => (h i).1) (funext fun i => (h i).2)
+
+private theorem indexed_collision {N owners cap : Nat} (hN : 2 ≤ N)
+    (hp : 2 ≤ owners) (hm : 3 ≤ cap) (prio : Nat → Nat) (enabled : Bool) (ρ : ℝ) (hρ : 1 ≤ ρ) :
+    ∃ x y : Config (Fin N) owners cap, x ≠ y ∧
+      indexedStep (by omega) (by omega) prio enabled (realDetBat ρ) x = y ∧
+      indexedStep (by omega) (by omega) prio enabled (realDetBat ρ) y = y := by
+  let B := completeBoard N
+  let K := endpointParams cap enabled
+  let bat := realDetBat ρ
+  let x := edgeState 0 1 cap 1
+  let y : State := ⟨fun _ => 0, fun i => if i = 1 then cap - 2 else 1⟩
+  have hx (i : Nat) : x.o i < owners ∧ 1 ≤ x.n i ∧ x.n i ≤ cap := by
+    by_cases hi0 : i = 0 <;> by_cases hi1 : i = 1 <;>
+      simp [x, edgeState, hi0, hi1] <;> omega
+  have hy (i : Nat) : y.o i < owners ∧ 1 ≤ y.n i ∧ y.n i ≤ cap := by
+    by_cases hi1 : i = 1 <;> simp [y, hi1] <;> omega
+  have hxPad (i : Nat) (hi : ¬ i < N) : x.o i = 0 ∧ x.n i = 1 := by
+    have h0 : i ≠ 0 := by omega
+    have h1 : i ≠ 1 := by omega
+    simp [x, edgeState, h0, h1]
+  have hyPad (i : Nat) (hi : ¬ i < N) : y.o i = 0 ∧ y.n i = 1 := by
+    have h1 : i ≠ 1 := by omega
+    simp [y, h1]
+  let dx : Config (Fin N) owners cap := decode (by omega) (by omega) x
+  let dy : Config (Fin N) owners cap := decode (by omega) (by omega) y
+  have hex : encode dx = x := encode_decode _ _ x hx hxPad
+  have hey : encode dy = y := encode_decode _ _ y hy hyPad
+  have ht : target B prio x 0 = some 1 := by
+    unfold target
+    apply argminBy_all
+    · exact List.mem_filter.mpr ⟨mem_completeBoard.mpr ⟨by omega, by omega, by decide⟩,
+        by simp [x, edgeState]⟩
+    · intro j hj
+      by_contra hne
+      have hh := (List.mem_filter.mp hj).2
+      simp [x, edgeState, hne] at hh
+  have hw : wants B K prio x 0 = true := by
+    unfold wants
+    rw [ht]
+    simp only [Bool.and_eq_true, decide_eq_true_eq]
+    change 2 ≤ cap ∧ 1 + (cap - 1) ≤ cap
+    omega
+  have hno (i : Nat) (_ : i < B.N) (hi0 : i ≠ 0) : wants B K prio x i = false := by
+    unfold wants
+    split <;> simp [x, edgeState, hi0]
+  have hres (i : Nat) (hi : i < N) :
+      (resolve B K prio bat x).o i = y.o i ∧ (resolve B K prio bat x).n i = y.n i := by
+    have h := single_attack B K prio bat (completeBoard_wf N) (completeBoard_symm N)
+      x 0 1 (by change 0 < N; omega) ht hw hno i hi
+    have hbat : bat 0 1 (x.n 0 - 1) (x.n 1) = (true, cap - 2) := by
+      simpa [x, edgeState, bat] using real_endpoint_battle cap hm ρ hρ 0 1
+    rw [hbat] at h
+    by_cases hi1 : i = 1 <;> by_cases hi0 : i = 0 <;>
+      simp_all [x, y, edgeState]
+  let r := resolve B K prio bat x
+  have hr : ∀ i, r.n i ≤ cap := fun i =>
+    (resolve_endpoint_legal B owners cap hm enabled prio bat
+      (real_endpoint_battle cap hm ρ hρ) x hx i).2.2
+  refine ⟨dx, dy, ?_, ?_, ?_⟩
+  · intro h
+    have hxy := congrArg encode h
+    rw [hex, hey] at hxy
+    have h0 := congrArg (fun s : State => s.n 0) hxy
+    simp [x, y, edgeState] at h0
+    omega
+  · change decode (by omega) (by omega) (step B K prio bat (encode dx)) = dy
+    rw [hex]
+    unfold step
+    rw [grow_zero _ cap enabled (fun i => (hx i).2.2), fortify_complete N cap enabled prio r hr]
+    funext i
+    obtain ⟨ho, hn⟩ := hres i i.isLt
+    simp [dy, decode, r, ho, hn]
+  · change decode (by omega) (by omega) (step B K prio bat (encode dy)) = dy
+    rw [hey, prop4a_homogeneous B K prio bat y 0 (fun _ => rfl),
+      grow_zero _ cap enabled (fun i => (hy i).2.2)]
+
+/-- The indexer's neighbour relation is the pullback of the complete simple graph. -/
+theorem completeBoard_adj {V : Type*} {N : Nat} (e : V ≃ Fin N) (i j : V) :
+    (e j).val ∈ (completeBoard N).nbr (e i).val ↔ (⊤ : SimpleGraph V).Adj i j := by
+  rw [mem_completeBoard, SimpleGraph.top_adj]
+  simp only [(e i).isLt, (e j).isLt, true_and]
+  constructor
+  · intro h heq
+    exact h (congrArg (fun v => (e v).val) heq.symm)
+  · intro h heq
+    exact h (e.injective (Fin.ext heq.symm))
+
+/-- The indexer's rank is the index of the image under the paper's priority permutation. -/
+private def indexedPriority {V : Type*} {N : Nat} (e : V ≃ Fin N)
+    (priority : Equiv.Perm V) (i : Nat) : Nat :=
+  if hi : i < N then (e (priority (e.symm ⟨i, hi⟩))).val else 0
+
+/-- The real deterministic paper step at g = 0 and θ = cap − 1 on the complete graph.
+The finite-product state has no restriction on which owners must occur. -/
+noncomputable def paperStep {V : Type*} [Fintype V] {owners cap : Nat}
+    (hp : 0 < owners) (hm : 0 < cap) (priority : Equiv.Perm V) (enabled : Bool) (ρ : ℝ)
+    (x : Config V owners cap) : Config V owners cap :=
+  let e := Fintype.equivFin V
+  let y := indexedStep hp hm (indexedPriority e priority) enabled (realDetBat ρ)
+    (fun i => x (e.symm i))
+  fun v => y (e v)
+
+/-- An explicit fixed-image collision for Proposition 2 at the highest active threshold. -/
+theorem paper_collision_fixed_image {V : Type*} [Fintype V] (hV : 2 ≤ Fintype.card V)
+    {owners cap : Nat} (hp : 2 ≤ owners) (hm : 3 ≤ cap) (priority : Equiv.Perm V)
+    (enabled : Bool) (ρ : ℝ) (hρ : 1 ≤ ρ) :
+    ∃ x y : Config V owners cap, x ≠ y ∧
+      paperStep (by omega) (by omega) priority enabled ρ x = y ∧
+      paperStep (by omega) (by omega) priority enabled ρ y = y := by
+  let e := Fintype.equivFin V
+  obtain ⟨x, y, hne, hx, hy⟩ :=
+    indexed_collision hV hp hm (indexedPriority e priority) enabled ρ hρ
+  let xV : Config V owners cap := fun v => x (e v)
+  let yV : Config V owners cap := fun v => y (e v)
+  have hxV : (fun i => xV (e.symm i)) = x := by funext i; simp [xV]
+  have hyV : (fun i => yV (e.symm i)) = y := by funext i; simp [yV]
+  refine ⟨xV, yV, ?_, ?_, ?_⟩
+  · intro h
+    apply hne
+    rw [← hxV, ← hyV, h]
+  · unfold paperStep
+    change (fun v => indexedStep _ _ (indexedPriority e priority) enabled
+      (realDetBat ρ) (fun i => xV (e.symm i)) (e v)) = yV
+    rw [hxV, hx]
+  · unfold paperStep
+    change (fun v => indexedStep _ _ (indexedPriority e priority) enabled
+      (realDetBat ρ) (fun i => yV (e.symm i)) (e v)) = yV
+    rw [hyV, hy]
+
+/-- The collision in the paper's band, with both fortification settings. -/
+theorem paper_noninjective {V : Type*} [Fintype V] (hV : 2 ≤ Fintype.card V)
+    {owners cap : Nat} (hp : 2 ≤ owners) (hm : 3 ≤ cap) (priority : Equiv.Perm V)
+    (enabled : Bool) (ρ : ℝ) (hρ₁ : 1 < ρ) (_hρ₂ : ρ < 2) :
+    ∃ x y : Config V owners cap, x ≠ y ∧
+      paperStep (by omega) (by omega) priority enabled ρ x =
+        paperStep (by omega) (by omega) priority enabled ρ y := by
+  obtain ⟨x, y, hne, hx, hy⟩ :=
+    paper_collision_fixed_image hV hp hm priority enabled ρ hρ₁.le
+  exact ⟨x, y, hne, hx.trans hy.symm⟩
+
+/-- The exact rational probe is also a check of the real step at ρ = 3/2. -/
+theorem real_probe (enabled : Bool) :
+    probeX ≠ probeY ∧
+    indexedStep (by decide) (by decide) id enabled (realDetBat (3 / 2)) probeX = probeY ∧
+    indexedStep (by decide) (by decide) id enabled (realDetBat (3 / 2)) probeY = probeY := by
+  have hρ : (1 : ℝ) ≤ 3 / 2 := (le_div_iff₀ (by exact zero_lt_two)).2 (by
+    rw [one_mul]
+    exact_mod_cast (by decide : (2 : Nat) ≤ 3))
+  obtain ⟨hne, hx, hy⟩ := probe enabled
+  exact ⟨hne,
+    (indexed_real_eq_rational _ (by decide) id enabled _ hρ probeX).trans hx,
+    (indexed_real_eq_rational _ (by decide) id enabled _ hρ probeY).trans hy⟩
+
+#print axioms completeBoard_adj
+#print axioms probe
+#print axioms real_probe
+#print axioms indexed_real_step_values
+#print axioms indexed_real_eq_rational
+#print axioms paper_collision_fixed_image
+#print axioms paper_noninjective
 
 end D5.S3.StatisticalMechanics.CellularAutomata.RiskCAEndpoint
