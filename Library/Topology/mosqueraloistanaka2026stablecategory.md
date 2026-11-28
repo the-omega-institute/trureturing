@@ -1552,3 +1552,52 @@ triangular piece. These are paper-level obstructions to the parity
 rule. The existence of some categorical two-cover at an
 input-dependent depth remains open.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3)
+
+## Forest covering numbers in a collapsible two-dimensional family
+
+Let (G) be a finite nonempty simple graph of minimum degree at least
+two, with forest covering number (a(G)). For every edge (uv) insert
+a private vertex (x_{uv}) into the triangle (puv) of the cone on
+(G). This replaces it by (uvx_{uv},pux_{uv},pvx_{uv}) with the same
+apex (p) for every block. The base edge (uv) is free in (uvx_{uv}).
+Deleting all these pairs leaves the cone on the graph with each edge
+subdivided once. In particular the thickened complex is collapsible.
+
+A categorical subcomplex cannot contain a cycle of original edges.
+At any cycle vertex (u), the two incident edges force its first
+possible image to lie in the intersection of their unique triangular
+cofaces, which is the singleton (u). The same argument fixes the
+cycle at every contiguity step. Conversely a forest piece contains the
+three triangles of each of its edges and all the radial edges (pv).
+Deleting a leaf by domination by its edge midpoint, then deleting the
+midpoint by domination by (p), contracts the piece. Thus its ambient
+simplicial category, in the unreduced convention, is exactly (a(G)).
+
+The nonempty closed faces under intersection of all containing facets
+form a poset (P_G). Exactly the original edges are nonclosed, with
+each edge closing to its private triangle. The original singleton
+vertices and the private triangular maxima of any cycle are fixed
+throughout every order fence starting at the inclusion of a lower
+set containing the cycle. In an upward step the maxima are fixed and
+their intersections force the singletons. In a downward step minimality
+fixes the singletons and a closed face containing both endpoints must
+contain their whole triangular maximum. The lower sets formed from
+forest pieces are retracts of the face posets of those pieces by the
+face closure, so the ordinary category of (P_G) is (a(G)).
+
+Each triangular maximum in (P_G) has as its strict lower order
+complex the subdivision of the path (u,x_{uv},v). In the first
+ordinary subdivision the two pieces contain the common cone-face
+region and take one side of each of these paths respectively. Each
+new maximum folds to the chosen edge face in its piece. This gives
+intrinsically contractible categorical lower sets at common depth
+one. The weak category is one by the collapse and the extensive
+face closure. The frozen cycle excludes ordinary contractibility,
+which subdivision reflects, so the stable category is exactly two.
+The relative cover construction works in any finite poset when every
+maximal chain under an added maximum lies in one prescribed region
+and contains its chosen dominator. Lean also checks equality of the ordinary categorical cover number
+and arboricity for every graph with an edge, and the categorical
+two-cover at depth one for every finite simple graph.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3) ·
+[Category of graphs](https://arxiv.org/abs/1605.01322)
