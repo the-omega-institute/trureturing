@@ -225,7 +225,9 @@ private def installByteExtern (src : Environment) (name : Name) : CoreM Unit := 
     let name := omegaName defn.name
     Lean.addDecl (.defnDecl {defn with name, type, value, all := defn.all.map omegaName}) (forceExpose := true)
     if isAuxRecursor src defn.name then modifyEnv (markAuxRecursor · name)
-    if isSparseCasesOn src defn.name then modifyEnv (markSparseCasesOn · name)
+    let constructorElim := defn.name == defn.name.getPrefix ++ `elim &&
+      ((src.find? defn.name.getPrefix) matches some (.ctorInfo _))
+    if isSparseCasesOn src defn.name && !constructorElim then modifyEnv (markSparseCasesOn · name)
     installByteExtern src defn.name
     -- Unfold before compiling arguments, so untaken branches of the pinned ite stay lazy.
     if Compiler.hasMacroInlineAttribute src defn.name then
@@ -234,6 +236,11 @@ private def installByteExtern (src : Environment) (name : Name) : CoreM Unit := 
     -- noncomputable. Explicit native callers require a successful compilation.
     withOptions (fun opts => Elab.async.set opts false) do
       Lean.compileDecls #[name] (logErrors := !stx[2].isNone)
+    -- Constructor eliminators have callable upstream code. The sparse tag makes the
+    -- compiler inline calls and skip emitting the standalone entry.
+    if constructorElim && isSparseCasesOn src defn.name then
+      unless (IR.findEnvDecl (← getEnv) name).isSome do throwError "missing native constructor eliminator {name}"
+      modifyEnv (markSparseCasesOn · name)
     setReducibilityStatus name (getReducibilityStatusCore src defn.name)
     if isProtected src defn.name then modifyEnv (addProtected · name)
 
