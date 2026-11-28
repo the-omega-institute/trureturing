@@ -3,7 +3,7 @@ bibkey: lyudogovskiy2026simplex
 authors: Fedor B. Lyudogovskiy
 year: 2026
 title: "Simplex Stratification and Phase Boundaries in the Partition Graph"
-doi: null
+doi: 10.48550/arXiv.2603.23228
 url: https://arxiv.org/html/2603.23228v1
 claim: "Conjectures 5.1 and 5.2, repeated as Problems 6.1 and 6.2, ask for the complete triangular threshold and staircase first-occurrence family of exact local simplex layers."
 strata_touched:
@@ -45,3 +45,7 @@ The classical support facts and later aliases are not additional settlements.
 ## Verified locator
 
 https://arxiv.org/html/2603.23228v1
+
+https://doi.org/10.48550/arXiv.2603.23228
+
+The v1 PDF gives Problem 6.3 (Boundary thresholds) on printed page 12.
