@@ -10,6 +10,8 @@ import OmegaBuild.Commands
 import D5.S3.Observer.Hilbert.NymanHalflineMellinKernel
 import D5.S3.Observer.Hilbert.NymanUnitIntervalMellin
 
+/-! # Tail energy and balanced finite Nyman approximation -/
+
 compile_only_with_mathlib
 
 set_option autoImplicit false
@@ -121,7 +123,8 @@ theorem finite_error_split (N : ℕ) (c : EuclideanSpace ℂ (Fin N)) :
   rw [squared_norm_integral f]
   change (∫ x in Ioi (0 : ℝ), ‖f x‖ ^ 2) = _
   rw [← Ioc_union_Ioi_eq_Ioi (show (0 : ℝ) ≤ 1 by norm_num),
-    setIntegral_union (disjoint_left.mpr (fun x hx hy => (not_lt_of_ge hx.2) hy))
+    setIntegral_union (s := Ioc (0 : ℝ) 1) (t := Ioi (1 : ℝ)) (μ := volume)
+      (disjoint_left.mpr (fun x hx hy => (not_lt_of_ge hx.2) hy))
       measurableSet_Ioi (hint.mono_set (fun _ hx => hx.1))
       (hint.mono_set (Ioi_subset_Ioi (show (0 : ℝ) ≤ 1 by norm_num))),
     integral_Ioc_eq_integral_Ioo, hunit, htail]
@@ -179,7 +182,8 @@ theorem constrained_distance_le (N : ℕ) :
     exact (shell N).starProjection_apply_mem target
   obtain ⟨c, hc⟩ := hp
   have hd : ‖target - synthesis N c‖ = distance N := by
-    simpa only [hc, dist_eq_norm, distance] using
+    rw [hc]
+    simpa only [dist_eq_norm, distance] using
       (shell N).dist_starProjection_eq_infDist target
   obtain ⟨hmem, hbound⟩ := centered_approximation N c
   have hle : Metric.infDist NymanUnitIntervalMellin.unitTarget (closure NymanUnitIntervalMellin.B0) ≤
@@ -195,5 +199,7 @@ theorem constrained_distance_le (N : ℕ) :
 #print axioms finite_error_split
 #print axioms centered_approximation
 #print axioms constrained_distance_le
+
+#check centered_approximation 0 (0 : EuclideanSpace ℂ (Fin 0))
 
 end D5.S3.Observer.Hilbert.NymanTailCentering
