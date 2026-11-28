@@ -1,9 +1,10 @@
 """Compile common order propositions and reject reversed comparisons on both public backends."""
 import json
-import os
 from pathlib import Path
 import subprocess
 import tempfile
+
+import public_clients
 
 
 HERE = Path(__file__).resolve().parent
@@ -55,16 +56,5 @@ def _check_module(product, library, owner):
         names = {name for _, name in sites(checked)}
         if not names:
             return []
-        for variant in ("Official", "Strict"):
-            env = dict(os.environ, LEAN_PATH=str(library)) if variant == "Strict" else os.environ
-            prefix = "Omega." if variant == "Strict" else ""
-            subprocess.run(["lean", Path(temp) / (variant + ".lean")], env=env, cwd=ROOT, check=True)
-            negative = subprocess.run(["lean", "--json", Path(temp) / (variant + "Reversed.lean")],
-                                      env=env, cwd=ROOT, capture_output=True, text=True)
-            errors = [r["data"].splitlines() for line in negative.stdout.splitlines()
-                      if (r := json.loads(line))["severity"] == "error"]
-            if (not negative.returncode or len(errors) != len(names) or
-                    any(len(lines) < 2 or lines[0] != "Type mismatch" for lines in errors) or
-                    {lines[1].strip().removeprefix("@") for lines in errors} != {prefix + name for name in names}):
-                raise ValueError(f"{variant} did not reject the reversed comparison at each checked order theorem")
+        public_clients.check(library, Path(temp), names, "Reversed")
         return checked

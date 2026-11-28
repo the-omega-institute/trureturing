@@ -102,6 +102,9 @@ python3 src/OmegaChecks/InitPort/report.py .lake/init-port-all --require-complet
 
 `Init.Internal.Order.Basic`、`Lemmas` 和 `MonadTail` 中，通过 `pointwiseOrderTypeChecked` 核验的命题包括列表、数组和选项单调性、函数链、逐点下确界与三个运行器的单调性。官方类型从函数、ReaderT 或状态变换器的偏序实例投影出比较关系，严格类型直接使用相应的逐点比较。核验器在普通导入中对两个完整类型作核内转换，把同一份显式命题分别编译，并从空内核重放严格定理。反转关系两端会使对应定理的类型不匹配。[核验实现](PointwiseOrderCheck.lean)
 
+`finiteConsumerTypeChecked` 表示声明的完整类型在一个具体的有限迭代器调用处使用了终止版本的收集或索引操作。核验器从官方原类型推导所需的有限实例，在官方、严格两个公开内核核对整个类型的定义等价性，再分别编译只导入原声明模块的显式调用端。把结果改成 `False` 时，两端均须在对应声明处报类型不匹配。严格内核重放这些可构造内容，官方无可执行入口的消去规则按逻辑调用端核验。无限迭代器上的通用操作仍按其本身的类型逐项核验。[有限迭代器调用核验](FiniteConsumerCheck.lean)
+
+
 
 
 

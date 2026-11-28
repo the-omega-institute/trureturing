@@ -9,6 +9,7 @@ import subprocess
 import tempfile
 
 import fin_bounds
+import finite_consumers
 import order_consumers
 
 HERE = Path(__file__).resolve().parent
@@ -160,6 +161,8 @@ def check_coverage(official):
     choice_operands = choice_type_dependencies(official.get("certifiedChoiceTypeDependencies", []))
     finite_bounds = fin_bounds.sites(official.get("certifiedFinBoundTypes", []))
     pointwise_sites = order_consumers.sites(official.get("certifiedPointwiseOrderTypes", []))
+    finite_sites = finite_consumers.sites(official.get("certifiedFiniteConsumerTypes", []))
+    candidates = finite_consumers.candidates(official["declarations"])
     sites = set()
     direct = 0
     matched = 0
@@ -325,6 +328,12 @@ def check_coverage(official):
                 any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")) or
                 private_type or orders or equivalent or choice_operand)):
             raise ValueError(f"uncertified pointwise order proposition for {site}")
+        finite = site in finite_sites
+        if finite != row.get("finiteConsumerTypeChecked", False) or (finite and (
+                site not in candidates or not port or row["kind"] not in {"theorem", "definition", "constructor", "recursor"} or
+                any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")) or
+                private_type or orders or equivalent or choice_operand or pointwise)):
+            raise ValueError(f"uncertified finite consumer public type for {site}")
         if port:
             if axiom or witness or (runtime and not (unsafe_runtime or effect or comparison or pointer_hash)) or row["strictModule"] != "Omega" + owner:
                 raise ValueError(f"inconsistent strict match for {owner}/{name}")
@@ -333,7 +342,7 @@ def check_coverage(official):
                 if row.get("originalTypeChecked") is True and row.get("originalTypeGap") is None:
                     original_types += 1
                 elif row.get("originalTypeChecked") is False and row.get("originalTypeGap"):
-                    if not private_type and not orders and not choice_operand and not equivalent and not pointwise:
+                    if not private_type and not orders and not choice_operand and not equivalent and not pointwise and not finite:
                         unresolved.append(site)
                 else:
                     raise ValueError(f"inconsistent original type check for {owner}/{name}")
@@ -345,6 +354,8 @@ def check_coverage(official):
             reductions += 1
         elif not endpoint and not argument and not refuter and path != "Quot.sound":
             unresolved.append(site)
+    if not finite_sites <= sites:
+        raise ValueError("finite consumer certificate has no definition site")
     if not pointwise_sites <= sites:
         raise ValueError("pointwise order certificate has no definition site")
     if not finite_bounds <= sites:
@@ -375,6 +386,8 @@ def check_coverage(official):
         raise ValueError("finite-index bound count does not agree with the checked sites")
     if summary.get("pointwiseOrderTypesChecked", 0) != len(pointwise_sites):
         raise ValueError("pointwise order count does not agree with the checked sites")
+    if summary.get("finiteConsumerTypesChecked", 0) != len(finite_sites):
+        raise ValueError("finite consumer count does not agree with the checked sites")
     return reductions, unresolved
 
 
@@ -406,7 +419,10 @@ def verify_complete(official, product, reductions, unresolved):
     pointwise = official.get("certifiedPointwiseOrderTypes", [])
     if pointwise and order_consumers.certificates(product) != pointwise:
         raise ValueError("live pointwise order certificates differ from inventory")
-    raw_type_alternatives = blocked | fin_bounds.sites(bounds) | order_consumers.sites(pointwise)
+    finite = official.get("certifiedFiniteConsumerTypes", [])
+    if finite and finite_consumers.certificates(product, official["declarations"]) != finite:
+        raise ValueError("live finite consumer certificates differ from inventory")
+    raw_type_alternatives = blocked | fin_bounds.sites(bounds) | order_consumers.sites(pointwise) | finite_consumers.sites(finite)
     certified = {(owner, name) for owner, name, _, _ in official.get("certifiedImportAllOriginalTypes", [])}
     if any(row["matchingNameAndModule"] and row.get("originalTypeChecked") is not True and
            (row["module"], row["name"]) not in raw_type_alternatives and
@@ -522,7 +538,8 @@ def report(product, require_complete=False):
         stage = Path(work)
         inventory = stage / "init-inventory.json"
         subprocess.run(["lake", "build", "+OmegaChecks.InitInventory", "+OmegaChecks.InitPort.Translation",
-                        "+OmegaChecks.InitPort.StrictReplay", "+OmegaChecks.InitPort.Alternatives.InternalOrder"], cwd=ROOT, check=True)
+                        "+OmegaChecks.InitPort.StrictReplay", "+OmegaChecks.InitPort.PublicTypeClient",
+                        "+OmegaChecks.InitPort.Alternatives.InternalOrder"], cwd=ROOT, check=True)
         subprocess.run(["lake", "env", "lean", "--run", HERE.parent / "InitInventory.lean", product / "lib", inventory],
                        cwd=ROOT, check=True)
         official = json.loads(inventory.read_text())
@@ -550,6 +567,10 @@ def report(product, require_complete=False):
         official["certifiedPointwiseOrderTypes"] = pointwise_checks
         official["summary"]["pointwiseOrderTypesChecked"] = len(pointwise_checks)
         pointwise_sites = order_consumers.sites(pointwise_checks)
+        finite_checks = finite_consumers.certificates(product, official["declarations"])
+        official["certifiedFiniteConsumerTypes"] = finite_checks
+        official["summary"]["finiteConsumerTypesChecked"] = len(finite_checks)
+        finite_sites = finite_consumers.sites(finite_checks)
         strict_choices = check_strict_reference_choices(product, stage, attempts)
         strict_matches = check_strict_longest_matches(product, stage)
         strict_folds = check_strict_fin_folds(product, stage)
@@ -563,6 +584,8 @@ def report(product, require_complete=False):
         pending.update({site: (*result, "strictEquivalenceWitness") for site, result in strict_equivalences.items()})
         for row in official["declarations"]:
             site = (row["module"], row["name"])
+            if site in finite_sites:
+                row["finiteConsumerTypeChecked"] = True
             if site in pointwise_sites:
                 row["pointwiseOrderTypeChecked"] = True
             if site in equivalent:
@@ -610,7 +633,7 @@ def report(product, require_complete=False):
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
                              "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap",
                              "importAllOriginalTypeChecked", "originalTypeOrderDependencies", "originalTypeChoiceDependency", "finBoundProofReplacementChecked",
-                             "pointwiseOrderTypeChecked"])
+                             "pointwiseOrderTypeChecked", "finiteConsumerTypeChecked"])
             for row in official["declarations"]:
                 if row["originalTypeChecked"] or row["kind"] == "axiom":
                     continue
@@ -659,7 +682,8 @@ def report(product, require_complete=False):
                                  json.dumps(row["originalTypeOrderDependencies"], sort_keys=True) if row.get("originalTypeOrderDependencies") else "",
                                  row.get("originalTypeChoiceDependency"),
                                  "true" if row.get("finBoundProofReplacementChecked") else "",
-                                 "true" if row.get("pointwiseOrderTypeChecked") else ""])
+                                 "true" if row.get("pointwiseOrderTypeChecked") else "",
+                                 "true" if row.get("finiteConsumerTypeChecked") else ""])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")

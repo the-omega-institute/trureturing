@@ -250,6 +250,30 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, "pointwise"):
                 check_coverage(data | {"declarations": [row | bad]})
 
+    def test_complete_finite_consumer_types_require_the_checked_whole_signature(self):
+        owner = "Init.Data.Iterators.Lemmas.Consumers.Collect"
+        name = "Std.Iter.toArray_ensureTermination"
+        row = site(owner, name, matchingNameAndModule=True, strictModule="Omega" + owner,
+                   originalTypeChecked=False, originalTypeGap="missing type dependencies: Omega.Std.Iter.toArray. "
+                   "The finite-iterator reformulation checks in both public kernels.")
+        data = inventory(row)
+        data["schemaVersion"] = 6
+        data["summary"]["originalTypesChecked"] = 0
+        self.assertEqual(check_coverage(data), (0, [(owner, name)]))
+        row["finiteConsumerTypeChecked"] = True
+        data["certifiedFiniteConsumerTypes"] = [[owner, name]]
+        data["summary"]["finiteConsumerTypesChecked"] = 1
+        self.assertEqual(check_coverage(data), (0, []))
+        with patch("report.finite_consumers.certificates", return_value=[]), self.assertRaisesRegex(ValueError, "live finite consumer"):
+            verify_complete(data, Path("product"), *check_coverage(data))
+        for bad in ({"originalTypeGap": "public conversion failed"}, {"kind": "opaque"}, {"strictUnsafe": True},
+                    {"matchingNameAndModule": False}, {"originalTypeChecked": True}):
+            with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, "finite consumer"):
+                check_coverage(data | {"declarations": [row | bad]})
+        for invalid in ([], [[owner, name]] * 2, [["Init...invalid", name]]):
+            with self.subTest(invalid=invalid), self.assertRaisesRegex(ValueError, "finite consumer"):
+                check_coverage(data | {"certifiedFiniteConsumerTypes": invalid})
+
     def test_strict_excluded_middle_is_a_logical_consequence(self):
         row = site("Init.Data.String.Lemmas.Pattern.Basic", "String.Slice.Pattern.Model.IsMatch.exists_isLongestMatch",
                    logicalConsequence="Classical.em", strictLogicalConsequence="Classical.em",

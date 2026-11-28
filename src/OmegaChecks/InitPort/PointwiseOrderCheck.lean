@@ -1,51 +1,18 @@
 module
 import all OmegaChecks.InitInventory.OriginalType
 import OmegaChecks.InitPort.StrictReplay
+import OmegaChecks.InitPort.PublicTypeClient
+meta import OmegaChecks.InitPort.PublicTypeClient
 meta import OmegaChecks.InitPort.StrictReplay
 meta import OmegaChecks.InitInventory.OriginalType
 
 open Lean InitKernelPort OmegaChecks.InitPort OmegaChecks.InitInventory
-
-/-- Render complete kernel applications and binders without typeclass search or implementation imports. -/
-private partial def levelText : Level → String
-  | .zero => "0"
-  | .succ l => "(" ++ levelText l ++ " + 1)"
-  | .max a b => "(max " ++ levelText a ++ " " ++ levelText b ++ ")"
-  | .imax a b => "(imax " ++ levelText a ++ " " ++ levelText b ++ ")"
-  | .param n => n.toString
-  | _ => panic! "unexpected level"
-
-private partial def source (e : Expr) (xs : List String := []) : String := Id.run do
-  let var := "x" ++ toString xs.length
-  let bind := fun (info : BinderInfo) (dom : Expr) =>
-    let (l,r) := match info with
-      | .implicit => ("{","}") | .strictImplicit => ("⦃","⦄")
-      | .instImplicit => ("[","]") | _ => ("(",")")
-    l ++ var ++ " : " ++ source dom xs ++ r
-  match e with
-  | .bvar i => return xs[i]!
-  | .sort l => return "(Sort " ++ levelText l ++ ")"
-  | .const n us =>
-    return "@" ++ n.toString ++ (if us.isEmpty then "" else ".{" ++ String.intercalate ", " (us.map levelText) ++ "}")
-  | .app _ _ => return "(" ++ String.intercalate " " ((source e.getAppFn xs) :: (e.getAppArgs.toList.map (source · xs))) ++ ")"
-  | .forallE _ dom body bi => return "(∀ " ++ bind bi dom ++ ", " ++ source body (var::xs) ++ ")"
-  | .lam _ dom body bi => return "(fun " ++ bind bi dom ++ " => " ++ source body (var::xs) ++ ")"
-  | .letE _ dom value body _ => return "(let " ++ var ++ " : " ++ source dom xs ++ " := " ++ source value xs ++ "; " ++ source body (var::xs) ++ ")"
-  | .mdata _ x => return source x xs
-  | .proj _ i x => return "(" ++ source x xs ++ ")." ++ toString (i+1)
-  | .lit (.natVal n) => return toString n
-  | _ => panic! "unhandled kernel expression"
 
 private def reverseRelations (type : Expr) : Expr :=
   type.replace fun e => do
     guard (e.isAppOfArity `Lean.Order.PartialOrder.rel 4)
     let args := e.getAppArgs
     return mkAppN e.getAppFn ((args.set! 2 args[3]!).set! 3 args[2]!)
-
-private def client (typ : Expr) (n : Name) (universes : List Name) : String := Id.run do
-  let decl := if universes.isEmpty then "" else "universe " ++ String.intercalate " " (universes.map Name.toString) ++ "\n"
-  return "section\n" ++ decl ++ "example : " ++ source typ ++ " :=\n  " ++
-    source (mkConst n (universes.map Level.param)) ++ "\nend\n"
 
 public unsafe def main (args : List String) : IO Unit := do
   let [lib, mod, dir] := args | throw <| IO.userError "expected a strict library, owner and client directory"
@@ -88,7 +55,7 @@ public unsafe def main (args : List String) : IO Unit := do
     roots := roots.push dst.name
     let statements := #[(common, name), (reverse, name), (lifted, dst.name), (translate portName reverse, dst.name)]
     for (typ, term) in statements, i in [:4] do
-      clients := clients.modify i (· ++ client typ term dst.levelParams)
+      clients := clients.modify i (· ++ PublicTypeClient.client typ term dst.levelParams)
   let _ ← replayStrict full.toKernelEnv roots
   for body in clients, filename in ["Official", "OfficialReversed", "Strict", "StrictReversed"] do
     IO.FS.writeFile (System.FilePath.mk dir / (filename ++ ".lean")) body
