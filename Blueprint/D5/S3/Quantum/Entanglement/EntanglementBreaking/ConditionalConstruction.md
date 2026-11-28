@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/ConditionalCons
 
 *Commentary.*
 
-For a traceless Hermitian direction at dimension d, impose the Schmidt-cutoff quadratic bound and the lower energy bound. Positivity of the test and its output partial transpose then yields a k-entanglement-breaking indecomposable map with the stated input-first Choi matrix.
+Let 1 ≤ k ≤ d and let H be a traceless Hermitian direction satisfying the Schmidt-cutoff quadratic bound and the lower energy bound. If the test and its output partial transpose are positive semidefinite, the map with input-first Choi matrix I − (16/d)H is k-entanglement-breaking and indecomposable.
 
 ## References
 

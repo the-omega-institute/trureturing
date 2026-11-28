@@ -24,27 +24,30 @@ internal sealed class DevendraMallickSumeshOpenProblemOneDocument : IScribeDocum
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("eb-devendramallicksumeshopenproblemone-devendramallicksumesh-openproblem1-refuted"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/DevendraMallickSumeshOpenProblemOne.devendraMallickSumesh_openProblem1_refuted"),
-                H("Refutation of universal decomposability"), StatementSource.FromAuthor(F.Disp(new Formula.Not(F.Id("claim")))),
+                H("Refutation of universal decomposability"), StatementSource.FromAuthor(F.Disp(
+                    new Formula.Not(new Formula.NamedConstant(FormulaIdentifier.Create("claim"))))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The square counterexample belongs to the class quantified by the universal assertion and violates its conclusion."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Claim() => Bind(FormulaQuantifier.ForAll, "a", F.Id("Npos"),
-        Bind(FormulaQuantifier.ForAll, "b", F.Id("Npos"),
-            Bind(FormulaQuantifier.ForAll, "Phi", Map(F.Id("a"), F.Id("b")),
+    private static Formula PositiveNaturals() => new Formula.NamedConstant(FormulaIdentifier.Create("Npos"));
+
+    private static Formula Claim() => Bind(FormulaQuantifier.ForAll, "a", PositiveNaturals(),
+        Bind(FormulaQuantifier.ForAll, "b", PositiveNaturals(),
+            Bind(FormulaQuantifier.ForAll, "f", Map(F.Id("a"), F.Id("b")),
                 new Formula.Logic(KEB(), FormulaLogicOperator.Implies, Decomposable()))));
 
-    private static Formula Counterexample() => Bind(FormulaQuantifier.Exists, "d", F.Id("Npos"),
-        Bind(FormulaQuantifier.Exists, "Phi", Map(F.Id("d"), F.Id("d")),
+    private static Formula Counterexample() => Bind(FormulaQuantifier.Exists, "d", PositiveNaturals(),
+        Bind(FormulaQuantifier.Exists, "f", Map(F.Id("d"), F.Id("d")),
             new Formula.Logic(KEB(), FormulaLogicOperator.And, new Formula.Not(Decomposable()))));
 
     private static Formula Map(Formula a, Formula b) =>
         new Formula.FunctionCall(FormulaIdentifier.Create("MatrixMap"), [a, b]);
 
     private static Formula KEB() =>
-        new Formula.FunctionCall(FormulaIdentifier.Create("IsKEB"), [F.D(2), F.Id("Phi")]);
+        new Formula.FunctionCall(FormulaIdentifier.Create("IsKEB"), [F.D(2), F.Id("f")]);
 
     private static Formula Decomposable() =>
-        new Formula.FunctionCall(FormulaIdentifier.Create("IsDecomposable"), [F.Id("Phi")]);
+        new Formula.FunctionCall(FormulaIdentifier.Create("IsDecomposable"), [F.Id("f")]);
 
     private static Formula Bind(FormulaQuantifier quantifier, string name, Formula domain, Formula body) =>
         new Formula.Bind(quantifier, FormulaIdentifier.Create(name), domain, body);

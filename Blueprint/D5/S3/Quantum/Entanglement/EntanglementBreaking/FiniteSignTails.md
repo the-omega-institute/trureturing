@@ -88,19 +88,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails
 
 The moment-generating function of the signed linear form is bounded by the sub-Gaussian bound with variance proxy the sum of squared coefficients.
 
-**Theorem 1.8 (Sign linear form tail).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signLinearForm_tail`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signLinearForm_tail` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For a nonnegative threshold, the absolute signed linear form has tail at most twice the exponential of minus the squared threshold divided by twice the squared coefficient norm.
-
-**Definition 1.9 (Hermitian sign index).**
+**Definition 1.8 (Hermitian sign index).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.HermitianSignIndex`
 
@@ -112,7 +100,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails
 
 Coordinates consist of a Boolean component selector and an ordered pair of matrix indices.
 
-**Definition 1.10 (Sign cube matrix).**
+**Definition 1.9 (Sign cube matrix).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signCubeMatrix`
 
@@ -124,7 +112,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails
 
 Use the Boolean-selected coordinates for the real and imaginary signs in the finite sign matrix.
 
-**Definition 1.11 (Sign cube sample).**
+**Definition 1.10 (Sign cube sample).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signCubeSample`
 
@@ -136,7 +124,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails
 
 On the product of two copies of Fin d, read the two signs per index pair from one assignment in the cube.
 
-**Definition 1.12 (Sign component).**
+**Definition 1.11 (Sign component).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signComponent`
 
@@ -148,7 +136,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails
 
 Return the imaginary part when the Boolean selector is true and the real part otherwise.
 
-**Definition 1.13 (Sign bilinear coefficients).**
+**Definition 1.12 (Sign bilinear coefficients).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signBilinearCoefficients`
 
@@ -160,7 +148,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails
 
 For each component of the bilinear form, combine the two terms attached to an upper entry and its conjugate into real coefficients of the two sign bits. Inactive coordinates carry zero coefficient.
 
-**Theorem 1.14 (Sign cube matrix bilinear component eq).**
+**Theorem 1.13 (Sign cube matrix bilinear component eq).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signCubeMatrix_bilinear_component_eq`
 
@@ -172,7 +160,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails
 
 Each chosen real or imaginary component of the bilinear form is the signed linear form in its specified coefficients.
 
-**Theorem 1.15 (Sign bilinear coefficients energy le).**
+**Theorem 1.14 (Sign bilinear coefficients energy le).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signBilinearCoefficients_energy_le`
 
@@ -184,7 +172,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails
 
 The sum of squared real coefficients is at most eighteen twenty-fifths times the product of the squared Euclidean norms of the two vectors.
 
-**Theorem 1.16 (Sign cube sample bilinear component has subgaussian mgf).**
+**Theorem 1.15 (Sign cube sample bilinear component has subgaussian mgf).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signCubeSample_bilinear_component_hasSubgaussianMGF`
 
@@ -196,7 +184,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails
 
 For vectors of Euclidean norm at most one the selected component has sub-Gaussian variance proxy eighteen twenty-fifths.
 
-**Theorem 1.17 (Sign cube sample bilinear component tail).**
+**Theorem 1.16 (Sign cube sample bilinear component tail).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signCubeSample_bilinear_component_tail`
 
@@ -208,7 +196,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails
 
 For unit-ball input vectors and nonnegative threshold, the signed-component absolute tail uses variance proxy eighteen twenty-fifths.
 
-**Theorem 1.18 (Sign cube sample bilinear tail).**
+**Theorem 1.17 (Sign cube sample bilinear tail).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signCubeSample_bilinear_tail`
 
@@ -220,7 +208,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails
 
 Control the absolute complex bilinear form by the union of the real and imaginary component tails at threshold divided by the square root of two.
 
-**Theorem 1.19 (Sign cube sample bilinear finset tail).**
+**Theorem 1.18 (Sign cube sample bilinear finset tail).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signCubeSample_bilinear_finset_tail`
 
@@ -251,6 +239,5 @@ A finite family of pairs of unit-ball vectors has a simultaneous upper tail boun
 - Truth anchor: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signCubeSample_quadratic_tail`
 - Truth anchor: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signLinearForm`
 - Truth anchor: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signLinearForm_hasSubgaussianMGF`
-- Truth anchor: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signLinearForm_tail`
 - Truth anchor: `D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signValue`
 - Dependency: [D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignMatrices](FiniteSignMatrices.md)

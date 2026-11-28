@@ -18,7 +18,7 @@ Each of the three bad events has probability less than one quarter under the sam
 
 **Theorem 1.2 (Indecomposable k-entanglement-breaking maps).**
 
-$$\forall k \in \mathbb{N},\; \forall d \in \mathbb{N},\; \left(2 \le k \land 524288 \cdot k^{3} \le d\right) \Rightarrow \left(\exists Phi \in \operatorname{MatrixMap}\left(d, d\right),\; \operatorname{IsKEB}\left(k, Phi\right) \land \left(\neg \operatorname{IsDecomposable}\left(Phi\right)\right)\right)$$
+$$\forall k \in \mathbb{N},\; \forall d \in \mathbb{N},\; \left(2 \le k \land 524288 \cdot k^{3} \le d\right) \Rightarrow \left(\exists f \in \operatorname{MatrixMap}\left(d, d\right),\; \operatorname{IsKEB}\left(k, f\right) \land \left(\neg \operatorname{IsDecomposable}\left(f\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/EntanglementBreaking/SignMatrixConstruction.exists_indecomposable_kEB` (`✓ std3`). ∎
 
@@ -26,7 +26,7 @@ $$\forall k \in \mathbb{N},\; \forall d \in \mathbb{N},\; \left(2 \le k \land 52
 
 *Commentary.*
 
-For each integer k at least two and every integer d at least 524288 times k cubed, there is a complex-linear k-entanglement-breaking map from the full d by d matrix algebra into itself that is indecomposable.
+For each natural number k at least two and every natural number d at least 524288 times k cubed, there is a complex-linear k-entanglement-breaking map from the full d by d matrix algebra into itself that is indecomposable.
 
 **Theorem 1.3 (Exists sign cube sample good).**
 

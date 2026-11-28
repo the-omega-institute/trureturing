@@ -6,7 +6,7 @@ A 2-entanglement-breaking map on complex matrices can be indecomposable.
 
 **Definition 1.1 (The universal decomposability assertion).**
 
-$$\forall a \in Npos,\; \forall b \in Npos,\; \forall Phi \in \operatorname{MatrixMap}\left(a, b\right),\; \operatorname{IsKEB}\left(2, Phi\right) \Rightarrow \operatorname{IsDecomposable}\left(Phi\right)$$
+$$\forall a \in \mathrm{Npos},\; \forall b \in \mathrm{Npos},\; \forall f \in \operatorname{MatrixMap}\left(a, b\right),\; \operatorname{IsKEB}\left(2, f\right) \Rightarrow \operatorname{IsDecomposable}\left(f\right)$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/EntanglementBreaking/DevendraMallickSumeshOpenProblemOne.claim` (`✓ std3`).
 
@@ -18,7 +18,7 @@ Open Problem 1, arXiv:2105.14991v2, p. 26: “Is every 2-EB map Φ : 𝕄₍d₁
 
 **Theorem 1.2 (An indecomposable 2-entanglement-breaking map).**
 
-$$\exists d \in Npos,\; \exists Phi \in \operatorname{MatrixMap}\left(d, d\right),\; \operatorname{IsKEB}\left(2, Phi\right) \land \left(\neg \operatorname{IsDecomposable}\left(Phi\right)\right)$$
+$$\exists d \in \mathrm{Npos},\; \exists f \in \operatorname{MatrixMap}\left(d, d\right),\; \operatorname{IsKEB}\left(2, f\right) \land \left(\neg \operatorname{IsDecomposable}\left(f\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/EntanglementBreaking/DevendraMallickSumeshOpenProblemOne.devendraMallickSumesh_openProblem1_counterexample` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ Taking k equal to two and both dimensions equal to 4194304 gives a 2-entanglemen
 
 **Theorem 1.3 (Refutation of universal decomposability).**
 
-$$\neg claim$$
+$$\neg \mathrm{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/EntanglementBreaking/DevendraMallickSumeshOpenProblemOne.devendraMallickSumesh_openProblem1_refuted` (`✓ std3`). ∎
 

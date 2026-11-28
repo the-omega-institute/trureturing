@@ -17,7 +17,7 @@ internal sealed class SignMatrixConstructionDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("eb-signmatrixconstruction-exists-indecomposable-keb"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/SignMatrixConstruction.exists_indecomposable_kEB"),
                 H("Indecomposable k-entanglement-breaking maps"), StatementSource.FromAuthor(F.Disp(Family())),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For each integer k at least two and every integer d at least 524288 times k cubed, there is a complex-linear k-entanglement-breaking map from the full d by d matrix algebra into itself that is indecomposable."))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For each natural number k at least two and every natural number d at least 524288 times k cubed, there is a complex-linear k-entanglement-breaking map from the full d by d matrix algebra into itself that is indecomposable."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("eb-signmatrixconstruction-exists-signcubesample-good"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/SignMatrixConstruction.exists_signCubeSample_good"),
@@ -27,7 +27,7 @@ internal sealed class SignMatrixConstructionDocument : IScribeDocumentDefinition
 
     private static Formula Family()
     {
-        Formula k = F.Id("k"), d = F.Id("d"), map = F.Id("Phi");
+        Formula k = F.Id("k"), d = F.Id("d"), map = F.Id("f");
         Formula naturals = F.Seq(F.Mathbb, F.Grp(F.Id("N")));
         Formula cutoff = new Formula.Binary(F.D(5, 2, 4, 2, 8, 8), FormulaBinaryOperator.Multiply,
             new Formula.Power(k, F.D(3)));
@@ -39,7 +39,7 @@ internal sealed class SignMatrixConstructionDocument : IScribeDocumentDefinition
             new Formula.FunctionCall(FormulaIdentifier.Create("IsKEB"), [k, map]),
             FormulaLogicOperator.And,
             new Formula.Not(new Formula.FunctionCall(FormulaIdentifier.Create("IsDecomposable"), [map])));
-        Formula exists = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("Phi"),
+        Formula exists = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("f"),
             new Formula.FunctionCall(FormulaIdentifier.Create("MatrixMap"), [d, d]), properties);
         return new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("k"), naturals,
             new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("d"), naturals,

@@ -84,13 +84,6 @@ private theorem subgaussian_abs_tail {Ω : Type*} [MeasurableSpace Ω] {μ : Mea
       rw [two_mul]
       exact add_le_add (hX.measure_ge_le ht) (hX.neg.measure_ge_le ht)
 
-/-- Two-sided Hoeffding bound on the uniform sign cube. -/
-theorem signLinearForm_tail {ι : Type*} [Fintype ι] (a : ι → ℝ) {t : ℝ} (ht : 0 ≤ t) :
-    (signCubeMeasure ι).real {ω | t ≤ |signLinearForm a ω|} ≤
-      2 * Real.exp (-(t ^ 2) / (2 * ∑ i, a i ^ 2)) := by
-  simpa only [NNReal.coe_sum, NNReal.coe_pow, coe_nnnorm, Real.norm_eq_abs, sq_abs]
-    using subgaussian_abs_tail (signLinearForm_hasSubgaussianMGF a) ht
-
 private theorem signLinearForm_hasSubgaussianMGF_le {ι : Type*} [Fintype ι]
     (a : ι → ℝ) {c : ℝ≥0} (ha : ∑ i, a i ^ 2 ≤ (c : ℝ)) :
     HasSubgaussianMGF (signLinearForm a) c (signCubeMeasure ι) := by
