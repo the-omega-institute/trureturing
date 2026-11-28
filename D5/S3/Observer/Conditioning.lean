@@ -15,7 +15,13 @@
      nonnegativity established in `FiniteDimensional.born_probability_skeleton`.
 -/
 
-import D5.S3.Quantum.FiniteDimensional
+module
+
+public import D5.S3.Quantum.FiniteDimensional
+
+/-! Finite projective measurements preserve trace and are idempotent. -/
+
+@[expose] public section
 
 namespace D5.S3.Observer.Conditioning
 

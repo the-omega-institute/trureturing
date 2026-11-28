@@ -6,13 +6,18 @@
    utility: none
    digest: Determinant-integral subentropy and invariance under rectangular Gram conversion. -/
 
-import D5.S3.Quantum.Foundation.FiniteStateChannel
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
-import Mathlib.LinearAlgebra.Matrix.SchurComplement
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.Tactic
+module
+
+public import D5.S3.Quantum.Foundation.FiniteStateChannel
+public import D5.S3.Quantum.Information.PartialTraceMutualInformation
+public import Mathlib.LinearAlgebra.Matrix.SchurComplement
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
 
 /-! Subentropy through a one-dimensional determinant integral. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

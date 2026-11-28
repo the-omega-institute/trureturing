@@ -6,12 +6,18 @@
    utility: none
    digest: Spectral transport of matrix quadratic forms under standard Gaussian measure. -/
 
-import Mathlib.Probability.Distributions.Gaussian.Multivariate
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Tactic
+module
+
+public import Mathlib.Probability.Distributions.Gaussian.Multivariate
+public import Mathlib.Analysis.Matrix.Spectrum
+public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.NormNum
 
 /-! Complex quadratic forms use the standard real Gaussian in the underlying Euclidean space. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

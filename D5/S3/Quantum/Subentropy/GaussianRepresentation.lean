@@ -6,12 +6,19 @@
    utility: none
    digest: Exact Laplace transforms of finite diagonal complex Gaussian quadratic forms. -/
 
-import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.MeasureTheory.Integral.Pi
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
-import Mathlib.Tactic
+module
+
+public import Mathlib.Probability.Distributions.Gaussian.Real
+public import Mathlib.MeasureTheory.Integral.Pi
+public import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.NormNum
 
 /-! Independent real coordinate pairs supply the complex Gaussian Laplace transform. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

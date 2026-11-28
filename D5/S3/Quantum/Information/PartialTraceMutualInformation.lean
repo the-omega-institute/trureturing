@@ -6,9 +6,15 @@
    utility: none
    digest: Partial traces preserve density states and determine quantum mutual information. -/
 
-import D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+module
+
+public import D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+
+/-! Partial traces preserve density states, and product states have zero mutual information. -/
+
+@[expose] public section
 
 /- The trace-preservation and positivity proofs below are adapted from
    CsdLean4/Mathlib/LinearAlgebra/Matrix/PartialTrace.lean,

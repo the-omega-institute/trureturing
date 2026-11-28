@@ -10,7 +10,10 @@ import D5.S3.Quantum.Foundation.FiniteStateChannel
 import D5.S3.Quantum.Information.OrthogonalRecordEntropy
 import D5.S3.Weil.ZetaLinear.RankTrace
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Tactic
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Push
+import Mathlib.Tactic.SplitIfs
 
 /-! The finite-POVM success set and its positive bounded supremum. -/
 
