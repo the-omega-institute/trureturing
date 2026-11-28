@@ -10,14 +10,14 @@ import Mathlib.RingTheory.PowerSeries.Exp
 import Mathlib.RingTheory.PowerSeries.Substitution
 import OmegaBuild.Commands
 
-compile_only_with_mathlib
-
 /-!
 Sushkov, arXiv:2611.02795v1, §6 item 1 (issue #35289).
 At H = N = 1 all YJM factors of (6.1) are units, so its unscaled class-sum
 coordinates are exactly the input family, including in degree zero.
 Equation (2.15) sends the class sum indexed by ρ to p_ρ / z_ρ.
 -/
+
+compile_only_with_mathlib
 
 noncomputable section
 
@@ -79,7 +79,7 @@ private def witness : Coefficients := fun n _ => if n ≤ 1 then 1 else 0
 private theorem frobenius_zero : frobenius witness 0 = 1 := by
   classical
   simp [frobenius, witness, powerSumMonomial, zPartition, partitionExponent, zExponent,
-    MvPolynomial.monomial_zero_eq_C]
+    ← MvPolynomial.one_def]
 
 private theorem frobenius_one : frobenius witness 1 = MvPolynomial.X 0 := by
   classical
@@ -95,10 +95,10 @@ private theorem frobenius_image (n : ℕ) :
       MvPolynomial.weightedHomogeneousComponent variableWeight n
         (1 + MvPolynomial.X 0 : PowerSum ℂ) := by
   have h₀ : MvPolynomial.IsWeightedHomogeneous variableWeight (1 : PowerSum ℂ) 0 :=
-    MvPolynomial.isWeightedHomogeneous_one
+    MvPolynomial.isWeightedHomogeneous_one ℂ variableWeight
   have h₁ : MvPolynomial.IsWeightedHomogeneous variableWeight
       (MvPolynomial.X 0 : PowerSum ℂ) 1 :=
-    MvPolynomial.isWeightedHomogeneous_X variableWeight 0
+    MvPolynomial.isWeightedHomogeneous_X ℂ variableWeight 0
   rw [map_add]
   rcases n with _ | _ | n
   · simp [frobenius_zero, h₀.weightedHomogeneousComponent_same,
@@ -113,14 +113,18 @@ private theorem not_multiplicative : ¬ Multiplicative witness := by
   have onePart : b 0 = 1 := by
     simpa [witness, eq_comm] using hb 1 (Nat.Partition.indiscrete 1)
   let twoOnes := Nat.Partition.ofSums 2 ({1, 1} : Multiset ℕ) (by decide)
+  have hparts : twoOnes.parts = {1, 1} := by
+    change Multiset.filter (· ≠ 0) ({1, 1} : Multiset ℕ) = _
+    exact Multiset.filter_eq_self.mpr (by simp)
   have h := hb 2 twoOnes
-  simp [witness, twoOnes, onePart] at h
+  simp [witness, hparts, onePart] at h
 
 private theorem timeDifference_constant : PowerSeries.constantCoeff timeDifference = 0 := rfl
 
 private theorem exponential_constant : PowerSeries.constantCoeff timeExponential = 1 := by
-  rw [timeExponential, PowerSeries.constantCoeff_subst_of_constantCoeff_zero timeDifference_constant]
-  simp
+  change MvPowerSeries.constantCoeff ((PowerSeries.exp Times).subst timeDifference) = 1
+  rw [PowerSeries.constantCoeff_subst_of_constantCoeff_zero timeDifference_constant]
+  simp [PowerSeries.constantCoeff_exp]
 
 private theorem exponential_linear :
     PowerSeries.coeff 1 timeExponential =
@@ -150,7 +154,7 @@ private theorem affine_residue :
       (affineShift Sum.inl (-1) * affineShift Sum.inr 1 * timeExponential) = 0 := by
   rw [PowerSeries.coeff_one_mul, PowerSeries.coeff_one_mul, exponential_constant,
     exponential_linear]
-  simp [affineShift, PowerSeries.coeff_one_mul]
+  simp [affineShift]
   ring
 
 private theorem witness_kp : ∀ d, residue (frobenius witness) d = 0 := by
@@ -158,8 +162,8 @@ private theorem witness_kp : ∀ d, residue (frobenius witness) d = 0 := by
   rcases d with _ | _ | d
   · have hp : Finset.antidiagonal 1 = {(0, 1), (1, 0)} := rfl
     simp [residue, hp, frobenius_zero, frobenius_one, scaledMiwa, variableWeight,
-      MvPolynomial.eval₂Hom_X', PowerSeries.coeff_zero_eq_constantCoeff, exponential_constant]
-  · have hp : Finset.antidiagonal 2 = {(0, 2), (1, 1), (2, 0)} := rfl
+      PowerSeries.coeff_zero_eq_constantCoeff, exponential_constant]
+  · have hp : Finset.antidiagonal 2 = {(0, 2), (1, 1), (2, 0)} := by decide
     have hz : frobenius witness 2 = 0 := frobenius_high (by decide)
     have ht (side : ℕ → Sum ℕ ℕ) (ε : ℂ) :
         scaledMiwa side ε (frobenius witness 1) = affineShift side ε - PowerSeries.X := by
@@ -171,7 +175,8 @@ private theorem witness_kp : ∀ d, residue (frobenius witness) d = 0 := by
     rw [hsingle, ht, ht, ← affine_residue]
     simp [affineShift, PowerSeries.coeff_one_mul, exponential_constant]
     ring
-  · apply Finset.sum_eq_zero
+  · unfold residue
+    apply Finset.sum_eq_zero
     intro mn hm
     have hs := Finset.mem_antidiagonal.mp hm
     by_cases h : 1 < mn.1
@@ -185,10 +190,10 @@ theorem result : ¬ claim := by
   apply not_multiplicative
   apply h witness
   · have h₀ : MvPolynomial.IsWeightedHomogeneous variableWeight (1 : PowerSum ℂ) 0 :=
-      MvPolynomial.isWeightedHomogeneous_one
+      MvPolynomial.isWeightedHomogeneous_one ℂ variableWeight
     have h₁ : MvPolynomial.IsWeightedHomogeneous variableWeight
         (MvPolynomial.X 0 : PowerSum ℂ) 1 :=
-      MvPolynomial.isWeightedHomogeneous_X variableWeight 0
+      MvPolynomial.isWeightedHomogeneous_X ℂ variableWeight 0
     simp [frobenius_image, h₀.weightedHomogeneousComponent_same,
       h₁.weightedHomogeneousComponent_ne 0 (by decide : 0 ≠ 1)]
   · exact witness_kp
