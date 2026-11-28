@@ -166,7 +166,7 @@ noncomputable instance integerFiber_fintype (D : LatticeData) (N : ℕ) :
   letI : Finite (IntegerFiber D N) := integerFiber_finite D N
   exact Fintype.ofFinite _
 
-private theorem chargeSupported_mem_iff (D : LatticeData)
+theorem chargeSupported_mem_iff (D : LatticeData)
     (C : Finset (Charge D)) (v : Carrier D) :
     v ∈ chargeSupported D C ↔
       ∀ a : Label D, a.1 ∉ C → carrierCoeffEquiv D v a = 0 := by
@@ -174,7 +174,7 @@ private theorem chargeSupported_mem_iff (D : LatticeData)
   rw [Finsupp.mem_supported']
   rfl
 
-private theorem cutoffActualGrade_eq_supported (D : LatticeData)
+theorem cutoffActualGrade_eq_supported (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
     (C : Finset (Charge D)) (n : ℤ) :
@@ -249,7 +249,7 @@ def cutoffCoeffEquiv (D : LatticeData)
   change cutoffActualGrade D H C n ≃ₗ[ℂ] (S →₀ ℂ)
   exact e.trans e'
 
-private theorem cutoffCoeffEquiv_apply (D : LatticeData)
+theorem cutoffCoeffEquiv_apply (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
     (C : Finset (Charge D)) (n : ℤ)
@@ -358,7 +358,7 @@ def neutralThetaTrace (D : LatticeData)
     simp only [Finset.mem_singleton] at ha
     simpa [ha])
 
-private theorem cutoffBasis_carrierCoeff (D : LatticeData)
+theorem cutoffBasis_carrierCoeff (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
     (C : Finset (Charge D)) (n : ℤ)

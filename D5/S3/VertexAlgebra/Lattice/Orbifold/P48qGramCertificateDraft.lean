@@ -3,7 +3,7 @@
    mirror-B: none(waiver:no-B-plane-mirror-for-source-module)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairingDraft.p48q_movingPairing_isPerfPair; instance=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramCertificateDraft.gram_inverse_certificate; result=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramCertificateDraft.gram_isometry_certificate
+   utility: kind=checker; basis=consumer=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qTwistedChargeAction.g_isometry; instance=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramCertificateDraft.gram_inverse_certificate; result=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramCertificateDraft.gram_isometry_certificate
    digest: Replay the Nebe integer Gram inverse and row-action isometry certificates. -/
 
 import Batteries.Tactic.OpenPrivate
