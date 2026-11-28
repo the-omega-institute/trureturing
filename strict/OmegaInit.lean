@@ -6,6 +6,7 @@ module
 prelude
 
 public import OmegaInit.Classical
+public import OmegaInit.Coe
 public import OmegaInit.Control.ExceptCps
 public import OmegaInit.Control.Lawful.Basic
 public import OmegaInit.Control.Lawful.Instances
