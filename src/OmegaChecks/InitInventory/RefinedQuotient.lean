@@ -7,8 +7,8 @@ import Init.GrindInstances.Ring.Nat
 namespace OmegaChecks.InitBoundaries.RefinedQuotient
 universe u v
 public abbrev Pair := Nat × Nat
-public abbrev base : Pair := (0,0)
-public abbrev mid : Pair := (1,1)
+public abbrev base : Pair := (0,1)
+public abbrev mid : Pair := (1,2)
 
 @[expose] public def tag {α : Sort u} (a : α) (p : Pair) : Prop :=
   HEq (ULift.up.{1} (PLift.up a)) (ULift.up.{u} (PLift.up p))
@@ -36,7 +36,8 @@ private theorem ind_beta {α : Sort u} {r : α → α → Prop} {β : carrier r 
 public theorem decode {a p : Pair} (h : tag a p) : a = p :=
   congrArg (fun v : ULift.{1} (PLift Pair) => v.down.down) (eq_of_heq h)
 
-@[expose] public def observe (p : Pair) : Bool := match p with | (2,2) => true | _ => false
+@[expose] public def observe (p : Pair) : Bool :=
+  Nat.casesOn p.1 false (fun n => Nat.casesOn n false (fun _ => true))
 
 @[expose] public def separate (r : Pair → Pair → Prop) (q : carrier r) : Bool :=
   Quot.lift observe (by
@@ -68,9 +69,11 @@ public def sites := [
   (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.add),
   (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.sub),
   (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.mul),
+  (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.neg),
   (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.nsmul),
   (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.zsmul),
   (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.npow),
+  (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.neg),
   (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.nsmul),
   (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.zsmul),
   (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.add),
@@ -101,8 +104,8 @@ private def checkRules (official clean : Environment) : IO Unit := do
             throwError "incorrect symbolic computation at a quotient constructor for {target}"
       (Meta.MetaM.run' check).toIO' {fileName := "<refined quotient rules>", fileMap := default} {env := clean}
 
-private def pair (n : Nat) :=
-  mkApp4 (mkConst ``Prod.mk [0, 0]) (mkConst ``Nat) (mkConst ``Nat) (mkRawNatLit n) (mkRawNatLit n)
+private def pair (a b : Nat) :=
+  mkApp4 (mkConst ``Prod.mk [0, 0]) (mkConst ``Nat) (mkConst ``Nat) (mkRawNatLit a) (mkRawNatLit b)
 
 private def natPair := mkApp2 (mkConst ``Prod [0, 0]) (mkConst ``Nat) (mkConst ``Nat)
 
@@ -121,7 +124,7 @@ public def certify (official witnesses : Environment) (owner : Name) (source : C
     | throw <| IO.userError "missing arithmetic instance"
   let op := mkApp2 (mkConst source.name [0]) (mkConst ``Nat) inst
   let .ok opType := Kernel.check official {} op | throw <| IO.userError "bad arithmetic specialization"
-  -- Double a representative or square it. Both operations send (1,1) to (2,2).
+  -- Doubling, squaring and negating all separate the two off-diagonal representatives.
   let two := mkRawNatLit 2
   let pow := source.name == ``Ring.OfSemiring.npow
   let fixedScalar := match source.name with
@@ -142,25 +145,38 @@ public def certify (official witnesses : Environment) (owner : Name) (source : C
   unless Kernel.isDefEqGuarded witnesses {} relation canonical do
     throw <| IO.userError "unexpected relation on the pair envelope"
   let mk := mkApp2 (mkConst ``Quot.mk [1]) natPair relation
-  let firstOutput := if pow || fixedScalar.isSome || source.name == ``Ring.OfSemiring.mul then 0 else 1
-  for (input, expected) in [(0, firstOutput), (1, 2)] do
-    let point := mkApp mk (pair input)
+  let clean ← replayBoundaryDependencies official witnesses
+    (``incompatible :: ``arithmeticRelated :: ``lift_beta :: ``ind_beta :: interpretations.map Prod.snd)
+  checkRules official clean
+  let relationModel := mkConst ``arithmeticRelation
+  let modelPoint := mkApp2 (mkConst ``point [1]) natPair relationModel
+  let observation := mkApp (mkConst ``separate) relationModel
+  for (input, arg, expected) in [(pair 0 1, ``base, ``Bool.false), (pair 1 2, ``mid, ``Bool.true)] do
+    unless Kernel.isDefEqGuarded clean {} input (mkConst arg) do throw <| IO.userError "wrong witness input"
+    let point := mkApp mk input
     let call := match scalarAction with
       | some act => mkApp act point
-      | none => mkApp2 op point (if pow then two else mkApp mk (pair 1))
+      | none =>
+        if [``Ring.OfSemiring.neg, ``IntModule.OfNatModule.neg].contains source.name then mkApp op point
+        else mkApp2 op point (if pow then two else mkApp mk (pair 1 1))
     let .ok resultType := Kernel.check official {} call | throw <| IO.userError "invalid arithmetic application"
     unless Kernel.isDefEqGuarded official {} resultType operand do
       throw <| IO.userError "arithmetic application has the wrong result type"
     let .ok result := Kernel.whnf official {} call | throw <| IO.userError "invalid envelope application"
-    unless result.isAppOfArity ``Quot.mk 3 && Kernel.isDefEqGuarded official {} result.appFn! mk &&
-        Kernel.isDefEqGuarded official {} result.appArg! (pair expected) do throw <| IO.userError s!"wrong result at {input}"
-  let clean ← replayBoundaryDependencies official witnesses
-    (``incompatible :: ``arithmeticRelated :: ``lift_beta :: ``ind_beta :: interpretations.map Prod.snd)
-  checkRules official clean
-  let test (n : Nat) := mkApp2 (mkConst ``separate) (mkConst ``arithmeticRelation)
-    (mkApp3 (mkConst ``point [1]) natPair (mkConst ``arithmeticRelation) (pair n))
-  for (n, expected) in [(0, ``Bool.false), (1, ``Bool.false), (2, ``Bool.true)] do
-    unless Kernel.isDefEqGuarded clean {} (test n) (mkConst expected) do throw <| IO.userError "unexpected refined observation"
+    unless result.isAppOfArity ``Quot.mk 3 && Kernel.isDefEqGuarded official {} result.appFn! mk do
+      throw <| IO.userError "expected a quotient constructor in the pinned computation"
+    -- Reify the constructor payload before crossing into the witness environment.
+    let payload := result.appArg!
+    let .ok coords := Kernel.whnf official {} payload | throw <| IO.userError "invalid representative"
+    unless coords.isAppOfArity ``Prod.mk 4 do throw <| IO.userError "expected a pair in the pinned constructor"
+    let natValue (e : Expr) : IO Nat := do
+      let .ok v := Kernel.whnf official {} e | throw <| IO.userError "invalid coordinate"
+      let some n := v.rawNatLit? | throw <| IO.userError "expected a natural coordinate"
+      return n
+    let checked := pair (← natValue coords.appFn!.appArg!) (← natValue coords.appArg!)
+    unless Kernel.isDefEqGuarded official {} payload checked &&
+        Kernel.isDefEqGuarded clean {} (mkApp observation (mkApp modelPoint checked)) (mkConst expected) do
+      throw <| IO.userError s!"wrong observation at {arg} for {source.name}"
   let some law := clean.find? ``incompatible | throw <| IO.userError "missing refined counterexample"
   let application := mkApp2 (mkConst law.name) (mkConst ``arithmeticRelation) (mkConst ``arithmeticRelated)
   let .ok specialized := Kernel.check clean {} application | throw <| IO.userError "invalid refined model specialization"
@@ -175,8 +191,8 @@ public def certify (official witnesses : Environment) (owner : Name) (source : C
     let compare (term expected : Expr) := do
       unless Kernel.isDefEqGuarded clean ctx term expected do throwError "refined quotient witness type mismatch"
     compare (← Meta.inferType candidate) (.forallE `q q q .default)
-    for (h, n, value) in [(first, 0, ``Bool.false), (second, 1, ``Bool.true)] do
-      let input := mkApp3 (mkConst ``point [1]) natPair rel (pair n)
+    for (h, arg, value) in [(first, ``base, ``Bool.false), (second, ``mid, ``Bool.true)] do
+      let input := mkApp3 (mkConst ``point [1]) natPair rel (mkConst arg)
       let observed := mkApp2 (mkConst ``separate) rel (mkApp candidate input)
       compare (← Meta.inferType h) (mkApp3 (mkConst ``Eq [1]) (mkConst ``Bool) observed (mkConst value))
     compare conclusion (.forallE `sound soundType (mkConst ``False) .default)
