@@ -155,6 +155,7 @@ private theorem kernel_tail_bound (Z : ZeroData) (k : ℕ) (hk : 2 ≤ ‖Z.gamm
   have hx := inverse_product_bound Z k hk
   have hbound := collapsed_kernel_bound x z hx.1 hz
   have hrel := ratio_relations (Z.zero k) (zero_ne Z k).1 (zero_ne Z k).2
+  simp only [ratio] at hrel
   have hz0 : 1 - z ≠ 0 := by
     intro he
     have he' : z = 1 := (sub_eq_zero.mp he).symm
