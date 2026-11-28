@@ -90,7 +90,8 @@ private theorem length_hits {f : Nat → Bool} (sticky : ∀ i, f i = true → f
       have out := ih (k+1) eq
       exact (congrArg f (by omega : k + len k = k + 1 + len (k + 1))).trans out
 
-private def seen (f : Nat → Bool) : Nat → Bool
+/-- The stream has signalled at or before the given index. -/
+def seen (f : Nat → Bool) : Nat → Bool
   | 0 => f 0
   | n+1 => seen f n || f (n+1)
 
@@ -609,8 +610,7 @@ private theorem signalRangeLaw {g : Nat → Bool} (sticky : ∀ k, g k = true �
     unfold stopAt at h
     split at h
     · cases h
-    · have := Option.some.inj h
-      omega
+    · exact Nat.ne_of_gt (Nat.lt_add_of_pos_right (Nat.zero_lt_succ n)) (Option.some.inj h)
   · intro; rfl
   · intro n a
     cases n with
@@ -630,7 +630,7 @@ private theorem signalRangeFinite {g : Nat → Bool} (sticky : ∀ k, g k = true
   refine ⟨n+1, ?_⟩
   change stopAt g (k + (n+1)) = none
   unfold stopAt
-  rw [signal_after sticky hit (by omega : n ≤ k + (n+1))]
+  rw [signal_after sticky hit (Nat.le_trans (Nat.le_succ n) (Nat.le_add_left ..))]
   rfl
 
 /-- A right-unbounded range can enumerate a Boolean search up to its first signal. -/

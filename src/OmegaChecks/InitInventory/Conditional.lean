@@ -22,6 +22,10 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
       ``Std.Rxo.Iterator.instLawfulIteratorLoop, ``Std.Rxi.Iterator.instLawfulIteratorLoop].contains name then
     return ((``funext).toString, ``OmegaChecks.InitBoundaries.RangeLoopLift.funextFromTwoSteps,
       "On two successive outputs the optimized loop ignores its lift and the default loop performs both lawful identity-monad lifts with their pinned behavior")
+  if owner == `Init.Data.Range.Polymorphic.RangeIterator && name == ``Std.Rxi.Iterator.instIteratorLoop.loop then
+    return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
+      ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromUnboundedRangeLoop,
+      "When a signal exists, the natural successor enumeration stops at its first occurrence and the identity-monad loop returns the final index")
   if owner == `Init.Data.Range.Polymorphic.RangeIterator && name == ``Std.Rxo.Iterator.instIteratorLoop.loop then
     return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
       ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromOpenRangeLoop,
