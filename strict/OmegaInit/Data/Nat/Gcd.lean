@@ -7,6 +7,9 @@ prelude
 public import OmegaInit.Prelude
 public import OmegaInit.Data.Nat.Div.Basic
 import all OmegaInit.Prelude
+import OmegaInit.Data.Nat.Dvd
+import OmegaInit.Data.Nat.Basic
+import OmegaInit.WF
 
 noncomputable section
 
@@ -85,3 +88,52 @@ public section
 namespace Nat
 export _root_.Omega.Nat (gcd_add_one gcd_one_left gcd_one_right gcd_rec gcd_succ gcd_zero_left gcd_zero_right)
 end Nat
+
+port_private_declaration Nat.gcd.induction.match_1_1
+port_proof Nat.gcd.induction by_constructive_casts
+port_proof Nat.dvd_gcd by_constructive_casts
+port_proof Nat.gcd_mul_left by_constructive_casts
+port_proof Nat.gcd_dvd by_constructive_casts
+port_proof Nat.gcd_dvd_right by_constructive_casts
+port_proof Nat.gcd_mul_left_left by_constructive_casts
+port_proof Nat.gcd_mul_right_left by_constructive_casts
+port_proof Nat.gcd_dvd_left by_constructive_casts
+port_proof Nat.gcd_comm by_constructive_casts
+port_proof Nat.gcd_mul_right_right by_constructive_casts
+port_proof Nat.gcd_dvd_gcd_of_dvd_left by_constructive_casts
+port_proof Nat.gcd_dvd_gcd_mul_left_left by_constructive_casts
+port_proof Nat.gcd_assoc by_constructive_casts
+port_private_declaration Nat.dvdProdDvdOfDvdProd._proof_5
+port_private_declaration Nat.dvdProdDvdOfDvdProd._proof_3
+port_private_declaration Nat.eq_zero_of_gcd_eq_zero_left.match_1_1
+port_proof Nat.gcd_pos_of_pos_left by_constructive_casts
+port_proof Nat.eq_zero_of_gcd_eq_zero_left by_constructive_casts
+port_proof Nat.eq_zero_of_gcd_eq_zero_right by_constructive_casts
+port_private_declaration Nat.dvdProdDvdOfDvdProd._proof_1
+port_private_declaration Nat.dvdProdDvdOfDvdProd._proof_2
+port_proof Nat.gcd_mul_right by_constructive_casts
+port_private_declaration Nat.dvdProdDvdOfDvdProd._proof_4
+port_definition Nat.dvdProdDvdOfDvdProd with_native_code
+port_private_declaration Nat.gcd_mul_right_dvd_mul_gcd.match_1_1
+port_proof Nat.gcd_mul_right_dvd_mul_gcd by_constructive_casts
+port_proof Nat.gcd_self by_constructive_casts
+port_private_declaration Nat.gcd_div.match_1_1
+port_proof Nat.gcd_div by_constructive_casts
+port_proof Nat.gcd_eq_zero_iff by_constructive_casts
+port_proof Nat.gcd_dvd_gcd_of_dvd_right by_constructive_casts
+port_proof Nat.gcd_dvd_gcd_mul_left_right by_constructive_casts
+port_proof Nat.gcd_dvd_gcd_mul_right_right by_constructive_casts
+port_proof Nat.gcd_eq_left by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (dvdProdDvdOfDvdProd dvd_gcd eq_zero_of_gcd_eq_zero_left
+  eq_zero_of_gcd_eq_zero_right gcd_assoc gcd_comm gcd_div gcd_dvd gcd_dvd_gcd_mul_left_left
+  gcd_dvd_gcd_mul_left_right gcd_dvd_gcd_mul_right_right gcd_dvd_gcd_of_dvd_left
+  gcd_dvd_gcd_of_dvd_right gcd_dvd_left gcd_dvd_right gcd_eq_left gcd_eq_zero_iff gcd_mul_left
+  gcd_mul_left_left gcd_mul_right gcd_mul_right_dvd_mul_gcd gcd_mul_right_left gcd_mul_right_right
+  gcd_pos_of_pos_left gcd_self)
+end Nat
+
+namespace Nat.gcd
+export _root_.Omega.Nat.gcd (induction)
+end Nat.gcd
