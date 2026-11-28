@@ -53,6 +53,7 @@ strata_touched:
   - D5/S3/Topology/StableCategory/DisjointCoverObstruction
   - D5/S3/Topology/StableCategory/HalesJewettCategoricalCover
   - D5/S3/Topology/StableCategory/SevenTrianglePowerCovers
+  - D5/S3/Topology/StableCategory/UnrestrictedFactorPowers
 license: citation-only
 triage: anchor
 ---
@@ -1312,3 +1313,17 @@ applies to finite powers of this one factor. All these powers have weak
 category one by realization of products. The stable category also
 allows further subdivisions, and the proof gives an obstruction at
 one fixed depth.
+
+The rank hypothesis can be removed from the conclusion about finite
+powers. For a finite poset (X), take the number of points in the
+principal ideal of each point as its section rank. In the enlarged
+poset of pairs (x,i), require (x≤y) and a strictly increasing rank
+for different first coordinates. All finite chains can be completed
+through the missing ranks by repeating a first coordinate. The section
+and projection split, and raising a rank to its maximum with the
+section rank compares both the identity and the section–projection
+composite to one order map. These comparisons survive products and
+the first ordinary subdivision. The rank-aligned Hales–Jewett theorem
+therefore gives unbounded one-step categorical cover size for the
+powers of any finite poset whose first subdivision has no
+one-piece categorical lower cover.
