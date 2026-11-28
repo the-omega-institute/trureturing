@@ -8,6 +8,8 @@ import all Init.Data.Nat.Bitwise.Basic
 import all Init.Data.List.Control
 import Init.Data.List.ToArray
 import Init.Data.Array.Lemmas
+import all Init.Data.Array.MapIdx
+import all Init.Data.List.MapIdx
 import all Init.Data.Iterators.Consumers.Monadic.Loop
 import all Init.Prelude
 public import OmegaChecks.InitInventory.Extensionality
@@ -92,6 +94,49 @@ example (rule : type_of% @Array.foldrM_subtype.{u,u,0}) : type_of% @List.foldrM_
   rw [← Array.foldrM_toList (xs := xs.toArray)] at eq
   rw [← Array.size_unattach (xs := xs.toArray), ← Array.foldrM_toList, Array.toList_unattach] at eq
   exact eq
+
+namespace IndexedMap
+
+/-- Two successive effects, with the conversion to an array performed after the list traversal. -/
+def PairConversion := ∀ {m : Type u → Type v} [Monad m] [LawfulMonad m] {β : Type u} (x y : m β),
+  (x >>= fun a => y >>= fun b => pure #[a, b]) =
+    List.toArray <$> (x >>= fun a => y >>= fun b => pure [a, b])
+
+/-- For one action the conversion follows from composition of functor maps. -/
+theorem singleton [Monad m] [LawfulMonad m] (x : m β) :
+    (x >>= fun a => pure #[a]) = List.toArray <$> (x >>= fun a => pure [a]) := by
+  rw [bind_pure_comp, bind_pure_comp, ← LawfulFunctor.comp_map]
+  rfl
+
+private def pick {m : Type u → Type v} {β : Type u} (x y : m β) : Bool → m β
+  | false => x
+  | true => y
+
+theorem fromList (rule : type_of% @List.mapIdxM_toArray.{u,v,0}) : PairConversion.{u,v} := by
+  intro m mon law β x y
+  exact rule (l := [false, true]) (f := fun _ b => pick x y b)
+
+private theorem arrayAfterList [Monad m] [LawfulMonad m] (x : m (Array β)) :
+    List.toArray <$> (Array.toList <$> x) = x := by
+  rw [← LawfulFunctor.comp_map]
+  exact id_map x
+
+theorem fromArray (rule : type_of% @Array.toList_mapIdxM.{u,v,0}) : PairConversion.{u,v} := by
+  intro m mon law β x y
+  have eq := rule (xs := #[false, true]) (f := fun _ b => pick x y b)
+  exact (arrayAfterList _).symm.trans (congrArg (List.toArray <$> ·) eq)
+
+/-- The bounded callbacks specialize to the same two effects at indices zero and one. -/
+example (rule : type_of% @List.mapFinIdxM_toArray.{u,v,0}) : PairConversion.{u,v} := by
+  intro m mon law β x y
+  exact rule (l := [false, true]) (f := fun _ b _ => pick x y b)
+
+example (rule : type_of% @Array.toList_mapFinIdxM.{u,v,0}) : PairConversion.{u,v} := by
+  intro m mon law β x y
+  have eq := rule (xs := #[false, true]) (f := fun _ b _ => pick x y b)
+  exact (arrayAfterList _).symm.trans (congrArg (List.toArray <$> ·) eq)
+
+end IndexedMap
 
 namespace SingletonSearch
 

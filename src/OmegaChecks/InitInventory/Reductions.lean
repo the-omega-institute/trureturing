@@ -158,6 +158,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``RangeSize.emOfClosed, ``RangeSize.emOfOpen, ``RangeSize.closedOfEM, ``RangeSize.openOfEM] ++
     IntegerCancellation.witnesses.map (fun row => row.2.2) ++
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
+    [``MonadicTraversal.IndexedMap.singleton, ``MonadicTraversal.IndexedMap.fromList, ``MonadicTraversal.IndexedMap.fromArray] ++
     [``MonadicTraversal.SingletonSearch.boolOfSingleton, ``MonadicTraversal.SingletonSearch.optionOfSingleton] ++
     [``MonadicTraversal.fromListFoldl, ``MonadicTraversal.fromListFoldr, ``ArrayLoopCongruence.listForInCongr] ++
     [``funextFromFunextIff, ``PostconditionIdentity.rightIdentity, ``PostconditionIdentity.leftIdentity, ``PostconditionIdentity.ofMonad] ++

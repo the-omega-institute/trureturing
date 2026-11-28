@@ -114,6 +114,13 @@ missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
   if let some entry := OmegaChecks.InitBoundaries.ContainerEquality.witnesses.lookup name then
     return entry
+  if owner == `Init.Data.Array.MapIdx then
+    if name == ``List.mapIdxM_toArray then
+      return (``OmegaChecks.InitBoundaries.MonadicTraversal.IndexedMap.PairConversion,
+        ``OmegaChecks.InitBoundaries.MonadicTraversal.IndexedMap.fromList)
+    if name == ``Array.toList_mapIdxM then
+      return (``OmegaChecks.InitBoundaries.MonadicTraversal.IndexedMap.PairConversion,
+        ``OmegaChecks.InitBoundaries.MonadicTraversal.IndexedMap.fromArray)
   if owner == `Init.Data.Option.Monadic then
     if let some entry := OmegaChecks.InitBoundaries.TransformerLaws.OptionIteration.directConsequences.lookup name then
       return entry
