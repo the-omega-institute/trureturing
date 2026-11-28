@@ -79,6 +79,8 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
       return (``List.zipWithM_cons_cons, ``OmegaChecks.InitBoundaries.MonadicZip.consOfConversion)
     | ``List.zipWithM_cons_cons =>
       return (``List.zipWithM'_eq_zipWithM, ``OmegaChecks.InitBoundaries.MonadicZip.conversionOfCons)
+    | ``List.mapM_cons =>
+      return (``List.mapM'_eq_mapM, ``OmegaChecks.InitBoundaries.MonadicZip.unaryConversionOfCons)
     | ``List.mapM'_eq_mapM =>
       return (``List.zipWithM'_eq_mapM_id_zipWith, ``OmegaChecks.InitBoundaries.MonadicZip.ofUnaryTraversal)
     | ``List.zipWithM'_eq_mapM_id_zipWith =>

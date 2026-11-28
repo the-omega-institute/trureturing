@@ -37,6 +37,23 @@ theorem conversionOfCons (consLaw : type_of% @List.zipWithM_cons_cons.{u,v,w,x})
       exact (congrArg (fun tail => f a b >>= fun z => tail >>= fun zs => pure (z :: zs))
         (ih (ys := ys))).trans (consLaw (f := f)).symm
 
+/-- The first-element equation of the tail-recursive unary traversal is equivalent
+to its agreement with the ordinary recursive traversal, at every input universe. -/
+theorem unaryConversionOfCons (rule : type_of% @List.mapM_cons.{u,v,w}) :
+    type_of% @List.mapM'_eq_mapM.{u,v,w} := by
+  intro m α β mon law f xs
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    exact (congrArg (fun tail => f a >>= fun b => tail >>= fun bs => pure (b :: bs)) ih).trans
+      (rule (f := f)).symm
+
+theorem unaryConsOfConversion (same : type_of% @List.mapM'_eq_mapM.{u,v,w}) :
+    type_of% @List.mapM_cons.{u,v,w} := by
+  intro m α β a xs mon law f
+  exact (same (f := f)).symm.trans (congrArg
+    (fun tail => f a >>= fun b => tail >>= fun bs => pure (b :: bs)) (same (f := f) (l := xs)))
+
 /-- Ordinary unary traversal of a zipped list, before its accumulator transformation. -/
 private theorem zipPrimeMapPrime [Monad m] (f : α → β → m γ) (xs : List α) (ys : List β) :
     List.zipWithM' f xs ys = List.mapM' id (List.zipWith f xs ys) := by
