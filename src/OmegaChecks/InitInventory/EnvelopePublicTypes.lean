@@ -85,6 +85,15 @@ public def orderCoherenceGap? (visible strict witnesses : Environment) (owner : 
   (check.run' |>.toIO' {fileName := "<module order coherence>", fileMap := default} {env := witnesses})
   return some s!"The public comparison at universe zero requires the full representative coherence. {witness} reduces that argument to propext."
 
+/-- Verify the specialized comparison against the fully reduced pinned representative formula. -/
+public def representativeTypeMatches (official strict : Environment) (pinned target : Expr) : Bool :=
+  (Option.isSome <| do
+    let reduced ← reduceType official strict {} pinned
+    guard ((Kernel.check official {} pinned).isOk && (Kernel.check official {} reduced).isOk &&
+      Kernel.isDefEqGuarded official {} pinned reduced)
+    let translated := InitKernelPort.translate InitKernelPort.portName reduced
+    guard ((Kernel.check strict {} translated).isOk && Kernel.isDefEqGuarded strict {} translated target))
+
 /-- Identify the remaining operation in an exported envelope equation. Importing private
 bodies can simplify a representative comparison beyond the upstream public interface. -/
 public def reductionGap? (official visible strict : Environment) (owner : Name) (source : ConstantInfo)
@@ -110,10 +119,7 @@ public def reductionGap? (official visible strict : Environment) (owner : Name) 
     else
       "Public reduction of the pinned statement still requires " ++
         String.intercalate ", " (absent.toList.map Name.toString) ++ "."
-  let privateType ← reduceType official strict {} pinned
-  guard ((Kernel.check official {} privateType).isOk && Kernel.isDefEqGuarded official {} pinned privateType)
-  let tr := InitKernelPort.translate InitKernelPort.portName privateType
-  if (Kernel.check strict {} tr).isOk && Kernel.isDefEqGuarded strict {} tr target then
+  if representativeTypeMatches official strict pinned target then
     return message ++ " The private representative reduction converts to the exported strict statement."
   return message
 
