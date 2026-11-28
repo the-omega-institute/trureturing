@@ -11,11 +11,8 @@ import D5.S3.Weil.ZetaRvm.Halving
 import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.Analysis.Normed.Group.Basic
 import Mathlib.Tactic
-import OmegaBuild.Commands
 
 /-! A multiplicity-weighted reflection bound for the positive zeta zero cutoff. -/
-
-compile_only_with_mathlib
 
 namespace D5.S3.Weil.ZeroData.ZetaOrdinateReflectionTransfer
 
