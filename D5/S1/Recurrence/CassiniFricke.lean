@@ -5,7 +5,7 @@
    anchors: []
    digest: The Cassini-Fricke quadratic form is an alternating invariant of Binet recurrences. -/
 
-import Mathlib
+import Mathlib.Tactic.LinearCombination
 
 namespace D5.S1.Recurrence.CassiniFricke
 

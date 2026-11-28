@@ -4,13 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Ordinary-trace one-mode qubit energy and entropy identities, equality, and tracial affinity stability. -/
+   digest: Ordinary-trace one-mode qubit energy and entropy identities, equality, and sharp affinity stability. -/
 
 import D5.S3.Quantum.Semigroups.WuModularEdgeSpectral
 import D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 import D5.S3.Quantum.Recovery.BKMFlagRefinementPetz
 import D5.S3.Quantum.Semigroups.WuQubitSharpTwoRigidity
+import D5.S3.Quantum.Semigroups.WuQubitSharpTwoExactAffinity
 
 /-!
 # Wu's physical one-mode deficit at exponent two
@@ -463,5 +464,344 @@ theorem tracial_stability_strict {ρ : Qubit} (hρ : ρ.PosSemidef) (htr : ρ.tr
   simpa only [normalizedDeficit, show sharpCoefficient 0 = 1 / 2 by simp [sharpCoefficient]] using
     normalizedDeficit_tracial_stability_strict (polarization_mem hρ htr) hv
       (gibbsAlignment hρ.isHermitian)
+
+section ExactAffinity
+
+private theorem sum_fin_two_at (f : Fin 2 → ℝ) (j : Fin 2) :
+    ∑ i, f i = f j + f (1 - j) := by
+  fin_cases j
+  · rw [Fin.sum_univ_two]
+    rfl
+  · rw [Fin.sum_univ_two]
+    change f 0 + f 1 = f 1 + f 0
+    exact add_comm _ _
+
+private theorem aligned_frame_weights {ρ : Qubit} (hρ : ρ.IsHermitian) :
+    let j := largerIndex hρ
+    let z := gibbsAlignment hρ
+    frameWeight hρ 0 j = (1 + z) / 2 ∧
+      frameWeight hρ 1 j = (1 - z) / 2 ∧
+      frameWeight hρ 0 (1 - j) = (1 - z) / 2 ∧
+      frameWeight hρ 1 (1 - j) = (1 + z) / 2 := by
+  obtain ⟨h01, h10, h11⟩ := frame_complements hρ
+  by_cases hle : hρ.eigenvalues 1 ≤ hρ.eigenvalues 0
+  · simp only [gibbsAlignment, largerIndex, ite_eq_left hle,
+      show (1 - 0 : Fin 2) = 1 by decide, h01, h10, h11]
+    exact ⟨by ring, by ring, by ring, by ring⟩
+  · simp only [gibbsAlignment, largerIndex, ite_eq_right hle,
+      show (1 - 1 : Fin 2) = 0 by decide, h01, h10, h11]
+    exact ⟨by ring, by ring, by ring, by ring⟩
+
+private theorem alignment_mem {ρ : Qubit} (hρ : ρ.IsHermitian) :
+    gibbsAlignment hρ ∈ Icc (-1 : ℝ) 1 := by
+  obtain ⟨h₀, h₁, _, _⟩ := aligned_frame_weights hρ
+  have hn (i : Fin 2) : 0 ≤ frameWeight hρ i (largerIndex hρ) := Complex.normSq_nonneg _
+  exact ⟨by linarith only [hn 0, h₀], by linarith only [hn 1, h₁]⟩
+
+private theorem sqrt_pair {x y : ℝ} (hx : 0 ≤ x) (hy : 0 ≤ y) (hsum : x + y = 1) :
+    let t := (x - y) / (1 + spectralRoot (x - y))
+    Real.sqrt x + Real.sqrt y = Real.sqrt 2 / Real.sqrt (1 + t ^ 2) ∧
+      Real.sqrt x - Real.sqrt y = t * (Real.sqrt x + Real.sqrt y) := by
+  let t := (x - y) / (1 + spectralRoot (x - y))
+  let p := Real.sqrt x + Real.sqrt y
+  let q := Real.sqrt x - Real.sqrt y
+  change p = Real.sqrt 2 / Real.sqrt (1 + t ^ 2) ∧ q = t * p
+  have hp : 0 ≤ p := by dsimp [p]; positivity
+  have hden : 0 < 1 + spectralRoot (x - y) := by unfold spectralRoot; positivity
+  have hpsq : p ^ 2 = 1 + spectralRoot (x - y) := by
+    dsimp [p]
+    rw [add_sq, Real.sq_sqrt hx, Real.sq_sqrt hy]
+    have hprod := sqrt_product hx hsum
+    linear_combination hsum + 2 * hprod
+  have hqp : q * p = x - y := by
+    calc
+      q * p = Real.sqrt x ^ 2 - Real.sqrt y ^ 2 := by dsimp [q, p]; ring
+      _ = _ := by rw [Real.sq_sqrt hx, Real.sq_sqrt hy]
+  have hq : q = t * p := by
+    dsimp only [t]
+    rw [div_mul_eq_mul_div₀]
+    apply (eq_div_iff hden.ne').mpr
+    rw [← hpsq, ← hqp]
+    ring
+  have hnorm : p ^ 2 + q ^ 2 = 2 := by
+    calc
+      _ = 2 * (Real.sqrt x ^ 2 + Real.sqrt y ^ 2) := by dsimp [p, q]; ring
+      _ = _ := by rw [Real.sq_sqrt hx, Real.sq_sqrt hy, hsum]; norm_num
+  have hscale : p ^ 2 * (1 + t ^ 2) = 2 := by rw [hq, mul_pow] at hnorm; nlinarith only [hnorm]
+  refine ⟨(eq_div_iff (Real.sqrt_pos.2 (by positivity)).ne').mpr ?_, hq⟩
+  rw [← Real.sqrt_sq hp, ← Real.sqrt_mul (sq_nonneg p), hscale]
+
+private theorem rate_half_polarization (h : ℝ) :
+    (ratePlus h - rateMinus h) / (1 + spectralRoot (ratePlus h - rateMinus h)) =
+      thermalBias h := by
+  rw [rate_difference, spectralRoot_tanh, thermalBias, Real.tanh_eq_sinh_div_cosh]
+  have hc := Real.cosh_pos h
+  field_simp [hc.ne', (show 1 + Real.cosh h ≠ 0 by positivity),
+    (show 1 + 1 / Real.cosh h ≠ 0 by positivity)]
+  rw [add_comm 1 (Real.cosh h)]
+
+private theorem trace_mpow_overlap (h : ℝ) {ρ : Qubit} (hρ : ρ.IsHermitian) :
+    (mpow ρ (1 / 2) * mpow (gibbs h) (1 / 2)).trace.re =
+      ∑ i, ∑ j, Real.sqrt (gibbsWeight h i) *
+        Real.sqrt (hρ.eigenvalues j) * frameWeight hρ i j := by
+  let U : Qubit := hρ.eigenvectorUnitary
+  have hρroot : mpow ρ (1 / 2) =
+      U * diagonal (fun i => (Real.sqrt (hρ.eigenvalues i) : ℂ)) * Uᴴ := by
+    simp only [mpow, ← Real.sqrt_eq_rpow, hρ.cfc_eq, Matrix.IsHermitian.cfc,
+      Unitary.conjStarAlgAut_apply, Function.comp_def, RCLike.ofReal_eq_complex_ofReal,
+      Matrix.star_eq_conjTranspose, U]
+  have hGroot : mpow (gibbs h) (1 / 2) =
+      diagonal (fun i => (Real.sqrt (gibbsWeight h i) : ℂ)) := by
+    simp only [mpow, ← Real.sqrt_eq_rpow, gibbs]
+    exact D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_diagonal _ _
+  rw [Matrix.trace_mul_comm, hρroot, hGroot]
+  simp only [← Matrix.mul_assoc]
+  exact WuCubicConditionalTensorization.trace_diagonal_overlap _ _ U
+
+/-- Ordinary trace of the two positive matrix square roots, in the Gibbs-axis
+coordinates of a complex PSD trace-one qubit. -/
+theorem trace_sqrt_gibbs_eq (h : ℝ) {ρ : Qubit} (hρ : ρ.PosSemidef) (htr : ρ.trace = 1) :
+    let v := polarization hρ.isHermitian
+    let t := v / (1 + spectralRoot v)
+    let z := gibbsAlignment hρ.isHermitian
+    (mpow ρ (1 / 2) * mpow (gibbs h) (1 / 2)).trace.re =
+      (1 + t * thermalBias h * z) / Real.sqrt ((1 + t ^ 2) * (1 + thermalBias h ^ 2)) := by
+  let v := polarization hρ.isHermitian
+  let t := v / (1 + spectralRoot v)
+  let z := gibbsAlignment hρ.isHermitian
+  let j := largerIndex hρ.isHermitian
+  let x := hρ.isHermitian.eigenvalues j
+  let y := hρ.isHermitian.eigenvalues (1 - j)
+  let a := Real.sqrt x
+  let b := Real.sqrt y
+  let c := Real.sqrt (ratePlus h)
+  let d := Real.sqrt (rateMinus h)
+  let k := thermalBias h
+  change _ = (1 + t * k * z) / Real.sqrt ((1 + t ^ 2) * (1 + k ^ 2))
+  obtain ⟨hx, hy⟩ := ordered_eigenvalues hρ.isHermitian htr
+  change x = (1 + v) / 2 at hx
+  change y = (1 - v) / 2 at hy
+  have hxy : x + y = 1 := by linarith only [hx, hy]
+  have hval : x - y = v := by linarith only [hx, hy]
+  have hp := sqrt_pair (hρ.eigenvalues_nonneg j) (hρ.eigenvalues_nonneg (1 - j)) hxy
+  change (a + b = _ ∧ a - b = _) at hp
+  rw [hval] at hp
+  obtain ⟨hab, hab'⟩ := hp
+  change a + b = Real.sqrt 2 / Real.sqrt (1 + t ^ 2) at hab
+  change a - b = t * (a + b) at hab'
+  have hg := sqrt_pair (ratePlus_pos h).le (rateMinus_pos h).le (rate_sum h)
+  dsimp only at hg
+  rw [rate_half_polarization] at hg
+  obtain ⟨hcd, hcd'⟩ := hg
+  change c + d = Real.sqrt 2 / Real.sqrt (1 + k ^ 2) at hcd
+  change c - d = k * (c + d) at hcd'
+  obtain ⟨h₀, h₁, h₀', h₁'⟩ := aligned_frame_weights hρ.isHermitian
+  change frameWeight hρ.isHermitian 0 j = (1 + z) / 2 at h₀
+  change frameWeight hρ.isHermitian 1 j = (1 - z) / 2 at h₁
+  change frameWeight hρ.isHermitian 0 (1 - j) = (1 - z) / 2 at h₀'
+  change frameWeight hρ.isHermitian 1 (1 - j) = (1 + z) / 2 at h₁'
+  calc
+    _ = ((a + b) * (c + d) + (a - b) * (c - d) * z) / 2 := by
+      rw [trace_mpow_overlap h hρ.isHermitian, Fin.sum_univ_two]
+      simp only [sum_fin_two_at _ j, h₀, h₁, h₀', h₁']
+      have hg0 : gibbsWeight h 0 = ratePlus h := by simp [gibbsWeight]
+      have hg1 : gibbsWeight h 1 = rateMinus h := by norm_num [gibbsWeight]
+      rw [hg0, hg1]
+      change c * a * ((1 + z) / 2) + c * b * ((1 - z) / 2) +
+        (d * a * ((1 - z) / 2) + d * b * ((1 + z) / 2)) = _
+      ring
+    _ = (a + b) * (c + d) * (1 + t * k * z) / 2 := by rw [hab', hcd']; ring
+    _ = _ := by
+      rw [hab, hcd, div_mul_div_comm, Real.mul_self_sqrt (by norm_num : 0 ≤ (2 : ℝ)),
+        Real.sqrt_mul (by positivity : 0 ≤ 1 + t ^ 2)]
+      ring
+
+private theorem first_diag_eq {ρ : Qubit} (hρ : ρ.IsHermitian) (htr : ρ.trace = 1) :
+    (ρ 0 0).re = (1 + polarization hρ * gibbsAlignment hρ) / 2 := by
+  let U : Qubit := hρ.eigenvectorUnitary
+  have hspec : ρ = U * diagonal (fun i => (hρ.eigenvalues i : ℂ)) * Uᴴ := by
+    simpa only [Unitary.conjStarAlgAut_apply, Function.comp_def,
+      RCLike.ofReal_eq_complex_ofReal, Matrix.star_eq_conjTranspose] using hρ.spectral_theorem
+  obtain ⟨hx, hy⟩ := ordered_eigenvalues hρ htr
+  obtain ⟨h₀, _, h₀', _⟩ := aligned_frame_weights hρ
+  calc
+    _ = ((U * diagonal (fun i => (hρ.eigenvalues i : ℂ)) * Uᴴ) 0 0).re :=
+      congrArg (fun A : Qubit => (A 0 0).re) hspec
+    _ = ∑ i, hρ.eigenvalues i * frameWeight hρ 0 i := by
+      simp only [Matrix.mul_apply (N := Uᴴ), Matrix.mul_diagonal, Complex.re_sum,
+        Matrix.conjTranspose_apply]
+      refine Finset.sum_congr rfl (fun i _ => ?_)
+      rw [mul_right_comm, Complex.star_def, Complex.mul_conj, ← Complex.ofReal_mul,
+        Complex.ofReal_re]
+      unfold frameWeight
+      ring
+    _ = _ := by
+      rw [sum_fin_two_at _ (largerIndex hρ)]
+      rw [hx, hy, h₀, h₀']
+      ring
+
+private theorem det_eq_polarization {ρ : Qubit} (hρ : ρ.IsHermitian) (htr : ρ.trace = 1) :
+    ρ.det.re = (1 - polarization hρ ^ 2) / 4 := by
+  have hd := congrArg Complex.re hρ.det_eq_prod_eigenvalues
+  have hs := congrArg (fun r : ℝ => r ^ 2) (eigenvalue_sum hρ htr)
+  simp only [Fin.prod_univ_two, RCLike.ofReal_eq_complex_ofReal, ← Complex.ofReal_mul,
+    Complex.ofReal_re] at hd
+  rw [hd, polarization, sq_abs]
+  nlinarith only [hs]
+
+private theorem eq_gibbs_of_coordinates (h : ℝ) {ρ : Qubit} (hρ : ρ.IsHermitian)
+    (htr : ρ.trace = 1) (hv : polarization hρ = Real.tanh h)
+    (hz : h = 0 ∨ gibbsAlignment hρ = 1) : ρ = gibbs h := by
+  have hPlus : ratePlus h = (1 + Real.tanh h) / 2 := by
+    linarith only [rate_sum h, rate_difference h]
+  have hMinus : rateMinus h = (1 - Real.tanh h) / 2 := by
+    linarith only [rate_sum h, rate_difference h]
+  have hvz : polarization hρ * gibbsAlignment hρ = Real.tanh h := by
+    rw [hv]
+    rcases hz with hz | hz <;> simp [hz]
+  have h00 : ρ 0 0 = (ratePlus h : ℂ) := by
+    have hdiag : (ρ 0 0).re = ratePlus h := by rw [first_diag_eq hρ htr, hvz, hPlus]
+    have hreal : ((ρ 0 0).re : ℂ) = ρ 0 0 := hρ.coe_re_apply_self 0
+    exact hreal.symm.trans (congrArg Complex.ofReal hdiag)
+  have h11 : ρ 1 1 = (rateMinus h : ℂ) := by
+    have hsum : (ratePlus h : ℂ) + (rateMinus h : ℂ) = 1 := by exact_mod_cast rate_sum h
+    have htrace := htr
+    change (∑ i, ρ i i) = 1 at htrace
+    rw [Fin.sum_univ_two, h00] at htrace
+    exact add_left_cancel (htrace.trans hsum.symm)
+  have hstar : ρ 1 0 = star (ρ 0 1) := (hρ.apply 1 0).symm
+  have hoff : ρ 0 1 = 0 := by
+    have hd := det_eq_polarization hρ htr
+    rw [hv, Matrix.det_fin_two, h00, h11, hstar, Complex.star_def, Complex.mul_conj,
+      ← Complex.ofReal_mul, ← Complex.ofReal_sub, Complex.ofReal_re, hPlus, hMinus] at hd
+    apply Complex.normSq_eq_zero.mp
+    linear_combination -hd
+  have hoff' : ρ 1 0 = 0 := by simp [hstar, hoff]
+  ext i j
+  fin_cases i <;> fin_cases j <;> norm_num [gibbs, gibbsWeight, h00, h11, hoff, hoff']
+
+/-- The exact one-mode coefficient bounds the loss of ordinary square-root
+affinity for every complex PSD trace-one qubit. -/
+theorem exact_affinity_stability {h : ℝ} (hh : 0 ≤ h) {ρ : Qubit}
+    (hρ : ρ.PosSemidef) (htr : ρ.trace = 1) :
+    exactAffinityCoefficient h * (1 - (mpow ρ (1 / 2) * mpow (gibbs h) (1 / 2)).trace.re) ^ 2 ≤
+      energy h ρ - sharpCoefficient h * entropy h ρ := by
+  obtain ⟨hE, hS⟩ := energy_entropy_eq h hρ htr
+  rw [hE, hS, trace_sqrt_gibbs_eq h hρ htr]
+  exact (normalizedDeficit_exactAffinity hh (polarization_mem hρ htr)
+    (alignment_mem hρ.isHermitian)).1
+
+/-- The bound is strict at every density matrix distinct from Gibbs. -/
+theorem exact_affinity_stability_strict {h : ℝ} (hh : 0 ≤ h) {ρ : Qubit}
+    (hρ : ρ.PosSemidef) (htr : ρ.trace = 1) (hne : ρ ≠ gibbs h) :
+    exactAffinityCoefficient h * (1 - (mpow ρ (1 / 2) * mpow (gibbs h) (1 / 2)).trace.re) ^ 2 <
+      energy h ρ - sharpCoefficient h * entropy h ρ := by
+  obtain ⟨hE, hS⟩ := energy_entropy_eq h hρ htr
+  rw [hE, hS, trace_sqrt_gibbs_eq h hρ htr]
+  exact (normalizedDeficit_exactAffinity hh (polarization_mem hρ htr)
+    (alignment_mem hρ.isHermitian)).2 fun ⟨hv, hz⟩ =>
+      hne (eq_gibbs_of_coordinates h hρ.isHermitian htr hv hz)
+
+open Filter
+open scoped Topology
+
+private theorem exists_faithful_qubit {v z : ℝ} (hv0 : 0 < v) (hv1 : v < 1)
+    (hz : z ∈ Icc (-1 : ℝ) 1) :
+    ∃ (ρ : Qubit) (hρ : ρ.PosDef), ρ.trace = 1 ∧
+      polarization hρ.isHermitian = v ∧ gibbsAlignment hρ.isHermitian = z := by
+  let a := (1 + v * z) / 2
+  let b := (1 - v * z) / 2
+  let c := v * Real.sqrt (1 - z ^ 2) / 2
+  let ρ : Qubit := !![(a : ℂ), (c : ℂ); (c : ℂ), (b : ℂ)]
+  have hHerm : ρ.IsHermitian := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [ρ, Matrix.conjTranspose_apply]
+  have htr : ρ.trace = 1 := by
+    change (∑ i, ρ i i) = 1
+    rw [Fin.sum_univ_two]
+    change (a : ℂ) + (b : ℂ) = 1
+    exact_mod_cast (show a + b = 1 by dsimp [a, b]; ring)
+  have hroot : 0 ≤ 1 - z ^ 2 := by
+    rw [show 1 - z ^ 2 = (1 + z) * (1 - z) by ring]
+    exact mul_nonneg (by linarith only [hz.1]) (sub_nonneg.mpr hz.2)
+  have hdet : ρ.det.re = (1 - v ^ 2) / 4 := by
+    rw [Matrix.det_fin_two]
+    change ((a : ℂ) * (b : ℂ) - (c : ℂ) * (c : ℂ)).re = _
+    rw [← Complex.ofReal_mul, ← Complex.ofReal_mul, ← Complex.ofReal_sub, Complex.ofReal_re]
+    calc
+      a * b - c * c = ((1 + v * z) * (1 - v * z) -
+          v ^ 2 * Real.sqrt (1 - z ^ 2) ^ 2) / 4 := by dsimp [a, b, c]; ring
+      _ = _ := by rw [Real.sq_sqrt hroot]; ring
+  have hvsq : polarization hHerm ^ 2 = v ^ 2 := by
+    have hd := det_eq_polarization hHerm htr
+    rw [hdet] at hd
+    linarith only [hd]
+  have hv' : polarization hHerm = v := by
+    rcases sq_eq_sq_iff_eq_or_eq_neg.mp hvsq with hp | hp
+    · exact hp
+    · have hnonneg : 0 ≤ polarization hHerm := abs_nonneg _
+      linarith only [hnonneg, hp, hv0]
+  have hz' : gibbsAlignment hHerm = z := by
+    have h := first_diag_eq hHerm htr
+    change a = _ at h
+    rw [hv'] at h
+    have hm : v * (gibbsAlignment hHerm - z) = 0 := by
+      dsimp [a] at h
+      linarith only [h]
+    exact sub_eq_zero.mp ((mul_eq_zero.mp hm).resolve_left hv0.ne')
+  have hρ : ρ.PosDef := hHerm.posDef_iff_eigenvalues_pos.mpr (fun i => by
+    obtain ⟨hp, hm⟩ := ordered_eigenvalues hHerm htr
+    rw [hv'] at hp hm
+    have hi : i = largerIndex hHerm ∨ i = 1 - largerIndex hHerm := by
+      generalize largerIndex hHerm = j
+      fin_cases j <;> fin_cases i <;> decide
+    rcases hi with hi | hi
+    · rw [hi, hp]
+      linarith only [hv0]
+    · rw [hi, hm]
+      linarith only [hv1])
+  exact ⟨ρ, hρ, htr, hv', hz'⟩
+
+/-- Faithful physical qubit states already force the optimal coefficient. -/
+theorem exact_affinity_coefficient_isGreatest {h : ℝ} (hh : 0 ≤ h) :
+    IsGreatest {c : ℝ | ∀ ρ : Qubit, ρ.PosSemidef → ρ.trace = 1 →
+      c * (1 - (mpow ρ (1 / 2) * mpow (gibbs h) (1 / 2)).trace.re) ^ 2 ≤
+        energy h ρ - sharpCoefficient h * entropy h ρ}
+      (exactAffinityCoefficient h) := by
+  refine ⟨fun ρ hρ htr => exact_affinity_stability hh hρ htr, ?_⟩
+  intro c hc
+  apply ge_of_tendsto (normalizedDeficit_exactAffinity_sharp_limit hh)
+  have hk0 : 0 ≤ thermalBias h :=
+    div_nonneg (Real.sinh_nonneg_iff.mpr hh) (by positivity)
+  have hk1 : thermalBias h < 1 := by
+    have hp : 0 < Real.cosh h - Real.sinh h := by rw [Real.cosh_sub_sinh]; positivity
+    exact (div_lt_one₀ (by positivity)).mpr (by linarith only [hp])
+  filter_upwards [exactAffinitySharpAlignment_eventually hh, Ioo_mem_nhdsGT hk1] with t ht htk
+  have ht0 : 0 < t := hk0.trans_lt htk.1
+  let v := polarizationOfHalf t
+  let z := exactAffinitySharpAlignment h t
+  have hv0 : 0 < v := by unfold v polarizationOfHalf; positivity
+  obtain ⟨ρ, hρ, htr, hv, hz⟩ := exists_faithful_qubit hv0 ht.1.2 ht.2.1
+  have hhalf : v / (1 + spectralRoot v) = t := by
+    dsimp only [v]
+    rw [spectralRoot_polarizationOfHalf ⟨ht0.le, htk.2.le⟩, polarizationOfHalf]
+    have hs : 1 + t ^ 2 ≠ 0 := by positivity
+    have hd : 1 + (1 - t ^ 2) / (1 + t ^ 2) = 2 / (1 + t ^ 2) := by
+      field_simp [hs]
+      ring
+    rw [hd]
+    field_simp [hs]
+  have ha := trace_sqrt_gibbs_eq h hρ.posSemidef htr
+  have hE := (energy_entropy_eq h hρ.posSemidef htr).1
+  have hS := (energy_entropy_eq h hρ.posSemidef htr).2
+  dsimp only at ha
+  rw [hv, hz, hhalf] at ha
+  rw [hv, hz] at hE hS
+  have hcρ := hc ρ hρ.posSemidef htr
+  rw [ha, hE, hS] at hcρ
+  exact (le_div_iff₀ (pow_pos ht.2.2 2)).mpr hcρ
+
+end ExactAffinity
 
 end D5.S3.Quantum.Semigroups.WuQubitSharpTwoPhysical

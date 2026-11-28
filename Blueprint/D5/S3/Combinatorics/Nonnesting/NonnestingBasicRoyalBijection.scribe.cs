@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Nonnesting;
 internal sealed class NonnestingBasicRoyalBijectionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Nonnesting/NonnestingBasicRoyalBijection.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/elizalde2024pattern");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/elizalde2024pattern");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A permutation and a Dyck path specify a doubled nonnesting permutation.",
