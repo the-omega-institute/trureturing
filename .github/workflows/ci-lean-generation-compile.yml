@@ -12,7 +12,7 @@ on:
         required: true
         type: string
       matrix:
-        description: Lanes containing changed module shards
+        description: Workers for the pinned publication plan
         required: true
         type: string
 
@@ -73,7 +73,7 @@ jobs:
         run: |
           python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
           bash .github/actions/lean-compile-layer/prepare-dependencies.sh
-      - name: Build and save the selected module shards
+      - name: Build and checkpoint the assigned publication targets
         env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_CACHE_WRITES: 'true'

@@ -5,7 +5,7 @@ import { createReadStream } from 'node:fs';
 import { copyFile, mkdir, mkdtemp, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { performance } from 'node:perf_hooks';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, isAbsolute, join, resolve } from 'node:path';
 import { createInterface } from 'node:readline';
 import { setTimeout as delay } from 'node:timers/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -415,6 +415,108 @@ async function moduleCacheEntry(key, digest, file) {
   }
 }
 
+// The SDK returns undefined both for an absent entry and after logging a service
+// error. Only the former permits a compiler worker to rebuild an evicted unit.
+async function restoreCheckpoint(cache, core, path, key) {
+  const { warning, error } = core;
+  let failure;
+  const capture = log => (message, ...args) => {
+    failure = String(message);
+    log(message, ...args);
+  };
+  core.warning = capture(warning);
+  core.error = capture(error);
+  try {
+    const backoffs = [2000, 4000, 8000, 16000, 32000];
+    for (let attempt = 0; ; attempt++) {
+      failure = undefined;
+      const matched = await cache.restoreCache([path], key, []);
+      if (matched === key) return true;
+      if (matched !== undefined) throw new Error('unexpected compiler checkpoint key ' + matched);
+      if (failure === undefined) return false;
+      if (attempt === backoffs.length || !/\b429\b[^\n]*Too Many Requests/i.test(failure)) {
+        throw new Error(failure);
+      }
+      // Workers share a repository-wide Actions Cache quota.
+      const backoff = backoffs[attempt];
+      await delay(backoff + Math.floor(Math.random() * backoff));
+    }
+  } finally {
+    core.warning = warning;
+    core.error = error;
+  }
+}
+
+async function compilerCheckpoint(kind, ...args) {
+  requirePublisher('compiler');
+  if (!['unit', 'catalog'].includes(kind)) throw new Error('invalid compiler checkpoint kind');
+  const prefix = 'lean-compiler-' + kind + '-v1-';
+  // Every runner must use the same literal path to derive the SDK cache version.
+  const path = join(stage, 'compiler-checkpoints', kind);
+  const { cache, cacheVersion, packageFile } = await loadCacheClient();
+  if (operation === 'compiler-cache-list') {
+    const [output] = args;
+    if (args.length !== 1 || !output) throw new Error('expected a compiler inventory destination');
+    const version = cacheVersion(path);
+    const rows = [];
+    for (const entry of visibleEntries('refs/heads/dev', prefix)) {
+      if (entry.version !== version || !entry.key.startsWith(prefix)) continue;
+      const match = /^([0-9a-f]{64})-([0-9a-f]{64})-([1-9][0-9]*)$/.exec(entry.key.slice(prefix.length));
+      if (!match || !Number.isSafeInteger(Number(match[3]))) continue;
+      const [, id, sha256, bytes] = match;
+      if (kind === 'catalog' && id !== sha256) continue;
+      rows.push({ id, sha256, bytes: Number(bytes) });
+    }
+    await writeFile(output, JSON.stringify(rows));
+    return;
+  }
+  const [id, sha256, bytes, file] = args;
+  if (args.length !== 4 || !isAbsolute(file) || !/^[0-9a-f]{64}$/.test(id) || !/^[0-9a-f]{64}$/.test(sha256)
+      || !/^[1-9][0-9]*$/.test(bytes) || !Number.isSafeInteger(Number(bytes))
+      || (kind === 'catalog' && id !== sha256)) {
+    throw new Error('invalid compiler checkpoint address');
+  }
+  const key = prefix + id + '-' + sha256 + '-' + bytes;
+  const verify = async candidate => {
+    if ((await stat(candidate)).size !== Number(bytes) || await digestFile(candidate) !== sha256) {
+      throw new Error('compiler checkpoint checksum or length mismatch');
+    }
+  };
+  const core = createRequire(packageFile)('@actions/core');
+  // Concurrent operations in a single runner must not extract over one another.
+  const temporary = await mkdtemp(join(process.env.RUNNER_TEMP, 'compiler-checkpoint-'));
+  try {
+    process.env.GITHUB_WORKSPACE = temporary;
+    process.chdir(temporary);
+    await mkdir(dirname(path), { recursive: true });
+    if (operation === 'compiler-cache-put') {
+      await copyFile(file, path);
+      await verify(path);
+      if (await cache.saveCache([path], key) > 0) return;
+      await rm(path, { force: true });
+      // A competing reservation can be visible only after its upload finalizes.
+      for (const ms of [0, 1000, 2000, 4000, 8000, 16000]) {
+        if (ms) await delay(ms);
+        if (await restoreCheckpoint(cache, core, path, key)) {
+          await verify(path);
+          return;
+        }
+      }
+      throw new Error('Actions Cache did not publish compiler checkpoint ' + key);
+    }
+    if (!await restoreCheckpoint(cache, core, path, key)) {
+      process.exitCode = 4;
+      throw new Error('Actions compiler checkpoint unavailable: ' + key);
+    }
+    await verify(path);
+    await copyFile(path, file);
+  } finally {
+    process.chdir(workspace);
+    process.env.GITHUB_WORKSPACE = workspace;
+    await rm(temporary, { recursive: true, force: true });
+  }
+}
+
 async function runModuleCache() {
   const temp = process.env.RUNNER_TEMP;
   const plan = join(temp, 'module-plan.json');
@@ -436,7 +538,16 @@ async function runModuleCache() {
     if (!Number.isSafeInteger(capacity) || capacity < 1 || capacity >= 2048) {
       throw new Error('shard_mib must be between 1 and 2047');
     }
-    args = ['plan', '--kind', kind || 'compiler', '--capacity', String(capacity * 1024 ** 2), '--output', plan, '--legacy-checkpoints', '--prepare-release'];
+    const publicationKind = kind || 'compiler';
+    args = ['plan', '--kind', publicationKind, '--capacity', String(capacity * 1024 ** 2),
+      '--output', plan, '--prepare-release'];
+    if (publicationKind === 'compiler') {
+      const workers = Number(process.env.LEAN_COMPILER_WORKERS || 64);
+      if (!Number.isSafeInteger(workers) || workers < 1 || workers > 256) {
+        throw new Error('LEAN_COMPILER_WORKERS must be an integer between 1 and 256');
+      }
+      args.push('--compiler-dag', '--legacy-checkpoints', '--workers', String(workers));
+    }
   } else {
     requirePublisher(kind || 'compiler');
     if (operation === 'module-worker') {
@@ -655,6 +766,9 @@ async function saveContinuation() {
 
 async function main() {
   if (['module-plan', 'module-worker', 'module-stage', 'module-promote', 'restore-published'].includes(operation)) return runModuleCache();
+  if (['compiler-cache-list', 'compiler-cache-put', 'compiler-cache-get'].includes(operation)) {
+    return compilerCheckpoint(...process.argv.slice(3));
+  }
   if (operation === 'module-get' || operation === 'module-put') return moduleCacheEntry(...process.argv.slice(3));
   if (operation === 'generation-get' || operation === 'generation-put') {
     return generationIndex(process.argv[3], process.argv[4]);

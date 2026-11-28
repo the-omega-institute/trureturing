@@ -45,7 +45,7 @@ def step (s : Config) : Config :=
 private def FiniteConfig (s : Config) : Prop :=
   ∃ M : ℤ, ∀ i : ℤ, i < -M ∨ M < i → s.1 i = false ∧ s.2 i = false
 
-private def zeroConfig : Config := (fun _ => false, fun _ => false)
+def zeroConfig : Config := (fun _ => false, fun _ => false)
 
 private theorem past_at_succ (s : Config) (n : ℕ) :
     (step^[n + 1] s).1 = (step^[n] s).2 := by
@@ -59,7 +59,7 @@ private theorem current_at_succ (s : Config) (n : ℕ) (i : ℤ) :
   rw [Function.iterate_succ_apply']
   rfl
 
-private theorem zero_period_three :
+theorem zero_period_three :
     step^[3] zeroConfig = zeroConfig ∧
       ∀ q : ℕ, 0 < q → q < 3 → step^[q] zeroConfig ≠ zeroConfig := by
   refine ⟨rfl, ?_⟩

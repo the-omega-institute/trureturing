@@ -42,6 +42,10 @@ name = "OmegaChecks"
 srcDir = "src"
 
 [[lean_lib]]
+name = "OmegaChecks.InitCompiler"
+srcDir = "src"
+
+[[lean_lib]]
 name = "OmegaBuild"
 srcDir = "src"
 roots = ["OmegaBuild.Commands"]

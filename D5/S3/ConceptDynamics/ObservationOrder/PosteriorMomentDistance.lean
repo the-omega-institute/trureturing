@@ -74,7 +74,7 @@ private def normal : Moment := fun i j => if edge i j then -(6 / 5) else 4 / 5
 private def pairing (X Y : Moment) : ℝ :=
   ∑ i, ∑ j, X i j * Y i j
 
-private theorem edge_bound (x : Fin 5 → ℝ) (hx : ∀ i, 0 ≤ x i) :
+theorem edge_bound (x : Fin 5 → ℝ) (hx : ∀ i, 0 ≤ x i) :
     x 0 * x 1 + x 1 * x 2 + x 2 * x 3 + x 3 * x 4 + x 4 * x 0 ≤
       (x 0 + x 1 + x 2 + x 3 + x 4) ^ 2 / 4 := by
   rcases le_total (x 3) (x 4) with h | h
