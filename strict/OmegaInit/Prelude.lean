@@ -561,6 +561,7 @@ port_definition instDecidableEqBool with_native_code
 port_definition DecidableRel
 port_definition Option.noConfusionType
 port_definition Option.noConfusion
+port_definition Option.some.noConfusion
 
 port_definition List.append.match_1 with_native_code
 port_structural_code List.append on_arg 2
