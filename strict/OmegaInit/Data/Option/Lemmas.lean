@@ -6,7 +6,7 @@ Authors: Mario Carneiro
 module
 prelude
 public import OmegaInit.Core
-public import OmegaInit.Data.Option.Basic
+public import OmegaInit.Data.Option.Instances
 import all OmegaInit.Data.Option.Basic
 import OmegaInit.PropLemmas
 
@@ -112,3 +112,20 @@ port_proof Option.filter_some_pos
 port_proof Option.isSome_of_any
 port_proof Option.none_lt_some
 port_proof Option.none_le
+
+port_proof Option.mem_some_self
+port_proof Option.get_mem
+port_proof Option.get_of_mem
+port_proof Option.not_mem_none
+port_proof Option.isSome_of_mem
+port_proof Option.mem_map_of_mem
+
+namespace Omega.Option
+
+private theorem memSomeImpl {α : Type u} {a b : α} : Iff (Eq (Option.some b) (Option.some a)) (Eq b a) :=
+  Iff.intro (fun h => congrArg (fun o : Option α => Option.getD o a) h) (congrArg Option.some)
+
+end Omega.Option
+
+port_proof Option.mem_some using Omega.Option.memSomeImpl
+port_proof Option.mem_some_iff
