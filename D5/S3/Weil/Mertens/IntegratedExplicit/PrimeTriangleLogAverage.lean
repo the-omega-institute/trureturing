@@ -6,13 +6,10 @@
    utility: none
    digest: A unit logarithmic window bound for the centered ordinary-prime triangle characterizes RH. -/
 
-import OmegaBuild.Commands
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeTriangleSquareLimit
 import D5.S3.Weil.Mertens.IntegratedExplicit.SignedPrimePrimitiveCriterion
 
 /-! A unit logarithmic window criterion for the centered ordinary-prime triangle. -/
-
-compile_only_with_mathlib
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
