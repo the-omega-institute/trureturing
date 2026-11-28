@@ -184,7 +184,7 @@ The optimal universal coefficient of a finite connected chordal graph is an inte
 
 The induced word metric has integral distances. Every target gain after tree normalization is the image of the canonical free-group cochain. Its triangle bounds carry each generator into the unit ball, so a shortest word-budget potential controls every target. The free-group example attains this budget.
 
-**Theorem 1.14 (The cyclic reconstruction witness at width three).**
+**Theorem 1.14 (A finite cyclic reconstruction witness at width three).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.pathPower_width_three_cyclic_exact`
 
@@ -208,21 +208,21 @@ Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachE
 
 *Commentary.*
 
-For every nonzero real L1 space, the optimal uniform coefficient on finite chordal graphs of clique number at most four is one. The zero space has coefficient zero.
+For every nonzero real L1 space, the optimal uniform coefficient on finite chordal graphs of clique number at most four is one.
 
 The three-candidate median gives the upper bound under simplicial elimination. Chordal fans have unbounded circumference at clique number three. Unit-vector scalar gains on these fans preserve the scalar lower bound by applying a norm-one functional to every potential.
 
-**Theorem 1.16 (No sub-two fit for the cyclic cochain).**
+**Theorem 1.16 (No sub-two fit for the finite abelian witnesses).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.not_subtwo_cyclic_path`
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.not_subtwo_finite_group`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.not_subtwo_cyclic_path` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.not_subtwo_finite_group` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-On the width-three power of the twenty-seven-vertex path, the specified cyclic gain in the Cayley metric of order 49 has some residual at least two for every potential. The metric has integer distances, so a sub-two fit would use at most one generator on every edge. The word certificate rules out such a fit.
+The normalized cochain in the cyclic group of order 49 on the width-three power of the twenty-seven-vertex path and the cochain in eleven copies of the cyclic group of order eight on the split graph each force some residual at least two for every potential. Their Cayley metrics have integer distances. A sub-two fit could use only the zero or one-letter residuals, which the two word certificates exclude.
 
 **Theorem 1.17 (Exact coefficient of the pair-retention family).**
 
@@ -280,15 +280,118 @@ At width two m with m positive, the least uniform coefficient over all path leng
 
 Every coordinate separates the labels into two halves. Symmetry makes the distances between distinct sample points equal. Any center has total distance at least the contribution from these balanced cuts. The periodic radius construction gives the lower bound, and the general Banach path-power theorem gives the upper bound.
 
+**Theorem 1.21 (The exact split-graph group bound).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.split_clique_four_group_witness`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.split_clique_four_group_witness` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Take a four-clique and one additional vertex on each of its four triangular faces. This eight-vertex split chordal graph has a gain in eleven copies of the cyclic group of order eight with triangle defects at most one and exact optimal edge error two in its bi-invariant word metric.
+
+After translating a potential so the first vertex has value zero, every residual of size less than two would put the root values in a finite list of possible states. No state extends simultaneously to all four leaves. The split-graph reconstruction theorem gives the matching upper bound. The same witness supplies the universal lower bound at clique number four.
+
+**Theorem 1.22 (The sharp finite Jung radius over real L1 spaces).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.l1_uniform_jung_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.l1_uniform_jung_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For m positive and k equal to two m or two m plus one, the least unit-diameter radius bound for every set of at most k points in every real L1 space is one minus one over two m.
+
+The odd-median construction supplies the upper bound in every measure space. Balanced cuts give two m points attaining the lower bound in a finite space with counting measure.
+
+**Theorem 1.23 (Group reconstruction with small clique separators).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.cliqueTree_separator_group_potential`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.cliqueTree_separator_group_potential` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Suppose a clique tree covers a graph with finitely many vertices. Let every adjacent bag intersection be nonempty and have at most s vertices. For inverse gains in a group with bi-invariant pseudometric and triangle defect at most delta, a potential gives every edge residual at most the maximum of one and s, times delta.
+
+Choose the oldest vertex of each bag as its anchor. Transport a bag gauge between anchors and freeze each vertex's potential at its birth. Along the relevant path, every charged anchor change uses a distinct older vertex of the first separator. There are at most s minus one such charges, and one more triangle closes the edge.
+
+**Theorem 1.24 (Real L1 reconstruction with small clique separators).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.cliqueTree_l1_separator_potential`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.cliqueTree_l1_separator_potential` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On a finite clique tree with arbitrary bag sizes, bounds of two, three, four, and five on adjacent bag intersection sizes give real L1 reconstruction coefficients one, five thirds, three, and twenty-five sevenths respectively.
+
+Assign each fresh vertex a convex combination of the mean separator label and an independently chosen Jung center. At separator sizes three and five the blend balances the bounds on old–new and new–new edges. Empty separators allow a fresh clique potential, and running intersection glues the bag potentials.
+
+**Theorem 1.25 (A group bound from clique number).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_clique_number_group_gain_potential`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_clique_number_group_gain_potential` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any finite chordal graph whose cliques have at most k vertices, inverse group gains of triangle defect at most epsilon admit a potential of edge error at most k minus one times epsilon. The subtraction is truncated at zero.
+
+When the graph has no triangles the gains integrate exactly. The two-factor construction handles clique cutoffs three and four. The universal four-defect bound handles higher cutoffs.
+
+**Theorem 1.26 (Banach reconstruction with controlled consecutive separators).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.cliqueTree_banach_two`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.cliqueTree_banach_two` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+In a finite rooted clique tree, permit root attachments of any size and separators of size at most three. A separator of size four through six may follow one of size at most two. A separator of size four or five may also follow one that shares at most one vertex with it. Then all edge residuals are bounded by twice the triangle defect in any real seminormed vector space.
+
+Vertices born together have residual at most the triangle defect. After a separator of size at most two the old–new bound is three halves of the defect. Separate weights on inherited and fresh separator vertices preserve these estimates through all allowed attachments.
+
+**Theorem 1.27 (Banach reconstruction on span-one rolling clique graphs).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_potential`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_potential` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For M at least two and arbitrary depth and copy count, skew gains on the span-one rolling clique graph in any real seminormed vector space have a potential with every edge error at most two minus two over M squared times the triangle defect.
+
+Every cross-block edge links an older block to its immediate child. Average all M squared retained labels in that parent. Internal edges have residual at most one defect, and on each cross-block edge one summand vanishes.
+
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.cliqueTree_banach_two`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.cliqueTree_height_banach_gain_potential`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.cliqueTree_l1_separator_potential`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.cliqueTree_separator_group_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.closed_walk_triangle_factors`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_ancestor_banach_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_clique_five_group_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_clique_four_group_gain_potential`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_clique_number_group_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_hilbert_jung_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_l1_jung_gain_potential`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_radius_approximate_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_tree_spanner_approximate_gain_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.family_exact`
@@ -297,14 +400,18 @@ Every coordinate separates the labels into two halves. Symmetry makes the distan
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.hilbert_powerPath_uniform_lower`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.l1_clique_four_exact`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.l1_even_powerPath_exact`
-- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.not_subtwo_cyclic_path`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.l1_uniform_jung_exact`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.not_subtwo_finite_group`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.pathPower_group_exact_strata`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.pathPower_width_three_cyclic_exact`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.powerPath_uniform_ge_doubled_radius`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.scalar_circumference_exact`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.split_clique_four_group_witness`
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/ChordalBanachLimitTwo](../ChordalBanachLimitTwo.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/CliqueTreeBanachPotential](../CliqueTreeBanachPotential.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/CompleteAndCliqueSumBanach](../CompleteAndCliqueSumBanach.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Chordal/Dirac](../Dirac.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/EliminationForest](../EliminationForest.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/GainPotential](../GainPotential.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/SimplicialAndIntervalPotential](../SimplicialAndIntervalPotential.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Chordal/UniformGainPotential](../UniformGainPotential.md)

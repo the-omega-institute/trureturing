@@ -136,4 +136,3 @@ noncomputable def evenL1Registration :
   options := #[]
 
 end Reg.D5.S3.Combinatorics.Graph.Chordal.Reconstruction.ChordalBanachExactStrata
-

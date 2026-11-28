@@ -1,7 +1,12 @@
 import OmegaBuild.Commands
 import OmegaMath.Combinatorics.Graph.RollingCliqueHistories
 import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.Tactic
+import Mathlib.Tactic.Abel
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 
 compile_only_with_mathlib
 
@@ -333,5 +338,6 @@ theorem potential_bound (g : Vertex M n k hM → Vertex M n k hM → E)
         abel
       _ ≤ _ := h
 
+end Potential
 end
 end Omega.RollingCliques.SpanOne

@@ -317,7 +317,7 @@ theorem birth_root {S : Finset V} {A : Set V}
     obtain ⟨q, heq, hmix, hnn⟩ := local_uniform hS hSA hcl g ε hε hrev htri p 1
       (by norm_num) (by simpa using hfit) S.card (le_refl _)
     refine ⟨q, heq, finish_attachment g ε hε hrev p q hfit2 heq _ ?_ ?_ hmix hnn⟩
-    · have : 0 ≤ 1 / (S.card : ℝ) := by positivity
+    · have : 0 ≤ 1 / (S.card : ℝ) := div_nonneg zero_le_one (Nat.cast_nonneg _)
       linarith
     · intro hs; omega
 
