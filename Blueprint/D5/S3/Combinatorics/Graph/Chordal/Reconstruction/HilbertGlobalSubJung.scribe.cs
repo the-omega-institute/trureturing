@@ -20,7 +20,12 @@ internal sealed class HilbertGlobalSubJungDocument : IScribeDocumentDefinition
             Result("finite-clique-credit", "exists_hilbert_gain_potential_clique_credit",
                 "The uniform finite-clique improvement",
                 "If every clique has at most N plus one vertices, with N a positive integer, the potential has an edge bound given by the square root of the global squared radius minus 57 over 10N, times the defect budget. This radius is at most the global radius minus 59 over 50N.",
-                "The new vertex and its predecessor clique together have at most N plus one vertices, so each probability vector in the insertion argument has at most N entries. Cauchy–Schwarz bounds their squared sum below by 1 over N. Add the resulting credit to each normalized row and use the same triangle invariant. Squaring the nonnegative linear radius proves the second comparison."))));
+                "The new vertex and its predecessor clique together have at most N plus one vertices, so each probability vector in the insertion argument has at most N entries. Cauchy–Schwarz bounds their squared sum below by 1 over N. Add the resulting credit to each normalized row and use the same triangle invariant. Squaring the nonnegative linear radius proves the second comparison."),
+            Result("retained-curl-caps", "exists_hilbert_gain_potential_retained_curl",
+                "The retained-curl bounds at three clique cutoffs",
+                "For clique cutoffs 31, 51, and 101, the radius factors are respectively 22302 over 10000, 22913 over 10000, and 23434 over 10000. Each conclusion supplies one potential for all edges and holds for any nonnegative triangle-defect budget.",
+                "At a simplicial insertion, maintain a lower bound on the sum of the edge deficits and the squared fixed triangle curls in every smaller clique. Subset rows supply the exact additional terms for each clique containing the new vertex. Product-weighted averaging of the old inequalities charges edges and triangles using symmetric polynomials on the complementary vertices.",
+                "Pair averaging bounds those symmetric polynomials by their uniform values and controls their loss away from uniform by the squared variation in the weights. The weighted Hilbert projection identity then bounds the new mixture minimum. An exact quadratic comparison for each cutoff closes the subset rows, including weights that vanish."))));
 
     private static DocumentBlock.Describe Result(string id, string declaration, string heading,
         params string[] paragraphs) =>

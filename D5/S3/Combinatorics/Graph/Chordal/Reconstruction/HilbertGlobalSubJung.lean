@@ -7,7 +7,10 @@
    digest: Global Hilbert gain reconstruction with an ordered triangle invariant. -/
 
 import OmegaBuild.Commands
+import D5.S3.Combinatorics.Graph.Chordal.EliminationForest
+import D5.S3.Combinatorics.Graph.Chordal.GainPotential
 import D5.S3.Combinatorics.Graph.Chordal.Reconstruction.HilbertGlobalSubJungCertificate
+import D5.S3.Combinatorics.Graph.Chordal.Reconstruction.HilbertGlobalSubJungFinite
 import OmegaMath.Combinatorics.Graph.ChordalOrderedResidualExtension
 import OmegaMath.Combinatorics.Graph.ChordalAbelianReduction
 import OmegaMath.Combinatorics.Graph.HilbertWeightedEnergy
@@ -915,5 +918,17 @@ theorem IsChordal.exists_hilbert_gain_potential_clique_credit
     (fun _ => placement s hs) g D hD hg ht
   rw [constants.2.1, constants.1] at h
   exact ⟨h, diagonal_sqrt_le_linear hN⟩
+
+/-- The retained-curl construction gives the certified radii 22302/10000,
+22913/10000, and 23434/10000 at clique cutoffs 31, 51, and 101 respectively. -/
+theorem IsChordal.exists_hilbert_gain_potential_retained_curl (hG : G.IsChordal)
+    (k : HilbertGlobalSubJungFinite.Cutoff)
+    (hclique : ∀ W : Finset V, G.IsClique (W : Set V) → W.card ≤ k.parameters.N + 1)
+    (g : V → V → E) (D : ℝ) (hD : 0 ≤ D) (hg : Skew g)
+    (ht : ∀ i j l, Triangle G i j l → ‖holonomy g i j l‖ ≤ D) :
+    ∃ p : V → E, ∀ i j, G.Adj i j → ‖g i j + p i - p j‖ ≤ k.parameters.R * D :=
+  scale_defect k.parameters.R hG
+    (fun f hf hft => HilbertGlobalSubJungFinite.exists_retained_potential hG k hclique f hf hft)
+    g D hD hg ht
 
 end SimpleGraph
