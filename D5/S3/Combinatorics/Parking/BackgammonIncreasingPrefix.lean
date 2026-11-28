@@ -974,11 +974,275 @@ example : backgammonOutcome [1, 4, 4, 3, 2, 2] = [1, 6, 4, 3, 2, 5] := by decide
 example : backgammonOutcome [3, 3, 1] = [3, 1, 2] := by decide
 example : backgammonOutcome [] = [] := rfl
 
-#print axioms backgammon_first_car_insertion
-#print axioms backgammon_first_car_inverse
-#print axioms backgammon_lift_statistic
-#print axioms lift_valid
-#print axioms distinctPrefix_length_spec
-#print axioms distinctPrefix_length_le
+/-- All words of a fixed length over the one-based alphabet `[spots]`. -/
+private def preferenceWords (spots : Nat) : Nat → List (List Nat)
+  | 0 => [[]]
+  | length + 1 => (List.range' 1 spots).flatMap fun p =>
+      (preferenceWords spots length).map (p :: ·)
+
+private theorem mem_preferenceWords (spots length : Nat) (word : List Nat) :
+    word ∈ preferenceWords spots length ↔
+      word.length = length ∧ ∀ p ∈ word, 1 ≤ p ∧ p ≤ spots := by
+  induction length generalizing word with
+  | zero => cases word <;> simp [preferenceWords]
+  | succ length ih =>
+    cases word with
+    | nil => simp [preferenceWords]
+    | cons p word =>
+      rw [preferenceWords, List.mem_flatMap]
+      constructor
+      · rintro ⟨q, hq, member⟩
+        obtain ⟨tail, ht, equal⟩ := List.mem_map.mp member
+        cases equal
+        obtain ⟨i, hi, eq⟩ := List.mem_range'.mp hq
+        obtain ⟨hlen, bounds⟩ := (ih word).mp ht
+        refine ⟨by simp [hlen], ?_⟩
+        intro x hx
+        rcases List.mem_cons.mp hx with rfl | hx
+        · omega
+        · exact bounds x hx
+      · rintro ⟨hlen, bounds⟩
+        obtain ⟨lower, upper⟩ := bounds p List.mem_cons_self
+        refine ⟨p, List.mem_range'.mpr ⟨p - 1, by omega, by omega⟩, ?_⟩
+        exact List.mem_map.mpr ⟨word, (ih word).mpr
+          ⟨by simpa using hlen, fun x hx => bounds x (List.mem_cons_of_mem p hx)⟩, rfl⟩
+
+private theorem nodup_flatMap_of_unique {α β : Type} {xs : List α} {f : α → List β}
+    (distinct : xs.Nodup) (fibers : ∀ x ∈ xs, (f x).Nodup)
+    (unique : ∀ x ∈ xs, ∀ y ∈ xs, ∀ b ∈ f x, b ∈ f y → x = y) :
+    (xs.flatMap f).Nodup := by
+  induction xs with
+  | nil => simp
+  | cons x xs ih =>
+    rw [List.nodup_cons] at distinct
+    rw [List.flatMap_cons, List.Nodup, List.pairwise_append]
+    refine ⟨fibers x List.mem_cons_self, ih distinct.2
+      (fun y hy => fibers y (List.mem_cons_of_mem x hy))
+      (fun y hy z hz => unique y (List.mem_cons_of_mem x hy) z (List.mem_cons_of_mem x hz)), ?_⟩
+    intro b hb c hc equal
+    subst c
+    obtain ⟨y, hy, hby⟩ := List.mem_flatMap.mp hc
+    have xy := unique x List.mem_cons_self y (List.mem_cons_of_mem x hy) b hb hby
+    exact distinct.1 (xy ▸ hy)
+
+private theorem preferenceWords_nodup (spots length : Nat) :
+    (preferenceWords spots length).Nodup := by
+  induction length with
+  | zero => simp [preferenceWords]
+  | succ length ih =>
+    apply nodup_flatMap_of_unique ((List.pairwise_lt_range' (s := 1) (n := spots)).imp
+      (fun h => Nat.ne_of_lt h))
+    · intro p _
+      rw [List.Nodup, List.pairwise_map]
+      exact ih.imp fun different equal => different (List.cons.inj equal).2
+    · intro p _ q _ word hp hq
+      obtain ⟨u, _, rfl⟩ := List.mem_map.mp hp
+      obtain ⟨v, _, eq⟩ := List.mem_map.mp hq
+      exact (List.cons.inj eq).1.symm
+
+/-- All preference words with the specified outcome, without repetitions. -/
+def outcomeWords (outcome : List Nat) : List (List Nat) :=
+  (preferenceWords outcome.length outcome.length).filter
+    (fun word => backgammonOutcome word == outcome)
+
+theorem mem_outcomeWords (outcome word : List Nat) :
+    word ∈ outcomeWords outcome ↔
+      word.length = outcome.length ∧ Valid word ∧ backgammonOutcome word = outcome := by
+  simp only [outcomeWords, List.mem_filter, beq_iff_eq, mem_preferenceWords, and_assoc]
+  constructor
+  · rintro ⟨hlen, hrange, hout⟩
+    exact ⟨hlen, by simpa only [Valid, hlen] using hrange, hout⟩
+  · rintro ⟨hlen, hvalid, hout⟩
+    exact ⟨hlen, by simpa only [Valid, hlen] using hvalid, hout⟩
+
+theorem outcomeWords_nodup (outcome : List Nat) : (outcomeWords outcome).Nodup :=
+  List.Nodup.sublist List.filter_sublist (preferenceWords_nodup _ _)
+
+/-- Insert car 1 in spot 1 and shift the labels of the remaining spots. -/
+def shiftOutcome (outcome : List Nat) : List Nat := 1 :: outcome.map Nat.succ
+
+private theorem lift_reduce (word reduced : List Nat) (member : word ∈ lifts reduced) :
+    word.tail.map (· - 1) = reduced := by
+  rw [lift_tail _ _ member, List.map_map]
+  simp [Function.comp_def]
+
+private theorem lift_length (word reduced : List Nat) (member : word ∈ lifts reduced) :
+    word.length = reduced.length + 1 := by
+  simp only [lifts, List.mem_cons, List.mem_map] at member
+  rcases member with rfl | ⟨_, _, rfl⟩ <;> simp
+
+/-- Every word in the shifted fiber is a lift of its unique reduced word. -/
+theorem outcomeWords_shift_perm (outcome : List Nat) :
+    (outcomeWords (shiftOutcome outcome)).Perm ((outcomeWords outcome).flatMap lifts) := by
+  apply (List.perm_ext_iff_of_nodup (outcomeWords_nodup _) ?_).mpr
+  · intro word
+    rw [mem_outcomeWords, List.mem_flatMap]
+    constructor
+    · rintro ⟨hlen, valid, out⟩
+      have head : (backgammonOutcome word).head? = some 1 := by simp [out, shiftOutcome]
+      obtain ⟨_, validReduced, member⟩ := backgammon_first_car_inverse word valid head
+      have outReduced := ((backgammon_first_car_insertion _ _ valid validReduced).mp member).2
+      rw [out, shiftOutcome, List.cons.injEq] at outReduced
+      have reducedLength := lift_length _ _ member
+      have targetLength : (shiftOutcome outcome).length = outcome.length + 1 := by
+        simp [shiftOutcome]
+      refine ⟨_, (mem_outcomeWords _ _).mpr ⟨by omega, validReduced, ?_⟩, member⟩
+      exact (List.map_inj_right (fun _ _ h => Nat.succ.inj h)).mp outReduced.2.symm
+    · rintro ⟨reduced, reducedMember, member⟩
+      obtain ⟨hlen, validReduced, outReduced⟩ := (mem_outcomeWords _ _).mp reducedMember
+      have valid := lift_valid word reduced validReduced member
+      refine ⟨by rw [lift_length _ _ member, hlen]; simp [shiftOutcome], valid, ?_⟩
+      rw [((backgammon_first_car_insertion _ _ valid validReduced).mp member).2, outReduced]
+      rfl
+  · apply nodup_flatMap_of_unique (outcomeWords_nodup _)
+    · intro reduced member
+      exact (backgammon_lift_statistic _ ((mem_outcomeWords _ _).mp member).2.1).1
+    · intro left _ right _ word hleft hright
+      exact (lift_reduce _ _ hleft).symm.trans (lift_reduce _ _ hright)
+
+private abbrev prefixLength (word : List Nat) : Nat := (distinctPrefix word).length
+
+private theorem lift_lengths_perm (word : List Nat) (valid : Valid word) :
+    ((lifts word).map prefixLength).Perm (List.range' 1 (prefixLength word + 1)) := by
+  obtain ⟨nodup, bounds, unique⟩ := backgammon_lift_statistic word valid
+  have rangeNodup : (List.range' 1 (prefixLength word + 1)).Nodup :=
+    (List.pairwise_lt_range').imp (fun h => Nat.ne_of_lt h)
+  apply (List.perm_ext_iff_of_nodup ?_ rangeNodup).mpr
+  · intro rank
+    rw [List.mem_map, List.mem_range']
+    constructor
+    · rintro ⟨lift, member, rfl⟩
+      obtain ⟨lower, upper⟩ := bounds lift member
+      change 1 ≤ prefixLength lift at lower
+      change prefixLength lift ≤ prefixLength word + 1 at upper
+      exact ⟨prefixLength lift - 1, by omega, by omega⟩
+    · rintro ⟨i, hi, rfl⟩
+      change i < (distinctPrefix word).length + 1 at hi
+      obtain ⟨lift, member, rank, _⟩ := unique (1 + 1 * i) (by omega) (by omega)
+      exact ⟨lift, member, rank⟩
+  · rw [List.Nodup, List.pairwise_map]
+    apply nodup.imp_of_mem
+    intro left right hl hr different equal
+    obtain ⟨lower, upper⟩ := bounds left hl
+    obtain ⟨selected, _, _, eq⟩ := unique (prefixLength left) lower upper
+    exact different ((eq left hl rfl).trans (eq right hr equal.symm).symm)
+
+/-- Count the words with a fixed outcome and a specified longest distinct prefix length. -/
+def refinedCount (outcome : List Nat) (rank : Nat) : Nat :=
+  (outcomeWords outcome).countP (fun word => prefixLength word == rank)
+
+/-- Adding car 1 in spot 1 contributes one word of rank `rank` from each reduced word
+whose longest distinct prefix supports that rank. -/
+theorem refinedCount_shift (outcome : List Nat) (rank : Nat) :
+    refinedCount (shiftOutcome outcome) rank =
+      (outcomeWords outcome).countP
+        (fun word => decide (1 ≤ rank ∧ rank ≤ (distinctPrefix word).length + 1)) := by
+  unfold refinedCount
+  rw [(outcomeWords_shift_perm outcome).countP_eq, List.countP_flatMap]
+  have count_fibers (words : List (List Nat)) (valid : ∀ word ∈ words, Valid word) :
+      (words.map (List.countP (fun word => prefixLength word == rank) ∘ lifts)).sum =
+        words.countP (fun word => decide (1 ≤ rank ∧ rank ≤ prefixLength word + 1)) := by
+    induction words with
+    | nil => rfl
+    | cons reduced words ih =>
+      rw [List.map_cons, List.sum_cons, List.countP_cons,
+        ih (fun word member => valid word (List.mem_cons_of_mem reduced member))]
+      have perm := lift_lengths_perm reduced (valid reduced List.mem_cons_self)
+      have rangeNodup : (List.range' 1 (prefixLength reduced + 1)).Nodup :=
+        (List.pairwise_lt_range').imp (fun h => Nat.ne_of_lt h)
+      have count := perm.countP_eq (· == rank)
+      rw [List.countP_map, ← List.count_eq_countP, rangeNodup.count] at count
+      have rankIn : rank ∈ List.range' 1 (prefixLength reduced + 1) ↔
+          1 ≤ rank ∧ rank ≤ prefixLength reduced + 1 := by
+        rw [List.mem_range']
+        constructor
+        · rintro ⟨i, hi, eq⟩
+          omega
+        · rintro ⟨lower, upper⟩
+          exact ⟨rank - 1, by omega, by omega⟩
+      simp only [rankIn] at count
+      change (lifts reduced).countP (fun word => prefixLength word == rank) =
+        (if 1 ≤ rank ∧ rank ≤ prefixLength reduced + 1 then 1 else 0) at count
+      rw [Function.comp_apply, count]
+      simp [Nat.add_comm]
+  exact count_fibers _ (fun word member => ((mem_outcomeWords _ _).mp member).2.1)
+
+/-- Sum a weight over the positive prefix lengths attainable by one lift. -/
+def liftWeight (weight : Nat → Nat) (length : Nat) : Nat :=
+  ((List.range' 1 (length + 1)).map weight).sum
+
+/-- Sum a weight depending only on the longest distinct preference prefix. -/
+def outcomeWeight (outcome : List Nat) (weight : Nat → Nat) : Nat :=
+  ((outcomeWords outcome).map (fun word => weight (prefixLength word))).sum
+
+/-- Inserting one fixed car transforms any weight by summing it over the attainable ranks. -/
+theorem outcomeWeight_shift (outcome : List Nat) (weight : Nat → Nat) :
+    outcomeWeight (shiftOutcome outcome) weight = outcomeWeight outcome (liftWeight weight) := by
+  unfold outcomeWeight
+  rw [((outcomeWords_shift_perm outcome).map _).sum_nat, List.map_flatMap]
+  have sum_fibers (words : List (List Nat)) (valid : ∀ word ∈ words, Valid word) :
+      (words.flatMap (fun reduced => (lifts reduced).map
+        (fun word => weight (prefixLength word)))).sum =
+      (words.map (fun reduced => liftWeight weight (prefixLength reduced))).sum := by
+    induction words with
+    | nil => rfl
+    | cons reduced words ih =>
+      rw [List.flatMap_cons, List.sum_append, List.map_cons, List.sum_cons,
+        ih (fun word member => valid word (List.mem_cons_of_mem reduced member))]
+      have fiber := ((lift_lengths_perm reduced (valid reduced List.mem_cons_self)).map weight).sum_nat
+      rw [List.map_map] at fiber
+      exact congrArg (· + _) fiber
+  exact sum_fibers _ (fun word member => ((mem_outcomeWords _ _).mp member).2.1)
+
+/-- The reverse suffix of length `length`, with one-based labels. -/
+def reverseOutcome (length : Nat) : List Nat := (List.range' 1 length).reverse
+
+/-- Put the fixed prefix of length `k` in front of the shifted outcome. -/
+def withIncreasingPrefix : Nat → List Nat → List Nat
+  | 0, outcome => outcome
+  | k + 1, outcome => withIncreasingPrefix k (shiftOutcome outcome)
+
+theorem withIncreasingPrefix_eq (k : Nat) (outcome : List Nat) :
+    withIncreasingPrefix k outcome = List.range' 1 k ++ outcome.map (k + ·) := by
+  induction k generalizing outcome with
+  | zero => simp [withIncreasingPrefix]
+  | succ k ih =>
+    rw [withIncreasingPrefix, ih, shiftOutcome, List.map_cons, List.map_map,
+      List.range'_concat, List.append_assoc]
+    simp only [Nat.one_mul, Nat.add_comm 1 k, List.singleton_append]
+    congr 1
+    congr 1
+    apply List.map_congr_left
+    intro p _
+    change k + (p + 1) = k + 1 + p
+    omega
+
+/-- Apply the one-car rank transform `k` times. -/
+def iteratedLiftWeight : Nat → (Nat → Nat) → Nat → Nat
+  | 0, weight => weight
+  | k + 1, weight => liftWeight (iteratedLiftWeight k weight)
+
+theorem outcomeWeight_increasingPrefix (k : Nat) (outcome : List Nat) (weight : Nat → Nat) :
+    outcomeWeight (withIncreasingPrefix k outcome) weight =
+      outcomeWeight outcome (iteratedLiftWeight k weight) := by
+  induction k generalizing outcome with
+  | zero => rfl
+  | succ k ih => rw [withIncreasingPrefix, ih, outcomeWeight_shift, iteratedLiftWeight]
+
+/-- The number of extensions through `k` inserted cars, for a reduced word of rank `length`. -/
+def iteratedLiftCount (k length : Nat) : Nat := iteratedLiftWeight k (fun _ => 1) length
+
+theorem iteratedLiftCount_succ (k length : Nat) :
+    iteratedLiftCount (k + 1) length =
+      ((List.range' 1 (length + 1)).map (iteratedLiftCount k)).sum := rfl
+
+/-- Count the outcome of Question 5.2 by weighting each reverse-outcome word by its exact
+number of extensions. The total street length is `k + suffixLength`. -/
+theorem increasingPrefix_count (k suffixLength : Nat) :
+    (outcomeWords (withIncreasingPrefix k (reverseOutcome suffixLength))).length =
+      ((outcomeWords (reverseOutcome suffixLength)).map
+        (fun word => iteratedLiftCount k (distinctPrefix word).length)).sum := by
+  simpa [outcomeWeight, iteratedLiftCount, List.map_const', List.sum_replicate_nat] using
+    (outcomeWeight_increasingPrefix k (reverseOutcome suffixLength) (fun _ => 1))
 
 end BackgammonIncreasingPrefix
