@@ -131,15 +131,10 @@ private theorem floor_iff_of_nonneg {r d m : R} (hd : 0 ≤ d) (hm : 0 ≤ m) (h
     refine ⟨m + d, m, by linarith, le_rfl, by simp, (gramNonneg_iff_det hlo hhi).mpr ?_⟩
     nlinarith only [bound]
 
-/-- A common lower bound `m` on the two probe readings cuts down the disk of attainable contrasts.
-For a nonnegative contrast the extremal pair is `(m + d, m)`; swapping the readings handles the
-other sign. The weights and readings lie in the same linearly ordered commutative ring. -/
-theorem exists_readings_at_floor_iff (r d m : R) (hm : 0 ≤ m) (hm1 : m ≤ 1)
+private theorem floor_iff_of_bounds (r d m : R) (hm : 0 ≤ m) (hm1 : m ≤ 1)
     (lo : -1 ≤ r) (hi : r ≤ 1) :
-    (∃ a b : R, m ≤ a ∧ m ≤ b ∧ a - b = d ∧
-      ∀ x y z : R, 0 ≤ x ^ 2 + y ^ 2 + z ^ 2 + 2 * (r * x * y + a * x * z + b * y * z)) ↔
+    (∃ a b, m ≤ a ∧ m ≤ b ∧ a - b = d ∧ GramNonneg r a b) ↔
       r ^ 2 + d ^ 2 + 2 * (1 - r) * m * (m + |d|) ≤ 1 := by
-  change (∃ a b, m ≤ a ∧ m ≤ b ∧ a - b = d ∧ GramNonneg r a b) ↔ _
   by_cases hd : 0 ≤ d
   · simpa [abs_of_nonneg hd] using floor_iff_of_nonneg hd hm hm1 lo hi
   · have swap : (∃ a b, m ≤ a ∧ m ≤ b ∧ a - b = d ∧ GramNonneg r a b) ↔
@@ -148,5 +143,23 @@ theorem exists_readings_at_floor_iff (r d m : R) (hm : 0 ≤ m) (hm1 : m ≤ 1)
         exact ⟨b, a, hb, ha, by linarith, gramNonneg_swap gram⟩
     rw [swap, floor_iff_of_nonneg (neg_nonneg.mpr (le_of_not_ge hd)) hm hm1 lo hi,
       abs_of_neg (lt_of_not_ge hd), neg_sq]
+
+/-- For a nonnegative common floor `m`, attainable three-point contrasts are characterized by
+the upper bounds on the floor and mutual reading and one polynomial inequality involving `|d|`.
+The witnesses are `(m + d, m)` for `d ≥ 0` and `(m, m - d)` for `d < 0`. -/
+theorem exists_readings_at_floor_iff (r d m : R) (hm : 0 ≤ m) :
+    (∃ a b : R, m ≤ a ∧ m ≤ b ∧ a - b = d ∧
+      ∀ x y z : R, 0 ≤ x ^ 2 + y ^ 2 + z ^ 2 + 2 * (r * x * y + a * x * z + b * y * z)) ↔
+      m ≤ 1 ∧ r ≤ 1 ∧ r ^ 2 + d ^ 2 + 2 * (1 - r) * m * (m + |d|) ≤ 1 := by
+  constructor
+  · rintro ⟨a, b, ha, hb, hab, gram⟩
+    have hm1 : m ≤ 1 := by nlinarith only [ha, gram 1 0 (-1)]
+    have lo : -1 ≤ r := by nlinarith only [gram 1 1 0]
+    have hi : r ≤ 1 := by nlinarith only [gram 1 (-1) 0]
+    exact ⟨hm1, hi, (floor_iff_of_bounds r d m hm hm1 lo hi).mp ⟨a, b, ha, hb, hab, gram⟩⟩
+  · rintro ⟨hm1, hi, bound⟩
+    have correction := mul_nonneg (mul_nonneg (sub_nonneg.mpr hi) hm) (add_nonneg hm (abs_nonneg d))
+    have lo : -1 ≤ r := by nlinarith only [bound, correction, sq_nonneg d, sq_nonneg (r + 1)]
+    exact (floor_iff_of_bounds r d m hm hm1 lo hi).mpr bound
 
 end Omega.Geometry.ThreeReadingContrast
