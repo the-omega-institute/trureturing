@@ -209,5 +209,141 @@ lemma child_closure {q t k S : ℝ} (hq : 0 ≤ q)
     dsimp [allowance] at ha
     linarith
 
+/-- The numerical obligations for the shared three-candidate placement proof. -/
+structure NumericalClosure (R C : ℝ) : Prop where
+  radius_nonneg : 0 ≤ R
+  invariant_ge_three : 3 ≤ C
+  repeated_triangle : 2 * R ^ 2 ≤ C
+  tetrahedron_cap : 6 * R ^ 2 ≤ 11
+  radius : ∀ {q t k S : ℝ}, 0 ≤ q → 0 ≤ t → t ≤ 1 →
+    0 ≤ k → k ^ 2 = C * (2 + t ^ 2) → S ≤ C + 2 + t ^ 2 + 2 * k →
+    ((R + 1) ^ 2 / 4 < q → q * (6 * (R + 1) ^ 2 - S) ≤ ((R + 1) ^ 2) ^ 2) →
+    q ≤ R ^ 2
+  child : ∀ {q t k S : ℝ}, 0 ≤ q → 0 ≤ t → t ≤ 1 →
+    0 ≤ k → k ^ 2 = C * (2 + t ^ 2) → S ≤ C + 2 + t ^ 2 + 2 * k →
+    ((R + 1) ^ 2 / 4 < q → q * (6 * (R + 1) ^ 2 - S) ≤ ((R + 1) ^ 2) ^ 2) →
+    q * (4 * (R + 1) ^ 2 - (R + t) ^ 2) ≤ ((R + 1) ^ 2) ^ 2 →
+    R ^ 2 + 2 * q - (2 / 3) * t ^ 2 ≤ C
+
+/-- The sharp two-piece scalar estimates instantiate the shared placement rule. -/
+theorem sharp_closure : NumericalClosure R C where
+  radius_nonneg := by norm_num [R]
+  invariant_ge_three := by norm_num [C]
+  repeated_triangle := by norm_num [R, C]
+  tetrahedron_cap := by norm_num [R]
+  radius := fun hq ht ht1 hk hk2 hS hsum =>
+    radius_closure hq (side_sum_cap ht ht1 hk hk2 hS) hsum
+  child := child_closure
+
+namespace ZeroSplit
+
+/-- Independent one-interval constants, with the `93/20` triangle invariant. -/
+def R : ℝ := 13 / 10
+def C : ℝ := 93 / 20
+def B : ℝ := (R + 1) ^ 2
+def allowance (s : ℝ) : ℝ := C - R ^ 2 + (2 / 3) * s
+def numerator (s : ℝ) : ℝ :=
+  (6 * B - C - 2 - s) * allowance s - 2 * B ^ 2
+def certificate (s : ℝ) : ℝ :=
+  numerator s ^ 2 - 4 * C * (2 + s) * allowance s ^ 2
+
+/-- Homogenization of the supplied degree-two Möbius certificate. -/
+lemma numerator_eq (s : ℝ) : numerator s =
+    (156991 / 5000 : ℝ) * s ^ 2 +
+    (377723 / 7500 : ℝ) * s * (1 - s) +
+    (91491 / 5000 : ℝ) * (1 - s) ^ 2 := by
+  dsimp [numerator, allowance, B, R, C]
+  ring
+
+/-- Homogenization of the supplied degree-four Möbius certificate. -/
+lemma certificate_eq (s : ℝ) : certificate s =
+    (6298142081 / 25000000 : ℝ) * s ^ 4 +
+    (13901223493 / 18750000 : ℝ) * s ^ 3 * (1 - s) +
+    (79945181687 / 112500000 : ℝ) * s ^ 2 * (1 - s) ^ 2 +
+    (1434994331 / 6250000 : ℝ) * s * (1 - s) ^ 3 +
+    (222315081 / 25000000 : ℝ) * (1 - s) ^ 4 := by
+  dsimp [certificate, numerator, allowance, B, R, C]
+  ring
+
+lemma numerator_nonneg {s : ℝ} (hlo : 0 ≤ s) (hhi : s ≤ 1) :
+    0 ≤ numerator s := by
+  have hright : 0 ≤ 1 - s := sub_nonneg.mpr hhi
+  rw [numerator_eq]
+  positivity
+
+lemma certificate_nonneg {s : ℝ} (hlo : 0 ≤ s) (hhi : s ≤ 1) :
+    0 ≤ certificate s := by
+  have hright : 0 ≤ 1 - s := sub_nonneg.mpr hhi
+  rw [certificate_eq]
+  positivity
+
+/-- A rational cap on the exact square-root side-sum bound. -/
+lemma side_sum_cap {t k S : ℝ} (ht : 0 ≤ t) (ht1 : t ≤ 1)
+    (hk : 0 ≤ k) (hk2 : k ^ 2 = C * (2 + t ^ 2))
+    (hS : S ≤ C + 2 + t ^ 2 + 2 * k) : S ≤ 378 / 25 := by
+  have ht2 : t ^ 2 ≤ 1 := by nlinarith
+  have hkbound : k ≤ 747 / 200 := by dsimp [C] at hk2; nlinarith
+  dsimp [C] at hS
+  linarith
+
+lemma radius_closure {q S : ℝ} (hq : 0 ≤ q) (hS : S ≤ 378 / 25)
+    (hbound : B / 4 < q → q * (6 * B - S) ≤ B ^ 2) : q ≤ R ^ 2 := by
+  by_cases hsmall : q ≤ B / 4
+  · dsimp [B, R] at *; linarith
+  · have hh := hbound (lt_of_not_ge hsmall)
+    have hm := mul_nonneg hq (sub_nonneg.mpr hS)
+    dsimp [B, R] at *
+    nlinarith
+
+/-- A single certificate range `0 ≤ t² ≤ 1` closes the triangle invariant.
+Only the geometric half-diameter radius alternative is distinguished. -/
+lemma child_closure {q t k S : ℝ} (hq : 0 ≤ q)
+    (ht : 0 ≤ t) (ht1 : t ≤ 1)
+    (hk : 0 ≤ k) (hk2 : k ^ 2 = C * (2 + t ^ 2))
+    (hS : S ≤ C + 2 + t ^ 2 + 2 * k)
+    (hsum : B / 4 < q → q * (6 * B - S) ≤ B ^ 2) :
+    R ^ 2 + 2 * q - (2 / 3) * t ^ 2 ≤ C := by
+  have ht2 : t ^ 2 ≤ 1 := by nlinarith
+  have hA : 0 < allowance (t ^ 2) := by
+    dsimp [allowance, C, R]; positivity
+  by_cases hsmall : q ≤ B / 4
+  · dsimp [B, R, C] at *; nlinarith [sq_nonneg t]
+  have hqsum := hsum (lt_of_not_ge hsmall)
+  have hden : 0 < 6 * B - (C + 2 + t ^ 2 + 2 * k) := by
+    have := side_sum_cap ht ht1 hk hk2 (le_refl (C + 2 + t ^ 2 + 2 * k))
+    dsimp [B, R] at *; linarith
+  have hqden : q * (6 * B - (C + 2 + t ^ 2 + 2 * k)) ≤ B ^ 2 := by
+    nlinarith [mul_nonneg hq (sub_nonneg.mpr hS)]
+  have hn := numerator_nonneg (sq_nonneg t) ht2
+  have hp := certificate_nonneg (sq_nonneg t) ht2
+  have hsq : (2 * k * allowance (t ^ 2)) ^ 2 =
+      4 * C * (2 + t ^ 2) * allowance (t ^ 2) ^ 2 := by
+    calc
+      _ = 4 * k ^ 2 * allowance (t ^ 2) ^ 2 := by ring
+      _ = _ := by rw [hk2]; ring
+  have hka : 0 ≤ 2 * k * allowance (t ^ 2) := by positivity
+  have hnka : 2 * k * allowance (t ^ 2) ≤ numerator (t ^ 2) := by
+    dsimp [certificate] at hp
+    nlinarith
+  have hh : (6 * B - (C + 2 + t ^ 2 + 2 * k)) *
+      (allowance (t ^ 2) - 2 * q) ≥ 0 := by
+    dsimp [numerator] at hnka
+    nlinarith
+  have ha := nonneg_of_mul_nonneg_right hh hden
+  dsimp [allowance] at ha
+  linarith
+
+/-- The independent `13/10` numerical closure uses no short-edge certificate. -/
+theorem closure : NumericalClosure R C where
+  radius_nonneg := by norm_num [R]
+  invariant_ge_three := by norm_num [C]
+  repeated_triangle := by norm_num [R, C]
+  tetrahedron_cap := by norm_num [R]
+  radius := fun hq ht ht1 hk hk2 hS hsum =>
+    radius_closure hq (side_sum_cap ht ht1 hk hk2 hS) hsum
+  child := fun hq ht ht1 hk hk2 hS hsum _ => child_closure hq ht ht1 hk hk2 hS hsum
+
+end ZeroSplit
+
 end
 end HilbertTriangleInsertion

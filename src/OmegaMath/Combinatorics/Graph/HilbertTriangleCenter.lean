@@ -19,7 +19,7 @@ open HilbertTetrahedronGeometry
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 
 /-- A three-candidate radius is controlled by both a specified short edge and the total energy. -/
-theorem center_bounds (y : Fin 3 → E) (hdiam : ∀ i j, ‖y i - y j‖ ^ 2 ≤ B) :
+theorem center_bounds {B : ℝ} (y : Fin 3 → E) (hdiam : ∀ i j, ‖y i - y j‖ ^ 2 ≤ B) :
     ∃ c q, 0 ≤ q ∧ (∀ i, ‖y i - c‖ ^ 2 ≤ q) ∧
       (∀ i j, i ≠ j → q * (4 * B - ‖y i - y j‖ ^ 2) ≤ B ^ 2) ∧
       (B / 4 < q → q * (6 * B -
@@ -83,7 +83,7 @@ theorem center_bounds (y : Fin 3 → E) (hdiam : ∀ i j, ‖y i - y j‖ ^ 2 �
 /-- Removing the opposite means preserves the sum of the arrays. The
 remaining Cauchy–Schwarz term is bounded by the product at zero holonomy. -/
 theorem centered_minkowski (a b c x y z : E) (hs : (a + b + c) + (x + y + z) = 0)
-    {T : ℝ} (hT : ‖x‖ ^ 2 + ‖y‖ ^ 2 + ‖z‖ ^ 2 ≤ T) (hTC : T ≤ C)
+    {C T : ℝ} (hT : ‖x‖ ^ 2 + ‖y‖ ^ 2 + ‖z‖ ^ 2 ≤ T) (hTC : T ≤ C)
     (hQ : ‖a‖ ^ 2 + ‖b‖ ^ 2 + ‖c‖ ^ 2 - (2 / 3) * ‖a + b + c‖ ^ 2 ≤ C) :
     ‖a + x‖ ^ 2 + ‖b + y‖ ^ 2 + ‖c + z‖ ^ 2 ≤ C + T + 2 * Real.sqrt (C * T) := by
   let u := ‖a + b + c‖ ^ 2 / 3
@@ -107,7 +107,8 @@ theorem centered_minkowski (a b c x y z : E) (hs : (a + b + c) + (x + y + z) = 0
     change D = ‖x‖ ^ 2 + ‖y‖ ^ 2 + ‖z‖ ^ 2 - u at hh
     linarith only [hh, hT]
   have hD₀ : 0 ≤ D := by dsimp [D]; positivity
-  have hC₀ : 0 ≤ C := by norm_num [C]
+  have hC₀ : 0 ≤ C := (show 0 ≤ T from (by positivity :
+    0 ≤ ‖x‖ ^ 2 + ‖y‖ ^ 2 + ‖z‖ ^ 2).trans hT).trans hTC
   have hprod : A * D ≤ C * T := by
     refine (mul_le_mul hA hD hD₀ (add_nonneg hC₀ hu)).trans ?_
     nlinarith only [mul_nonneg hu (sub_nonneg.mpr hTC), sq_nonneg u]

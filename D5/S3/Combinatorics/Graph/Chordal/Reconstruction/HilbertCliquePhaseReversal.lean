@@ -74,6 +74,23 @@ theorem IsChordal.exists_cliqueFour_hilbert_gain_potential (hG : G.IsChordal)
     (by norm_num [HilbertTriangleInsertion.R]) hclique HilbertTriangleInsertion.place f hf ?_
   exact fun a b c h => ht a b c h.1 h.2.1 h.2.2
 
+/-- An independent one-interval cutoff-four argument, with triangle invariant
+`93/20`, gives error at most `13/10` times the triangle-defect budget. -/
+theorem IsChordal.exists_cliqueFour_hilbert_gain_potential_zeroSplit (hG : G.IsChordal)
+    (hclique : ∀ c : Finset V, G.IsClique (c : Set V) → c.card ≤ 4)
+    (g : V → V → E) (δ : ℝ) (hδ : 0 ≤ δ) (hrev : Skew g)
+    (htri : ∀ a b c, G.Adj a b → G.Adj b c → G.Adj a c → ‖g a b + g b c - g a c‖ ≤ δ) :
+    ∃ p : V → E, ∀ a b, G.Adj a b → ‖g a b - (p b - p a)‖ ≤ (13/10) * δ := by
+  apply scale_gain_bound hG _ _ g δ hδ hrev htri
+  intro f hf ht
+  refine reconstruct (k := 3) (R := HilbertTriangleInsertion.ZeroSplit.R)
+    (U := HilbertTriangleInsertion.ZeroSplit.R) (M := HilbertTriangleInsertion.ZeroSplit.C)
+    (N := 11) hG (by norm_num [HilbertTriangleInsertion.ZeroSplit.R])
+    le_rfl (by norm_num [HilbertTriangleInsertion.ZeroSplit.R, HilbertTriangleInsertion.ZeroSplit.C])
+    (by norm_num [HilbertTriangleInsertion.ZeroSplit.R]) hclique
+    HilbertTriangleInsertion.ZeroSplit.place f hf ?_
+  exact fun a b c h => ht a b c h.1 h.2.1 h.2.2
+
 /-- At clique number at most five, the coupled invariants give edge error at
 most `sqrt (10275 / 4576)` times the triangle-defect budget. -/
 theorem IsChordal.exists_cliqueFive_hilbert_gain_potential (hG : G.IsChordal)
@@ -169,6 +186,106 @@ theorem hilbert_cliqueFive_phase_separation :
     have h := (l1_even_powerPath_exact 2 (by decide) C).mp ⟨hC.1, hfit⟩
     norm_num at h
     exact h
+
+open MeasureTheory
+
+/-- Bounds uniform over finite chordal graphs and real L1 spaces of arbitrary measures. -/
+def RealL1CliqueUpper (k : ℕ) (C : ℝ) : Prop :=
+  0 ≤ C ∧ ∀ (n : ℕ) (G : SimpleGraph (Fin n)), G.IsChordal →
+    (∀ c : Finset (Fin n), G.IsClique (c : Set (Fin n)) → c.card ≤ k) →
+    ∀ (Ω : Type) [MeasurableSpace Ω] (μ : Measure Ω), PairRetention.Upper G (Lp ℝ 1 μ) C
+
+/-- Bounds uniform over finite chordal graphs and real Banach spaces. -/
+def BanachCliqueUpper (k : ℕ) (C : ℝ) : Prop :=
+  0 ≤ C ∧ ∀ (n : ℕ) (G : SimpleGraph (Fin n)), G.IsChordal →
+    (∀ c : Finset (Fin n), G.IsClique (c : Set (Fin n)) → c.card ≤ k) →
+    ∀ (E : Type) [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E],
+      PairRetention.Upper G E C
+
+private theorem banachCliqueUpper_five_three : BanachCliqueUpper 5 3 := by
+  refine ⟨by norm_num, ?_⟩
+  intro n G hG hcl E _ _ _ g hg ht
+  let f (a b : Fin n) : Multiplicative E := Multiplicative.ofAdd (g a b)
+  have hf : ∀ a b, G.Adj a b → f b a = (f a b)⁻¹ := by
+    intro a b _
+    exact congrArg Multiplicative.ofAdd (hg a b)
+  have hft : ∀ a b c, G.Adj a b → G.Adj b c → G.Adj a c →
+      Dist.dist (f a b * f b c) (f a c) ≤ 1 := by
+    intro a b c hab hbc hac
+    change Dist.dist (g a b + g b c) (g a c) ≤ 1
+    simpa only [dist_eq_norm, PairRetention.defect] using ht a b c hab hbc hac
+  obtain ⟨p, hp⟩ := hG.exists_clique_five_group_gain_potential hcl f zero_le_one hf hft
+  refine ⟨fun a => (p a).toAdd, fun a b hab => ?_⟩
+  have h := hp a b hab
+  change Dist.dist (g a b) (-(p a).toAdd + (p b).toAdd) ≤ 3 * 1 at h
+  simpa only [dist_eq_norm, PairRetention.residual, sub_eq_neg_add, mul_one] using h
+
+private theorem realL1CliqueUpper_of_banach {k : ℕ} {C : ℝ}
+    (h : BanachCliqueUpper k C) : RealL1CliqueUpper k C := by
+  refine ⟨h.1, ?_⟩
+  intro n G hG hc Ω _ μ
+  exact h.2 n G hG hc (Lp ℝ 1 μ)
+
+private theorem finiteL1CliqueUpper_of_realL1 {k : ℕ} {C : ℝ}
+    (h : RealL1CliqueUpper k C) : FiniteL1CliqueUpper k C := by
+  refine ⟨h.1, ?_⟩
+  intro n G hG hc I _ g hg ht
+  let : MeasurableSpace I := ⊤
+  let : MeasurableSingletonClass I := ⟨fun _ => trivial⟩
+  let e := ChordalL1.countingCoordinates (I := I)
+  let f := fun a b => e.symm (g a b)
+  have hf : ∀ a b, f b a = -f a b := by
+    intro a b
+    simp [f, hg a b]
+  have hft : ∀ a b c, G.Adj a b → G.Adj b c → G.Adj a c →
+      ‖PairRetention.defect f a b c‖ ≤ 1 := by
+    intro a b c hab hbc hac
+    simpa only [PairRetention.defect, f, ← map_add, ← map_sub, LinearIsometryEquiv.norm_map]
+      using ht a b c hab hbc hac
+  obtain ⟨p, hp⟩ := h.2 n G hG hc I (Measure.count : Measure I) f hf hft
+  refine ⟨fun a => e (p a), fun a b hab => ?_⟩
+  have hp' := hp a b hab
+  rw [← e.norm_map] at hp'
+  simpa only [PairRetention.residual, f, map_sub, LinearIsometryEquiv.apply_symm_apply] using hp'
+
+private theorem one_le_of_realL1CliqueUpper_four {C : ℝ} (h : RealL1CliqueUpper 4 C) :
+    1 ≤ C := by
+  let I := Fin 1
+  let : MeasurableSpace I := ⊤
+  let : MeasurableSingletonClass I := ⟨fun _ => trivial⟩
+  let μ : Measure I := Measure.count
+  let e := ChordalL1.countingCoordinates (I := I)
+  let : Nontrivial (Lp ℝ 1 μ) := e.symm.injective.nontrivial
+  apply (l1_clique_four_exact μ C).mp
+  intro n G hG hc
+  exact h.2 (n + 1) G hG hc I μ
+
+private theorem realL1CliqueUpper_four_one : RealL1CliqueUpper 4 1 := by
+  refine ⟨zero_le_one, ?_⟩
+  intro n G hG hc Ω _ μ g hrev htri
+  obtain ⟨p, hp⟩ := hG.exists_l1_jung_gain_potential 1 (by decide) hc g 1 zero_le_one hrev htri
+  norm_num at hp
+  exact ⟨p, hp⟩
+
+/-- The exact clique-four real L1 coefficient and the clique-five order
+between Hilbert, real L1, and Banach reconstruction. -/
+theorem realL1_hilbert_banach_phase_reversal :
+    sInf {C | RealL1CliqueUpper 4 C} = 1 ∧
+    1 < hilbertCliqueCoefficient 4 ∧
+    hilbertCliqueCoefficient 5 < (3 / 2 : ℝ) ∧
+    (3 / 2 : ℝ) ≤ sInf {C | RealL1CliqueUpper 5 C} ∧
+    sInf {C | RealL1CliqueUpper 5 C} ≤ sInf {C | BanachCliqueUpper 5 C} := by
+  have hbelow (k : ℕ) : BddBelow {C | RealL1CliqueUpper k C} := ⟨0, fun _ h => h.1⟩
+  have hBan : {C | BanachCliqueUpper 5 C}.Nonempty := ⟨3, banachCliqueUpper_five_three⟩
+  have hL : {C | RealL1CliqueUpper 5 C}.Nonempty :=
+    ⟨3, realL1CliqueUpper_of_banach banachCliqueUpper_five_three⟩
+  obtain ⟨hstrict, hhigh, -, -, -⟩ := hilbert_cliqueFour_phase_separation
+  obtain ⟨hupper, hmiddle, hthreshold, hlower⟩ := hilbert_cliqueFive_phase_separation
+  refine ⟨le_antisymm (csInf_le (hbelow 4) realL1CliqueUpper_four_one) ?_,
+    hstrict.trans_le hhigh, hupper.trans_lt (hmiddle.trans hthreshold), ?_, ?_⟩
+  · exact le_csInf ⟨1, realL1CliqueUpper_four_one⟩ fun _ h => one_le_of_realL1CliqueUpper_four h
+  · exact le_csInf hL fun C h => hlower C (finiteL1CliqueUpper_of_realL1 h)
+  · exact csInf_le_csInf (hbelow 5) hBan fun _ h => realL1CliqueUpper_of_banach h
 
 end Comparison
 
