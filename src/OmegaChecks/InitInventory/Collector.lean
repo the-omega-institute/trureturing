@@ -2,6 +2,7 @@ module
 public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
+import all Init.While
 import all Init.Data.Iterators.Combinators.Monadic.Take
 import all Init.Data.Iterators.Basic
 import all Init.Data.Iterators.Consumers.Monadic.Loop
@@ -667,6 +668,102 @@ def limitedOmniscienceFromUnboundedRange (loop : type_of% (@Rxi.Iterator.instIte
       | true => simp only [stopAt, e, ite_true]; rfl
     have result := length_hits (seenSticky f) gHit len unroll 0
     exact Bool.noConfusion (h.symm.trans (by simpa only [Nat.zero_add] using result))
+
+namespace WhileSearch
+
+/-- Stop at a signalled index, otherwise advance to its successor. -/
+def advance (f : Nat → Bool) (_ : Unit) (n : Nat) : Id (ForInStep Nat) :=
+  if f n then .done n else .yield (n + 1)
+
+private def sumStep (f : Nat → Bool) (n : Nat) : Id (Nat ⊕ Nat) :=
+  if f n then .inr n else .inl (n + 1)
+
+private def bounded (f : Nat → Bool) : Nat → Nat → Nat
+  | 0, n => n
+  | fuel+1, n => if f n then n else bounded f fuel (n+1)
+
+/-- The pinned identity-monad loop returns a signalled index whenever a sticky stream signals. -/
+theorem officialHit (f : Nat → Bool) (sticky : ∀ k, f k = true → f (k+1) = true)
+    (last : Nat) (h : f last = true) :
+    f (Lean.Loop.forIn (m := Id) {} 0 (advance f)) = true := by
+  let g (n : Nat) := bounded f (last - n) n
+  have step (n : Nat) : repeatM.body (sumStep f) g n = g n := by
+    dsimp only [repeatM.body, sumStep, bind, Id.instMonad, pure]
+    cases flag : f n with
+    | true =>
+      simp only [ite_true]
+      change n = bounded f (last - n) n
+      cases last - n <;> simp only [bounded, flag, ite_true]
+    | false =>
+      have lt : n < last := Nat.lt_of_not_ge fun le =>
+        Bool.noConfusion (flag.symm.trans (signal_after sticky h le))
+      have fuel : last - n = (last - (n+1)) + 1 := by omega
+      simp only [Bool.false_eq_true, ite_false]
+      change bounded f (last - (n+1)) (n+1) = bounded f (last - n) n
+      rw [fuel, bounded, flag]
+      rfl
+  have unroll (n : Nat) := @repeatM_eq Nat Id _ Nat ⟨0⟩ (sumStep f) n ⟨g, funext step⟩
+  have returns (fuel n : Nat) (enough : last ≤ n + fuel) : f (repeatM (sumStep f) n) = true := by
+    induction fuel generalizing n with
+    | zero =>
+      have hit := signal_after sticky h (show last ≤ n from enough)
+      rw [unroll n]
+      simp only [repeatM.body, sumStep, hit, ite_true]
+      exact hit
+    | succ fuel ih =>
+      rw [unroll n]
+      cases hit : f n with
+      | true =>
+        simp only [repeatM.body, sumStep, hit, ite_true]
+        exact hit
+      | false =>
+        simp only [repeatM.body, sumStep, hit, Bool.false_eq_true, ite_false]
+        exact ih (n+1) (by omega)
+  suffices same : Lean.Loop.forIn (m := Id) {} 0 (advance f) = repeatM (sumStep f) 0 by
+    exact (congrArg f same).trans (returns last 0 (by omega))
+  unfold Lean.Loop.forIn
+  apply congrArg (fun op => @repeatM Nat Id _ Nat ⟨0⟩ op 0)
+  funext n
+  cases h : f n <;> simp only [advance, sumStep, h] <;> rfl
+
+/-- A total stopping index respecting all terminating searches decides occurrence in any stream. -/
+def decideFromStoppingIndex (index : (Nat → Bool) → Nat)
+    (terminates : ∀ g : Nat → Bool, (∀ n, g n = true → g (n+1) = true) →
+      (∃ n, g n = true) → g (index g) = true)
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  let g := seen f
+  cases found : g (index g) with
+  | true => exact .isTrue (hit_of_seen f _ found)
+  | false =>
+    refine .isFalse fun ⟨last, h⟩ => ?_
+    exact Bool.noConfusion (found.symm.trans
+      (terminates g (seenSticky f) ⟨last, seen_of_hit f last h⟩))
+
+/-- Agreement with the pinned loop is needed only on terminating identity-monad searches. -/
+def limitedOmniscienceFromWhile (loop : type_of% @Lean.Loop.forIn.{0,0})
+    (finite : ∀ g : Nat → Bool, (∀ n, g n = true → g (n+1) = true) →
+      (∃ n, g n = true) →
+        loop (m := Id) {} 0 (advance g) = Lean.Loop.forIn (m := Id) {} 0 (advance g))
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply decideFromStoppingIndex (fun g => loop (m := Id) {} 0 (advance g)) _ f
+  rintro g sticky ⟨last, h⟩
+  exact (congrArg g (finite g sticky ⟨last, h⟩)).trans (officialHit g sticky last h)
+
+/-- The exposed ForIn instance runs the same searches through its method. -/
+def limitedOmniscienceFromWhileInstance (inst : type_of% @Lean.instForInLoopUnitOfMonad.{0,0})
+    (finite : ∀ g : Nat → Bool, (∀ n, g n = true → g (n+1) = true) →
+      (∃ n, g n = true) → (inst (m := Id)).forIn {} 0 (advance g) =
+        Lean.Loop.forIn (m := Id) {} 0 (advance g))
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) :=
+  limitedOmniscienceFromWhile (fun {β m} _ => @ForIn.forIn m Lean.Loop Unit (inst (m := m)) β) finite f
+
+open Lean Elab.Command in
+run_cmd
+  liftTermElabM do
+    unless (← collectAxioms ``decideFromStoppingIndex).isEmpty do
+      throwError "stream decision from terminating results must be axiom-free"
+
+end WhileSearch
 
 end Collector
 

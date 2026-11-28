@@ -17,6 +17,15 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
   if owner == `Init.Control.Lawful.MonadAttach.Lemmas && name == ``WeaklyLawfulMonadAttach.bind_attach_of_nonempty then
     return ("∀ p : Prop, Decidable p", ``OmegaChecks.InitBoundaries.AttachDecision.decideFromBranch,
       "The right-hand continuation supplies a CanReturn decision for every weakly lawful attachment")
+  if owner == `Init.While then
+    let witness := match name with
+      | ``Lean.Loop.forIn => some ``OmegaChecks.InitBoundaries.Collector.WhileSearch.limitedOmniscienceFromWhile
+      | ``Lean.instForInLoopUnitOfMonad =>
+        some ``OmegaChecks.InitBoundaries.Collector.WhileSearch.limitedOmniscienceFromWhileInstance
+      | _ => none
+    if let some proof := witness then
+      return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)", proof,
+        "The identity-monad loop returns the pinned result on sticky Boolean streams with a signal")
   if owner == `Init.Data.Iterators.Combinators.Monadic.Take && name == `Std.Iterators.Types.Take.Rel.eq_1 then
     return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
       ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromTakeDecision,
