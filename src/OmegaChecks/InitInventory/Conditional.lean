@@ -1,6 +1,7 @@
 module
 
 public import OmegaChecks.InitInventory.Reductions
+public import OmegaChecks.InitInventory.TakeFiniteness
 public import OmegaChecks.InitInventory.Collector
 public import OmegaChecks.InitInventory.OpenRangeLoop
 public import OmegaChecks.InitInventory.RangeLoopLift
@@ -27,9 +28,9 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
       return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)", proof,
         "The identity-monad loop returns the pinned result on sticky Boolean streams with a signal")
   if owner == `Init.Data.Iterators.Combinators.Monadic.Take && name == `Std.Iterators.Types.Take.Rel.eq_1 then
-    return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
-      ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromTakeDecision,
-      "The right side of the unfolding equation supplies a finiteness decision for every productive iterator")
+    return ((``OmegaChecks.InitBoundaries.TakeFiniteness.RelationDecision).toString,
+      ``OmegaChecks.InitBoundaries.TakeFiniteness.decideRelation,
+      "The finiteness decision on the right of the original equation is equivalent to deciding well-foundedness of all binary relations on Type u")
   if owner == `Init.Data.Range.Polymorphic.RangeIterator && [``Std.Rxc.Iterator.instLawfulIteratorLoop,
       ``Std.Rxo.Iterator.instLawfulIteratorLoop, ``Std.Rxi.Iterator.instLawfulIteratorLoop].contains name then
     return ((``funext).toString, ``OmegaChecks.InitBoundaries.RangeLoopLift.funextFromTwoSteps,
