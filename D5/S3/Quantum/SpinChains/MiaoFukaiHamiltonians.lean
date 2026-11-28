@@ -128,8 +128,12 @@ private theorem ordinary_local_kills {L : ℕ} (hL : 5 ≤ L) {x : Config L} (hx
   have hT : Kills (T j) x := jammed_kills hL j hx
   have hminus (a : ℂ) : Kills (h46minus a j) x :=
     kills_sub hT (kills_smul (kills_square hT))
-  rw [h71_eq_h46plus hL, h46plus_eq_h46minus_neg hL]
-  exact ⟨hminus Δ, hminus (-Δ), hminus (-Δ)⟩
+  obtain ⟨ha, hf, hda, hdf⟩ := ladder_parts_kill hL hx j
+  refine ⟨hminus Δ, ?_, ?_⟩
+  · rw [h46plus_eq_h46minus_neg hL]
+    exact hminus (-Δ)
+  · rw [h71, mul_add, mul_add, Matrix.mul_smul, Matrix.mul_smul]
+    exact kills_add (kills_add ha (kills_smul hda)) (kills_add hf (kills_smul hdf))
 
 /-- All three printed ordinary Hamiltonian sums annihilate a jammed basis word on both sides. -/
 theorem ordinary_kills {L : ℕ} (hL : 5 ≤ L) {x : Config L} (hx : Jammed x) (Δ : ℂ) :
@@ -219,10 +223,8 @@ theorem staggered_preserves_charge {L : ℕ} (hL : 5 ≤ L) (μ v₀ : ℂ) :
 abbrev Sector (L q : ℕ) := {x : Config L // charge x = q}
 
 /-- The support of the Hamiltonian restricted to the fixed-charge basis. -/
-def sectorSupport {L q : ℕ} (M : Op L) : SimpleGraph (Sector L q) where
-  Adj x y := x ≠ y ∧ (M y.val x.val ≠ 0 ∨ M x.val y.val ≠ 0)
-  symm := ⟨fun _ _ h => ⟨h.1.symm, h.2.symm⟩⟩
-  loopless := ⟨fun _ h => h.1 rfl⟩
+def sectorSupport {L q : ℕ} (M : Op L) : SimpleGraph (Sector L q) :=
+  SimpleGraph.fromRel (fun x y => M y.val x.val ≠ 0)
 
 private theorem singleton_of_kills {L q : ℕ} {M : Op L} (x : Sector L q)
     (h : Kills M x.val) :
@@ -233,7 +235,7 @@ private theorem singleton_of_kills {L q : ℕ} {M : Op L} (x : Sector L q)
   rw [ket, Matrix.single_one_vecMul] at hrow
   have hi : (sectorSupport M).IsIsolated x := by
     intro y hy
-    rcases hy.2 with hy | hy
+    rcases ((SimpleGraph.fromRel_adj _ _ _).mp hy).2 with hy | hy
     · exact hy (congrFun hcol y.val)
     · exact hy (congrFun hrow y.val)
   ext y

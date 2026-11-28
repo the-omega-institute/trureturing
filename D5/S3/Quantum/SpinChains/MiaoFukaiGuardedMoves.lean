@@ -645,6 +645,56 @@ theorem ladder_density_parts {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
     ← mul_assoc, ← mul_assoc, ha, hf, mul_assoc, mul_assoc,
     ← pow_two, ← pow_two, hA, hF]
 
+private theorem ladder_parts_disjoint {L : ℕ} (j : Fin L) (y x : Config L) :
+    ((Ue j * A j) y x = 0 ∨ (Um j * F j) y x = 0) ∧
+      ((Ue j * DA j) y x = 0 ∨ (Um j * DF j) y x = 0) := by
+  classical
+  by_cases ha : centerAllowed j x.val
+  · have hf : ¬flanksAllowed j x.val := center_flanks_disjoint ha
+    constructor <;> right
+    · simp [Um, Nminus, Matrix.diagonal_sub, Matrix.diagonal_pow, Matrix.diagonal_mul, F, hf]
+    · simp [Um, Nminus, Matrix.diagonal_sub, Matrix.diagonal_pow, Matrix.diagonal_mul, DF_eq,
+        Matrix.diagonal_apply, hf]
+  · constructor <;> left
+    · simp [Ue, E, Matrix.diagonal_sub, Matrix.diagonal_pow, Matrix.diagonal_mul, A, ha]
+    · simp [Ue, E, Matrix.diagonal_sub, Matrix.diagonal_pow, Matrix.diagonal_mul, DA_eq,
+        Matrix.diagonal_apply, ha]
+
+private theorem split_jammed_action {L : ℕ} {M N : Op L} {x : Config L}
+    (h : (M + N) *ᵥ ket x = 0 ∧ ket x ᵥ* (M + N) = 0)
+    (hd : ∀ y z, M y z = 0 ∨ N y z = 0) :
+    (M *ᵥ ket x = 0 ∧ ket x ᵥ* M = 0) ∧ (N *ᵥ ket x = 0 ∧ ket x ᵥ* N = 0) := by
+  classical
+  obtain ⟨hcol, hrow⟩ := h
+  simp only [ket, Matrix.mulVec_single_one, Matrix.single_one_vecMul] at hcol hrow ⊢
+  have split_entry (y z : Config L) (he : (M + N) y z = 0) :
+      M y z = 0 ∧ N y z = 0 := by
+    rw [Matrix.add_apply] at he
+    rcases hd y z with hm | hn
+    · exact ⟨hm, by simpa [hm] using he⟩
+    · exact ⟨by simpa [hn] using he, hn⟩
+  have hc (y : Config L) := split_entry y x (congrFun hcol y)
+  have hr (y : Config L) := split_entry x y (congrFun hrow y)
+  exact ⟨⟨funext fun y => (hc y).1, funext fun y => (hr y).1⟩,
+    ⟨funext fun y => (hc y).2, funext fun y => (hr y).2⟩⟩
+
+/-- Both the linear and quadratic contributions in each of Eq. (71)'s
+two controlled summands separately kill a jammed basis word. -/
+theorem ladder_parts_kill {L : ℕ} (hL : 5 ≤ L) {x : Config L} (hx : Jammed x) (j : Fin L) :
+    ((Ue j * A j) *ᵥ ket x = 0 ∧ ket x ᵥ* (Ue j * A j) = 0) ∧
+    ((Um j * F j) *ᵥ ket x = 0 ∧ ket x ᵥ* (Um j * F j) = 0) ∧
+    ((Ue j * DA j) *ᵥ ket x = 0 ∧ ket x ᵥ* (Ue j * DA j) = 0) ∧
+    ((Um j * DF j) *ᵥ ket x = 0 ∧ ket x ᵥ* (Um j * DF j) = 0) := by
+  obtain ⟨hT, hSq⟩ := ladder_density_parts hL j
+  have h := jammed_kills hL j hx
+  have hs : T j ^ 2 *ᵥ ket x = 0 ∧ ket x ᵥ* T j ^ 2 = 0 := by
+    simp [pow_two, ← Matrix.mulVec_mulVec, ← Matrix.vecMul_vecMul, h.1, h.2]
+  rw [hT] at h
+  rw [hSq] at hs
+  obtain ⟨ha, hf⟩ := split_jammed_action h fun y z => (ladder_parts_disjoint j y z).1
+  obtain ⟨hda, hdf⟩ := split_jammed_action hs fun y z => (ladder_parts_disjoint j y z).2
+  exact ⟨ha, hf, hda, hdf⟩
+
 end
 
 end D5.S3.Quantum.SpinChains.MiaoFukaiGuardedMoves
