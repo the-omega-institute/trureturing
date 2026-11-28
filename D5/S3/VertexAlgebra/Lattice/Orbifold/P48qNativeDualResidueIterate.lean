@@ -69,7 +69,7 @@ using one source cutoff for all integer indices. -/
 theorem gradedPairing_dualField_residue_iterate (a b : NativeStates) (d e : ℕ)
     (ha : L₀ a = (d : ℂ) • a) (hb : L₀ b = (e : ℂ) • b)
     (s t : ℤ) (hsa : σ a = ζ ^ s • a) (htb : σ b = ζ ^ t • b) :
-    ∃ N : ℕ, (∀ m ≥ (N : ℤ), mu lattice a m b = 0) ∧
+    ∃ N : ℕ, d + e ≤ N ∧ (∀ m ≥ (N : ℤ), mu lattice a m b = 0) ∧
       ∀ (p q n : ℤ) (f : RestrictedDual) (v : State),
         let pNative (i : ℕ) : ℤ := -p + 2 * (d : ℤ) - (i : ℤ) - 2 - n
         let qNative (l : ℕ) : ℤ := -q + 2 * (e : ℤ) - (l : ℤ) - 2 - n
@@ -96,16 +96,17 @@ theorem gradedPairing_dualField_residue_iterate (a b : NativeStates) (d e : ℕ)
       (liftEigenPow a s hsa ij.1) (liftEigenPow b t htb ij.2)
   obtain ⟨K, hK⟩ := source_cutoff a b
   let pairs := (Finset.range (d + 1)).product (Finset.range (e + 1))
-  let N := max K (pairs.sup cutoff)
+  let N := max (d + e) (max K (pairs.sup cutoff))
   have hUniform (i l : ℕ) (hi : i ∈ Finset.range (d + 1)) (hl : l ∈ Finset.range (e + 1)) :
       TwistedBorcherdsAt nativeField ((L₁ ^ i) a) ((L₁ ^ l) b) s t N := by
     have hmem : (i, l) ∈ pairs := Finset.mem_product.mpr ⟨hi, hl⟩
     have hle : cutoff (i, l) ≤ N :=
-      (Finset.le_sup (f := cutoff) hmem).trans (le_max_right K (pairs.sup cutoff))
+      (Finset.le_sup (f := cutoff) hmem).trans
+        ((le_max_right K (pairs.sup cutoff)).trans (le_max_right _ _))
     exact twistedBorcherdsAt_mono nativeField _ _ s t hle (hcut (i, l)) (hborcherds (i, l))
-  refine ⟨N, ?_, ?_⟩
+  refine ⟨N, le_max_left _ _, ?_, ?_⟩
   · intro m hm
-    have hle : K ≤ N := le_max_left _ _
+    have hle : K ≤ N := (le_max_left _ _).trans (le_max_right _ _)
     exact hK m (by omega)
   · intro p q n f v pNative qNative T
     let X (i : ℕ) := stripResidue (s - 3 * pNative i) (nativeField ((L₁ ^ i) a))
