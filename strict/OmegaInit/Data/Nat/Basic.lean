@@ -12,6 +12,13 @@ public import OmegaInit.Data.NeZero
 
 @[expose] public section
 
+port_definition Nat.repeat.match_1
+port_definition Nat.repeat._f
+port_definition Nat.repeat
+port_structural_code Nat.repeat on_arg 3 using
+  fun {α} (f : α → α) n a =>
+    Nat.casesOn (motive := fun _ => α) n a (fun k => f (Omega.Nat.repeat f k a))
+
 port_definition Nat.min with_native_code
 port_definition Nat.instMax with_native_code
 port_definition Nat.max with_native_code
@@ -536,6 +543,7 @@ end Omega.Nat
 
 public section
 namespace Nat
+export _root_.Omega.Nat («repeat»)
 export _root_.Omega.Nat (add_assoc add_comm add_le_add add_le_add_iff_left add_le_add_iff_right add_le_add_left add_le_add_right add_left_cancel add_left_comm add_mul add_one add_one_inj add_one_le_add_one_iff add_one_le_iff add_one_le_of_lt add_one_lt_add_one_iff add_one_mul add_one_ne_add_one_iff add_one_ne_zero add_one_sub_one add_right_cancel add_right_comm add_sub_add_left add_sub_add_right add_sub_cancel add_sub_cancel_left add_sub_of_le add_sub_self_left add_succ and_forall_add_one beq_refl eq_zero_of_add_eq_zero eq_zero_of_add_eq_zero_left eq_zero_or_eq_succ_pred le_add_left le_add_left_of_le le_add_right le_add_right_of_le le_of_add_le_add_left le_of_add_le_add_right le_of_add_left_le le_of_add_right_le le_of_lt_add_one le_step le_sub_of_add_le le_total le_zero left_distrib lt_add_one_iff lt_add_one_of_le lt_add_one_of_lt lt_of_add_one_le lt_of_not_ge lt_succ lt_succ_iff lt_succ_of_lt mul_add mul_add_one mul_assoc mul_comm mul_le_mul mul_le_mul_left mul_le_mul_right mul_left_comm mul_lt_mul_of_pos_left mul_lt_mul_of_pos_right mul_one mul_pow mul_succ mul_two mul_zero not_add_one_le_zero not_le not_le_of_lt one_lt_two one_mul or_exists_add_one pow_add_one pow_le_pow_right pow_one pow_succ pow_zero pred_lt pred_succ pred_zero right_distrib sub_add_cancel sub_add_eq sub_le_of_le_add sub_self sub_self_add sub_sub sub_succ sub_succ_lt_self sub_zero succ_add succ_eq_add_one succ_inj succ_le_succ_iff succ_lt_succ succ_lt_succ_iff succ_mul succ_ne_succ_iff succ_ne_zero succ_pred_eq_of_ne_zero succ_sub_succ two_mul two_pos two_pow_pos zero_add zero_lt_one zero_lt_sub_of_lt zero_lt_two zero_mul zero_ne_add_one zero_sub zero_sub_one)
 end Nat
 
