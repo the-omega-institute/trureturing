@@ -17,6 +17,7 @@ meta import OmegaChecks.InitPort.UnsafeRuntime
 import OmegaChecks.InitPort.EffectRun
 meta import OmegaChecks.InitPort.EffectRun
 import OmegaChecks.InitInventory.DeclarationEvidence
+meta import OmegaChecks.InitInventory.DeclarationEvidence
 import OmegaChecks.InitInventory.Conditional
 meta import OmegaChecks.InitInventory.Conditional
 import OmegaChecks.InitInventory.FieldNormalization
