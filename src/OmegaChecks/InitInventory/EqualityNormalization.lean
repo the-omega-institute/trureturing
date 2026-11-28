@@ -341,6 +341,49 @@ def equivalences : List (Name × Name × Name) := [
 
 end NaturalComparison
 
+namespace NaturalCastComparison
+
+/-- Nat.ToInt.eq_eq identifies the equality propositions on the two carriers. -/
+theorem eqIff : (type_of% @Nat.ToInt.eq_eq) ↔ (type_of% @Int.ofNat.injEq) := by
+  constructor
+  · intro rule a b
+    exact (rule (a := a) (b := b) rfl rfl).symm
+  · rintro rule a b _ _ rfl rfl
+    exact (rule a b).symm
+
+/-- Comparison with a positive lower bound uses signed subtraction on the integer side. -/
+def SuccessorRows : Prop :=
+  ∀ a b : Nat, (Nat.succ a ≤ b) = Int.NonNeg (Int.subNatNat b a.succ)
+
+theorem ltIff : (type_of% @Nat.ToInt.lt_eq) ↔ SuccessorRows := by
+  constructor
+  · intro rule a b
+    exact rule (a := a) (b := b) rfl rfl
+  · rintro rule a b _ _ rfl rfl
+    exact rule a b
+
+/-- The zero lower bound is the additional case required by non-strict comparison. -/
+def AllRows : Prop :=
+  (type_of% @Nat.ToInt.lt_eq) ∧ ∀ b : Nat, (0 ≤ b) = ((0 : Int) ≤ Int.ofNat b)
+
+theorem leIff : (type_of% @Nat.ToInt.le_eq) ↔ AllRows := by
+  constructor
+  · intro le
+    refine ⟨?_, fun b => le (a := 0) (b := b) rfl rfl⟩
+    rintro a b _ _ rfl rfl
+    exact le (a := a.succ) (b := b) rfl rfl
+  · rintro ⟨lt, zero⟩ a b _ _ rfl rfl
+    cases a with
+    | zero => exact zero b
+    | succ a => exact lt (a := a) (b := b) rfl rfl
+
+def equivalences : List (Name × Name × Name) := [
+  (``Nat.ToInt.eq_eq, ``Int.ofNat.injEq, ``eqIff),
+  (``Nat.ToInt.lt_eq, ``SuccessorRows, ``ltIff),
+  (``Nat.ToInt.le_eq, ``AllRows, ``leIff)]
+
+end NaturalCastComparison
+
 namespace ConstructorNormalization
 
 theorem propextOfDecision
