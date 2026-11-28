@@ -5,6 +5,7 @@ import all Init.Grind.Ordered.Order
 import all Init.Data.Order.LemmasExtra
 public import OmegaChecks.InitInventory.Logic
 import all OmegaChecks.InitInventory.Logic
+import all OmegaChecks.InitInventory.FiniteCollectionLogic
 
 public section
 
