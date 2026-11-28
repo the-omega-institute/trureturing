@@ -11,8 +11,6 @@ import all OmegaInit.Prelude
 
 @[expose] public section
 
-attribute [local semireducible] Omega.Nat.add Omega.Int.subNatNat
-
 namespace Omega.Int
 
 theorem nonneg_def {a : Int} : Iff (NonNeg a) (Exists (fun n : Nat => Eq a (ofNat n))) :=
@@ -146,8 +144,7 @@ theorem natAbs_mul_self {a : Int} : Eq (ofNat (a.natAbs.mul a.natAbs)) (a.mul a)
     (fun _ => rfl) (fun _ => rfl) a
 
 theorem ofNat_succ_pos (n : Nat) : (ofNat Nat.zero).lt (ofNat n.succ) :=
-  Nat.rec (motive := fun k => (ofNat Nat.zero).lt (ofNat k.succ))
-    (NonNeg.mk _) (fun _ _ => NonNeg.mk _) n
+  le.intro n (congrArg ofNat (Nat.add_comm Nat.zero.succ n))
 
 theorem natAbs_natCast (n : Nat) : Eq (ofNat n).natAbs n := Omega.rfl
 
@@ -210,3 +207,86 @@ port_proof Int.natAbs_ofNat' by_reflexivity
 port_proof Int.natAbs.eq_1 by_reflexivity
 port_proof Int.natAbs.eq_2 by_reflexivity
 port_proof Int.toNat.eq_1 by_reflexivity
+
+namespace Omega.Int
+
+theorem ofNat_le {m n : Nat} : Iff ((ofNat m).le (ofNat n)) (Nat.le m n) :=
+  Iff.intro (fun h => (le.dest h).elim (fun _ e => Nat.le.intro (ofNat_inj.mp e)))
+    (fun h => (Nat.le.dest h).elim (fun k e => le.intro k (congrArg ofNat e)))
+
+theorem ofNat_lt {n m : Nat} : Iff ((ofNat n).lt (ofNat m)) (Nat.lt n m) := ofNat_le
+
+theorem ofNat_zero_le (n : Nat) : (ofNat Nat.zero).le (ofNat n) := natCast_nonneg n
+
+theorem toNat_of_nonneg {a : Int} (h : (ofNat Nat.zero).le a) : Eq (ofNat a.toNat) a :=
+  (eq_ofNat_of_zero_le h).elim (fun _ e => (congrArg (fun z : Int => ofNat z.toNat) e).trans e.symm)
+
+theorem le_toNat {n : Nat} {z : Int} (h : (ofNat Nat.zero).le z) :
+    Iff (Nat.le n z.toNat) ((ofNat n).le z) :=
+  Iff.intro (fun b => Eq.subst (motive := (ofNat n).le) (toNat_of_nonneg h) (ofNat_le.mpr b))
+    (fun b => ofNat_le.mp (Eq.subst (motive := (ofNat n).le) (toNat_of_nonneg h).symm b))
+
+theorem toNat_lt {n : Nat} {z : Int} (h : (ofNat Nat.zero).le z) :
+    Iff (Nat.lt z.toNat n) (z.lt (ofNat n)) :=
+  Iff.intro (fun b => Eq.subst (motive := fun x => Int.lt x (ofNat n)) (toNat_of_nonneg h) (ofNat_lt.mpr b))
+    (fun b => ofNat_lt.mp (Eq.subst (motive := fun x => Int.lt x (ofNat n)) (toNat_of_nonneg h).symm b))
+
+theorem eq_natAbs_of_nonneg {a : Int} (h : (ofNat Nat.zero).le a) : Eq a (ofNat a.natAbs) :=
+  (eq_ofNat_of_zero_le h).elim (fun n e => Eq.subst (motive := fun z => Eq z (ofNat z.natAbs)) e.symm
+    (Omega.rfl : Eq (ofNat n) (ofNat (ofNat n).natAbs)))
+
+theorem le_natAbs {a : Int} : a.le (ofNat a.natAbs) :=
+  (Int.le_total (ofNat Nat.zero) a).elim (fun h => Int.le_of_eq (eq_natAbs_of_nonneg h))
+    (fun h => Int.le_trans h (natCast_nonneg a.natAbs))
+
+protected theorem add_le_of_le_sub_right {a b c : Int} (h : a.le (c.sub b)) : (a.add b).le c :=
+  Eq.subst (motive := (a.add b).le) (Int.sub_add_cancel c b) (Int.add_le_add_right h b)
+
+protected theorem le_sub_right_of_add_le {a b c : Int} (h : (a.add b).le c) : a.le (c.sub b) :=
+  Eq.subst (motive := fun x => Int.le x (c.sub b)) (Int.add_sub_cancel a b) (Int.add_le_add_right h b.neg)
+
+protected theorem add_le_of_le_sub_left {a b c : Int} (h : b.le (c.sub a)) : (a.add b).le c :=
+  Eq.subst (motive := fun x => Int.le x c) (Int.add_comm b a) (Int.add_le_of_le_sub_right h)
+
+protected theorem le_sub_left_of_add_le {a b c : Int} (h : (a.add b).le c) : b.le (c.sub a) :=
+  Int.le_sub_right_of_add_le (Eq.subst (motive := fun x => Int.le x c) (Int.add_comm a b) h)
+
+protected theorem sub_le_sub_right {a b : Int} (h : a.le b) (c : Int) : (a.sub c).le (b.sub c) :=
+  Int.add_le_add_right h c.neg
+
+protected theorem le_of_sub_le_sub_right {a b c : Int} (h : (a.sub c).le (b.sub c)) : a.le b :=
+  Eq.subst (motive := fun x => Int.le x b) (Int.sub_add_cancel a c)
+    (Eq.subst (motive := ((a.sub c).add c).le) (Int.sub_add_cancel b c) (Int.add_le_add_right h c))
+
+protected theorem sub_le_sub_right_iff {a b c : Int} : Iff ((a.sub c).le (b.sub c)) (a.le b) :=
+  Iff.intro Int.le_of_sub_le_sub_right (fun h => Int.sub_le_sub_right h c)
+
+protected theorem add_lt_add_left {a b : Int} (h : a.lt b) (c : Int) : (c.add a).lt (c.add b) :=
+  Eq.subst (motive := fun x => Int.le x (c.add b)) (Int.add_assoc c a (ofNat Nat.zero.succ)).symm
+    (Int.add_le_add_left h c)
+
+protected theorem add_lt_add_right {a b : Int} (h : a.lt b) (c : Int) : (a.add c).lt (b.add c) :=
+  Eq.subst (motive := fun x => Int.lt x (b.add c)) (Int.add_comm c a)
+    (Eq.subst (motive := (c.add a).lt) (Int.add_comm c b) (Int.add_lt_add_left h c))
+
+protected theorem sub_lt_sub_right {a b : Int} (h : a.lt b) (c : Int) : (a.sub c).lt (b.sub c) :=
+  Int.add_lt_add_right h c.neg
+
+protected theorem lt_of_sub_lt_sub_right {a b c : Int} (h : (a.sub c).lt (b.sub c)) : a.lt b :=
+  Eq.subst (motive := fun x => Int.lt x b) (Int.sub_add_cancel a c)
+    (Eq.subst (motive := ((a.sub c).add c).lt) (Int.sub_add_cancel b c) (Int.add_lt_add_right h c))
+
+protected theorem sub_lt_sub_right_iff {a b c : Int} : Iff ((a.sub c).lt (b.sub c)) (a.lt b) :=
+  Iff.intro Int.lt_of_sub_lt_sub_right (fun h => Int.sub_lt_sub_right h c)
+
+theorem natAbs_eq_natAbs_iff {a b : Int} : Iff (Eq a.natAbs b.natAbs) (Or (Eq a b) (Eq a b.neg)) :=
+  Iff.intro (fun h =>
+    have same := congrArg ofNat h
+    (natAbs_eq a).elim
+      (fun ha => (natAbs_eq b).elim (fun hb => Or.inl (ha.trans (same.trans hb.symm)))
+        (fun hb => Or.inr (ha.trans (same.trans ((Int.neg_neg (ofNat b.natAbs)).symm.trans (congrArg Int.neg hb.symm))))))
+      (fun ha => (natAbs_eq b).elim (fun hb => Or.inr (ha.trans (congrArg Int.neg (same.trans hb.symm))))
+        (fun hb => Or.inl (ha.trans ((congrArg Int.neg same).trans hb.symm)))))
+    (fun pair => pair.elim (congrArg natAbs) (fun e => (congrArg natAbs e).trans (natAbs_neg b)))
+
+end Omega.Int

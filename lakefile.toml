@@ -59,3 +59,8 @@ srcDir = "src"
 name = "omegaAudit"
 root = "OmegaChecks.Audit"
 srcDir = "src"
+
+[[lean_exe]]
+name = "omegaPointerObservations"
+root = "OmegaChecks.InitPort.PointerObservations"
+srcDir = "src"

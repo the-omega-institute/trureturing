@@ -1,6 +1,24 @@
 module
 
+import Init.Data.List.SplitOn.Basic
+public import OmegaChecks.Interface.Equations.List
 public import OmegaChecks.Interface.Equations.Logic
+public import OmegaChecks.InitPort.ReferenceSwap
+public import OmegaChecks.InitPort.ReferenceSpecialization
+public import OmegaChecks.InitPort.LawfulLoop
+public import OmegaChecks.InitPort.PatternMatch
+public import OmegaChecks.InitPort.LogicalHandle
+public import OmegaChecks.InitPort.StateToken
+public import OmegaChecks.InitPort.TypeName
+public import OmegaChecks.InitPort.FloatFraction
+public import OmegaChecks.InitPort.Alternatives.GrindRing
+public import OmegaChecks.Interface.Equations.Array
+public import OmegaChecks.Interface.Equations.Collect
+public import OmegaChecks.Interface.Equations.FilePath
+public import OmegaChecks.Interface.Equations.String
+public import OmegaChecks.Interface.Equations.Uri
+public import OmegaChecks.Interface.Equations.Bitwise
+public import OmegaChecks.Interface.Equations.NatFold
 public import Mathlib.Data.Nat.Fib.Basic
 public import Mathlib.Data.Nat.Choose.Basic
 public import Mathlib.Data.Nat.Prime.Defs
@@ -8,6 +26,16 @@ public import Mathlib.Data.Nat.Prime.Defs
 /-! Pointwise equations for strict arithmetic algorithms interpreted over official types. -/
 
 namespace OmegaChecks.Interface.Equations
+
+open Lean.Grind Lean.Grind.CommRing in
+public theorem Lean.Grind.CommRing.Expr.denoteSAsRing {α : Type u} [Lean.Grind.Semiring α]
+    (ctx : Context α) (e : Expr) :
+    OmegaChecks.InitPort.Alternatives.Lean.Grind.CommRing.Expr.denoteSAsRing ctx e = e.denoteSAsRing ctx :=
+  (e.denoteAsRing_eq ctx).symm
+
+public theorem List.splitOnPTR {α : Type u} (p : α → Bool) (xs : List α) :
+    xs.splitOnP p = _root_.List.splitOnPTR p xs :=
+  congrFun (congrFun (congrFun _root_.List.splitOnP_eq_splitOnPTR α) p) xs
 
 @[expose] public def pair (n : Nat) : Bool → Nat :=
   Nat.rec (motive := fun _ => Bool → Nat) (Bool.rec 0 1)
@@ -150,34 +178,13 @@ public theorem Nat.div (x y : Nat) :
   | zero => exact (Nat.div_zero x).symm
   | succ d => exact divisionSteps_eq d _ x (Nat.lt_succ_self x)
 
-@[expose] public noncomputable def remainderSteps (d : Nat) : Nat → Nat → Nat :=
-  Nat.rec (motive := fun _ => Nat → Nat) (fun _ => 0)
-    (fun _ previous x => Bool.rec x (previous (x - d.succ)) (_root_.Nat.ble d.succ x))
-
-private theorem remainderSteps_eq (d fuel x : Nat) (h : x < fuel) :
-    remainderSteps d fuel x = x % d.succ := by
-  induction fuel generalizing x with
-  | zero => exact False.elim ((Nat.not_lt_zero x) h)
-  | succ fuel ih =>
-    change Bool.rec x (remainderSteps d fuel (x - d.succ)) (_root_.Nat.ble d.succ x) = x % d.succ
-    rw [Nat.mod_eq_ite x d.succ]
-    by_cases le : d.succ ≤ x
-    · rw [Nat.ble_eq_true_of_le le, ite_eq_left ⟨Nat.succ_pos _, le⟩]
-      have smaller := Nat.sub_lt_of_pos_le (Nat.succ_pos d) le
-      exact ih _ (Nat.lt_of_lt_of_le smaller (Nat.le_of_lt_succ h))
-    · have hb : _root_.Nat.ble d.succ x = false :=
-        Bool.eq_false_of_ne_true (fun ht => le (Nat.le_of_ble_eq_true ht))
-      rw [hb, ite_eq_right (fun both => le both.2)]
-
 public theorem Nat.mod (x y : Nat) :
-    Nat.rec 0 (fun k _ => Nat.rec k.succ
-      (fun d _ => remainderSteps d k.succ.succ k.succ) y) x = _root_.Nat.mod x y := by
-  cases x with
-  | zero => rfl
-  | succ k =>
-    cases y with
-    | zero => exact (Nat.mod_zero k.succ).symm
-    | succ d => exact remainderSteps_eq d _ _ (Nat.lt_succ_self k.succ)
+    Nat.casesOn x 0 (fun k => if y ≤ k.succ then _root_.Nat.modCore k.succ y else k.succ) =
+      _root_.Nat.mod x y := by
+  cases x <;> rfl
+
+public theorem Nat.modCore (x y : Nat) : _root_.Nat.mod x y = _root_.Nat.modCore x y :=
+  (_root_.Nat.modCore_eq_mod x y).symm
 
 @[expose] public noncomputable def euclideanSteps : Nat → Nat → Nat → Nat :=
   Nat.rec (motive := fun _ => Nat → Nat → Nat) (fun _ n => n)

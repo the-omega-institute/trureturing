@@ -1,8 +1,8 @@
 # Omega 数学模块的架构与验证
 
-`OmegaInit` 提供严格基础，`OmegaMathlib` 提供与钉版 Mathlib 对应的公开接口，`OmegaMath` 公开六卷的项目数学。项目数学与外部核验库位于 `src/`，严格后端的基础实现位于 `strict/`。Lean 导入使用模块名，例如 `import OmegaMath`。根包使用钉版工具链和依赖锁文件。宿主审计与混合消费示例位于 `OmegaChecks`。[Lake 配置](../lakefile.toml)
+`OmegaInit` 提供严格基础，`OmegaMathlib` 提供与钉版 Mathlib 对应的公开接口，`OmegaMath` 公开六卷的项目数学。严格 Mathlib 移植位于仓库根目录的 `OmegaMathlib.lean` 和 `OmegaMathlib/`，叶模块沿用钉版 Mathlib 的相对路径。项目数学与外部核验库位于 `src/`，严格 Init 基础位于 `strict/`。Lean 导入使用模块名，例如 `import OmegaMath`。根包使用钉版工具链和依赖锁文件。宿主审计与混合消费示例位于 `OmegaChecks`。[Lake 配置](../lakefile.toml)
 
-普通 Lake 构建和下游导入使用钉版官方 Lean Init 与 Mathlib。作者照常运行 `lake build`。编译器自动记录模块声明，官方构建照常编译带标记的模块及其下游；严格准入读取该记录并跳过这些模块。运行 `lake build +OmegaMath` 即可编译项目数学。Lake 从 `src/OmegaInit` 和 `src/OmegaMathlib` 读取与共享源码配套的官方名称别名。准入时，构建驱动在独立的工件目录中改用 `strict/OmegaInit` 和 `strict/OmegaMathlib`，以同一份项目数学源码做严格核验。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
+普通 Lake 构建和下游导入使用钉版官方 Lean Init 与 Mathlib。作者照常运行 `lake build`。编译器自动记录模块声明，官方构建照常编译带标记的模块及其下游；严格准入读取该记录并跳过这些模块。运行 `lake build +OmegaMath` 即可编译项目数学。Lake 从 `src/OmegaInit` 和 `src/OmegaMathlib` 读取与共享源码配套的官方名称别名。准入时，构建驱动在独立的工件目录中改用 `strict/OmegaInit` 和根目录的 `OmegaMathlib`，以同一份项目数学源码做严格核验。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
 
 ## 选择编译后端
 
@@ -127,6 +127,8 @@ OmegaMath
 
 `OmegaInit` 对照本仓钉版 Lean 的 `Init`。模块名前缀从 `Init` 换成 `OmegaInit`，公开声明在官方完整名字前加 `Omega.`。Lake 从 `src/` 解析模块路径。类型和运算按它们在官方编译产物中的声明位置组织。
 
+生成的严格库在 `OmegaInit.Core` 中保留六个内核名称，包括 `Task`、`Task.pure`、`Task.get`、`Task.rec`、`Task.recOn` 和 `Task.casesOn`。Lean 编译器用根名 `Task` 识别任务投影。普通源码使用对应的 `Omega.Task` 名称，元程序可先解析别名再按内核名称查环境。
+
 | 官方模块 | 官方声明 | 本仓源文件 | 本仓声明 |
 | --- | --- | --- | --- |
 | `Init.Prelude` | `Nat`、`Nat.add` | [Prelude.lean](../strict/OmegaInit/Prelude.lean) | `Omega.Nat`、`Omega.Nat.add` |
@@ -154,7 +156,8 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 ```sh
 lake test -- OmegaInit
 mkdir -p .lake/build/omega-checks
-lean --run src/OmegaChecks/InitInventory.lean .lake/build/omega-strict/lib/lean \
+lake build +OmegaChecks.InitInventory
+lake env lean --run src/OmegaChecks/InitInventory.lean .lake/build/omega-strict/lib/lean \
   .lake/build/omega-checks/init-inventory.json .lake/build/omega-checks/init-gaps.tsv
 ```
 
@@ -178,7 +181,6 @@ LEAN_PATH=.lake/init-port-all/lib lean Example.lean
 module
 prelude
 import OmegaMath
-import OmegaInit.Data.List.Basic
 
 #check Omega.Nat.fib
 #check Omega.Nat.div
@@ -186,7 +188,11 @@ import OmegaInit.Data.List.Basic
 #check Omega.List.reverse
 ```
 
-输出目录中的 `init-gaps.tsv` 按官方模块和名称列出剩余非公理声明、此次尝试遇到的依赖和原因。`init-inventory.json` 列出全部公开声明。`audit.txt` 和 `omegamath-audit.txt` 分别保存基础库与 OmegaMath 导入闭包的内核审计。`init-public-reductions.tsv` 逐项列出普通导入时，到严格库封装实现的定义体依赖路径，以及该接口在官方环境中的计算机制。例如，公开导入 `OmegaInit.Data.Nat.Div.Basic` 后可应用 `Omega.Nat.div_zero`。直接展开严格除法实现的用法见 [生成说明](OmegaChecks/InitPort/README.md)。批量生成器只复制源码库已有的原生编译数据。可单独导入的官方模块保留对应的 `OmegaInit.*` 模块路径。
+对于已移植的名称，`import OmegaMath` 和 `import OmegaInit` 遵循官方 `import Init` 的可见范围。官方需要单独导入的定理，使用对应的 `OmegaInit` 模块。例如，`Omega.Std.Iter.inductSteps` 需要 `import OmegaInit.Data.Iterators.Lemmas.Basic`。[入口核验](OmegaChecks/InitPort/RootImports.lean)
+
+`originalTypesChecked` 统计在严格公开环境中核对过官方原类型的声明位置。清点器按普通名称翻译完整的官方类型，保留宇宙参数，先在严格公开环境中检查该类型，再核对它与导出声明的定义等价。只有改写后的表述可以使用时，缺口表记录缺少的依赖及已核验的改写。`matchingNameAndModule` 统计同名同模块的位置，其中也包括只完成特化的接口。输出目录中的 `init-gaps.tsv` 按官方模块和名称列出剩余非公理声明、此次尝试遇到的依赖和原因。已生成的声明如保留特化类型，`originalTypeGap` 说明原类型核验遇到的缺口。`init-inventory.json` 列出全部公开声明。`audit.txt` 和 `omegamath-audit.txt` 分别保存基础库与 OmegaMath 导入闭包的内核审计。`init-public-reductions.tsv` 逐项列出普通导入时，到严格库封装实现的定义体依赖路径，以及该接口在官方环境中的计算机制。例如，公开导入 `OmegaInit.Data.Nat.Div.Basic` 后可应用 `Omega.Nat.div_zero`。直接展开严格除法实现的用法见 [生成说明](OmegaChecks/InitPort/README.md)。批量生成器只复制源码库已有的原生编译数据。可单独导入的官方模块保留对应的 `OmegaInit.*` 模块路径。
+
+`Ring.OfSemiring.pow_zero` 的官方原类型含 `npow a 0`。普通导入官方模块即可将它归约为 `natCast 1`。清点器核对这一处归约，再在严格公开环境核对完整类型。严格库可以按原参数调用该定理；直接书写含 `npow` 的表达式仍需要移植幂运算。
 
 ## 严格库与可替换接口
 
@@ -211,7 +217,7 @@ python3 src/OmegaChecks/check.py --full
 
 完整双端检查也沿导入图选取独立 `Reg` 包中依赖 Omega 的模块。先用 `make install-tools` 安装钉版检查器接口。官方端使用主库及检查器接口编译入选模块，严格端编译其中支持双端的子集。普通数学发布从主包构建。
 
-移植者新增严格基础模块或修改其公开接口后，在仓库根目录运行以下命令。它编译 `strict/` 下的移植，从实际导入图和编译后的公开名称生成 `src/OmegaInit`、`src/OmegaMathlib` 及其根模块的官方别名文件。将生成文件和严格源码一同提交，双端准入检查会按相同规则核对内容。
+移植者新增严格基础模块或修改其公开接口后，在仓库根目录运行以下命令。它编译 `strict/OmegaInit` 和根目录 `OmegaMathlib` 中的移植，从实际导入图和编译后的公开名称生成 `src/OmegaInit`、`src/OmegaMathlib` 及其根模块的官方别名文件。将生成文件和严格源码一同提交，双端准入检查会按相同规则核对内容。
 
 ```sh
 python3 src/OmegaChecks/portable.py --regenerate-facades

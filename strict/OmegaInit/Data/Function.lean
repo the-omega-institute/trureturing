@@ -9,6 +9,9 @@ public import OmegaInit.Core
 
 @[expose] public section
 
+port_definition Function.curry with_native_code
+port_definition Function.uncurry with_native_code
+
 namespace Omega.Function
 
 /-- Equal outputs of an injective function have equal inputs. -/

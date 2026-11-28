@@ -14,8 +14,21 @@ public def compilerLayouts (types ctors : Array Name) : CoreM Unit := do
     -- The compiler queries the erased type markers when computing constructor layouts.
     -- Their bodies and declarations are local to this compiler calculation.
     for n in [`lcAny, `lcErased, `lcVoid] do
-      Lean.addDecl (.opaqueDecl {name := n, levelParams := [], type := .sort (.succ .zero), value := .sort .zero, isUnsafe := false})
+      unless (← getEnv).contains n do
+        Lean.addDecl (.opaqueDecl {name := n, levelParams := [], type := .sort (.succ .zero), value := .sort .zero, isUnsafe := false})
+    if types == #[`Omega.ByteArray] then
+      modifyEnv fun env =>
+        let env := trivialStructureInfoExt.insert env `Omega.ByteArray none
+        let env := impureTrivialStructureInfoExt.insert env `Omega.ByteArray none
+        impureTypeExt.insert env `Omega.ByteArray ImpureType.tobject
     compileInductives types
+    if types == #[`Omega.ByteArray] then
+      let name := `Omega.ByteArray.mk
+      let some l := ctorLayoutExt.find? (← getEnv) name | throwError "missing strict byte array constructor"
+      unless l.ctorInfo.size == 1 && l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 &&
+          l.ctorInfo.cidx == 0 && (l.fieldInfo matches #[.object 0 _]) do
+        throwError "unexpected strict byte array constructor layout"
+      modifyEnv (ctorLayoutExt.insert · name {l with ctorInfo := {l.ctorInfo with usize := 2, ssize := 1}})
     return ← getEnv
   for n in types do
     copyEntry trivialStructureInfoExt layoutEnv n

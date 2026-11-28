@@ -6,10 +6,17 @@ Authors: Mario Carneiro
 module
 prelude
 public import OmegaInit.Core
-public import OmegaInit.Data.Option.Basic
+public import OmegaInit.Data.Option.Instances
+import all OmegaInit.Data.Option.Basic
 import OmegaInit.PropLemmas
 
-port_proof Option.all_false by_reflexivity
+namespace Omega.Option
+
+theorem all_false {α : Type u} {o : Option α} : Eq (Option.all (fun _ => Bool.false) o) (Option.isNone o) :=
+  Option.casesOn (motive := fun x => Eq (Option.all (fun _ => Bool.false) x) (Option.isNone x))
+    o Option.isNone_none.symm (fun a => (Option.isNone_some (a := a)).symm)
+
+end Omega.Option
 port_proof Option.all_map
 port_proof Option.merge_none_right
 port_proof Option.any_map
@@ -57,3 +64,87 @@ port_proof Option.le.eq_3 by_reflexivity
 port_proof Option.le.eq_4 by_reflexivity
 port_proof Option.lt.eq_1 by_reflexivity
 port_proof Option.lt.eq_2 by_reflexivity
+
+port_proof Option.default_eq_none by_reflexivity
+port_proof Option.not_isSome by_reflexivity
+port_proof Option.not_comp_isSome by_reflexivity
+port_proof Option.pure_def by_reflexivity
+port_proof Option.pure_apply by_reflexivity
+port_proof Option.bind_eq_bind by_reflexivity
+port_proof Option.bind_apply by_reflexivity
+port_proof Option.map_eq_map by_reflexivity
+port_proof Option.map_apply by_reflexivity
+port_proof Option.filter_none by_reflexivity
+port_proof Option.filter_some by_reflexivity
+port_proof Option.bind_guard by_reflexivity
+port_proof Option.guard_false by_reflexivity
+port_proof Option.guard_true by_reflexivity
+port_proof Option.guard_def by_reflexivity
+port_proof Option.guard_apply by_reflexivity
+port_proof Option.guard_eq_ite by_reflexivity
+port_proof Option.guard_eq_filter by_reflexivity
+port_proof Option.toArray_some by_reflexivity
+port_proof Option.toArray_none by_reflexivity
+port_proof Option.orElse_eq_orElse by_reflexivity
+port_proof Option.orElse_apply by_reflexivity
+port_proof Option.none_beq_none by_reflexivity
+port_proof Option.none_beq_some by_reflexivity
+port_proof Option.some_beq_none by_reflexivity
+port_proof Option.some_beq_some by_reflexivity
+port_proof Option.isEqSome_eq_beq_some by_reflexivity
+port_proof Option.some_lt_some by_reflexivity
+port_proof Option.some_le_some by_reflexivity
+port_proof Option.merge_max by_reflexivity
+port_proof Option.map_ite by_finite_cases
+port_proof Option.map_if by_finite_cases
+port_proof Option.map_dite by_finite_cases
+port_proof Option.map_dif by_finite_cases
+port_proof Option.some_ne_none
+port_proof Option.get_of_eq_some
+port_proof Option.get_eq_getD
+port_proof Option.get_congr
+port_proof Option.isSome_of_eq_some
+port_proof Option.eq_some_of_isSome
+port_proof Option.isSome_of_isSome_bind
+port_proof Option.isSome_apply_of_isSome_bind
+port_proof Option.get_bind
+port_proof Option.filter_some_pos
+port_proof Option.isSome_of_any
+port_proof Option.none_lt_some
+port_proof Option.none_le
+
+port_proof Option.mem_some_self
+port_proof Option.get_mem
+port_proof Option.get_of_mem
+port_proof Option.not_mem_none
+port_proof Option.isSome_of_mem
+port_proof Option.mem_map_of_mem
+
+namespace Omega.Option
+
+public theorem mem_some {α : Type u} {a b : α} : Iff (Membership.mem (some b) a) (Eq b a) :=
+  some_inj
+
+end Omega.Option
+
+port_proof Option.mem_some_iff
+
+port_proof Option.pbind_none by_reflexivity
+port_proof Option.pbind_some by_reflexivity
+port_proof Option.pelim_none by_reflexivity
+port_proof Option.pelim_some by_reflexivity
+port_proof Option.pfilter_none by_reflexivity
+port_proof Option.pmap_none by_reflexivity
+port_proof Option.pmap_some by_reflexivity
+port_proof Option.map_pbind
+port_proof Option.pbind_eq_bind
+port_proof Option.pbind_map
+port_proof Option.pbind_none'
+port_proof Option.pbind_some'
+port_proof Option.pelim_congr
+port_proof Option.pelim_congr_left
+port_proof Option.pelim_none'
+port_proof Option.pelim_some'
+port_proof Option.pmap_congr
+port_proof Option.pmap_none'
+port_proof Option.pmap_some'
