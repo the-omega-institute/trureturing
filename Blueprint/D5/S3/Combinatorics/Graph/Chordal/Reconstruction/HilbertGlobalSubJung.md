@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertGlobalS
 
 For an arbitrary finite chordal graph and skew gains in a real inner product space, one vertex potential bounds the norm of every edge residual by 241361 over 100000 times the common nonnegative triangle-defect budget. This constant is strictly below 2414 over 1000, which is strictly below one plus the square root of two. The gap from one plus the square root of two exceeds 3 over 5000.
 
-Normalize positive defects to one and insert vertices in reverse perfect elimination order. The earlier neighbors of each new vertex form a clique. Preserve the edge cap and a triangle inequality whose right side uses the squared edge deficits and whose left side depends on the oldest edge's inner product with the triangle curl.
+Normalize positive defects to one and insert vertices in reverse perfect elimination order. The earlier neighbors of each new vertex form a clique. Preserve the edge cap and a triangle inequality whose right side is a weighted sum of deficits in squared edge norms and whose left side depends on the oldest edge's inner product with the triangle curl.
 
 The new constraints are singleton and pair averages of squared distances with fixed offsets. Maximizing their minimum weighted value over the probability simplex gives a common center whenever all mixtures have nonpositive minimum. The variance identity divides the loss in each mixture into a diagonal term, old-edge deficits, new-curl deficits, row-mean energy, and centered energy.
 
