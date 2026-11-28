@@ -8,7 +8,7 @@ internal sealed class MiaoFukaiGuardedMovesDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/SpinChains/MiaoFukaiGuardedMoves.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/StatisticalMechanics/miaofukai2026novel");
+        LibraryNoteRef.Create("D5/L/SpinModels/miaofukai2026novel");
 
     private static readonly Formula L = F.Id("L");
     private static readonly Formula J = F.Id("j");
