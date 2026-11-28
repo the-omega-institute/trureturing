@@ -11,9 +11,12 @@ module
 public import Mathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Data.Rat.BigOperators
 public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import OmegaBuild.Commands
 
 /-! The discrete parking CDFs and a counterexample to Conjecture 5.2 of
 Higuita-Diaz, López and Roldán-Correa (arXiv:2611.14718v2). -/
+
+compile_only_with_mathlib
 
 public section
 
@@ -244,105 +247,105 @@ private theorem static_exact : static witness 6 = (1 / 55 : ℚ) := by
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_0 : seqList witness 5 [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 13, 14] = 
+private theorem seq_after_0 : seqList witness 5 [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 13, 14] =
     0 := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_1 : seqList witness 5 [0, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14] = 
+private theorem seq_after_1 : seqList witness 5 [0, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14] =
     0 := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_2 : seqList witness 5 [0, 1, 3, 4, 5, 6, 7, 8, 10, 11, 12, 14] = 
+private theorem seq_after_2 : seqList witness 5 [0, 1, 3, 4, 5, 6, 7, 8, 10, 11, 12, 14] =
     0 := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_3 : seqList witness 5 [0, 1, 2, 4, 5, 6, 7, 8, 9, 11, 12, 14] = 
+private theorem seq_after_3 : seqList witness 5 [0, 1, 2, 4, 5, 6, 7, 8, 9, 11, 12, 14] =
     0 := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_4 : seqList witness 5 [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13] = 
+private theorem seq_after_4 : seqList witness 5 [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13] =
     0 := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_5 : seqList witness 5 [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14] = 
+private theorem seq_after_5 : seqList witness 5 [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14] =
     0 := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_6 : seqList witness 5 [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 14] = 
+private theorem seq_after_6 : seqList witness 5 [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 14] =
     0 := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_7 : seqList witness 5 [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13] = 
+private theorem seq_after_7 : seqList witness 5 [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13] =
     0 := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_8 : seqList witness 5 [0, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14] = 
+private theorem seq_after_8 : seqList witness 5 [0, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14] =
     (16 / 675) := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_9 : seqList witness 5 [0, 1, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13] = 
+private theorem seq_after_9 : seqList witness 5 [0, 1, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13] =
     0 := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_10 : seqList witness 5 [0, 1, 2, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14] = 
+private theorem seq_after_10 : seqList witness 5 [0, 1, 2, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14] =
     (16 / 675) := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_11 : seqList witness 5 [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13, 14] = 
+private theorem seq_after_11 : seqList witness 5 [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13, 14] =
     (16 / 675) := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_12 : seqList witness 5 [2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14] = 
+private theorem seq_after_12 : seqList witness 5 [2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14] =
     (16 / 225) := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_13 : seqList witness 5 [0, 1, 4, 5, 7, 8, 9, 10, 11, 12, 14] = 
+private theorem seq_after_13 : seqList witness 5 [0, 1, 4, 5, 7, 8, 9, 10, 11, 12, 14] =
     (16 / 225) := by
   decide +kernel
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Reduce the depth-five conditional average for this available set.
-private theorem seq_after_14 : seqList witness 5 [0, 1, 2, 3, 5, 6, 8, 10, 11, 12, 13] = 
+private theorem seq_after_14 : seqList witness 5 [0, 1, 2, 3, 5, 6, 8, 10, 11, 12, 13] =
     (16 / 225) := by
   decide +kernel
 
