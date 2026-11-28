@@ -58,10 +58,6 @@ $$\forall (F: Type), [Field\left(F\right)] [Fintype\left(F\right)] \forall (m: \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/QTransversalDirectSum.fulcher_conjecture_4_8` (`✓ std3`). ∎
 
-*Resolves.* `Problems/fulcher-2026-transversal-q-matroid-direct-sum` (proved) by `D5/S3/Combinatorics/Matroids/QTransversalDirectSum.fulcher_conjecture_4_8`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fulcher-2026-transversal-q-matroid-direct-sum","declaration_gid":"D5/S3/Combinatorics/Matroids/QTransversalDirectSum.fulcher_conjecture_4_8","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Andrew Fulcher (2026). *A cyclic flat embedding theorem for transversal q-matroids*. DOI: [10.48550/arXiv.2603.13550](https://doi.org/10.48550/arXiv.2603.13550). URL: <https://arxiv.org/abs/2603.13550v1>.

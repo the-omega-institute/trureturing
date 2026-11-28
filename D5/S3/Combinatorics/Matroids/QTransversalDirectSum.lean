@@ -11,8 +11,8 @@
    escape_witness: joint_preimage gives T ≤ W with T.map p ≤ A, T.map q ≤ B, and
      codim_W T ≤ codim_(W.map p) A + codim_(W.map q) B. The forward inequality
      applies the bound to the minimizing subspaces A and B of the two projections.
-   Frozen source rank: QTransversalRepresentability.qTransversalRank
-     [sha256:96ee97a8c5f3cfa595a88de42ddd2cc4013068d09da2a71d5894718a9f826f32].
+   Frozen source rank: D5/S3/Combinatorics/Matroids/QTransversalRepresentability.qTransversalRank
+     (declaration statement ID sha256:f1b25e340bb78ecac8167fcda1195aa58ea788c12ba37025e3edf88ee7d52343).
    The joint dimension estimate uses the quotient calculation from LinearRado.
 -/
 

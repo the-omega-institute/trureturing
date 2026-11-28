@@ -5,7 +5,7 @@ doi: 10.48550/arXiv.2603.13550
 url: https://arxiv.org/abs/2603.13550v1
 triage: theorem
 motivation_gids:
-  - D5/S3/Combinatorics/Matroids/QTransversalDirectSum.fulcher_conjecture_4_8
+  - D5/S3/Combinatorics/Matroids/QTransversalRepresentability.qTransversalRank
 ---
 
 # Fulcher Conjecture 4.8 on transversal q-matroid direct sums
@@ -22,6 +22,13 @@ arbitrary presentations. The target uses all finite fields in Lean's
 Type universe, arbitrary finite dimensions and slot counts, and every
 subspace \(U\) of the sum. Each slot keeps its index, including when
 several slots carry the same subspace. [Fulcher, arXiv:2603.13550v1](https://arxiv.org/html/2603.13550v1#S4.Thmtheorem8)
+
+## Motivation
+
+The frozen `qTransversalRank` measures the largest dimension of an
+every-basis partial q-transversal inside a given subspace. The conjecture
+asks whether the lifted presentations compute the direct-sum rank even
+on subspaces that mix the two factors.
 
 ## Gap
 
@@ -69,28 +76,38 @@ IsPartialQTransversal and the associated supremum rank
 qTransversalRank. Its concatenated slots are the pullbacks of the
 factor slots under the two coordinate projections. Thus they are
 \(X_i\oplus E_2\) and \(E_1\oplus Y_j\) under the coordinate
-equivalence. The right side is the minimum in Fulcher's
-Definition 2.7 and Ceria–Jurrius Definition 38, with the same
-\(W\le U\) in both projection terms. [Direct-sum rank](https://arxiv.org/html/2603.13550v1#S2.Thmtheorem7)
+equivalence. Fulcher's Definition 2.7 writes the rank as a minimum over
+all \(W\le U\), using the same \(W\) in both projection terms.
+Ceria–Jurrius Definition 38 constructs the direct sum by taking the union
+of the two loop extensions, and Definition 28 gives the union rank
+minimum. Their Theorem 45 gives rank additivity on decomposable subspaces.
+[Fulcher's rank formula](https://arxiv.org/html/2603.13550v1#S2.Thmtheorem7)
+[Ceria–Jurrius](https://doi.org/10.1007/s10801-023-01283-x)
 
 The endpoint's source registration varies the concatenated rank at
 \(U\) while retaining the full right-hand side. The rank is sensitive
 to the observed subspace already over the two-element field. The
-continuation is open.
+continuation is recorded as unknown.
 
-The §3.9 mirrors for `LinearRado.deficit_representatives` and
-`QTransversalRepresentability.presentation_rank_eq_hallMinimum` remain
-open. The first needs a dependent realization over the field, ambient
-module, presentation, and slot subset, binding the restricted sum rank
-in the Hall hypothesis and retaining the existential conclusion.
-The second needs a dependent realization over the finite field,
-presentation, and subspace, binding the observed rank to the complete
-Hall minimum. Both require lawful variation, sensitivity, and current
-source-binding evidence. [Follow-up scope #35130](https://github.com/the-omega-institute/trureturing/issues/35130)
+The §3.9 owner audits remain incomplete for
+`LinearRado.quotient_sum_finrank`, `LinearRado.deficit_representatives`,
+and `QTransversalRepresentability.presentation_rank_eq_hallMinimum`.
+Their realizations must bind, respectively, the quotient-image rank
+in the dimension equality, the restricted sum rank within the Hall
+hypothesis while retaining the existential conclusion, and the
+presentation rank in the complete indexed Hall minimum. Each lacks
+a source-equivalence certificate and its variation and sensitivity
+evidence. [Owner audit disclosure in #35130](https://github.com/the-omega-institute/trureturing/issues/35130#issuecomment-7234563370)
 
 ## Triage
 
-**Proved.** The concatenated family presents the direct sum on every
-subspace, including those that mix coordinates of both factors. The
-preimage estimate shows how related projected minimizers control rank
-on such a subspace even when it is not the product of its projections.
+The Lean theorem shows that the concatenated family presents the direct
+sum on every subspace, including those that mix coordinates of both
+factors. The preimage estimate shows how related projected minimizers
+control rank on such a subspace.
+
+## ASSUMED-UNVERIFIED
+
+Literature coverage is limited to the sources and searches recorded in
+the preregistration. Any claim of publication priority or absence of
+an earlier proof outside that search remains unverified.
