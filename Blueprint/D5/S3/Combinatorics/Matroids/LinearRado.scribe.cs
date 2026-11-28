@@ -64,7 +64,7 @@ internal sealed class LinearRadoDocument : IScribeDocumentDefinition
             Imp(Rel(r, FormulaRelationOperator.LessThanOrEqual, k), Imp(hall, representatives)));
         return All("F", V("Type"), Inst(A(V("Field"), f),
             All("V", V("Type"), Inst(A(V("AddCommGroup"), v), Inst(A(V("Module"), f, v),
-            Inst(A(V("FiniteDimensional"), f, v), All("k", N, All("r", N, conclusion)))))));
+            Inst(A(V("FiniteDimensional"), f, v), All("k", N, All("r", N, conclusion))))))));
     }
     private static Formula Minor() => All("F", Type, Inst(A(V("Field"), V("F")),
         All("k", N, All("t", N, All("M", A(V("Matrix"), Fin(V("k")), Fin(V("t")), V("F")),

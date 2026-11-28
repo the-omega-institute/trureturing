@@ -73,6 +73,21 @@ equivalence. The right side is the minimum in Fulcher's
 Definition 2.7 and Ceria–Jurrius Definition 38, with the same
 \(W\le U\) in both projection terms. [Direct-sum rank](https://arxiv.org/html/2603.13550v1#S2.Thmtheorem7)
 
+The endpoint's source registration varies the concatenated rank at
+\(U\) while retaining the full right-hand side. The rank is sensitive
+to the observed subspace already over the two-element field. The
+continuation is open.
+
+The §3.9 mirrors for `LinearRado.deficit_representatives` and
+`QTransversalRepresentability.presentation_rank_eq_hallMinimum` remain
+open. The first needs a dependent realization over the field, ambient
+module, presentation, and slot subset, binding the restricted sum rank
+in the Hall hypothesis and retaining the existential conclusion.
+The second needs a dependent realization over the finite field,
+presentation, and subspace, binding the observed rank to the complete
+Hall minimum. Both require lawful variation, sensitivity, and current
+source-binding evidence. [Follow-up scope #35130](https://github.com/the-omega-institute/trureturing/issues/35130)
+
 ## Triage
 
 **Proved.** The concatenated family presents the direct sum on every
