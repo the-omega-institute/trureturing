@@ -45,7 +45,7 @@ abbrev arena : Arena where
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   letI : Nonempty (Sector 0 2 0) :=
-    ⟨⟨fun _ => 2, by simp [Finset.sum_univ_succ]⟩⟩
+    ⟨⟨fun _ => 2, by simp [Fin.sum_univ_succ]⟩⟩
   have hzero := (h 1 (by norm_num) 2 0).2.1
   change IsGreatest (spectrum ℝ (hamiltonian 1 2 0)) 0 at hzero
   have hone := (top_finite_sector_eigenvalue 1 (by norm_num) 2 0).2.1

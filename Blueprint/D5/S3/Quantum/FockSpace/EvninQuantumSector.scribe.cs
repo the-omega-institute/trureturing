@@ -23,7 +23,7 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
-                        "The sector is indexed by natural occupations η on modes 0 through M with sum N "
+                        "Write s for σ. The sector is indexed by natural occupations η on modes 0 through M with sum N "
                         + "and momentum sum M. Each coordinate is in the normalized bosonic basis of Eq. (22). "
                         + "For N at least two, the ordered annihilator for modes k and j − k maps into "
                         + "particle number N − 2 and momentum M − j on the same mode list. Its matrix entry "
@@ -48,7 +48,7 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
-                        "The square of each pair annihilator is diagonal after multiplication by its adjoint "
+                        "Each pair annihilator gives a diagonal matrix when multiplied by its adjoint "
                         + "on the left. Each removable column has exactly one lower occupation, and distinct "
                         + "columns cannot share that row. An impossible removal contributes zero, including "
                         + "when the lower sector is empty. Summing the ordered diagonal counts gives N(N − 1), "
@@ -76,7 +76,7 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
 
     private static Formula ClaimBody()
     {
-        Formula sigma = F.Id("σ"), n = F.Id("N"), m = F.Id("M");
+        Formula sigma = F.Id("s"), n = F.Id("N"), m = F.Id("M");
         Formula sector = Call("Sector", m, n, m);
         Formula h = Call("hamiltonian", sigma, n, m);
         Formula vector = Call("occupationVector", Call("raney", sigma, D(1)));
@@ -87,7 +87,7 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
             And(new Formula.Relation(vector, FormulaRelationOperator.NotEqual, D(0)),
                 new Formula.Relation(Call("mulVec", h, vector), FormulaRelationOperator.Equal,
                     Call("smul", energy, vector)))));
-        return All("σ", Reals(), Implies(
+        return All("s", Reals(), Implies(
             new Formula.Relation(D(1), FormulaRelationOperator.LessThanOrEqual, sigma),
             All("N", Naturals(), All("M", Naturals(), Implies(Call("Nonempty", sector), conclusion)))));
     }
