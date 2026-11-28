@@ -40,7 +40,7 @@ A failure of the circuit witness, pairwise-intersection certificate, slice isome
 
 ## Evidence
 
-The settling declaration is `D5.S3.Quantum.Information.GangulyCircuitAccess.Recovery.result`, whose compiled type is the literal negation of `D5.S3.Quantum.Information.GangulyCircuitAccess.Recovery.claim`. The current scoped report gives the module statement identity `sha256:2d89de495f5b976065e654f96dadee09f5492bec2ba98a267a74b33ba710fa2b` and the result statement identity `sha256:cd4f51774897d120a88d9c97809000068c61eef63de59503bdc2e2741a19d358`. The result's axiom closure is `Classical.choice`, `Quot.sound` and `propext`.
+The settling declaration is `D5.S3.Quantum.Information.GangulyCircuitAccess.result`, whose compiled type is the literal negation of `D5.S3.Quantum.Information.GangulyCircuitAccess.claim`. The current scoped report gives the module statement identity `sha256:2d89de495f5b976065e654f96dadee09f5492bec2ba98a267a74b33ba710fa2b` and the result statement identity `sha256:cd4f51774897d120a88d9c97809000068c61eef63de59503bdc2e2741a19d358`. The result's axiom closure is `Classical.choice`, `Quot.sound` and `propext`.
 
 The result uses the checked seven-vertex authorization and quantum-access certificates, the reduced-density collision, and the ordinary-function obstruction to recovery. The separate checked witness correspondence supplies the isometry and shortened-code interpretation. The contextual lower-bound claim through six vertices is attributed to the paper, Table I, the dealer-component reduction, and the supplied finite enumeration. It is not a declaration in this delivery.
 
