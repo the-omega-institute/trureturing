@@ -77,4 +77,5 @@ behavior selects a nonbottom point whenever the predicate has one, including
 predicates that are not chains.
 InternalOrder.choiceFromFlatPresence recovers Classical.choice from that behavior.
 On chains, FlatSelection.smallChainSelections characterizes the small-universe
-supremum law, and eqIffChainLaw characterizes agreement with a certified supremum. -/
+supremum law, and eqIffChainLaw characterizes agreement with a certified supremum.
+At universe zero propSup returns the bottom and propSupLaw supplies the exact law. -/
