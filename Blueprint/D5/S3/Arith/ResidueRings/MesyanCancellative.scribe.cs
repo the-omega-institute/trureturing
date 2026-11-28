@@ -65,7 +65,10 @@ internal sealed class MesyanCancellativeDocument : IScribeDocumentDefinition
                         + "multiples distinct, since equality of distinct multiples would give a positive "
                         + "multiple of a equal to zero. Apply "), Ref(Criterion),
                         Text(" to obtain a cyclic-preserving left multiplier e fixing a. "
-                            + "Since e² is a natural multiple of e, evaluation at a forces e² = e. "
+                            + "The proof uses associativity to rewrite (e * e) * a as e * (e * a) = a. "
+                            + "Since e² is a natural multiple of e, this evaluation forces e² = e. "
+                            + "It uses associativity again to rewrite e * (e * x) as (e * e) * x = e * x, "
+                            + "so left multiplication by e is a projection. "
                             + "Left multiplication by e sends a + x to an element with no additive inverse, "
                             + "as that image is a plus the image of x. Idempotence and cyclic preservation "
                             + "then force e to fix a + x, and cancellation shows that e fixes x. "
@@ -73,7 +76,7 @@ internal sealed class MesyanCancellativeDocument : IScribeDocumentDefinition
                             + "with the global left identity.")),
                     Paragraph(Text("When every element has an additive inverse, choosing those inverses "
                         + "gives a nonunital ring on the same carrier. Its semiring reduct is definitionally "
-                        + "the original structure, including its natural scalar action, so "),
+                        + "the original structure, including its natural scalar action. The existing associative-ring theorem "),
                         Ref(RingClassification), Text(" applies directly.")),
                     Paragraph(Text("A multiplicative identity yields a product unit by taking its natural "
                         + "multiples. In the torsion case, positive additive order supplies an additive inverse "
