@@ -6,6 +6,157 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.Conjecture52; result=D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.not_conjecture52; claim=D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.Conjecture52
    digest: The sequential CDF exceeds the static CDF on a tree of maximum degree three. -/
 
+/-
+admission_basis: open-problem-resolution (#35265, Refuted).
+Direct frozen D5 dependencies: none for every declaration.
+The settling theorem is the designated utility refutation.
+
+proof_shape: closed: bind-only; escape_witness: none;
+  consumers: closed_iff, after, seqList, after_toFinset, seqList_eq, jamList, jamList_iff.
+  Model or executable carrier definition.
+proof_shape: closed_iff: bind-only; escape_witness: none;
+  consumers: jamList_iff.
+  Normalize the Boolean tests.
+proof_shape: after: bind-only; escape_witness: none;
+  consumers: seq, after_toFinset, seqList_eq.
+  Model or executable carrier definition.
+proof_shape: seq: bind-only; escape_witness: none;
+  consumers: seqList_eq, Conjecture52, seq_witness_list, sequential_exact, not_conjecture52.
+  Model or executable carrier definition.
+proof_shape: seqList: bind-only; escape_witness: none;
+  consumers: seqList_eq, seq_witness_list, seq_after_0 through seq_after_14, seq_full_list, sequential_exact.
+  Model or executable carrier definition.
+proof_shape: after_toFinset: bind-only; escape_witness: none;
+  consumers: seqList_eq.
+  Use extensionality and list and finset filter membership.
+proof_shape: seqList_eq: content; escape_witness: seqList_eq;
+  consumers: seq_witness_list.
+  Induct on the cutoff to transport the recursive CDF across duplicate-free lists.
+proof_shape: jammed: bind-only; escape_witness: none;
+  consumers: jammed_iff, jammedDecidable, static, staticCount, static_eq, jamList_iff, staticCount_list.
+  Model or executable carrier definition.
+proof_shape: jammed_iff: content; escape_witness: jammed_iff;
+  consumers: jammedDecidable, jamList_iff.
+  Characterize maximality by independence and closed-neighborhood coverage using single-vertex insertions.
+proof_shape: jammedDecidable: content; escape_witness: jammed_iff;
+  consumers: static, staticCount, static_eq, staticCount_list.
+  Transport decidability through the coverage characterization.
+proof_shape: static: bind-only; escape_witness: none;
+  consumers: static_eq, Conjecture52, static_exact, not_conjecture52.
+  Model or executable carrier definition.
+proof_shape: staticCount: bind-only; escape_witness: none;
+  consumers: static_eq, staticCount_list, static_count, static_small_count, static_exact.
+  Model or executable carrier definition.
+proof_shape: static_eq: bind-only; escape_witness: none;
+  consumers: static_exact.
+  Combine the two filters using Finset.filter_filter.
+proof_shape: Conjecture52: bind-only; escape_witness: none;
+  consumers: not_conjecture52.
+  Model or executable carrier definition.
+proof_shape: closedMasks: bind-only; escape_witness: none;
+  consumers: packedClosed.
+  Model or executable carrier definition.
+proof_shape: packedClosed: bind-only; escape_witness: none;
+  consumers: packedClosed_symm, witness, witnessAdj.
+  Model or executable carrier definition.
+proof_shape: packedClosed_symm: bind-only; escape_witness: none;
+  consumers: witness.
+  Reduce the closed finite symmetry check.
+proof_shape: witness: bind-only; escape_witness: none;
+  consumers: witnessAdj, witness_maxDegree_le, seq_witness_list, static_count, static_small_count, static_exact, seq_after_0 through seq_after_14, seq_full_list, sequential_exact, not_conjecture52.
+  Model or executable carrier definition.
+proof_shape: witnessAdj: bind-only; escape_witness: none;
+  consumers: witness_maxDegree_le, seq_witness_list, static_count, static_small_count, static_exact, seq_after_0 through seq_after_14, seq_full_list, sequential_exact, not_conjecture52.
+  Model or executable carrier definition.
+proof_shape: witness_maxDegree_le: bind-only; escape_witness: none;
+  consumers: not_conjecture52.
+  Apply maxDegree_le_of_forall_degree_le and reduce the finite degree checks.
+proof_shape: seq_witness_list: content; escape_witness: seqList_eq;
+  consumers: sequential_exact.
+  Apply the recursive CDF correspondence to List.finRange.
+proof_shape: powerset_list_val: bind-only; escape_witness: none;
+  consumers: staticCount_list.
+  Normalize Multiset.powerset_coe' and apply List.pmap_eq_map.
+proof_shape: jamList: bind-only; escape_witness: none;
+  consumers: jamList_iff, staticCount_list, static_count, static_small_count.
+  Model or executable carrier definition.
+proof_shape: jamList_iff: content; escape_witness: jammed_iff;
+  consumers: staticCount_list.
+  Transport the independence and coverage characterization to Boolean list tests.
+proof_shape: countSubsets: bind-only; escape_witness: none;
+  consumers: countSubsets_eq, staticCount_list, static_count, static_small_count.
+  Model or executable carrier definition.
+proof_shape: countSubsets_eq: content; escape_witness: countSubsets_eq;
+  consumers: staticCount_list.
+  Induct on the list for every predicate, splitting on whether the head is selected.
+proof_shape: staticCount_list: content; escape_witness: staticCount_list;
+  consumers: static_count, static_small_count.
+  Identify the powerset filter count with recursive sublist counting for every qualifying predicate.
+proof_shape: static_count: content; escape_witness: staticCount_list;
+  consumers: static_exact.
+  Evaluate the total count through the sublist correspondence.
+proof_shape: static_small_count: content; escape_witness: staticCount_list;
+  consumers: static_exact.
+  Evaluate the cutoff-six count through the sublist correspondence.
+proof_shape: static_exact: content; escape_witness: staticCount_list;
+  consumers: not_conjecture52.
+  Substitute the certified counts into the static ratio.
+proof_shape: seq_after_0: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_1: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_2: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_3: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_4: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_5: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_6: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_7: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_8: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_9: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_10: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_11: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_12: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_13: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_after_14: bind-only; escape_witness: none;
+  consumers: seq_full_list.
+  Reduce the closed conditional average.
+proof_shape: seq_full_list: bind-only; escape_witness: none;
+  consumers: sequential_exact.
+  Substitute the fifteen conditional values and reduce the rational average.
+proof_shape: sequential_exact: content; escape_witness: seqList_eq;
+  consumers: not_conjecture52.
+  Transport the exact list average to the finset CDF.
+proof_shape: not_conjecture52: content; escape_witness: seqList_eq;
+  consumers: none.
+  Specialize the conjecture to the witness and compare the exact CDFs.
+-/
+
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Clique
