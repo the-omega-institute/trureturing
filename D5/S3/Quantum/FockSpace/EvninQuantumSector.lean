@@ -7,12 +7,16 @@
    digest: Weighted normal-ordered Hamiltonian in Evnin's finite occupation sectors. -/
 
 import OmegaBuild.Commands
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Tactic
-
-compile_only_with_mathlib
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.LinearAlgebra.Matrix.ConjTranspose
+import Mathlib.Tactic.Abel
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 
 /-! The normalized occupation model for Evnin, arXiv:2607.25445v3, §2.3. -/
+
+compile_only_with_mathlib
 
 set_option autoImplicit false
 open scoped BigOperators Matrix
@@ -165,6 +169,7 @@ instance (L N M : ℕ) : Fintype (Sector L N M) :=
     (fun (η : Sector L N M) a => (⟨η.val a, by
       have h : η.val a ≤ ∑ b, η.val b :=
         single_le_sum (fun _ _ => Nat.zero_le _) (mem_univ a)
+      rw [η.property.1] at h
       omega⟩ : Fin (N + 1)))
     (fun _ _ h => Subtype.ext (funext fun a => congrArg Fin.val (congrFun h a)))
 
@@ -276,9 +281,160 @@ private theorem pair_adjoint_square {L N M : ℕ} (hN : 2 ≤ N) (i j : Mode L)
     apply sum_eq_zero
     intro ζ _
     by_cases hζ : raise hN i j hM ζ = η
-    · have hξ : raise hN i j hM ζ ≠ ξ := fun h => he (hζ.symm.trans h)
-      simp [Matrix.conjTranspose_apply, pairAnnihilator, hζ, hξ]
+    · simp [Matrix.conjTranspose_apply, pairAnnihilator, hζ, he]
     · simp [Matrix.conjTranspose_apply, pairAnnihilator, hζ]
+
+/-- Factorial coordinates of the common pair-lowering vector. -/
+private def coordinate {L : ℕ} (A : ℕ → ℝ) (η : Mode L → ℕ) : ℝ :=
+  ∏ a, Real.sqrt (A a.val) ^ η a / Real.sqrt (η a).factorial
+
+/-- The attaining vector in the normalized occupation basis. -/
+def occupationVector {L N M : ℕ} (A : ℕ → ℝ) : Sector L N M → ℂ :=
+  fun η => (coordinate A η.val : ℂ)
+
+private theorem coordinate_pos {L : ℕ} (A : ℕ → ℝ) (hA : ∀ n, 0 < A n)
+    (η : Mode L → ℕ) : 0 < coordinate A η := by
+  apply prod_pos
+  intro a _
+  exact div_pos (pow_pos (Real.sqrt_pos.mpr (hA _)) _)
+    (Real.sqrt_pos.mpr (by exact_mod_cast Nat.factorial_pos (η a)))
+
+private def bump {L : ℕ} (η : Mode L → ℕ) (i : Mode L) : Mode L → ℕ :=
+  fun a => η a + if a = i then 1 else 0
+
+private theorem coordinate_bump {L : ℕ} (A : ℕ → ℝ) (η : Mode L → ℕ) (i : Mode L) :
+    Real.sqrt ((η i : ℝ) + 1) * coordinate A (bump η i) =
+      Real.sqrt (A i.val) * coordinate A η := by
+  let u := fun a : Mode L => Real.sqrt (A a.val) ^ η a / Real.sqrt (η a).factorial
+  let v := fun a : Mode L =>
+    Real.sqrt (A a.val) ^ bump η i a / Real.sqrt (bump η i a).factorial
+  change _ * ∏ a, v a = _ * ∏ a, u a
+  rw [← mul_prod_erase univ v (mem_univ i), ← mul_prod_erase univ u (mem_univ i)]
+  have hprod : (∏ a ∈ univ.erase i, v a) = ∏ a ∈ univ.erase i, u a := by
+    apply prod_congr rfl
+    intro a ha
+    simp [u, v, bump, ne_of_mem_erase ha]
+  rw [hprod, ← mul_assoc, ← mul_assoc]
+  congr 1
+  have hs : 0 < Real.sqrt ((η i : ℝ) + 1) :=
+    Real.sqrt_pos.mpr (by positivity)
+  simp only [u, v, bump, ite_true, eq_self, pow_succ, Nat.factorial_succ, Nat.cast_mul, Nat.cast_succ]
+  rw [Real.sqrt_mul (by positivity : 0 ≤ (η i : ℝ) + 1)]
+  have hf : 0 < Real.sqrt ((η i).factorial : ℝ) :=
+    Real.sqrt_pos.mpr (by exact_mod_cast Nat.factorial_pos (η i))
+  field_simp [hs.ne', hf.ne']
+  <;> ring
+
+/-- The coefficient in the source, with the entire pair product under the square root. -/
+def pairWeight (A : ℕ → ℝ) (i j : ℕ) : ℝ := Real.sqrt (A i * A j)
+
+private theorem pair_lowers_vector {L N M : ℕ} (hN : 2 ≤ N) (i j : Mode L)
+    (hM : i.val + j.val ≤ M) (A : ℕ → ℝ) (hA : ∀ n, 0 < A n) :
+    pairAnnihilator hN i j hM *ᵥ occupationVector A =
+      pairWeight A i.val j.val • occupationVector A := by
+  classical
+  funext ζ
+  rw [Matrix.mulVec_apply_eq_sum, sum_eq_single (raise hN i j hM ζ)]
+  · simp only [pairAnnihilator, ite_true, eq_self, occupationVector, Pi.smul_apply,
+      Complex.real_smul, ← Complex.ofReal_mul]
+    apply congrArg Complex.ofReal
+    have hraise : (raise hN i j hM ζ).val = bump (bump ζ.val j) i := by
+      funext a
+      simp only [raise, bump, increment]
+      omega
+    rw [hraise]
+    have hq : pairCount (bump (bump ζ.val j) i) i j =
+        ((bump ζ.val j i : ℝ) + 1) * ((ζ.val j : ℝ) + 1) := by
+      by_cases hij : i = j
+      · subst j
+        simp [pairCount, bump, Nat.cast_add]
+      · simp [pairCount, bump, hij, Ne.symm hij, Nat.cast_add]
+    rw [hq, Real.sqrt_mul (by positivity), pairWeight, Real.sqrt_mul (hA _).le]
+    calc
+      _ = Real.sqrt ((ζ.val j : ℝ) + 1) *
+          (Real.sqrt ((bump ζ.val j i : ℝ) + 1) * coordinate A (bump (bump ζ.val j) i)) := by ring
+      _ = _ := by
+        rw [coordinate_bump, ← mul_assoc, mul_comm (Real.sqrt ((ζ.val j : ℝ) + 1)),
+          mul_assoc, coordinate_bump, ← mul_assoc]
+  · intro η _ hη
+    simp [pairAnnihilator, Ne.symm hη]
+  · simp
+
+private theorem occupationVector_ne_zero {L N M : ℕ} [Nonempty (Sector L N M)]
+    (A : ℕ → ℝ) (hA : ∀ n, 0 < A n) : (occupationVector A : Sector L N M → ℂ) ≠ 0 := by
+  obtain ⟨η⟩ := ‹Nonempty (Sector L N M)›
+  intro h
+  have hz := congrFun h η
+  exact (coordinate_pos A hA η.val).ne' (by simpa [occupationVector] using hz)
+
+private def leftMode {M : ℕ} (j : Mode M) (k : Fin (j.val + 1)) : Mode M :=
+  ⟨k.val, by omega⟩
+
+private def rightMode {M : ℕ} (j : Mode M) (k : Fin (j.val + 1)) : Mode M :=
+  ⟨j.val - k.val, by omega⟩
+
+private theorem mode_sum {M : ℕ} (j : Mode M) (k : Fin (j.val + 1)) :
+    (leftMode j k).val + (rightMode j k).val = j.val := by
+  change k.val + (j.val - k.val) = j.val
+  omega
+
+private def pairAt {N M : ℕ} (hN : 2 ≤ N) (i l : Mode M)
+    (j : ℕ) (hj : j ≤ M) (h : i.val + l.val = j) :
+    Matrix (Sector M (N - 2) (M - j)) (Sector M N M) ℂ :=
+  h ▸ pairAnnihilator hN i l (h.symm ▸ hj)
+
+private theorem pairAt_adjoint_square {N M : ℕ} (hN : 2 ≤ N) (i l : Mode M)
+    (j : ℕ) (hj : j ≤ M) (h : i.val + l.val = j) :
+    (pairAt hN i l j hj h)ᴴ * pairAt hN i l j hj h =
+      Matrix.diagonal (fun η => (pairCount η.val i l : ℂ)) := by
+  subst j
+  exact pair_adjoint_square hN i l hj
+
+private theorem pairAt_lowers_vector {N M : ℕ} (hN : 2 ≤ N) (i l : Mode M)
+    (j : ℕ) (hj : j ≤ M) (h : i.val + l.val = j) (A : ℕ → ℝ) (hA : ∀ n, 0 < A n) :
+    pairAt hN i l j hj h *ᵥ occupationVector A =
+      pairWeight A i.val l.val • occupationVector A := by
+  subst j
+  exact pair_lowers_vector hN i l hj A hA
+
+private def blockPair {N M : ℕ} (hN : 2 ≤ N) (j : Mode M) (k : Fin (j.val + 1)) :
+    Matrix (Sector M (N - 2) (M - j.val)) (Sector M N M) ℂ :=
+  pairAt hN (leftMode j k) (rightMode j k) j.val (Nat.le_of_lt_succ j.isLt) (mode_sum j k)
+
+private theorem sum_momentum_blocks {R : Type*} [AddCommMonoid R] {M : ℕ}
+    (f : Mode M → Mode M → R) :
+    (∑ j : Mode M, ∑ k : Fin (j.val + 1), f (leftMode j k) (rightMode j k)) =
+      ∑ i : Mode M, ∑ l with i.val + l.val ≤ M, f i l := by
+  classical
+  rw [← Fintype.sum_sigma (fun a : (Σ j : Mode M, Fin (j.val + 1)) =>
+    f (leftMode a.1 a.2) (rightMode a.1 a.2))]
+  let valid := (univ : Finset (Mode M × Mode M)).filter (fun a => a.1.val + a.2.val ≤ M)
+  calc
+    _ = ∑ a ∈ valid, f a.1 a.2 := by
+      apply sum_bij (fun a _ => (leftMode a.1 a.2, rightMode a.1 a.2))
+      · intro a _
+        simp only [valid, mem_filter, mem_univ, true_and, mode_sum]
+        omega
+      · intro a _ b _ h
+        have hleft := congrArg (fun p : Mode M × Mode M => p.1.val) h
+        have hsum := congrArg (fun p : Mode M × Mode M => p.1.val + p.2.val) h
+        simp only [mode_sum] at hsum
+        have he : a.1 = b.1 := Fin.ext hsum
+        obtain ⟨j, k⟩ := a
+        obtain ⟨l, m⟩ := b
+        change j = l at he
+        subst l
+        cases (Fin.ext hleft : k = m)
+        rfl
+      · rintro ⟨i, l⟩ ha
+        have hv : i.val + l.val ≤ M := (mem_filter.mp ha).2
+        let j : Mode M := ⟨i.val + l.val, by omega⟩
+        let k : Fin (j.val + 1) := ⟨i.val, by dsimp [j]; omega⟩
+        exact ⟨⟨j, k⟩, mem_univ _, Prod.ext (Fin.ext rfl) (Fin.ext (Nat.add_sub_cancel_left _ _))⟩
+      · intro a _
+        rfl
+    _ = _ := by
+      simp only [valid, sum_filter, Fintype.sum_prod_type]
 
 end
 end D5.S3.Quantum.FockSpace.EvninQuantumSector
