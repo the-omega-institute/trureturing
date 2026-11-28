@@ -80,6 +80,8 @@ internal sealed class MesyanCancellativeDocument : IScribeDocumentDefinition
                         + "for each element and the ring classification gives the converse. The additive order is zero for an element of infinite order. "
                         + "Each prime-primary identity belongs to its own component, consisting of elements "
                         + "killed by some power of the prime. Zero serves as the identity in a zero component. "
+                        + "The Lean statement includes the zero semiring, where zero is a two-sided identity. "
+                        + "Mesyan uses the term unital semiring for a nonzero semiring with a multiplicative identity. "
                         + "The structural classification of noncancellative semirings remains open here."))),
                 DescribeRole.Theorem))));
 

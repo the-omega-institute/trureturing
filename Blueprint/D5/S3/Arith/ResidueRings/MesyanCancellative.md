@@ -50,7 +50,7 @@ Suppose a has no additive inverse. Cancellation makes its natural multiples dist
 
 When every element has an additive inverse, choosing those inverses gives a nonunital ring on the same carrier. Its semiring reduct is definitionally the original structure, including its natural scalar action, so `D5/S3/Arith/ResidueRings/MesyanQuantaleClassification.product_unit_iff` applies directly.
 
-A multiplicative identity yields a product unit by taking its natural multiples. In the torsion case, positive additive order supplies an additive inverse for each element and the ring classification gives the converse. The additive order is zero for an element of infinite order. Each prime-primary identity belongs to its own component, consisting of elements killed by some power of the prime. Zero serves as the identity in a zero component. The structural classification of noncancellative semirings remains open here.
+A multiplicative identity yields a product unit by taking its natural multiples. In the torsion case, positive additive order supplies an additive inverse for each element and the ring classification gives the converse. The additive order is zero for an element of infinite order. Each prime-primary identity belongs to its own component, consisting of elements killed by some power of the prime. Zero serves as the identity in a zero component. The Lean statement includes the zero semiring, where zero is a two-sided identity. Mesyan uses the term unital semiring for a nonzero semiring with a multiplicative identity. The structural classification of noncancellative semirings remains open here.
 
 ## References
 
