@@ -1,9 +1,30 @@
 module
 public import Init.Data.Array.MapIdx
 public import Init.Data.Vector.MapIdx
+import all Init.Data.Array.MapIdx
+import all Init.Data.List.MapIdx
 
 /-! Indexed maps preserve array and vector decompositions at the same index. -/
 namespace OmegaChecks.InitPort.Alternatives
+
+private theorem sameIndexedLoop [Monad m] (xs : List α) (f : Nat → α → m β) (rest : List α) :
+    (fun p : {acc : Array β // rest.length + acc.size = xs.length} => List.mapFinIdxM.go xs
+      (fun i a _ => f i a) rest p.val p.property) = (fun p => List.mapIdxM.go f rest p.val) := by
+  induction rest with
+  | nil => rfl
+  | cons a rest ih =>
+    exact congrArg (fun tail (p : {acc : Array β // (a :: rest).length + acc.size = xs.length}) =>
+      f p.val.size a >>= fun b => tail ⟨p.val.push b, by
+        rw [Array.size_push, Nat.add_succ, ← Nat.succ_add]
+        exact p.property⟩) ih
+
+public theorem List.mapIdxM_toArray.go : type_of% (private_decl% @_root_.List.mapIdxM_toArray.go) := by
+  intro m α β mon xs f rest acc inv
+  exact congrFun (sameIndexedLoop xs f rest) ⟨acc, inv⟩
+
+public theorem List.mapIdxM_toArray.go._f : type_of% (private_decl% @_root_.List.mapIdxM_toArray.go._f) := by
+  intro m α β mon xs f rest _ acc inv
+  exact congrFun (sameIndexedLoop xs f rest) ⟨acc, inv⟩
 
 public theorem Array.mapIdx_append : type_of% @_root_.Array.mapIdx_append := by
   intros

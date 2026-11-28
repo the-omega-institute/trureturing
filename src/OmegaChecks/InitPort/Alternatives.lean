@@ -167,10 +167,14 @@ public def loadAlternatives : IO (NameMap ConstantInfo) := do
   for (owner, data) in env.header.moduleNames.zip env.header.moduleData do
     unless (`Init).isPrefixOf owner do continue
     for original in data.constants do
-      unless original.isTheorem && !aligned.contains original.name do continue
+      if aligned.contains original.name then continue
       let some user := privateToUserName? original.name | continue
       let some alt := aligned.find? user | continue
       unless alt.isTheorem && original.numLevelParams == alt.numLevelParams do continue
+      -- Structural recursion on a theorem can emit its induction step as a definition in Prop.
+      unless original.isTheorem do
+        unless original matches .defnInfo _ do continue
+        unless (Kernel.check env {} original.type).toOption == some (.sort .zero) do continue
       -- Generated equations have a separate owner and parent check above.
       if (Meta.declFromEqLikeName env user).isSome then continue
       let type := alt.type.instantiateLevelParams alt.levelParams (original.levelParams.map Level.param)
