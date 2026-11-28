@@ -1,4 +1,5 @@
 import OmegaBuild.Commands
+import OmegaMath.Combinatorics.Graph.ChordalPath49Metric
 import D5.S3.Combinatorics.Graph.Chordal.ChordalBanachLimitTwo
 import Mathlib.Topology.MetricSpace.IsometricSMul
 import Mathlib.Tactic.Group
@@ -64,3 +65,57 @@ theorem pathPower_small_group_upper_bound {n k : ℕ} (hk : 1 ≤ k) (hk' : k �
 
 end SimpleGraph.BanachPathPower
 
+
+namespace SimpleGraph.BanachPathPower
+
+/-- A uniform bound for bi-invariant group gains on all finite paths of the given width. -/
+def GroupUniformBound (k : ℕ) (C : ℝ) : Prop :=
+  0 ≤ C ∧ ∀ (n : ℕ) (H : Type) [Group H] [PseudoMetricSpace H]
+    [IsIsometricSMul H H] [IsIsometricSMul Hᵐᵒᵖ H] (g : Fin n → Fin n → H),
+    (∀ a b, (pathPower n k).Adj a b → g b a = (g a b)⁻¹) →
+    (∀ a b c, (pathPower n k).Adj a b → (pathPower n k).Adj b c →
+      (pathPower n k).Adj a c → Dist.dist (g a b * g b c) (g a c) ≤ 1) →
+    ∃ p : Fin n → H, ∀ a b, (pathPower n k).Adj a b →
+      Dist.dist (g a b) ((p a)⁻¹ * p b) ≤ C
+
+theorem triangle_power_lower (C : ℝ) (hC : GroupUniformBound 2 C) : 1 ≤ C := by
+  let := ChordalPath49.cayleyMetric
+  let := ChordalPath49.cayley_left
+  let := ChordalPath49.cayley_right
+  let f : ℕ → ℕ → ChordalPath49.H := fun i j => if i = 0 ∧ j = 2 then 2 else 0
+  let g (i j : Fin 3) := Multiplicative.ofAdd (ChordalPath49.skew f i j)
+  have hrev (a b : Fin 3) (ha : (pathPower 3 2).Adj a b) : g b a = (g a b)⁻¹ :=
+    ChordalPath49.skew_rev f ha.ne
+  have htri (a b c : Fin 3) (hab : (pathPower 3 2).Adj a b) (hbc : (pathPower 3 2).Adj b c)
+      (hac : (pathPower 3 2).Adj a c) : Dist.dist (g a b * g b c) (g a c) ≤ 1 := by
+    have ht (i j l : ℕ) (hij : i < j) (hjl : j < l) (hil : l ≤ i + 2) :
+        f i j + f j l - f i l ∈ ChordalPath49.alphabet := by
+      have h₁ : j = i + 1 := by omega
+      have h₂ : l = i + 2 := by omega
+      rw [h₁, h₂]
+      by_cases h₀ : i = 0
+      · subst i; decide
+      · simp [f, h₀, ChordalPath49.alphabet]
+    change Dist.dist (Multiplicative.ofAdd (ChordalPath49.skew f a b + ChordalPath49.skew f b c))
+      (Multiplicative.ofAdd (ChordalPath49.skew f a c)) ≤ 1
+    simpa only [Nat.cast_one] using (ChordalPath49.word_iff_distance 1 _ _).2
+      ((ChordalPath49.wordBudget_one_iff _).2 (ChordalPath49.skew_triangles f ht hab hbc hac))
+  obtain ⟨p, hp⟩ := hC.2 3 ChordalPath49.M g hrev htri
+  by_contra! hlt
+  have hz (a b : Fin 3) (hab : (pathPower 3 2).Adj a b) : g a b = (p a)⁻¹ * p b := by
+    have hq := (hp a b hab).trans_lt hlt
+    change (GroupWordMetric.length ChordalPath49.letters_generate ((g a b)⁻¹ * ((p a)⁻¹ * p b)) : ℝ) < 1 at hq
+    have hq' : GroupWordMetric.length ChordalPath49.letters_generate
+        ((g a b)⁻¹ * ((p a)⁻¹ * p b)) < 1 := by exact_mod_cast hq
+    have hz' : GroupWordMetric.length ChordalPath49.letters_generate
+        ((g a b)⁻¹ * ((p a)⁻¹ * p b)) = 0 := by omega
+    have he := GroupWordMetric.eq_one_of_length_zero ChordalPath49.letters_generate hz'
+    exact inv_mul_eq_one.mp he
+  have hab : (pathPower 3 2).Adj 0 1 := ⟨by decide, by decide, by decide⟩
+  have hbc : (pathPower 3 2).Adj 1 2 := ⟨by decide, by decide, by decide⟩
+  have hac : (pathPower 3 2).Adj 0 2 := ⟨by decide, by decide, by decide⟩
+  have he : g 0 1 * g 1 2 = g 0 2 := by rw [hz _ _ hab, hz _ _ hbc, hz _ _ hac]; group
+  have hne : g 0 1 * g 1 2 ≠ g 0 2 := by decide
+  exact hne he
+
+end SimpleGraph.BanachPathPower
