@@ -2,6 +2,7 @@ module
 
 public import OmegaChecks.InitInventory.Reductions
 public import OmegaChecks.InitInventory.Collector
+public import OmegaChecks.InitInventory.OpenRangeLoop
 public import OmegaChecks.InitInventory.FieldNormalization
 public import OmegaChecks.InitInventory.StringPatterns
 public import OmegaChecks.InitInventory.StringSearchLoops
@@ -12,6 +13,10 @@ namespace OmegaChecks.InitInventory
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 public def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Data.Range.Polymorphic.RangeIterator && name == ``Std.Rxo.Iterator.instIteratorLoop.loop then
+    return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
+      ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromOpenRangeLoop,
+      "For the natural successor and the comparison g k = false, the identity-monad loop satisfies its official step equation whenever the range is finite")
   if owner == `Init.Data.Option.Lemmas then
     let singletonLaw := match name with
       | ``Option.choice_eq_some => some ``OmegaChecks.InitBoundaries.OptionSelector.decideFromSingleton
