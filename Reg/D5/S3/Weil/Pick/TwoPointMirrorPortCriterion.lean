@@ -240,15 +240,15 @@ def arena : Arena where
   Law R := ∀ {Port : Type u} [fp : Fintype Port] [dp : DecidableEq Port]
     (mu : ℂ) (C : Matrix Port Port ℂ) (z : Fin 2 → ℂ)
     (_ : mu ≠ star mu) (_ : z 0 ≠ z 1) (_ : ∀ i, 0 < (z i).im)
-    (_ : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0) (_ : C ≠ 0),
+    (_ : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0),
       let G := R.readout () ⟨Port, fp, dp, mu, z⟩ C
-      ∃ p q : Port ⊕ Port, p ≠ q ∧
+      C ≠ 0 ↔ ∃ p q : Port ⊕ Port, p ≠ q ∧
         (G p p * G q q - G p q * G q p).re < 0
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  obtain ⟨p, q, _, hneg⟩ := h (Port := ULift.{u} Unit) Complex.I 1 samples
-    pole_nonreal samples_distinct samples_upper samples_regular one_ne_zero
+  obtain ⟨p, q, _, hneg⟩ := (h (Port := ULift.{u} Unit) Complex.I 1 samples
+    pole_nonreal samples_distinct samples_upper samples_regular).mp one_ne_zero
   change ((0 : ℂ) * 0 - 0 * 0).re < 0 at hneg
   norm_num at hneg
 
@@ -294,7 +294,7 @@ def registration : LeanInformationAudit.Contract.Registration
     coordinates := #[0, 3, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "value"]
+        "body", "body", "value"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]

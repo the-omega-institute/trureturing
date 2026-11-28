@@ -48,10 +48,10 @@ internal sealed class TwoPointMirrorPortCriterionDocument : IScribeDocumentDefin
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For every nonzero residue C and every admissible pair of locations, there are distinct sample-port coordinates p and q such that the real part of G(p,p)G(q,q) minus G(p,q)G(q,p) is strictly negative. " +
+                    "For every admissible pair of locations, C is nonzero if and only if there are distinct sample-port coordinates p and q such that the real part of G(p,p)G(q,q) minus G(p,q)G(q,p) is strictly negative. " +
                     "Thus a two-by-two principal submatrix already detects indefiniteness, regardless of the number of ports. " +
                     "If a diagonal entry C(i,i) is nonzero, use port i at both locations: the determinant is minus the squared modulus of C(i,i) times the squared modulus of the scalar Cauchy determinant. " +
                     "If all diagonal entries of C vanish, all diagonal entries of G vanish. The nonzero residue forces G to be nonzero; any nonzero off-diagonal entry then gives a principal determinant equal to minus its squared modulus. " +
-                    "The selected coordinates may use one location or both. This conclusion concerns the finite mirror-resolvent model and supplies no identification with a zeta transfer function."))),
+                    "Conversely, a zero residue gives the zero Gram and excludes a negative minor. The selected coordinates may use one location or both. This conclusion concerns the finite mirror-resolvent model and supplies no identification with a zeta transfer function."))),
                 DescribeRole.Theorem))));
 }

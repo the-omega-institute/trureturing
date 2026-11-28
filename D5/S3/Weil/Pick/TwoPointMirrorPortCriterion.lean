@@ -230,60 +230,64 @@ private theorem diagonal_port_minor (mu : ℂ) (C : Matrix Port Port ℂ)
   simp [factoredBlock, cauchyDeterminant, star_mul, star_sub]
   <;> ring
 
-/-- Every nonzero residue is detected by a negative principal minor involving
-only two sample-port coordinates, independently of the number of ports. -/
+/-- Nonzero residues are exactly those detected by a negative principal minor
+involving two sample-port coordinates, independently of the number of ports. -/
 theorem two_point_mirror_negative_principal_minor
     (mu : ℂ) (C : Matrix Port Port ℂ) (z : Fin 2 → ℂ)
     (hmu : mu ≠ star mu) (hdistinct : z 0 ≠ z 1)
     (hupper : ∀ i, 0 < (z i).im)
-    (hregular : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0)
-    (hC : C ≠ 0) :
+    (hregular : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0) :
+      let G := mirrorNevanlinnaGram mu C z
+      C ≠ 0 ↔ ∃ p q : Port ⊕ Port, p ≠ q ∧
+        (G p p * G q q - G p q * G q p).re < 0 := by
+    classical
+    constructor
+    · intro hC
     let G := mirrorNevanlinnaGram mu C z
-    ∃ p q : Port ⊕ Port, p ≠ q ∧
-      (G p p * G q q - G p q * G q p).re < 0 := by
-  classical
-  let G := mirrorNevanlinnaGram mu C z
-  change ∃ p q : Port ⊕ Port, p ≠ q ∧
-    (G p p * G q q - G p q * G q p).re < 0
-  by_cases hdiag : ∀ i, C i i = 0
-  · have hzero (p : Port ⊕ Port) : G p p = 0 := by
-      cases p <;> simp [G, mirrorNevanlinnaGram, mirrorNevanlinnaBlock,
-        mirrorResolvent, Matrix.conjTranspose_apply, hdiag]
-    have hG : G ≠ 0 := by
-      intro hz
-      apply hC
-      apply (two_point_mirror_posSemidef_iff mu C z hmu hdistinct hupper hregular).mp
-      change G.PosSemidef
-      rw [hz]
-      exact Matrix.PosSemidef.zero
-    have hex : ∃ p q, G p q ≠ 0 := by
-      by_contra hn
-      push_neg at hn
-      exact hG (Matrix.ext hn)
-    obtain ⟨p, q, hpq⟩ := hex
-    have hHerm : G.IsHermitian := by
-      change (mirrorNevanlinnaGram mu C z).IsHermitian
-      rw [(two_point_mirror_congruence mu C z hmu hdistinct hupper hregular).1]
-      exact Matrix.isHermitian_mul_mul_conjTranspose _
-        (finite_spectral_localizer_zero_scale_isHermitian _ _ _ _)
-    refine ⟨p, q, ?_, ?_⟩
-    · rintro rfl
-      exact hpq (hzero p)
-    · rw [hzero p, hzero q, ← hHerm.apply q p]
-      simpa [Complex.star_def, Complex.mul_conj] using
-        neg_lt_zero.mpr (Complex.normSq_pos.mpr hpq)
-  · push_neg at hdiag
-    obtain ⟨i, hi⟩ := hdiag
-    refine ⟨Sum.inl i, Sum.inr i, Sum.inl_ne_inr, ?_⟩
-    change ((mirrorNevanlinnaGram mu C z) (Sum.inl i) (Sum.inl i) *
-      (mirrorNevanlinnaGram mu C z) (Sum.inr i) (Sum.inr i) -
-      (mirrorNevanlinnaGram mu C z) (Sum.inl i) (Sum.inr i) *
-      (mirrorNevanlinnaGram mu C z) (Sum.inr i) (Sum.inl i)).re < 0
-    rw [diagonal_port_minor mu C z i hupper hregular]
-    have hc := Complex.normSq_pos.mpr hi
-    have hd := Complex.normSq_pos.mpr (cauchyDeterminant_ne_zero mu z hmu hdistinct hregular)
-    simpa [Complex.star_def, mul_comm, Complex.mul_conj] using
-      neg_lt_zero.mpr (mul_pos hc hd)
+    change ∃ p q : Port ⊕ Port, p ≠ q ∧
+      (G p p * G q q - G p q * G q p).re < 0
+    by_cases hdiag : ∀ i, C i i = 0
+    · have hzero (p : Port ⊕ Port) : G p p = 0 := by
+        cases p <;> simp [G, mirrorNevanlinnaGram, mirrorNevanlinnaBlock,
+          mirrorResolvent, Matrix.conjTranspose_apply, hdiag]
+      have hG : G ≠ 0 := by
+        intro hz
+        apply hC
+        apply (two_point_mirror_posSemidef_iff mu C z hmu hdistinct hupper hregular).mp
+        change G.PosSemidef
+        rw [hz]
+        exact Matrix.PosSemidef.zero
+      have hex : ∃ p q, G p q ≠ 0 := by
+        by_contra hn
+        push_neg at hn
+        exact hG (Matrix.ext hn)
+      obtain ⟨p, q, hpq⟩ := hex
+      have hHerm : G.IsHermitian := by
+        change (mirrorNevanlinnaGram mu C z).IsHermitian
+        rw [(two_point_mirror_congruence mu C z hmu hdistinct hupper hregular).1]
+        exact Matrix.isHermitian_mul_mul_conjTranspose _
+          (finite_spectral_localizer_zero_scale_isHermitian _ _ _ _)
+      refine ⟨p, q, ?_, ?_⟩
+      · rintro rfl
+        exact hpq (hzero p)
+      · rw [hzero p, hzero q, ← hHerm.apply q p]
+        simpa [Complex.star_def, Complex.mul_conj] using
+          neg_lt_zero.mpr (Complex.normSq_pos.mpr hpq)
+    · push_neg at hdiag
+      obtain ⟨i, hi⟩ := hdiag
+      refine ⟨Sum.inl i, Sum.inr i, Sum.inl_ne_inr, ?_⟩
+      change ((mirrorNevanlinnaGram mu C z) (Sum.inl i) (Sum.inl i) *
+        (mirrorNevanlinnaGram mu C z) (Sum.inr i) (Sum.inr i) -
+        (mirrorNevanlinnaGram mu C z) (Sum.inl i) (Sum.inr i) *
+        (mirrorNevanlinnaGram mu C z) (Sum.inr i) (Sum.inl i)).re < 0
+      rw [diagonal_port_minor mu C z i hupper hregular]
+      have hc := Complex.normSq_pos.mpr hi
+      have hd := Complex.normSq_pos.mpr (cauchyDeterminant_ne_zero mu z hmu hdistinct hregular)
+      simpa [Complex.star_def, mul_comm, Complex.mul_conj] using
+        neg_lt_zero.mpr (mul_pos hc hd)
+  · rintro ⟨p, q, _, hneg⟩ hC
+    subst C
+    simpa [mirrorNevanlinnaGram, mirrorNevanlinnaBlock, mirrorResolvent] using hneg
 
 #print axioms two_point_mirror_congruence
 #print axioms two_point_mirror_posSemidef_iff
