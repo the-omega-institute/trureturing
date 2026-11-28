@@ -8,5 +8,5 @@ namespace Omega
 export _root_ (Nat.shiftLeft.match_1)
 end Omega
 namespace Omega.Nat
-export _root_.Nat (bitwise hasNotBit land lor shiftRight testBit xor)
+export _root_.Nat (bitwise hasNotBit instShiftLeft instShiftRight land lor shiftLeft shiftRight testBit xor)
 end Omega.Nat

@@ -7,6 +7,7 @@ prelude
 import all OmegaInit.Prelude
 
 public import OmegaInit.Core
+public import OmegaInit.Data.NeZero
 
 @[expose] public section
 
@@ -548,4 +549,29 @@ port_proof Nat.le_of_not_gt
 public section
 namespace Nat
 export _root_.Omega.Nat (casesAuxOn ge_of_not_lt instMax le_of_not_gt max max_def min min_def not_le_of_gt not_lt_of_ge recAux)
+end Nat
+
+port_proof Nat.succ_le_of_lt
+port_proof Nat.lt_of_succ_le
+port_proof Nat.add_lt_add_left
+port_proof Nat.add_lt_add_right
+port_proof Nat.eq_zero_or_pos
+port_proof Nat.instNeZeroSucc
+attribute [instance] Omega.Nat.instNeZeroSucc
+port_proof Nat.le_of_succ_le
+port_proof Nat.le_of_lt
+port_proof Nat.ne_of_lt
+port_proof Nat.ne_of_gt
+port_proof Nat.pos_of_ne_zero
+port_proof Nat.pos_iff_ne_zero
+port_proof Nat.pos_of_neZero
+port_definition Nat.sub_le_sub_right._f
+port_proof Nat.sub_le_sub_right
+port_proof Nat.succ_sub
+port_proof Nat.sub_lt_left_of_lt_add
+port_proof Nat.sub_lt_right_of_lt_add
+
+public section
+namespace Nat
+export _root_.Omega.Nat (add_lt_add_left add_lt_add_right eq_zero_or_pos instNeZeroSucc le_of_lt le_of_succ_le lt_of_succ_le ne_of_gt ne_of_lt pos_iff_ne_zero pos_of_neZero pos_of_ne_zero sub_le_sub_right sub_lt_left_of_lt_add sub_lt_right_of_lt_add succ_le_of_lt succ_sub)
 end Nat

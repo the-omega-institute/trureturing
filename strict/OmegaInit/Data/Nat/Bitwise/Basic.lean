@@ -30,8 +30,8 @@ attribute [irreducible] bitwise
 
 end Omega.Nat
 
-port_definition Nat.land
-port_definition Nat.lor
+port_definition Nat.land with_native_code
+port_definition Nat.lor with_native_code
 namespace Nat
 /-- The kernel evaluates numerals at this literal name. Symbolic calls retain the pinned bitwise definition. -/
 @[extern "lean_nat_lxor", no_expose] def xor : @& Nat → @& Nat → Nat :=
@@ -44,7 +44,7 @@ port_definition Nat.shiftLeft.match_1
 namespace Omega.Nat
 export _root_.Nat (xor)
 
-@[implicit_reducible] def shiftRight : Nat → Nat → Nat := fun x n =>
+@[extern "lean_nat_shiftr", implicit_reducible] def shiftRight : @& Nat → @& Nat → Nat := fun x n =>
   Nat.brecOn (motive := fun _ => Nat → Nat) n (fun i below num =>
     Nat.shiftLeft.match_1 (fun _ i => Nat.below (motive := fun _ => Nat → Nat) i → Nat) num i
       (fun z _ => z) (fun z _ prior => Nat.div (prior.fst z) (succ (succ zero))) below) x
@@ -64,4 +64,15 @@ port_definition Nat.hasNotBit
 public section
 namespace Nat
 export _root_.Omega.Nat (hasNotBit)
+end Nat
+
+port_definition Nat.shiftLeft._f
+port_definition Nat.shiftLeft with_native_code
+port_definition Nat.instShiftLeft with_native_code
+port_definition Nat.instShiftRight with_native_code
+attribute [instance] Omega.Nat.instShiftLeft Omega.Nat.instShiftRight
+
+public section
+namespace Nat
+export _root_.Omega.Nat (instShiftLeft instShiftRight shiftLeft)
 end Nat

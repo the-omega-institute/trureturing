@@ -144,6 +144,31 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
   if info.isAxiom || info.isUnsafe || info.isPartial then throwErrorAt stx "inadmissible declaration"
   return (src, info)
 
+/-- Restore the private kernel declaration at the lexical owner of the pinned helper. -/
+@[command_parser, builtin_command_parser] def portPrivate := leading_parser "port_private_declaration " >> ident
+
+@[builtin_command_elab portPrivate] def elabPortPrivate : CommandElab := fun stx => do
+  let owner ← getMainModule
+  unless owner.getRoot == `OmegaInit do throwError "expected an OmegaInit module"
+  let pinned := owner.replacePrefix `OmegaInit `Init
+  let src ← officialEnvironment pinned
+  let helper := stx[1].getId
+  let sourceName := mkPrivateNameCore pinned helper
+  unless src.getModuleIdxFor? sourceName == src.getModuleIdx? pinned do throwErrorAt stx[1] "invalid private owner"
+  let some ci := src.find? sourceName | throwErrorAt stx[1] "unknown private declaration"
+  let name := mkPrivateNameCore owner (omegaName helper)
+  liftCoreM <| withoutExporting do
+    let type ← ofExcept (translateProofTerm src ci.type)
+    match ci with
+    | .thmInfo t =>
+      Lean.addDecl (.thmDecl {t with name, type, value := ← ofExcept (translateProofTerm src t.value), all := [name]})
+    | .defnInfo d =>
+      unless d.safety == .safe && d.all == [d.name] do throwError "expected a total nonmutual definition"
+      Lean.addDecl (.defnDecl {d with name, type, value := ← ofExcept (translateProofTerm src d.value), all := [name]})
+      setReducibilityStatus name (getReducibilityStatusCore src ci.name)
+      withOptions (fun opts => Elab.async.set opts false) do Lean.compileDecls #[name] (logErrors := false)
+    | _ => throwError "expected a private theorem or total definition"
+
 @[command_parser, builtin_command_parser] def portProof := leading_parser
   "port_proof " >> ident >> optional (" using " >> ident) >> optional (" by_reflexivity" <|> " by_finite_cases")
 
@@ -247,7 +272,7 @@ private def installRuntimeExtern (src : Environment) (name : Name) : CoreM Unit 
     | `ByteArray.mk => some ("lean_byte_array_mk", "omega_byte_array_mk", #[(.object, false)], .object)
     | `ByteArray.emptyWithCapacity => some ("lean_mk_empty_byte_array", "omega_byte_array_empty", #[(.tobject, true)], .object)
     | `ByteArray.push => some ("lean_byte_array_push", "omega_byte_array_push", #[(.object, false), (.uint8, false)], .object)
-    | _ => none
+    | _ => RootNames.natBitwiseExtern? name |>.map fun sym => (sym, sym, #[(.tobject, true), (.tobject, true)], .tobject)
   let some (target, symbol, args, result) := spec | return
   let some (.extern _ ps ret ⟨[.standard `all upstream]⟩) := IR.findEnvDecl src name
     | throwError "missing pinned native primitive {name}"

@@ -174,7 +174,9 @@ private def project (source output : System.FilePath) (env pinned : Environment)
     for n in protectedExt.getModuleEntries env idx (level := level) do
       metadata := addProtected metadata (renamed n)
     for (n, status) in reducibilityCoreExt.getModuleEntries env idx (level := level) do
-      let expose := moved.contains `Nat.xor && [`Nat.xor, `Omega.Nat.bitwise].contains n
+      -- A hosted modulo uses its checked recurrence in place of the kernel's literal reduction.
+      let expose := (moved.contains `Nat.xor && [`Nat.xor, `Omega.Nat.bitwise].contains n) ||
+        (moved.contains `Nat.mod && n == `Omega.Nat.modCore)
       let status := if expose then .semireducible else status
       metadata := reducibilityCoreExt.addEntry (asyncDecl := renamed n) metadata (renamed n, status)
     let native := Compiler.implementedByAttr.ext

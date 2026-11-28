@@ -913,3 +913,13 @@ port_inductive Lean.Name
 port_definition Lean.Name.mkStr1 with_native_code
 port_definition Lean.SyntaxNodeKind
 port_inductive Lean.ParserDescr
+
+port_native_records Zero
+port_proof Nat.lt_of_le_of_lt
+port_proof Nat.pred_le_pred
+port_proof Nat.succ_pos
+
+public section
+namespace Nat
+export _root_.Omega.Nat (lt_of_le_of_lt pred_le_pred succ_pos)
+end Nat

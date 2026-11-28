@@ -450,6 +450,9 @@ def main():
             run("lean", HERE / "consumers/QuotientConsumer.lean", env=hosted_env)
             if (hosted / "OmegaInit/Coe.olean").is_file():
                 run("lean", HERE / "consumers/CoercionConsumer.lean", env=hosted_env)
+            if has_interfaces(product / "inventory.jsonl", {
+                    "Init.Data.Fin.Basic": {"Fin.elim0", "Fin.coeToNat", "Fin.instOfNat"}}):
+                run("lean", HERE / "consumers/FinBasicConsumer.lean", env=hosted_env)
             if (hosted / "OmegaInit/Core.olean").is_file():
                 run("lean", HERE / "consumers/SetoidQuotientConsumer.lean", env=hosted_env)
             if (hosted / "OmegaInit/Ext.olean").is_file():
