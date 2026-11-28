@@ -702,3 +702,10 @@ namespace Nat
 export _root_.Omega.Nat (eq_of_le_of_lt_succ lt_iff_le_and_ne lt_of_succ_lt lt_one_iff not_lt_of_le
   succ_le_iff)
 end Nat
+
+port_proof Nat.eq_zero_of_le_zero by_constructive_casts
+port_proof Nat.le_of_not_lt by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (eq_zero_of_le_zero le_of_not_lt)
+end Nat

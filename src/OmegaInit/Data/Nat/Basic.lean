@@ -37,3 +37,7 @@ namespace Omega.Nat
 export _root_.Nat (eq_of_le_of_lt_succ lt_iff_le_and_ne lt_of_succ_lt lt_one_iff not_lt_of_le
   succ_le_iff)
 end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (eq_zero_of_le_zero le_of_not_lt)
+end Omega.Nat
