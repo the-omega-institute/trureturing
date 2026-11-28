@@ -37,10 +37,20 @@ function checkpointStorage(paths, key) {
   assert.equal(fs.realpathSync(process.env.GITHUB_WORKSPACE), fs.realpathSync("."));
   return require("node:path").join(process.env.CHECKPOINT_STORE, key);
 }
+function throttleOnce(storage, op) {
+  const marker = storage + "." + op + "-429";
+  if (!fs.existsSync(marker)) return false;
+  fs.unlinkSync(marker);
+  const core = require("@actions/core");
+  core.warning("You've hit a rate limit, your rate limit will reset in 1 seconds");
+  core.warning("Failed request: (429) Too Many Requests: rate limit exceeded");
+  return true;
+}
 exports.restoreCache = async function(paths, key, prefixes, options) {
   if (key.startsWith("lean-compiler-")) {
     const storage = checkpointStorage(paths, key);
     assert.deepEqual(prefixes, []);
+    if (throttleOnce(storage, "get")) return undefined;
     if (process.env.RESTORE_DIAGNOSTIC) {
       require("@actions/core")[process.env.RESTORE_DIAGNOSTIC]("cache service failure");
       return undefined;
@@ -78,6 +88,7 @@ exports.restoreCache = async function(paths, key, prefixes, options) {
 exports.saveCache = async function(paths, key) {
   if (key.startsWith("lean-compiler-")) {
     const storage = checkpointStorage(paths, key);
+    if (throttleOnce(storage, "put")) return -1;
     if (fs.existsSync(storage) || fs.existsSync(storage + ".reserved")) return -1;
     fs.copyFileSync(paths[0], storage, fs.constants.COPYFILE_EXCL);
     return 1;
@@ -178,9 +189,16 @@ esac
     const address = [kind, id, digest, String(size)];
     const key = ['lean-compiler', kind, 'v1', id, digest, size].join('-');
     const put = ['compiler-cache-put', ...address, input];
+    const child = { GITHUB_WORKFLOW_REF: 'owner/repo/.github/workflows/ci-lean-generation-compile.yml@refs/heads/dev',
+      GITHUB_EVENT_NAME: 'workflow_dispatch' };
+    const childRead = invoke(worker, ['compiler-cache-get', ...address, output], child);
+    assert.equal(childRead.status, kind === 'unit' ? 4 : 1);
+    assert.equal(invoke(publisher, put, { ...child, GITHUB_REF_PROTECTED: 'false' }).status, 1);
     const get = ['compiler-cache-get', ...address, output];
     assert.equal(invoke(publisher, put, { GITHUB_EVENT_NAME: 'pull_request' }).status, 1);
+    if (kind === 'unit') await writeFile(join(storage, key + '.put-429'), '');
     const stored = invoke(publisher, put);
+    if (kind === 'unit') assert.match(stored.stdout, /throttled compiler checkpoint/);
     assert.equal(stored.status, 0, stored.stderr);
     const row = { key, version: 'sdk-version', ref: 'refs/heads/dev' };
     const inventory = [row, { ...row, ref: 'refs/heads/pr' }, { ...row, version: 'different' },
@@ -190,7 +208,9 @@ esac
     const listed = invoke(worker, ['compiler-cache-list', kind, listFile]);
     assert.equal(listed.status, 0, listed.stderr);
     assert.deepEqual(JSON.parse(await readFile(listFile)), [{ id, sha256: digest, bytes: size }]);
+    if (kind === 'unit') await writeFile(join(storage, key + '.get-429'), '');
     const restored = invoke(worker, get);
+    if (kind === 'unit') assert.match(restored.stdout, /throttled compiler checkpoint/);
     assert.equal(restored.status, 0, restored.stderr);
     assert.equal(await readFile(output, 'utf8'), bytes);
     await rm(output);
@@ -654,4 +674,47 @@ else:
   const empty = run('push', 'restore-published');
   assert.equal(empty.status, 0, empty.stderr);
   assert.match(empty.stdout, /No published module cache yet/);
+});
+
+test('a dispatched compiler child builds only its units or final shard lanes', async t => {
+  const { root, env, run } = await fixture(t);
+  const directory = join(root, 'tools/scripts/worktree');
+  await mkdir(directory, { recursive: true });
+  await writeFile(join(directory, 'lean_module_cache.py'), `
+import json, os, sys
+from pathlib import Path
+op, *args = sys.argv[1:]
+assert os.environ["LEAN_MODULE_ACTIONS_CACHE"] == "1"
+assert Path(args[args.index("--plan")+1]).name == "module-plan.json"
+dest = Path(args[args.index("--output")+1])
+with open("commands", "a") as out:
+    print(op, file=out)
+if op == "compiler-receipts":
+    dest.write_text("{}")
+elif op == "compiler-units":
+    assert json.loads(Path(args[args.index("--receipts")+1]).read_text()) == {}
+    keys = json.loads(Path(args[args.index("--assignment")+1]).read_text())
+    dest.write_text(json.dumps(dict.fromkeys(keys, "receipt")))
+elif op == "worker":
+    assert "--receipts" in args and args[args.index("--lane")+1] in ["0", "3"]
+else:
+    raise ValueError(op)
+`);
+  env.GITHUB_WORKFLOW_REF = 'owner/repo/.github/workflows/ci-lean-generation-compile.yml@refs/heads/dev';
+  env.COMPILER_PHASE = 'units';
+  env.COMPILER_ASSIGNMENT = JSON.stringify([digest]);
+  const result = join(root, 'compiler-result/result.json');
+  assert.equal(run('push', 'compiler-assigned').status, 1);
+  const unit = run('workflow_dispatch', 'compiler-assigned');
+  assert.equal(unit.status, 0, unit.stderr);
+  assert.deepEqual(JSON.parse(await readFile(result)), { [digest]: 'receipt' });
+  env.COMPILER_PHASE = 'shards';
+  env.COMPILER_ASSIGNMENT = '[0,3]';
+  const shard = run('workflow_dispatch', 'compiler-assigned');
+  assert.equal(shard.status, 0, shard.stderr);
+  assert.deepEqual(JSON.parse(await readFile(result)), { lanes: [0, 3] });
+  env.COMPILER_ASSIGNMENT = '[3,3]';
+  assert.match(run('workflow_dispatch', 'compiler-assigned').stderr, /invalid compiler assignment/);
+  assert.equal(run('workflow_dispatch', 'module-promote').status, 1);
+  assert.equal(await readFile(join(root, 'commands'), 'utf8'), 'compiler-receipts\ncompiler-units\ncompiler-receipts\nworker\nworker\n');
 });

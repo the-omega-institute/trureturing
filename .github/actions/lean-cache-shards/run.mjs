@@ -340,16 +340,19 @@ async function digestFile(path) {
   return hash.digest('hex');
 }
 
-function requirePublisher(kind) {
+function requirePublisher(kind, allowCompilerChild = false) {
   const env = process.env;
   const workflow = kind === 'report' ? 'report-release-publish.yml' : 'cache-release-publish.yml';
   const events = ['schedule', 'workflow_dispatch'];
   if (kind === 'compiler') events.push('push');
   if (kind === 'report') events.push('workflow_run');
+  const path = env.GITHUB_REPOSITORY + '/.github/workflows/';
+  const worker = allowCompilerChild && kind === 'compiler' && env.GITHUB_EVENT_NAME === 'workflow_dispatch'
+    && env.GITHUB_WORKFLOW_REF === path + 'ci-lean-generation-compile.yml@refs/heads/dev';
   if (!events.includes(env.GITHUB_EVENT_NAME)
       || env.GITHUB_REF !== 'refs/heads/dev' || env.GITHUB_REF_PROTECTED !== 'true'
       || env.STRATALINT_CACHE_WRITES !== 'true'
-      || env.GITHUB_WORKFLOW_REF !== env.GITHUB_REPOSITORY + '/.github/workflows/' + workflow + '@refs/heads/dev') {
+      || (!worker && env.GITHUB_WORKFLOW_REF !== path + workflow + '@refs/heads/dev')) {
     throw new Error('shared cache writes require the protected dev Release publisher');
   }
 }
@@ -385,7 +388,7 @@ async function generationIndex(digest, file) {
 
 async function moduleCacheEntry(key, digest, file) {
   const put = operation === 'module-put';
-  if (put) requirePublisher(key?.endsWith('-report') ? 'report' : 'compiler');
+  if (put) requirePublisher(key?.endsWith('-report') ? 'report' : 'compiler', true);
   if (!key || key.length > 512 || /[,\r\n]/.test(key) || !/^[0-9a-f]{64}$/.test(digest) || !file) {
     throw new Error('invalid module cache address');
   }
@@ -415,40 +418,53 @@ async function moduleCacheEntry(key, digest, file) {
   }
 }
 
-// The SDK returns undefined both for an absent entry and after logging a service
-// error. Only the former permits a compiler worker to rebuild an evicted unit.
-async function restoreCheckpoint(cache, core, path, key) {
+// The SDK logs throttling and returns the same sentinel as a cache miss or
+// a lost reservation. Respect the reported reset before retrying the operation.
+async function checkpointRequest(core, request, succeeded, verifyReservation = false) {
   const { warning, error } = core;
-  let failure;
-  const capture = log => (message, ...args) => {
-    failure = String(message);
-    log(message, ...args);
-  };
-  core.warning = capture(warning);
-  core.error = capture(error);
-  try {
-    const backoffs = [2000, 4000, 8000, 16000, 32000];
-    for (let attempt = 0; ; attempt++) {
-      failure = undefined;
-      const matched = await cache.restoreCache([path], key, []);
-      if (matched === key) return true;
-      if (matched !== undefined) throw new Error('unexpected compiler checkpoint key ' + matched);
-      if (failure === undefined) return false;
-      if (attempt === backoffs.length || !/\b429\b[^\n]*Too Many Requests/i.test(failure)) {
-        throw new Error(failure);
-      }
-      // Workers share a repository-wide Actions Cache quota.
-      const backoff = backoffs[attempt];
-      await delay(backoff + Math.floor(Math.random() * backoff));
+  const deadline = performance.now() + 75000;
+  let attempts = 0;
+  for (;;) {
+    let retrySeconds;
+    let failure;
+    const capture = log => (message, ...args) => {
+      const detail = String(message);
+      const reset = /rate limit will reset in (\d+) seconds?/i.exec(detail);
+      if (reset) retrySeconds = Number(reset[1]);
+      else if (/rate limited|too many requests|\b429\b/i.test(detail)) retrySeconds ??= 2;
+      failure = detail;
+      log(message, ...args);
+    };
+    core.warning = capture(warning);
+    core.error = capture(error);
+    let result;
+    try {
+      result = await request();
+    } finally {
+      core.warning = warning;
+      core.error = error;
     }
-  } finally {
-    core.warning = warning;
-    core.error = error;
+    if (succeeded(result)) return result;
+    if (retrySeconds === undefined) {
+      if (failure && !verifyReservation) throw new Error(failure);
+      return result;
+    }
+    const ms = 1000 * Math.max(retrySeconds, Math.min(16, 2 ** attempts)) + Math.random() * 2000;
+    if (performance.now() + ms >= deadline) throw new Error(failure);
+    console.log('Actions Cache throttled compiler checkpoint, retrying in ' + Math.ceil(ms / 1000) + 's');
+    await delay(ms);
+    attempts++;
   }
 }
 
+async function restoreCheckpoint(cache, core, path, key) {
+  const matched = await checkpointRequest(core, () => cache.restoreCache([path], key, []), result => result === key);
+  if (matched !== undefined && matched !== key) throw new Error('unexpected compiler checkpoint key ' + matched);
+  return matched === key;
+}
+
 async function compilerCheckpoint(kind, ...args) {
-  requirePublisher('compiler');
+  requirePublisher('compiler', kind === 'unit');
   if (!['unit', 'catalog'].includes(kind)) throw new Error('invalid compiler checkpoint kind');
   const prefix = 'lean-compiler-' + kind + '-v1-';
   // Every runner must use the same literal path to derive the SDK cache version.
@@ -492,7 +508,7 @@ async function compilerCheckpoint(kind, ...args) {
     if (operation === 'compiler-cache-put') {
       await copyFile(file, path);
       await verify(path);
-      if (await cache.saveCache([path], key) > 0) return;
+      if (await checkpointRequest(core, () => cache.saveCache([path], key), id => id > 0, true) > 0) return;
       await rm(path, { force: true });
       // A competing reservation can be visible only after its upload finalizes.
       for (const ms of [0, 1000, 2000, 4000, 8000, 16000]) {
@@ -514,6 +530,58 @@ async function compilerCheckpoint(kind, ...args) {
     process.chdir(workspace);
     process.env.GITHUB_WORKSPACE = workspace;
     await rm(temporary, { recursive: true, force: true });
+  }
+}
+
+async function runCompilerDispatch() {
+  const assigned = operation === 'compiler-assigned';
+  requirePublisher('compiler', assigned);
+  const temp = process.env.RUNNER_TEMP;
+  const plan = join(temp, 'module-plan.json');
+  const resume = join(temp, 'compiler-resume');
+  const tool = 'tools/scripts/worktree/lean_module_cache.py';
+  const env = { ...process.env, LEAN_MODULE_ACTIONS_CACHE: '1' };
+  const run = (script, ...args) => execFileSync('python3', ['-B', script, ...args], { env, stdio: 'inherit' });
+  if (!assigned) {
+    const controller = '.github/scripts/compiler-release-coordinator.py';
+    if (operation === 'compiler-coordinate-prepare') {
+      run(controller, '--prepare-only', '--plan', plan, '--directory', resume);
+    } else {
+      const args = ['--plan', join(resume, 'module-plan.json'), '--pending', join(resume, 'pending.json')];
+      for (const [name, flag] of [['COMPILER_MAX_ACTIVE', '--max-active'],
+        ['COMPILER_UNITS_PER_BATCH', '--units-per-batch'], ['COMPILER_SHARDS_PER_BATCH', '--shards-per-batch']]) {
+        if (env[name]) args.push(flag, env[name]);
+      }
+      run(controller, ...args);
+    }
+    return;
+  }
+  if (env.GITHUB_EVENT_NAME !== 'workflow_dispatch' ||
+      env.GITHUB_WORKFLOW_REF !== env.GITHUB_REPOSITORY + '/.github/workflows/ci-lean-generation-compile.yml@refs/heads/dev') {
+    throw new Error('compiler assignment requires the protected child workflow');
+  }
+  const phase = env.COMPILER_PHASE;
+  const units = phase === 'units';
+  const assignments = JSON.parse(env.COMPILER_ASSIGNMENT);
+  if ((!units && phase !== 'shards') || !Array.isArray(assignments) || !assignments.length ||
+      new Set(assignments).size !== assignments.length || !assignments.every(value => units
+        ? typeof value === 'string' && /^[0-9a-f]{64}$/.test(value)
+        : Number.isSafeInteger(value) && value >= 0)) throw new Error('invalid compiler assignment');
+  const directory = join(temp, 'compiler-result');
+  await mkdir(directory, { recursive: true });
+  const result = join(directory, 'result.json');
+  const receipts = join(temp, 'compiler-receipts.json');
+  run(tool, 'compiler-receipts', '--plan', plan, '--output', receipts);
+  if (units) {
+    const assignment = join(temp, 'compiler-assignment.json');
+    await writeFile(assignment, JSON.stringify(assignments));
+    run(tool, 'compiler-units', '--plan', plan, '--assignment', assignment, '--receipts', receipts, '--output', result);
+  } else {
+    for (const lane of assignments) {
+      run(tool, 'worker', '--plan', plan, '--lane', String(lane), '--receipts', receipts,
+        '--output', join(temp, 'compiler-shards-' + lane));
+    }
+    await writeFile(result, JSON.stringify({ lanes: assignments }));
   }
 }
 
@@ -765,6 +833,7 @@ async function saveContinuation() {
 }
 
 async function main() {
+  if (['compiler-coordinate-prepare', 'compiler-coordinate', 'compiler-assigned'].includes(operation)) return runCompilerDispatch();
   if (['module-plan', 'module-worker', 'module-stage', 'module-promote', 'restore-published'].includes(operation)) return runModuleCache();
   if (['compiler-cache-list', 'compiler-cache-put', 'compiler-cache-get'].includes(operation)) {
     return compilerCheckpoint(...process.argv.slice(3));
