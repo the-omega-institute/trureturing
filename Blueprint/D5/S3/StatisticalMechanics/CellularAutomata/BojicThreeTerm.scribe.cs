@@ -45,10 +45,7 @@ internal sealed class BojicThreeTermDocument : IScribeDocumentDefinition
                         "This settles the cyclic three-term direction in Section 11 for the "
                         + "stated distinct-offset range. Rules on other graphs are outside "
                         + "the statement."))),
-                DescribeRole.Theorem,
-                openProblemResolutionClaim: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("bojic-2026-three-term-cyclic-unipotent-order"),
-                    ResolutionKind.Proved)))));
+                DescribeRole.Theorem))));
 
     private static Formula MainFormula()
     {

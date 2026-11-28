@@ -10,10 +10,6 @@ $$\forall q \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall a \in \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/BojicThreeTerm.piecewise_trinomial_interface` (`✓ std3`). ∎
 
-*Resolves.* `Problems/bojic-2026-three-term-cyclic-unipotent-order` (proved) by `D5/S3/StatisticalMechanics/CellularAutomata/BojicThreeTerm.piecewise_trinomial_interface`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bojic-2026-three-term-cyclic-unipotent-order","declaration_gid":"D5/S3/StatisticalMechanics/CellularAutomata/BojicThreeTerm.piecewise_trinomial_interface","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ana Bojić (2026). *Semisimple–Unipotent Decomposition and the Exact Order of a Linear Cellular Automaton over F2*. DOI: [10.48550/arXiv.2611.33216](https://doi.org/10.48550/arXiv.2611.33216). URL: <https://arxiv.org/abs/2611.33216v1>.
