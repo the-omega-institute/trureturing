@@ -67,6 +67,35 @@ private def checkedEnvelopePowZero (visible strict : Environment) (owner : Name)
   let translated := InitKernelPort.translate InitKernelPort.portName reduced
   guard ((Kernel.check strict {} translated).isOk && Kernel.isDefEqGuarded strict {} translated target))
 
+/-- The order of functions uses the pointwise relation. Its antisymmetry proof is
+absent from the strict library. A theorem projecting just the relation can still
+have a common public type. Reduce only subterms involving the missing instances,
+then check the whole type in each exported environment. -/
+private def checkedOrderFields (visible strict : Environment) (owner : Name)
+    (source : ConstantInfo) (pinned target : Expr) (missing : Array Name) : Bool := Id.run do
+  let orderInstances := [`Lean.Order.instOrderPi, `Lean.Order.ImplicationOrder.instOrder,
+    `Lean.Order.ReverseImplicationOrder.instOrder, `Lean.Order.instPartialOrderStateT,
+    `Lean.Order.instPartialOrderStateRefT', `Lean.Order.instPartialOrderReaderT,
+    `Lean.Grind.Ring.OfSemiring.instLEQOfOrderedAdd, `Lean.Grind.Ring.OfSemiring.instLTQOfOrderedAdd]
+  let absent := missing.map InitKernelPort.originalName
+  unless source.isTheorem && absent.all orderInstances.contains &&
+      (visible.find? source.name).any (fun ci => ci.type.equal source.type) &&
+      visible.getModuleIdxFor? source.name == visible.getModuleIdx? owner do return false
+  let usesMissing := fun (e : Expr) => e.getUsedConstants.any absent.contains
+  let mut reduced := pinned
+  for _ in [:16] do
+    let step := reduced.replace fun e => do
+      guard ((e.isApp || e.isProj) && usesMissing e && !e.getAppFn.constName?.any absent.contains)
+      let simplified ← (Kernel.whnf visible {} e).toOption
+      guard (!simplified.equal e)
+      return simplified
+    if step.equal reduced then break
+    reduced := step
+  let translated := InitKernelPort.translate InitKernelPort.portName reduced
+  return !usesMissing reduced && (Kernel.check visible {} pinned).isOk &&
+    (Kernel.check visible {} reduced).isOk && Kernel.isDefEqGuarded visible {} pinned reduced &&
+    (Kernel.check strict {} translated).isOk && Kernel.isDefEqGuarded strict {} translated target
+
 /-- The kernel names a recursor's minor premises after its constructors. Translate those
 binder labels alongside the constructor constants when comparing serialized public types. -/
 private def recursorBinders (rules : List RecursorRule) : Expr → Expr
@@ -88,7 +117,8 @@ public def originalTypeGap? (official visible strict : Environment) (owner : Nam
   let missing := (expected.getUsedConstants.filter (fun n => !strict.contains n)).qsort Name.lt
   unless missing.isEmpty do
     if checkedFinBound official strict owner source.name pinned target.type ||
-        checkedEnvelopePowZero visible strict owner source pinned target.type then return none
+        checkedEnvelopePowZero visible strict owner source pinned target.type ||
+        checkedOrderFields visible strict owner source pinned target.type missing then return none
     return some ("missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString))
   if (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target.type then
     return none
