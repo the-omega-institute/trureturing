@@ -85,7 +85,7 @@ extension kinds therefore require a correspondence before a port can expose them
 private def supportedExtension (name : Name) : Bool :=
   [-- Compiled interface registrations checked by the port and kernel-interface audits.
    externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.defaultInstanceExtension.name,
-   Meta.simpExtension.ext.name, auxRecExt.name, noConfusionExt.name, sparseCasesOnExt.name, Meta.completionBlackListExt.name,
+   Meta.simpExtension.ext.name, auxRecExt.name, noConfusionExt.name, privateToUserName sparseCasesOnExt.name, Meta.completionBlackListExt.name,
    protectedExt.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, neverExtractAttr.ext.name, reducibilityCoreExt.name,
    privateToUserName structureExt.name, projectionFnInfoExt.name, Meta.Match.Extension.extension.name,
    -- Module provenance, compiled representation and kernel bookkeeping in the pinned toolchain.
