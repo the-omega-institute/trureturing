@@ -5,7 +5,7 @@ import subprocess
 import tempfile
 
 from portable import backend_plan
-from strict_lake import ROOT
+from host_lake import ROOT, UPSTREAM
 
 
 def package(directory, name, dependency, modules):
@@ -31,7 +31,7 @@ def package(directory, name, dependency, modules):
 
 
 def test_external_package():
-    subprocess.run(["lake", "build", "omegaBackendPlan"], cwd=ROOT, check=True)
+    subprocess.run(["lake", "build", "@omegamath/omegaBackendPlan"], cwd=ROOT, check=True)
     with tempfile.TemporaryDirectory(prefix="omega-backend-packages-") as directory:
         library = Path(directory) / "library"
         client = Path(directory) / "client"
@@ -68,7 +68,7 @@ example (a k : Omega.Nat) : Omega.Eq ((a.mul k).mul (a.mul k)) ((a.mul a).mul (k
         assert timestamps == [path.stat().st_mtime_ns for path in outputs], "warm Lake build recompiled an input"
         search = subprocess.check_output(["lake", "env", "printenv", "LEAN_PATH"], cwd=client, text=True).strip()
         report = json.loads(subprocess.check_output([
-            ROOT / ".lake/build/bin/omegaBackendPlan", search, "UseFactorial", "UseSquare",
+            UPSTREAM / ".lake/build/bin/omegaBackendPlan", search, "UseFactorial", "UseSquare",
         ], cwd=client, text=True))
         assert backend_plan(search, ["UseFactorial", "UseSquare"], prepared=True) == report
         assert report["mathlibOnly"] == {"UseFactorial": ["UseFactorial", "FactorialLibrary"]}, report

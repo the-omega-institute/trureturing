@@ -11,8 +11,8 @@ import D5.S3.Geometry.Lorentz.WeylNullScreen
 import D5.S3.Geometry.Lorentz.SL2CLorentzCover4D
 import D5.S3.Geometry.Lorentz.KerrSchildWeylDoubleCopy4D
 import D5.S3.Geometry.Lorentz.PerturbedCausalOrderWeyl4D
-import OmegaMath.Geometry.BinaryQuarticSpinor
-import OmegaMath.Geometry.HermitianSpinorContraction
+import D5.S3.Geometry.Spinors.BinaryQuarticSpinor
+import D5.S3.Geometry.Spinors.HermitianSpinorContraction
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Tactic
 

@@ -6,7 +6,7 @@
    utility: none
    digest: Conical binary refinement is equivalent to exact finite-fiber transportation. -/
 
-import OmegaMath.Algebra.Refinement.FiniteTransport
+import D5.S3.Algebra.Refinement.FiniteTransport
 
 /-! Exact transportation characterizes conical commutative refinement monoids. -/
 

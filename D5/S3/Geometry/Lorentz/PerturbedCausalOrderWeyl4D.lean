@@ -7,7 +7,7 @@
    digest: Vacuum plane wave curvature, its projective Weyl quartic, and exact null focusing. -/
 
 import D5.S3.Geometry.Lorentz.WeylNullScreen
-import OmegaMath.Geometry.PPWaveDiamondMeasure
+import D5.S3.Geometry.Lorentz.PlaneWaves.PPWaveDiamondMeasure
 import Mathlib.Analysis.Calculus.Taylor
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv

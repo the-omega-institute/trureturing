@@ -6,7 +6,7 @@
    utility: none
    digest: Nonzero absorption is equivalent to universal greatest support in finite additive-observation fibers over conical commutative coefficients. -/
 
-import OmegaMath.Algebra.Refinement.AbsorptionGreatestSupport
+import D5.S3.Algebra.Refinement.AbsorptionGreatestSupport
 
 set_option autoImplicit false
 

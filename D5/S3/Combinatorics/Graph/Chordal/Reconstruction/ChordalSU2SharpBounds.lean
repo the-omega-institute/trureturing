@@ -7,8 +7,8 @@
    digest: Spherical caps control unit-quaternion gain reconstruction on finite chordal graphs. -/
 
 import D5.S3.Combinatorics.Graph.Chordal.UniformGainPotential
-import OmegaMath.Geometry.SU2SharpLayer
-import OmegaMath.Geometry.SU2ThreeParentHolonomy
+import D5.S3.Geometry.UnitQuaternions.Holonomy.SU2SharpLayer
+import D5.S3.Geometry.UnitQuaternions.Holonomy.SU2ThreeParentHolonomy
 
 open scoped Quaternion InnerProductSpace
 

@@ -676,6 +676,43 @@ else:
   assert.match(empty.stdout, /No published module cache yet/);
 });
 
+test('Lake seeds require opt-in by the current PR and exclude pinned and report restores', async t => {
+  const { root, env, run } = await fixture(t);
+  const directory = join(root, 'tools/scripts/worktree');
+  await mkdir(directory, { recursive: true });
+  await writeFile(join(directory, 'lean_module_cache.py'), `
+import json, sys
+from pathlib import Path
+Path("arguments").write_text(json.dumps(sys.argv[1:]))
+`);
+  env.GITHUB_WORKFLOW_REF = 'owner/repo/.github/workflows/ci-current.yml@refs/heads/dev';
+  env.GITHUB_JOB = 'current';
+  for (const [event, job, optIn, kind, version, staged, forwards] of [
+    ['pull_request', 'current', '', '', '', 'false', false],
+    ['pull_request', 'current', 'false', '', '', 'false', false],
+    ['pull_request', 'current', 'true', '', '', 'false', true],
+    ['pull_request', 'current', 'true', 'compiler', '', 'false', true],
+    ['pull_request', 'current', 'true', 'report', '', 'false', false],
+    ['pull_request', 'current', 'true', 'compiler', 'lean-modules-' + 'b'.repeat(40), 'false', false],
+    ['pull_request', 'current', 'true', 'compiler', 'lean-modules-' + 'b'.repeat(40), 'true', false],
+    ['pull_request', 'current', 'true', 'compiler', '', 'true', false],
+    ['pull_request', 'omega-consumer', 'true', '', '', 'false', false],
+    ['push', 'current', 'true', '', '', 'false', false],
+    ['workflow_run', 'current', 'true', '', '', 'false', false],
+  ]) {
+    Object.assign(env, { GITHUB_JOB: job, 'INPUT_LAKE-SEED': optIn, INPUT_KIND: kind,
+      INPUT_VERSION: version, INPUT_STAGED: staged });
+    const result = run(event, 'restore-published');
+    assert.equal(result.status, 0, result.stderr);
+    const args = ['restore'];
+    if (kind) args.push('--kind', kind);
+    if (staged === 'true') args.push('--staged');
+    if (version) args.push('--version', version);
+    if (forwards) args.push('--lake-seed');
+    assert.deepEqual(JSON.parse(await readFile(join(root, 'arguments'), 'utf8')), args);
+  }
+});
+
 test('a dispatched compiler child builds only its units or final shard lanes', async t => {
   const { root, env, run } = await fixture(t);
   const directory = join(root, 'tools/scripts/worktree');

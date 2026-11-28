@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Turnpike/PrunedSubsetProjectionObstruction.claim; result=D5/S3/Combinatorics/Turnpike/PrunedSubsetProjectionObstruction.result; claim=D5/S3/Combinatorics/Turnpike/PrunedSubsetProjectionObstruction.claim
    digest: An assignment for a realizable seven-point input passes every subset cut but has no full lift. -/
 module
-public import OmegaMath.Combinatorics.Turnpike.SubsetCertificateChecks
+public import D5.S3.Combinatorics.Turnpike.SubsetCertificateChecks
 public import Mathlib.Data.Fin.VecNotation
 public import Mathlib.Algebra.BigOperators.Fin
 

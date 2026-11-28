@@ -367,8 +367,8 @@ separate PRs.
 
 For mathematical work, follow [the reuse and admission rules](../CLAUDE.md#3-形式化逃逸内容用途与研究):
 check the D5 frozen ledger for the result and prefer OmegaMath when constructing
-the proof. If a reusable result is missing, add it to `src/OmegaMath/`.
-For a port, use the pinned Mathlib defining module's path under the `OmegaMath`
+the proof. Contribute reusable results that build with the independent Omega foundations to `src/OmegaMath/` in the upstream OmegaMath repository and adopt its release here. Place proofs that import Mathlib or depend on it transitively in D5.
+For a port, use the pinned Mathlib defining module's path under the upstream `strict/OmegaMathlib`
 root and prefix the original declaration name with `Omega.`. Place original
 results near their mathematical topic and mark the module `Omega original.`.
 D5 imports the specific module for its book-facing theorem. For example,
@@ -429,11 +429,7 @@ comparison when their representations differ. Keep imports, names, links and
 migration notes directed from the consumers to the library. Follow the scoped
 report and frozen-state procedure in the [migration skill](../skills/omega-math-migration/SKILL.md).
 
-The ordinary Lean module shard stores the official outputs and the strict
-Omega and common-interface outputs built for its members under the same cache
-key. CI uses the affected modules to select both the shards to restore and the
-checks to run. Changes to shared compiler or audit inputs can affect the full
-Omega check.
+OmegaMath publishes the library and verifies its strict and official backends. This repository selects the affected D5 and Reg consumers for its checks. A PR can reuse a published ordinary Lean module as a build seed. Lake checks it against the current consumer, dependency and compiler inputs before use.
 
 ### D5 publication references
 
@@ -483,8 +479,8 @@ label qualifying declarations **仅 Omega · 零公理**. The Truth Release carr
 the corresponding evidence on each annotated declaration in the truth export. For the library itself, the strict
 audit checks every declaration in the selected Omega module and its imports for
 an empty axiom set and replays the closure in a fresh Lean kernel environment.
-`lake test -- OmegaMath.Projective` checks the projective topic.
-[Strict library audit](../src/OmegaChecks/Audit.lean)
+Run `lake test -- OmegaMath.Projective` in a checkout of the pinned OmegaMath release for the projective topic.
+[Strict library audit](https://github.com/the-omega-institute/omegamath/blob/dev/src/OmegaChecks/Audit.lean)
 
 ## Open a pull request
 

@@ -7,10 +7,10 @@
    digest: Unified gauge generators, adjoint and fermion weights, and chiral spinor charges. -/
 
 import OmegaBuild.Commands
-import OmegaMath.Algebra.ExteriorSquareTrace
-import OmegaMath.LinearAlgebra.Matrix.AdjointIrreducibility
-import OmegaMath.LinearAlgebra.Matrix.ComplexRealification
-import OmegaMath.LinearAlgebra.SpinorWeights5
+import D5.S3.Algebra.ExteriorSquareTrace
+import D5.S3.LinearAlgebra.Matrix.AdjointIrreducibility
+import D5.S3.LinearAlgebra.Matrix.ComplexRealification
+import D5.S3.LinearAlgebra.SpinorWeights5
 import D5.S3.Quantum.Gauge.GaugeUnificationRG4D
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.LinearAlgebra.Matrix.Reindex

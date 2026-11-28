@@ -6,7 +6,7 @@
    utility: none
    digest: Density characterizes full permitted support over the original ordered-group cone. -/
 
-import OmegaMath.Algebra.Refinement.OrderedConeFullSupport
+import D5.S3.Algebra.Refinement.OrderedConeFullSupport
 
 /-! Density is exactly the condition for simultaneous full permitted support.
 The reusable construction is in `Omega.Refinement`; the coefficient cone here

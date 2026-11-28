@@ -6,8 +6,8 @@
    utility: none
    digest: The finite Gibbs clock corner has normalized trace and exact entropy identities. -/
 
-import OmegaMath.MeasureTheory.MatrixFieldEntropy
-import OmegaMath.Matrix.BlockEntropyIntegral
+import D5.S3.MeasureTheory.MatrixFieldEntropy
+import D5.S3.Matrix.BlockEntropyIntegral
 import D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
 import D5.S3.Quantum.Lieb.PositiveMapJensen
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity

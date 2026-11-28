@@ -12,7 +12,7 @@
    Direct frozen dependencies: OrthogonalLieStructure. -/
 
 import D5.S3.QuadraticForms.OrthogonalLieStructure
-import OmegaMath.Algebra.RationalSpinFactor
+import D5.S3.Algebra.RationalSpinFactor
 
 /-!
 The forward implication in Gorshkov–Shpectorov, Problem 3.20 (journal

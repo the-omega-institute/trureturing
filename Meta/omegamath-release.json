@@ -1,0 +1,12 @@
+{
+  "assets": {
+    "omegamath-aarch64-unknown-linux-gnu.tar.gz": "sha256:b118d203c5fabc00fc04943cabaa49786a925076267c8408e037922fc760ac90",
+    "omegamath-arm64-apple-darwin24.6.0.tar.gz": "sha256:847743a95fcdc50c18f01763746e69bf5afb5069b627d341845ad6e089d8f1ec"
+  },
+  "ci_attempt": 1,
+  "ci_run": 46160914708,
+  "repository": "the-omega-institute/omegamath",
+  "source": "b3556e3c80f0d13ca66f812e578f5541ae0e36cb",
+  "tag": "v0.1.0-rc.1",
+  "toolchain": "leanprover/lean4:v4.35.0"
+}

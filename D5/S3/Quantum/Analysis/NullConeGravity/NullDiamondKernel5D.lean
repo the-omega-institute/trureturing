@@ -12,8 +12,8 @@ import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondMultipliers4D
 import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondContour4D
 import D5.S3.Quantum.Analysis.NullConeGravity.QuarterPowerSqrtHilbertSchmidt
 import D5.S3.Quantum.Analysis.NullConeGravity.CCRConjugation
-import OmegaMath.Analysis.HalfIntegerBesselFourier
-import OmegaMath.Analysis.HalfIntegerBesselRadial
+import D5.S3.Analysis.HalfIntegerBesselFourier
+import D5.S3.Analysis.HalfIntegerBesselRadial
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv

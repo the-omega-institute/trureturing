@@ -9,7 +9,7 @@
 import OmegaBuild.Commands
 import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondSphere5D
 import D5.S3.Geometry.Lorentz.DimensionSelection4D
-import OmegaMath.Analysis.BPSTRadialIntegral
+import D5.S3.Analysis.BPSTRadialIntegral
 import Mathlib.MeasureTheory.Measure.OpenPos
 import Mathlib.Tactic.FinCases
 

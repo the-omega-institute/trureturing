@@ -158,6 +158,9 @@ jobs:
             lake-manifest.json
             lakefile.*
             lean-report-inputs.json
+            Meta/omegamath-release.json
+            src/OmegaChecks/portable.py
+            src/OmegaChecks/host_lake.py
             lean-toolchain
             nuget.config
           CI_PUSH_BEFORE: ${{ github.event.before }}

@@ -8,7 +8,7 @@
 
 import OmegaBuild.Commands
 import D5.S3.Geometry.Lorentz.WeylNullScreen
-import OmegaMath.Algebra.ProjectivePolynomial
+import D5.S3.Algebra.ProjectivePolynomial
 import Mathlib.Algebra.TrivSqZeroExt.Basic
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Mathlib.Tactic.LinearCombination

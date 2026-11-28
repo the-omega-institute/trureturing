@@ -8,7 +8,7 @@
 
 import D5.S3.Analytic.Oscillation.MontgomeryWindow
 import D5.S3.Analytic.Oscillation.SmoothedSpectrumCounting
-import OmegaMath.MeasureTheory.LorentzIntervalMass
+import D5.S3.MeasureTheory.LorentzIntervalMass
 import Mathlib.Analysis.Real.Pi.Bounds
 
 /-! A bound on the count in closed intervals controls the ordered Lorentz pair sum. -/

@@ -11,11 +11,11 @@ import D5.S3.Quantum.Analysis.NullConeGravity.CCRFockWeyl
 import D5.S3.Quantum.Analysis.NullConeGravity.CCRSqueezeInfinite
 import D5.S3.Quantum.Analysis.NullConeGravity.CCRWeylState
 import D5.S3.Quantum.Algebra.StateApproximation.IrreducibleBoundedLift
-import OmegaMath.Analysis.ConjugateDifferentiable
-import OmegaMath.OperatorAlgebra.UnitaryIntertwining
-import OmegaMath.Analysis.PlanarGaussian
-import OmegaMath.Analysis.HilbertBasisFiniteModes
-import OmegaMath.Analysis.SquareSummableProjection
+import D5.S3.Analysis.ConjugateDifferentiable
+import D5.S3.OperatorAlgebra.UnitaryIntertwining
+import D5.S3.Analysis.PlanarGaussian
+import D5.S3.Analysis.HilbertBasisFiniteModes
+import D5.S3.Analysis.SquareSummableProjection
 import Mathlib.MeasureTheory.Integral.Pi
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.MeasureTheory.Measure.Lebesgue.Complex

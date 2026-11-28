@@ -7,7 +7,7 @@
    digest: Classify all contrasts against a third point for a normalized rational Gram form. -/
 
 import Mathlib.Algebra.Order.Ring.Rat
-import OmegaMath.Geometry.ThreeReadingContrast
+import D5.S3.Geometry.CoefficientBodies.ThreeReadingContrast
 
 namespace D5.S3.Quantum.AURICOmega.ThreeReadingContrast
 

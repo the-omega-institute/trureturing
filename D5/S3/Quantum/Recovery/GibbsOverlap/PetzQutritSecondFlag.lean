@@ -10,7 +10,7 @@ import D5.S3.Quantum.Divergence.GibbsVariationalIdentity
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.Schatten.Holder
 import D5.S3.Weil.ZetaLinear.RankTrace
-import OmegaMath.Matrix.BlockEntropy
+import D5.S3.Matrix.BlockEntropy
 import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
 
 /-! The quadratic estimate for the second flag of the physical qutrit Petz example. -/

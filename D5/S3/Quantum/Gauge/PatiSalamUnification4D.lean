@@ -7,8 +7,8 @@
    digest: Pati–Salam adjoint branching, chiral fermion weights, and compact group covers. -/
 
 import OmegaBuild.Commands
-import OmegaMath.Geometry.SU4SO6Cover
-import OmegaMath.Geometry.SU2xSU2SO4Cover
+import D5.S3.Geometry.Orthogonality.SpinCovers.SU4SO6Cover
+import D5.S3.Geometry.Orthogonality.SpinCovers.SU2xSU2SO4Cover
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.LinearAlgebra.Matrix.Reindex
 import D5.S3.Quantum.Gauge.SU5SO10GrandUnification4D

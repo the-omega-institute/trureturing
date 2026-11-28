@@ -6,7 +6,7 @@
    utility: none
    digest: Block ranks characterize ordered arcs in full matrix rings over fields. -/
 
-import OmegaMath.LinearAlgebra.Matrix.AnnihilatorRank
+import D5.S3.LinearAlgebra.Matrix.AnnihilatorRank
 import D5.S0.Certificates.Algebra.MekeraNilpotentAdjacencyRefutation
 
 /-! Ranks characterize ordered arcs in the annihilator digraph of a full matrix ring. -/

@@ -110,8 +110,12 @@ jobs:
             python3 -B .github/scripts/test-read-module-reports.py
             python3 -B .github/scripts/test-compiler-release-coordinator.py
           fi
-          if grep -zEq '^\.github/(scripts/(test-)?omega-audit-results\.py|workflows/ci-current\.yml)$' "$RUNNER_TEMP/changed-paths"; then
+          if grep -zEq '^(Meta/(tools-release|ci-units)\.json|\.github/(scripts/(test-)?omega-(audit-results|consumer)\.py|workflows/ci-current\.yml))$' "$RUNNER_TEMP/changed-paths"; then
             python3 -B .github/scripts/test-omega-audit-results.py
+            python3 -B .github/scripts/test-omega-consumer.py
+          fi
+          if grep -zEq '^(Meta/omegamath-release\.json|\.github/scripts/(test-)?verify-omegamath-release\.py|\.github/workflows/ci-current\.yml)$' "$RUNNER_TEMP/changed-paths"; then
+            python3 -B .github/scripts/test-verify-omegamath-release.py
           fi
       - name: Cache the tools used by the protected base snapshot
         env:
@@ -314,6 +318,7 @@ jobs:
         with:
           operation: restore-published
           targets-file: ${{ steps.cache_scope.outputs.targets-file }}
+          lake-seed: ${{ github.event_name == 'pull_request' }}
       - name: Theory-only file and capacity checks
         if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
         env:
@@ -387,9 +392,9 @@ jobs:
           DOTNET_CLI_UI_LANGUAGE: en-US
         run: python3 tools/scripts/workflow/ci_checks.py unit filemap
 
-  omega:
+  omega-consumer:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['omega'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['omega-consumer'] }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     env:
@@ -426,16 +431,8 @@ jobs:
       - id: toolchain
         if: ${{ !cancelled() && steps.keys.outcome == 'success' }}
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - id: omega_scope
-        name: Select affected Omega checks and cache roots
-        if: steps.toolchain.outcome == 'success'
-        run: |
-          python3 -B src/OmegaChecks/test_scope.py
-          python3 -B src/OmegaChecks/test_audit_cache.py
-          python3 -B src/OmegaChecks/check.py --changed "$RUNNER_TEMP/changed-paths" \
-            --write-scope "$RUNNER_TEMP/omega-scope.json" --cache-targets "$RUNNER_TEMP/omega-cache-targets"
       - id: dependency
-        if: steps.omega_scope.outputs.targets-file != '' && steps.keys.outputs.dependency_key != ''
+        if: steps.toolchain.outcome == 'success' && steps.keys.outputs.dependency_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -443,18 +440,24 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: lean_seeds
-        if: steps.omega_scope.outputs.targets-file != ''
+        if: steps.toolchain.outcome == 'success'
         name: Install the restored Lean dependencies
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+      - id: omega_scope
+        name: Select affected D5 and Reg consumers and cache roots
+        if: steps.lean_seeds.outcome == 'success'
+        run: |
+          python3 -B .github/scripts/omega-consumer.py --changed "$RUNNER_TEMP/changed-paths" \
+            --write-scope "$RUNNER_TEMP/omega-scope.json" --cache-targets "$RUNNER_TEMP/omega-cache-targets"
       - if: steps.omega_scope.outputs.targets-file != ''
         uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
           cache: false
-      - name: Restore the published module shards for Omega
+      - name: Restore the published module shards for downstream consumers
         if: steps.omega_scope.outputs.targets-file != ''
         continue-on-error: true
         uses: ./.github/actions/lean-cache-shards
@@ -473,18 +476,18 @@ jobs:
           export OMEGA_AUDIT_CACHE
           echo "OMEGA_AUDIT_CACHE=$OMEGA_AUDIT_CACHE" >> "$GITHUB_ENV"
           python3 -B .github/scripts/omega-audit-results.py restore
-      - name: Initialize the Omega compute allowance
+      - name: Initialize the Omega consumer compute allowance
         run: |
           budget="$RUNNER_TEMP/unit-compute-seconds"
           python3 tools/scripts/workflow/ci_compute.py init "$budget" 120
           echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
       - id: run
-        name: Check Omega admission and downstream substitution
+        name: Verify the OmegaMath release and affected downstream consumers
         env:
           CI: 'true'
           OMEGA_SCOPE_FILE: ${{ runner.temp }}/omega-scope.json
           LEAN_NUM_THREADS: '1'
-        run: bash .github/actions/lean-compile-layer/measure.sh --compile python3 tools/scripts/workflow/ci_checks.py unit omega
+        run: bash .github/actions/lean-compile-layer/measure.sh --compile python3 tools/scripts/workflow/ci_checks.py unit omega-consumer
       - name: Publish official declaration axiom dependencies
         if: steps.omega_scope.outputs.report-file != ''
         uses: actions/upload-artifact@v4
@@ -510,9 +513,32 @@ jobs:
 
   # The one required check. It always runs, so a failed or cancelled unit, or a
   # failed detection, is red rather than skipped.
+  rc-linux:
+    name: Verify published OmegaMath on Linux arm64
+    if: github.event_name == 'pull_request' && github.base_ref == 'integration-omegamath-rc-consumer-tests'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: leanprover/lean-action@ba3fdfe5c4476c925da13bf11a005ddb47e47aee
+        with:
+          auto-config: 'false'
+          use-github-cache: 'false'
+          use-mathlib-cache: 'false'
+      - name: Verify the release and build the actual D5 consumer
+        env:
+          MATHLIB_NO_CACHE_ON_UPDATE: '1'
+        run: |
+          make verify-omegamath-release
+          lake --no-cache build +D5.S0.Computability.GuardedWall
+          lake --no-cache --no-build build +D5.S0.Computability.GuardedWall
+
   required:
     if: always()
-    needs: [detect, source, current, filemap, omega]
+    needs: [detect, source, current, filemap, omega-consumer]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:

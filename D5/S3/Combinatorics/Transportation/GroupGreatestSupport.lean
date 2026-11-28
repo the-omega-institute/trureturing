@@ -6,7 +6,7 @@
    utility: none
    digest: Torsion-freeness is equivalent to universal greatest support in finite additive-observation fibers of an abelian group. -/
 
-import OmegaMath.Algebra.Refinement.GroupGreatestSupport
+import D5.S3.Algebra.Refinement.GroupGreatestSupport
 
 set_option autoImplicit false
 

@@ -53,7 +53,7 @@ class FakeGitHub:
         run = {"id": run_id, "repository": {"id": self.repo_id}, "head_repository": {"id": self.repo_id},
                "path": transport.WORKFLOW, "head_branch": branch, "head_sha": sha, "event": "push",
                "status": "completed", "conclusion": "success", "run_attempt": 2}
-        job = {"name": "omega", "run_id": run_id, "run_attempt": 2, "head_sha": sha, "status": "completed",
+        job = {"name": "omega-consumer", "run_id": run_id, "run_attempt": 2, "head_sha": sha, "status": "completed",
                "conclusion": "success", "steps": [{"name": transport.PUBLISH_STEP, "conclusion": "success"}]}
         self.responses[f"compare/{sha}...{'f' * 40}?per_page=1&page=2"] = {"status": "ahead"}
         self.responses[f"actions/runs/{run_id}"] = run

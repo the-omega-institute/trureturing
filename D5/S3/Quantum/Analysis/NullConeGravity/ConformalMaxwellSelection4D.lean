@@ -7,7 +7,7 @@
    digest: Conformal Maxwell transport and transverse and longitudinal Proca identities. -/
 
 import OmegaBuild.Commands
-import OmegaMath.Analysis.InverseTimeRescaling
+import D5.S3.Analysis.InverseTimeRescaling
 import D5.S3.Quantum.Analysis.NullConeGravity.CCRWeylState
 import D5.S3.Quantum.Analysis.NullConeGravity.QuarterPowerSqrtHilbertSchmidt
 import Mathlib.MeasureTheory.Integral.Bochner.Basic

@@ -8,8 +8,8 @@
 
 module
 
-public import OmegaMath.InformationTheory.PottsFusion.RawChannel
-public import OmegaMath.InformationTheory.PottsFusion.CalibratedBilinear
+public import D5.S3.InformationTheory.PottsFusion.RawChannel
+public import D5.S3.InformationTheory.PottsFusion.CalibratedBilinear
 
 /-! # Bilinear information combining without channel symmetry -/
 

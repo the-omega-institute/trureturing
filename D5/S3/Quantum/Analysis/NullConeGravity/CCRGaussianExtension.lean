@@ -11,8 +11,8 @@ import D5.S3.Quantum.Analysis.NullConeGravity.CCRAbsoluteValueHS
 import D5.S3.Quantum.Analysis.NullConeGravity.QuarterPowerSqrtHilbertSchmidt
 import D5.S3.Quantum.Analysis.CompactEigenbasis
 import D5.S3.Quantum.Analysis.TraceClass.HilbertSchmidt
-import OmegaMath.Analysis.PositiveSkew
-import OmegaMath.Analysis.HilbertSqueeze
+import D5.S3.Analysis.PositiveSkew
+import D5.S3.Analysis.HilbertSqueeze
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -600,6 +600,11 @@ async function runModuleCache() {
     if (kind) args.push('--kind', kind);
     if (process.env.INPUT_STAGED === 'true') args.push('--staged');
     if (process.env.INPUT_VERSION) args.push('--version', process.env.INPUT_VERSION);
+    if (process.env['INPUT_LAKE-SEED'] === 'true' && process.env.GITHUB_EVENT_NAME === 'pull_request'
+        && process.env.GITHUB_JOB === 'current' && kind !== 'report'
+        && !process.env.INPUT_VERSION && process.env.INPUT_STAGED !== 'true') {
+      args.push('--lake-seed');
+    }
     if (targetsFile) args.push('--targets-file', targetsFile);
     else if (targets.length) args.push('--targets', ...targets);
   } else if (operation === 'module-plan') {

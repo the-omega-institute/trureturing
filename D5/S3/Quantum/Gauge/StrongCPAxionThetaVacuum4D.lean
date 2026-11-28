@@ -7,8 +7,8 @@
    digest: Two-flavor strong CP vacua, chiral susceptibility and axion couplings. -/
 
 import OmegaBuild.Commands
-import OmegaMath.Analysis.AffineLattice
-import OmegaMath.Analysis.SquareRootCosine
+import D5.S3.Analysis.AffineLattice
+import D5.S3.Analysis.SquareRootCosine
 import Mathlib.Analysis.Calculus.TangentCone.Real
 import D5.S3.Quantum.Gauge.ChiralSymmetrySkyrme4D
 import D5.S3.Quantum.Gauge.YangMillsBPSSelfDual4D

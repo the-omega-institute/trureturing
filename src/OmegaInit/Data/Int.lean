@@ -1,7 +1,0 @@
-module
-public import Init.Data.Int
-public import OmegaInit.Data.Int.Lemmas
-public import OmegaInit.Data.Int.Order
-
-/-! Namespace aliases to the pinned public interface. -/
-public section

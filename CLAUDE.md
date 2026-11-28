@@ -16,9 +16,9 @@
 
 ## 写 Lean 时怎样选择 Omega 与 Mathlib 后端
 
-默认用同一份源码在官方 Mathlib 和严格后端编译。普通发布使用钉版官方 Mathlib。`OmegaMathlib` 提供钉版 Mathlib 已移植、已核对的严格子集，项目自己的数学放在 `OmegaMath`。
+默认用同一份源码在官方 Mathlib 和严格后端编译。D5 和 Reg 使用宿主直接钉定的官方 Mathlib。`OmegaMathlib` 提供钉版 Mathlib 已移植、已核对的严格子集，可用独立基础编译的数学放在上游 `OmegaMath`，依赖 Mathlib 的证明放在 D5。
 
-消费模块需要完整的 Mathlib 接口时，导入 `OmegaBuild.Commands`，在全部 import 后、首个数学声明前写 `compile_only_with_mathlib`。之后可直接使用 Mathlib 的类型、定理、实例和 tactics，以及官方端的 OmegaMath 成果。直接或间接导入这个模块的文件自动继承选择，其余入选模块照常双编。[两个可编译示例](src/README.md#选择编译后端)
+消费模块需要完整的 Mathlib 接口时，导入 `OmegaBuild.Commands`，在全部 import 后、首个数学声明前写 `compile_only_with_mathlib`。之后可直接使用 Mathlib 的类型、定理、实例和 tactics，以及官方端的 OmegaMath 成果。直接或间接导入这个模块的文件自动继承选择，其余入选模块照常双编。[消费示例与上游文档](src/README.md#选择编译后端)
 
 ## 常用命令速查
 
@@ -187,8 +187,8 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 3.1 先库后证与宿主搜索能力
 
 **先库后证**:任何 Lean 形式化前默认可出网查第三方库(loogle/leansearch/Reservoir/GitHub/arXiv 等非封闭示例),判卷门永远离线(第 3.7 条、spec A12/A17)。本款仅管本仓派出的形式化 worker;codex-cli worker 搜索是宿主默认能力,仓库无法强制,禁止改宿主 `~/.codex` 全局配置。
-先查 D5 是否已有对应冻结声明。构造证明优先检索本仓 `src/OmegaMath/` 及其 `OmegaInit` 基础，再查钉版 Mathlib 和 spec A17 可准入的第三方 Lean 生态。已有结果用尽后才本地证明，仍无法证明则记 `AxiomDebt`/`open` 并开 upstream issue。精确命中必须 import+直接应用,只在真实 content 证明内适配参数与规范化,不重证,也不新增无消费者的 bind-only 包装/伴随定理/模块(第 3.2 条);上游已证者是唯一真源。brief/PR 保留最小检索结论:查何名、何处、命中与否,不存过程(第 2.10 条)。
-需要钉版 Mathlib 已有的结果时，消费模块可按首节选择官方后端并直接引用。目标要求严格实现时，将标准库对应移植到 `strict/OmegaMathlib/`，保留上游定义模块的目录与文件名，并在原声明全名前加 `Omega.`。项目自己的可复用数学放在 `src/OmegaMath/`。原创结果就近放在数学专题目录，模块文档首行写 `Omega original.`。D5 只导入所需模块并承接具体结论的冻结引用。模块归位和定向审计见 [Omega 数学模块指南](src/README.md)。
+先查 D5 是否已有对应冻结声明。构造证明优先检索已钉版的 `.lake/packages/omegamath/src/OmegaMath/` 及其 `OmegaInit` 基础，再查钉版 Mathlib 和 spec A17 可准入的第三方 Lean 生态。已有结果用尽后才本地证明，仍无法证明则记 `AxiomDebt`/`open` 并开 upstream issue。精确命中必须 import+直接应用,只在真实 content 证明内适配参数与规范化,不重证,也不新增无消费者的 bind-only 包装/伴随定理/模块(第 3.2 条);上游已证者是唯一真源。brief/PR 保留最小检索结论:查何名、何处、命中与否,不存过程(第 2.10 条)。
+需要钉版 Mathlib 已有的结果时，消费模块可按首节选择官方后端并直接引用。目标要求严格实现时，在独立的 OmegaMath 仓库将标准库对应移植到 `strict/OmegaMathlib/`，保留上游定义模块的目录与文件名，并在原声明全名前加 `Omega.`。可用独立基础编译的数学放在上游 `src/OmegaMath/`，引用 Mathlib 定理、实例或 tactics 的证明放在 D5。原创结果就近放在数学专题目录，模块文档首行写 `Omega original.`。D5 只导入所需模块并承接具体结论的冻结引用。模块归位和定向审计见 [Omega 数学模块指南](src/README.md)。
 检索须覆盖已有的私有定义、引理与定理;仓内命中因 `private` 无法跨模块复用时,按第 4.3 条公开原声明并直接引用,不得视为缺失而重证。
 派发时实测搜索可用性并报结果;能力缺失记具名 `open(wait-for-capability)`,不得报 search-complete。恢复后完成第三方检索,该检索与本地证明均失败才记 `AxiomDebt`/`open`。
 
@@ -197,7 +197,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 **严格禁止新增或交付 bind-only 数学声明；全部为 bind-only 的 atom 复用既有结果，不再作为新形式化靶，零新增 Lean。消化结算按第 1.2 条从简，不以账目终态作为转向实质形式化的前提。** 本禁令逐声明适用,公开定理、私有包装、别名、伴随定理与独立模块均无例外;同模块另有 content、API 便利、覆盖需求、任务终点或反驳用途均不能豁免;有消费的辅助声明、下文具名开放问题的结算结论和以下出版引用情形按各自条件处理。现有定理的直接应用是 content 证明内部的正常步骤,可以写在证明内部,也可以按下款写成有消费的辅助声明,但不得另立为无消费者的绑定声明或冒称形式化成果。
 **严格 Omega Math 迁移。** 采用 [omega-math-migration](skills/omega-math-migration/SKILL.md) 原地迁移既有 D5 声明及受影响消费者。凡声称对应 Mathlib 的表示、运算或谓词，须指明钉版声明，并随交付保留可编译的 Lean 对应证明。类型或陈述改变时，在混合核验或消费侧核对原命题的量词、前提与结论。Omega 原创构造以明确规格及其已证性质为依据，尚未建立的对应在 PR 明列。依赖由 D5 消费者指向所需数学库。库源码与库指南只描述库自身数学，D5 名称、路径、链接与迁移证据归消费侧。定向报告逐声明测量库来源和公理。仅对实际完成严格编译和导出对照的声明记录配对证据，冻结记录使用规范 writer。
 
-**OmegaMath 的 D5 出版引用。** 已有通用证明位于 `src/OmegaMath/`，书中有具体条目需要冻结 GID 且 D5 尚无相同冻结项时，可以为该条目首冻一个直接应用原证明的 D5 声明。PR 标出书中位置与原声明，判形记 `bind-only`，数学成果归于原证明。此条只提供出版引用的准入依据。
+**OmegaMath 的 D5 出版引用。** 已有通用证明位于已钉版的 `.lake/packages/omegamath/src/OmegaMath/`，书中有具体条目需要冻结 GID 且 D5 尚无相同冻结项时，可以为该条目首冻一个直接应用原证明的 D5 声明。PR 标出书中位置与原声明，判形记 `bind-only`，数学成果归于原证明。此条只提供出版引用的准入依据。
 **有消费的辅助声明(τ=0 owner 2026-10-05 裁决,原话「没必要为了解决bind-only 降低性能, 只要有消费也没问题」)**:一条 bind-only 声明(公开或私有)若有真实消费者——同一交付或既有树上另一声明在其活推导路径上实际使用它,判断标准同「逃逸见证」第 (iv) 项——即可新增并随宿主模块冻结,不必为规避本禁令而内联、合并声明或牺牲构建性能。它只是证明的组织方式:不构成新增数学内容,不为宿主模块提供逃逸见证或准入依据,宿主模块仍须由其他声明取得 `escape-witness` 或 `open-problem-resolution`;报告逐声明照实写 `proof_shape: bind-only` 并点名消费者。只为 import、覆盖、登记、API 便利或未来消费者而存在的 bind-only 声明不算有消费,仍按本条禁止。
 本条分开判定**判形**(`proof_shape`)与**准入依据**(`admission_basis`);消化终结处理已有内容,不取得新增数学内容的名义。
 **判形**:将待交付定理的局部别名、同次新增的公开或私有 helper、tactic 展开与定义性等式全部内联,依赖展开止于既有冻结前置与钉版上游声明。若结论仅由这些前置的实例化、前提代入、逻辑投影或重组(`.1`/`.2`/`.mp`/`.mpr`、合取、TFAE 打包)、以及规范化改写得到,即为 **bind-only**;否则为 **content**。规范化包括定义展开、只用既有冻结或 Mathlib 改写引理的 `simp`,以及在给定假设和上述步骤已提供全部原子事实后进行的求和分配、代数展开及 `ring`/`linarith`/`omega`/`norm_num`/`decide` 化简。仅把移心恒等式命名为见证、改换指标类型或加入权重,不构成规范化之外的新内容。判定程序若建立前置未提供、也不能由上述规范化得到的新命题,该命题才是候选见证;使用某个 tactic 本身不决定判形。最薄上游包装、手工重证已有上游结论及从既有存在定理取见证后作绑定,同样判为 bind-only。

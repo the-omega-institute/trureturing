@@ -1,14 +1,18 @@
 """Exercise tools pin admission with the GitHub objects seen by the required check."""
 
 import base64
+from contextlib import chdir
 import importlib.util
+import io
 import json
 from pathlib import Path
 import re
 import subprocess
+import sys
+import tarfile
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import call, patch
 
 spec = importlib.util.spec_from_file_location("installer", Path(__file__).with_name("install-tools.py"))
 installer = importlib.util.module_from_spec(spec)
@@ -151,6 +155,160 @@ class Admission(unittest.TestCase):
         duplicate = json.dumps(self.legacy | {"previous_pin": ROOT_PIN})[:-1] + f', "previous_pin":"{A_PIN}"}}'
         with self.assertRaisesRegex(ValueError, "duplicate field"):
             installer.parse_pin(duplicate)
+
+
+class Installation(unittest.TestCase):
+    workspaces = ("lean-inspector", "lean-inspector-reg", "lean-inspector-interface")
+
+    def setUp(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        self.root = Path(directory.name) / "checkout"
+        self.root.mkdir()
+        self.cache = self.root / "build/tools-releases"
+        self.other = Path(directory.name) / "unrelated"
+        self.other.mkdir()
+        self.archive = Path(directory.name) / "tools.tar.gz"
+        self.payload = {"tools/Makefile": b"fixture makefile\n"}
+        for workspace in self.workspaces:
+            config = "lakefile.lean" if workspace == "lean-inspector" else "lakefile.toml"
+            self.payload[f"tools/{workspace}/{config}"] = b"fixture config\n"
+            self.payload[f"tools/{workspace}/lake-manifest.json"] = b'{"version":"1.3.0","packages":[]}\n'
+        with tarfile.open(self.archive, "w:gz") as archive:
+            for name, content in self.payload.items():
+                entry = tarfile.TarInfo(name)
+                entry.size = len(content)
+                archive.addfile(entry, io.BytesIO(content))
+        self.pin = {"version": "v0.1.0", "sha256": installer.digest(self.archive)}
+        pin_path = self.root / installer.PIN
+        pin_path.parent.mkdir()
+        pin_path.write_text(json.dumps(self.pin))
+        self.omega = {"url": "https://github.com/the-omega-institute/omegamath", "type": "git",
+                      "subDir": None, "scope": "the-omega-institute", "rev": A, "name": "omegamath",
+                      "manifestFile": "lake-manifest.json", "inputRev": "v0.1.0", "inherited": False,
+                      "configFile": "lakefile.toml"}
+        self.write_manifest(self.omega)
+
+    def write_manifest(self, omega):
+        entries = [{"name": "mathlib", "type": "git", "rev": OLD}]
+        if omega is not None:
+            entries.append(omega)
+        (self.root / "lake-manifest.json").write_text(json.dumps({
+            "version": "1.3.0", "packagesDir": ".lake/packages", "packages": entries,
+        }))
+
+    def override(self, workspace):
+        return self.root / "tools" / workspace / ".lake/package-overrides.json"
+
+    def run_installer(self, *args):
+        with (patch.object(installer, "ROOT", self.root), patch.object(installer, "CACHE", self.cache),
+              patch.object(sys, "argv", ["install-tools.py", *args]),
+              patch.object(installer.subprocess, "check_output", return_value=b"") as commands,
+              patch.object(installer, "urlopen", side_effect=AssertionError("unexpected download")),
+              chdir(self.other)):
+            installer.main()
+        commands.assert_called_once_with(["git", "-C", self.root, "ls-files", "--", "tools"])
+
+    def assert_release_bytes(self):
+        for name, content in self.payload.items():
+            self.assertEqual((self.root / name).read_bytes(), content)
+        self.assertEqual((self.root / "tools" / installer.STAMP).read_text(), self.pin["sha256"] + "\n")
+
+    def assert_overrides(self, omega):
+        expected = {"version": "1.3.0", "packages": [omega | {"inherited": True}]}
+        for workspace in self.workspaces:
+            path = self.override(workspace)
+            self.assertEqual(json.loads(path.read_bytes()), expected)
+        self.assert_release_bytes()
+        self.assertFalse((self.root / ".lake/packages/omegamath").exists())
+
+    def test_fresh_installs_exact_overrides_before_package_checkout(self):
+        self.run_installer("--archive", str(self.archive))
+        self.assert_overrides(self.omega)
+        self.assertFalse((self.other / "tools").exists())
+        manifest = json.loads((self.root / "lake-manifest.json").read_bytes())
+        self.assertEqual(manifest["packages"][-1], self.omega)
+
+    def test_valid_installation_refreshes_overrides_and_preserves_build_files(self):
+        self.run_installer("--archive", str(self.archive))
+        self.assert_overrides(self.omega)
+        build = self.override(self.workspaces[0]).parent / "existing-build"
+        build.write_bytes(b"saved compiler output")
+        self.override(self.workspaces[1]).unlink()
+        updated = self.omega | {"rev": B_NEW, "inputRev": "v0.1.1"}
+        self.write_manifest(updated)
+        with patch.object(installer, "unpack", side_effect=AssertionError("valid tools should be reused")):
+            self.run_installer()
+        self.assert_overrides(updated)
+        self.assertEqual(build.read_bytes(), b"saved compiler output")
+        self.assertEqual(list(self.cache.glob("previous-*")), [])
+
+    def test_protected_base_without_omega_and_stale_override(self):
+        self.write_manifest(None)
+        self.run_installer("--archive", str(self.archive))
+        self.assert_release_bytes()
+        self.assertTrue(all(not self.override(workspace).exists() for workspace in self.workspaces))
+        self.write_manifest(self.omega)
+        self.run_installer()
+        self.assert_overrides(self.omega)
+        self.write_manifest(None)
+        with patch.object(installer, "unpack", side_effect=AssertionError("valid tools should be reused")):
+            self.run_installer()
+        self.assertTrue(all(not self.override(workspace).exists() for workspace in self.workspaces))
+        self.assert_release_bytes()
+
+    def test_sparse_bootstrap_without_manifest(self):
+        manifest = self.root / "lake-manifest.json"
+        manifest.unlink()
+        self.run_installer("--archive", str(self.archive))
+        self.assert_release_bytes()
+        self.assertTrue(all(not self.override(workspace).exists() for workspace in self.workspaces))
+        self.write_manifest(self.omega)
+        self.run_installer()
+        self.assert_overrides(self.omega)
+        manifest.unlink()
+        with patch.object(installer, "unpack", side_effect=AssertionError("valid tools should be reused")):
+            self.run_installer()
+        self.assert_overrides(self.omega)
+
+    def test_rejects_ambiguous_or_unpinned_omega(self):
+        path = self.root / "lake-manifest.json"
+        for entries in ([self.omega, self.omega], [self.omega | {"rev": A[:12]}],
+                        [self.omega | {"type": "path"}]):
+            with self.subTest(entries=entries):
+                path.write_text(json.dumps({"version": "1.3.0", "packages": entries}))
+                with self.assertRaisesRegex(ValueError, "omegamath"):
+                    self.run_installer("--archive", str(self.archive))
+                self.assertFalse((self.root / "tools").exists())
+
+    def test_cache_revision_only_caches_the_historical_release(self):
+        with (patch.object(installer, "ROOT", self.root), patch.object(installer, "CACHE", self.cache),
+              patch.object(sys, "argv", ["install-tools.py", "--cache-revision", OLD, "--archive", str(self.archive)]),
+              patch.object(installer.subprocess, "check_output", side_effect=[
+                  (ROOT_PIN + "\n").encode(),
+                  f"100644 blob {A_PIN}\t{installer.PIN}\n".encode(),
+                  json.dumps(self.pin).encode(),
+              ]) as commands, chdir(self.other)):
+            installer.main()
+        self.assertEqual(commands.call_args_list, [
+            call(["git", "-C", self.root, "rev-parse", "--verify", "--end-of-options", OLD + "^{tree}"]),
+            call(["git", "-C", self.root, "ls-tree", "--full-tree", ROOT_PIN, "--", installer.PIN]),
+            call(["git", "-C", self.root, "cat-file", "blob", A_PIN]),
+        ])
+        self.assertFalse((self.root / "tools").exists())
+        self.assertEqual(installer.digest(self.cache / (self.pin["sha256"] + ".tar.gz")), self.pin["sha256"])
+
+    def test_failed_atomic_replace_preserves_existing_override(self):
+        self.run_installer("--archive", str(self.archive))
+        self.assert_overrides(self.omega)
+        override = self.override(self.workspaces[0])
+        before = override.read_bytes()
+        self.write_manifest(self.omega | {"rev": B_NEW})
+        with patch.object(installer.os, "replace", side_effect=OSError("fixture replacement failure")):
+            with self.assertRaisesRegex(OSError, "fixture replacement failure"):
+                self.run_installer()
+        self.assertEqual(override.read_bytes(), before)
+        self.assertEqual(list(override.parent.iterdir()), [override])
 
 
 class ConsumerGit(unittest.TestCase):

@@ -8,7 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.Chordal.SimplicialAndIntervalPotential
 import D5.S3.Combinatorics.Graph.Chordal.EliminationForest
-import OmegaMath.Combinatorics.Graph.ThreeTreePolygon
+import D5.S3.Combinatorics.Graph.Chordal.ThreeTrees.ThreeTreePolygon
 import Mathlib.Analysis.Normed.Module.HahnBanach
 import Mathlib.Data.Finset.Sort
 import Mathlib.Tactic.Module
