@@ -65,7 +65,10 @@ internal sealed class BlecherNoAnticommutingPairDocument : IScribeDocumentDefini
                         + "diagonal. The representation is faithful in complex matrices of size m²(m + 2), and the same argument "
                         + "proves noncommutativity, the zero-product implication and all amplification "
                         + "norm equalities."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("blecher-2025-example-5-5-no-anticommuting-pair"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimBody()
     {

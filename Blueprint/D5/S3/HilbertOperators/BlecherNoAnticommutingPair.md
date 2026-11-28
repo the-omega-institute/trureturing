@@ -24,6 +24,10 @@ $$\neg \left(\forall \left(A: \operatorname{Submodule}\left(\mathbb{C}, \operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/HilbertOperators/BlecherNoAnticommutingPair.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/blecher-2025-example-5-5-no-anticommuting-pair` (refuted) by `D5/S3/HilbertOperators/BlecherNoAnticommutingPair.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"blecher-2025-example-5-5-no-anticommuting-pair","declaration_gid":"D5/S3/HilbertOperators/BlecherNoAnticommutingPair.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* David P. Blecher (2025). *Commutativity of operator algebras*. DOI: [10.1016/j.exmath.2025.125742](https://doi.org/10.1016/j.exmath.2025.125742). URL: <https://arxiv.org/abs/2509.17673v2>.
