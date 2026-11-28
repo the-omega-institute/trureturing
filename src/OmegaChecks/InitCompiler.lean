@@ -67,7 +67,7 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
   return (src, info)
 
 @[command_parser, builtin_command_parser] def portProof := leading_parser
-  "port_proof " >> ident >> optional (" using " >> ident) >> optional " by_reflexivity"
+  "port_proof " >> ident >> optional (" using " >> ident) >> optional (" by_reflexivity" <|> " by_finite_cases")
 
 @[builtin_command_elab portProof] def elabPortProof : CommandElab := fun stx => do
   let (src, info) ← officialDeclaration stx[1]
@@ -80,7 +80,12 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
     unless ← Meta.MetaM.run' (Meta.isProp target.type) do throwError "expected a proof interface"
     if !stx[3].isNone then
       if implementation.isSome then throwError "specify only one proof implementation"
-      let some term := elementaryProof? (← getEnv) type | throwError "no reflexivity or assumption proof"
+      let term ← if stx[3][0].getAtomVal == "by_finite_cases" then do
+        let some body ← finiteProof? src info.type | throwError "no finite case proof for {info.name}"
+        ofExcept (translateProofTerm src body)
+      else do
+        let some body := elementaryProof? (← getEnv) type | throwError "no reflexivity or assumption proof"
+        pure body
       Lean.addDecl (.thmDecl {target with value := term, all := [target.name]})
     else if let some proof := implementation then
       Lean.addDecl (.thmDecl {target with value := mkConst proof levels, all := [target.name]})
