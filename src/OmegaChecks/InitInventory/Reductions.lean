@@ -56,6 +56,9 @@ meta import OmegaChecks.InitInventory.StrictRingOrder
 public import OmegaChecks.InitInventory.EnvelopeOrder
 import all OmegaChecks.InitInventory.EnvelopeOrder
 meta import OmegaChecks.InitInventory.EnvelopeOrder
+public import OmegaChecks.InitInventory.SumFunctions
+import all OmegaChecks.InitInventory.SumFunctions
+meta import OmegaChecks.InitInventory.SumFunctions
 public import OmegaChecks.InitInventory.Extensionality
 import all OmegaChecks.InitInventory.Extensionality
 meta import OmegaChecks.InitInventory.Extensionality
@@ -167,6 +170,9 @@ private def replayWitnesses (env : Environment) : IO Unit := do
      ``ErasedSelection.outInjIffConstructors, ``ErasedSelection.outInjIffLaw] ++
     [``ChoiceOperands.fromChoice, ``ExistentialConjunction.ofRule] ++
     [``SubsingletonState.ofState, ``SubsingletonState.iffState] ++
+    SumFunctions.consequences.map (fun row => row.2.2) ++
+    [``SumFunctions.etaIffBranches, ``SumFunctions.etaOfComposition, ``SumFunctions.compositionOfEta,
+      ``SumFunctions.identityOfEta, ``SumFunctions.constantsOfComposition, ``SumFunctions.swapIffIdentity] ++
     TransformerLaws.OptionIteration.directConsequences.map (fun row => row.2.2) ++
     TransformerLaws.OptionIteration.constructions ++
     [``TransformerLaws.MapAfterBind.funextFromMapBind, ``TransformerLaws.MapAfterBind.funextFromStateRunSeq,
