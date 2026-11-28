@@ -18,9 +18,11 @@ internal sealed class FinitePronySecondMomentRangeDocument : IScribeDocumentDefi
                     + "distinct nodes in the open interval with strictly positive weights "
                     + "and moments of orders zero and one equal to M and M times x. Their "
                     + "second moments range from M times x squared, inclusive, to M times "
-                    + "the quantity (a + b) x minus a b, exclusive. A realizing family has "
-                    + "one node exactly at the included endpoint. Each interior second "
-                    + "moment admits a two-node family.")),
+                    + "the quantity (a + b) x minus a b, exclusive. A realizing family "
+                    + "has one node if and only if its second moment equals the lower "
+                    + "endpoint. Each interior second moment admits a two-node family. "
+                    + "Thus fixing mass and mean leaves both the second moment and the "
+                    + "minimum pole count undetermined.")),
                 Paragraph(Text("The weighted sum of squared distances from the mean gives "
                     + "the lower slack. If it vanishes, positivity forces every node to "
                     + "equal the mean. The upper slack is the weighted sum of the products "
