@@ -11,8 +11,11 @@ import D5.S3.Weil.ZetaRvm.Halving
 import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.Analysis.Normed.Group.Basic
 import Mathlib.Tactic
+import OmegaBuild.Commands
 
 /-! A multiplicity-weighted reflection bound for the positive zeta zero cutoff. -/
+
+compile_only_with_mathlib
 
 namespace D5.S3.Weil.ZeroData.ZetaOrdinateReflectionTransfer
 
@@ -69,7 +72,7 @@ private theorem reflection_transfer {ι : Type*} (s : Finset ι) (r : ι → ι)
 open Zeta23 in
 /-- Pairing zeros of the same height bounds the transfer from the complex zero sum
 to the ordinate sum by a quadratic displacement weight. -/
-theorem actual_reflection_bound (T v : ℝ) :
+theorem actual_reflection_bound (v T : ℝ) :
     let s := (zerosIn_finite 0 T).toFinset
     ‖(∑ ρ ∈ s, (zeroMult ρ : ℂ) * Complex.exp ((v : ℂ) * (ρ - 1 / 2))) -
       ∑ ρ ∈ s, (zeroMult ρ : ℂ) * Complex.exp (Complex.I * ((v * ρ.im : ℝ) : ℂ))‖ ≤
