@@ -35,6 +35,15 @@ strata_touched:
   - D5/S3/Topology/RetractionCoordinate
   - D5/S3/Topology/StableCategory/TetrahedralGraphIteration
   - D5/S3/Topology/StableCategory/TetrahedralCategoricalCover
+  - D5/S3/Topology/BarycentricRealization
+  - D5/S3/Topology/StableCategory/FourPieceCategoricalCover
+  - D5/S3/Topology/StableCategory/DimensionFourCategoricalColour
+  - D5/S3/Topology/StableCategory/LebesgueStarAssignment
+  - D5/S3/Topology/StableCategory/TetrahedralOneSidedRefinement
+  - D5/S3/Topology/StableCategory/TetrahedralAsymmetricIteration
+  - D5/S3/Topology/StableCategory/ThreePieceCategoricalCover
+  - D5/S3/Topology/StableCategory/DepthZeroElementaryExpansion
+  - D5/S3/Topology/StableCategory/ExactCategoricalExtension
 license: citation-only
 triage: anchor
 ---
@@ -1092,3 +1101,94 @@ subcomplexes covering an ordinary subdivision of the source. Both
 inclusions contract by contiguity in the ambient at that same depth.
 This allows a categorical region of dimension at most three to be
 split while keeping its contractions in a higher-dimensional ambient.
+
+## Four categorical pieces from a star assignment
+
+Suppose a finite complex has dimension at most four and every closed
+vertex star can be assigned to one of two subcomplexes with nullhomotopic
+realization inclusions. The first barycentric subdivision separates
+the mixed-label and five-vertex faces from the remaining faces. Each
+induced region has dimension at most three. On every monochromatic flag,
+the old label set is constant, including at the isolated pure top faces.
+The realization map sends a flag to the weighted average of its face
+barycentres. It identifies every subdivided subcomplex with the original
+one and permits the supplied homotopies to glue on the open fibres of
+the label sets. In a connected ambient, the two relative two-piece covers
+then pull back by the face intersections at a common ordinary subdivision
+depth. The Lean theorem gives four categorical lower sets in the face
+poset at that depth.
+
+For a connected complex of weak category two, the Lean theorem proves
+the star assignment from the categorical open cover. In the original
+coordinate metric each barycentric subdivision shrinks the mesh by at
+most four fifths. Once the mesh is smaller than the Lebesgue number,
+each closed vertex star lies in one categorical open. The proof
+transports the two homotopies to the subcomplexes of faces carried into
+the respective opens. For a finite poset with connected order-complex
+realization and order-complex dimension at most four, this gives four
+categorical lower sets in some ordinary iterated chain poset.
+
+## Three-piece bound for contractible complexes
+
+For a nullhomotopic realization inclusion of a subcomplex of dimension
+at most five, the one-sided tetrahedral refinement gives a paper
+proof of a relative three-piece cover. The lowest two face ranks form
+a bipartite graph. Fold the other ranks to one apex when reading the
+tetrahedral colouring. The graph parameter gains four levels for
+every three ambient levels, and the other parameter retains the
+ambient depth. Its exceptions contract through single graph edges
+and enter the next parameter as isolated vertices. At the terminal
+depth the graph region contracts. The remaining parameter has
+dimension at most three and gives two pieces by the relative theorem.
+Pulling back through the meeting-face maps gives the three-piece
+cover at a single ambient depth. The Lean theorem proves the absolute
+version for every finite simplicial complex of dimension at most five
+with contractible realization. The relative version above remains a
+paper deduction.
+
+In dimension four the two-piece bound for contractible realization
+remains open. A PL four-ball with 19 vertices and 69 maximal simplexes
+admits a three-piece cover with strongly collapsible intersections
+for which each pairwise union contains a domination-free ambient
+retract. The retracts persist under common subdivision, so every
+pairwise union remains noncategorical. This ball has another
+two-piece cover obtained by redistributing parts of the original
+three pieces.
+
+
+## Categorical covers across one elementary expansion
+
+Suppose the retained complex has a categorical two-cover on its
+given triangulation and the expanded complex is connected. The Lean
+theorem gives a categorical lower cover of size two for the face
+poset after two ordinary barycentric subdivisions of the expanded
+complex. For a mixed attachment, take the vertices omitted by the
+old attaching facets assigned to the second piece. They form a
+face in the first piece and belong to every old attaching face
+exclusive to it. This face supplies the contiguity comparison for
+the two new face vertices. A monochromatic attachment leaves a
+separate categorical edge in the opposite first-subdivision region.
+
+The corresponding transport of an arbitrary inherited cover
+on a positive-depth subdivision is known here for a triangular
+expansion by a paper argument with rooted trees and the planar dual.
+In dimension four the same colouring rule can fail at every common
+depth. Linked curves in the old trace can become nullhomologous in
+the new colour, preventing any endpoint map that fixes the old
+trace. It remains open whether a different colouring or a
+contraction that moves the old trace gives a general transfer.
+
+
+## Exact intersections across an attachment
+
+Suppose the retained subcomplex is full and has a prescribed two-piece
+cover. One further ordinary subdivision gives an exact categorical
+extension when the attachment and one old piece are categorical
+together. When the attachment and both old pieces are individually
+categorical, there is an exact extension with three pieces, with the
+third disjoint from the retained subdivision. More generally, if a
+categorical cover by full subcomplexes contains the corresponding
+prescribed old pieces, one further ordinary subdivision gives the
+prescribed intersections without increasing the number of pieces.
+The proofs intersect each retained face with a vertex set and compare
+this order map with inclusion by a finite contiguity chain.

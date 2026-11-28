@@ -1,0 +1,91 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Gauge;
+
+internal sealed class ElectroweakHiggsMechanism4DDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Quantum/Gauge/ElectroweakHiggsMechanism4D.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/LieTheory/weinberg1967modelofleptons");
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The Higgs vacuum stabilizer, gauge boson mass matrix and scalar fluctuation spectrum for one complex doublet.",
+        H("Electroweak symmetry breaking"),
+        Blocks(
+            Paragraph(Text("The neutral component of a hypercharge one-half doublet acquires vacuum value v divided by the square root of two. Its electric charge is zero. The vacuum fixes the photon direction and gives equal masses to the two charged weak modes. The scalar potential gives a positive radial mass and three vanishing Goldstone masses at tree level.")),
+            Entry("higgs-potential", "higgsPotential", "Scalar doublet potential",
+                "The potential is lambda times the square of the difference between the squared doublet norm and v squared over two.", DescribeRole.Definition, Source),
+            Entry("higgs-vac", "higgsVac", "Neutral vacuum",
+                "The upper component is zero and the lower component is v divided by the square root of two.", DescribeRole.Definition, Source),
+            Entry("higgs-potential-nonneg", "higgsPotential_nonneg", "Lower bound",
+                "Positive lambda makes the potential nonnegative.", DescribeRole.Theorem),
+            Entry("higgs-potential-eq-zero-iff", "higgsPotential_eq_zero_iff", "Vacuum manifold",
+                "For positive lambda the potential vanishes exactly on the sphere of squared doublet norm v squared over two.", DescribeRole.Theorem),
+            Entry("higgs-potential-vacuum-zero", "higgsPotential_vacuum_zero", "Vacuum energy",
+                "The chosen neutral doublet lies on the zero set of the potential.", DescribeRole.Theorem),
+            Entry("ew-generator-action", "ewGeneratorAction", "Infinitesimal gauge action",
+                "The Pauli matrices divided by two give the weak action. Hypercharge acts by one half of the identity.", DescribeRole.Definition, Source),
+            Entry("higgs-vacuum-stabilizer-iff", "higgs_vacuum_stabilizer_iff", "Electric charge direction",
+                "At positive v the first two weak coordinates vanish in the stabilizer and the third weak coordinate equals the hypercharge coordinate.", DescribeRole.Theorem, Source),
+            Entry("ew-group-action", "ewGroupAction", "Doublet group action",
+                "The unit pair of complex coordinates specifies the weak matrix and the unit phase multiplies both output components.", DescribeRole.Definition, Source),
+            Entry("higgs-group-stabilizer-iff", "higgs_group_stabilizer_iff", "Vacuum stabilizer circle",
+                "At positive v, an element of the weak group and hypercharge circle fixes the vacuum exactly when the weak matrix is diagonal with first entry equal to the hypercharge phase. The unit phases parametrize the stabilizer.", DescribeRole.Theorem),
+            Entry("gauge-derivative", "gaugeDerivative", "Gauge term at the vacuum",
+                "The gauge term multiplies the weak coordinates by g and the hypercharge coordinate by g prime and includes the factor minus i.", DescribeRole.Definition, Source),
+            Entry("gauge-derivative-eq-generator-action", "gaugeDerivative_eq_generator_action", "Gauge coupling to the doublet",
+                "The component expression is the infinitesimal action at the vacuum after coupling substitution and multiplication by minus i.", DescribeRole.Theorem),
+            Entry("ew-mass-quadratic", "ewMassQuadratic", "Gauge mass quadratic form",
+                "Twice the sum of the squared complex norms of the gauge term gives the real mass quadratic form.", DescribeRole.Definition, Source),
+            Entry("ew-mass-quadratic-form", "ew_mass_quadratic_form", "Charged and neutral terms",
+                "The charged term is g²v²/4 times the sum of the first two field squares. The neutral term is v²/4 times the square of g times the third field minus g prime times the hypercharge field.", DescribeRole.Theorem),
+            Entry("cos-w", "cosW", "Weak mixing cosine",
+                "Divide the weak coupling by the square root of the sum of the squared couplings.", DescribeRole.Definition, Source),
+            Entry("sin-w", "sinW", "Weak mixing sine",
+                "Divide the hypercharge coupling by the square root of the sum of the squared couplings.", DescribeRole.Definition, Source),
+            Entry("m-wsq", "mWSq", "Charged weak mass squared",
+                "Multiply the square of the weak coupling by v squared over four.", DescribeRole.Definition, Source),
+            Entry("m-zsq", "mZSq", "Neutral weak mass squared",
+                "Multiply the sum of the squared couplings by v squared over four.", DescribeRole.Definition, Source),
+            Entry("photon-mode", "photonMode", "Photon coordinate",
+                "Weight the third weak coordinate by the mixing sine and the hypercharge coordinate by the mixing cosine and add them.", DescribeRole.Definition, Source),
+            Entry("z-mode", "zMode", "Z coordinate",
+                "Subtract the hypercharge coordinate times the mixing sine from the third weak coordinate times the mixing cosine.", DescribeRole.Definition, Source),
+            Entry("ew-neutral-rotation-orthogonal", "ew_neutral_rotation_orthogonal", "Orthogonal neutral rotation",
+                "When at least one coupling is nonzero, the Z and photon coordinates preserve the sum of squares.", DescribeRole.Theorem),
+            Entry("ew-mass-diagonalized", "ew_mass_diagonalized", "Diagonal gauge masses",
+                "For nonzero coupling pair the two charged coordinates have coefficient M W squared and the Z coordinate has coefficient M Z squared. The photon has coefficient zero.", DescribeRole.Theorem),
+            Entry("ew-mass-matrix", "ewMassMatrix", "Gauge mass matrix",
+                "The symmetric matrix acts on the three real weak coordinates followed by the real hypercharge coordinate.", DescribeRole.Definition, Source),
+            Entry("ew-gauge-mass-matrix", "ew_gauge_mass_matrix", "Matrix of the gauge quadratic form",
+                "Contracting the matrix with the real field vector on both sides recovers twice the squared gauge derivative norm.", DescribeRole.Theorem),
+            Entry("ew-w-mass-sq", "ew_W_mass_sq", "Charged weak eigenvectors",
+                "The first two coordinate vectors have the same squared mass eigenvalue.", DescribeRole.Theorem),
+            Entry("ew-photon-massless", "ew_photon_massless", "Massless photon",
+                "For nonzero coupling pair the normalized photon direction belongs to the kernel of the mass matrix.", DescribeRole.Theorem),
+            Entry("ew-z-mass-sq", "ew_Z_mass_sq", "Neutral weak eigenvector",
+                "For nonzero coupling pair the normalized Z direction has squared mass given by the sum of the squared couplings times v squared over four.", DescribeRole.Theorem),
+            Entry("ew-mass-order", "ew_mass_order", "Strict mass ordering",
+                "Positive couplings and positive v give positive charged mass squared and a strictly larger neutral weak mass squared.", DescribeRole.Theorem),
+            Entry("ew-custodial-rho-eq-one", "ew_custodial_rho_eq_one", "Custodial ratio",
+                "Positive g and v give a ratio of one after dividing charged mass squared by the product of Z mass squared and the squared mixing cosine.", DescribeRole.Theorem),
+            Entry("ew-electric-charge-relations", "ew_electric_charge_relations", "Electromagnetic coupling",
+                "Positive couplings give equal electric charge from the two neutral projections and a reciprocal squared charge equal to the sum of reciprocal squared couplings.", DescribeRole.Theorem),
+            Entry("higgs-fluctuation", "higgsFluctuation", "Real fluctuation coordinates",
+                "The doublet is parametrized by three Goldstone coordinates and the radial coordinate h, each scaled by the inverse square root of two.", DescribeRole.Definition, Source),
+            Entry("higgs-fluctuation-expansion", "higgs_fluctuation_expansion", "Exact fluctuation potential",
+                "The potential is lambda over four times the square of the sum of 2 v h and the four squared fluctuation coordinates.", DescribeRole.Theorem),
+            Entry("higgs-fluctuation-homogeneous-terms", "higgs_fluctuation_homogeneous_terms", "Quadratic, cubic and quartic terms",
+                "With q the sum of fluctuation squares, the three terms are lambda v squared h squared, lambda v h q and lambda q squared over four.", DescribeRole.Theorem),
+            Entry("higgs-hessian-diagonal", "higgs_hessian_diagonal", "Hessian quadratic form",
+                "The second directional derivative at the vacuum is 2 lambda v squared times the square of the radial component of the direction.", DescribeRole.Theorem),
+            Entry("higgs-hessian-spectrum", "higgs_hessian_spectrum", "Higgs and Goldstone masses",
+                "The radial coordinate has positive mass squared for positive lambda and v. Each of the three Goldstone coordinate second derivatives vanishes.", DescribeRole.Theorem))));
+
+    private static DocumentBlock Entry(string id, string declaration, string title, string statement,
+        DescribeRole role, LibraryNoteRef? source = null) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
+            H(title), StatementSource.WithoutFormula(),
+            source is null ? AssessedProvenance.FromRepo() : AssessedProvenance.FromRepo(source),
+            Blocks(Paragraph(Text(statement))), role);
+}

@@ -5,7 +5,8 @@
    anchors: []
    digest: A finite scaled-Kraft mass with a complexity ceiling bounds the candidate count. -/
 
-import Mathlib
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Tactic.Positivity
 
 open scoped BigOperators
 
