@@ -31,7 +31,8 @@ open Lean.Grind Lean.Grind.CommRing in
 public theorem Lean.Grind.CommRing.Expr.denoteSAsRing {α : Type u} [Lean.Grind.Semiring α]
     (ctx : Context α) (e : Expr) :
     OmegaChecks.InitPort.Alternatives.Lean.Grind.CommRing.Expr.denoteSAsRing ctx e = e.denoteSAsRing ctx :=
-  (e.denoteAsRing_eq ctx).symm
+  (OmegaChecks.InitPort.Alternatives.Lean.Grind.CommRing.Expr.denoteAsRing_eq ctx e).trans
+    (e.denoteAsRing_eq ctx).symm
 
 public theorem List.splitOnPTR {α : Type u} (p : α → Bool) (xs : List α) :
     xs.splitOnP p = _root_.List.splitOnPTR p xs :=
