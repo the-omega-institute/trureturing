@@ -43,7 +43,8 @@ open P48qNativeConformalZero (native_conformal_coeff_neg_six_eq_totalLZero)
 open P48qNativeDualCoefficients (bpzTerm)
 open P48qNativeDualLinearField (dualField)
 open P48qNativeRestrictedDualField (ActualGrade GradeDual RestrictedDual gradedPairing
-  gradedPairing_apply_grade gradedPairing_dualField_coeff gradedPairing_ext stateDecompose)
+  gradedPairing_apply_grade gradedPairing_dualField_coeff gradedPairing_ext gradedPairing_lof
+  stateDecompose)
 open P48qThirdTwistedField (State)
 open P48qTwistedChargeAction (lattice)
 open P48qTwistedStateEnergy (totalLZero totalLZero_eigenvalues totalLZero_vacuum_spectrum totalWeight)
@@ -142,6 +143,67 @@ theorem gradedPairing_dual_conformal_monodromy (f : RestrictedDual) (v : State) 
         LinearMap.id_apply]
   simpa only [LinearMap.comp_apply, hAssemble] using
     LinearMap.congr_fun hState (stateDecompose v)
+
+/-- The actual BPZ pairing separates both rotation eigenspaces at each common eigenvalue. -/
+theorem gradedPairing_conformal_monodromy_separates (c : ℂ) :
+    (∀ f : RestrictedDual, f ≠ 0 → dualConformalMonodromy f = c • f →
+      ∃ v : State, conformalMonodromy v = c • v ∧ gradedPairing f v ≠ 0) ∧
+    (∀ v : State, v ≠ 0 → conformalMonodromy v = c • v →
+      ∃ f : RestrictedDual, dualConformalMonodromy f = c • f ∧ gradedPairing f v ≠ 0) := by
+  constructor
+  · intro f hf hRotate
+    have hComponent : ∃ w : ℝ, f w ≠ 0 := by
+      by_contra! h
+      apply hf
+      apply DFinsupp.ext
+      intro w
+      rw [DFinsupp.zero_apply, h w]
+    obtain ⟨w, hw⟩ := hComponent
+    have hComponentRotate := congrArg (fun g : RestrictedDual => g w) hRotate
+    simp only [dualConformalMonodromy, DirectSum.lmap_apply, LinearMap.smul_apply,
+      LinearMap.id_apply, DirectSum.smul_apply] at hComponentRotate
+    have hPhase : Complex.exp (2 * (Real.pi : ℂ) * Complex.I * (w : ℂ)) = c :=
+      smul_left_injective ℂ hw hComponentRotate
+    have hEval : ∃ x : ActualGrade w, f w x ≠ 0 := by
+      by_contra! h
+      apply hw
+      apply LinearMap.ext
+      intro x
+      rw [LinearMap.zero_apply, h x]
+    obtain ⟨x, hx⟩ := hEval
+    have hEnergy : totalLZero (x : State) = (w : ℂ) • (x : State) :=
+      Module.End.mem_eigenspace_iff.mp x.property
+    refine ⟨(x : State), ?_, ?_⟩
+    · simpa only [hPhase] using
+        conformalMonodromy_totalLZero_eigenvector (x : State) (w : ℂ) hEnergy
+    · simpa only [gradedPairing_apply_grade f w x] using hx
+  · intro v hv hRotate
+    have hComponent : ∃ w : ℝ, stateDecompose v w ≠ 0 := by
+      by_contra! h
+      apply hv
+      apply stateDecompose.injective
+      rw [stateDecompose.map_zero]
+      apply DFinsupp.ext
+      intro w
+      rw [DFinsupp.zero_apply, h w]
+    obtain ⟨w, hw⟩ := hComponent
+    obtain ⟨g, hg⟩ := Module.Projective.exists_dual_ne_zero ℂ hw
+    let f : RestrictedDual := DirectSum.lof ℂ ℝ GradeDual w g
+    let phase : ℂ := Complex.exp (2 * (Real.pi : ℂ) * Complex.I * (w : ℂ))
+    have hPair : gradedPairing f v ≠ 0 := by
+      simpa only [f, gradedPairing_lof] using hg
+    have hfRotate : dualConformalMonodromy f = phase • f := by
+      simp only [f, phase, dualConformalMonodromy, DirectSum.lmap_lof,
+        LinearMap.smul_apply, LinearMap.id_apply, map_smul]
+    have hScalar : phase • gradedPairing f v = c • gradedPairing f v := by
+      calc
+        phase • gradedPairing f v = gradedPairing (dualConformalMonodromy f) v := by
+          simp only [hfRotate, map_smul, LinearMap.smul_apply]
+        _ = gradedPairing f (conformalMonodromy v) :=
+          gradedPairing_dual_conformal_monodromy f v
+        _ = c • gradedPairing f v := by rw [hRotate, map_smul]
+    have hPhase : phase = c := smul_left_injective ℂ hPair hScalar
+    exact ⟨f, hPhase ▸ hfRotate, hPair⟩
 
 /-! The unnormalized coefficient covariance, first for a homogeneous source. -/
 private theorem dual_conformal_monodromy_coeff_of_weight (a : NativeStates) (d : ℕ)
