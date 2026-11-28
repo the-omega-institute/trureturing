@@ -310,3 +310,18 @@ public section
 namespace Nat
 export _root_.Omega.Nat (add_div_right add_mul_div_left add_mul_div_right div_eq_of_lt_le instDvd mul_sub_div sub_mul_div_of_le)
 end Nat
+
+port_proof Nat.zero_mod
+port_private_declaration Nat.add_mul_mod_self_left.match_1_1
+port_private_declaration Nat.mod_eq_sub_mod.match_1_1
+port_proof Nat.mod_eq_sub_mod
+port_proof Nat.add_mod_right
+port_definition Nat.add_mul_mod_self_left._f
+port_proof Nat.add_mul_mod_self_left
+port_proof Nat.mul_mod_right
+port_proof Nat.mul_div_cancel
+
+public section
+namespace Nat
+export _root_.Omega.Nat (add_mod_right add_mul_mod_self_left mod_eq_sub_mod mul_div_cancel mul_mod_right zero_mod)
+end Nat

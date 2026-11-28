@@ -595,3 +595,17 @@ public section
 namespace Nat
 export _root_.Omega.Nat (lt_of_succ_lt_succ mul_sub_right_distrib not_lt pred_mul sub_eq_zero_of_le sub_le_sub_left sub_ne_zero_of_lt sub_pos_of_lt succ_pred_eq_of_pos)
 end Nat
+
+port_proof Nat.mul_sub_left_distrib
+port_proof Nat.le_of_eq
+port_proof Nat.le_of_mul_le_mul_left
+port_proof Nat.eq_of_mul_eq_mul_left
+port_private_declaration Nat.sub_eq_iff_eq_add.match_1_1
+port_proof Nat.sub_eq_iff_eq_add
+port_proof Nat.le_of_not_le
+port_proof Nat.mul_sub
+
+public section
+namespace Nat
+export _root_.Omega.Nat (eq_of_mul_eq_mul_left le_of_eq le_of_mul_le_mul_left le_of_not_le mul_sub mul_sub_left_distrib sub_eq_iff_eq_add)
+end Nat
