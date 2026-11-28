@@ -21,4 +21,4 @@ Konno's Theorem 3.2 and the amplitude expansion preceding Corollary 3.3 give the
 ## Verified locator
 
 - DOI https://doi.org/10.48550/arXiv.2609.05033. The DataCite record supplies the title and both authors.
-- URL https://arxiv.org/html/2609.05033v1. Section 2, printed pages 3–4, gives the direction basis, step matrices, product order, positive interval rule, and conditional law. Definition 3.1 and Theorem 3.1, printed pages 13–14, give exact uniformity and the rotation-coin rigidity theorem. Section 5, printed page 17, states the questions for general unitary coins and arbitrary initial states.
+- URL https://arxiv.org/abs/2609.05033v1. The [versioned text](https://arxiv.org/html/2609.05033v1) gives the direction basis, step matrices, product order, positive interval rule, and conditional law in Section 2, printed pages 3–4. Definition 3.1 and Theorem 3.1, printed pages 13–14, give exact uniformity and the rotation-coin rigidity theorem. Section 5, printed page 17, states the questions for general unitary coins and arbitrary initial states.
