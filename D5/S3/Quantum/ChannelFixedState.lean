@@ -25,7 +25,11 @@
      10.1017/9781316848142). No specific theorem number was verified or attributed.
 -/
 
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 namespace D5.S3.Quantum.ChannelFixedState
 
