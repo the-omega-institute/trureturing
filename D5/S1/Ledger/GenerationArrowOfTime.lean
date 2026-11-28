@@ -5,7 +5,10 @@
    anchors: []
    digest: Prime-exponent length is additive and strictly increases under nonzero generation. -/
 
-import Mathlib
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Data.Finsupp.Order
+import Mathlib.Data.Nat.Prime.Defs
+import Mathlib.Tactic.Ring
 
 /- Library-search audit trail (2026-08-22):
    * `rg -n -F 'length_strictly_increases_under_generation' D5 Golden/Frozen/accepted`

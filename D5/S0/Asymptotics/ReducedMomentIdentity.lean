@@ -43,7 +43,8 @@
    `Finset.sum_sub_distrib` and `pow_succ`.
 -/
 
-import Mathlib
+import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Tactic.Ring
 
 /-!
 # A deleted atom turns two power sums into one weighted moment

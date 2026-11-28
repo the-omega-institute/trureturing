@@ -5,7 +5,11 @@
    anchors: []
    digest: Periodic Fibonacci residues modulo sixteen obstruct even perfect-power sums. -/
 
-import Mathlib
+import Mathlib.Algebra.Group.Even
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Data.Nat.Fib.Basic
+import Mathlib.Data.Nat.ModEq
+import Mathlib.Tactic.IntervalCases
 
 namespace D5.S1.Recurrence.FibonacciPowerSumMod16Obstruction
 
