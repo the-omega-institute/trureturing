@@ -25,6 +25,20 @@ private theorem boundedSignal_iff_halts (c : Code) (input : Nat) :
     obtain ⟨fuel, hit⟩ := Code.evaln_complete.mp h
     exact ⟨fuel, Option.isSome_iff_exists.mpr ⟨value, hit⟩⟩
 
+/-- The raw finiteness bit required by the pinned `Take.Rel.eq_1` is noncomputable
+on bounded simulations, even with natural-number states, unit outputs and no skips. -/
+theorem not_computable_take_finiteness_bit
+    (classify : ∀ [Iterator Nat Id Unit] [Productive Nat Id], Decidable (Finite Nat Id))
+    (input : Nat) : ¬ Computable (fun c : Code =>
+      takeSearchBit (@classify) (fun fuel => (Code.evaln fuel c input).isSome)) := by
+  intro computes
+  apply ComputablePred.halting_problem input
+  apply ComputablePred.of_eq (p := fun c : Code =>
+    takeSearchBit (@classify) (fun fuel => (Code.evaln fuel c input).isSome) = true)
+  · exact ⟨inferInstance, by simpa using computes⟩
+  · intro c
+    exact (takeSearchBit_iff (@classify) _).trans (boundedSignal_iff_halts c input)
+
 /-- On the bounded-evaluation streams of partial recursive codes, any total collector
 agreeing with the pinned finite collector yields a Boolean test outside the computable
 functions. The input of each simulated code may be fixed in advance. -/

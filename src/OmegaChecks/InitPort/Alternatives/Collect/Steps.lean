@@ -17,7 +17,10 @@ open Std Std.Iterators Std.Iterators.Types
 namespace OmegaChecks.InitPort.Alternatives
 
 /-- A decreasing countdown suffices. At equal countdowns, a finite inner iterator
-also allows yielding steps to contribute to the decrease. -/
+also allows yielding steps to contribute to the decrease. The pinned Take.Rel.eq_1
+selects its branch with a finiteness decision. Even on productive natural-number
+iterators, its Boolean tag on bounded program simulations decides halting
+(Collector.not_computable_take_finiteness_bit). -/
 public def Std.Iterators.Types.Take.Rel {α β : Type w} (m : Type w → Type v)
     [Monad m] [Iterator α m β] [Productive α m] (a b : IterM (α := Take α m) m β) : Prop :=
   a.internalState.countdown < b.internalState.countdown ∨

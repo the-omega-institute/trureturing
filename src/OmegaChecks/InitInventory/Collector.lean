@@ -137,6 +137,11 @@ private theorem hitOfSearchFinite (f : Nat → Bool) (finite : letI := searchIte
         rw [h]
   exact reaches ⟨0⟩
 
+private theorem finitenessIffSignal (f : Nat → Bool) :
+    (letI := searchIterator (seen f); Finite Nat Id) ↔ ∃ n, f n = true :=
+  ⟨fun hf => (hitOfSearchFinite (seen f) hf).elim fun n hit => hit_of_seen f n hit,
+   fun ⟨n, hit⟩ => searchFinite (seenSticky f) (seen_of_hit f n hit)⟩
+
 /-- Deciding the finiteness test of the Take.Rel unfolding on productive, yield-only
 search iterators decides whether any element of an arbitrary Boolean stream is true. -/
 def limitedOmniscienceFromTakeDecision
@@ -145,10 +150,26 @@ def limitedOmniscienceFromTakeDecision
   letI := searchIterator (seen f)
   letI := searchProductive (seen f)
   cases classify with
-  | isTrue hf =>
-    exact isTrue ((hitOfSearchFinite (seen f) hf).elim fun n hit => hit_of_seen f n hit)
-  | isFalse hn =>
-    exact isFalse fun ⟨n, hit⟩ => hn (searchFinite (seenSticky f) (seen_of_hit f n hit))
+  | isTrue finite => exact .isTrue ((finitenessIffSignal f).mp finite)
+  | isFalse infinite => exact .isFalse (fun hit => infinite ((finitenessIffSignal f).mpr hit))
+
+/-- The Boolean tag of the finiteness decision itself, on the productive iterator
+that stops as soon as the stream has signalled. -/
+def takeSearchBit
+    (classify : ∀ [Iterator Nat Id Unit] [Productive Nat Id], Decidable (Finite Nat Id))
+    (f : Nat → Bool) : Bool := by
+  letI := searchIterator (seen f)
+  letI := searchProductive (seen f)
+  exact @decide (Finite Nat Id) classify
+
+theorem takeSearchBit_iff
+    (classify : ∀ [Iterator Nat Id Unit] [Productive Nat Id], Decidable (Finite Nat Id))
+    (f : Nat → Bool) : takeSearchBit (@classify) f = true ↔ ∃ n, f n = true := by
+  letI := searchIterator (seen f)
+  letI := searchProductive (seen f)
+  letI : Decidable (Finite Nat Id) := classify
+  exact ⟨fun yes => (finitenessIffSignal f).mp (of_decide_eq_true yes),
+    fun hit => decide_eq_true ((finitenessIffSignal f).mpr hit)⟩
 
 open Lean Meta Elab.Command in
 run_cmd
@@ -166,7 +187,8 @@ run_cmd
       let reduction ← getConstInfo ``limitedOmniscienceFromTakeDecision
       unless Kernel.isDefEqGuarded (← getEnv) {} required reduction.type.bindingDomain! do
         throwError "the decision in Take.Rel.eq_1 differs from the input to the stream reduction"
-    unless (← collectAxioms ``limitedOmniscienceFromTakeDecision).isEmpty do
+    unless (← collectAxioms ``limitedOmniscienceFromTakeDecision).isEmpty &&
+        (← collectAxioms ``takeSearchBit_iff).isEmpty do
       throwError "the stream decision reduction depends on axioms"
 
 /-- A decider for all Boolean streams cannot examine a bounded prefix at the all-false stream. -/
