@@ -1,5 +1,5 @@
 /- GID: D5/S3/Topology/StableCategory/FaceInclusionNullhomotopy
-   generality: G
+   generality: I
    mirror-B: none(waiver:consumed-by-weak-category-one-reduction)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
