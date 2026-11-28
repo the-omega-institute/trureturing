@@ -76,8 +76,8 @@ internal sealed class BoundedRealCocycleDocument : IScribeDocumentDefinition
                 H("Exact reconstruction from a bounded orbit"),
                 StatementSource.FromAuthor(Disp(statement)),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/Cohomology/coronelnavasponce2011bounded"),
-                    LibraryNoteRef.Create("D5/L/Cohomology/petkovic2026cohomology")),
+                    LibraryNoteRef.Create("D5/L/Topology/coronelnavasponce2011bounded"),
+                    LibraryNoteRef.Create("D5/L/Topology/petkovic2026cohomology")),
                 Blocks(
                     Paragraph(Text(
                         "G and X range over independent universes. G has a multiplication, and X is " +

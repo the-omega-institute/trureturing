@@ -11,7 +11,7 @@ strata_touched:
 license: citation-only
 triage: anchor
 ---
-<!-- GID: D5/L/Cohomology/petkovic2026cohomology -->
+<!-- GID: D5/L/Topology/petkovic2026cohomology -->
 # Continuous reconstruction and smooth cohomological stability
 
 Primary source: https://arxiv.org/src/2607.11171v1 .
@@ -46,3 +46,7 @@ continuous transfer nor closedness of the smooth coboundary space. Those
 bridges and the conjectured necessity remain unresolved here.
 
 No article code or substantial article text is reproduced.
+
+## Verified locator
+
+https://arxiv.org/abs/2607.11171v1

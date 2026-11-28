@@ -11,7 +11,7 @@ strata_touched:
 license: citation-only
 triage: anchor
 ---
-<!-- GID: D5/L/Cohomology/coronelnavasponce2011bounded -->
+<!-- GID: D5/L/Topology/coronelnavasponce2011bounded -->
 # Bounded cocycles and continuous invariant sections
 
 Primary source: https://arxiv.org/src/1101.3523v4 .
@@ -52,3 +52,7 @@ Normalization and density propagate the original bound C rather than 2C.
 General CAT(0), infinite-dimensional Hilbert, matrix conjugacy and cocycles
 with reflections are outside this formal theorem. No article code or
 substantial article text is reproduced.
+
+## Verified locator
+
+https://arxiv.org/abs/1101.3523v4
