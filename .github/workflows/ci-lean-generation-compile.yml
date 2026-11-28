@@ -76,7 +76,7 @@ jobs:
         if: inputs.kind != 'report'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: &verify-parent |
+        run: |
           set -euo pipefail
           [[ "$COMPILER_PARENT_RUN" =~ ^[1-9][0-9]*$ && "$COMPILER_PARENT_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
           [[ "$COMPILER_SOURCE" =~ ^[a-f0-9]{40}$ && "$COMPILER_BATCH" =~ ^[1-9][0-9]*$ ]]
@@ -170,7 +170,17 @@ jobs:
         if: inputs.kind != 'report'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: *verify-parent
+        run: |
+          set -euo pipefail
+          [[ "$COMPILER_PARENT_RUN" =~ ^[1-9][0-9]*$ && "$COMPILER_PARENT_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
+          [[ "$COMPILER_SOURCE" =~ ^[a-f0-9]{40}$ && "$COMPILER_BATCH" =~ ^[1-9][0-9]*$ ]]
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$COMPILER_PARENT_RUN" |
+            jq -e --arg repo "$GITHUB_REPOSITORY" --arg attempt "$COMPILER_PARENT_ATTEMPT" '
+              .path == ".github/workflows/cache-release-publish.yml" and .status == "in_progress" and
+              (.run_attempt | tostring) == $attempt and .head_branch == "dev" and
+              .repository.full_name == $repo and .head_repository.full_name == $repo and
+              (.event == "push" or .event == "schedule" or
+               (.event == "workflow_dispatch" and .actor.login == "loning" and .triggering_actor.login == "loning"))'
       - name: Complete the parent compiler assignment
         if: inputs.kind != 'report'
         uses: ./.github/actions/lean-cache-shards
