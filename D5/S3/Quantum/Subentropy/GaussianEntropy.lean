@@ -6,12 +6,16 @@
    utility: none
    digest: Gaussian finite entropy gaps identify diagonal determinant-integral subentropy. -/
 
-import D5.S3.Quantum.Subentropy.GaussianRepresentation
-import D5.S3.Quantum.Subentropy.LaplaceEntropy
-import D5.S3.Quantum.Subentropy.DensityKernel
-import Mathlib.MeasureTheory.Function.JacobianOneDim
+module
+
+public import D5.S3.Quantum.Subentropy.GaussianRepresentation
+public import D5.S3.Quantum.Subentropy.LaplaceEntropy
+public import D5.S3.Quantum.Subentropy.DensityKernel
+public import Mathlib.MeasureTheory.Function.JacobianOneDim
 
 /-! Nonnegative product kernels give a Gaussian entropy-gap representation. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

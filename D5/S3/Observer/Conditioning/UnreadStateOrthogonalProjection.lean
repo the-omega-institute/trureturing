@@ -15,8 +15,14 @@
    * Repository and pinned-Mathlib searches found no theorem packaging every clause for an
      arbitrary finite complete family of pairwise orthogonal projections. -/
 
-import D5.S3.Observer.Conditioning
-import D5.S3.Quantum.Tomography.RankOneContextCommutator
+module
+
+public import D5.S3.Observer.Conditioning
+public import D5.S3.Quantum.Tomography.RankOneContextCommutator
+
+/-! Unread measurement is an orthogonal projection for the Hilbert–Schmidt inner product. -/
+
+@[expose] public section
 
 namespace D5.S3.Observer.Conditioning.UnreadStateOrthogonalProjection
 

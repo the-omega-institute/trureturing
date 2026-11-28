@@ -46,12 +46,16 @@ Direct frozen dependencies (GID, statement_id):
     sha256:a8376a57b9d3e52109fea12f73db0ab84164e4cb061792f870b54843e0dedb67
 -/
 
-import D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum
-import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Data.Multiset.Sort
-import Mathlib.Algebra.Polynomial.Roots
+module
+
+public import D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum
+public import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Data.Multiset.Sort
+public import Mathlib.Algebra.Polynomial.Roots
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

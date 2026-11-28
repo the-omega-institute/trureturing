@@ -182,18 +182,21 @@ Measurability follows from measurable marginal integration and measurable
 coordinate insertion. The marginal insertion identity, followed by integration
 over i, gives the original full-product mass m_{j(i)}. Multiplying by its
 inverse therefore gives integral_mu_i h_i = 1, using exactly its positive
-finite mass. To close the target, equality in Finner must still imply, for
-every original j, the almost-everywhere identity
+finite mass. The canonical-profile strengthening asks for every original j
+to satisfy the almost-everywhere identity
 f_j = m_j product_{i in S_j} h_i for this simultaneously chosen family.
 Unit integrals and the support-intersection bridge alone do not give that
 identity.
 
-The remaining formal obligation is the forward implication from saturation of
-the actual ENNReal marginal inequality chain to a simultaneously measurable,
-common coordinate family. Pairwise Holder equality alone does not establish
-that compatibility. The support-space transports, normalization, and converse
-identities described here also require compiled correspondence evidence before
-they can be claimed as the full Lean equality classification.
+`ProperSupportMarginalGluing.finner_equality_iff_common_profiles` proves the
+existential equality classification directly under the original product law.
+Its supports are finite coordinate sets; on finite I this represents every set
+of coordinates. It includes positive finite original masses and strictly
+positive balanced real weights, separated coordinate incidence patterns,
+empty supports and types, repeated row supports, weight one, unrestricted
+empty-row weights, positive-measure zeros and null infinities. The theorem
+does not prescribe the above profiles for every incident-row choice. That
+canonical-choice strengthening remains a separate correspondence question.
 
 ## Finite normalized Holder under one arbitrary measure
 
@@ -228,3 +231,48 @@ the almost-everywhere common density. No mathematical originality is claimed.
 This criterion applies to normalized factors on a common measure. It supplies
 no recovery theorem across conditional slices of zero mass and does not prove
 the common-coordinate-profile classification for Finner's full marginal chain.
+
+## Proper-support assembly in the stability proof
+
+Directly read proof: https://arxiv.org/html/2610.29041v1#S2.SS1
+
+Bennett and Oh, Section 2.1, first consider the case in which every support is
+proper. Deleting a coordinate outside a target row leaves that row unchanged.
+The lower-dimensional factorization supplies coordinate profiles given by the
+one-coordinate marginals of fixed incident rows. Marginal composition identifies
+these profiles independently of the coordinate deleted. Every proper-support row
+can therefore use the same family. The exact gluing implication takes concrete
+normalized factorizations of the deleted marginals as premises; it does not assume
+positive slice masses.
+
+The full-support branch of the source separates full-support rows, rescales the
+proper-row weights by the positive remaining incidence budget, and uses a global
+Holder step. At exact equality, simultaneous almost-everywhere substitution
+replaces the stability estimates for products. A proof of marginal gluing alone
+does not establish either that full-support reduction or the complete induction
+from the original saturation hypothesis.
+
+## Exact equality by induction on the active coordinates
+
+The full equality declaration uses the same ambient product law at every
+inductive stage. Normalize each original row to have integral one. Marginal
+integration over any one coordinate preserves these integrals. The pointwise
+marginal estimate gives a lower bound of one on the weighted-product integral
+of the deleted rows, and Finner on their smaller supports gives an upper bound
+of one. The remaining incidence patterns and balance equations are unchanged.
+The smaller-active-set conclusion supplies all deleted-marginal factorizations
+needed by proper-support gluing.
+
+For at least two active coordinates, remove the full-support rows' common
+incidence mask. Strict positivity and separation imply that the residual
+budget r is positive. Divide the proper-row weights by r. Their product Q
+has integral at most one by Finner, while a global Holder bound and saturation
+of the original product imply that its integral raised to r is at least one.
+Thus Q has integral one. Apply proper-support gluing at that cardinality,
+then normalized Holder to Q and the full-support rows. Every full row equals
+the same product Q almost everywhere. The singleton case instead uses Holder
+only on the incident rows and treats every empty-support row as constant one;
+the empty case uses only these constant rows. Finite product interchange and
+Tonelli prove the converse. Positive finite scalar normalization restores
+exactly the original row masses. These are Lean implications, without invoking
+the literature's classification as an unproved premise.

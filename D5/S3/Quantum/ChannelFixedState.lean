@@ -25,7 +25,18 @@
      10.1017/9781316848142). No specific theorem number was verified or attributed.
 -/
 
-import Mathlib
+module
+
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.Dynamics.BirkhoffSum.NormedSpace
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+
+/-! # Fixed density states of finite quantum channels -/
+
+@[expose] public section
 
 namespace D5.S3.Quantum.ChannelFixedState
 

@@ -21,6 +21,7 @@ import Mathlib.Data.Fintype.Powerset
 import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
 import Mathlib.LinearAlgebra.PiTensorProduct.Basis
 import Mathlib.LinearAlgebra.PiTensorProduct.DirectSum
+import Mathlib.LinearAlgebra.PiTensorProduct.Finite
 
 noncomputable section
 

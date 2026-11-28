@@ -233,12 +233,22 @@ D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm; sha256:12ad034b5758446e6
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17573
 -/
 
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Tactic
-import D5.S3.Quantum.Foundation.FiniteStateChannel
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Abs
+module
+
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.CongrExclamation
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NoncommRing
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
+public import D5.S3.Quantum.Foundation.FiniteStateChannel
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Abs
+
+@[expose] public section
 
 noncomputable section
 namespace D5.S3.Quantum.Foundation.FiniteTraceDistance

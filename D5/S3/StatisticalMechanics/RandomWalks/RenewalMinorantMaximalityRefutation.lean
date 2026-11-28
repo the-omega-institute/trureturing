@@ -15,10 +15,17 @@ Direct frozen dependencies: none (pinned Mathlib only)
 Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
-import Mathlib.Algebra.MvPolynomial.Degrees
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Algebra.MvPolynomial.Degrees
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+
+/-! Nikolov–Savov Conjecture 3.7: Q_4 is not a maximal renewal minorant. -/
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -21,7 +21,11 @@ Direct frozen dependencies: D5/S3/Quantum/FiniteDimensional (module statement_id
   `qubit_weyl_star` (sha256:be07b0533dfdb8741136a43d8272fd7a664770fb9b4a851805c5db573532362d)
 -/
 
-import D5.S3.Quantum.Information.Pauli.PauliMatrix
+module
+
+public import D5.S3.Quantum.Information.Pauli.PauliMatrix
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -13,6 +13,36 @@ internal sealed class FinnerProductMeasureDocument : IScribeDocumentDefinition
         "under one product probability law.",
         H("Finner's inequality on product probability spaces"),
         Blocks(
+            Describe.Lean(DescribeId.Create("finite-coordinate-product-integral"),
+                DeclarationHandle.Create(Prefix + "lintegral_fin_prod"),
+                H("Product integrals of separate coordinate functions"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "For any natural n, measurable spaces E_i indexed by Fin n, sigma-finite " +
+                    "measures mu_i and measurable ENNReal functions a_i on E_i, the integral " +
+                    "of product_i a_i(x_i) under Measure.pi(mu_i) equals the product of " +
+                    "their separate integrals. No probability, positivity or finiteness " +
+                    "of those integrals is required. The empty product is included. " +
+                    "The proof uses the measure-preserving finite-Pi decomposition and " +
+                    "binary Tonelli, including the ENNReal convention zero times infinity " +
+                    "equal to zero. This same product-integral statement supports coordinate " +
+                    "density products and the identification of normalized coordinate " +
+                    "profiles by marginal integration."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finner-marginal-estimate"),
+                DeclarationHandle.Create(Prefix + "marginal_estimate"),
+                H("Finner's estimate before all coordinates are integrated"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "For any coordinate type I with decidable equality and finite row type J, " +
+                    "take measurable ENNReal rows f_j supported on S_j under coordinate probability " +
+                    "laws mu_i. Let nonnegative real weights satisfy the incidence budget at " +
+                    "most one at every coordinate. For every finite coordinate set T, the " +
+                    "T-marginal of the product of f_j^w_j is pointwise at most the product " +
+                    "of the T-marginals of f_j raised to w_j. The ambient coordinate type " +
+                    "need not be finite, and masses may be zero or infinite. This estimate " +
+                    "is the coordinate induction used by the full inequality and supplies " +
+                    "the saturation sandwich for deleted rows in its equality classification."))),
+                DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("finner-product-measure"),
                 DeclarationHandle.Create(Prefix + "finner_product_measure"),
                 H("Fractional hypergraph inequality"),
@@ -74,9 +104,9 @@ internal sealed class FinnerProductMeasureDocument : IScribeDocumentDefinition
                 "f_j=m_j times the product of those same h_i over S_j, mu-almost " +
                 "everywhere for every j. Empty index types, empty supports, repeated " +
                 "supports, zero values on sets of positive measure and infinity values " +
-                "on null sets are included. This classification is not a conclusion of " +
-                "the inequality declaration above; extracting the common family from " +
-                "saturation remains a formal obligation.")),
+                "on null sets are included. The declaration " +
+                "ProperSupportMarginalGluing.finner_equality_iff_common_profiles proves " +
+                "this classification by induction on the active coordinate set.")),
             Paragraph(Text(
                 "The directly read Bennett-Oh restatement in Section 1.1, after equation " +
                 "(1.6), attributes to Finner a common-profile equality representation " +
@@ -116,10 +146,11 @@ internal sealed class FinnerProductMeasureDocument : IScribeDocumentDefinition
                 "of f_{j(i)} over every coordinate other than i, evaluated at a " +
                 "with coordinate i replaced by t. These are measurable functions. " +
                 "Marginal insertion and full-product integration give each integral " +
-                "equal to one, using the positive finite original mass. The " +
-                "unclosed step is that Finner saturation forces every original " +
-                "row f_j to equal m_j times the product of this same candidate " +
-                "family over S_j, almost everywhere under the original mu.")),
+                "equal to one, using the positive finite original mass. The equality " +
+                "theorem in ProperSupportMarginalGluing constructs a common family " +
+                "by active-set induction and proper-support marginal gluing. Identifying " +
+                "every resulting profile with this particular anchored candidate is " +
+                "a separate canonical-choice correspondence question.")),
             Paragraph(Text(
                 "For the converse implication, the finite intersection of the rowwise " +
                 "full-measure sets permits substitution of every representation in the " +

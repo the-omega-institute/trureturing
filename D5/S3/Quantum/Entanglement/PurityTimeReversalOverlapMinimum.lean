@@ -16,8 +16,13 @@ Direct frozen dependencies: D5/S3/Quantum/FiniteDimensional (`qubitX`, `qubitZ`)
   D5/S3/Quantum/Information/PartialTraceMutualInformation (`partialTraceRight`)
 -/
 
-import D5.S3.Quantum.FiniteDimensional
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
+module
+
+public import D5.S3.Quantum.FiniteDimensional
+public import D5.S3.Quantum.Information.PartialTraceMutualInformation
+public import Mathlib.Algebra.Order.Chebyshev
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

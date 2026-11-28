@@ -6,15 +6,19 @@
    utility: none
    digest: Gaussian entropy gives concavity and convex nonnegative block-pinching gaps. -/
 
-import D5.S3.Quantum.Subentropy.Basic
-import D5.S3.Quantum.Subentropy.ClassicalQuantumGram
-import D5.S3.Quantum.Subentropy.EntropyJensenGap
-import D5.S3.Quantum.Subentropy.GaussianMatrix
-import D5.S3.Quantum.Subentropy.GaussianQuadratic
-import Mathlib.Logic.Equiv.Bool
+module
+
+public import D5.S3.Quantum.Subentropy.Basic
+public import D5.S3.Quantum.Subentropy.ClassicalQuantumGram
+public import D5.S3.Quantum.Subentropy.EntropyJensenGap
+public import D5.S3.Quantum.Subentropy.GaussianMatrix
+public import D5.S3.Quantum.Subentropy.GaussianQuadratic
+public import Mathlib.Logic.Equiv.Bool
 
 /-! Exact finite sign-twirl algebra, including empty coordinate blocks.
 Escape audit unfinished for sign_unitary and signTwirl_eq_blockPinch: https://github.com/the-omega-institute/trureturing/issues/19176. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

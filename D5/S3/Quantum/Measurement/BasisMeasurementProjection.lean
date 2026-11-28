@@ -5,9 +5,16 @@
    anchors: []
    digest: Basis dephasing is the orthogonal projection onto diagonal Hermitian matrices. -/
 
-import D5.S3.Observer.Conditioning.UnreadStateOrthogonalProjection
-import D5.S3.Quantum.Tomography.RankOneContextCommutator
-import Mathlib.Analysis.InnerProductSpace.Projection.Basic
+module
+
+public import D5.S3.Observer.Conditioning.UnreadStateOrthogonalProjection
+public import D5.S3.Quantum.Tomography.RankOneContextCommutator
+public import Mathlib.Analysis.InnerProductSpace.Projection.Basic
+public import Mathlib.Analysis.Matrix.Order
+
+/-! Basis measurement projects Hermitian matrices onto their diagonal subspace. -/
+
+@[expose] public section
 
 /- Library-search audit trail (2026-08-22):
    * `rg -n -F 'basis_measurement_is_orthogonal_projection' D5 Golden/Frozen/accepted`

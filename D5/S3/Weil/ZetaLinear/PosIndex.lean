@@ -20,7 +20,9 @@ were written first as a self-contained development (namespace `RHLinalg`) accomp
 paper's authors, and are incorporated here unchanged; they have no upstream outside this project (see README
 § Provenance and attribution).
 -/
-import Mathlib.Analysis.Matrix.PosDef
+module
+
+public import Mathlib.Analysis.Matrix.PosDef
 
 /-!
 # Positive index of a Hermitian matrix
@@ -34,6 +36,8 @@ This file defines `posIndex` via the eigenvalue count, together with the
 real-valued trace `rtrace` and squared Frobenius norm `frobSq` needed for
 the rank–trace inequality (paper §3, `lem:ranktrace`).
 -/
+
+@[expose] public section
 
 noncomputable section
 

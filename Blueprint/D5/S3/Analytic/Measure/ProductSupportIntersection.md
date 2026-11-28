@@ -4,7 +4,19 @@
 
 Almost-everywhere equal measurable nonnegative functions under a finite product probability law have a common measurable representative supported on the intersection of their coordinate sets.
 
-**Theorem 1.1 (A common representative on the intersection).**
+**Lemma 1.1 (Integrating coordinates removes their dependencies).**
+
+Lean statement: `D5/S3/Analytic/Measure/ProductSupportIntersection.marginal_depends`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Measure/ProductSupportIntersection.marginal_depends` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let I be any coordinate type with decidable equality, X_i measurable spaces, mu_i arbitrary measures, and u a finite coordinate set. If an ENNReal function f on the dependent product depends only on S, then lmarginal(mu,u,f) depends only on S with u removed. No measurability of f, probability, sigma-finiteness, finite ambient index type or integral bound is assumed. Coordinates outside u are compared directly; the integrated coordinates are replaced by the same integration variable. This dependence statement identifies the supports of deleted rows in the Finner equality induction.
+
+**Theorem 1.2 (A common representative on the intersection).**
 
 Lean statement: `D5/S3/Analytic/Measure/ProductSupportIntersection.exists_measurable_intersection_representative`
 
@@ -25,3 +37,4 @@ This is a general product-measure support lemma. It gives no equality criterion 
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Measure/ProductSupportIntersection.exists_measurable_intersection_representative`
+- Truth anchor: `D5/S3/Analytic/Measure/ProductSupportIntersection.marginal_depends`

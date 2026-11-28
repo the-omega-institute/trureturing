@@ -6,12 +6,18 @@
    utility: none
    digest: Nonnegativity, homogeneity and joint convexity of finite entropy Jensen gaps. -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.Analysis.Convex.Jensen
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.Analysis.Convex.Jensen
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
 
 /-! Finite entropy gaps on the full nonnegative cone. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

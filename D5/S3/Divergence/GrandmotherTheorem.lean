@@ -22,7 +22,14 @@
      case separately before simplifying the positive-denominator terms.
 -/
 
-import D5.S3.Divergence.ClassicalDPI
+module
+
+public import D5.S3.Divergence.ClassicalDPI
+public import Mathlib.InformationTheory.KullbackLeibler.KLFun
+
+/-! Nonnegativity of finite relative entropy under absolute continuity. -/
+
+@[expose] public section
 
 namespace D5.S3.Divergence.GrandmotherTheorem
 

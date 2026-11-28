@@ -73,13 +73,20 @@
    _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.transition_re_stochastic_iff: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.transition_colStochastic.
    _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.matrix_inner_trace: proof_shape: bind-only; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.hsPair_blocks, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.hsPair_left_ext, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.amplification_adjoint_pair, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.adjoint_twoPositive_of_star, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.unital_iff_adjoint_tracePreserving.
 -/
-import Mathlib.Analysis.Normed.Field.Approximation
-import Mathlib.Analysis.CStarAlgebra.PositiveLinearMap
-import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
-import Mathlib.Topology.Algebra.MvPolynomial
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Univ
-import D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity
-import D5.S3.Weil.ZetaLinear.RankTrace
+module
+
+public import Mathlib.Analysis.Normed.Field.Approximation
+public import Mathlib.Analysis.CStarAlgebra.PositiveLinearMap
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
+public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
+public import Mathlib.Topology.Algebra.MvPolynomial
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Univ
+public import D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity
+public import D5.S3.Weil.ZetaLinear.RankTrace
+
+/-! # Transition traces of two-positive maps -/
+
+@[expose] public section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 set_option backward.isDefEq.respectTransparency false

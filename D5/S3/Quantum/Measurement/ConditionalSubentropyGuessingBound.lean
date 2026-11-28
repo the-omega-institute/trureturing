@@ -148,17 +148,32 @@ proof_shape: determinant_reindex: bind-only; consumers=determinant_cq_bound
 proof_shape: determinant_cq_bound: bind-only; consumers=result
 -/
 
-import D5.S3.Quantum.Subentropy.POVMGram
-import D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace
-import D5.S3.Quantum.Subentropy.Basic
-import D5.S3.Quantum.Subentropy.GuessingProbability
-import D5.S3.Quantum.Subentropy.ClassicalQuantumGram
-import D5.S3.Quantum.Foundation.FiniteStateChannel
-import D5.S3.Quantum.Information.OrthogonalRecordEntropy
-import D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing
-import D5.S3.Quantum.Subentropy.GaussianMatrix
-import D5.S3.Quantum.Subentropy.GaussianQuadratic
-import D5.S3.StatisticalMechanics.RandomWalks.RenewalMinorantMaximalityRefutation
+module
+
+public import D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure
+public import D5.S3.Quantum.Subentropy.POVMGram
+public import D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace
+public import D5.S3.Quantum.Subentropy.Basic
+public import D5.S3.Quantum.Subentropy.GuessingProbability
+public import D5.S3.Quantum.Subentropy.ClassicalQuantumGram
+public import D5.S3.Quantum.Foundation.FiniteStateChannel
+public import D5.S3.Quantum.Information.OrthogonalRecordEntropy
+public import D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing
+public import D5.S3.Quantum.Subentropy.GaussianMatrix
+public import D5.S3.Quantum.Subentropy.GaussianQuadratic
+public import D5.S3.StatisticalMechanics.RandomWalks.RenewalMinorantMaximalityRefutation
+public import Mathlib.Probability.Distributions.Exponential
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.PolarCoord
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.NumberTheory.Harmonic.GammaDeriv
+public import Mathlib.MeasureTheory.Integral.Gamma
+
+/-! Conditional subentropy is at most the guessing min-entropy of a finite c-q state. -/
+
+@[expose] public section
 namespace D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound
 open D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing (chart)
 open ProbabilityTheory
@@ -194,18 +209,7 @@ open scoped ENNReal
 set_option backward.isDefEq.respectTransparency false in
 private lemma lintegral_fin_prod {n : ℕ} {E : Fin n → Type*} {mE : ∀ i, MeasurableSpace (E i)} (μ : (i : Fin n) → Measure (E i)) [∀ i, SigmaFinite (μ i)] (f : (i : Fin n) → E i → ℝ≥0∞) (hf : ∀ i, Measurable (f i)) :
     (∫⁻ x, ∏ i, f i (x i) ∂Measure.pi μ) = ∏ i, ∫⁻ x, f i x ∂μ i := by
-  induction n with
-  | zero => simp
-  | succ n ih =>
-    calc
-      _ = ∫⁻ x : E 0 × ((i : Fin n) → E (Fin.succ i)), f 0 x.1 * ∏ i : Fin n, f (Fin.succ i) (x.2 i) ∂((μ 0).prod (Measure.pi (fun i => μ i.succ))) :=
-        by
-        rw [← ((measurePreserving_piFinSuccAbove μ 0).symm).lintegral_comp_emb (MeasurableEquiv.measurableEmbedding _)]; simp_rw [MeasurableEquiv.piFinSuccAbove_symm_apply, Fin.insertNthEquiv, Fin.prod_univ_succ, Fin.insertNth_zero, Equiv.coe_fn_mk, Fin.cons_succ, Fin.zero_succAbove, cast_eq, Fin.cons_zero]
-      _ = (∫⁻ x, f 0 x ∂μ 0) * ∏ i : Fin n, ∫⁻ x, f (Fin.succ i) x ∂μ i.succ := by
-        rw [lintegral_prod_mul (μ := μ 0) (ν := Measure.pi (fun i : Fin n => μ i.succ)) (f := f 0) (g := fun (x : (i : Fin n) → E i.succ) => ∏ i : Fin n, f i.succ (x i)) (hf 0).aemeasurable
-            (by exact (Finset.measurable_prod _ (fun i _ => (hf i.succ).comp (measurable_pi_apply i))).aemeasurable),
-          ih _ _ (fun i => hf i.succ)]
-      _ = _ := by exact Eq.symm (Fin.prod_univ_succAbove (fun i => ∫⁻ (x : E i), f i x ∂μ i) 0)
+  exact D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure.lintegral_fin_prod μ f hf
 private lemma pi_withDensity_fin {n : ℕ} {E : Fin n → Type*} {mE : ∀ i, MeasurableSpace (E i)} (μ : (i : Fin n) → Measure (E i)) [∀ i, SigmaFinite (μ i)] (f : (i : Fin n) → E i → ℝ≥0∞) (hf : ∀ i, Measurable (f i))
     [∀ i, SigmaFinite ((μ i).withDensity (f i))] : Measure.pi (fun i => (μ i).withDensity (f i)) = (Measure.pi μ).withDensity (fun x => ∏ i, f i (x i)) :=
   by

@@ -14,7 +14,11 @@ admission_basis: open-problem-resolution (#11475; Refuted)
 Direct frozen dependencies: none (pinned Mathlib only)
 -/
 
-import Mathlib.Analysis.Matrix.PosDef
+module
+
+public import Mathlib.Analysis.Matrix.PosDef
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

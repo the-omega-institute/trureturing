@@ -17,12 +17,16 @@ certified-instance as their primary delivered content. Utility semantics
 remain subject to independent review; the header does not prove acceptance.
 -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Data.Matrix.Block
-import Mathlib.LinearAlgebra.Matrix.Permutation
-import Mathlib.Tactic.Linarith
-import Mathlib.Logic.Equiv.Fintype
+module
+
+public import D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
+public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.Data.Matrix.Block
+public import Mathlib.LinearAlgebra.Matrix.Permutation
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Logic.Equiv.Fintype
+
+@[expose] public section
 
 set_option autoImplicit false
 

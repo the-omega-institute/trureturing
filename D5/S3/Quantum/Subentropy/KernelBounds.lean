@@ -6,12 +6,16 @@
    utility: none
    digest: Uniform integrable bounds for the determinant subentropy kernel. -/
 
-import D5.S3.Quantum.Subentropy.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
+module
+
+public import D5.S3.Quantum.Subentropy.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
 
 /-! The classical determinant kernel is bounded by a common inverse-square envelope. -/
+
+@[expose] public section
 noncomputable section
 set_option autoImplicit false
 open Matrix MeasureTheory Set

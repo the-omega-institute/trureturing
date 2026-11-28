@@ -6,10 +6,16 @@
    utility: none
    digest: Orthogonal record states have an explicit classical plus conditional entropy split. -/
 
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
-import D5.S3.Entropy.MaxEntropy
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.PosPart.Basic
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Projection
+module
+
+public import D5.S3.Quantum.Information.PartialTraceMutualInformation
+public import D5.S3.Entropy.MaxEntropy
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.PosPart.Basic
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Projection
+
+/-! Orthogonal record states have an explicit classical plus conditional entropy split. -/
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

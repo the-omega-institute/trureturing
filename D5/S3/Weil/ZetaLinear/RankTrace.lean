@@ -19,9 +19,11 @@ were written first as a self-contained development (namespace `RHLinalg`) accomp
 paper's authors, and are incorporated here unchanged; they have no upstream outside this project (see README
 § Provenance and attribution).
 -/
-import D5.S3.Weil.ZetaLinear.PosIndex
-import D5.S3.Weil.ZetaLinear.VonNeumann
-import D5.S3.Weil.ZetaLinear.HermitianPosPart
+module
+
+public import D5.S3.Weil.ZetaLinear.PosIndex
+public import D5.S3.Weil.ZetaLinear.VonNeumann
+public import D5.S3.Weil.ZetaLinear.HermitianPosPart
 
 /-!
 # The rank–trace inequality (paper §3, `lem:ranktrace`)
@@ -40,6 +42,8 @@ Decompose `Q = Q₊ − Q₋` (spectral positive/negative parts). Expand
 `sum_sq_diff_lower` and `sum_sq_lower_of_card_pos_le` bound the remaining
 pieces, and `linarith` assembles.
 -/
+
+@[expose] public section
 
 noncomputable section
 

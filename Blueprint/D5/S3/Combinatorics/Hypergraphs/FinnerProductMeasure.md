@@ -4,7 +4,31 @@
 
 Fractional incidence budgets control products of local measurable factors under one product probability law.
 
-**Theorem 1.1 (Fractional hypergraph inequality).**
+**Theorem 1.1 (Product integrals of separate coordinate functions).**
+
+Lean statement: `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.lintegral_fin_prod`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.lintegral_fin_prod` (`✓ std3`). ∎
+
+*Citation.* Helmut Finner (1992). *A Generalization of Holder's Inequality and Some Probability Inequalities*. DOI: [10.1214/aop/1176989534](https://doi.org/10.1214/aop/1176989534).
+
+*Commentary.*
+
+For any natural n, measurable spaces E_i indexed by Fin n, sigma-finite measures mu_i and measurable ENNReal functions a_i on E_i, the integral of product_i a_i(x_i) under Measure.pi(mu_i) equals the product of their separate integrals. No probability, positivity or finiteness of those integrals is required. The empty product is included. The proof uses the measure-preserving finite-Pi decomposition and binary Tonelli, including the ENNReal convention zero times infinity equal to zero. This same product-integral statement supports coordinate density products and the identification of normalized coordinate profiles by marginal integration.
+
+**Lemma 1.2 (Finner's estimate before all coordinates are integrated).**
+
+Lean statement: `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.marginal_estimate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.marginal_estimate` (`✓ std3`). ∎
+
+*Citation.* Helmut Finner (1992). *A Generalization of Holder's Inequality and Some Probability Inequalities*. DOI: [10.1214/aop/1176989534](https://doi.org/10.1214/aop/1176989534).
+
+*Commentary.*
+
+For any coordinate type I with decidable equality and finite row type J, take measurable ENNReal rows f_j supported on S_j under coordinate probability laws mu_i. Let nonnegative real weights satisfy the incidence budget at most one at every coordinate. For every finite coordinate set T, the T-marginal of the product of f_j^w_j is pointwise at most the product of the T-marginals of f_j raised to w_j. The ambient coordinate type need not be finite, and masses may be zero or infinite. This estimate is the coordinate induction used by the full inequality and supplies the saturation sandwich for deleted rows in its equality classification.
+
+**Theorem 1.3 (Fractional hypergraph inequality).**
 
 Lean statement: `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.finner_product_measure`
 
@@ -22,7 +46,7 @@ For a finite coordinate set T, integrate only those coordinates, using lmarginal
 
 The proof directly reuses Mathlib's ENNReal.lintegral_mul_prod_norm_pow_le, Measurable.lmarginal, lmarginal_insert, lmarginal_update_of_mem, lmarginal_update_of_notMem, lmarginal_univ, and the measurable ENNReal real-power instance. The finite coordinate induction connects these suppliers to overlapping supports. The Library note identifies the classical theorem and distinguishes the directly read balanced finite-norm restatement from the probability weak-budget statement and extended endpoints proved here. No mathematical originality is claimed.
 
-For the equality target, take strictly positive real weights and require each coordinate incidence sum to be exactly one. Require also that the map i to M_i={j : i belongs to S_j} is injective and that each original full-product mass m_j=integral_mu f_j is positive and finite. The target is that equality in Finner holds if and only if there is one measurable family h_i:X_i->ENNReal, with integral_mu_i h_i=1 for every i, such that f_j=m_j times the product of those same h_i over S_j, mu-almost everywhere for every j. Empty index types, empty supports, repeated supports, zero values on sets of positive measure and infinity values on null sets are included. This classification is not a conclusion of the inequality declaration above; extracting the common family from saturation remains a formal obligation.
+For the equality target, take strictly positive real weights and require each coordinate incidence sum to be exactly one. Require also that the map i to M_i={j : i belongs to S_j} is injective and that each original full-product mass m_j=integral_mu f_j is positive and finite. The target is that equality in Finner holds if and only if there is one measurable family h_i:X_i->ENNReal, with integral_mu_i h_i=1 for every i, such that f_j=m_j times the product of those same h_i over S_j, mu-almost everywhere for every j. Empty index types, empty supports, repeated supports, zero values on sets of positive measure and infinity values on null sets are included. The declaration ProperSupportMarginalGluing.finner_equality_iff_common_profiles proves this classification by induction on the active coordinate set.
 
 The directly read Bennett-Oh restatement in Section 1.1, after equation (1.6), attributes to Finner a common-profile equality representation g_j(P_j x)^{q_j}=c_j times the product of H_i(x_i) over S_j, with c_j>0. For nonempty supports, balance and positive weights give w_j<=1, so q_j=1/w_j lies in the stated finite range q_j>=1, including q_j=1. A factor on an empty support is constant and equals m_j because the full law is a probability measure. It contributes a scalar even when its weight exceeds one. The Library note gives the support-space correspondence and distinguishes this secondary attribution from a proof of the ENNReal target.
 
@@ -30,10 +54,12 @@ If a measurable common representation with positive finite c_j is given, put a_i
 
 The support-intersection bridge uses the same actual product law. If f and g agree almost everywhere, f depends on S, and g is measurable and depends on T, integrate g over the complement of S. The resulting measurable function depends on S intersect T and represents f almost everywhere: the corresponding marginal of f is pointwise f, and Fubini transports the original equality to almost every slice. No positivity or finite integral is needed for this bridge. For a fixed i, the intersection of S_j over all j in M_i is exactly {i}, by balance, positive weights and incidence injectivity. Applying the bridge to conditional profiles still requires their almost-everywhere equality under one common product law and recovery of every original factor across zero marginals.
 
-An explicit candidate chooses one j(i) in M_i and an anchor a in the full product, then sets h_i(t)=m_{j(i)}^{-1} times the marginal of f_{j(i)} over every coordinate other than i, evaluated at a with coordinate i replaced by t. These are measurable functions. Marginal insertion and full-product integration give each integral equal to one, using the positive finite original mass. The unclosed step is that Finner saturation forces every original row f_j to equal m_j times the product of this same candidate family over S_j, almost everywhere under the original mu.
+An explicit candidate chooses one j(i) in M_i and an anchor a in the full product, then sets h_i(t)=m_{j(i)}^{-1} times the marginal of f_{j(i)} over every coordinate other than i, evaluated at a with coordinate i replaced by t. These are measurable functions. Marginal insertion and full-product integration give each integral equal to one, using the positive finite original mass. The equality theorem in ProperSupportMarginalGluing constructs a common family by active-set induction and proper-support marginal gluing. Identifying every resulting profile with this particular anchored candidate is a separate canonical-choice correspondence question.
 
 For the converse implication, the finite intersection of the rowwise full-measure sets permits substitution of every representation in the powered product. Distribute the positive real powers over finite ENNReal products and interchange the factor and coordinate products. For each coordinate, the incident powers sum to one, leaving (product_j m_j^{w_j}) times product_i h_i(x_i). Integrating the coordinate product gives the product of its unit integrals. This argument retains the ENNReal zero/infinity convention and uses no pointwise cancellation. If I is empty, all supports are empty and the assertion reduces to constant-mass identities; if J is empty and I is nonempty, balance is inconsistent; if both are empty, all products and the integral equal one.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.finner_product_measure`
+- Truth anchor: `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.lintegral_fin_prod`
+- Truth anchor: `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.marginal_estimate`

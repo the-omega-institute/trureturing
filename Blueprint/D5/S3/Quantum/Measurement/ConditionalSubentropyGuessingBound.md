@@ -129,6 +129,7 @@ The simplex integral equals the determinant-integral subentropy on positive semi
 - Truth anchor: `D5/S3/Quantum/Measurement/ConditionalSubentropyGuessingBound.simplex_volume`
 - Truth anchor: `D5/S3/Quantum/Measurement/ConditionalSubentropyGuessingBound.subentropy`
 - Truth anchor: `D5/S3/Quantum/Measurement/ConditionalSubentropyGuessingBound.subentropySpectrum`
+- Dependency: [D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure](../../Combinatorics/Hypergraphs/FinnerProductMeasure.md)
 - Dependency: [D5/S3/Geometry/AlphaGeometry/PositiveSimplexGeometryAndMixing](../../Geometry/AlphaGeometry/PositiveSimplexGeometryAndMixing.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
 - Dependency: [D5/S3/Quantum/Information/OrthogonalRecordEntropy](../Information/OrthogonalRecordEntropy.md)

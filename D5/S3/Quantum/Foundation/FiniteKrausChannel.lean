@@ -220,9 +220,18 @@ The pinned upstream tree has no NOTICE file. Full upstream license follows.
    limitations under the License.
 -/
 
-import D5.S3.Quantum.Foundation.FiniteStateChannel
-import Mathlib.LinearAlgebra.TensorProduct.Matrix
-import Mathlib.Tactic
+module
+
+public import D5.S3.Quantum.Foundation.FiniteStateChannel
+public import Mathlib.LinearAlgebra.TensorProduct.Matrix
+public import Mathlib.Tactic.CongrExclamation
+public import Mathlib.Tactic.Convert
+public import Mathlib.Tactic.NthRewrite
+public import Mathlib.Tactic.Simps.Basic
+public import Mathlib.Tactic.SplitIfs
+public import Mathlib.Tactic.Tauto
+
+@[expose] public section
 
 /- Exact-reuse audit: source intake precedes D5, pinned Mathlib and Physlib
    searches. The private closure retains the upstream Kraus CP and TP proofs

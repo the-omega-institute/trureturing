@@ -6,14 +6,18 @@
    utility: none
    digest: Convergent resolvent representation of finite entropy Jensen gaps. -/
 
-import D5.S3.Quantum.Subentropy.UniformIntegrals
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.Convex.SpecificFunctions.Basic
-import Mathlib.Analysis.Convex.Jensen
-import Mathlib.MeasureTheory.Integral.Prod
+module
+
+public import D5.S3.Quantum.Subentropy.UniformIntegrals
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+public import Mathlib.Analysis.Convex.Jensen
+public import Mathlib.MeasureTheory.Integral.Prod
 
 /-! Finite entropy differences from convergent reciprocal differences. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

@@ -9,6 +9,7 @@ import D5.S3.Quantum.Measurement.BasisMeasurementProjection
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 import Mathlib.Analysis.InnerProductSpace.TensorProduct
 import Mathlib.LinearAlgebra.TensorProduct.Map
+import Mathlib.LinearAlgebra.Complex.FiniteDimensional
 
 /- Library-search audit trail (2026-08-22):
    * `rg -n -F 'bipartite_sector_decomposition' D5 Golden/Frozen/accepted` and the

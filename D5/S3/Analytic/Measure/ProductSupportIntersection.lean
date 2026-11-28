@@ -8,8 +8,11 @@
 
 module
 
+public import OmegaBuild.Commands
 public import Mathlib.MeasureTheory.Integral.Marginal
 public import Mathlib.Logic.Function.DependsOn
+
+compile_only_with_mathlib
 
 /-! # Intersections of coordinate supports under product probability laws
 
@@ -30,7 +33,7 @@ namespace D5.S3.Analytic.Measure.ProductSupportIntersection
 variable {I : Type*} [Fintype I] {X : I → Type*} [∀ i, MeasurableSpace (X i)]
     (μ : ∀ i, MeasureTheory.Measure (X i)) [∀ i, IsProbabilityMeasure (μ i)]
 
-private lemma marginal_congr_ae [DecidableEq I] (s : Finset I) {f g : (∀ i, X i) → ℝ≥0∞}
+lemma marginal_congr_ae [DecidableEq I] (s : Finset I) {f g : (∀ i, X i) → ℝ≥0∞}
     (hf : Measurable f) (hg : Measurable g) (he : f =ᵐ[MeasureTheory.Measure.pi μ] g) :
     lmarginal μ s f =ᵐ[MeasureTheory.Measure.pi μ] lmarginal μ s g := by
   classical
@@ -66,7 +69,7 @@ private lemma marginal_congr_ae [DecidableEq I] (s : Finset I) {f g : (∀ i, X 
   simp [e, hne] at hy
 
 omit [Fintype I] [∀ i, IsProbabilityMeasure (μ i)] in
-private lemma marginal_depends [DecidableEq I] (u : Finset I) {f : (∀ i, X i) → ℝ≥0∞}
+lemma marginal_depends [DecidableEq I] (u : Finset I) {f : (∀ i, X i) → ℝ≥0∞}
     {S : Set I} (hd : DependsOn f S) : DependsOn (lmarginal μ u f) (S \ u) := by
   classical
   intro x y hxy

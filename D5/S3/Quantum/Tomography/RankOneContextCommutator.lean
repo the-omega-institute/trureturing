@@ -5,7 +5,18 @@
    anchors: []
    digest: Complete rank-one contexts satisfy the aggregate projection commutator formula. -/
 
-import Mathlib
+module
+
+public import Mathlib.Data.Complex.BigOperators
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NoncommRing
+public import Mathlib.Tactic.NormNum
+
+/-! # Commutators of complete rank-one contexts -/
+
+@[expose] public section
 
 /- Library-search audit trail (2026-08-18):
    * Repository searches found rank-one density, projection, Frobenius, and generic commutator
