@@ -286,6 +286,10 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     return ((``Classical.choice).toString, ``OmegaChecks.InitBoundaries.OptionSelector.fromSome,
       "For every nonempty type, the selector returns some, as specified by Option.isSome_choice")
   if owner == `Init.Internal.Order.Basic then
+    if name == ``Lean.Order.iterates || name == ``Lean.Order.iterates.sup then
+      return ("OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice",
+        ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfChainSup,
+        "The pinned supremum constructor keeps the chain selector as its result index, including the empty chain on every inhabited subsingleton")
     if name == ``Lean.Order.Example.find then
       return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
         ``OmegaChecks.InitBoundaries.InternalOrder.limitedOmniscienceOfSearch,
