@@ -1,5 +1,5 @@
 import D5.S3.Geometry.Lorentz.ADMHamiltonianGravity4D
-import Reg.Support.UnitSixO
+import Reg.Support.UnitSixO.Common
 
 /-! Typed observations of the metric, the momentum map, and the Hubble rate. -/
 

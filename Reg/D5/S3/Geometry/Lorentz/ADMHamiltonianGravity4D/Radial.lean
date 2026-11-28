@@ -1,5 +1,5 @@
 import D5.S3.Geometry.Lorentz.ADMHamiltonianGravity4D
-import Reg.Support.UnitSixO
+import Reg.Support.UnitSixO.Common
 
 /-! Readouts for the radial operator, areal radius, and mass observables. -/
 

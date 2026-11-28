@@ -1,5 +1,5 @@
 import D5.S3.Quantum.Gauge.StrongCPAxionThetaVacuum4D
-import Reg.Support.UnitSixO
+import Reg.Support.UnitSixO.Common
 
 /-! Readouts for angular and axion potential families. -/
 
