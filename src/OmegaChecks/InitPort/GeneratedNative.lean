@@ -272,6 +272,13 @@ private def listPointerBorrows : Pass := Pass.mkPerDeclaration `listPointerBorro
   let #[type, xs, ys] := decl.params | throwError "unexpected list comparison arity"
   return {decl with params := #[type, ← xs.updateBorrow true, ← ys.updateBorrow true]}
 
+/-- The pinned Nat bitwise primitives take two borrowed heap values. A detached
+seed can supply the logical definition without the compiler's borrow annotations. -/
+private def natBitwiseBorrows : Pass := Pass.mkPerDeclaration `natBitwiseBorrows .impure fun decl => do
+  unless (OmegaChecks.InitCompiler.RootNames.natBitwiseExtern? (InitKernelPort.originalName decl.name)).isSome do return decl
+  let #[left, right] := decl.params | throwError "unexpected natural bitwise primitive arity"
+  return {decl with params := #[← left.updateBorrow true, ← right.updateBorrow true]}
+
 private def compileOwner (source : Environment) (partialCode : NameMap DefinitionVal) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
   let strict ← getEnv
   let manager ← PassInstaller.run (← getPassManager)
@@ -280,6 +287,10 @@ private def compileOwner (source : Environment) (partialCode : NameMap Definitio
     unless OmegaChecks.InitPort.PointerComparison.hasBorrowedABI source `ptrEqList false do
       throwError "unexpected pinned list comparison ownership"
     PassInstaller.run manager (.installBefore .impure `inferBorrow (fun _ => listPointerBorrows))
+  else pure manager
+  let manager ← if words.any (fun n =>
+      (OmegaChecks.InitCompiler.RootNames.natBitwiseExtern? (InitKernelPort.originalName n)).isSome) then
+    PassInstaller.run manager (.installBefore .impure `inferBorrow (fun _ => natBitwiseBorrows))
   else pure manager
   modifyEnv fun env => passManagerExt.setState env ((passManagerExt.getState env).1, manager)
   -- ToLCNF replaces nested proofs with this marker while inferring erased argument types.
