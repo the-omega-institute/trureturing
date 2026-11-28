@@ -33,6 +33,7 @@ public import OmegaChecks.InitInventory.ConstraintReflection
 public import OmegaChecks.InitInventory.RangeIndex
 public import OmegaChecks.InitInventory.Reductions
 public import OmegaChecks.InitInventory.TransformerLaws
+public import OmegaChecks.InitInventory.VectorProjection
 public import OmegaChecks.InitInventory.Traversal
 public import OmegaChecks.InitInventory.Collector
 public import OmegaChecks.InitInventory.StringPatterns
@@ -300,6 +301,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.MapAfterBind.funextFromStateRunSeq)
   | `Init.Control.Lawful.Basic, ``LawfulMonad.mk' =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromMonadConstructor)
+  | `Init.Data.Vector.Monadic, ``Vector.map_toArray_inj =>
+    return (``OmegaChecks.InitBoundaries.VectorProjection.ArrayTests,
+      ``OmegaChecks.InitBoundaries.VectorProjection.arrayTestsOfOriginal)
   | `Init.Control.Lawful.Lemmas, ``map_inj_of_left_inverse =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromMapInjectiveLeftInverse)
   | `Init.Control.Lawful.Lemmas, ``map_inj_right_of_nonempty =>
