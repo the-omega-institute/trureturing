@@ -100,6 +100,9 @@ python3 src/OmegaChecks/InitPort/report.py .lake/init-port-all --require-complet
 
 `List.findFinIdx?_eq_pmap_findIdx?` 和 `Array.findFinIdx?_eq_pmap_findIdx?` 的原文在构造 `Fin` 的下标界证明中使用 `propext`。把这一证明换成从已找到下标取得的界，整个命题在官方公开内核中与原文定义等价，在严格公开内核中与导出的定理类型定义等价。两侧普通导入均可直接使用定理证明相同的完整命题；把结论改成总是返回 `none` 时，两侧都拒绝。严格内核从空环境重放这两条定理。`finBoundProofReplacementChecked` 单独计录这种已移植的完整命题。[双端核验](FinBoundCheck.lean)
 
+`Init.Internal.Order.Basic`、`Lemmas` 和 `MonadTail` 中，通过 `pointwiseOrderTypeChecked` 核验的命题包括列表、数组和选项单调性、函数链、逐点下确界与三个运行器的单调性。官方类型从函数、ReaderT 或状态变换器的偏序实例投影出比较关系，严格类型直接使用相应的逐点比较。核验器在普通导入中对两个完整类型作核内转换，把同一份显式命题分别编译，并从空内核重放严格定理。反转关系两端会使对应定理的类型不匹配。[核验实现](PointwiseOrderCheck.lean)
+
+
 
 
 ### 范围大小与双重否定消除

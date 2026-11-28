@@ -9,6 +9,7 @@ import subprocess
 import tempfile
 
 import fin_bounds
+import order_consumers
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
@@ -158,6 +159,7 @@ def check_coverage(official):
     blocked_orders = order_dependencies(official.get("certifiedOrderTypeDependencies", []))
     choice_operands = choice_type_dependencies(official.get("certifiedChoiceTypeDependencies", []))
     finite_bounds = fin_bounds.sites(official.get("certifiedFinBoundTypes", []))
+    pointwise_sites = order_consumers.sites(official.get("certifiedPointwiseOrderTypes", []))
     sites = set()
     direct = 0
     matched = 0
@@ -316,6 +318,13 @@ def check_coverage(official):
                 any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")) or
                 private_type or orders or choice_operand)):
             raise ValueError(f"uncertified finite-index bound proof replacement for {site}")
+        pointwise = site in pointwise_sites
+        if pointwise != row.get("pointwiseOrderTypeChecked", False) or (pointwise and (
+                not port or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
+                row.get("originalTypeGap") != order_consumers.gap(name) or
+                any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")) or
+                private_type or orders or equivalent or choice_operand)):
+            raise ValueError(f"uncertified pointwise order proposition for {site}")
         if port:
             if axiom or witness or (runtime and not (unsafe_runtime or effect or comparison or pointer_hash)) or row["strictModule"] != "Omega" + owner:
                 raise ValueError(f"inconsistent strict match for {owner}/{name}")
@@ -324,7 +333,7 @@ def check_coverage(official):
                 if row.get("originalTypeChecked") is True and row.get("originalTypeGap") is None:
                     original_types += 1
                 elif row.get("originalTypeChecked") is False and row.get("originalTypeGap"):
-                    if not private_type and not orders and not choice_operand and not equivalent:
+                    if not private_type and not orders and not choice_operand and not equivalent and not pointwise:
                         unresolved.append(site)
                 else:
                     raise ValueError(f"inconsistent original type check for {owner}/{name}")
@@ -336,6 +345,8 @@ def check_coverage(official):
             reductions += 1
         elif not endpoint and not argument and not refuter and path != "Quot.sound":
             unresolved.append(site)
+    if not pointwise_sites <= sites:
+        raise ValueError("pointwise order certificate has no definition site")
     if not finite_bounds <= sites:
         raise ValueError("finite-index bound certificate has no definition site")
     if choice_operands:
@@ -362,6 +373,8 @@ def check_coverage(official):
         raise ValueError("import all original type count does not agree with the checked sites")
     if summary.get("finBoundProofReplacementsChecked", 0) != len(finite_bounds):
         raise ValueError("finite-index bound count does not agree with the checked sites")
+    if summary.get("pointwiseOrderTypesChecked", 0) != len(pointwise_sites):
+        raise ValueError("pointwise order count does not agree with the checked sites")
     return reductions, unresolved
 
 
@@ -390,7 +403,10 @@ def verify_complete(official, product, reductions, unresolved):
     bounds = official.get("certifiedFinBoundTypes", [])
     if bounds and fin_bounds.certificates(product) != bounds:
         raise ValueError("live finite-index bound certificates differ from inventory")
-    raw_type_alternatives = blocked | fin_bounds.sites(bounds)
+    pointwise = official.get("certifiedPointwiseOrderTypes", [])
+    if pointwise and order_consumers.certificates(product) != pointwise:
+        raise ValueError("live pointwise order certificates differ from inventory")
+    raw_type_alternatives = blocked | fin_bounds.sites(bounds) | order_consumers.sites(pointwise)
     certified = {(owner, name) for owner, name, _, _ in official.get("certifiedImportAllOriginalTypes", [])}
     if any(row["matchingNameAndModule"] and row.get("originalTypeChecked") is not True and
            (row["module"], row["name"]) not in raw_type_alternatives and
@@ -530,6 +546,10 @@ def report(product, require_complete=False):
         official["certifiedFinBoundTypes"] = bound_checks
         official["summary"]["finBoundProofReplacementsChecked"] = len(bound_checks)
         equivalent = fin_bounds.sites(bound_checks)
+        pointwise_checks = order_consumers.certificates(product)
+        official["certifiedPointwiseOrderTypes"] = pointwise_checks
+        official["summary"]["pointwiseOrderTypesChecked"] = len(pointwise_checks)
+        pointwise_sites = order_consumers.sites(pointwise_checks)
         strict_choices = check_strict_reference_choices(product, stage, attempts)
         strict_matches = check_strict_longest_matches(product, stage)
         strict_folds = check_strict_fin_folds(product, stage)
@@ -543,6 +563,8 @@ def report(product, require_complete=False):
         pending.update({site: (*result, "strictEquivalenceWitness") for site, result in strict_equivalences.items()})
         for row in official["declarations"]:
             site = (row["module"], row["name"])
+            if site in pointwise_sites:
+                row["pointwiseOrderTypeChecked"] = True
             if site in equivalent:
                 row["finBoundProofReplacementChecked"] = True
             if site in choice_operands:
@@ -587,7 +609,8 @@ def report(product, require_complete=False):
                              "specializedEndpointType", "strictConstructorIff", "formationArgument", "transportPathType", "pinnedLiftCoherenceRefuter",
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
                              "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap",
-                             "importAllOriginalTypeChecked", "originalTypeOrderDependencies", "originalTypeChoiceDependency", "finBoundProofReplacementChecked"])
+                             "importAllOriginalTypeChecked", "originalTypeOrderDependencies", "originalTypeChoiceDependency", "finBoundProofReplacementChecked",
+                             "pointwiseOrderTypeChecked"])
             for row in official["declarations"]:
                 if row["originalTypeChecked"] or row["kind"] == "axiom":
                     continue
@@ -635,7 +658,8 @@ def report(product, require_complete=False):
                                  "true" if row.get("importAllOriginalTypeChecked") else "",
                                  json.dumps(row["originalTypeOrderDependencies"], sort_keys=True) if row.get("originalTypeOrderDependencies") else "",
                                  row.get("originalTypeChoiceDependency"),
-                                 "true" if row.get("finBoundProofReplacementChecked") else ""])
+                                 "true" if row.get("finBoundProofReplacementChecked") else "",
+                                 "true" if row.get("pointwiseOrderTypeChecked") else ""])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
