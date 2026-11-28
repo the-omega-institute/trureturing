@@ -7,7 +7,11 @@
    digest: Weighted normal-ordered Hamiltonian in Evnin's finite occupation sectors. -/
 
 import OmegaBuild.Commands
-import Mathlib.Analysis.Complex.Basic
+import D5.S3.Combinatorics.WeightedBond.LagrangeBurmann
+import Mathlib.Analysis.Matrix.PosDef
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.RingTheory.PowerSeries.Binomial
+import Mathlib.Tactic.Module
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.FieldSimp
@@ -19,7 +23,7 @@ import Mathlib.Tactic.Ring
 compile_only_with_mathlib
 
 set_option autoImplicit false
-open scoped BigOperators Matrix
+open scoped BigOperators Matrix ComplexOrder
 open Finset
 
 namespace D5.S3.Quantum.FockSpace.EvninQuantumSector
@@ -323,7 +327,6 @@ private theorem coordinate_bump {L : ℕ} (A : ℕ → ℝ) (η : Mode L → ℕ
   have hf : 0 < Real.sqrt ((η i).factorial : ℝ) :=
     Real.sqrt_pos.mpr (by exact_mod_cast Nat.factorial_pos (η i))
   field_simp [hs.ne', hf.ne']
-  <;> ring
 
 /-- The coefficient in the source, with the entire pair product under the square root. -/
 def pairWeight (A : ℕ → ℝ) (i j : ℕ) : ℝ := Real.sqrt (A i * A j)
@@ -435,6 +438,361 @@ private theorem sum_momentum_blocks {R : Type*} [AddCommMonoid R] {M : ℕ}
         rfl
     _ = _ := by
       simp only [valid, sum_filter, Fintype.sum_prod_type]
+
+private def blockWeight {M : ℕ} (A : ℕ → ℝ) (j : Mode M) (k : Fin (j.val + 1)) : ℝ :=
+  pairWeight A (leftMode j k).val (rightMode j k).val
+
+private def pairBlock {N M : ℕ} (hN : 2 ≤ N) (A : ℕ → ℝ) (j : Mode M) :
+    Matrix (Sector M (N - 2) (M - j.val)) (Sector M N M) ℂ :=
+  ∑ k, blockWeight A j k • blockPair hN j k
+
+/-- The ordered four-operator sum with mode weights `A` and block coefficients `c`. -/
+def weightedHamiltonian (A c : ℕ → ℝ) (N M : ℕ) : Matrix (Sector M N M) (Sector M N M) ℂ :=
+  if hN : 2 ≤ N then
+    ∑ j : Mode M, (c j.val / 2) • ∑ k, ∑ l,
+      (blockWeight A j k * blockWeight A j l) • ((blockPair hN j k)ᴴ * blockPair hN j l)
+  else 0
+
+private theorem weightedHamiltonian_eq_blocks (A c : ℕ → ℝ) (N M : ℕ) :
+    weightedHamiltonian A c N M =
+      if hN : 2 ≤ N then
+        ∑ j : Mode M, (c j.val / 2) • ((pairBlock hN A j)ᴴ * pairBlock hN A j)
+      else 0 := by
+  unfold weightedHamiltonian
+  split
+  · apply sum_congr rfl
+    intro j _
+    congr 1
+    rw [pairBlock, Matrix.conjTranspose_sum, Matrix.sum_mul]
+    simp_rw [Matrix.mul_sum, Matrix.conjTranspose_smul, star_trivial,
+      Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+  · rfl
+
+/-- The claimed top eigenvalue, with real subtraction even for the vacuum. -/
+def energy (σ : ℝ) (N M : ℕ) : ℝ := ((N : ℝ) - 1) * (N + 2 * σ * M) / 2
+
+private theorem scalar_diagonal {N M : ℕ} (hN : 2 ≤ N) (σ : ℝ) :
+    (∑ j : Mode M, ((1 + σ * j.val) / 2) •
+      ∑ k, (blockPair hN j k)ᴴ * blockPair hN j k) =
+      energy σ N M • (1 : Matrix (Sector M N M) (Sector M N M) ℂ) := by
+  classical
+  simp_rw [blockPair, pairAt_adjoint_square]
+  ext η ξ
+  by_cases h : η = ξ
+  · subst ξ
+    simp only [Matrix.sum_apply, Matrix.smul_apply, Matrix.diagonal_apply_eq, Matrix.one_apply_eq,
+      Complex.real_smul, mul_one, ← Complex.ofReal_mul,
+      ← Complex.ofReal_sum]
+    apply congrArg Complex.ofReal
+    let f (i l : Mode M) : ℝ :=
+      (1 + σ * ((i.val + l.val : ℕ) : ℝ)) * pairCount η.val i l
+    calc
+      _ = (∑ j : Mode M, ∑ k, f (leftMode j k) (rightMode j k)) / 2 := by
+        rw [Finset.sum_div]
+        apply sum_congr rfl
+        intro j _
+        rw [mul_sum, Finset.sum_div]
+        apply sum_congr rfl
+        intro k _
+        unfold f
+        rw [mode_sum, div_mul_eq_mul_div]
+      _ = _ := by
+        rw [sum_momentum_blocks]
+        exact occupation_diagonal_sum Fin.val η.val N M η.property.1 η.property.2 σ
+  · simp [Matrix.sum_apply, Matrix.diagonal_apply_ne _ h, Matrix.one_apply_ne h]
+
+private def pairDefect {N M : ℕ} (hN : 2 ≤ N) (A : ℕ → ℝ) (j : Mode M)
+    (k l : Fin (j.val + 1)) : Matrix (Sector M (N - 2) (M - j.val)) (Sector M N M) ℂ :=
+  blockWeight A j k • blockPair hN j l - blockWeight A j l • blockPair hN j k
+
+private def defect {N M : ℕ} (hN : 2 ≤ N) (A c : ℕ → ℝ) :
+    Matrix (Sector M N M) (Sector M N M) ℂ :=
+  ∑ j : Mode M, (c j.val / 4) • ∑ k, ∑ l, (pairDefect hN A j k l)ᴴ * pairDefect hN A j k l
+
+private theorem weighted_factorization {N M : ℕ} (hN : 2 ≤ N) (σ : ℝ) (A c : ℕ → ℝ)
+    (hc : ∀ j, c j * ∑ k : Fin (j + 1), pairWeight A k.val (j - k.val) ^ 2 = 1 + σ * j) :
+    energy σ N M • (1 : Matrix (Sector M N M) (Sector M N M) ℂ) =
+      weightedHamiltonian A c N M + defect hN A c := by
+  rw [← scalar_diagonal hN, weightedHamiltonian_eq_blocks, dite_eq_left hN, defect, ← sum_add_distrib]
+  apply sum_congr rfl
+  intro j _
+  have hg := weighted_gram_defect univ (blockWeight A j) (blockPair hN j)
+  change (∑ k, ∑ l, (pairDefect hN A j k l)ᴴ * pairDefect hN A j k l) =
+    2 • ((∑ k, blockWeight A j k ^ 2) • (∑ k, (blockPair hN j k)ᴴ * blockPair hN j k) -
+      (pairBlock hN A j)ᴴ * pairBlock hN A j) at hg
+  rw [hg, ← Nat.cast_smul_eq_nsmul ℝ, smul_smul, smul_sub, smul_smul]
+  norm_num
+  have hj : c j.val * (∑ k, blockWeight A j k ^ 2) = 1 + σ * j.val := hc j.val
+  have hcoeff : c j.val / 4 * 2 * (∑ k, blockWeight A j k ^ 2) = (1 + σ * j.val) / 2 := by
+    linarith only [hj]
+  rw [hcoeff]
+  module
+
+private theorem defect_posSemidef {N M : ℕ} (hN : 2 ≤ N) (A c : ℕ → ℝ)
+    (hc : ∀ j, 0 ≤ c j) : (defect (M := M) hN A c).PosSemidef := by
+  apply Matrix.posSemidef_sum
+  intro j _
+  apply Matrix.PosSemidef.smul _ (div_nonneg (hc _) (by norm_num))
+  exact Matrix.posSemidef_sum _ fun k _ =>
+    Matrix.posSemidef_sum _ fun l _ => Matrix.posSemidef_conjTranspose_mul_self _
+
+private theorem hamiltonian_posSemidef (A c : ℕ → ℝ) (hc : ∀ j, 0 ≤ c j) (N M : ℕ) :
+    (weightedHamiltonian A c N M).PosSemidef := by
+  rw [weightedHamiltonian_eq_blocks]
+  split
+  · exact Matrix.posSemidef_sum _ fun j _ =>
+      (Matrix.posSemidef_conjTranspose_mul_self _).smul (div_nonneg (hc _) (by norm_num))
+  · exact Matrix.PosSemidef.zero
+
+private theorem defect_mulVec {N M : ℕ} (hN : 2 ≤ N) (A c : ℕ → ℝ) (hA : ∀ n, 0 < A n) :
+    defect (M := M) hN A c *ᵥ occupationVector A = 0 := by
+  have hzero (j : Mode M) (k l : Fin (j.val + 1)) :
+      pairDefect hN A j k l *ᵥ occupationVector A = 0 := by
+    simp only [pairDefect, Matrix.sub_mulVec, Matrix.smul_mulVec, blockPair,
+      pairAt_lowers_vector _ _ _ _ _ _ _ hA, blockWeight, smul_smul]
+    rw [mul_comm (pairWeight A _ _), sub_self]
+  simp only [defect, Matrix.sum_mulVec, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec, hzero,
+    Matrix.mulVec_zero, sum_const_zero, smul_zero]
+
+private theorem mem_spectrum_of_vector {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (H : Matrix ι ι ℂ) (E : ℝ) (v : ι → ℂ) (hv : v ≠ 0) (he : H *ᵥ v = E • v) :
+    E ∈ spectrum ℝ H := by
+  rw [← spectrum.algebraMap_mem_iff ℂ]
+  rw [← Matrix.spectrum_toLin']
+  apply Module.End.HasEigenvalue.mem_spectrum
+  apply Module.End.hasEigenvalue_of_hasEigenvector (x := v)
+  refine ⟨Module.End.mem_eigenspace_iff.mpr ?_, hv⟩
+  change H *ᵥ v = (E : ℂ) • v
+  exact he
+
+private theorem le_energy_of_defect {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (H D : Matrix ι ι ℂ) (E : ℝ) (hH : H.IsHermitian) (hD : D.PosSemidef)
+    (h : E • (1 : Matrix ι ι ℂ) = H + D) (x : ℝ) (hx : x ∈ spectrum ℝ H) : x ≤ E := by
+  obtain ⟨i, rfl⟩ := hH.spectrum_real_eq_range_eigenvalues ▸ hx
+  let u := hH.eigenvectorBasis i
+  have hDu : D *ᵥ ⇑u = (E - hH.eigenvalues i) • ⇑u := by
+    rw [← sub_eq_of_eq_add' h, Matrix.sub_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
+      hH.mulVec_eigenvectorBasis, sub_smul]
+  have hp := (RCLike.nonneg_iff.mp (hD.dotProduct_mulVec_nonneg (⇑u))).1
+  rw [hDu, dotProduct_smul, RCLike.smul_re, dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct,
+    inner_self_eq_norm_sq_to_K, hH.eigenvectorBasis.orthonormal.1 i] at hp
+  simpa using hp
+
+private theorem weighted_spectrum (σ : ℝ) (A c : ℕ → ℝ)
+    (hA : ∀ n, 0 < A n) (hc : ∀ j, 0 ≤ c j)
+    (hw : ∀ j, c j * ∑ k : Fin (j + 1), pairWeight A k.val (j - k.val) ^ 2 = 1 + σ * j)
+    (N M : ℕ) [Nonempty (Sector M N M)] :
+    (weightedHamiltonian A c N M).IsHermitian ∧
+      IsGreatest (spectrum ℝ (weightedHamiltonian A c N M)) (energy σ N M) ∧
+      (occupationVector A : Sector M N M → ℂ) ≠ 0 ∧
+      weightedHamiltonian A c N M *ᵥ occupationVector A = energy σ N M • occupationVector A := by
+  have hH := (hamiltonian_posSemidef A c hc N M).isHermitian
+  have hv : (occupationVector A : Sector M N M → ℂ) ≠ 0 := occupationVector_ne_zero A hA
+  refine ⟨hH, ?_⟩
+  by_cases hN : 2 ≤ N
+  · have hfactor := weighted_factorization (M := M) hN σ A c hw
+    have he := congrArg (fun H : Matrix (Sector M N M) (Sector M N M) ℂ =>
+      H *ᵥ occupationVector A) hfactor
+    simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
+      defect_mulVec (M := M) hN A c hA, add_zero] at he
+    exact ⟨⟨mem_spectrum_of_vector _ _ _ hv he.symm,
+      fun x hx => le_energy_of_defect _ _ _ hH (defect_posSemidef hN A c hc) hfactor x hx⟩,
+      hv, he.symm⟩
+  · have hE : energy σ N M = 0 := by
+      have hn : N = 0 ∨ N = 1 := by omega
+      rcases hn with rfl | rfl
+      · obtain ⟨η⟩ := ‹Nonempty (Sector M 0 M)›
+        have hz : ∀ a, η.val a = 0 := by
+          intro a
+          have hle : η.val a ≤ ∑ b, η.val b :=
+            single_le_sum (fun _ _ => Nat.zero_le _) (mem_univ a)
+          rw [η.property.1] at hle
+          omega
+        have hM : M = 0 := by simpa only [hz, mul_zero, sum_const_zero] using η.property.2.symm
+        simp [energy, hM]
+      · simp [energy]
+    have hh : weightedHamiltonian A c N M = 0 := by simp [weightedHamiltonian, hN]
+    have he : weightedHamiltonian A c N M *ᵥ occupationVector A =
+        energy σ N M • occupationVector A := by simp [hh, hE]
+    have hD : (0 : Matrix (Sector M N M) (Sector M N M) ℂ).PosSemidef := .zero
+    exact ⟨⟨mem_spectrum_of_vector _ _ _ hv he,
+      fun x hx => le_energy_of_defect _ _ _ hH hD (by simp [hh, hE]) x hx⟩, hv, he⟩
+
+open PowerSeries
+
+/-- Evnin's real Raney coefficients from Eq. (31). -/
+def raney (σ r : ℝ) (j : ℕ) : ℝ :=
+  r * Real.Gamma (σ * j + r) /
+    (Real.Gamma ((σ - 1) * j + r + 1) * Real.Gamma ((j : ℝ) + 1))
+
+/-- The prefactor of the squared block in Evnin's Eq. (32). -/
+def blockCoefficient (σ : ℝ) (j : ℕ) : ℝ :=
+  (1 + j * (σ - 1) / 2) / raney σ 1 j
+
+private theorem raney_pos (σ r : ℝ) (hσ : 1 ≤ σ) (hr : 0 < r) (j : ℕ) :
+    0 < raney σ r j := by
+  have h : 0 ≤ σ - 1 := sub_nonneg.mpr hσ
+  have hs : 0 ≤ σ := by linarith
+  unfold raney
+  exact div_pos (mul_pos hr (Real.Gamma_pos_of_pos (by positivity)))
+    (mul_pos (Real.Gamma_pos_of_pos (by positivity)) (Real.Gamma_pos_of_pos (by positivity)))
+
+private theorem raney_zero (σ r : ℝ) (hr : 0 < r) : raney σ r 0 = 1 := by
+  simp [raney, Real.Gamma_add_one hr.ne', (mul_pos hr (Real.Gamma_pos_of_pos hr)).ne']
+
+private theorem gamma_asc (x : ℝ) (hx : 0 < x) (n : ℕ) :
+    Real.Gamma (x + n) = Real.Gamma x * (ascPochhammer ℝ n).eval x := by
+  induction n with
+  | zero => simp [ascPochhammer_zero]
+  | succ n ih =>
+    rw [Nat.cast_succ, ← add_assoc, Real.Gamma_add_one (by positivity), ih,
+      ascPochhammer_succ_eval]
+    ring
+
+private theorem raney_choose (σ r : ℝ) (hσ : 1 ≤ σ) (hr : 0 < r) (n : ℕ) :
+    ((n : ℝ) + 1) * raney σ r (n + 1) =
+      r * Ring.choose (r - 1 + σ * (n + 1 : ℕ)) n := by
+  let x : ℝ := (σ - 1) * (n + 1 : ℕ) + r + 1
+  have hx : 0 < x := by
+    have h : 0 ≤ σ - 1 := sub_nonneg.mpr hσ
+    dsimp [x]
+    positivity
+  have he : σ * (n + 1 : ℕ) + r = x + n := by simp [x, Nat.cast_add]; ring
+  have hchoose : (n.factorial : ℝ) * Ring.choose (r - 1 + σ * (n + 1 : ℕ)) n =
+      (ascPochhammer ℝ n).eval x := by
+    rw [← nsmul_eq_mul, ← Ring.descPochhammer_eq_factorial_smul_choose,
+      Polynomial.descPochhammer_smeval_eq_ascPochhammer, Polynomial.ascPochhammer_smeval_eq_eval]
+    congr 1
+    simp [x, Nat.cast_add]
+    ring
+  have hden : (σ - 1) * (n + 1 : ℕ) + r + 1 = x := rfl
+  rw [raney, he, hden, gamma_asc x hx, Real.Gamma_nat_eq_factorial, Nat.factorial_succ,
+    Nat.cast_mul, Nat.cast_succ, ← hchoose]
+  field_simp [(Real.Gamma_pos_of_pos hx).ne',
+    (show (n.factorial : ℝ) ≠ 0 by exact_mod_cast Nat.factorial_ne_zero n)]
+  push_cast
+  congr 1
+  ring
+
+private theorem binomialSeries_pow_real (σ : ℝ) (n : ℕ) :
+    binomialSeries ℝ σ ^ n = binomialSeries ℝ (σ * n) := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [pow_succ, ih, ← binomialSeries_add, Nat.cast_succ, mul_add, mul_one]
+
+private theorem raney_convolution (σ : ℝ) (hσ : 1 ≤ σ) (j : ℕ) :
+    (∑ k : Fin (j + 1), raney σ 1 k.val * raney σ 1 (j - k.val)) = raney σ 2 j := by
+  let F := binomialSeries ℝ σ
+  let G := binomialSeries ℝ (-σ)
+  have hg : G * F = 1 := by
+    dsimp [G, F]
+    rw [← binomialSeries_add, neg_add_cancel, binomialSeries_zero]
+  let P := (X : PowerSeries ℝ) * G
+  have hp : constantCoeff P = 0 := by simp [P]
+  have hp₁ : IsUnit (coeff 1 P) := by simp [P, G, coeff_succ_X_mul]
+  let T := P.substInvOfIsUnit hp₁
+  have ht : constantCoeff T = 0 := constantCoeff_substInvOfIsUnit P hp₁
+  have hsubst : HasSubst T := HasSubst.of_constantCoeff_zero ht
+  have hinv : T * G.subst T = X := by
+    have h := subst_substInvOfIsUnit_right P hp hp₁
+    change P.subst T = X at h
+    simpa only [P, subst_mul hsubst, subst_X hsubst] using h
+  have hfix : T = X * F.subst T := by
+    rw [← hinv, mul_assoc, ← subst_mul hsubst, hg]
+    have hone : (1 : PowerSeries ℝ).subst T = 1 := by
+      rw [← coe_substAlgHom (R := ℝ) hsubst]
+      exact (substAlgHom (R := ℝ) hsubst).map_one
+    rw [hone, mul_one]
+  let coeffSeries := fun r : ℝ => (binomialSeries ℝ r).subst T
+  have hC (r : ℕ) (hr : 0 < r) (n : ℕ) : coeff n (coeffSeries r) = raney σ r n := by
+    cases n with
+    | zero =>
+      unfold coeffSeries
+      rw [coeff_zero_eq_constantCoeff_apply]
+      change MvPowerSeries.constantCoeff ((binomialSeries ℝ (r : ℝ)).subst T) = _
+      rw [constantCoeff_subst_of_constantCoeff_zero ht,
+        binomialSeries_constantCoeff, map_one, raney_zero σ r (by exact_mod_cast hr)]
+    | succ n =>
+      have hd : derivative (R := ℝ) (binomialSeries ℝ (r : ℝ)) =
+          (r : ℝ) • binomialSeries ℝ ((r - 1 : ℕ) : ℝ) := by
+        rw [binomialSeries_nat, binomialSeries_nat, derivative_pow]
+        simp [smul_eq_C_mul, mul_comm]
+      have h := D5.S3.Combinatorics.WeightedBond.lagrange_burmann T
+        (binomialSeries ℝ (r : ℝ)) F ht hfix n
+      rw [hd, smul_mul_assoc, binomialSeries_pow_real, ← binomialSeries_add] at h
+      have hcast : ((r - 1 : ℕ) : ℝ) = (r : ℝ) - 1 := by
+        simpa using (Nat.cast_sub (R := ℝ) (Nat.one_le_iff_ne_zero.mpr hr.ne'))
+      rw [hcast] at h
+      simp only [map_smul, binomialSeries_coeff, smul_eq_mul, mul_one] at h
+      have hc := raney_choose σ r hσ (by exact_mod_cast hr) n
+      change coeff (n + 1) (coeffSeries r) = raney σ r (n + 1)
+      have hpos : (0 : ℝ) < (n : ℝ) + 1 := by positivity
+      exact mul_left_cancel₀ hpos.ne' (h.trans hc.symm)
+  have hm : coeffSeries 2 = coeffSeries 1 * coeffSeries 1 := by
+    unfold coeffSeries
+    rw [show (2 : ℝ) = 1 + 1 by norm_num, binomialSeries_add, subst_mul hsubst]
+  have hc := congrArg (coeff j) hm
+  rw [coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun k l =>
+    coeff k (coeffSeries 1) * coeff l (coeffSeries 1))] at hc
+  have h1 (n : ℕ) : coeff n (coeffSeries 1) = raney σ 1 n := by simpa using hC 1 (by decide) n
+  have h2 (n : ℕ) : coeff n (coeffSeries 2) = raney σ 2 n := by simpa using hC 2 (by decide) n
+  simp only [h1, h2] at hc
+  rw [Fin.sum_univ_eq_sum_range (fun k => raney σ 1 k * raney σ 1 (j - k))]
+  exact hc.symm
+
+private theorem raney_ratio (σ : ℝ) (hσ : 1 ≤ σ) (j : ℕ) :
+    blockCoefficient σ j * raney σ 2 j = 1 + σ * j := by
+  let x : ℝ := σ * j + 1
+  let y : ℝ := (σ - 1) * j + 2
+  have hs : 0 ≤ σ := by linarith
+  have hs' : 0 ≤ σ - 1 := sub_nonneg.mpr hσ
+  have hx : 0 < x := by dsimp [x]; positivity
+  have hy : 0 < y := by dsimp [y]; positivity
+  have hf : 0 < Real.Gamma ((j : ℝ) + 1) := Real.Gamma_pos_of_pos (by positivity)
+  have ha (r : ℝ) : raney σ r j =
+      r * Real.Gamma (x + (r - 1)) /
+        (Real.Gamma (y + (r - 1)) * Real.Gamma ((j : ℝ) + 1)) := by
+    unfold raney
+    congr 2 <;> dsimp [x, y] <;> ring
+  rw [blockCoefficient, ha 1, ha 2]
+  norm_num only [sub_self, add_zero, show (2 : ℝ) - 1 = 1 by norm_num, one_mul]
+  rw [Real.Gamma_add_one hx.ne', Real.Gamma_add_one hy.ne']
+  have hy' : y ≠ 0 := hy.ne'
+  field_simp [hy', (Real.Gamma_pos_of_pos hx).ne', (Real.Gamma_pos_of_pos hy).ne', hf.ne']
+  dsimp [x, y]
+  ring
+
+private theorem source_weight_identity (σ : ℝ) (hσ : 1 ≤ σ) (j : ℕ) :
+    blockCoefficient σ j *
+      (∑ k : Fin (j + 1), pairWeight (raney σ 1) k.val (j - k.val) ^ 2) = 1 + σ * j := by
+  have hpos := raney_pos σ 1 hσ (by norm_num)
+  simp only [pairWeight, Real.sq_sqrt (mul_nonneg (hpos _).le (hpos _).le)]
+  rw [raney_convolution σ hσ, raney_ratio σ hσ]
+
+/-- Evnin's normally ordered Hamiltonian (Eqs. (19), (30)–(32)). -/
+def hamiltonian (σ : ℝ) (N M : ℕ) : Matrix (Sector M N M) (Sector M N M) ℂ :=
+  weightedHamiltonian (raney σ 1) (blockCoefficient σ) N M
+
+/-- Evnin's conjectured top eigenvalue together with its explicit vector. -/
+def claim : Prop :=
+  ∀ (σ : ℝ), 1 ≤ σ → ∀ (N M : ℕ), ∀ [Nonempty (Sector M N M)],
+    (hamiltonian σ N M).IsHermitian ∧
+      IsGreatest (spectrum ℝ (hamiltonian σ N M)) (energy σ N M) ∧
+      (occupationVector (raney σ 1) : Sector M N M → ℂ) ≠ 0 ∧
+      hamiltonian σ N M *ᵥ occupationVector (raney σ 1) =
+        energy σ N M • occupationVector (raney σ 1)
+
+/-- The exact top eigenvalue of Evnin's Hamiltonian, attained by the factorial vector. -/
+theorem top_finite_sector_eigenvalue : claim := by
+  intro σ hσ N M hsector
+  have hpos := raney_pos σ 1 hσ (by norm_num)
+  have hc (j : ℕ) : 0 ≤ blockCoefficient σ j := by
+    have h : 0 ≤ σ - 1 := sub_nonneg.mpr hσ
+    unfold blockCoefficient
+    exact div_nonneg (by positivity) (hpos j).le
+  exact weighted_spectrum σ (raney σ 1) (blockCoefficient σ) hpos hc
+    (source_weight_identity σ hσ) N M
 
 end
 end D5.S3.Quantum.FockSpace.EvninQuantumSector
