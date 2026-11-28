@@ -4,8 +4,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritica
 
 internal sealed class Q9InactiveContactFibreDocument : IScribeDocumentDefinition
 {
-    private const string Fibre =
-        "D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9InactiveContactFibre.";
+    private const string Placement =
+        "D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/";
+    private const string Fibre = Placement + "Q9InactiveContactFibre.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Forbidden parity corrections constrain how the two components can occupy adjacent fibres.",
@@ -36,6 +37,16 @@ internal sealed class Q9InactiveContactFibreDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("A fibre with at most five occupied points on the chosen parity contributes at most fifteen edges by the degree bound. At occupancy six, the two components contribute one and five points. The five points are the free-coordinate neighbours of the singleton's antipode.")),
                     Paragraph(Text("The antipode has five selected neighbours and is excluded by the degree bound. Each remaining edge from those five points comes from a selected double flip of the antipode. Signed flip anticommutation puts the two corresponding directions in opposite sign classes. Among five directions there are at most twelve ordered pairs across those classes, and the singleton contributes at most three more edges."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("q9-five-pure-forces-eleven-mixed"),
+                DeclarationHandle.Create(Placement + "Q9PureFibreEdgeCapacity.five_pure_contact_fibres_force_eleven_mixed"),
+                H("Five occupied pure fibres force eleven mixed fibres"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Cubic regularity puts 129 selected vertices on each parity. The equal direction counts give 43 edges per axis and 215 edges in the five free directions.")),
+                    Paragraph(Text("If exactly five fibres are occupied and pure and at most ten are mixed, the pure fibres have at most eleven holes in total. At least four of them adjoin a mixed fibre and therefore have at least two holes. With up to three holes in a pure fibre, any selected vertex of the opposite parity must neighbour at least two holes. Two holes have at most two common neighbours. Three holes have at most four distinct vertices adjacent to two of them, because any three intersecting pairs of their neighbourhoods have a common vertex.")),
+                    Paragraph(Text("The resulting capacity of the pure fibres is at most sixty free edges. The mixed fibres contribute at most 150, so the total falls short of 215."))),
                 DescribeRole.Theorem)),
         []));
 }
