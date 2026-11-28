@@ -1,4 +1,5 @@
 import OmegaMath.Matrix.HomogeneousWordPowersAlternating
+import OmegaMath.Matrix.HomogeneousWordPowersSingular
 import Mathlib.LinearAlgebra.Basis.Fin
 
 /-! Omega original.

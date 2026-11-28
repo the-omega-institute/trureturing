@@ -1,3 +1,4 @@
+import OmegaMath.Matrix.HomogeneousWordPowersInvertible
 import OmegaMath.Matrix.HomogeneousWordPowersCompression
 import Mathlib.Algebra.Group.Pointwise.Set.ListOfFn
 
