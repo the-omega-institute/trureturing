@@ -1,8 +1,8 @@
 ---
 slug: blecher-2025-example-5-5-no-anticommuting-pair
-bibkey: blecher2025commutativity
-doi: 10.1016/j.exmath.2025.125742
-url: https://arxiv.org/abs/2509.17673v2
+bibkey: blecher2025anticommutingpair
+doi: null
+url: "https://arxiv.org/html/2509.17673v2#S5.Thmtheorem5"
 triage: theorem
 motivation_gids:
   - D5/S3/HilbertOperators/BlecherNoAnticommutingPair.result
@@ -12,7 +12,7 @@ motivation_gids:
 
 ## Problem
 
-David P. Blecher, *Commutativity of operator algebras*, Example 5.5 asks for a noncommutative reversible operator algebra in which every pair satisfying $xy=-yx$ has $xy=0$. The source is arXiv v2, with the canonical repository citation at https://arxiv.org/abs/2509.17673v2 and the Example 5.5 locator at https://arxiv.org/html/2509.17673v2#S5.Thmtheorem5. The formal claim quantifies over a complex submodule $A$ of $M_{16}(\mathbb C)$, matrix-multiplication closure, a noncommuting pair, and equality of the entrywise-transpose Euclidean operator norm at every matrix level. It concludes that a pair with $xy=-yx$ and $xy\ne0$ exists.
+David P. Blecher, *Commutativity of operator algebras*, Example 5.5 asks for a noncommutative reversible operator algebra in which every pair satisfying $xy=-yx$ has $xy=0$. The formal claim quantifies over a complex submodule $A$ of $M_{16}(\mathbb C)$, matrix-multiplication closure, a noncommuting pair, and equality of the entrywise-transpose Euclidean operator norm at every matrix level. It concludes that a pair with $xy=-yx$ and $xy\ne0$ exists. [Example 5.5](https://arxiv.org/html/2509.17673v2#S5.Thmtheorem5)
 
 ### Statement echo
 
@@ -54,7 +54,7 @@ The theorem does not assert minimal ambient dimension, symmetry for Blecher's or
 
 The Reg audit has no target. `result` is a utility refutation with `utility: kind=certified-instance; basis=refutes=gid:D5/S3/HilbertOperators/BlecherNoAnticommutingPair.claim; result=D5/S3/HilbertOperators/BlecherNoAnticommutingPair.result; claim=D5/S3/HilbertOperators/BlecherNoAnticommutingPair.claim`, and the designated refutation result is exempt from the four-slot escape registration under CLAUDE.md §3.9. No Reg mirror is required for this module.
 
-The source prerequisite is `Library/HilbertOperators/blecher2025commutativity.md`, whose DOI and URL are exactly `10.1016/j.exmath.2025.125742` and `https://arxiv.org/abs/2509.17673v2`. The measured immediate directory capacities are 20 Lean files in `D5/S3/HilbertOperators`, 40 Blueprint files in `Blueprint/D5/S3/HilbertOperators`, and 62 Library files in `Library/HilbertOperators`, each below the configured 96-entry limit.
+The reading note for this question cites Example 5.5 in the versioned arXiv text. [Example 5.5 reading note](../Library/HilbertOperators/blecher2025anticommutingpair.md)
 
 The scoped Scribe source uses the real Lean objects `Submodule`, `Matrix`, `Fin`, `Matrix.comp`, and `Matrix.transpose`. The result node displays the complete proposition via `ClaimBody()`, including the exact entrywise-transpose norm equation above.
 
@@ -74,7 +74,7 @@ The scoped Scribe source uses the real Lean objects `Submodule`, `Matrix`, `Fin`
 
 The public scope is exactly one refutation at $m=2$, ambient size $2^2(2+2)=16$. The uniform scope is the private construction for all $m\ge2$, ambient size $m^2(m+2)$, which is consumed by the public refutation only at $m=2$.
 
-Per-declaration proof shapes and live consumers are recorded in the attempt-owned re-review artifact. The construction declarations that introduce the signed-probe representation and the transpose unitary are content. Coordinate, involution, readout, and matrix identities are bind-only helpers with named consumers on the live path. No bind-only helper is orphaned.
+The construction declarations that introduce the signed-probe representation and the transpose unitary are content. Coordinate, involution, readout, and matrix identities are bind-only helpers with named consumers on the live path.
 
 ## ASSUMED-UNVERIFIED
 

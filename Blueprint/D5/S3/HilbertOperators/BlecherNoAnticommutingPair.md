@@ -12,7 +12,7 @@ $$\left(\operatorname{D5.S3.HilbertOperators.BlecherNoAnticommutingPair.claim}\r
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* David P. Blecher (2025). *Commutativity of operator algebras*. DOI: [10.1016/j.exmath.2025.125742](https://doi.org/10.1016/j.exmath.2025.125742). URL: <https://arxiv.org/abs/2509.17673v2>.
+*Acknowledgement.* David P. Blecher (2025). *Commutativity of operator algebras*. URL: <https://arxiv.org/html/2509.17673v2#S5.Thmtheorem5>.
 
 *Commentary.*
 
@@ -30,7 +30,7 @@ $$\neg \left(\forall \left(A: \operatorname{Submodule}\left(\mathbb{C}, \operato
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* David P. Blecher (2025). *Commutativity of operator algebras*. DOI: [10.1016/j.exmath.2025.125742](https://doi.org/10.1016/j.exmath.2025.125742). URL: <https://arxiv.org/abs/2509.17673v2>.
+*Acknowledgement.* David P. Blecher (2025). *Commutativity of operator algebras*. URL: <https://arxiv.org/html/2509.17673v2#S5.Thmtheorem5>.
 
 *Commentary.*
 

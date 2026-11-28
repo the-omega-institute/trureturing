@@ -8,7 +8,7 @@ internal sealed class BlecherNoAnticommutingPairDocument : IScribeDocumentDefini
 {
     private const string Module = "D5/S3/HilbertOperators/BlecherNoAnticommutingPair";
     private static LibraryNoteRef Source =>
-        LibraryNoteRef.Create("D5/L/HilbertOperators/blecher2025commutativity");
+        LibraryNoteRef.Create("D5/L/HilbertOperators/blecher2025anticommutingpair");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A noncommutative symmetric operator algebra in M₁₆(ℂ) excludes nonzero anticommuting products.",

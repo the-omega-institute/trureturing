@@ -5,7 +5,7 @@ year: 2025
 title: "Commutativity of operator algebras"
 doi: 10.1016/j.exmath.2025.125742
 url: "https://arxiv.org/abs/2509.17673v2"
-claim: "The paper studies reversible operator algebras, those whose reversed multiplication with the same matrix norms is again an abstract operator algebra, shows that they are 3-commutative, constructs an anticommuting noncommutative reversible subalgebra of M_4 from the canonical anticommutation relations, and conjectures that up to unitary equivalence it is the only noncommutative reversible 4×4 matrix algebra."
+claim: "In Example 5.2, Blecher conjectures that the algebra constructed from the canonical anticommutation relations is, up to unitary equivalence, the only noncommutative reversible 4×4 matrix algebra."
 strata_touched:
   - D5/S3/HilbertOperators/ReversibleFourByFourNonuniqueness
 license: citation-only
@@ -19,6 +19,8 @@ D. P. Blecher, Expositiones Mathematicae 43(6) (2025), DOI 10.1016/j.exmath.2025
 An abstract operator algebra is *reversible* if it "with reversed multiplication (but with same matrix norms) is also an abstract operator algebra". Example 5.2 takes $U=e_{13}+e_{24}$ and $V=e_{12}-e_{34}$ in $M_4$, which satisfy the canonical anticommutation relations, and $A=\mathrm{Span}\{U,V,UV\}$; $A$ is anticommuting, hence reversible, and noncommutative. The example ends:
 
 > We conjecture that up to unitary equivalence $A$ is the only noncommutative reversible $4\times4$ matrix algebra.
+
+The same paper's question about nonzero anticommuting products is recorded in the [Example 5.5 reading note](blecher2025anticommutingpair.md).
 
 ## Verified locator
 
