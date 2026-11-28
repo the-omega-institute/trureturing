@@ -113,7 +113,7 @@ open D5.S3.Weil.ZeroData.ZetaOrdinateReflectionTransfer Zeta23
 
 /-- An exponential bound on the multiplicity-weighted right-tail count gives a
 quadratic ordinate transfer for frequencies up to one quarter of the decay rate. -/
-theorem actual_reflection_bound_of_exponential_tail (T v A r : ℝ) (hr : 0 < r) (hv : |v| ≤ r / 4)
+theorem actual_reflection_bound_of_exponential_tail (v T A r : ℝ) (hr : 0 < r) (hv : |v| ≤ r / 4)
     (htail : ∀ t > 0,
       (∑ ρ ∈ (zerosIn_finite 0 T).toFinset.filter (fun ρ => 1 / 2 + t ≤ ρ.re),
         (zeroMult ρ : ℝ)) ≤ A * Real.exp (-r * t)) :

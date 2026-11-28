@@ -29,7 +29,7 @@ private def rejected : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law R := ∀ T v A r : ℝ, 0 < r → |v| ≤ r / 4 →
+  Law R := ∀ v T A r : ℝ, 0 < r → |v| ≤ r / 4 →
     (∀ t > 0,
       (∑ ρ ∈ (zerosIn_finite 0 T).toFinset.filter (fun ρ => 1 / 2 + t ≤ ρ.re),
         (zeroMult ρ : ℝ)) ≤ A * Real.exp (-r * t)) →
@@ -105,10 +105,10 @@ private def registration :
   sourceSelection := some {
     owner := `D5.S3.Weil.ZeroData.ZetaOrdinateDensityTransfer
     definition := none
-    coordinates := #[1]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "arg"]
-      stateBinder := 0
+      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
