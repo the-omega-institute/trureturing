@@ -212,7 +212,7 @@ private theorem P_apply (i j : Fin 3) :
   rw [Complex.ofReal_div, Complex.ofReal_intCast, Complex.ofReal_intCast, eq_div_iff hdc, mul_comm]
   exact he.symm
 
-private theorem row_sum_le {X : Qutrit ℂ} {r : ℝ} (hr : 0 ≤ r)
+theorem row_sum_le {X : Qutrit ℂ} {r : ℝ} (hr : 0 ≤ r)
     (h : ∀ i, ∑ j, ‖X i j‖ ≤ r) : ‖X‖ ≤ r := by
   let R : ℝ≥0 := ⟨r, hr⟩
   rw [Matrix.linfty_opNorm_def]
@@ -227,7 +227,7 @@ private theorem entry_norm_le (X : Qutrit ℂ) (i j : Fin 3) : ‖X i j‖ ≤ �
   exact (Finset.single_le_sum (fun b _ => (zero_le : 0 ≤ ‖X i b‖₊)) (Finset.mem_univ j)).trans
     (Finset.le_sup (f := fun i => ∑ j, ‖X i j‖₊) (Finset.mem_univ i))
 
-private theorem norm_A_le : ‖A‖ ≤ 11 := by
+theorem norm_A_le : ‖A‖ ≤ 11 := by
   refine row_sum_le (by norm_num) fun i => ?_
   fin_cases i <;> norm_num [A, AInt, Fin.sum_univ_three, Complex.norm_intCast]
 
@@ -353,7 +353,7 @@ private theorem exp_diagonal_real (v : Fin 3 → ℝ) :
   funext i
   simp only [Pi.coe_exp, ← Complex.exp_eq_exp_ℂ, Complex.ofReal_exp]
 
-private theorem exp_add_scalar (X : Qutrit ℂ) (c : ℝ) :
+theorem exp_add_scalar (X : Qutrit ℂ) (c : ℝ) :
     exp (X + (c : ℂ) • (1 : Qutrit ℂ)) = (Real.exp c : ℂ) • exp X := by
   have hcomm : Commute X ((c : ℂ) • (1 : Qutrit ℂ)) :=
     (Commute.one_right X).smul_right (c : ℂ)
@@ -368,7 +368,7 @@ private theorem exp_add_scalar (X : Qutrit ℂ) (c : ℝ) :
 
 private def weights (i : Fin 3) : ℝ := Real.exp (s i - 9)
 
-private def overlap : Qutrit ℂ := exp (A + B) * exp A * exp B
+def overlap : Qutrit ℂ := exp (A + B) * exp A * exp B
 
 private theorem normalized_overlap :
     (Real.exp (-18) : ℂ) • overlap = Matrix.diagonal (fun i => (weights i : ℂ)) * K := by
@@ -392,7 +392,7 @@ private theorem exp_neg_nat_le_inv_two_pow (n : ℕ) :
     one_div]
   exact inv_anti₀ (by positivity) (pow_le_pow_left₀ (by norm_num) Real.exp_one_gt_two.le n)
 
-private theorem normalized_overlap_bound :
+theorem normalized_overlap_bound :
     traceNorm ((Real.exp (-18) : ℂ) • overlap) ≤ (801763 : ℝ) / 1638400 := by
   rw [normalized_overlap]
   refine (traceNorm_le_sum_norm _).trans ?_
@@ -411,7 +411,7 @@ private theorem normalized_overlap_bound :
   norm_num [Fin.sum_univ_three, weights, s, entryBounds]
   linarith only [h16, h8]
 
-private theorem comparison_trace :
+theorem comparison_trace :
     (exp ((2 : ℂ) • (A + B))).trace.re =
       Real.exp (-14) + Real.exp 2 + Real.exp 18 := by
   have hd : (2 : ℂ) • (A + B) = Matrix.diagonal (fun i => ((2 * s i : ℝ) : ℂ)) := by
