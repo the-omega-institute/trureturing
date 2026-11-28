@@ -234,6 +234,25 @@ class CoverageTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "live quotient order formation"):
                 verify_complete(data, Path("product"), *check_coverage(data))
 
+    def test_embedding_order_implications_belong_to_their_defining_module(self):
+        owner = "Init.Grind.Module.OfNatModule"
+        scope = "Lean.Grind.IntModule.OfNatModule."
+        order = scope + "instLEQOfOrderedAdd"
+        proofs = "OmegaChecks.InitBoundaries.EnvelopeOrder."
+        rows = [site(owner, scope + suffix, originalTypeGap=None) for suffix in ("of_le", "of_not_le")]
+        data = inventory(*rows)
+        self.assertEqual(check_coverage(data)[1], [(owner, row["name"]) for row in rows])
+        certificates = [[owner, row["name"], order, order + "._proof_3", proofs + "propextFromModuleLift",
+                         proofs + "moduleLiftFromPropext"] for row in rows]
+        for row in rows:
+            row["quotientOrderFormation"] = order
+        data["certifiedEnvelopeOrderFormations"] = certificates
+        self.assertEqual(check_coverage(data), (0, []))
+        for bad in (["Init.Grind.Module.Envelope", *certificates[0][1:]],
+                    [owner, scope + "of_lt", *certificates[0][2:]]):
+            with self.subTest(certificate=bad), self.assertRaisesRegex(ValueError, "quotient order formation"):
+                check_coverage(data | {"certifiedEnvelopeOrderFormations": [bad]})
+
     def test_semiring_equation_requires_the_corresponding_image_computation(self):
         owner = "Init.Grind.Ring.CommSemiringAdapter"
         name = "Lean.Grind.CommRing.Expr.denoteSAsRing.eq_4"

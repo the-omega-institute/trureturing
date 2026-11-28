@@ -203,7 +203,7 @@ def envelope_order_formations(checks):
     sites = {}
     witness = "OmegaChecks.InitBoundaries.EnvelopeOrder."
     for owner, name, order, coherence, forward, reverse, *construction in checks:
-        if owner == MODULE_ENVELOPE:
+        if owner in (MODULE_ENVELOPE, "Init.Grind.Module.OfNatModule"):
             scope, suffix, model = MODULE_ENVELOPE_PREFIX, "_proof_3", "Module"
         elif owner == "Init.Grind.Ring.Envelope":
             scope, suffix, model = "Lean.Grind.Ring.OfSemiring", "_proof_1", "Ring"
@@ -211,7 +211,9 @@ def envelope_order_formations(checks):
             raise ValueError(f"invalid quotient order owner {owner}")
         site = (owner, name)
         expected_construction = [witness + model.lower() + "OrderFromPropext"] if name == order else []
-        if (site in sites or name not in {order, scope + ".instIsPreorderQ", scope + ".instOrderedAddQ"} or
+        names = ({scope + ".of_le", scope + ".of_not_le"} if owner == "Init.Grind.Module.OfNatModule" else
+                 {order, scope + ".instIsPreorderQ", scope + ".instOrderedAddQ"})
+        if (site in sites or name not in names or
                 construction != expected_construction or order != scope + ".instLEQOfOrderedAdd" or coherence != order + "." + suffix or
                 forward != witness + "propextFrom" + model + "Lift" or reverse != witness + model.lower() + "LiftFromPropext"):
             raise ValueError(f"invalid quotient order formation dependency for {site}")

@@ -44,6 +44,57 @@ private def certify (source : ConstantInfo) (order coherence : Name) : MetaM Uni
       else throwError "expected a preorder or ordered-addition instance"
     checkLift use order coherence
 
+/-- Read the pinned proposition at its two arbitrary quotient arguments. The hypotheses
+identify representatives, but neither equality substitutes into the published type. -/
+private def checkImplication (source : ConstantInfo) (order coherence : Name) (negated : Bool) : MetaM Unit := do
+  let ty := source.type.instantiateLevelParams source.levelParams [.zero]
+  forallBoundedTelescope ty (some 11) fun xs rest => do
+    let #[α, moduleInst, baseLE, _, _, a, b, qa, qb, ha, hb] := xs | throwError "unexpected embedding binders"
+    let .forallE _ premise conclusion _ := rest | throwError "expected implication"
+    let relation (prop : Expr) : MetaM Expr := do
+      if !negated then return prop
+      unless prop.isAppOfArity ``Not 1 do throwError "expected negated comparison"
+      return prop.appArg!
+    let p ← relation premise
+    let q ← relation conclusion
+    let compares (rel inst left right : Expr) :=
+      rel.isAppOfArity ``LE.le 4 && rel.getAppArgs[1]! == inst && rel.getAppArgs[2]! == left && rel.appArg! == right
+    unless compares p baseLE a b && q.isAppOfArity ``LE.le 4 do throwError "unexpected comparison premise or goal"
+    let use := q.getAppArgs[1]!
+    unless compares q use qa qb && use.getAppArgs == xs.extract 0 5 do throwError "specialized quotient comparison"
+    for (value, quotient, equality) in [(a, qa, ha), (b, qb, hb)] do
+      let some (_, lhs, rhs) := (← inferType equality).eq? | throwError "expected embedding equality"
+      unless lhs.isAppOfArity ``Lean.Grind.IntModule.OfNatModule.toQ 3 &&
+          lhs.getAppArgs == #[α, moduleInst, value] && rhs == quotient do throwError "wrong embedding equality"
+    checkLift use order coherence
+
+private def checkImplications (lib : System.FilePath) (systemPath : SearchPath)
+    (order coherence forward reverse : Name) : IO Unit := do
+  let owner := `Init.Grind.Module.OfNatModule
+  let target := owner.replacePrefix `Init `OmegaInit
+  unless ← (modToFilePath lib target "olean").pathExists do return
+  searchPathRef.set systemPath
+  let visible ← importModules #[{module := owner}] {} (level := .exported)
+  let pinned ← importModules #[{module := owner, importAll := true}] {}
+  searchPathRef.set [lib]
+  let strict ← importModules #[{module := target}] {} (level := .exported)
+  let full ← importModules #[{module := target, importAll := true}] {}
+  for (suffix, negated) in [("of_le", false), ("of_not_le", true)] do
+    let name := order.getPrefix.str suffix
+    if strict.contains (portName name) then continue
+    let some src := pinned.find? name | throw <| IO.userError s!"missing theorem {name}"
+    let translated := translate portName src.type
+    unless src.isTheorem && !src.isUnsafe && !src.isPartial && src.numLevelParams == 1 &&
+        (visible.find? name).any (·.type.equal src.type) && visible.getModuleIdxFor? name == visible.getModuleIdx? owner &&
+        (Kernel.check visible {} src.type).isOk && typeNeedsConstant visible src.type order &&
+        translated.getUsedConstants.filter (!strict.contains ·) == #[portName order] &&
+        !full.contains (portName order) && !(Kernel.check strict {} translated).isOk do
+      throw <| IO.userError s!"invalid quotient comparison in {name}"
+    ((checkImplication src order coherence negated).run').toIO'
+      {fileName := "<quotient order implication>", fileMap := default} {env := visible}
+    IO.println (toJson #[owner.toString, name.toString, order.toString, coherence.toString,
+      forward.toString, reverse.toString]).compress
+
 private def checkOrder (source : ConstantInfo) (coherence : Name) : MetaM Unit := do
   let n := source.name
   let env ← getEnv
@@ -120,3 +171,5 @@ public def main (args : List String) : IO Unit := do
         {env := visible}
       IO.println (toJson #[owner.toString, name.toString, order.toString, coherence.toString,
         forward.toString, reverse.toString]).compress
+    if owner == `Init.Grind.Module.Envelope then
+      checkImplications lib systemPath order coherence forward reverse
