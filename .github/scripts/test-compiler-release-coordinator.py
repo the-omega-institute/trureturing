@@ -155,6 +155,38 @@ class ScheduleTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "do not admit"):
             controller.coordinate(Actions(plan), controller.Schedule(plan, pending, {}), None, 1, 1)
 
+    def test_pending_run_metadata_can_arrive_after_dispatch(self):
+        plan, pending = example([[]], [])
+        github = Actions(plan, latency=2)
+        listing = github.runs
+
+        def runs(*args, **options):
+            return [dict(row, display_title=None) if row["status"] != "completed" else row
+                    for row in listing(*args, **options)]
+
+        github.runs = runs
+        with patch.object(controller.time, "sleep"), contextlib.redirect_stdout(io.StringIO()):
+            controller.coordinate(github, controller.Schedule(plan, pending, {}), None, 1, 1)
+        self.assertEqual(github.submitted, [("units", [key(0)])])
+
+    def test_completed_run_identity_is_checked_against_exact_run(self):
+        plan, pending = example([[]], [])
+        for exact_title in ("1/units", "unrelated"):
+            with self.subTest(exact_title=exact_title), contextlib.redirect_stdout(io.StringIO()):
+                github = Actions(plan)
+                github.runs = Mock(return_value=[dict(id=1001, status="completed", display_title=None)])
+                github.json = Mock(return_value=dict(id=1001, status="completed", conclusion="success",
+                                                     display_title=exact_title))
+                schedule = controller.Schedule(plan, pending, {})
+                if exact_title == "1/units":
+                    controller.coordinate(github, schedule, None, 1, 1)
+                    self.assertEqual(schedule.done, {key(0)})
+                else:
+                    with self.assertRaisesRegex(ValueError, "untrusted compiler workflow run 1001"):
+                        controller.coordinate(github, schedule, None, 1, 1)
+                    self.assertEqual(schedule.done, set())
+                github.json.assert_called_once_with("actions/runs/1001")
+
 
 class ApiTests(unittest.TestCase):
     def setUp(self):
@@ -226,7 +258,8 @@ class ApiTests(unittest.TestCase):
 
     def test_wrong_repository_event_or_workflow_rejected(self):
         for field, value in (("workflow_id",75), ("event","push"), ("head_branch","feature"),
-                             ("head_repository", {"full_name":"other/repo"}), ("display_title","other")):
+                             ("actor", None), ("head_repository", {"full_name":"other/repo"}),
+                             ("head_repository", None), ("display_title","other")):
             with self.subTest(field=field):
                 self.assertFalse(self.github.matches(dict(self.row, **{field:value}), self.row["display_title"]))
 
