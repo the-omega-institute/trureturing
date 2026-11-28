@@ -8,7 +8,7 @@
 
 import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.CliqueTreeBanachPotential
-import OmegaMath.Combinatorics.Graph.L1Jung
+import D5.S3.Combinatorics.Graph.L1Jung
 
 compile_only_with_mathlib
 

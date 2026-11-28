@@ -7,8 +7,8 @@
    digest: Dirac level pairing, Euler–Heisenberg invariants, and polarization Hessians. -/
 
 import OmegaBuild.Commands
-import OmegaMath.Analysis.HermiteOscillator
-import OmegaMath.Analysis.EulerHeisenbergProperTime
+import D5.S3.Analysis.HermiteOscillator
+import D5.S3.Analysis.EulerHeisenbergProperTime
 import D5.S3.Geometry.Lorentz.DiracCliffordSpinors4D
 import D5.S3.Geometry.Lorentz.MaxwellRainichStressEnergy4D
 import Mathlib.Algebra.Polynomial.Derivative

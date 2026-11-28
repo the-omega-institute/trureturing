@@ -21,7 +21,7 @@ import Mathlib.Analysis.Calculus.Deriv.Inv
 import D5.S3.Geometry.Lorentz.FLRWCosmologyFriedmann4D
 import D5.S3.Geometry.Lorentz.PenroseCarterCausalCompactification4D
 import D5.S3.Geometry.Lorentz.PenroseHawkingSingularityBPS4D
-import OmegaMath.Analysis.InverseDistanceRays
+import D5.S3.Analysis.InverseDistanceRays
 
 /-! The ADM metric is a congruence of the temporal and spatial blocks.
 The Legendre map acts by a different scalar on the trace and shear directions. -/

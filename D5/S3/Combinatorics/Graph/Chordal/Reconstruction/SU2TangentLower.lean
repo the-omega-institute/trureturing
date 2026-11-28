@@ -1,13 +1,13 @@
 /- GID: D5/S3/Combinatorics/Graph/Chordal/Reconstruction/SU2TangentLower
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Chordal/Reconstruction/SU2TangentLower
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Euclidean-three transfer and width-four round SU2 family lower bound. -/
 
-import OmegaMath.Combinatorics.Graph.SU2TangentTransfer
-import OmegaMath.Geometry.SU2EuclideanCoordinates
+import D5.S3.Combinatorics.Graph.SU2TangentTransfer
+import D5.S3.Geometry.SU2EuclideanCoordinates
 import D5.S3.Combinatorics.Graph.Chordal.Reconstruction.ChordalBanachExactStrata
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 

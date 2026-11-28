@@ -8,7 +8,7 @@
 
 module
 
-public import OmegaMath.Combinatorics.MonotoneIntervalStability
+public import D5.S3.Combinatorics.MonotoneIntervalStability
 
 /-! Uniform noisy recovery from all inclusive interval occurrences of length at least two. -/
 

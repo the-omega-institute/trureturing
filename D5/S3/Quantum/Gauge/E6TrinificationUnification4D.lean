@@ -9,9 +9,9 @@
 import OmegaBuild.Commands
 import D5.S3.Quantum.Gauge.SU5SO10GrandUnification4D
 import D5.S3.Quantum.Gauge.GaugeUnificationRG4D
-import OmegaMath.LinearAlgebra.SpinorWeights5
-import OmegaMath.LinearAlgebra.RootSystem.ExceptionalSix
-import OmegaMath.LinearAlgebra.Matrix.CyclicMatrixCubic
+import D5.S3.LinearAlgebra.SpinorWeights5
+import D5.S3.LinearAlgebra.RootSystem.ExceptionalSix
+import D5.S3.LinearAlgebra.Matrix.CyclicMatrixCubic
 
 /-! The 27 left-handed states branch as 16 with qPsi charge 1, a vector with
 qPsi charge -2, and a singlet with qPsi charge 4. The vector is a fundamental

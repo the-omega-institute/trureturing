@@ -6,7 +6,7 @@
    utility: none
    digest: Every joint additive-observation fiber over a finite power of a conical regular commutative monoid has greatest support. -/
 
-import OmegaMath.Algebra.Refinement.RegularGreatestSupport
+import D5.S3.Algebra.Refinement.RegularGreatestSupport
 
 set_option autoImplicit false
 

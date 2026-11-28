@@ -6,7 +6,7 @@
    utility: none
    digest: Characterize the homogeneous signed contact equations by contact and tangent nullspaces. -/
 
-import OmegaMath.LinearAlgebra.Matrix.WeightedContactJacobian
+import D5.S3.LinearAlgebra.Matrix.WeightedContactJacobian
 
 /-! Exact kernel of the linearized moment and dual contact equations. -/
 

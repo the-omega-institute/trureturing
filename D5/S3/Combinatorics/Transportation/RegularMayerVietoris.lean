@@ -6,7 +6,7 @@
    utility: none
    digest: Regular conical coefficients admit finite-fiber transport exactly under idempotent refinement and the two Mayer-Vietoris laws. -/
 
-import OmegaMath.Algebra.Refinement.RegularMayerVietoris
+import D5.S3.Algebra.Refinement.RegularMayerVietoris
 import D5.S3.Combinatorics.Transportation.FiniteFiberTransport
 
 /-! The regular coefficient criterion combines Goodearl--Pardo--Wehrung,

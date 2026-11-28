@@ -7,9 +7,9 @@
    digest: Finite three-tree stackings embed into a prefix-closed part of replicated histories. -/
 
 import OmegaBuild.Commands
-import OmegaMath.Combinatorics.Graph.PureThreeTreeChild
+import D5.S3.Combinatorics.Graph.PureThreeTreeChild
 import D5.S3.Combinatorics.Graph.Chordal.PureThreeTreeRetract
-import OmegaMath.Combinatorics.Graph.StackedThreeTreeGraph
+import D5.S3.Combinatorics.Graph.StackedThreeTreeGraph
 
 compile_only_with_mathlib
 

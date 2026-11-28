@@ -9,7 +9,7 @@
 import OmegaBuild.Commands
 import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondSphere4D
 import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondSchwinger4D
-import OmegaMath.Analysis.GaussianSubordination
+import D5.S3.Analysis.GaussianSubordination
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
 import Mathlib.Analysis.SpecialFunctions.Gaussian.FourierTransform

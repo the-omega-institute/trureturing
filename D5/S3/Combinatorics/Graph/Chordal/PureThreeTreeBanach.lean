@@ -7,7 +7,7 @@
    digest: Banach reconstruction and offline triangle tests bound each other on replicated three-trees. -/
 
 import OmegaBuild.Commands
-import OmegaMath.Combinatorics.Graph.PureThreeTreeClosure
+import D5.S3.Combinatorics.Graph.PureThreeTreeClosure
 import D5.S3.Combinatorics.Graph.Chordal.SimplicialAndIntervalPotential
 import Mathlib.Analysis.Normed.Module.HahnBanach
 

@@ -1552,3 +1552,147 @@ triangular piece. These are paper-level obstructions to the parity
 rule. The existence of some categorical two-cover at an
 input-dependent depth remains open.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3)
+
+## Forest covering numbers in a collapsible two-dimensional family
+
+Let (G) be a finite nonempty simple graph of minimum degree at least
+two, with forest covering number (a(G)). For every edge (uv) insert
+a private vertex (x_{uv}) into the triangle (puv) of the cone on
+(G). This replaces it by (uvx_{uv},pux_{uv},pvx_{uv}) with the same
+apex (p) for every block. The base edge (uv) is free in (uvx_{uv}).
+Deleting all these pairs leaves the cone on the graph with each edge
+subdivided once. In particular the thickened complex is collapsible.
+
+A categorical subcomplex cannot contain a cycle of original edges.
+At any cycle vertex (u), the two incident edges force its first
+possible image to lie in the intersection of their unique triangular
+cofaces, which is the singleton (u). The same argument fixes the
+cycle at every contiguity step. Conversely a forest piece contains the
+three triangles of each of its edges and all the radial edges (pv).
+Deleting a leaf by domination by its edge midpoint, then deleting the
+midpoint by domination by (p), contracts the piece. Thus its ambient
+simplicial category, in the unreduced convention, is exactly (a(G)).
+
+The nonempty closed faces under intersection of all containing facets
+form a poset (P_G). Exactly the original edges are nonclosed, with
+each edge closing to its private triangle. The original singleton
+vertices and the private triangular maxima of any cycle are fixed
+throughout every order fence starting at the inclusion of a lower
+set containing the cycle. In an upward step the maxima are fixed and
+their intersections force the singletons. In a downward step minimality
+fixes the singletons and a closed face containing both endpoints must
+contain their whole triangular maximum. The lower sets formed from
+forest pieces are retracts of the face posets of those pieces by the
+face closure, so the ordinary category of (P_G) is (a(G)).
+
+Each triangular maximum in (P_G) has as its strict lower order
+complex the subdivision of the path (u,x_{uv},v). In the first
+ordinary subdivision the two pieces contain the common cone-face
+region and take one side of each of these paths respectively. Each
+new maximum folds to the chosen edge face in its piece. This gives
+intrinsically contractible categorical lower sets at common depth
+one. The weak category is one by the collapse and the extensive
+face closure. The frozen cycle excludes ordinary contractibility,
+which subdivision reflects, so the stable category is exactly two.
+The relative cover construction works in any finite poset when every
+maximal chain under an added maximum lies in one prescribed region
+and contains its chosen dominator. Lean also checks equality of the ordinary categorical cover number
+and arboricity for every graph with an edge, and the categorical
+two-cover at depth one for every finite simple graph.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3) ·
+[Category of graphs](https://arxiv.org/abs/1605.01322)
+
+## Necessity of the maximal-chain condition for relative extension
+
+Suppose the two pieces in the first chain subdivision extend prescribed
+categorical lower regions, with exact old intersections. Require each
+order homotopy into its old region to fix that region throughout. For
+each chosen maximum with a strict predecessor, each side covering a
+maximal chain through that maximum must have a common strict predecessor
+in all the maximal lower chains it covers. A downward comparison
+cannot move the singleton of the maximum. In the first upward comparison
+that moves it, each assigned maximal chain through the maximum still
+contains its fixed old lower chain and the maximum. Maximality then
+keeps those chains unchanged and forces every new member of the image
+singleton to belong to all their strict lower parts. Together with the
+insertion and deletion construction this gives an exact criterion for
+relative extension at the first subdivision.
+
+For a \(d\)-simplex horn, the \(d\) facets supply a transversal of its
+maximal lower chains. For the opposite bound, index the vertices
+opposite the cone vertex cyclically. In the facet omitting vertex \(i\),
+start at vertex \(i+1\), add the remaining non-cone vertices in cyclic
+order, then add the cone vertex. This gives \(d\) disjoint maximal
+chains. When \(d\geq 3\), adjoining a maximum over the horn therefore
+requires at least three regions at the first subdivision if the
+homotopies fix the entire inherited parts. The restriction on the
+homotopies is essential to this lower bound.
+
+There is a paper construction at depth two when both inherited
+pieces equal the whole old region. One lower set consists of flags
+whose chains all meet the old poset. Intersect those chains with the
+old poset and lift the resulting comparison through subdivision.
+The other lower set consists of old flags and, separately for each
+new maximum, flags whose chains all contain it. Each new component
+contracts by inserting the singleton of that maximum. Its terminal
+value then follows the edge to the singleton of any strict
+predecessor. These comparisons fix the old flags throughout. Every
+flag missed by the first set contains a new singleton and hence
+belongs to the second. If the old inclusion is categorical, both
+pieces are categorical at the common depth. For the horn this
+attains two pieces exactly one subdivision after the first-depth
+obstruction.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3)
+
+## Compatible homotopies across a lower cover
+
+For two lower regions covering a face poset, suppose the images of
+every shared input face have nonempty intersection. Keep the regional
+map on its exclusive inputs and take the intersection on the overlap.
+The resulting order map is the greatest ambient map bounded above by
+both regional maps on their respective domains. Compatibility survives
+enlarging either regional map, so consecutive pairs with independent
+comparison directions have a compatible common upper pair. Gluing
+through these pairs gives an ambient homotopy. A common constant
+endpoint contracts the ambient face poset. Connectedness also suffices
+when the terminal constants differ.
+
+Consequently any such schedule of two regional contractions in a
+noncontractible ambient face poset has a stage with disjoint images of
+a shared singleton. At a stage with disjoint images of a shared face,
+every vertex of that face is already a shared singleton with disjoint
+images, by monotonicity of both regional maps. The obstruction persists
+at every ordinary depth of a complex whose face poset remains
+noncontractible under subdivision. It constrains the overlap of the
+regional homotopies in Question 6.3.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3) ·
+[Strong homotopy types, nerves and collapses](https://arxiv.org/abs/0907.2954)
+
+## Sharp relative covering numbers for a simplex expansion
+
+For a \(d\)-simplex with \(d\geq 2\), consider its horn obtained by
+removing the top simplex and the opposite facet. A relative piece
+contains the entire subdivided horn and contracts into it through
+order maps that fix it throughout. Lean proves that the order model
+adjoining a greatest element to the horn needs exactly \(d\) such
+pieces at the first chain subdivision. There is one piece per facet.
+Lean also constructs two relative pieces after the second subdivision
+for arbitrary simultaneous attachments of maximal elements with
+strict predecessors.
+
+For the literal simplex expansion, deleting the free facet is an
+order retraction which replaces it by the top simplex. It fixes the
+horn and compares with the identity. Subdivision lifts the comparison
+relative to the horn, so relative covers transfer both ways. A
+single piece is impossible at every depth. Partition the vertices of
+the missing facet into two nonempty faces. In the first subdivision
+their distance is two through the missing facet, and in the horn it
+exceeds two because there is no common comparable face. Ordinary
+subdivision doubles both distances. A relative retraction would fix
+the two faces and would have to increase their distance. The depth-zero
+cover is impossible for the same reason, because any lower set
+containing the greatest element is the whole poset. This paper
+argument yields an exact sequence of relative covering numbers:
+no finite cover at depth zero, \(d\) at depth one, and two at every
+later depth.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3)

@@ -6,7 +6,7 @@
    utility: none
    digest: Circle-valued gains admit potential fits on alternating orthogonal quaternion lines. -/
 
-import OmegaMath.Geometry.UnitQuaternionCircle
+import D5.S3.Geometry.UnitQuaternionCircle
 import D5.S3.Combinatorics.Graph.Chordal.ChordalScalarFit
 
 /-! Omega original.

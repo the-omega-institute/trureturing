@@ -8,7 +8,7 @@
 
 import OmegaBuild.Commands
 import D5.S3.StatisticalMechanics.ZTwoHighTemperatureExpansion
-import OmegaMath.Topology.CubicalBox
+import D5.S3.Topology.CubicalBox
 import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.Analysis.SpecialFunctions.Exponential
 import Mathlib.Analysis.SpecialFunctions.Log.Basic

@@ -7,10 +7,10 @@
    digest: Four-neighbor insertion preserves Hilbert reconstruction bounds. -/
 
 import OmegaBuild.Commands
-import OmegaMath.Combinatorics.Graph.ChordalResidualExtension
-import OmegaMath.Combinatorics.Graph.HilbertChildFace
-import OmegaMath.Combinatorics.Graph.HilbertResidualEnergy
-import OmegaMath.Combinatorics.Graph.HilbertTetrahedronBounds
+import D5.S3.Combinatorics.Graph.ChordalResidualExtension
+import D5.S3.Combinatorics.Graph.HilbertChildFace
+import D5.S3.Combinatorics.Graph.HilbertResidualEnergy
+import D5.S3.Combinatorics.Graph.HilbertTetrahedronBounds
 import D5.S3.Combinatorics.Graph.Chordal.HilbertTetrahedronGeometryFaces
 
 compile_only_with_mathlib

@@ -7,7 +7,7 @@
    digest: Three-neighbor placement with two Hilbert reconstruction coefficients. -/
 
 import OmegaBuild.Commands
-import OmegaMath.Combinatorics.Graph.ChordalResidualExtension
+import D5.S3.Combinatorics.Graph.ChordalResidualExtension
 import D5.S3.Combinatorics.Graph.Chordal.HilbertTriangleCenter
 
 compile_only_with_mathlib

@@ -10,14 +10,14 @@ import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondSphere4D
 import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondMultipliers4D
 import D5.S3.Analytic.CothBernoulliDegree.PartialFraction
 import D5.S3.Analytic.PetzCothStripMode
-import OmegaMath.Analysis.FourierTestSeparation
+import D5.S3.Analysis.FourierTestSeparation
 import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
 import Mathlib.Analysis.Fourier.LpSpace
 import Mathlib.Analysis.SpecialFunctions.Sigmoid
 import Mathlib.Analysis.Calculus.Deriv.Support
-import OmegaMath.Analysis.LogarithmicFourierTail
-import OmegaMath.Analysis.ModularLogPairing
-import OmegaMath.Analysis.LogisticCoordinate
+import D5.S3.Analysis.LogarithmicFourierTail
+import D5.S3.Analysis.ModularLogPairing
+import D5.S3.Analysis.LogisticCoordinate
 
 /-! Compactly supported cone profiles and the angular-frequency transform. -/
 

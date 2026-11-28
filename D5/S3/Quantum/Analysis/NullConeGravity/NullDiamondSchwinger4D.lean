@@ -8,9 +8,9 @@
 
 import D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondBesselSeries4D
 import D5.S3.Analytic.GammaGammaNBU.Result
-import OmegaMath.Analysis.SchwingerAsymptotics
-import OmegaMath.Analysis.SchwingerBessel
-import OmegaMath.Analysis.SingularSecondOrder
+import D5.S3.Analysis.SchwingerAsymptotics
+import D5.S3.Analysis.SchwingerBessel
+import D5.S3.Analysis.SingularSecondOrder
 
 /-! The Schwinger integral fixes the logarithmic normalization on the positive axis. -/
 set_option autoImplicit false

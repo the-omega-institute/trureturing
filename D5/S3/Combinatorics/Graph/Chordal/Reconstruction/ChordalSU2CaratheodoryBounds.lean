@@ -7,8 +7,8 @@
    digest: Caratheodory caps bound round unit-quaternion gains globally at clique cutoffs five and six. -/
 
 import D5.S3.Combinatorics.Graph.Chordal.Reconstruction.ChordalSU2SharpBounds
-import OmegaMath.Geometry.SU2CaratheodoryRadius
-import OmegaMath.Geometry.SU2FivePointCover
+import D5.S3.Geometry.SU2CaratheodoryRadius
+import D5.S3.Geometry.SU2FivePointCover
 
 compile_only_with_mathlib
 

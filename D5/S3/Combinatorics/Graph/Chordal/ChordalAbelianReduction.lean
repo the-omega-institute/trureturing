@@ -9,7 +9,7 @@
 import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.GainPotential
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import OmegaMath.Combinatorics.Graph.ChordalGainReduction
+import D5.S3.Combinatorics.Graph.ChordalGainReduction
 
 compile_only_with_mathlib
 

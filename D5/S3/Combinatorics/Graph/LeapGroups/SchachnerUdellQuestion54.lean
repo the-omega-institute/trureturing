@@ -10,7 +10,7 @@ import D5.S3.Arith.FibonacciAtomic.Observer.SparseLiteralParityReadLowerBound
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.CubicContactDistance
 import Mathlib.Combinatorics.SimpleGraph.Circulant
 import Mathlib.GroupTheory.Perm.Sign
-import OmegaMath.Combinatorics.Graph.LeapGroup
+import D5.S3.Combinatorics.Graph.LeapGroup
 
 set_option autoImplicit false
 

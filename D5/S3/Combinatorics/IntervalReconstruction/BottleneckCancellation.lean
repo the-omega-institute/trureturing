@@ -6,7 +6,7 @@
    utility: none
    digest: Prescribed finite occurrence deletion preserves a quantitative pseudometric matching. -/
 
-import OmegaMath.Combinatorics.BottleneckCancellation
+import D5.S3.Combinatorics.BottleneckCancellation
 
 /-! Book citation for quantitative cancellation of prescribed occurrence pairs. -/
 

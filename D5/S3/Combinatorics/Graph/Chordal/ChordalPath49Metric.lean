@@ -7,8 +7,8 @@
    digest: The order-49 Cayley metric converts word-budget obstructions on path powers to metric obstructions. -/
 
 import OmegaBuild.Commands
-import OmegaMath.Combinatorics.Graph.ChordalPath49
-import OmegaMath.Combinatorics.Graph.GroupWordMetric
+import D5.S3.Combinatorics.Graph.ChordalPath49
+import D5.S3.Combinatorics.Graph.GroupWordMetric
 import D5.S3.Combinatorics.Graph.Chordal.ChordalBanachLimitTwo
 import Mathlib.Tactic.Abel
 

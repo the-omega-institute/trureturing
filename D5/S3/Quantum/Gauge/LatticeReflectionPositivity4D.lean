@@ -6,8 +6,8 @@
    utility: none
    digest: Wilson gauge invariance, reflection positivity, positive transfer, and the strong-coupling rectangular area law. -/
 
-import OmegaMath.LatticeGauge.TransferOperator
-import OmegaMath.LatticeGauge.StrongCouplingAreaLaw
+import D5.S3.LatticeGauge.TransferOperator
+import D5.S3.LatticeGauge.StrongCouplingAreaLaw
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

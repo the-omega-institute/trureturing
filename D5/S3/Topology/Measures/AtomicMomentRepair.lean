@@ -6,7 +6,7 @@
    utility: none
    digest: Replace the zero cutoff while preserving five signed moments. -/
 
-import OmegaMath.MeasureTheory.AtomicMomentRepair
+import D5.S3.MeasureTheory.AtomicMomentRepair
 import Mathlib.Topology.Order.DenselyOrdered
 
 /-! Publication statement for replacing the zero cutoff in a five-moment match. -/

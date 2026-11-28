@@ -9,8 +9,8 @@
 import OmegaBuild.Commands
 import D5.S3.Geometry.Lorentz.DiracCliffordSpinors4D
 import D5.S3.Geometry.Lorentz.WeylNullScreen
-import OmegaMath.Geometry.OrthogonalMatrixGenerators
-import OmegaMath.Geometry.ChiralClifford24
+import D5.S3.Geometry.OrthogonalMatrixGenerators
+import D5.S3.Geometry.ChiralClifford24
 import Mathlib.Algebra.Lie.Matrix
 import Mathlib.Analysis.Calculus.FDeriv.Pow
 import Mathlib.Analysis.Calculus.Deriv.Inv

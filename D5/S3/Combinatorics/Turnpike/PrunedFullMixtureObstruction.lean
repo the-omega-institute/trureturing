@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Turnpike/PrunedFullMixtureObstruction.claim; result=D5/S3/Combinatorics/Turnpike/PrunedFullMixtureObstruction.result; claim=D5/S3/Combinatorics/Turnpike/PrunedFullMixtureObstruction.claim
    digest: A full containment-pruned feasible assignment is outside every finite mixture of actual rulers. -/
 module
-public import OmegaMath.Combinatorics.Turnpike.PrunedFullMixtureObstruction
+public import D5.S3.Combinatorics.Turnpike.PrunedFullMixtureObstructionProofs
 
 /-! The numerical relation and full triangle LP follow Elder, Marçais and
 Kingsford, WABI 2026, Sections 3.1–3.5 and 5 (CC BY 4.0).

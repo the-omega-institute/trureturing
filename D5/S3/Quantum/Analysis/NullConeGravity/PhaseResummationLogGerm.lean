@@ -14,7 +14,7 @@ import Mathlib.Analysis.SpecialFunctions.Integrability.Log
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.NumberTheory.ZetaValues
-import OmegaMath.Calculus.ClausenLocalGerms
+import D5.S3.Calculus.ClausenLocalGerms
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -12,7 +12,7 @@
    Direct frozen dependencies: OrthogonalLieStructure, LieRadicalTransfer. -/
 
 import D5.S3.QuadraticForms.OrthogonalLieStructure
-import OmegaMath.Algebra.RationalSpinFactor
+import D5.S3.Algebra.RationalSpinFactor
 import OmegaBuild.Commands
 
 compile_only_with_mathlib
