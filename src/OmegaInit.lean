@@ -47,6 +47,7 @@ public import OmegaInit.Ext
 public import OmegaInit.Grind.Lemmas
 public import OmegaInit.Grind.Module.Basic
 public import OmegaInit.Grind.Module.Envelope
+public import OmegaInit.Grind.Module.OfNatModule
 public import OmegaInit.Grind.Norm
 public import OmegaInit.Grind.Order
 public import OmegaInit.Grind.Ordered.Module
