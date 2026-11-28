@@ -20,6 +20,7 @@ internal sealed class CosineJetHankelCriterionDocument : IScribeDocumentDefiniti
                     "For any natural d, let rho enumerate d complex points, allowing repetitions, and suppose its finite support is closed under conjugation. "
                     + "Let t be any nonzero real number. Write Gamma(rho)=-i(rho-1/2), C(z)=2 cos(z), and J(z)=d/du C(uz) at u=1, so J(z)=-2z sin(z). "
                     + "H(t,rho) is the normalized d by d Newton-Hankel matrix of the nodes C(t Gamma(rho(j))); K(t,rho) uses J(t Gamma(rho(j))) instead. "
+                    + "For d>0 its entry H_ab is (1/d) times the sum over j of Re(C(t Gamma(rho(j)))^(a+b)); K_ab uses J in place of C. The real part is taken after the complex power, counting repeated entries separately. For d=0 both matrices are empty. "
                     + "For either node list, entry (a,b) is the real part of the sum of the node powers a+b, divided by d. "
                     + "ConjugationStable in the formula means closure of the finite support, and PSD means positive semidefinite. No equality of conjugate multiplicities is required.")),
                 Paragraph(Text(
