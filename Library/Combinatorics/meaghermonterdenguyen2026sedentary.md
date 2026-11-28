@@ -1,0 +1,23 @@
+---
+bibkey: meaghermonterdenguyen2026sedentary
+authors: Karen Meagher, Hermie Monterde, Tung T. Nguyen
+year: 2026
+title: "Sedentariness in Cayley graphs"
+doi: 10.48550/arXiv.2611.00567
+url: https://arxiv.org/abs/2611.00567v1
+claim: "Lemma 3.3 identifies the twin eigenvalue. Theorem 2.2(2) gives the odd-relation criterion at half mass. Section 9 asks for a bound for sedentary strongly cospectral twins."
+strata_touched:
+  - D5/S3/Quantum/Dynamics/StronglyCospectralTwinAmplitudeBound
+license: citation-only
+triage: anchor
+---
+
+Theorem 2.2(2) gives the sedentariness criterion when a spectral projector has diagonal
+entry one half. Equation (2.3) uses an integer relation among the differences between
+the other supported eigenvalues and that eigenvalue, with an odd sum of coefficients.
+Lemma 3.3 identifies the eigenvalue of the difference of the twin vertex vectors as
+(-1) for adjacent twins and (0) for nonadjacent twins.
+
+Section 9, printed page 27, asks:
+
+> In general, it would be interesting to find a bound for sedentary twins that admit strong cospectrality.

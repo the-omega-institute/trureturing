@@ -14,6 +14,7 @@ escape_witness: the twin difference lies in the full twin eigenspace, which forc
 admission_basis: open-problem-resolution (#35281; Proved)
 -/
 
+import OmegaBuild.Commands
 import D5.S3.Fourier.WeightedIntegerRelations
 import D5.S3.Fourier.WeightedPhaseRelationLattice
 import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
@@ -24,6 +25,8 @@ import D5.S3.Quantum.Dynamics.StrongCospectralMultiplicityBoundRefutation
 /-! A relation-dependent adjacency return-amplitude floor for §9 of Meagher, Monterde and
 Nguyen, *Sedentariness in Cayley graphs*, arXiv:2611.00567v1. Lemma 3.3 and Theorem 2.2(2) of
 the paper give the twin eigenvector and the qualitative parity criterion, respectively. -/
+
+compile_only_with_mathlib
 
 set_option autoImplicit false
 
@@ -227,8 +230,6 @@ private theorem dephased_expansion (u v : Fin n)
   congr 3
   ring
 
--- The result below uses the same remaining support for the spectral series and character.
-
 private theorem remaining_weight (u v : Fin n)
     (hhalf : idempotent G (twinEigenvalue G u v) u u = 1 / 2) :
     ∑ λ ∈ remainingSupport G u v, idempotent G λ u u = 1 / 2 := by
@@ -364,4 +365,3 @@ theorem result (u v : Fin n) (huv : u ≠ v)
 #print axioms result
 
 end D5.S3.Quantum.Dynamics.StronglyCospectralTwinAmplitudeBound
-
