@@ -69,6 +69,11 @@ private theorem frequency_radius_le (m : ℤ × ℤ) :
   · simpa [z, Real.norm_eq_abs, ← Int.cast_abs, Nat.cast_natAbs] using
       PiLp.norm_apply_le (p := 2) z (1 : Fin 2)
 
+private theorem fourier_translate (f : Plane → ℂ) (x w : Plane) :
+    𝓕 (fun y => f (y + x)) w = Real.fourierChar ⟪x, w⟫ • 𝓕 f w := by
+  exact congrFun (VectorFourier.fourierIntegral_comp_add_right Real.fourierChar volume
+    (innerₗ Plane) f x) w
+
 private theorem translated_lattice_decay (f : Plane → ℂ) (hf : HasCompactSupport f)
     (hs : ContDiff ℝ ∞ f) :
     ∃ K : ℝ, 0 ≤ K ∧ ∀ (ε : ℝ), 0 < ε → ∀ (c : Plane) (m : ℤ × ℤ),
@@ -80,23 +85,8 @@ private theorem translated_lattice_decay (f : Plane → ℂ) (hf : HasCompactSup
   let w : Plane := WithLp.toLp 2 ![(m.1 : ℝ), (m.2 : ℝ)]
   let g : Plane → ℂ := fun x => f (ε⁻¹ • x)
   have htrans : ‖𝓕 (fun x : Plane => g (x - c)) w‖ = ‖𝓕 g w‖ := by
-    rw [Real.fourier_eq', Real.fourier_eq']
-    let u : Plane → ℂ := fun x =>
-      Complex.exp ((↑(-2 * Real.pi * ⟪x, w⟫) * Complex.I)) • g x
-    let factor : ℂ := Complex.exp ((↑(-2 * Real.pi * ⟪c, w⟫) * Complex.I))
-    have hshift : (fun x : Plane =>
-        Complex.exp ((↑(-2 * Real.pi * ⟪x, w⟫) * Complex.I)) • g (x - c)) =
-        fun x => factor • u (x + -c) := by
-      funext x
-      dsimp [u, factor]
-      rw [← mul_assoc, ← Complex.exp_add, ← sub_eq_add_neg]
-      congr 2
-      rw [inner_sub_left]
-      push_cast
-      ring
-    rw [hshift, integral_smul, integral_add_right_eq_self, norm_smul]
-    simp only [factor, Complex.norm_exp, Complex.mul_I_re, Complex.ofReal_im, neg_zero, Real.exp_zero, one_mul]
-    rfl
+    simp only [sub_eq_add_neg, fourier_translate, Circle.smul_def, smul_eq_mul, norm_mul,
+      Circle.norm_coe, one_mul]
   change ‖𝓕 (fun x : Plane => g (x - c)) w‖ ≤ _
   rw [htrans]
   refine (h ε he w).trans ?_
@@ -121,11 +111,12 @@ private theorem coordinate_fourier_integral (f : Plane → ℂ) (m : ℤ × ℤ)
   ring
 
 
-private theorem locally_finite_lattice_translates {ι : Type*} [Fintype ι]
+private theorem locally_finite_lattice_translates {ι : Type*} [Finite ι]
     (f : C(ι → ℝ, ℂ)) (hf : HasCompactSupport f) (K : TopologicalSpace.Compacts (ι → ℝ)) :
     Summable (fun a : ι → ℤ =>
       ‖(f.comp (ContinuousMap.addRight (fun i => (a i : ℝ)))).restrict K‖) := by
   classical
+  let _ := Fintype.ofFinite ι
   obtain ⟨R, hR⟩ := K.isCompact.isBounded.subset_closedBall 0
   obtain ⟨S, hS⟩ := hf.isCompact.isBounded.subset_closedBall 0
   let B : Finset (ι → ℤ) := Fintype.piFinset (fun _ => Finset.Icc ⌈-(R + S)⌉ ⌊R + S⌋)
@@ -149,11 +140,6 @@ private theorem locally_finite_lattice_translates {ι : Type*} [Fintype ι]
   rw [Real.norm_eq_abs, abs_le] at hxi hai
   exact Finset.mem_Icc.mpr ⟨Int.ceil_le.mpr (by linarith), Int.le_floor.mpr (by linarith)⟩
 
-private theorem fourier_translate (f : Plane → ℂ) (x w : Plane) :
-    𝓕 (fun y => f (y + x)) w = Real.fourierChar ⟪x, w⟫ • 𝓕 f w := by
-  exact congrFun (VectorFourier.fourierIntegral_comp_add_right Real.fourierChar volume
-    (innerₗ Plane) f x) w
-
 private theorem lattice_periodization (f : Plane → ℂ) (hf : HasCompactSupport f)
     (hc : Continuous f) (p : Plane)
     (hs : Summable (fun m : ℤ × ℤ =>
@@ -163,7 +149,8 @@ private theorem lattice_periodization (f : Plane → ℂ) (hf : HasCompactSuppor
         (Real.fourierChar ⟪p, toLp 2 ![(m.1 : ℝ), (m.2 : ℝ)]⟫ : ℂ) := by
   let F : Plane → ℂ := fun y => f (y + p)
   let E := (PiLp.continuousLinearEquiv 2 ℝ (fun _ : Fin 2 => ℝ)).symm.toHomeomorph
-  let G : C(Fin 2 → ℝ, ℂ) := ⟨F ∘ E, (hc.comp (continuous_id.add continuous_const)).comp E.continuous⟩
+  let G : C(Fin 2 → ℝ, ℂ) :=
+    ⟨F ∘ E, (hc.comp (continuous_id.add continuous_const)).comp E.continuous⟩
   have hG : HasCompactSupport G := (hf.comp_homeomorph (Homeomorph.addRight p)).comp_homeomorph E
   let equiv := finTwoArrowEquiv ℤ
   let A : (ℤ × ℤ) → ℂ := fun m => 𝓕 f (toLp 2 ![(m.1 : ℝ), (m.2 : ℝ)])
@@ -193,7 +180,8 @@ private theorem lattice_periodization (f : Plane → ℂ) (hf : HasCompactSuppor
     _ = ∑' k : Fin 2 → ℤ, ∫ x : Fin 2 → ℝ, Complex.exp (-2 * Real.pi * Complex.I *
         (∑ i : Fin 2, (k i : ℝ) * x i : ℝ)) * G x :=
       D5.S3.Fourier.CoordinatePoisson.tsum_eq_tsum_integral
-        (G.continuous.integrable_of_hasCompactSupport hG) (locally_finite_lattice_translates G hG) hfourier
+        (G.continuous.integrable_of_hasCompactSupport hG)
+        (locally_finite_lattice_translates G hG) hfourier
     _ = ∑' m : ℤ × ℤ, A m * χ m :=
       (tsum_congr hint).trans (equiv.tsum_eq fun m => A m * χ m)
 
@@ -444,7 +432,7 @@ private theorem scaled_sampling_error {ι : Type*} (s : Finset ι) (w : ι → �
 def character (m : ℤ × ℤ) (p : Plane) : ℂ :=
   Real.fourierChar ⟪p, toLp 2 ![(m.1 : ℝ), (m.2 : ℝ)]⟫
 
-/-- A fixed smooth compactly supported window has uniform sampling error over its centers and scales. -/
+/-- A smooth compactly supported window has uniform sampling error over its centers and scales. -/
 theorem compact_window_sampling {ι : Type*} (f : Plane → ℂ) (hf : HasCompactSupport f)
     (hs : ContDiff ℝ ∞ f) :
     ∃ K ≥ (0 : ℝ), ∀ (ε : ℝ), 0 < ε → ε ≤ 1 →
@@ -469,13 +457,14 @@ theorem compact_window_sampling {ι : Type*} (f : Plane → ℂ) (hf : HasCompac
   have hsum : Summable a :=
     (summable_of_sum_le (fun m => norm_nonneg (a m)) (fun t =>
       (scaled_fourier_masses t a ε K he he1 hK (fun m _ => hA m)).1)).of_norm
+  have hz : (toLp 2 ![(0 : ℝ), (0 : ℝ)] : Plane) = 0 := by
+    ext j
+    fin_cases j <;> rfl
   have hzero : a (0, 0) = (ε ^ 2 : ℝ) • (∫ x, f x) := by
-    have hz : (toLp 2 ![(0 : ℝ), (0 : ℝ)] : Plane) = 0 := by
-      ext j
-      fin_cases j <;> rfl
     change 𝓕 g (toLp 2 ![((0 : ℤ) : ℝ), ((0 : ℤ) : ℝ)]) = _
     rw [Int.cast_zero, hz, Real.fourier_eq']
-    simp only [inner_zero_right, mul_zero, Complex.ofReal_zero, zero_mul, Complex.exp_zero, one_smul]
+    simp only [inner_zero_right, mul_zero, Complex.ofReal_zero, zero_mul, Complex.exp_zero,
+      one_smul]
     change (∫ x, f (ε⁻¹ • (x - center))) = _
     calc
       _ = ∫ x, f (ε⁻¹ • x) := by
@@ -485,9 +474,6 @@ theorem compact_window_sampling {ι : Type*} (f : Plane → ℂ) (hf : HasCompac
         rw [Measure.integral_comp_inv_smul_of_nonneg volume f he.le]
         simp
   have hχ0 (i : ι) : character (0, 0) (p i) = 1 := by
-    have hz : (toLp 2 ![(0 : ℝ), (0 : ℝ)] : Plane) = 0 := by
-      ext j
-      fin_cases j <;> rfl
     change (Real.fourierChar ⟪p i, toLp 2 ![((0 : ℤ) : ℝ), ((0 : ℤ) : ℝ)]⟫ : ℂ) = 1
     simp [hz]
   have hsample := scaled_sampling_error s w (fun m i => character m (p i))
