@@ -237,12 +237,12 @@ theorem two_point_mirror_negative_principal_minor
     (hmu : mu ≠ star mu) (hdistinct : z 0 ≠ z 1)
     (hupper : ∀ i, 0 < (z i).im)
     (hregular : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0) :
-      let G := mirrorNevanlinnaGram mu C z
-      C ≠ 0 ↔ ∃ p q : Port ⊕ Port, p ≠ q ∧
-        (G p p * G q q - G p q * G q p).re < 0 := by
-    classical
-    constructor
-    · intro hC
+    let G := mirrorNevanlinnaGram mu C z
+    C ≠ 0 ↔ ∃ p q : Port ⊕ Port, p ≠ q ∧
+      (G p p * G q q - G p q * G q p).re < 0 := by
+  classical
+  constructor
+  · intro hC
     let G := mirrorNevanlinnaGram mu C z
     change ∃ p q : Port ⊕ Port, p ≠ q ∧
       (G p p * G q q - G p q * G q p).re < 0
