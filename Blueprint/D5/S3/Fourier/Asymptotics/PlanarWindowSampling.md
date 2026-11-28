@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Fourier/Asymptotics/PlanarWindowSampling.compact_window_s
 
 *Commentary.*
 
-Fix a smooth compactly supported complex function f on the Euclidean plane. There is a nonnegative constant K depending on f. For 0 < ε ≤ 1 and any center, scale f by ε and sum its integer translates. Take any finite sample of planar representatives with nonnegative real weights totaling one. For a positive integer J and nonnegative reals c and d, suppose that each nonzero mode of radius k ≤ J has weighted character average of norm at most c + dk². The radius is the maximum of the two absolute coordinates.
+Fix a smooth compactly supported complex function f on the Euclidean plane. There is a nonnegative constant K depending on f. For 0 < ε ≤ 1, any center z, and any planar representative p, sum f(ε⁻¹(p + a − z)) over a in ℤ². Take any finite sample of planar representatives with nonnegative real weights totaling one. For a positive integer J and nonnegative reals c and d, suppose that each nonzero mode of radius k ≤ J has weighted character average of norm at most c + dk². The radius is the maximum of the two absolute coordinates.
 
 The norm of the difference between the weighted average of the periodized window and ε² times the plane integral of f is at most 27Kc + 27Kd/ε² + 2K/(ε⁴J⁴).
 
