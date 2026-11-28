@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SignedFlips/SignedMidpointLink
+   generality: G
+   mirror-B: none(waiver:covered-by-q9-inactive-contact-fibre-blueprint)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Archive.Sensitivity]
+   utility: none
+   digest: Signed coordinate flips give opposite transported signs at the ends of a selected double flip. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SupportedEigenSaturation
 

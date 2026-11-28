@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9FiveAxisFibreCapacity
+   generality: G
+   mirror-B: none(waiver:covered-by-q9-inactive-contact-fibre-blueprint)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Archive.Sensitivity]
+   utility: none
+   digest: A cross-distance-four condition restricts two parity banks in the five-cube to six points in total. -/
+
 import Mathlib.InformationTheory.Hamming
 
 /-! In the seven-axis contact graph whose complement is a triangle, the three
