@@ -188,6 +188,13 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(change=change), self.assertRaisesRegex(ValueError, "order type dependency"):
                 check_coverage(data | {"declarations": [row | change]})
 
+    def test_pointer_comparison_retains_its_checked_runtime_behavior(self):
+        row = site("Init.ShareCommon", "ShareCommon.Object.ptrEq", kind="definition", unsafe=True, strictUnsafe=True,
+                   matchingNameAndModule=True, strictModule="OmegaInit.ShareCommon", checkedPointerComparison=True,
+                   logicalConsequence="False", logicalConsequenceWitness="PointerModel", requiredBehavior="identity",
+                   runtimeConflictWitness="PointerModel", originalTypeGap=None)
+        self.assertEqual(check_coverage(inventory(row)), (0, []))
+
     def test_order_class_formation_requires_its_complete_coherence(self):
         owner = "Init.Grind.Ring.Envelope"
         scope = "Lean.Grind.Ring.OfSemiring."

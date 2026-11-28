@@ -407,10 +407,10 @@ def check_coverage(official):
                 port or row["kind"] not in ("theorem", "definition") or row["unsafe"] or row["partial"] or
                 row.get("originalTypeChecked") is not False or row.get("originalTypeGap") is not None)):
             raise ValueError(f"uncertified public quotient order formation for {site}")
-        comparison = comparisons.get(site)
-        if row.get("originalTypeEnvelopeOrderInstance") != comparison or (comparison and (
+        envelope_comparison = comparisons.get(site)
+        if row.get("originalTypeEnvelopeOrderInstance") != envelope_comparison or (envelope_comparison and (
                 not port or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
-                (row.get("originalTypeGap") or "").partition(". ")[0] != "missing type dependencies: Omega." + comparison or
+                (row.get("originalTypeGap") or "").partition(". ")[0] != "missing type dependencies: Omega." + envelope_comparison or
                 any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")))):
             raise ValueError(f"uncertified quotient comparison coherence for {site}")
         equivalent = site in finite_bounds
@@ -454,7 +454,7 @@ def check_coverage(official):
                 if row.get("originalTypeChecked") is True and row.get("originalTypeGap") is None:
                     original_types += 1
                 elif row.get("originalTypeChecked") is False and row.get("originalTypeGap"):
-                    if not any((private_type, choice_operand, equivalent, pointwise, finite, projected, embedding, comparison)):
+                    if not any((private_type, choice_operand, equivalent, pointwise, finite, projected, embedding, envelope_comparison)):
                         unresolved.append(site)
                 else:
                     raise ValueError(f"inconsistent original type check for {owner}/{name}")
