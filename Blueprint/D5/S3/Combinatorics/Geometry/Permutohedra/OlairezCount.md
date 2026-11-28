@@ -1,8 +1,8 @@
-# Lattice points in the dihedral permutohedron
+# Lattice points in the dihedral permutohedron for n ≥ 3
 
 ## Abstract
 
-A prefix recurrence counts the lattice points in every nonnegative integral dilation of the dihedral permutohedron.
+For n ≥ 3, a prefix recurrence counts the lattice points in every nonnegative integral dilation of Qₙ.
 
 **Definition 1.1 (Integer points of the source dilation).**
 
@@ -78,15 +78,15 @@ Lean statement: `D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.terminal
 
 Write E(n, k) for the sum of Dₙ(nt, Tt − kS mod n, a, p) over integers t with |t| ≤ k, natural numbers a ≤ B and p ≤ n, and the strict inequality B + 2p < a + n. Each terminal vector recovers t from its coordinate sum, then d by subtracting t from every coordinate.
 
-**Theorem 1.6 (Finite cardinality in every dilation).**
+**Theorem 1.6 (Finite cardinality in every dilation for n ≥ 3).**
 
 $$\forall n,k \in \mathbb{N}, n \geq 3 \implies (\operatorname{Finite}\left(X_{n,k}\right) \land \operatorname{card}\left(X_{n,k}\right)=E\left(n, k\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.latticePointCount_terminalSum` (`✓ std3`). ∎
 
-*Resolves.* `Problems/olairez-2026-dihedral-permutohedron-lattice-points` (proved) by `D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.latticePointCount_terminalSum`.
+*Resolves.* `Problems/olairez-2026-dihedral-permutohedron-lattice-points-n-ge-3` (proved) by `D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.latticePointCount_terminalSum`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"olairez-2026-dihedral-permutohedron-lattice-points","declaration_gid":"D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.latticePointCount_terminalSum","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"olairez-2026-dihedral-permutohedron-lattice-points-n-ge-3","declaration_gid":"D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.latticePointCount_terminalSum","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -94,7 +94,9 @@ $$\forall n,k \in \mathbb{N}, n \geq 3 \implies (\operatorname{Finite}\left(X_{n
 
 *Commentary.*
 
-Every source point corresponds to one terminal prefix of length n, and every such prefix recovers one source point. The sum counts the prefixes with multiplicity across states. Taking k = 1 gives the undilated count, and k = 0 gives the singleton at the origin. This resolves the lattice-point alternative of Question 6.1. An explicit Ehrhart coefficient formula remains open here.
+For n ≥ 3, every source point corresponds to one terminal prefix of length n, and every such prefix recovers one source point. The sum counts the prefixes with multiplicity across states. Taking k = 1 gives the undilated count, and k = 0 gives the singleton at the origin. This resolves the lattice-point alternative of Question 6.1 for n ≥ 3. An explicit Ehrhart coefficient formula remains open here.
+
+At the two-label boundary of Equation (2), the first matrix swaps the labels and the second is the identity. Thus Q₂ is the segment from (1, 2) to (2, 1). The lattice points of kQ₂ are (j, 3k − j) for integers k ≤ j ≤ 2k, giving k + 1 points. This calculation is unverified in Lean here and lies outside the proved claim.
 
 On the named input fourOneInput = (4, 1), kernel evaluation counts 22 occurrences passing the terminal filter. An anonymous application of the cardinality theorem and the recurrence identity gives 22 points in the original source lattice.
 
