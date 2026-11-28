@@ -23,8 +23,7 @@ open D5.S3.Combinatorics.Graph.Hypercube
 open BalancedCriticalSpectrum (Q IsBalanced flip)
 open private diff diff_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private SideHigh compressed selected_three_hamming nine_side_three_step_cover from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 open private eleven_nine_theta from

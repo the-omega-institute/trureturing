@@ -29,8 +29,7 @@ open private compressed_distance diff_self diff_symm diff_triangle_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
 open private diff diff_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private three_walk_endpoint_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
 

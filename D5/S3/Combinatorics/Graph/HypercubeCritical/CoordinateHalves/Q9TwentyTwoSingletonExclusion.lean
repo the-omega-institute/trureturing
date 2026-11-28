@@ -26,8 +26,7 @@ open Q9TwentyTwoSingletonCoverage (high_candidate_of_normalized candidate_of_nor
 open Q9TwentyTwoSingletonLabels (select_subdivision_vertices singleton_model)
 open Q9TwentyTwoAxes (normalize_root_and_first_point)
 open Q9TwentyTwoReconstruction (no_listed_singleton_half)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open Q9TwentyTwoCompression (half_compression)
 open private coordinate_slice_low_independent coordinate_slice_degree_cases balanced_subset
   paritySide parity_bipartite from
