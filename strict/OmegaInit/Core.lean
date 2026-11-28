@@ -511,7 +511,7 @@ port_thunk_field_code
 port_definition Thunk.map with_native_code
 port_definition Thunk.bind with_native_code
 port_definition instInhabitedThunk with_native_code
-attribute [instance] Omega.instInhabitedThunk
+attribute [instance] Omega.instInhabitedThunk Omega.LawfulBEq.toReflBEq Omega.instBEqProd
 
 namespace Omega
 export _root_ (Thunk)
