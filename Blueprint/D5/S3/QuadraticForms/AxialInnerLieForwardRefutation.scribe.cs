@@ -50,7 +50,10 @@ internal sealed class AxialInnerLieForwardRefutationDocument : IScribeDocumentDe
                     + "Under the resulting isomorphism with so₃(ℚ) × so₃(ℚ), the preimage of the kernel of the second projection "
                     + "contains the preimage of (r,0) and excludes the preimage of (0,r), where r is the elementary skew matrix with entry 1 "
                     + "in row 0, column 1. This gives a nonzero proper Lie ideal."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gorshkov-shpectorov-2026-axial-simplicity-forward"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimBody()
     {

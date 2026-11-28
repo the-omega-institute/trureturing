@@ -22,6 +22,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/AxialInnerLieConverseRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gorshkov-shpectorov-2026-axial-simplicity-converse` (refuted) by `D5/S3/QuadraticForms/AxialInnerLieConverseRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gorshkov-shpectorov-2026-axial-simplicity-converse","declaration_gid":"D5/S3/QuadraticForms/AxialInnerLieConverseRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ilya Gorshkov, Sergey Shpectorov (2026). *Axial Algebras: Questions and Conjectures*. DOI: [10.46298/cm.19581](https://doi.org/10.46298/cm.19581). URL: <https://arxiv.org/abs/2606.30048v1>.

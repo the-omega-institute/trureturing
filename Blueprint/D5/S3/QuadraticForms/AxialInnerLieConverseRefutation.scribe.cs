@@ -45,7 +45,10 @@ internal sealed class AxialInnerLieConverseRefutationDocument : IScribeDocumentD
                     + "Every chosen commutator acts by a skew matrix on the three vector coordinates and by zero on both scalar coordinates. "
                     + "The positive-coordinate axes yield the elementary skew matrices up to a factor of 1/4. "
                     + "The frozen orthogonal simplicity theorem applies to the resulting Lie equivalence."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gorshkov-shpectorov-2026-axial-simplicity-converse"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimBody()
     {
