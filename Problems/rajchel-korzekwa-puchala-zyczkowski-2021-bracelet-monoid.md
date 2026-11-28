@@ -61,9 +61,7 @@ The kernel-checked declaration is `D5/S3/Quantum/Matrix/Unistochastic/BraceletMo
 
 The bounded literature screen examined arXiv:2204.13008, 2310.03436v2, 2405.05785v6, 2505.08785v1, 2604.02309v1, 2312.00497v2 and 2608.04354v1. It located no earlier proof of the full closure assertion in that scope. The journal article body and some forward-citation endpoints were inaccessible or rate-limited. [Preregistration and proof route](https://github.com/the-omega-institute/trureturing/issues/17593#issuecomment-7235297451)
 
-### Stage B claim (inactive)
-
-The exact Conjecture 9 claim is prepared for Stage B as `∀ d : ℕ, IsBracelet (1 : Matrix (Fin d) (Fin d) ℝ) ∧ (∀ A B : Matrix (Fin d) (Fin d) ℝ, IsBracelet A → IsBracelet B → IsBracelet (A * B))`. The Stage B resolution marker is inactive pending independent review and the later freeze workflow.
+The frozen theorem resolves Conjecture 9. Its Blueprint records the identity and closure result and links it to this dossier. [Theorem and resolution](../Blueprint/D5/S3/Quantum/Matrix/Unistochastic/BraceletMonoid.md)
 
 ## Triage
 
@@ -75,7 +73,7 @@ The exact Conjecture 9 claim is prepared for Stage B as `∀ d : ℕ, IsBracelet
 
 3. **Source consequence in prose.** The product in Eq. (49) gives the star-shapedness argument described after Theorem 14. For $0\le t\le 1$, the matrix $(1-t)I_d+tW_d$ is bracelet. For $d\ge 2$, each overlap list has two equal largest terms at the two selected indices. Multiplication on the right by a bracelet matrix $B$ gives the segment point $(1-t)B+tW_d$, since $W_dB=W_d$ by unit column sums. The case $d=1$ is the singleton identity. [arXiv:2101.11288v1, Eq. (49)](https://arxiv.org/pdf/2101.11288v1#page=8)
 
-4. **Other source questions.** The existing dossiers give separate refutations of [circulant bracelet sufficiency](rajchel-korzekwa-puchala-zyczkowski-2021-circulant-bracelet-sufficiency.md) and [Conjecture 19](rajchel-korzekwa-puchala-zyczkowski-2021-conjecture19-circulant-lift.md). The rectangular preserver converse and positive-defect contraction are outside this Lean result.
+4. **Other source questions.** The existing dossiers give separate refutations of circulant bracelet sufficiency and Conjecture 19. The rectangular preserver converse and the stronger contraction bound for pairs with positive input defect remain open in Lean. [Circulant bracelet sufficiency](rajchel-korzekwa-puchala-zyczkowski-2021-circulant-bracelet-sufficiency.md) · [Conjecture 19](rajchel-korzekwa-puchala-zyczkowski-2021-conjecture19-circulant-lift.md)
 
 ## ASSUMED-UNVERIFIED
 

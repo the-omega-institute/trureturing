@@ -37,7 +37,10 @@ internal sealed class BraceletMonoidDocument : IScribeDocumentDefinition
                         "The statement includes d = 0 because Fin d is allowed to be empty. In that dimension the "
                             + "distinct-index families are vacuous. No positivity, field, rectangular, or complex "
                             + "matrix conclusion is added to the real square-matrix interface."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rajchel-korzekwa-puchala-zyczkowski-2021-bracelet-monoid"),
+                    ResolutionKind.Proved))
         )));
 
     private static Formula Statement()
