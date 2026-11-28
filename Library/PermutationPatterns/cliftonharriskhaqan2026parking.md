@@ -5,7 +5,7 @@ year: 2026
 title: "Parking Functions Inspired by Board Games"
 doi: 10.48550/arXiv.2611.29890
 url: https://arxiv.org/pdf/2611.29890v1
-claim: "The reverse backgammon outcome is counted by Motzkin paths. Question 5.2 asks for a Motzkin expansion after fixing an increasing prefix."
+claim: "Question 5.2 asks whether, for fixed k and n > k, the number of backgammon preference words with outcome (1, …, k, n, …, k + 1) can be expressed as a sum involving Motzkin numbers whose indices depend on n."
 strata_touched:
   - D5/S3/Combinatorics/Parking/BackgammonIncreasingPrefix
   - D5/S3/Combinatorics/Parking/BackgammonReverseWeights
@@ -26,7 +26,9 @@ above height zero and end at height zero. Lemma 3.18 counts these paths by
 interior touches to the horizontal axis. The proof of Theorem 1.8 identifies
 that refinement with the longest distinct initial preference segment of
 reverse-outcome words.
-[Path definition and proof](https://arxiv.org/pdf/2611.29890v1#page=15)
+[Definition 3.14](https://arxiv.org/pdf/2611.29890v1#page=15) ·
+[Lemma 3.18](https://arxiv.org/pdf/2611.29890v1#page=16) ·
+[Proof of Theorem 1.8](https://arxiv.org/pdf/2611.29890v1#page=18)
 
 Question 5.2 uses an increasing prefix followed by the remaining labels in
 decreasing order. Theorem 1.8 and Corollaries 1.9–1.10 give the Motzkin
@@ -38,7 +40,7 @@ three-label suffix. For example, its fiber at n = 5 and k = 2 has count
 37 by Corollary 1.10, whereas the Catalan number C₅ is 42.
 [Theorem 1.6](https://arxiv.org/pdf/2611.29890v1#page=5) ·
 [Corollary 1.10](https://arxiv.org/pdf/2611.29890v1#page=6) ·
-[Proposition 3.11](https://arxiv.org/pdf/2611.29890v1#page=11) ·
+[Proposition 3.11](https://arxiv.org/pdf/2611.29890v1#page=12) ·
 [Question 5.2](https://arxiv.org/pdf/2611.29890v1#page=27)
 
 ## Verified locator

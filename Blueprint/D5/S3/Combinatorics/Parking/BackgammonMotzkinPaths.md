@@ -134,6 +134,10 @@ $$|\operatorname{outcomeWords}\left(\operatorname{withIncreasingPrefix}\left(k, 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths.increasingPrefix_count_eq_signed_motzkin` (`✓ std3`). ∎
 
+*Resolves.* `Problems/clifton-harris-khaqan-backgammon-motzkin` (proved) by `D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths.increasingPrefix_count_eq_signed_motzkin`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"clifton-harris-khaqan-backgammon-motzkin","declaration_gid":"D5/S3/Combinatorics/Parking/BackgammonMotzkinPaths.increasingPrefix_count_eq_signed_motzkin","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Alexander Clifton, Pamela E. Harris, and Maryam Khaqan (2026). *Parking Functions Inspired by Board Games*. DOI: [10.48550/arXiv.2611.29890](https://doi.org/10.48550/arXiv.2611.29890). URL: <https://arxiv.org/pdf/2611.29890v1>.

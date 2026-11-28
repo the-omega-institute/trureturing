@@ -44,12 +44,15 @@ internal sealed class BackgammonMotzkinPathsDocument : IScribeDocumentDefinition
             Node("increasingPrefix_count_eq_signed_motzkin", "Signed Motzkin formula for Question 5.2", DescribeRole.Theorem,
                 "Clifton, Harris and Khaqan ask in Question 5.2 for a sum involving Motzkin numbers with indices depending on n, for each fixed k and n > k. The target outcome has the labels 1 through k in increasing order followed by the remaining labels in decreasing order. The formula holds for all n ≥ k ≥ 0. Vertical bars count list entries, the square brackets index signedCoefficients from zero, and the arithmetic of the sum is over the integers. "
                     + "The ground-return recurrence and the Catalan rank shift give the recurrence for Qₖ. For k = 0, 1 and 2 the formula yields M(n), M(n + 1) − M(n), and M(n + 2) − 2M(n + 1) + M(n) − M(n − 1), where M counts ordinary Motzkin walks. These are Theorem 1.8 and Corollaries 1.9–1.10 on their published ranges. At n = k the suffix is empty and the sum is Cₖ, agreeing with the identity-permutation case of Theorem 1.6 for positive k. The empty street contributes one.",
-                AssessedProvenance.FromRepo(Source), SignedFormula())),
+                AssessedProvenance.FromRepo(Source), SignedFormula(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("clifton-harris-khaqan-backgammon-motzkin"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
         string declaration, string title, DescribeRole role, string prose, AssessedProvenance provenance,
-        Formula? formula = null) =>
+        Formula? formula = null, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(
             DescribeId.Create("backgammon-motzkin-" + declaration.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Owner + declaration),
@@ -57,7 +60,7 @@ internal sealed class BackgammonMotzkinPathsDocument : IScribeDocumentDefinition
             formula is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role, resolution);
 
     private static Formula CoefficientRecurrence()
     {
