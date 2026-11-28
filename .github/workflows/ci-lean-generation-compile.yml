@@ -1,6 +1,34 @@
 name: Build Lean module shards
+run-name: Compiler release ${{ inputs.parent_run }}/${{ inputs.parent_attempt }}/${{ inputs.batch }} ${{ inputs.phase }}
 
 on:
+  workflow_dispatch:
+    inputs:
+      parent_run:
+        description: Active protected compiler publication run
+        required: true
+        type: string
+      parent_attempt:
+        description: Active attempt of the parent run
+        required: true
+        type: string
+      source:
+        description: Protected dev commit pinned by the parent
+        required: true
+        type: string
+      batch:
+        description: Dispatch sequence number within the parent attempt
+        required: true
+        type: string
+      phase:
+        description: Compiler units or final shard assembly
+        required: true
+        type: choice
+        options: [units, shards]
+      assignment:
+        description: JSON array of compiler unit keys or shard lane numbers
+        required: true
+        type: string
   workflow_call:
     inputs:
       source:
@@ -8,7 +36,7 @@ on:
         required: true
         type: string
       kind:
-        description: Compiler or report publication
+        description: Report publication
         required: true
         type: string
       matrix:
@@ -19,12 +47,17 @@ on:
 permissions: {}
 jobs:
   build:
+    if: >-
+      inputs.kind == 'report' ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/dev' && github.ref_protected &&
+       github.workflow_ref == format('{0}/.github/workflows/ci-lean-generation-compile.yml@refs/heads/dev', github.repository) &&
+       github.actor == 'github-actions[bot]' && github.triggering_actor == 'github-actions[bot]' && github.run_attempt == 1)
     permissions:
       contents: write
       actions: read
     strategy:
       fail-fast: false
-      matrix: ${{ fromJSON(inputs.matrix) }}
+      matrix: ${{ fromJSON(inputs.matrix || '{"lane":[0]}') }}
     timeout-minutes: 360
     runs-on: ubuntu-24.04-arm
     env:
@@ -32,13 +65,62 @@ jobs:
       STRATALINT_ACCEPT_COLD_BUILD: '1'
       STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
       STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS: '21600'
+      COMPILER_PARENT_RUN: ${{ inputs.parent_run }}
+      COMPILER_PARENT_ATTEMPT: ${{ inputs.parent_attempt }}
+      COMPILER_SOURCE: ${{ inputs.source }}
+      COMPILER_BATCH: ${{ inputs.batch }}
+      COMPILER_PHASE: ${{ inputs.phase }}
+      COMPILER_ASSIGNMENT: ${{ inputs.assignment }}
     steps:
+      - name: Verify the dispatching compiler publisher
+        if: inputs.kind != 'report'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          [[ "$COMPILER_PARENT_RUN" =~ ^[1-9][0-9]*$ && "$COMPILER_PARENT_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
+          [[ "$COMPILER_SOURCE" =~ ^[a-f0-9]{40}$ && "$COMPILER_BATCH" =~ ^[1-9][0-9]*$ ]]
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$COMPILER_PARENT_RUN" |
+            jq -e --arg repo "$GITHUB_REPOSITORY" --arg attempt "$COMPILER_PARENT_ATTEMPT" '
+              .path == ".github/workflows/cache-release-publish.yml" and .status == "in_progress" and
+              (.run_attempt | tostring) == $attempt and .head_branch == "dev" and
+              .repository.full_name == $repo and .head_repository.full_name == $repo and
+              (.event == "push" or .event == "schedule" or
+               (.event == "workflow_dispatch" and .actor.login == "loning" and .triggering_actor.login == "loning"))'
+      - uses: actions/download-artifact@v8
+        if: inputs.kind != 'report'
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.parent_run }}
+          name: generation-pin-${{ inputs.parent_run }}
+          path: ${{ runner.temp }}/compiler-parent-pin
+          digest-mismatch: error
+      - uses: actions/download-artifact@v8
+        if: inputs.kind != 'report'
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.parent_run }}
+          name: compiler-resume-plan-${{ inputs.parent_attempt }}
+          path: ${{ runner.temp }}
+          digest-mismatch: error
+      - name: Check the pinned source and assigned work
+        if: inputs.kind != 'report'
+        run: |
+          set -euo pipefail
+          test "$(cat "$RUNNER_TEMP/compiler-parent-pin/source")" = "$COMPILER_SOURCE"
+          jq -e --arg source "$COMPILER_SOURCE" --arg phase "$COMPILER_PHASE" --argjson batch "$COMPILER_ASSIGNMENT" '
+            . as $p | .source == $source and .kind == "compiler" and
+            ($batch | type == "array" and length > 0 and length == (unique | length)) and
+            (if $phase == "units" then all($batch[]; type == "string" and ($p.compiler_dag.units[.] != null))
+             elif $phase == "shards" then all($batch[]; type == "number" and floor == . and . >= 0 and . < ($p.lanes | length))
+             else false end)' "$RUNNER_TEMP/module-plan.json"
       - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.source }}
           persist-credentials: false
       - run: python3 .github/scripts/install-tools.py
       - uses: actions/download-artifact@v8
+        if: inputs.kind == 'report'
         with:
           name: module-plan-${{ github.run_id }}
           path: ${{ runner.temp }}
@@ -74,6 +156,7 @@ jobs:
           python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
           bash .github/actions/lean-compile-layer/prepare-dependencies.sh
       - name: Build and checkpoint the assigned publication targets
+        if: inputs.kind == 'report'
         env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_CACHE_WRITES: 'true'
@@ -83,3 +166,34 @@ jobs:
         with:
           kind: ${{ inputs.kind }}
           operation: module-worker
+      - name: Confirm the parent attempt before writing checkpoints
+        if: inputs.kind != 'report'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          [[ "$COMPILER_PARENT_RUN" =~ ^[1-9][0-9]*$ && "$COMPILER_PARENT_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
+          [[ "$COMPILER_SOURCE" =~ ^[a-f0-9]{40}$ && "$COMPILER_BATCH" =~ ^[1-9][0-9]*$ ]]
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$COMPILER_PARENT_RUN" |
+            jq -e --arg repo "$GITHUB_REPOSITORY" --arg attempt "$COMPILER_PARENT_ATTEMPT" '
+              .path == ".github/workflows/cache-release-publish.yml" and .status == "in_progress" and
+              (.run_attempt | tostring) == $attempt and .head_branch == "dev" and
+              .repository.full_name == $repo and .head_repository.full_name == $repo and
+              (.event == "push" or .event == "schedule" or
+               (.event == "workflow_dispatch" and .actor.login == "loning" and .triggering_actor.login == "loning"))'
+      - name: Complete the parent compiler assignment
+        if: inputs.kind != 'report'
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_CACHE_WRITES: 'true'
+          LEAN_NUM_THREADS: '1'
+        with:
+          kind: compiler
+          operation: compiler-assigned
+      - uses: actions/upload-artifact@v6
+        if: inputs.kind != 'report'
+        with:
+          name: compiler-result-${{ inputs.parent_attempt }}-${{ inputs.batch }}
+          path: ${{ runner.temp }}/compiler-result/result.json
+          if-no-files-found: error
