@@ -53,4 +53,36 @@ public def checked (official strict : Environment) (owner : Name) (source : Cons
   guard (translated.getUsedConstants.all strict.contains && (Kernel.check strict {} translated).isOk &&
     Kernel.isDefEqGuarded strict {} translated target))
 
+/-- Identify the remaining operation in an exported envelope equation. Importing private
+bodies can simplify a representative comparison beyond the upstream public interface. -/
+public def reductionGap? (official visible strict : Environment) (owner : Name) (source : ConstantInfo)
+    (pinned target : Expr) : Option String := do
+  let name := source.name
+  let moduleLaw := owner == `Init.Grind.Module.Envelope && name.getPrefix == `Lean.Grind.IntModule.OfNatModule &&
+    ["mk_le_mk", "toQ_add", "toQ_le", "toQ_lt", "toQ_smul", "toQ_zero"].contains name.getString!
+  let ringEquation := owner == `Init.Grind.Ring.CommSemiringAdapter &&
+    name.getPrefix == `Lean.Grind.CommRing.Expr.denoteSAsRing &&
+    ["eq_4", "eq_5", "eq_6", "eq_def"].contains name.getString!
+  guard ((moduleLaw || ringEquation) && source.isTheorem && (Kernel.check strict {} target).isOk)
+  let entry ← visible.find? name
+  guard (entry.levelParams == source.levelParams && entry.type.equal source.type)
+  let reduced ← reduceType visible strict {} pinned
+  guard ((Kernel.check visible {} pinned).isOk && (Kernel.check visible {} reduced).isOk &&
+    Kernel.isDefEqGuarded visible {} pinned reduced)
+  let translated := InitKernelPort.translate InitKernelPort.portName reduced
+  let absent := (translated.getUsedConstants.filter (!strict.contains ·)).qsort Name.lt
+  guard (!absent.isEmpty && !(Kernel.check strict {} translated).isOk)
+  let original := (InitKernelPort.translate InitKernelPort.portName pinned).getUsedConstants
+  let message := if absent.all original.contains then
+      "Public reduction of the pinned statement retains the unavailable instance."
+    else
+      "Public reduction of the pinned statement still requires " ++
+        String.intercalate ", " (absent.toList.map Name.toString) ++ "."
+  let privateType ← reduceType official strict {} pinned
+  guard ((Kernel.check official {} privateType).isOk && Kernel.isDefEqGuarded official {} pinned privateType)
+  let tr := InitKernelPort.translate InitKernelPort.portName privateType
+  if (Kernel.check strict {} tr).isOk && Kernel.isDefEqGuarded strict {} tr target then
+    return message ++ " The private representative reduction converts to the exported strict statement."
+  return message
+
 end OmegaChecks.InitInventory.EnvelopePublicTypes

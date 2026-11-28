@@ -199,7 +199,10 @@ public def originalTypeGap? (official visible strict : Environment) (owner : Nam
     | .notApplicable => pure ()
     if let some gap ← patternSkipGap? official visible strict owner source pinned target.type missing then
       return some gap
-    return some ("missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString))
+    let gap := "missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString)
+    if let some detail := EnvelopePublicTypes.reductionGap? official visible strict owner source pinned target.type then
+      return some (gap ++ ". " ++ detail)
+    return some gap
   if (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target.type then
     return none
   return some "pinned type does not check or convert to the exported type"
