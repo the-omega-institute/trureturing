@@ -114,12 +114,14 @@ private theorem sourceLOne_pow_weight (a : Carrier lattice) (d : ℂ) (ha : L₀
       push_cast <;> ring
     rw [eq_add_of_sub_eq h, ← add_smul, hScalar]
 
-private def dividedAd (r : ℕ) (A : Module.End ℂ (Carrier lattice)) :
-    Module.End ℂ (Carrier lattice) :=
-  (r.factorial : ℂ)⁻¹ • (adL₁ ^ r) A
+private def dividedAd {W : Type*} [AddCommGroup W] [Module ℂ W]
+    (T : Module.End ℂ W) (r : ℕ) (A : Module.End ℂ W) : Module.End ℂ W :=
+  (r.factorial : ℂ)⁻¹ • (LieAlgebra.ad ℂ (Module.End ℂ W) T ^ r) A
 
-private theorem dividedAd_succ (r : ℕ) (A : Module.End ℂ (Carrier lattice)) :
-    (r + 1 : ℂ) • dividedAd (r + 1) A = adL₁ (dividedAd r A) := by
+private theorem dividedAd_succ {W : Type*} [AddCommGroup W] [Module ℂ W]
+    (T : Module.End ℂ W) (r : ℕ) (A : Module.End ℂ W) :
+    (r + 1 : ℂ) • dividedAd T (r + 1) A =
+      LieAlgebra.ad ℂ (Module.End ℂ W) T (dividedAd T r A) := by
   have hFactorial : (r.factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero r
   have hSucc : (r + 1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero r
   simp only [dividedAd, map_smul, Nat.factorial_succ, Nat.cast_mul, Nat.cast_add,
@@ -169,7 +171,8 @@ private theorem coefficient_step_succ (α : ℂ) (r j : ℕ) (hj : j ≤ r) :
     field_simp
     linear_combination step
 
-private theorem sum_step (α : ℂ) (r : ℕ) (F : ℕ → Module.End ℂ (Carrier lattice)) :
+private theorem sum_step {W : Type*} [AddCommGroup W] [Module ℂ W]
+    (α : ℂ) (r : ℕ) (F : ℕ → W) :
     (r + 1 : ℂ) • (∑ j ∈ Finset.range (r + 2), coefficient α (r + 1) j • F j) =
       (∑ j ∈ Finset.range (r + 1), coefficient α r j • F (j + 1)) +
       ∑ j ∈ Finset.range (r + 1), (coefficient α r j * (α - (r : ℂ) - (j : ℂ))) • F j := by
@@ -194,42 +197,48 @@ private theorem sum_step (α : ℂ) (r : ℕ) (F : ℕ → Module.End ℂ (Carri
       · simp [g, mul_comm]
     _ = _ := by rw [Finset.sum_add_distrib, add_assoc, shift]
 
-/-- Every divided power of the adjoint action on an actual homogeneous
-source mode, with integer binomial coefficients and a finite range at
-each order. The mode index is the normalized index of `Y`. -/
-theorem sourceLOne_dividedAd_modes (a : Carrier lattice) (d : ℤ)
-    (ha : L₀ a = (d : ℂ) • a) (m : ℤ) (r : ℕ) :
-    (r.factorial : ℂ)⁻¹ • (adL₁ ^ r) ((Y lattice a)[[m]]) =
+-- The mode recurrence uses only the weight shift of the source and the
+-- Ward commutator on the target, so it applies to both native carriers.
+private theorem dividedAd_modes_of_ward {V W : Type*}
+    [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
+    (S : Module.End ℂ V) (T : Module.End ℂ W)
+    (mode : ℤ → V →ₗ[ℂ] Module.End ℂ W) (a : V) (d m : ℤ)
+    (ward : ∀ (j : ℕ) (q : ℤ),
+      T * mode q ((S ^ j) a) - mode q ((S ^ j) a) * T =
+        mode q (S ((S ^ j) a)) + (2 * ((d : ℂ) - (j : ℂ)) - (q : ℂ) - 2) •
+          mode (q + 1) ((S ^ j) a)) (r : ℕ) :
+    (r.factorial : ℂ)⁻¹ • (LieAlgebra.ad ℂ (Module.End ℂ W) T ^ r) (mode m a) =
       ∑ j ∈ Finset.range (r + 1),
-        ((j.factorial : ℂ)⁻¹ * ((Ring.choose (2 * d - m - (j : ℤ) - 2) (r - j) : ℤ) : ℂ)) •
-          ((Y lattice ((L₁ ^ j) a))[[m + (r : ℤ) - (j : ℤ)]]) := by
+        ((j.factorial : ℂ)⁻¹ * integerBinomial (2 * d - m - (j : ℤ) - 2) (r - j)) •
+          mode (m + (r : ℤ) - (j : ℤ)) ((S ^ j) a) := by
   let α : ℂ := 2 * (d : ℂ) - (m : ℂ) - 2
   have expansion (n : ℕ) :
-      dividedAd n ((Y lattice a)[[m]]) =
+      dividedAd T n (mode m a) =
         ∑ j ∈ Finset.range (n + 1), coefficient α n j •
-          ((Y lattice ((L₁ ^ j) a))[[m + (n : ℤ) - (j : ℤ)]]) := by
+          mode (m + (n : ℤ) - (j : ℤ)) ((S ^ j) a) := by
     induction n with
     | zero => simp [dividedAd, coefficient]
     | succ n ih =>
       let next := fun j : ℕ =>
-        ((Y lattice ((L₁ ^ j) a))[[m + ((n + 1 : ℕ) : ℤ) - (j : ℤ)]])
+        mode (m + ((n + 1 : ℕ) : ℤ) - (j : ℤ)) ((S ^ j) a)
       have modeStep (j : ℕ) :
-          adL₁ ((Y lattice ((L₁ ^ j) a))[[m + (n : ℤ) - (j : ℤ)]]) =
+          LieAlgebra.ad ℂ (Module.End ℂ W) T
+            (mode (m + (n : ℤ) - (j : ℤ)) ((S ^ j) a)) =
             next (j + 1) + (α - (n : ℂ) - (j : ℂ)) • next j := by
         rw [LieAlgebra.ad_apply, Ring.lie_def,
-          sourceLOne_mode_commutator _ _ (sourceLOne_pow_weight a (d : ℂ) ha j)]
+          ward j]
         have hScalar : 2 * ((d : ℂ) - (j : ℂ)) -
             ((m + (n : ℤ) - (j : ℤ) : ℤ) : ℂ) - 2 = α - (n : ℂ) - (j : ℂ) := by
           dsimp only [α]
           push_cast <;> ring
         dsimp only [next]
-        rw [pow_succ' L₁ j, Module.End.mul_apply,
+        rw [pow_succ' S j, Module.End.mul_apply,
           show m + ((n + 1 : ℕ) : ℤ) - ((j + 1 : ℕ) : ℤ) = m + (n : ℤ) - (j : ℤ) by omega,
           show m + ((n + 1 : ℕ) : ℤ) - (j : ℤ) = m + (n : ℤ) - (j : ℤ) + 1 by omega,
           hScalar]
-      apply smul_right_injective (Module.End ℂ (Carrier lattice))
+      apply smul_right_injective (Module.End ℂ W)
         (show (n + 1 : ℂ) ≠ 0 by exact_mod_cast Nat.succ_ne_zero n)
-      change (n + 1 : ℂ) • dividedAd (n + 1) ((Y lattice a)[[m]]) =
+      change (n + 1 : ℂ) • dividedAd T (n + 1) (mode m a) =
         (n + 1 : ℂ) • ∑ j ∈ Finset.range (n + 2), coefficient α (n + 1) j • next j
       rw [dividedAd_succ, ih, map_sum]
       simp only [map_smul]
@@ -244,7 +253,7 @@ theorem sourceLOne_dividedAd_modes (a : Carrier lattice) (d : ℤ)
               (coefficient α n j * (α - (n : ℂ) - (j : ℂ))) • next j := by
           simp only [smul_add, smul_smul, Finset.sum_add_distrib]
         _ = _ := (sum_step α n next).symm
-  change dividedAd r ((Y lattice a)[[m]]) = _
+  change dividedAd T r (mode m a) = _
   rw [expansion]
   apply Finset.sum_congr rfl
   intro j hj
@@ -256,8 +265,22 @@ theorem sourceLOne_dividedAd_modes (a : Carrier lattice) (d : ℤ)
     rw [← hArg]
     exact Ring.map_choose (Int.castRingHom ℂ) _ _
   rw [coefficient, if_pos (Nat.le_of_lt_succ (Finset.mem_range.mp hj))]
-  rw [hChoose]
+  rw [integerBinomial, hChoose]
   simp only [div_eq_mul_inv, mul_comm]
+
+/-- Every divided power of the adjoint action on an actual homogeneous
+source mode, with integer binomial coefficients and a finite range at
+each order. The mode index is the normalized index of `Y`. -/
+theorem sourceLOne_dividedAd_modes (a : Carrier lattice) (d : ℤ)
+    (ha : L₀ a = (d : ℂ) • a) (m : ℤ) (r : ℕ) :
+    (r.factorial : ℂ)⁻¹ • (adL₁ ^ r) ((Y lattice a)[[m]]) =
+      ∑ j ∈ Finset.range (r + 1),
+        ((j.factorial : ℂ)⁻¹ * ((Ring.choose (2 * d - m - (j : ℤ) - 2) (r - j) : ℤ) : ℂ)) •
+          ((Y lattice ((L₁ ^ j) a))[[m + (r : ℤ) - (j : ℤ)]]) := by
+  let mode (q : ℤ) : Carrier lattice →ₗ[ℂ] Module.End ℂ (Carrier lattice) :=
+    (LinearMap.proj q).comp (VertexOperator.ncoeff.comp (Y lattice))
+  exact dividedAd_modes_of_ward L₁ L₁ mode a d m
+    (fun j q => sourceLOne_mode_commutator _ _ (sourceLOne_pow_weight a (d : ℂ) ha j) q) r
 
 end
 end D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeSourceMobius

@@ -37,7 +37,6 @@ attribute [local instance 100] LieRing.ofAssociativeRing
 
 local notation "L₀" => sugawaraMode lattice (actualInverse lattice) 0
 local notation "L₁" => sugawaraMode lattice (actualInverse lattice) 1
-local notation "adL₁" => LieAlgebra.ad ℂ (Module.End ℂ (Carrier lattice)) L₁
 
 -- Left multiplication is the sum of the adjoint and right multiplication.
 -- The binomial coefficient converts the total factorial to the two factorials.
@@ -78,6 +77,50 @@ private theorem dividedTranslation_apply_end {V : Type*} [AddCommGroup V] [Modul
   congr 1
   field_simp [hFactorial] <;> ring
 
+private theorem dividedTranslation_mode_of_dividedAd {V W : Type*}
+    [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
+    (S : Module.End ℂ V) (T : Module.End ℂ W)
+    (mode : ℤ → V →ₗ[ℂ] Module.End ℂ W) (a : V) (b : W) (d m : ℤ)
+    (expand : ∀ n : ℕ,
+      dividedTranslation (LieAlgebra.ad ℂ (Module.End ℂ W) T) n (mode m a) =
+        ∑ i ∈ Finset.range (n + 1),
+          ((i.factorial : ℂ)⁻¹ * integerBinomial (2 * d - m - (i : ℤ) - 2) (n - i)) •
+            mode (m + (n : ℤ) - (i : ℤ)) ((S ^ i) a)) (r : ℕ) :
+    dividedTranslation T r (mode m a b) =
+      ∑ i ∈ Finset.range (r + 1), ∑ j ∈ Finset.range (r - i + 1),
+        integerBinomial (2 * d - m - (i : ℤ) - 2) (r - i - j) •
+          mode (m + (r : ℤ) - (i : ℤ) - (j : ℤ)) (dividedTranslation S i a)
+            (dividedTranslation T j b) := by
+  let term := fun i j : ℕ =>
+    integerBinomial (2 * d - m - (i : ℤ) - 2) (r - i - j) •
+      mode (m + (r : ℤ) - (i : ℤ) - (j : ℤ)) (dividedTranslation S i a)
+        (dividedTranslation T j b)
+  change _ = ∑ i ∈ Finset.range (r + 1), ∑ j ∈ Finset.range (r - i + 1), term i j
+  rw [dividedTranslation_apply_end T (mode m a) b r]
+  calc
+    _ = ∑ j ∈ Finset.range (r + 1), ∑ i ∈ Finset.range (r - j + 1), term i j := by
+      apply Finset.sum_congr rfl
+      intro j hj
+      have hjr : j ≤ r := Nat.le_of_lt_succ (Finset.mem_range.mp hj)
+      have expansion := LinearMap.congr_fun (expand (r - j))
+        (dividedTranslation T j b)
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply] at expansion
+      rw [expansion]
+      apply Finset.sum_congr rfl
+      intro i _
+      have hMode : m + ((r - j : ℕ) : ℤ) - (i : ℤ) =
+          m + (r : ℤ) - (i : ℤ) - (j : ℤ) := by omega
+      have hOrder : r - j - i = r - i - j := by omega
+      dsimp only [term]
+      rw [hMode, hOrder,
+        show dividedTranslation S i a = (i.factorial : ℂ)⁻¹ • (S ^ i) a from rfl]
+      simp only [map_smul, LinearMap.smul_apply, smul_smul, mul_comm]
+    _ = _ := by
+      apply Finset.sum_comm' (f := fun j i => term i j)
+      intro j i
+      simp only [Finset.mem_range]
+      omega
+
 /-- Finite inversion of the actual `m`th source iterate at divided order `r`.
 For `b` of weight `e`, this is the coefficient of
 `x^(-m-1) y^(r-2*(d+e-m-1))` after removing `(-1)^(d+e-m-1)` from
@@ -93,37 +136,10 @@ theorem sourceLOne_divided_inverted_iterate (a b : Carrier lattice) (d : ℤ)
         integerBinomial (2 * d - m - (i : ℤ) - 2) (r - i - j) •
           ((Y lattice (dividedTranslation L₁ i a))[[m + (r : ℤ) - (i : ℤ) - (j : ℤ)]])
             (dividedTranslation L₁ j b) := by
-  let term := fun i j : ℕ =>
-    integerBinomial (2 * d - m - (i : ℤ) - 2) (r - i - j) •
-      ((Y lattice (dividedTranslation L₁ i a))[[m + (r : ℤ) - (i : ℤ) - (j : ℤ)]])
-        (dividedTranslation L₁ j b)
-  change _ = ∑ i ∈ Finset.range (r + 1), ∑ j ∈ Finset.range (r - i + 1), term i j
-  rw [dividedTranslation_apply_end L₁ ((Y lattice a)[[m]]) b r]
-  calc
-    _ = ∑ j ∈ Finset.range (r + 1), ∑ i ∈ Finset.range (r - j + 1), term i j := by
-      apply Finset.sum_congr rfl
-      intro j hj
-      have hjr : j ≤ r := Nat.le_of_lt_succ (Finset.mem_range.mp hj)
-      have expansion := LinearMap.congr_fun (sourceLOne_dividedAd_modes a d ha m (r - j))
-        (dividedTranslation L₁ j b)
-      simp only [LinearMap.sum_apply, LinearMap.smul_apply] at expansion
-      change ((r - j).factorial : ℂ)⁻¹ •
-        ((adL₁ ^ (r - j)) ((Y lattice a)[[m]])) (dividedTranslation L₁ j b) = _
-      rw [expansion]
-      apply Finset.sum_congr rfl
-      intro i _
-      have hMode : m + ((r - j : ℕ) : ℤ) - (i : ℤ) =
-          m + (r : ℤ) - (i : ℤ) - (j : ℤ) := by omega
-      have hOrder : r - j - i = r - i - j := by omega
-      dsimp only [term, integerBinomial]
-      rw [hMode, hOrder,
-        show dividedTranslation L₁ i a = (i.factorial : ℂ)⁻¹ • (L₁ ^ i) a from rfl]
-      simp only [map_smul, Pi.smul_apply, LinearMap.smul_apply, smul_smul, mul_comm]
-    _ = _ := by
-      apply Finset.sum_comm' (f := fun j i => term i j)
-      intro j i
-      simp only [Finset.mem_range]
-      omega
+  let mode (q : ℤ) : Carrier lattice →ₗ[ℂ] Module.End ℂ (Carrier lattice) :=
+    (LinearMap.proj q).comp (VertexOperator.ncoeff.comp (Y lattice))
+  exact dividedTranslation_mode_of_dividedAd L₁ L₁ mode a b d m
+    (sourceLOne_dividedAd_modes a d ha m) r
 
 end
 end D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeInvertedIterate
