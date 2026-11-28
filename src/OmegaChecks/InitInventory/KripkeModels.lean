@@ -56,6 +56,50 @@ theorem countermodel :
   · exact fun h => h.elim (fun n => n (some true) (Or.inl rfl) rfl)
       (fun nn => nn (some false) (Or.inl rfl) no)
 
+/-- Two sections of a varying set. Both names survive on the left branch and
+the restriction to the right branch identifies them. -/
+def restrictName (w : Option Bool) (name : Bool) : Bool :=
+  w.elim name (fun leaf => bif leaf then false else name)
+
+def equalAt (a b : Bool) (w : Option Bool) : Prop := restrictName w a = restrictName w b
+
+private theorem equalityPersists {u v : Option Bool} (uv : reaches u v) (a b : Bool) :
+    equalAt a b u → equalAt a b v := by
+  rcases uv with h | h
+  · cases h
+    intro eq
+    exact congrArg (restrictName v) eq
+  · cases h
+    exact id
+
+/-- The two names are distinct at the root. At one leaf they coincide and at
+the other their inequality persists. This refutes both strong and weak case
+splitting for equality in this varying set. -/
+theorem equalityCountermodel :
+    (∀ u v, reaches u v → ∀ a b, equalAt a b u → equalAt a b v) ∧
+    ¬ (equalAt false true none ∨ neg (equalAt false true) none) ∧
+    ¬ (neg (equalAt false true) none ∨ neg (neg (equalAt false true)) none) := by
+  let e := equalAt false true
+  have distinct : ¬e none := fun eq => nomatch eq
+  have identified : e (some true) := rfl
+  have apart : neg e (some false) := by
+    intro w h eq
+    rcases h with h | h
+    · cases h
+    · cases h
+      exact nomatch eq
+  have nn : ¬neg e none := fun no => no (some true) (Or.inl rfl) identified
+  exact ⟨fun _ _ => equalityPersists, fun h => h.elim distinct nn,
+    fun h => h.elim nn (fun double => double (some false) (Or.inl rfl) apart)⟩
+
+/-- The membership premise of the list case split holds at the root. Its right
+disjunct also requires an inequality that remains valid at every later world. -/
+theorem membershipCountermodel :
+    restrictName none false ∈ [restrictName none true, restrictName none false] ∧
+    ¬ (equalAt false true none ∨
+      (neg (equalAt false true) none ∧ restrictName none false ∈ [restrictName none false])) := by
+  exact ⟨.tail _ (.head _), fun h => equalityCountermodel.2.1 (h.imp_right And.left)⟩
+
 end ForkFrame
 
 end OmegaChecks.InitBoundaries

@@ -258,6 +258,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``NaturalCancellation.exprNormEq, ``NaturalCancellation.exprNorm, ``NaturalCancellation.polyEq,
       ``NaturalCancellation.polyLe,
       ``OptionalIndex.decidablePropExtOfIsSome, ``TwoWorlds.countermodel, ``ForkFrame.countermodel,
+      ``ForkFrame.equalityCountermodel, ``ForkFrame.membershipCountermodel,
       ``ClassicalConsequences.weakMiddleOfDeMorgan, ``ClassicalConsequences.deMorganOfWeakMiddle] ++ ClassicalDecisionEquations.rules.map Prod.snd
   discard <| replayBoundaryDependencies official env roots
 
