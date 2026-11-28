@@ -31,10 +31,16 @@ end Omega.Nat
 
 port_definition Nat.land
 port_definition Nat.lor
+namespace Nat
+/-- The kernel evaluates numerals at this literal name. Symbolic calls retain the pinned bitwise definition. -/
+@[no_expose] def xor : @& Nat → @& Nat → Nat :=
+  Omega.Nat.bitwise (@Omega.bne Bool (@Omega.instBEqOfDecidableEq Bool Omega.instDecidableEqBool))
+end Nat
 
 port_definition Nat.shiftLeft.match_1
 
 namespace Omega.Nat
+export _root_.Nat (xor)
 
 @[implicit_reducible] def shiftRight : Nat → Nat → Nat := fun x n =>
   Nat.brecOn (motive := fun _ => Nat → Nat) n (fun i below num =>
