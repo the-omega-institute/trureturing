@@ -1,5 +1,5 @@
 import OmegaBuild.Commands
-import D5.S3.Combinatorics.Graph.Chordal.Dirac
+import Mathlib.Combinatorics.SimpleGraph.Clique
 import Mathlib.Analysis.Normed.Module.Basic
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.Linarith
@@ -173,9 +173,12 @@ private theorem repeated_tetrahedron {ι : Type*} {r : ι → ι → E}
     simp only [tetrahedron, hr.diagonal, norm_zero, zero_pow (by decide : 2 ≠ 0)] <;>
     linarith only [hab, hac, had, hbc, hbd, hcd, h₁, h₂, h₃, h₄, hN]
 
-/-- A placement rule that preserves the residual invariants extends to every
-finite chordal graph whose cliques have at most `k+1` vertices. -/
-theorem reconstruct [Finite V] (hG : G.IsChordal) {k : ℕ} {R U M N : ℝ}
+/-- A local placement rule extends to graphs with simplicial elimination
+and cliques of size at most `k+1`. -/
+theorem reconstruct [Finite V]
+    (hsimp : ∀ S : Finset V, S.Nonempty →
+      ∃ a ∈ S, G.IsClique {x | x ∈ S ∧ G.Adj x a})
+    {k : ℕ} {R U M N : ℝ}
     (hU : 0 ≤ U) (hUR : U ≤ R) (hM : 2 * R ^ 2 ≤ M) (hN : 5 * R ^ 2 ≤ N)
     (hclique : ∀ s : Finset V, G.IsClique (s : Set V) → s.card ≤ k + 1)
     (hplace : ∀ (r : Fin k → Fin k → E) (y : Fin k → E), Neighborhood (Fin k) r y R M N →
@@ -192,10 +195,7 @@ theorem reconstruct [Finite V] (hG : G.IsChordal) {k : ℕ} {R U M N : ℝ}
     induction S using Finset.strongInductionOn with
     | _ S ih =>
       by_cases hS : S.Nonempty
-      · let : Nonempty (S : Set V) := ⟨⟨hS.choose, hS.choose_spec⟩⟩
-        obtain ⟨v, hv⟩ := (hG.induce (S : Set V)).exists_isSimplicial
-        let a : V := v.val
-        have ha : a ∈ S := v.property
+      · obtain ⟨a, ha, hv⟩ := hsimp S hS
         obtain ⟨p, he, hq, hi⟩ := ih (S.erase a) (Finset.erase_ssubset ha)
         let K := S.filter fun x => G.Adj x a
         let ι := ↥(K : Set V)
@@ -206,9 +206,9 @@ theorem reconstruct [Finite V] (hG : G.IsChordal) {k : ℕ} {R U M N : ℝ}
           Finset.mem_erase.mpr ⟨(Finset.mem_filter.mp x.property).2.ne, (Finset.mem_filter.mp x.property).1⟩
         have hxA (x : ι) : G.Adj x.val a := (Finset.mem_filter.mp x.property).2
         have hK (x z : ι) (h : x ≠ z) : G.Adj x.val z.val :=
-          hv (show (⟨x.val, (Finset.mem_erase.mp (hxS x)).2⟩ : (S : Set V)) ∈ _ from (hxA x).symm)
-            (show (⟨z.val, (Finset.mem_erase.mp (hxS z)).2⟩ : (S : Set V)) ∈ _ from (hxA z).symm)
-            (fun heq => h (Subtype.ext (congrArg (fun t : (S : Set V) => t.val) heq)))
+          hv ⟨(Finset.mem_filter.mp x.property).1, hxA x⟩
+            ⟨(Finset.mem_filter.mp z.property).1, hxA z⟩
+            (fun heq => h (Subtype.ext heq))
         have hKcl : G.IsClique (↑(insert a K) : Set V) := by
           intro x hx z hz hne
           simp only [Finset.coe_insert, Set.mem_insert_iff, Finset.mem_coe] at hx hz

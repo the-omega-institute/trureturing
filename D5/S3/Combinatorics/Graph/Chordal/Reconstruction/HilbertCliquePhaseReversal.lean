@@ -55,6 +55,17 @@ private theorem scale_gain_bound [Finite V] [NormedSpace ℝ E] (hG : G.IsChorda
   rw [he, norm_smul, Real.norm_eq_abs, abs_of_nonneg hδ, mul_comm C δ]
   exact mul_le_mul_of_nonneg_left (hq a b hab) hpδ.le
 
+private theorem simplicial_elimination [Finite V] (hG : G.IsChordal)
+    (S : Finset V) (hS : S.Nonempty) :
+    ∃ a ∈ S, G.IsClique {x | x ∈ S ∧ G.Adj x a} := by
+  let : Nonempty (S : Set V) := ⟨⟨hS.choose, hS.choose_spec⟩⟩
+  obtain ⟨a, ha⟩ := (hG.induce (S : Set V)).exists_isSimplicial
+  refine ⟨a, a.property, ?_⟩
+  intro x hx y hy hxy
+  exact ha (show (⟨x, hx.1⟩ : (S : Set V)) ∈ _ from hx.2.symm)
+    (show (⟨y, hy.1⟩ : (S : Set V)) ∈ _ from hy.2.symm)
+    (fun heq => hxy (congrArg Subtype.val heq))
+
 section Hilbert
 
 variable [Finite V] [InnerProductSpace ℝ E]
@@ -69,7 +80,7 @@ theorem IsChordal.exists_cliqueFour_hilbert_gain_potential (hG : G.IsChordal)
   apply scale_gain_bound hG _ _ g δ hδ hrev htri
   intro f hf ht
   refine reconstruct (k := 3) (R := HilbertTriangleInsertion.R) (U := HilbertTriangleInsertion.R)
-    (M := HilbertTriangleInsertion.C) (N := 11) hG (by norm_num [HilbertTriangleInsertion.R])
+    (M := HilbertTriangleInsertion.C) (N := 11) (simplicial_elimination hG) (by norm_num [HilbertTriangleInsertion.R])
     le_rfl (by norm_num [HilbertTriangleInsertion.R, HilbertTriangleInsertion.C])
     (by norm_num [HilbertTriangleInsertion.R]) hclique HilbertTriangleInsertion.place f hf ?_
   exact fun a b c h => ht a b c h.1 h.2.1 h.2.2
@@ -85,7 +96,7 @@ theorem IsChordal.exists_cliqueFour_hilbert_gain_potential_zeroSplit (hG : G.IsC
   intro f hf ht
   refine reconstruct (k := 3) (R := HilbertTriangleInsertion.ZeroSplit.R)
     (U := HilbertTriangleInsertion.ZeroSplit.R) (M := HilbertTriangleInsertion.ZeroSplit.C)
-    (N := 11) hG (by norm_num [HilbertTriangleInsertion.ZeroSplit.R])
+    (N := 11) (simplicial_elimination hG) (by norm_num [HilbertTriangleInsertion.ZeroSplit.R])
     le_rfl (by norm_num [HilbertTriangleInsertion.ZeroSplit.R, HilbertTriangleInsertion.ZeroSplit.C])
     (by norm_num [HilbertTriangleInsertion.ZeroSplit.R]) hclique
     HilbertTriangleInsertion.ZeroSplit.place f hf ?_
@@ -100,7 +111,8 @@ theorem IsChordal.exists_cliqueFive_hilbert_gain_potential (hG : G.IsChordal)
     ∃ p : V → E, ∀ a b, G.Adj a b → ‖g a b - (p b - p a)‖ ≤ Real.sqrt (10275/4576) * δ := by
   apply scale_gain_bound hG _ _ g δ hδ hrev htri
   intro f hf ht
-  refine reconstruct (k := 4) (R := 3 / 2) (M := 329 / 50) (N := 621 / 50) hG
+  refine reconstruct (k := 4) (R := 3 / 2) (M := 329 / 50) (N := 621 / 50)
+    (simplicial_elimination hG)
     (Real.sqrt_nonneg _) ((Real.sqrt_le_iff).2 (by norm_num)) (by norm_num) (by norm_num)
     hclique HilbertTetrahedronInsertion.place f hf ?_
   exact fun a b c h => ht a b c h.1 h.2.1 h.2.2
