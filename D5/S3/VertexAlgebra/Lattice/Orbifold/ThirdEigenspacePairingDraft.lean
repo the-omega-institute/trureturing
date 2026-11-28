@@ -89,7 +89,7 @@ private theorem component_mem (hA : A ^ 3 = 1) {α : ℂ} (hα : α ^ 3 = 1) (x 
   simp only [smul_add, smul_smul, hmul, (pow_two α).symm, one_smul]
   abel
 
-private theorem exists_eigenspace_decomposition (hA : A ^ 3 = 1)
+theorem exists_eigenspace_decomposition (hA : A ^ 3 = 1)
     (hζ : IsPrimitiveRoot ζ 3) (x : V) :
     ∃ u ∈ A.eigenspace 1, ∃ v ∈ A.eigenspace ζ, ∃ w ∈ A.eigenspace (ζ ^ 2),
       u + (v + w) = x := by
@@ -202,7 +202,7 @@ def p48qAction : End ℂ (Fin 48 → ℂ) := rowAction ℂ nebeOrderThree
 def p48qForm : LinearMap.BilinForm ℂ (Fin 48 → ℂ) :=
   (nebeGram.map (Int.castRingHom ℂ)).toBilin'
 
-private theorem p48qAction_cube : p48qAction ^ 3 = 1 := by
+theorem p48qAction_cube : p48qAction ^ 3 = 1 := by
   let c := Int.castRingHom ℂ
   change (c.mapMatrix nebeOrderThreeᵀ).toLin' ^ 3 = 1
   have ht : nebeOrderThreeᵀ ^ 3 = 1 := by

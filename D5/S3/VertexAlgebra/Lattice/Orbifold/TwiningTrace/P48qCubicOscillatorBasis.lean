@@ -21,23 +21,20 @@ open LatticeGeneratingFieldLocality OriginalCurrentMetric
 open P48qTwistedChargeAction (lattice g g_apply)
 open P48qFixedRankCertificate (nebeOrderThree)
 open scoped Matrix
-open private oscillator_X mixingMatrix from D5.S3.VertexAlgebra.Lattice.IsometryLift
+open IsometryLift (oscillator_X)
 open P48qMomentumEnergy (Fixed fixedBasis)
-open ThirdTwistedChargeCocycle (zeta)
-open private exists_eigenspace_decomposition p48qAction_cube from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairingDraft
-open private zeta_coe_primitive from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedChargeCocycle
+open ThirdTwistedChargeCocycle (zeta zeta_primitive)
 
 noncomputable section
 
 local notation "ω₃" => (zeta : ℂ)
+local notation "hω₃" => (IsPrimitiveRoot.coe_units_iff.mpr zeta_primitive)
 local notation "A" => p48qAction
 
 private def seed (i : Fin 16) : Fin 48 → ℂ :=
   (fixedBasis i : Fin 48 → ℂ) +
-    (p48qBasis zeta_coe_primitive i : Fin 48 → ℂ) +
-    (p48qOppositeBasis zeta_coe_primitive i : Fin 48 → ℂ)
+    (p48qBasis hω₃ i : Fin 48 → ℂ) +
+    (p48qOppositeBasis hω₃ i : Fin 48 → ℂ)
 
 private def orbit (i : Fin 3 × Fin 16) : Fin 48 → ℂ :=
   ![seed i.2, A (seed i.2), A (A (seed i.2))] i.1
@@ -57,23 +54,23 @@ private theorem orbit_spans : ⊤ ≤ Submodule.span ℂ (Set.range orbit) := by
   let S := Submodule.span ℂ (Set.range orbit)
   have hsum : 1 + ω₃ + ω₃ ^ 2 = 0 := by
     simpa only [Finset.sum_range_succ, Finset.sum_range_zero, pow_zero, pow_one, zero_add]
-      using zeta_coe_primitive.geom_sum_eq_zero (by decide)
-  have hcube := zeta_coe_primitive.pow_eq_one
+      using (hω₃).geom_sum_eq_zero (by decide)
+  have hcube := (hω₃).pow_eq_one
   have hfour : ω₃ ^ 2 * ω₃ ^ 2 = ω₃ := by
     rw [← pow_add, show 2 + 2 = 3 + 1 by decide, pow_add, hcube, one_mul, pow_one]
   have hthree : ω₃ * ω₃ ^ 2 = 1 := by
     simpa only [pow_succ, mul_comm] using hcube
   let b₀ (i : Fin 16) := (fixedBasis i : Fin 48 → ℂ)
-  let b₁ (i : Fin 16) := (p48qBasis zeta_coe_primitive i : Fin 48 → ℂ)
-  let b₂ (i : Fin 16) := (p48qOppositeBasis zeta_coe_primitive i : Fin 48 → ℂ)
+  let b₁ (i : Fin 16) := (p48qBasis hω₃ i : Fin 48 → ℂ)
+  let b₂ (i : Fin 16) := (p48qOppositeBasis hω₃ i : Fin 48 → ℂ)
   have each (i : Fin 16) : b₀ i ∈ S ∧ b₁ i ∈ S ∧ b₂ i ∈ S := by
     have h₀ : A (b₀ i) = b₀ i := by
       have h : (b₀ i) ∈ Fixed := (fixedBasis i).property
       simpa only [Fixed, LinearMap.mem_ker, LinearMap.sub_apply, End.one_apply, sub_eq_zero] using h
     have h₁ : A (b₁ i) = ω₃ • b₁ i :=
-      End.mem_eigenspace_iff.mp (p48qBasis zeta_coe_primitive i).property
+      End.mem_eigenspace_iff.mp (p48qBasis hω₃ i).property
     have h₂ : A (b₂ i) = ω₃ ^ 2 • b₂ i :=
-      End.mem_eigenspace_iff.mp (p48qOppositeBasis zeta_coe_primitive i).property
+      End.mem_eigenspace_iff.mp (p48qOppositeBasis hω₃ i).property
     have hv₀ : seed i = b₀ i + b₁ i + b₂ i := rfl
     have hv₁ : A (seed i) = b₀ i + ω₃ • b₁ i + ω₃ ^ 2 • b₂ i := by
       rw [hv₀, map_add, map_add, h₀, h₁, h₂]
@@ -128,12 +125,12 @@ private theorem orbit_spans : ⊤ ≤ Submodule.span ℂ (Set.range orbit) := by
     exact S.sum_mem fun i _ => S.smul_mem _ (hb i)
   intro x _
   obtain ⟨u, hu, v, hv, w, hw, rfl⟩ :=
-    exists_eigenspace_decomposition p48qAction_cube zeta_coe_primitive x
+    exists_eigenspace_decomposition p48qAction_cube hω₃ x
   have hu' : u ∈ Fixed := by
     rwa [End.eigenspace_def, one_smul] at hu
   exact S.add_mem (basis_mem fixedBasis (fun i => (each i).1) ⟨u, hu'⟩)
-    (S.add_mem (basis_mem (p48qBasis zeta_coe_primitive) (fun i => (each i).2.1) ⟨v, hv⟩)
-      (basis_mem (p48qOppositeBasis zeta_coe_primitive) (fun i => (each i).2.2) ⟨w, hw⟩))
+    (S.add_mem (basis_mem (p48qBasis hω₃) (fun i => (each i).2.1) ⟨v, hv⟩)
+      (basis_mem (p48qOppositeBasis hω₃) (fun i => (each i).2.2) ⟨w, hw⟩))
 
 /-- A current basis consisting of sixteen orbits of length three. -/
 def cubicBasis : Basis (Fin 3 × Fin 16) ℂ (Fin 48 → ℂ) :=
@@ -154,7 +151,7 @@ def rotate : Equiv.Perm CubicIndex where
   left_inv x := by simp
   right_inv x := by simp
 
-private def colourEquiv : Fin 3 × Fin 16 ≃ Fin 48 := finProdFinEquiv
+def colourEquiv : Fin 3 × Fin 16 ≃ Fin 48 := finProdFinEquiv
 
 private def coordinates : (Fin 48 → ℂ) ≃ₗ[ℂ] (Fin 48 → ℂ) :=
   (cubicBasis.reindex colourEquiv).equivFun.symm
@@ -162,7 +159,7 @@ private def coordinates : (Fin 48 → ℂ) ≃ₗ[ℂ] (Fin 48 → ℂ) :=
 private def changeMatrix : Matrix (Fin 48) (Fin 48) ℂ :=
   LinearMap.toMatrix' coordinates.toLinearMap
 
-private def inverseMatrix : Matrix (Fin 48) (Fin 48) ℂ :=
+def inverseMatrix : Matrix (Fin 48) (Fin 48) ℂ :=
   LinearMap.toMatrix' coordinates.symm.toLinearMap
 
 private theorem changeMatrix_mul_inverse :
@@ -183,7 +180,7 @@ def oscillatorCoordinates : MvPolynomial CubicIndex ℂ ≃ₐ[ℂ] Oscillator l
     (substitutionEquiv (fun _ => changeMatrix) (fun _ => inverseMatrix)
       (fun _ => changeMatrix_mul_inverse) (fun _ => inverseMatrix_mul_change))
 
-private theorem oscillatorCoordinates_X (i : Fin 3 × Fin 16) (n : ℕ) :
+theorem oscillatorCoordinates_X (i : Fin 3 × Fin 16) (n : ℕ) :
     oscillatorCoordinates (X (i, n)) =
       ∑ j : Fin 48, (cubicBasis i) j • (X (j, n) : Oscillator lattice) := by
   change substitution (fun _ => changeMatrix)
@@ -204,8 +201,7 @@ private theorem oscillator_current (v : Fin 48 → ℂ) (n : ℕ) :
       (∑ i : Fin 48, v i • (X (i, n) : Oscillator lattice)) =
     ∑ j : Fin 48, (A v) j • (X (j, n) : Oscillator lattice) := by
   have hentry (i j : Fin 48) :
-      mixingMatrix lattice g j i = (nebeOrderThree i j : ℂ) := by
-    change (g (unitCharge lattice i) j : ℂ) = _
+      (g (unitCharge lattice i) j : ℂ) = (nebeOrderThree i j : ℂ) := by
     rw [g_apply]
     have h : unitCharge lattice i = Pi.single i (1 : ℤ) := by
       funext k

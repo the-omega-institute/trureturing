@@ -23,10 +23,6 @@ open P48qTwistedChargeAction (lattice g g_cube g_isometry)
 open P48qCubicOscillatorBasis NativeStandardThirdLift
 open D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation (integerEnergy)
 open ThirdTwistedChargeAction (nativeStandardEta_fixed)
-open private oscillatorCoordinates_X colourEquiv inverseMatrix from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.TwiningTrace.P48qCubicOscillatorBasis
-open private cutoffActualGrade_eq_supported from
-  D5.S3.VertexAlgebra.Characters.LatticeThetaCharacter
 
 noncomputable section
 

@@ -47,7 +47,7 @@ open scoped BigOperators VertexOperator
 noncomputable section
 
 open private defect defectMatrix defect_symmetric defect_pairing
-  additive_expansion oscillator_X oscillator_charge mixingMatrix from
+  additive_expansion oscillator_charge mixingMatrix from
   D5.S3.VertexAlgebra.Lattice.IsometryLift
 
 private def q (D : LatticeData) (g : Charge D ≃+ Charge D) (a : Charge D) : F₂ :=

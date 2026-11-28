@@ -207,8 +207,6 @@ section TwiningTrace
 
 open LatticeThetaCharacter LatticePositiveEnergy
 open LatticeSugawaraCurrents (gramComplex sugawaraMode)
-open private chargeSupported_mem_iff cutoffCoeffEquiv_apply cutoffBasis_carrierCoeff from
-  D5.S3.VertexAlgebra.Characters.LatticeThetaCharacter
 
 private theorem standardLift_charge (a : Charge D) (v : Carrier D) :
     (standardLift D g h3 hg v) (g a) =

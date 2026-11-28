@@ -174,10 +174,10 @@ def oscillator (D : LatticeData) (g : Charge D ≃+ Charge D) :
     (fun _ => mixing_inverse D g g.symm g.apply_symm_apply)
     (fun _ => mixing_inverse D g.symm g g.symm_apply_apply)
 
-private theorem oscillator_X (D : LatticeData) (g : Charge D ≃+ Charge D)
+theorem oscillator_X (D : LatticeData) (g : Charge D ≃+ Charge D)
     (x : Index D) :
     oscillator D g (X x) =
-      ∑ j : Fin D.rank, mixingMatrix D g j x.1 • X (j, x.2) :=
+      ∑ j : Fin D.rank, (g (unitCharge D x.1) j : ℂ) • X (j, x.2) :=
   OriginalCurrentMetric.substitution_X _ x
 
 private def defect (D : LatticeData) (g : Charge D ≃+ Charge D) :
@@ -272,7 +272,9 @@ private theorem oscillator_charge (D : LatticeData) (g : Charge D ≃+ Charge D)
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro j _
-  rw [← Finset.sum_smul, ← charge_coordinates]
+  rw [← Finset.sum_smul]
+  change (∑ i : Fin D.rank, (a i : ℂ) * mixingMatrix D g j i) • (X (j, n) : Oscillator D) = _
+  rw [← charge_coordinates]
 
 private theorem oscillator_smul (D : LatticeData) (g : Charge D ≃+ Charge D)
     (z : ℂ) (p : Oscillator D) :
@@ -358,7 +360,8 @@ private theorem translated_naturality (D : LatticeData) (g : Charge D ≃+ Charg
     simp only [AlgHom.comp_apply, T, MvPolynomial.aeval_X, AlgEquiv.coe_toAlgHom]
     change Polynomial.map (oscillator D g).toRingHom (translationVariable D a x.1 x.2) =
       (T (g a)) (oscillator D g (X x))
-    rw [oscillator_X]
+    rw [show oscillator D g (X x) =
+      ∑ j : Fin D.rank, mixingMatrix D g j x.1 • X (j, x.2) from oscillator_X D g x]
     simp only [map_sum, map_smul, T, MvPolynomial.aeval_X]
     have hx : (oscillator D g).toRingHom (X (x.1, x.2)) =
         ∑ j : Fin D.rank, mixingMatrix D g j x.1 • X (j, x.2) :=
