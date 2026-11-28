@@ -456,7 +456,11 @@ def main():
                 run("lean", HERE / "consumers/ErasedConsumer.lean", env=hosted_env)
             search_modules = ("Data/Array/Lemmas", "Data/List/Monadic", "Data/Vector/Lemmas", "Internal/Order/Lemmas")
             if not args.exclude and all((hosted / "OmegaInit" / (module + ".olean")).is_file() for module in search_modules):
-                run("lean", HERE / "consumers/ListSearchConsumer.lean", env=hosted_env)
+                # Compile the same search laws and observations checked by the stock Lake client
+                # against the independently generated public declarations.
+                source = (HERE / "consumers/ListSearchConsumer.lean").read_text()
+                client = source.replace("import Init.", "import OmegaInit.").replace("_root_.", "Omega.")
+                run("lean", "--stdin", text=True, input=client, env=hosted_env)
             if (hosted / "OmegaInit/Data/List/Scan/Basic.olean").is_file():
                 run("lean", HERE / "consumers/ListScanConsumer.lean", env=hosted_env)
         product.rename(target)
