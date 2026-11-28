@@ -508,6 +508,12 @@ public theorem Array.foldr_induction.go : type_of% (private_decl% @_root_.Array.
     rw [foldBefore (m := Id) f xs 0 i h (Nat.zero_lt_succ i)]
     exact ih (Nat.le_of_lt h) (step ⟨i, h⟩ b inv)
 
+public theorem Array.foldr_induction.go._unary :
+    type_of% (private_decl% @_root_.Array.foldr_induction.go._unary) := by
+  intro α β xs motive f step state
+  obtain ⟨i, b, bound, inv⟩ := state
+  exact Array.foldr_induction.go motive step bound inv
+
 public theorem Array.foldr_induction : type_of% @_root_.Array.foldr_induction := by
   intro α β xs motive init initial f step
   unfold _root_.Array.foldr _root_.Array.foldrM
@@ -707,6 +713,11 @@ public theorem List.zipWithAll_go_toArray :
   apply _root_.Array.ext'
   rw [_root_.Array.toList_append]
   exact zipWithAllList f xs.toArray ys.toArray i acc
+
+public theorem List.zipWithAll_go_toArray._unary :
+    type_of% (private_decl% @_root_.List.zipWithAll_go_toArray._unary) := by
+  intro α β γ xs ys f state
+  exact List.zipWithAll_go_toArray xs ys f state.1 state.2
 
 public theorem List.zipWithAll_toArray : type_of% @_root_.List.zipWithAll_toArray := by
   intro α β γ f xs ys

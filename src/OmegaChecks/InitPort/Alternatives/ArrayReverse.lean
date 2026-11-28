@@ -95,6 +95,12 @@ public theorem Array.toList_reverse.go : type_of% (private_decl% @_root_.Array.t
     | inl lo => exact Nat.not_le_of_lt lo inside.1
     | inr hi => exact Nat.not_le_of_lt hi inside.2
 
+public theorem Array.toList_reverse.go._unary :
+    type_of% (private_decl% @_root_.Array.toList_reverse.go._unary) := by
+  intro α xs state
+  obtain ⟨as, i, j, bound, mirror, size, slot, k⟩ := state
+  exact Array.toList_reverse.go as i j bound mirror size slot k
+
 public theorem Array.toList_reverse : type_of% @_root_.Array.toList_reverse := by
   intro α xs
   unfold _root_.Array.reverse
