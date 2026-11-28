@@ -146,4 +146,91 @@ def registration : LeanInformationAudit.Contract.Registration
 
 #print axioms registration
 
+namespace Congruence
+
+open _root_.D5.S3.SpectralTopology.FiniteSpectralLocalizer
+
+def arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {Port : Type u} [fp : Fintype Port] [dp : DecidableEq Port]
+    (mu : ℂ) (C : Matrix Port Port ℂ) (z : Fin 2 → ℂ)
+    (_ : mu ≠ star mu) (_ : z 0 ≠ z 1) (_ : ∀ i, 0 < (z i).im)
+    (_ : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0),
+      R.readout () ⟨Port, fp, dp, mu, z⟩ C =
+          mirrorCauchyFeature mu z *
+            finiteSpectralLocalizer (0 : Matrix Port Port ℂ) C 0 0 0 *
+              (mirrorCauchyFeature mu z)ᴴ ∧
+        IsUnit (mirrorCauchyFeature (Port := Port) mu z)
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h (Port := ULift.{u} Unit) Complex.I 1 samples
+    pole_nonreal samples_distinct samples_upper samples_regular
+  have hf := (two_point_mirror_congruence Complex.I
+    (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) samples pole_nonreal
+    samples_distinct samples_upper samples_regular).1
+  have hz : mirrorNevanlinnaGram Complex.I
+      (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) samples = 0 :=
+    hf.trans hh.1.symm
+  have hp : (mirrorNevanlinnaGram Complex.I
+      (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) samples).PosSemidef := by
+    rw [hz]
+    exact Matrix.PosSemidef.zero
+  exact one_ne_zero ((two_point_mirror_posSemidef_iff Complex.I
+    (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) samples pole_nonreal
+    samples_distinct samples_upper samples_regular).mp hp)
+
+def source : Registration arena.{u} (type_of% @two_point_mirror_congruence.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@two_point_mirror_congruence, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro other hne
+      exact (hne (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration
+    (@two_point_mirror_congruence.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Weil.Pick.TwoPointMirrorPortCriterion.Congruence.unit
+  realizationName := `Reg.D5.S3.Weil.Pick.TwoPointMirrorPortCriterion.Congruence.source
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p C => @mirrorNevanlinnaGram p.Port p.finitePort p.decidablePort
+      p.pole C p.samples) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Pick.TwoPointMirrorPortCriterion
+    definition := none
+    coordinates := #[0, 1, 2, 3, 5]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms registration
+
+end Congruence
+
 end Reg.D5.S3.Weil.Pick.TwoPointMirrorPortCriterion

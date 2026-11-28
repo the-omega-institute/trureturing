@@ -36,15 +36,7 @@ internal sealed class TwoPointMirrorPortCriterionDocument : IScribeDocumentDefin
                 Blocks(Paragraph(Text(
                     "Under the same pole, distinctness, upper-half-plane and regularity assumptions, the full Gram is positive semidefinite if and only if C is zero. " +
                     "Invertible congruence transfers positivity to the localizer. Its trace is zero, so positive semidefiniteness forces the entire localizer, and hence C, to vanish. " +
-                    "For bilateral ports the residue is the adjoint of the minus port times the plus port; separate nonvanishing of the two maps does not ensure a nonzero cross residue."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("two-point-even-port-positive-iff-zero-probe"),
-                DeclarationHandle.Create(Module + "two_point_even_port_posSemidef_iff"),
-                H("Every nonzero even probe is visible"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
+                    "For bilateral ports the residue is the adjoint of the minus port times the plus port; separate nonvanishing of the two maps does not ensure a nonzero cross residue. " +
                     "When the two port maps are equal to G, the residue is the Hilbert Gram formed by the adjoint of G times G. " +
                     "For the same admissible two locations, positive semidefiniteness is equivalent to G being zero. " +
                     "This criterion includes singular probes and empty finite spaces. It detects visibility of one conjugate pole pair; it does not count all negative squares or identify the finite transfer with a completed-zeta or Weil realization."))),

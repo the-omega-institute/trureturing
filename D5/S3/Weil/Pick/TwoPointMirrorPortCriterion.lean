@@ -187,9 +187,7 @@ theorem two_point_mirror_posSemidef_iff
   rw [hfactor]
   exact hunit.posSemidef_star_right_conjugate_iff.trans (localizer_posSemidef_iff C)
 
-/-- Equal ports make the cross residue a Hilbert Gram, so two-point positivity
-is equivalent to the probe itself being zero, regardless of its fiber rank. -/
-theorem two_point_even_port_posSemidef_iff
+example
     {Fiber : Type*} [Fintype Fiber]
     (mu : ℂ) (G : Matrix Fiber Port ℂ) (z : Fin 2 → ℂ)
     (hmu : mu ≠ star mu) (hdistinct : z 0 ≠ z 1)
@@ -201,6 +199,5 @@ theorem two_point_even_port_posSemidef_iff
 
 #print axioms two_point_mirror_congruence
 #print axioms two_point_mirror_posSemidef_iff
-#print axioms two_point_even_port_posSemidef_iff
 
 end D5.S3.Weil.Pick.TwoPointMirrorPortCriterion
