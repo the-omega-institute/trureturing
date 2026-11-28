@@ -1729,3 +1729,31 @@ categorical, their lifted contractions make the new pieces categorical
 at this same depth. The unconstrained connected mixed-interface
 extension remains open.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3)
+
+## Moving the anchor inside the cone base
+
+The exclusive faces can move before the apex is removed. On the
+second retained region, take an order fence from the identity through
+self-maps that send each wholly exclusive base face inside the
+actual cone base. Extend a row by coning each moved base face and
+fixing the apex. A retained point below a coned face is below its
+base, which makes this extension monotone. At the endpoint, insert
+an anchor spanning the moved faces in the second trace, then remove
+the apex. The resulting map lands in the second retained region.
+
+The two categorical point regions can have moving old points in
+their contractions. Two ordinary subdivisions still give exact old
+intersections. In the chain construction, require wholly old chains
+to lie in the prescribed old piece, and trim every chain to the
+points of its assigned region before applying the lifted categorical
+contraction.
+
+For a positively subdivided example, take the old path from vertex
+0 to vertex 6, the horn subpath from 0 to 4, and the two old regions
+from 4 to 6 and from 0 to 4. The exclusive subpath has disjoint
+edges `01` and `23`, so no vertex spans both. Folding 0 onto 1
+and then 1 onto 2 moves the exclusive subpath into the edge
+`23`, where vertex 3 serves as anchor. For general shellings the
+remaining problem is to find a compatible deformation in the
+retained piece for each new horn.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3)
