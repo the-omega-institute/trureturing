@@ -76,10 +76,17 @@ right side is $55/9$. The actual observations differ at $2$ and $3$.
 
 ## Triage
 
-The cubic ratio bound proves the full exponent family once the arithmetic
-bounds place the powered ratios in its domain. At $n=2,k=1$ the actual
-values are $(1,3,3)$ and both quotients are $55/9$. Equality classification
-over the full family remains open.
+The checked Lean module proves the inequality for the full exponent family.
+Equality holds exactly when $n$ is prime. For prime $n$,
+$\varphi(n)=n-1$ and $\psi(n)=\sigma(n)=n+1$, so $x=y=r$ and the two
+normalized quotients coincide. For composite $n$, a proper divisor
+$d$ with $1<d<n$ is among $1,\ldots,n-1$ and is excluded from the totient
+count. Thus $\varphi(n)<n-1$. Since $\psi(n)\geq n+1$ and $k\geq 1$,
+we have $y\geq x>r>1$. In the C4 decomposition of the normalized
+difference multiplied by $r^2xy>0$, the term
+$r(r^3-1)((x-r)+(y-r))$ is strictly positive and the remaining
+terms are nonnegative. This gives strict inequality for composite $n$.
+The equality classification is a separate formalization.
 
 ## ASSUMED-UNVERIFIED
 
