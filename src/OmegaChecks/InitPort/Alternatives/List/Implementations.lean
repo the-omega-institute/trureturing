@@ -30,6 +30,20 @@ public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.List.appendTR.eq
 
 public theorem List.filterMap_eq_filterMapTR : @_root_.List.filterMap = @List.filterMapTR := rfl
 
+public theorem List.filterMap_eq_filterMapTR.go.{v,u} :
+    type_of% (private_decl% @_root_.List.filterMap_eq_filterMapTR.go.{v,u}) := by
+  intro α β f xs acc
+  induction xs generalizing acc with
+  | nil => exact (_root_.List.append_nil _).symm
+  | cons x xs ih =>
+    simp only [_root_.List.filterMapTR.go, _root_.List.filterMap]
+    cases result : f x with
+    | none => exact ih acc
+    | some y =>
+      change _root_.List.filterMapTR.go f xs (acc.push y) = acc.toList ++ y :: xs.filterMap f
+      rw [ih, _root_.Array.toList_push, _root_.List.append_assoc]
+      rfl
+
 @[expose] public def List.mapTR : type_of% @_root_.List.mapTR := @_root_.List.map
 
 public theorem List.map_eq_mapTR : @_root_.List.map = @List.mapTR := rfl
