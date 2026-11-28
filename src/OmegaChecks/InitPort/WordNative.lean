@@ -30,7 +30,8 @@ public def install (names : Array Name) : CoreM Unit := do
   for n in names do
     unless (← getEnv).find? n matches some (.ctorInfo _) do
       modifyEnv fun e => privateConstKindsExt.insert e n .defn
-    let entry := (thunkExtern n).getD (symbol n)
+    let official := InitKernelPort.originalName n
+    let entry := ((thunkExtern n) <|> InitCompiler.RootNames.natBitwiseExtern? official).getD (symbol n)
     modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, ⟨[.standard `all entry]⟩)
     (← compileDeclsRef.get) #[n] {}
 
@@ -128,6 +129,11 @@ private def checkSliceLayout (source strict : Environment) : IO Unit := do
 /-- Check both sides of the call and generate its ownership conversions from their stored IR. -/
 public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let official := InitKernelPort.originalName n
+  if let some entry := InitCompiler.RootNames.natBitwiseExtern? official then
+    let args := #[(IR.IRType.tobject, true), (.tobject, true)]
+    verify source official args .tobject entry
+    verify strict n args .tobject entry
+    return ""
   if let some entry := thunkExtern official then
     let read := official == `Thunk.get
     let args := #[(IR.IRType.erased, false), (if read then .object else .tobject, read)]
