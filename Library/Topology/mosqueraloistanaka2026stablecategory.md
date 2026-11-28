@@ -58,6 +58,8 @@ strata_touched:
   - D5/S3/Topology/StableCategory/ShellingColourObstruction
   - D5/S3/Topology/StableCategory/CategoricalCoverFactorization
   - D5/S3/Topology/SimplicialNullhomotopyApproximation
+  - D5/S3/Topology/StableCategory/OrderComplexNullhomotopy
+  - D5/S3/Geometry/Gluing/RelativeDeformationRetract
 license: citation-only
 triage: anchor
 ---
@@ -1466,3 +1468,52 @@ of the mapping cylinder. The finite order homotopy and exact gluing
 are additional steps beyond the approximation formalized here.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
 [Non-Hausdorff mapping cylinders](https://arxiv.org/abs/1005.0538)
+
+## From realization nullhomotopies to finite order-map fences
+
+At each step on a nonempty chain, taking its maximum chooses a vertex
+in the original carrier. The same choice on a face sends the images
+of all its vertices to points below the image of its maximum. After
+fixed-target approximation and passage to face maps, taking the
+target maximum therefore gives the exact composite of the original
+order map with the repeated chain-maximum projection.
+`OrderComplexNullhomotopy` proves that this composite belongs to the
+fence class of a constant at every sufficiently large source depth.
+
+The mapping-cylinder proof also uses that a homotopy-equivalent
+inclusion of a finite realized subcomplex is a strong deformation
+retract. `RelativeDeformationRetract` formalizes this step using
+subcomplex homotopy extension twice. The first extension obtains a
+strict retraction. The second extends an out-and-back path contraction
+in the compact-open path space, so the deformation fixes the
+subcomplex pointwise. Identifying the realized maximum projection
+with the subdivision homeomorphism up to homotopy, and assembling
+the finite cylinders, remain separate parts of the factorization.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Non-Hausdorff mapping cylinders](https://arxiv.org/abs/1005.0538)
+
+## Prescribed subdivision depths in coherent four-balls
+
+For each depth \(d\), there is a coherent triangulation \(T\) of a
+four-simplex with \(\operatorname{cat}(F(\operatorname{sd}^d T))\ge 3\).
+The construction surrounds a retained torus by a layered radial collar,
+refines the far collar with the torus fixed, and then embeds the cone on
+the torus as an exact simplicial retract of a coherent simplex
+triangulation. A contiguity contraction either stays in the collar or
+has a last row before first exit. In that row, the projected image of
+each torus component fits inside one open vertex star. A categorical
+two-cover would therefore give two topologically categorical pieces
+of the torus, whose coordinate classes have nonzero cup product.
+
+The same proof with a product of \(k\) circles gives a lower bound of
+\(k+1\) in dimension \(2k\) at each prescribed depth. One extra
+subdivision gives collapsible flag examples by Adiprasito and Benedetti.
+A partition of the vertices into \(k\) categorical induced subcomplexes
+yields an actual cover after one more subdivision, using the regions
+of faces that meet each colour. Thus neither such a partition nor a
+categorical cover has a uniform depth bound in this class. The example
+varies with the prescribed depth. The existence of a suitable depth
+for each individual input is the remaining question. These lower
+bounds are proved at the paper level.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Collapsibility of barycentric subdivisions](https://arxiv.org/html/1709.07930#S4.SSx1.Thmtheorem3)
