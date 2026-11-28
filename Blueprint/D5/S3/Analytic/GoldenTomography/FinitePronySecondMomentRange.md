@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Analytic/GoldenTomography/FinitePronySecondMomentRange.fi
 
 *Commentary.*
 
-Over a linearly ordered field, let distinct nodes in the open interval (a, b) have positive weights of total mass M. Their first moment M times x forces a < x < b. For each such x, the feasible second moments run from M times x squared, inclusive, to M times the quantity (a + b) x minus a b, exclusive. A realizing family has one node if and only if its second moment equals the lower endpoint. Each interior second moment admits a two-node family. The minimum number of nodes realizing the full moment triple is one at the lower endpoint and two in the interior.
+Over a linearly ordered field, fix a total mass M > 0. Let a finite family of distinct nodes in the open interval (a, b) have positive weights with that total mass. Their first moment M times x forces a < x < b. For each such x, the feasible second moments run from M times x squared, inclusive, to M times the quantity (a + b) x minus a b, exclusive. A realizing family has one node if and only if its second moment equals the lower endpoint. Each interior second moment admits a two-node family. The minimum number of nodes realizing the full moment triple is one at the lower endpoint and two in the interior.
 
 The weighted sums of distances to the left and right endpoints are M times (x − a) and M times (b − x). Positive mass supplies at least one node, so these sums are strictly positive. The weighted sum of squared distances from the mean gives the lower slack. If it vanishes, positivity forces every node to equal the mean. The upper slack is the weighted sum of the products of the two distances from each node to the interval endpoints. Every summand is positive.
 

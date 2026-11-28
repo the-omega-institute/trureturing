@@ -13,8 +13,9 @@ internal sealed class FinitePronySecondMomentRangeDocument : IScribeDocumentDefi
             H("The second-moment interval and the minimum node count"),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(
-                Paragraph(Text("Over a linearly ordered field, let distinct nodes in the open interval (a, b) "
-                    + "have positive weights of total mass M. Their first moment M times x "
+                Paragraph(Text("Over a linearly ordered field, fix a total mass M > 0. Let a finite family "
+                    + "of distinct nodes in the open interval (a, b) have positive weights "
+                    + "with that total mass. Their first moment M times x "
                     + "forces a < x < b. For each such x, the feasible second moments run "
                     + "from M times x squared, inclusive, to M times the quantity "
                     + "(a + b) x minus a b, exclusive. A realizing family "
