@@ -1,5 +1,5 @@
 import D5.S3.Quantum.QuantumChannels.CouplingWassersteinTriangleRefutation
-import D5.S3.Quantum.Analysis.NullConeGravity.PureGNSExtensionSectors
+import D5.S3.Quantum.Foundation.TrigonometricMomentGap
 import D5.S3.Quantum.Foundation.FiniteHermitianTraceDuality
 
 /-!
@@ -593,6 +593,61 @@ theorem finite_attainment_of_compact_hull {ρ σ : Matrix (Fin n) (Fin n) ℂ}
 
 #print axioms convexHull_realized_as_plan
 #print axioms finite_attainment_of_compact_hull
+
+local instance : TopologicalSpace (UnitVector n) :=
+  inferInstanceAs (TopologicalSpace {v : Fin n → ℂ // ∑ i, Complex.normSq (v i) = 1})
+
+private theorem unitVector_compact : CompactSpace (UnitVector n) := by
+  let S : Set (Fin n → ℂ) := {v | ∑ i, Complex.normSq (v i) = 1}
+  change CompactSpace S
+  apply isCompact_iff_compactSpace.mp
+  have hc : Continuous fun v : Fin n → ℂ => ∑ i, Complex.normSq (v i) :=
+    continuous_finset_sum _ fun i _ => Complex.continuous_normSq.comp (continuous_apply i)
+  have hclosed : IsClosed S := isClosed_eq hc continuous_const
+  have hcompact : IsCompact (Set.pi Set.univ fun _ : Fin n => Metric.closedBall (0 : ℂ) 1) :=
+    isCompact_univ_pi fun _ => isCompact_closedBall _ _
+  refine hcompact.of_isClosed_subset hclosed ?_
+  intro v hv i _
+  have hs : ∑ j, Complex.normSq (v j) = 1 := hv
+  have hi := Finset.single_le_sum (f := fun j => Complex.normSq (v j))
+    (fun j _ => Complex.normSq_nonneg (v j)) (Finset.mem_univ i)
+  rw [hs, Complex.normSq_eq_norm_sq] at hi
+  exact Metric.mem_closedBall.mpr (by rw [dist_zero_right]; nlinarith [norm_nonneg (v i)])
+
+private theorem continuous_pureMoment :
+    Continuous (fun xy : UnitVector n × UnitVector n => pureMoment xy.1 xy.2) := by
+  have hρ : Continuous fun x : UnitVector n => rankOneDensity x.val := by
+    apply continuous_pi
+    intro i
+    apply continuous_pi
+    intro j
+    simp only [rankOneDensity, vecMulVec_apply, Pi.star_apply]
+    exact ((continuous_apply i).comp continuous_subtype_val).mul
+      ((continuous_apply j).comp continuous_subtype_val).star
+  have hground : Continuous fun xy : UnitVector n × UnitVector n => ground xy.1 xy.2 := by
+    unfold ground
+    apply Real.continuous_sqrt.comp
+    apply continuous_const.sub
+    apply Complex.continuous_normSq.comp
+    exact continuous_finset_sum _ fun i _ =>
+      (((continuous_apply i).comp continuous_subtype_val).comp continuous_fst).star.mul
+        (((continuous_apply i).comp continuous_subtype_val).comp continuous_snd)
+  exact (hρ.comp continuous_fst).prodMk ((hρ.comp continuous_snd).prodMk hground)
+
+private theorem pureMoments_compact : IsCompact (pureMoments n) := by
+  haveI : CompactSpace (UnitVector n) := unitVector_compact
+  exact isCompact_range continuous_pureMoment
+
+open D5.S3.Quantum.Foundation.TrigonometricMomentGap (compact_hull)
+
+/-- Every inhabited plan space has a finitely supported minimizer of its
+original countable-plan infimum. -/
+theorem finite_attainment {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q₀ : Plan ρ σ) :
+    ∃ Q : Plan ρ σ, (∃ s : Finset ℕ, ∀ j ∉ s, Q.weight j = 0) ∧ cost Q = wasserstein ρ σ :=
+  finite_attainment_of_compact_hull Q₀
+    (compact_hull pureMoments_compact ⟨_, ⟨(Q₀.source 0, Q₀.target 0), rfl⟩⟩)
+
+#print axioms finite_attainment
 
 private def phaseX : UnitVector 2 :=
   ⟨![4 / 5, (3 / 5) * Complex.I], by
