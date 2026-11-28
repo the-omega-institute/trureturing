@@ -184,6 +184,12 @@ public theorem Pattern.Model.find?_eq_none_iff._proof_1_7 :
   intro ρ pat model s absent pos yes
   exact (absent pos yes).elim
 
+public theorem Pattern.Model.find?_eq_none_iff._proof_1_8 :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.find?_eq_none_iff._proof_1_8) := by
+  intro ρ pat model s descend x earlier here
+  obtain ⟨y, less, hit⟩ := descend x here
+  exact earlier y less hit
+
 end OmegaChecks.InitPort.Alternatives.String.Slice
 
 namespace OmegaChecks.InitPort.Alternatives.String
