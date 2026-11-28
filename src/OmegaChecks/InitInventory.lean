@@ -601,15 +601,57 @@ private def checkedTypeAxioms (official : Environment) (info : ConstantInfo)
     | .ok _ => throwError "the unchanged type of {info.name} checked without {name}"
   return direct
 
-/-- Check the pinned type in the strict public environment using only the ordinary name
-translation. The comparison uses each defining site's actual universe binders. -/
-private def originalTypeGap? (strict : Environment) (source target : ConstantInfo) : Option String := Id.run do
+/-- The proof in `fun i h => Fin.mk i proof`, and the single occurrence where it is used. -/
+private structure FinBoundSite where
+  proof : Expr
+  closedProof : Expr
+  replaceProof : Expr → Expr
+
+private def finBoundSite? (rename : Name → Name) (type : Expr) : Option FinBoundSite := do
+  if let .forallE n d b bi := type then
+    let site ← finBoundSite? rename b
+    return {site with
+      closedProof := .lam n d site.closedProof bi
+      replaceProof := fun proof => .forallE n d (site.replaceProof proof) bi}
+  let .app lhs rhs := type | none
+  guard (type.isAppOfArity (rename ``Eq) 3 && rhs.isAppOfArity (rename ``Option.pmap) 6)
+  let args := rhs.getAppArgs
+  let .lam i idom (.lam h hdom (.app mkFin proof) hbi) ibi := args[3]! | none
+  guard (mkFin.isAppOfArity (rename ``Fin.mk) 2 && mkFin.appArg! == .bvar 1)
+  let bind := fun body => Expr.lam i idom (.lam h hdom body hbi) ibi
+  let replaceProof := fun p => mkApp lhs (mkAppN rhs.getAppFn (args.set! 3 (bind (.app mkFin p))))
+  return { proof, closedProof := bind proof, replaceProof }
+
+/-- The two search equations use choice inside the proof of a Fin bound. Compare the
+complete, binder-closed proof types and recheck the single replacement in both kernels. -/
+private def checkedFinBound (official strict : Environment) (owner name : Name)
+    (pinned target : Expr) : Bool := (Option.isSome <| do
+  guard ((owner == `Init.Data.Array.Find && name == ``Array.findFinIdx?_eq_pmap_findIdx?) ||
+    (owner == `Init.Data.List.Find && name == ``List.findFinIdx?_eq_pmap_findIdx?))
+  let src ← finBoundSite? id pinned
+  let dst ← finBoundSite? InitKernelPort.portName target
+  let prop ← (Kernel.check official {} src.closedProof).toOption
+  let strictProp ← (Kernel.check strict {} dst.closedProof).toOption
+  guard ((← (Kernel.check official {} prop).toOption).isProp &&
+    (← (Kernel.check strict {} strictProp).toOption).isProp)
+  let translate := InitKernelPort.translate InitKernelPort.portName
+  guard (Kernel.isDefEqGuarded strict {} (translate prop) strictProp)
+  let revised := src.replaceProof (InitKernelPort.translate InitKernelPort.originalName dst.proof)
+  guard ((Kernel.check official {} revised).isOk && Kernel.isDefEqGuarded official {} pinned revised)
+  let expected := translate revised
+  guard ((Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target))
+
+/-- Check the pinned type in the strict public environment with the original universe
+binders. A Fin bound proof may be replaced only after checking proof irrelevance. -/
+private def originalTypeGap? (official strict : Environment) (owner : Name)
+    (source target : ConstantInfo) : Option String := Id.run do
   if source.numLevelParams != target.numLevelParams then return some "universe parameter count"
-  let expected := InitKernelPort.translate InitKernelPort.portName
-    (source.type.instantiateLevelParams source.levelParams (target.levelParams.map Level.param))
+  let pinned := source.type.instantiateLevelParams source.levelParams (target.levelParams.map Level.param)
+  let expected := InitKernelPort.translate InitKernelPort.portName pinned
   if expected.equal target.type then return none
   let missing := (expected.getUsedConstants.filter (fun n => !strict.contains n)).qsort Name.lt
   unless missing.isEmpty do
+    if checkedFinBound official strict owner source.name pinned target.type then return none
     return some ("missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString))
   if (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target.type then
     return none
@@ -795,7 +837,7 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
           throwError "invalid public, private or native effect runner {strictName}"
         if name == `unsafeBaseIO then OmegaChecks.InitPort.EffectRun.checkWorld full.toKernelEnv
       let strictOwner := if matched then some expected else none
-      let typeGap := strictInfo.bind (originalTypeGap? strict info)
+      let typeGap := strictInfo.bind (originalTypeGap? official strict owner info)
       if matched && typeGap.isNone then originalTypes := originalTypes + 1
       if matched then
         matchingNames := matchingNames + 1
