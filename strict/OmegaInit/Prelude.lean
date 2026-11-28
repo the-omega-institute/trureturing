@@ -829,20 +829,9 @@ namespace Nat.zero
 export _root_.Omega.Nat.zero (elim)
 end Nat.zero
 
-port_proof Nat.lt_of_lt_of_le
-port_proof Nat.lt_add_one
 
-port_definition GE.ge
-port_definition Nat.eq_or_lt_of_le._f
-port_proof Nat.eq_or_lt_of_le
-port_proof Nat.le_succ_of_le
-port_definition Nat.lt_or_ge._f
-port_proof Nat.lt_or_ge
 port_definition GT.gt
 port_proof Nat.lt_trans
 port_proof decide_eq_false
 port_proof of_decide_eq_true
-port_proof Nat.lt_succ_self
-port_proof Nat.not_lt_zero
-port_proof Nat.le_of_lt_succ
 port_proof Nat.brecOn.eq
