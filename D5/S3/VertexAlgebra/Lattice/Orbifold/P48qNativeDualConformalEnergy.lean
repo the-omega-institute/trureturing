@@ -32,7 +32,7 @@ open HalfFockSpectralFiberSource (actualInverse actualInverse_left actualInverse
 open LatticeActualConformalState (omega)
 open LatticeActualConformalWard (omega_product)
 open LatticeSugawaraCurrents (sugawaraMode)
-open P48qAllJetWickField (nativeField)
+open P48qAllJetWickField (NativeStates nativeField)
 open P48qCubicMonodromy
   (conformalMonodromy conformalMonodromy_totalLZero_eigenvector conformalMonodromy_cube)
 open P48qFiniteEnergyEigenspaces (totalLZero_eigenspace_finiteDimensional)
@@ -50,6 +50,8 @@ open private gram_det_unit from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConformalVectorDecomposition
 open private source_conformal_products_checked from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeVirasoro
+open private gradingRotation_any_coeff from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeModeProductSpan
 
 noncomputable section
 
@@ -139,6 +141,73 @@ theorem gradedPairing_dual_conformal_monodromy (f : RestrictedDual) (v : State) 
   simpa only [LinearMap.comp_apply, hAssemble] using
     LinearMap.congr_fun hState (stateDecompose v)
 
+/-! The unnormalized coefficient covariance, first for a homogeneous source. -/
+theorem dual_conformal_monodromy_coeff_of_weight (a : NativeStates) (d : ℕ)
+    (ha : L₀ a = (d : ℂ) • a) (k : ℤ) :
+    dualConformalMonodromy * C (dualField a) k =
+      (ThirdTwistedChargeCocycle.zeta : ℂ) ^ k •
+        (C (dualField a) k * dualConformalMonodromy) := by
+  apply LinearMap.ext
+  intro f
+  apply gradedPairing_ext
+  intro w v
+  let ell (j : ℕ) : ℤ := -k - 6 * (d : ℤ) + 3 * (j : ℤ)
+  let readout : Module.End ℂ State :=
+    (-1 : ℂ) ^ d • ∑ j ∈ Finset.range (d + 1),
+      (j.factorial : ℂ)⁻¹ • bpzTerm a d k j
+  have hTerm (j : ℕ) :
+      conformalMonodromy * bpzTerm a d k j =
+        (ThirdTwistedChargeCocycle.zeta : ℂ) ^ ell j •
+          (bpzTerm a d k j * conformalMonodromy) := by
+    rw [conformalMonodromy]
+    simp only [bpzTerm, smul_mul_assoc, mul_smul_comm, smul_smul]
+    rw [gradingRotation_any_coeff ((sugawaraMode lattice (actualInverse lattice) 1 ^ j) a)
+      (ell j)]
+    rw [smul_smul, mul_comm (Complex.exp _) _]
+  have hReadout :
+      readout * conformalMonodromy =
+        (ThirdTwistedChargeCocycle.zeta : ℂ) ^ k •
+          (conformalMonodromy * readout) := by
+    simp only [readout, smul_mul_assoc, mul_smul_comm, smul_smul, hTerm,
+      Finset.smul_sum, Finset.mul_sum, Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro j hj
+    have hζ :
+        (ThirdTwistedChargeCocycle.zeta : ℂ) ^ k *
+            (ThirdTwistedChargeCocycle.zeta : ℂ) ^ ell j = 1 := by
+      rw [← zpow_add₀ (Units.ne_zero ThirdTwistedChargeCocycle.zeta)]
+      apply ((IsPrimitiveRoot.coe_units_iff.mpr ThirdTwistedChargeCocycle.zeta_primitive :
+        IsPrimitiveRoot (ThirdTwistedChargeCocycle.zeta : ℂ) 3).zpow_eq_one_iff_dvd _).mpr
+      dsimp only [ell]
+      use -2 * (d : ℤ) + (j : ℤ)
+      ring
+    let z : ℂ := ThirdTwistedChargeCocycle.zeta
+    let c : ℂ := (-1) ^ d * (j.factorial : ℂ)⁻¹
+    have hScalar : z ^ k * (c * z ^ ell j) = c := by
+      calc
+        z ^ k * (c * z ^ ell j) = c * (z ^ k * z ^ ell j) := by ring
+        _ = c := by rw [show z ^ k * z ^ ell j = 1 from hζ, mul_one]
+    change c • (bpzTerm a d k j * conformalMonodromy) =
+      (z ^ k * (c * z ^ ell j)) • (bpzTerm a d k j * conformalMonodromy)
+    rw [hScalar]
+  simp only [Module.End.mul_apply, LinearMap.smul_apply, map_smul]
+  change gradedPairing (dualConformalMonodromy (C (dualField a) k f)) v =
+    (ThirdTwistedChargeCocycle.zeta : ℂ) ^ k •
+      gradedPairing (C (dualField a) k (dualConformalMonodromy f)) v
+  rw [gradedPairing_dual_conformal_monodromy]
+  rw [gradedPairing_dualField_coeff a d ha k f (conformalMonodromy v)]
+  rw [gradedPairing_dualField_coeff a d ha k (dualConformalMonodromy f) v]
+  have hApply (x : State) : readout x =
+      (-1 : ℂ) ^ d • ∑ j ∈ Finset.range (d + 1), (j.factorial : ℂ)⁻¹ • bpzTerm a d k j x := by
+    simp only [readout, LinearMap.smul_apply, LinearMap.sum_apply]
+  rw [← hApply (conformalMonodromy v), ← hApply v]
+  change gradedPairing f ((readout * conformalMonodromy) v) =
+    (ThirdTwistedChargeCocycle.zeta : ℂ) ^ k •
+      gradedPairing (dualConformalMonodromy f) (readout v)
+  rw [hReadout]
+  simp only [LinearMap.smul_apply, Module.End.mul_apply, map_smul, smul_eq_mul]
+  rw [gradedPairing_dual_conformal_monodromy]
+
 /-- The cube of the positive dual rotation is the same third-root scalar
 as on the native state space. -/
 theorem dualConformalMonodromy_cube :
@@ -157,7 +226,8 @@ theorem dualConformalMonodromy_cube :
       simp only [conformalMonodromy_cube, LinearMap.smul_apply, Module.End.one_apply, map_smul]
 
 run_cmd do
-  for name in [``gradedPairing_dual_conformal_monodromy, ``dualConformalMonodromy_cube] do
+  for name in [``gradedPairing_dual_conformal_monodromy,
+      ``dual_conformal_monodromy_coeff_of_weight, ``dualConformalMonodromy_cube] do
     let axioms ← Lean.collectAxioms name
     unless axioms.all (fun ax => [``propext, ``Classical.choice, ``Quot.sound].contains ax) do
       throwError "Unexpected axiom closure for {name}: {axioms}"
