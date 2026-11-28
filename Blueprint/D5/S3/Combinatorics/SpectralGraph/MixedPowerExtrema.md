@@ -10,6 +10,10 @@ $$\forall (V : \operatorname{Type} u), \forall [\operatorname{Fintype}\left(V\ri
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/MixedPowerExtrema.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/das-ashni-sangeetha-2026-mixed-power-extrema` (proved) by `D5/S3/Combinatorics/SpectralGraph/MixedPowerExtrema.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"das-ashni-sangeetha-2026-mixed-power-extrema","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/MixedPowerExtrema.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Joyentanuj Das; Anto Jerrin Ashni R; Sangeetha C (2026). *Extremal adjacency and distance spectral radii of graph powers*. DOI: [10.48550/arXiv.2611.29397](https://doi.org/10.48550/arXiv.2611.29397). URL: <https://arxiv.org/abs/2611.29397v1>.

@@ -21,7 +21,10 @@ internal sealed class MixedPowerExtremaDocument : IScribeDocumentDefinition
             Blocks(
                 Paragraph(Text("Question 5.1 in Das–Ashni–Sangeetha, arXiv:2611.29397v1, printed p. 17, asks for the extrema of the largest eigenvalue of the mixed degree–adjacency matrix of a graph power. Both matrices use the power graph. The existing graphPower joins distinct vertices at base distance at most k on connected graphs. The OmegaMath theorem mixedTop_isGreatest identifies mixedTop with the greatest element of the real matrix spectrum.")),
                 Paragraph(Text("A spanning tree reduces the lower bound to trees. Reflected coordinates compare the edge energies under a terminal-leaf transfer, and a sum of rooted distance deficits gives a finite descent to a path. The last transfer is strict for a nonpath tree above the complete-power range. A chord on a spanning path gives an extra power edge. For the upper equality, strict spectral monotonicity and the complete graph's row sum identify exactly the complete powers."))),
-            DescribeRole.Theorem)),
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("das-ashni-sangeetha-2026-mixed-power-extrema"),
+                ResolutionKind.Proved))),
         []));
 
     private static Formula ResultFormula()
