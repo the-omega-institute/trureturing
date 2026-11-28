@@ -16,4 +16,7 @@ port_definition Lean.Grind.Ring.OfSemiring.npow.match_1 with_native_code
 Q.exact and toQ_inj have constructive proofs under the additional hypotheses
 in OmegaChecks.InitBoundaries.RingEnvelopeExact. The canonical quotient lifts
 for add, sub, mul and neg require identifying the classes of (1, 1) and (0, 0).
-OmegaChecks.InitBoundaries.EnvelopeCancellation checks these obligations. -/
+OmegaChecks.InitBoundaries.EnvelopeCancellation checks these obligations.
+The public types of instIsPreorderQ and instOrderedAddQ fix the unrestricted quotient
+comparison. Its representative coherence is equivalent to propext at universe zero
+by propextFromRingLift and ringLiftFromPropext in OmegaChecks.InitBoundaries.EnvelopeOrder. -/

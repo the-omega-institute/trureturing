@@ -130,13 +130,9 @@ theorem propextFromModuleLift (respect : type_of% @IntModule.OfNatModule.instLEQ
   exact @respect Bool xorNatModule (testLE p q) (testPreorder p q) ordered
     (false,false) (true,false) (true,true) (true,false) ⟨false,rfl⟩ ⟨false,rfl⟩
 
-/-- Propositional extensionality suffices to lift the representative comparison at every universe. -/
-theorem moduleLiftFromPropext (ext : type_of% @propext) :
-    type_of% @IntModule.OfNatModule.instLEQOfOrderedAdd._proof_3.{u} := by
-  intro α module order preorder ordered ⟨a, b⟩ ⟨e, f⟩ ⟨c, d⟩ ⟨g, h⟩ ⟨k, first⟩ ⟨l, second⟩
-  change a + d + k = b + c + k at first
-  change e + h + l = f + g + l at second
-  change (a + f ≤ b + e) = (c + h ≤ d + g)
+private theorem compareRepresentatives {α : Type u} [NatModule α] [LE α] [IsPreorder α] [OrderedAdd α]
+    {a b c d e f g h k l : α} (first : a + d + k = b + c + k) (second : e + h + l = f + g + l) :
+    (a + f ≤ b + e) ↔ (c + h ≤ d + g) := by
   have regroup (a b c d x y : α) :
       (a + b) + ((c + x) + (d + y)) = ((a + c) + x) + ((b + d) + y) :=
     let rotate := congrArg (a + ·) (AddCommMonoid.add_left_comm b (c + x) (d + y))
@@ -153,10 +149,21 @@ theorem moduleLiftFromPropext (ext : type_of% @propext) :
       ((flipPairs b e c h k l).trans (regroup c h b e k l).symm))
   have right : (b + e) + ((d + k) + (g + l)) = (d + g) + ((b + k) + (e + l)) :=
     (regroup b e d g k l).trans ((flipPairs b e d g k l).trans (regroup d g b e k l).symm)
-  apply ext
   exact (OrderedAdd.add_le_left_iff ((d + k) + (g + l))).trans
     ((Iff.of_eq (congr (congrArg (· ≤ ·) left) right)).trans
       (OrderedAdd.add_le_left_iff ((b + k) + (e + l))).symm)
+
+/-- Propositional extensionality suffices to lift the representative comparison at every universe. -/
+theorem moduleLiftFromPropext (ext : type_of% @propext) :
+    type_of% @IntModule.OfNatModule.instLEQOfOrderedAdd._proof_3.{u} := by
+  intro α module order preorder ordered ⟨a, b⟩ ⟨e, f⟩ ⟨c, d⟩ ⟨g, h⟩ ⟨k, first⟩ ⟨l, second⟩
+  exact ext (compareRepresentatives first second)
+
+/-- The semiring's additive module has the same representative relation and comparison. -/
+theorem ringLiftFromPropext (ext : type_of% @propext) :
+    type_of% @Ring.OfSemiring.instLEQOfOrderedAdd._proof_1.{u} := by
+  intro α ring order preorder ordered ⟨a, b⟩ ⟨e, f⟩ ⟨c, d⟩ ⟨g, h⟩ ⟨k, first⟩ ⟨l, second⟩
+  exact ext (compareRepresentatives first second)
 
 /-- Cancellation identifies the diagonal Boolean representative with zero. -/
 private theorem diagonalEq {A : Type} (mk : Bool × Bool → A)
