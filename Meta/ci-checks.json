@@ -3,6 +3,12 @@
   "checks": [
     {
       "id": "SL-003",
+      "directory_capacity_exempt_roots": [
+        "OmegaMathlib",
+        "src/OmegaMathlib",
+        "src/OmegaMath",
+        "src/OmegaChecks/InitPort"
+      ],
       "materials": [
         "global.json",
         "Directory.Build.props",
@@ -19,6 +25,7 @@
         "*.lean",
         "D5/**/*.lean",
         "src/**/*.lean",
+        "OmegaMathlib/**/*.lean",
         "Reg/**",
         "Meta/domains.yaml"
       ],

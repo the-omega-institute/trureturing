@@ -13,7 +13,7 @@ CHECK_INPUTS = {AUDIT, CERTIFICATE, "OmegaChecks.Portable.Exports", "OmegaChecks
                 "OmegaBuild.Commands", "OmegaBuild.Plan"}
 SHARED = {"lean-toolchain", "lakefile.toml", "lake-manifest.json",
           "src/OmegaChecks/check.py", "src/OmegaChecks/audit_cache.py", "src/OmegaChecks/portable.py",
-          "src/OmegaChecks/scope.py", "src/OmegaChecks/strict_lake.py",
+          "src/OmegaChecks/scope.py", "src/OmegaChecks/strict_lake.py", "src/OmegaChecks/hosted.py",
           "src/OmegaChecks/test_backend_plan.py", "src/OmegaChecks/test_backend_scheduling.py"}
 REG_INPUTS = {"Reg/lakefile.toml", "Reg/lake-manifest.json", "Meta/tools-release.json"}
 FIBONACCI = "OmegaMathlib.Data.Nat.Fib.Basic"
@@ -25,12 +25,12 @@ REPORT_DIR = ".lake/build/omega-checks/"
 def module_path(path):
     if not path.endswith(".lean"):
         return None
-    if path == "Trureturing.lean" or path.startswith(("D5/", "Reg/")):
+    if path in {"Trureturing.lean", "OmegaMathlib.lean"} or path.startswith(("D5/", "Reg/", "OmegaMathlib/")):
         return path.removesuffix(".lean").replace("/", ".")
     if path.startswith(("src/", "strict/")):
         directory, _, relative = path.partition("/")
         name = relative.removesuffix(".lean").replace("/", ".")
-        if root(name) in (CHECK_ROOTS | {"OmegaBuild"} if directory == "src" else BASIS):
+        if root(name) in (CHECK_ROOTS | {"OmegaBuild"} if directory == "src" else {"OmegaInit"}):
             return name
     return None
 
@@ -75,7 +75,8 @@ def discover(changed_file):
     paths = set(raw.decode().split("\0")) - {""}
     changed = {path: name for path in paths if (name := module_path(path))}
     shared = (paths & SHARED) | {path for path in paths if path == "src/OmegaChecks/InitCompiler.lean"
-                                or path.startswith(("src/OmegaChecks/InitCompiler/", "src/OmegaChecks/InitPort/"))}
+                                or path.startswith(("src/OmegaChecks/InitCompiler/", "src/OmegaChecks/InitPort/",
+                                                    "strict/OmegaChecks/InitPort/"))}
     reg_inputs = paths & REG_INPUTS
     if not (changed or shared or reg_inputs):
         return plan({}, {}, set(), set(), [], [])

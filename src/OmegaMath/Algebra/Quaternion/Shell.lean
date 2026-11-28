@@ -160,7 +160,7 @@ private theorem mk_mul_self (x y z : Int) :
     let a := Quaternion.mk Int.zero x y z
     Eq (a.mul a) (scalar (a.dot a).neg) :=
   let values := triple x y z .nil
-  let A := pure Nat.zero
+  let A := ShellCertificate.pure Nat.zero
   let lhs := A.mul A
   let rhs := Coordinates.scalar (A.dot A).neg
   ext (lhs.w.sound rhs.w values rfl) (lhs.x.sound rhs.x values rfl)
@@ -238,8 +238,8 @@ private theorem compress_pairs_mk (α s x1 x2 x3 y1 y2 y3 : Int) :
   let values := Values.cons α (Values.cons s (triple x1 x2 x3 (triple y1 y2 y3 .nil)))
   let A := Expr.var Nat.zero
   let S := Expr.var Nat.zero.succ
-  let P := pure Nat.zero.succ.succ
-  let Q := pure n5
+  let P := ShellCertificate.pure Nat.zero.succ.succ
+  let Q := ShellCertificate.pure n5
   let C := cfst A (Coordinates.scalar S) Q (Coordinates.scalar S) P
   let D := csnd (Coordinates.scalar S) Q (Coordinates.scalar S) P
   let T := (S.mul S).add (A.mul (P.dot Q))
@@ -333,9 +333,9 @@ private theorem triangle_pairs_mk (α s x1 x2 x3 y1 y2 y3 z1 z2 z3 : Int) :
     (triple x1 x2 x3 (triple y1 y2 y3 (triple z1 z2 z3 .nil))))
   let A := Expr.var Nat.zero
   let s' := Expr.var Nat.zero.succ
-  let P := pure Nat.zero.succ.succ
-  let Q := pure n5
-  let R := pure n3.succ.succ.succ.succ.succ
+  let P := ShellCertificate.pure Nat.zero.succ.succ
+  let Q := ShellCertificate.pure n5
+  let R := ShellCertificate.pure n3.succ.succ.succ.succ.succ
   let S := Coordinates.scalar s'
   let S' := Coordinates.scalar s'.neg
   let C1 := cfst A S R S P
@@ -497,8 +497,8 @@ private theorem defect_facts_mk (d s q1 q2 q3 a1 a2 a3 : Int) :
   let values := Values.cons d (Values.cons s (triple q1 q2 q3 (triple a1 a2 a3 .nil)))
   let D := Expr.var Nat.zero
   let S := Expr.var Nat.zero.succ
-  let Q := pure Nat.zero.succ.succ
-  let A := pure n5
+  let Q := ShellCertificate.pure Nat.zero.succ.succ
+  let A := ShellCertificate.pure n5
   let W := fun V : Coordinates => (cshell S.neg Q A V).scale D
   let one' := Coordinates.scalar Expr.one
   let two := Expr.one.add Expr.one
@@ -517,8 +517,8 @@ private theorem defect_zero_mk (s q1 q2 q3 a1 a2 a3 : Int) :
     defectZero s (Quaternion.mk Int.zero q1 q2 q3) (Quaternion.mk Int.zero a1 a2 a3) :=
   let values := Values.cons s (triple q1 q2 q3 (triple a1 a2 a3 .nil))
   let S := Expr.var Nat.zero
-  let Q := pure Nat.zero.succ
-  let A := pure n4
+  let Q := ShellCertificate.pure Nat.zero.succ
+  let A := ShellCertificate.pure n4
   let xi := (csub czero (cunitI.mul czero)).mul A.conj
   let xj := (csub czero (cunitJ.mul czero)).mul A.conj
   And.intro ((cdefectS S Q A czero czero czero).sound .zero values rfl)
@@ -637,9 +637,9 @@ private theorem alt_prod_mk (x1 x2 x3 y1 y2 y3 z1 z2 z3 : Int) :
     let d3 := (d.add d).add d
     Eq (altProd p q r) (scalar (d3.add d3).neg) :=
   let values := triple x1 x2 x3 (triple y1 y2 y3 (triple z1 z2 z3 .nil))
-  let P := pure Nat.zero
-  let Q := pure n3
-  let R := pure (n3.add n3)
+  let P := ShellCertificate.pure Nat.zero
+  let Q := ShellCertificate.pure n3
+  let R := ShellCertificate.pure (n3.add n3)
   let D := P.dot (Q.mul R)
   let D3 := (D.add D).add D
   let lhs := caltProd P Q R

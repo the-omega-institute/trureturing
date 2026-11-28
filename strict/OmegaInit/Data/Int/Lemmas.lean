@@ -11,13 +11,17 @@ import OmegaInit.Data.Nat.Lemmas
 
 @[expose] public section
 
-attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat
-
 namespace Omega.Int
 
+private def ofDifferences (positive negative : Nat) : Int :=
+  negOfNat.match_1 (fun _ => Int) negative (fun _ => ofNat positive) negSucc
+
 private theorem subNatNat_zero (a : Nat) : Eq (subNatNat a Nat.zero) (ofNat a) :=
-  Nat.rec (motive := fun a => Eq (subNatNat a Nat.zero) (ofNat a))
-    rfl (fun _ _ => rfl) a
+  congrArg (ofDifferences a) (Nat.zero_sub a)
+
+private theorem cancelSuccessors (m n : Nat) : Eq (subNatNat m.succ n.succ) (subNatNat m n) :=
+  (congrArg (fun d => ofDifferences d (Nat.sub n.succ m.succ)) (Nat.succ_sub_succ m n)).trans
+    (congrArg (ofDifferences (Nat.sub m n)) (Nat.succ_sub_succ n m))
 
 protected theorem subNatNat_eq_coe {m n : Nat} :
     Eq (subNatNat m n) ((ofNat m).sub (ofNat n)) :=
@@ -28,10 +32,11 @@ protected theorem subNatNat_eq_coe {m n : Nat} :
 theorem subNatNat_add_add (m n k : Nat) :
     Eq (subNatNat (m.add k) (n.add k)) (subNatNat m n) :=
   Nat.rec (motive := fun k => Eq (subNatNat (m.add k) (n.add k)) (subNatNat m n))
-    rfl (fun _ ih => ih) k
+    rfl (fun k ih => (cancelSuccessors (m.add k) (n.add k)).trans ih) k
 
 theorem subNatNat_self (n : Nat) : Eq (subNatNat n n) (ofNat Nat.zero) :=
-  Nat.rec (motive := fun n => Eq (subNatNat n n) (ofNat Nat.zero)) rfl (fun _ ih => ih) n
+  Nat.rec (motive := fun n => Eq (subNatNat n n) (ofNat Nat.zero))
+    rfl (fun n ih => (cancelSuccessors n n).trans ih) n
 
 /-- Split a natural difference according to which argument has the excess. -/
 @[elab_as_elim] theorem subNatNat_elim (m n : Nat) (motive : Nat → Nat → Int → Prop)
@@ -47,13 +52,15 @@ theorem subNatNat_self (n : Nat) : Eq (subNatNat n n) (ofNat Nat.zero) :=
       (fun i _ => Eq.subst (motive := fun y => P Nat.zero y (negSucc i))
         (Nat.zero_add i.succ) (hn i Nat.zero)) n)
     (fun m ih n P hp hn => Nat.rec (motive := fun n => P m.succ n (subNatNat m.succ n))
-      (Eq.subst (motive := fun x => P x Nat.zero (ofNat m.succ)) (Nat.zero_add m.succ)
-        (hp m.succ Nat.zero))
-      (fun n _ => ih n (fun m n x => P m.succ n.succ x)
-        (fun i n => Eq.subst (motive := fun k => P k n.succ (ofNat i))
-          (Nat.succ_add n i) (hp i n.succ))
-        (fun i m => Eq.subst (motive := fun k => P m.succ k (negSucc i))
-          (Nat.succ_add m i.succ) (hn i m.succ))) n) m) n motive hp hn
+      (Eq.subst (motive := P m.succ Nat.zero) (subNatNat_zero m.succ).symm
+        (Eq.subst (motive := fun x => P x Nat.zero (ofNat m.succ)) (Nat.zero_add m.succ)
+          (hp m.succ Nat.zero)))
+      (fun n _ => Eq.subst (motive := P m.succ n.succ) (cancelSuccessors m n).symm
+        (ih n (fun m n x => P m.succ n.succ x)
+          (fun i n => Eq.subst (motive := fun k => P k n.succ (ofNat i))
+            (Nat.succ_add n i) (hp i n.succ))
+          (fun i m => Eq.subst (motive := fun k => P m.succ k (negSucc i))
+            (Nat.succ_add m i.succ) (hn i m.succ)))) n) m) n motive hp hn
 
 theorem subNatNat_add_left {m n : Nat} : Eq (subNatNat (m.add n) m) (ofNat n) :=
   (congrArg (fun k => subNatNat k m) (Nat.add_comm m n)).trans
@@ -427,6 +434,24 @@ protected theorem sub_add_cancel (a b : Int) : Eq ((a.sub b).add b) a :=
 protected theorem add_sub_cancel (a b : Int) : Eq ((a.add b).sub b) a :=
   (Int.add_assoc a b b.neg).trans ((congrArg a.add (Int.add_right_neg b)).trans (Int.add_zero a))
 
+theorem ofNat_sub {m n : Nat} (h : Nat.le m n) : Eq (ofNat (Nat.sub n m)) ((ofNat n).sub (ofNat m)) :=
+  (Nat.le.dest h).elim fun k e =>
+    Eq.subst (motive := fun n => Eq (ofNat (Nat.sub n m)) ((ofNat n).sub (ofNat m))) e
+      ((congrArg ofNat (Nat.add_sub_cancel_left m k)).trans
+        (subNatNat_add_left.symm.trans Int.subNatNat_eq_coe))
+
+private theorem subNatNat_eq_cases (m n : Nat) : Eq (subNatNat m n)
+    (Nat.casesOn (motive := fun _ => Int) (Nat.sub n m) (ofNat (Nat.sub m n)) negSucc) :=
+  subNatNat_elim m n (fun m n i => Eq i
+      (Nat.casesOn (motive := fun _ => Int) (Nat.sub n m) (ofNat (Nat.sub m n)) negSucc))
+    (fun i n =>
+      (congrArg ofNat (Nat.add_sub_cancel_left n i)).symm.trans
+        (congrArg (fun k : Nat => Nat.casesOn (motive := fun _ => Int) k
+          (ofNat (Nat.sub (Nat.add n i) n)) negSucc) (Nat.sub_self_add n i)).symm)
+    (fun i m => (congrArg (fun k : Nat => Nat.casesOn (motive := fun _ => Int) k
+      (ofNat (Nat.sub m (Nat.add m i.succ))) negSucc) (Nat.add_sub_cancel_left m i.succ)).symm)
+
 end Omega.Int
 
+port_proof Int.subNatNat.eq_1 using Omega.Int.subNatNat_eq_cases
 port_proof Ne.eq_1 by_reflexivity
