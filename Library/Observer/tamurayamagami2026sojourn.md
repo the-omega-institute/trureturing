@@ -16,6 +16,8 @@ triage: anchor
 
 The paper assigns intervals starting at the origin to the side of the next step. For each time and sojourn count it adds the return amplitudes coherently before taking the squared norm on the initial coin vector. The conditional law divides these squared norms by their positive sum. Theorem 3.1 establishes rigidity for rotation coins and a fixed initial state. Section 5 asks for the extension to general unitary coins and varying initial states.
 
+Konno's Theorem 3.2 and the amplitude expansion preceding Corollary 3.3 give the earlier Hadamard return coefficients. The matrix in the expansion is a scalar multiple of a unitary matrix, so those coefficients give the same weights for every unit initial vector for the standard Hadamard coin. [Konno, *Sojourn times of the Hadamard walk in one dimension*](https://doi.org/10.1007/s11128-011-0265-7) ([arXiv preprint](https://arxiv.org/abs/1102.5587)).
+
 ## Verified locator
 
 - DOI https://doi.org/10.48550/arXiv.2609.05033. The DataCite record supplies the title and both authors.
