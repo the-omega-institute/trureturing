@@ -218,6 +218,40 @@ class CoverageTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "live quotient order formation"):
                 verify_complete(data, Path("product"), *check_coverage(data))
 
+    def test_ring_formation_requires_each_physical_type_and_the_model_for_its_index(self):
+        owner = "Init.Grind.Ring.Envelope"
+        scope = "Lean.Grind.Ring.OfSemiring."
+        ring = scope + "ofSemiring"
+        refuter = "OmegaChecks.InitBoundaries.RepresentativeQuotient.refuteEnvelopeCancellation"
+        names = [scope + name for name in ("toQ_natCast", "toQ_pow", "instNoNatZeroDivisorsQOfAddRightCancel",
+                                            "instIsCharPQOfAddRightCancel")]
+        rows = [site(owner, name) for name in names]
+        operation = site(owner, ring, kind="definition", representativeRefuter=refuter)
+        data = inventory(*rows, operation)
+        data["certifiedRepresentativeRefutations"] = [[owner, ring, ring, refuter]]
+        self.assertEqual(check_coverage(data), (0, [(owner, name) for name in names]))
+        certs = [[owner, name, ring, refuter] for name in names]
+        data["certifiedRingInstanceFormations"] = certs
+        for row in rows:
+            row["quotientRingFormation"] = ring
+        self.assertEqual(check_coverage(data), (0, []))
+        for i in range(4):
+            bad = certs[0].copy()
+            bad[i] = "Other"
+            with self.subTest(i=i), self.assertRaisesRegex(ValueError, "envelope instance certificate"):
+                check_coverage(data | {"certifiedRingInstanceFormations": [bad, *certs[1:]]})
+        with self.assertRaisesRegex(ValueError, "envelope instance certificate"):
+            check_coverage(data | {"certifiedRingInstanceFormations": certs + certs})
+        with self.assertRaisesRegex(ValueError, "lack the counterexample"):
+            check_coverage(data | {"certifiedRepresentativeRefutations": []})
+        for change in ({"originalTypeChecked": True}, {"quotientRingFormation": None}, {"kind": "definition"},
+                       {"partial": True}, {"unsafe": True}):
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, "quotient ring formation"):
+                check_coverage(data | {"declarations": [rows[0] | change, *rows[1:], operation]})
+        with patch("report.envelope_formation_certificates", return_value=[]), self.assertRaisesRegex(
+                ValueError, "live quotient ring formation"):
+            verify_complete(data, Path("product"), *check_coverage(data))
+
     def test_quotient_order_requires_both_implications_and_the_correct_public_comparison(self):
         owner = "Init.Grind.Module.Envelope"
         prefix = "Lean.Grind.IntModule.OfNatModule."

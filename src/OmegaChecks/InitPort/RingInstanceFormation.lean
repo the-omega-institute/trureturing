@@ -1,0 +1,116 @@
+module
+import all OmegaChecks.InitInventory.Reductions
+import OmegaChecks.InitPort.StrictReplay
+meta import OmegaChecks.InitInventory.Reductions
+meta import OmegaChecks.InitPort.StrictReplay
+
+open Lean Meta InitKernelPort OmegaChecks.InitPort OmegaChecks.InitBoundaries
+open Lean.Grind
+
+private def owner := `Init.Grind.Ring.Envelope
+private def operation := ``Ring.OfSemiring.ofSemiring
+
+/-- The selected class index, equality carrier or powered endpoint contains the whole ring instance. -/
+private def endpoint (name : Name) (conclusion : Expr) : MetaM Expr := do
+  if name == ``Ring.OfSemiring.instNoNatZeroDivisorsQOfAddRightCancel then
+    unless conclusion.isAppOfArity ``NoNatZeroDivisors 2 do throwError "wrong scalar cancellation class"
+    return conclusion.appArg!
+  if name == ``Ring.OfSemiring.instIsCharPQOfAddRightCancel then
+    unless conclusion.isAppOfArity ``IsCharP 3 do throwError "wrong characteristic class"
+    return conclusion.getAppArgs[1]!
+  let some (carrier, left, right) := conclusion.eq? | throwError "expected an embedding equality"
+  if name == ``Ring.OfSemiring.toQ_natCast then
+    unless carrier.isAppOfArity ``Ring.OfSemiring.Q 2 && carrier.getAppArgs[0]!.isAppOfArity ``Ring.OfSemiring.Q 2 &&
+        right.getAppFn.isConstOf ``Ring.OfSemiring.natCast &&
+        Kernel.isDefEqGuarded (← getEnv) (← getLCtx) left right do
+      throwError "expected the reflexive natural-cast equality in the double envelope"
+    return carrier.appArg!
+  unless name == ``Ring.OfSemiring.toQ_pow && right.isAppOfArity ``HPow.hPow 6 do throwError "unexpected power"
+  return right.getAppArgs[3]!
+
+private def checkInstance (source : ConstantInfo) : MetaM Unit := do
+  let env ← getEnv
+  let levels := source.levelParams.map Level.param
+  forallTelescope source.type fun _ conclusion => do
+    if source.name == ``Ring.OfSemiring.toQ_pow then
+      let some (_, left, right) := conclusion.eq? | throwError "expected a power equality"
+      unless (← whnf left).getAppFn.isConstOf ``Quot.mk && (← whnf right).getAppFn.isConstOf ``Ring.OfSemiring.npow do
+        throwError "unexpected public computation of the two power endpoints"
+    let index ← endpoint source.name conclusion
+    let some use := index.find? (·.isAppOfArity operation 2) | throwError "ring instance absent from index"
+    let args := use.getAppArgs
+    unless args.all Expr.isFVar do throwError "specialized ring arguments"
+    let whole ← mkLambdaFVars args use
+    let type ← ofExceptKernelException (Kernel.check env {} whole)
+    let expected := (← getConstInfo operation).instantiateTypeLevelParams levels
+    unless !whole.hasFVar && Kernel.isDefEqGuarded env {} whole (mkConst operation levels) &&
+        Kernel.isDefEqGuarded env {} type expected do throwError "incomplete ring in quotient index"
+
+private def natSemiring :=
+  mkApp2 (mkConst ``CommSemiring.toSemiring [.zero]) (mkConst ``Nat) (mkConst ``instCommSemiringNat)
+
+/-- Instantiate every premise at the same characteristic-zero natural semiring as the cancellation test. -/
+private def checkNat (strict : Environment) (source : ConstantInfo) : MetaM Unit := do
+  let env ← getEnv
+  let mut applied := mkConst source.name [.zero]
+  let mut ty := source.type.instantiateLevelParams source.levelParams [.zero]
+  while let .forallE _ domain body bi := ty do
+    let arg ← if domain == .sort (.succ .zero) then pure (mkConst ``Nat)
+      else if bi == .instImplicit then
+        match domain.getAppFn.constName! with
+        | ``Semiring => pure natSemiring
+        | ``AddRightCancel => pure (mkConst ``instAddRightCancelNat)
+        | ``NoNatZeroDivisors => pure (mkConst ``instNoNatZeroDivisorsNat)
+        | ``IsCharP => pure (mkConst ``instIsCharPNatOfNat)
+        | cls => throwError "unexpected natural class {cls}"
+      else if domain.isConstOf ``Nat then pure (mkRawNatLit 0)
+      else throwError "unexpected natural specialization of {source.name}"
+    let actual ← ofExceptKernelException (Kernel.check strict {} (translate portName arg))
+    unless Kernel.isDefEqGuarded strict {} actual (translate portName domain) do
+      throwError "natural witness has a different strict type for {source.name}"
+    applied := mkApp applied arg
+    ty := body.instantiate1 arg
+  let actual ← ofExceptKernelException (Kernel.check env {} applied)
+  unless Kernel.isDefEqGuarded env {} actual ty do throwError "failed to instantiate every premise"
+  let some use := (← endpoint source.name ty).find? (·.isAppOfArity operation 2)
+    | throwError "missing ring in natural specialization"
+  unless Kernel.isDefEqGuarded env {} use (mkApp2 (mkConst operation [.zero]) (mkConst ``Nat) natSemiring) do
+    throwError "specialized ring does not use the natural semiring"
+
+public def main (args : List String) : IO Unit := do
+  let [lib] := args | throw <| IO.userError "expected a strict library"
+  let target := owner.replacePrefix `Init `OmegaInit
+  unless ← (modToFilePath lib target "olean").pathExists do return
+  initSearchPath (← findSysroot)
+  let visible ← importModules #[{module := owner}] {} (level := .exported)
+  let official ← importModules #[{module := owner, importAll := true}, {module := `Init.GrindInstances.Nat, importAll := true},
+    {module := `Init.GrindInstances.Ring.Nat, importAll := true}] {} (level := .private)
+  let evidence ← importModules #[{module := `OmegaChecks.InitInventory.Reductions, importAll := true}] {}
+  let some op := official.find? operation | throw <| IO.userError "missing canonical ring"
+  let refuter := ``RepresentativeQuotient.refuteEnvelopeCancellation
+  RepresentativeQuotient.certify official evidence op refuter
+  searchPathRef.set [lib]
+  let strict ← importModules #[{module := target}] {} (level := .exported)
+  if !strict.contains (portName ``Ring.OfSemiring.Q) || strict.contains (portName operation) then return
+  let natRing := `OmegaInit.GrindInstances.Ring.Nat
+  unless ← (modToFilePath lib natRing "olean").pathExists do return
+  let full ← importModules #[{module := target, importAll := true}, {module := natRing, importAll := true},
+    {module := `OmegaInit.GrindInstances.Nat, importAll := true}] {}
+  let witnesses := #[``instCommSemiringNat, ``instAddRightCancelNat, ``instNoNatZeroDivisorsNat, ``instIsCharPNatOfNat]
+  unless witnesses.all (full.contains ∘ portName) do return
+  let cast := ``EnvelopeCancellation.nestedNatCast
+  let kernel ← restoreEvidence evidence full.toKernelEnv cast
+  let _ ← replayStrict kernel ((witnesses.map portName).push (portName cast))
+  for name in [``Ring.OfSemiring.toQ_natCast, ``Ring.OfSemiring.toQ_pow,
+      ``Ring.OfSemiring.instNoNatZeroDivisorsQOfAddRightCancel, ``Ring.OfSemiring.instIsCharPQOfAddRightCancel] do
+    if strict.contains (portName name) then continue
+    let some src := official.find? name | throw <| IO.userError s!"missing {name}"
+    let expected := translate portName src.type
+    unless src.isTheorem && !src.isUnsafe && !src.isPartial && src.numLevelParams == 1 && (visible.find? name).any (·.type.equal src.type) &&
+        visible.getModuleIdxFor? name == visible.getModuleIdx? owner &&
+        (Kernel.check visible {} src.type).isOk && typeNeedsConstant visible src.type operation &&
+        expected.getUsedConstants.filter (!strict.contains ·) == #[portName operation] &&
+        !(Kernel.check strict {} expected).isOk do throw <| IO.userError s!"invalid type formation for {name}"
+    ((checkInstance src).run').toIO' {fileName := "<ring index>", fileMap := default} {env := visible}
+    ((checkNat full src).run').toIO' {fileName := "<natural semiring>", fileMap := default} {env := official}
+    IO.println (toJson #[owner.toString, name.toString, operation.toString, refuter.toString]).compress

@@ -141,15 +141,30 @@ ENVELOPE_REFUTER = "OmegaChecks.InitBoundaries.RepresentativeQuotient.refuteEnve
 EMBEDDINGS = {ENVELOPE_INSTANCE.rsplit(".", 1)[0] + "." + name for name in ("toQ_add", "toQ_smul", "toQ_zero")}
 
 
-def envelope_type_dependencies(checks):
+RING_ENVELOPE = "Init.Grind.Ring.Envelope"
+RING_PREFIX = "Lean.Grind.Ring.OfSemiring."
+RING_INSTANCE = RING_PREFIX + "ofSemiring"
+RING_INSTANCE_SITES = {RING_PREFIX + name for name in (
+    "toQ_natCast", "toQ_pow", "instNoNatZeroDivisorsQOfAddRightCancel", "instIsCharPQOfAddRightCancel")}
+
+
+def envelope_instance_sites(checks, expected_owner, expected_names, expected_instance):
     sites = set()
     for owner, name, instance, refuter in checks:
         site = owner, name
-        if (owner != MODULE_ENVELOPE or name not in EMBEDDINGS or instance != ENVELOPE_INSTANCE or
+        if (owner != expected_owner or name not in expected_names or instance != expected_instance or
                 refuter != ENVELOPE_REFUTER or site in sites):
-            raise ValueError(f"invalid module embedding certificate for {site}")
+            raise ValueError(f"invalid envelope instance certificate for {site}")
         sites.add(site)
     return sites
+
+
+def envelope_type_dependencies(checks):
+    return envelope_instance_sites(checks, MODULE_ENVELOPE, EMBEDDINGS, ENVELOPE_INSTANCE)
+
+
+def ring_instance_sites(checks):
+    return envelope_instance_sites(checks, RING_ENVELOPE, RING_INSTANCE_SITES, RING_INSTANCE)
 
 
 MODULE_ENVELOPE_PREFIX = ENVELOPE_INSTANCE.rsplit(".", 1)[0]
@@ -202,8 +217,8 @@ def envelope_order_formations(checks):
     return sites
 
 
-def envelope_formation_certificates(product):
-    result = subprocess.run(["lake", "env", "lean", "--run", HERE / "EnvelopeOrderFormation.lean", product / "lib"],
+def envelope_formation_certificates(product, program="EnvelopeOrderFormation.lean"):
+    result = subprocess.run(["lake", "env", "lean", "--run", HERE / program, product / "lib"],
                             cwd=ROOT, stdout=subprocess.PIPE, text=True, check=True)
     return [json.loads(line) for line in result.stdout.splitlines()]
 
@@ -237,6 +252,9 @@ def check_coverage(official):
     if embeddings and by_refutation.get((MODULE_ENVELOPE, ENVELOPE_INSTANCE)) != (ENVELOPE_INSTANCE, ENVELOPE_REFUTER):
         raise ValueError("module embedding certificates lack the counterexample for their instance")
     comparison_formations = envelope_order_formations(official.get("certifiedEnvelopeOrderFormations", []))
+    ring_formations = ring_instance_sites(official.get("certifiedRingInstanceFormations", []))
+    if ring_formations and by_refutation.get((RING_ENVELOPE, RING_INSTANCE)) != (RING_INSTANCE, ENVELOPE_REFUTER):
+        raise ValueError("ring formation certificates lack the counterexample for their instance")
     comparisons = envelope_order_dependencies(official.get("certifiedEnvelopeOrderCoherence", []))
     finite_bounds = fin_bounds.sites(official.get("certifiedFinBoundTypes", []))
     pointwise_sites = order_consumers.sites(official.get("certifiedPointwiseOrderTypes", []))
@@ -407,6 +425,11 @@ def check_coverage(official):
                 port or row["kind"] not in ("theorem", "definition") or row["unsafe"] or row["partial"] or
                 row.get("originalTypeChecked") is not False or row.get("originalTypeGap") is not None)):
             raise ValueError(f"uncertified public quotient order formation for {site}")
+        ring_formation = site in ring_formations
+        if row.get("quotientRingFormation") != (RING_INSTANCE if ring_formation else None) or (ring_formation and (
+                port or row["kind"] != "theorem" or row["unsafe"] or row["partial"] or
+                row.get("originalTypeChecked") is not False or row.get("originalTypeGap") is not None)):
+            raise ValueError(f"uncertified public quotient ring formation for {site}")
         envelope_comparison = comparisons.get(site)
         if row.get("originalTypeEnvelopeOrderInstance") != envelope_comparison or (envelope_comparison and (
                 not port or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
@@ -464,8 +487,10 @@ def check_coverage(official):
             # These Lean reductions take a value usable by safe code. The kernel
             # prohibits supplying an unsafe implementation to such a witness.
             reductions += 1
-        elif not endpoint and not argument and not refuter and not order_formation and path != "Quot.sound":
+        elif not endpoint and not argument and not refuter and not order_formation and not ring_formation and path != "Quot.sound":
             unresolved.append(site)
+    if not ring_formations <= sites:
+        raise ValueError("ring formation certificate has no declaration")
     if not comparison_formations.keys() <= sites:
         raise ValueError("quotient order formation has no declaration")
     if not comparisons.keys() <= sites:
@@ -548,6 +573,9 @@ def verify_complete(official, product, reductions, unresolved):
     formations = official.get("certifiedEnvelopeOrderFormations", [])
     if formations and envelope_formation_certificates(product) != formations:
         raise ValueError("live quotient order formation certificates differ from inventory")
+    ring_formations = official.get("certifiedRingInstanceFormations", [])
+    if ring_formations and envelope_formation_certificates(product, "RingInstanceFormation.lean") != ring_formations:
+        raise ValueError("live quotient ring formation certificates differ from inventory")
     comparisons = official.get("certifiedEnvelopeOrderCoherence", [])
     if comparisons and envelope_type_certificates(product, order=True) != comparisons:
         raise ValueError("live envelope order certificates differ from inventory")
@@ -709,6 +737,9 @@ def report(product, require_complete=False):
         order_formations = envelope_formation_certificates(product)
         official["certifiedEnvelopeOrderFormations"] = order_formations
         comparison_formations = envelope_order_formations(order_formations)
+        ring_checks = envelope_formation_certificates(product, "RingInstanceFormation.lean")
+        official["certifiedRingInstanceFormations"] = ring_checks
+        ring_formations = ring_instance_sites(ring_checks)
         order_coherence = envelope_type_certificates(product, order=True)
         official["certifiedEnvelopeOrderCoherence"] = order_coherence
         comparisons = envelope_order_dependencies(order_coherence)
@@ -759,6 +790,8 @@ def report(product, require_complete=False):
                 row["originalTypeChoiceDependency"] = choice_operands[site]
             if site in comparison_formations:
                 row["quotientOrderFormation"] = comparison_formations[site]
+            if site in ring_formations:
+                row["quotientRingFormation"] = RING_INSTANCE
             if site in comparisons:
                 row["originalTypeEnvelopeOrderInstance"] = comparisons[site]
             if site in embeddings:
@@ -804,7 +837,7 @@ def report(product, require_complete=False):
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
                              "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap",
                              "importAllOriginalTypeChecked", "originalTypeOrderDependencies", "originalTypeChoiceDependency", "finBoundProofReplacementChecked",
-                             "pointwiseOrderTypeChecked", "finiteConsumerTypeChecked", "publicProjectionTypeChecked", "moduleBodyStrictImport", "originalTypeEnvelopeInstance", "originalTypeEnvelopeOrderInstance", "quotientOrderFormation"])
+                             "pointwiseOrderTypeChecked", "finiteConsumerTypeChecked", "publicProjectionTypeChecked", "moduleBodyStrictImport", "originalTypeEnvelopeInstance", "originalTypeEnvelopeOrderInstance", "quotientOrderFormation", "quotientRingFormation"])
             for row in official["declarations"]:
                 if row["originalTypeChecked"] or row["kind"] == "axiom":
                     continue
@@ -856,7 +889,7 @@ def report(product, require_complete=False):
                                  "true" if row.get("pointwiseOrderTypeChecked") else "",
                                  "true" if row.get("finiteConsumerTypeChecked") else "",
                                  "true" if row.get("publicProjectionTypeChecked") else "", row.get("moduleBodyStrictImport"), row.get("originalTypeEnvelopeInstance"),
-                                 row.get("originalTypeEnvelopeOrderInstance"), row.get("quotientOrderFormation")])
+                                 row.get("originalTypeEnvelopeOrderInstance"), row.get("quotientOrderFormation"), row.get("quotientRingFormation")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
