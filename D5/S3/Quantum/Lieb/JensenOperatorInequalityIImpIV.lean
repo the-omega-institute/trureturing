@@ -107,7 +107,7 @@ private lemma blockSwap_sq (X : L ℋ) :
     simp [blockSwap, blockOp, blockDiagonal, ContinuousLinearMap.mul_def] <;> abel
 
 omit [CompleteSpace ℋ] in
-private lemma blockDiagonal_eq_blockOp (A B : L ℋ) :
+lemma blockDiagonal_eq_blockOp (A B : L ℋ) :
     blockDiagonal (ℋ := ℋ) A B = blockOp (ℋ := ℋ) A 0 0 B := by
   ext z i
   fin_cases i <;> simp [blockDiagonal, blockOp]
@@ -115,7 +115,7 @@ private lemma blockDiagonal_eq_blockOp (A B : L ℋ) :
 set_option maxHeartbeats 400000 in
 -- Multiplying two generic `blockOp` expressions is elaboration-heavy.
 omit [CompleteSpace ℋ] in
-private lemma blockOp_mul (A00 A01 A10 A11 B00 B01 B10 B11 : L ℋ) :
+lemma blockOp_mul (A00 A01 A10 A11 B00 B01 B10 B11 : L ℋ) :
     blockOp (ℋ := ℋ) A00 A01 A10 A11 * blockOp (ℋ := ℋ) B00 B01 B10 B11 =
       blockOp (ℋ := ℋ)
         (A00 * B00 + A01 * B10)
@@ -130,7 +130,7 @@ private lemma blockOp_mul (A00 A01 A10 A11 B00 B01 B10 B11 : L ℋ) :
     simp [ContinuousLinearMap.mul_def, add_left_comm, add_comm]
 
 omit [CompleteSpace ℋ] in
-private lemma blockOp_add
+lemma blockOp_add
     (A00 A01 A10 A11 B00 B01 B10 B11 : L ℋ) :
     blockOp (ℋ := ℋ) A00 A01 A10 A11 + blockOp (ℋ := ℋ) B00 B01 B10 B11 =
       blockOp (ℋ := ℋ) (A00 + B00) (A01 + B01) (A10 + B10) (A11 + B11) := by
@@ -139,7 +139,7 @@ private lemma blockOp_add
 
 set_option synthInstance.maxHeartbeats 100000 in
 -- Scalar action on `blockOp` triggers expensive instance search for nested operator expressions.
-private lemma blockOp_smulR
+lemma blockOp_smulR
     (r : ℝ) (A00 A01 A10 A11 : L ℋ) :
     r • blockOp (ℋ := ℋ) A00 A01 A10 A11 =
       blockOp (ℋ := ℋ) (r • A00) (r • A01) (r • A10) (r • A11) := by
@@ -176,7 +176,7 @@ private lemma blockOp_mul_blockDiagonal_zero_right
 
 set_option synthInstance.maxHeartbeats 400000 in
 -- `StarAlgHom.map_cfc` needs `MulAction ℝ (L (HSum ℋ))`; search is deep without section CFC.
-private lemma cfcR_blockDiagonal (f : ℝ → ℝ)
+lemma cfcR_blockDiagonal (f : ℝ → ℝ)
     (A B : L ℋ) (hA : IsSelfAdjoint A) (hB : IsSelfAdjoint B)
     (hcont : ContinuousOn f (spectrum ℝ A ∪ spectrum ℝ B)) :
     cfcR (ℋ := HSum ℋ) f (blockDiagonal (ℋ := ℋ) A B) =
@@ -253,7 +253,7 @@ private lemma cfcR_zero (f : ℝ → ℝ) :
     algebraMap ℝ (L ℋ) (f 0)
   simp
 
-private lemma cfcR_conj_unitary_on (s : Set ℝ) (f : ℝ → ℝ) (hcont : ContinuousOn f s)
+lemma cfcR_conj_unitary_on (s : Set ℝ) (f : ℝ → ℝ) (hcont : ContinuousOn f s)
     {A : L ℋ} (hAs : spectrum ℝ A ⊆ s)
     (u : unitary (L ℋ)) (hA : IsSelfAdjoint A) :
     cfcR (ℋ := ℋ) f (star u * A * u) = star u * cfcR (ℋ := ℋ) f A * u := by

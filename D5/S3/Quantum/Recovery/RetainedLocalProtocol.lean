@@ -226,11 +226,16 @@ Full upstream license:
 
 -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausChannel
-import D5.S3.Quantum.Foundation.FiniteStateChannel
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Logic.Equiv.Prod
-import Mathlib.Logic.Equiv.Fin.Basic
+module
+
+public import D5.S3.Quantum.Foundation.FiniteKrausChannel
+public import D5.S3.Quantum.Foundation.FiniteStateChannel
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.Logic.Equiv.Prod
+public import Mathlib.Logic.Equiv.Fin.Basic
+
+set_option backward.privateInPublic true
+@[expose] public section
 noncomputable section
 open scoped BigOperators
 set_option backward.isDefEq.respectTransparency false

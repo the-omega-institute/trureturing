@@ -15,7 +15,12 @@
      nonnegativity established in `FiniteDimensional.born_probability_skeleton`.
 -/
 
-import D5.S3.Quantum.FiniteDimensional
+module
+
+public import D5.S3.Quantum.FiniteDimensional
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 namespace D5.S3.Observer.Conditioning
 

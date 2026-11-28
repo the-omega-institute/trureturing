@@ -19,3 +19,4 @@ For every finite complex matrix dimension and every positive semidefinite witnes
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Lieb/TraceInverseConvexity.weighted_trace_inverse_convexOn`
+- Dependency: [D5/S3/Quantum/Matrix/Spectral/TraceOrder](../Matrix/Spectral/TraceOrder.md)

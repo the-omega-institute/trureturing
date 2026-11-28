@@ -6,10 +6,22 @@
    utility: none
    digest: Finite phase decompositions of contractions yield separable Hermitian scalar shifts. -/
 
-import Mathlib
-import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
-import D5.S3.Resource.EntanglementWitness
-import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
+module
+
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
+public import Aesop
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+public import D5.S3.Quantum.Matrix.Spectral.IsometricCalculus
+public import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
+public import D5.S3.Resource.EntanglementWitness
+public import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -21,43 +33,6 @@ open D5.S3.Resource.CompositeCones
 open D5.S3.Resource.EntanglementWitness
 open scoped Kronecker ComplexOrder MatrixOrder
 
-private theorem exists_unitary_dilation {n : ℕ} (C : Matrix (Fin n) (Fin n) ℂ)
-    (hC : (1 - Cᴴ * C).PosSemidef) :
-    ∃ U : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℂ,
-      U ∈ Matrix.unitaryGroup _ ℂ ∧ ∀ i j, U (Sum.inl i) (Sum.inl j) = C i j := by
-  classical
-  let R := CFC.sqrt (1 - Cᴴ * C)
-  have hR : R.IsHermitian := (CFC.sqrt_nonneg (1 - Cᴴ * C)).posSemidef.isHermitian
-  have hRR : Rᴴ * R = 1 - Cᴴ * C := by
-    rw [hR.eq]
-    exact CFC.sqrt_mul_sqrt_self _ hC.nonneg
-  let v : (Fin n ⊕ Fin n) → EuclideanSpace ℂ (Fin n ⊕ Fin n) :=
-    Sum.elim (fun j => WithLp.toLp 2 (Sum.elim (fun i => C i j) (fun i => R i j)))
-      (fun _ => 0)
-  let s : Set (Fin n ⊕ Fin n) := Set.range Sum.inl
-  have hv : Orthonormal ℂ (s.domRestrict v) := by
-    rw [orthonormal_iff_ite]
-    intro i j
-    obtain ⟨i, hi⟩ := i
-    obtain ⟨j, hj⟩ := j
-    obtain ⟨i, rfl⟩ := hi
-    obtain ⟨j, rfl⟩ := hj
-    have hsum : Cᴴ * C + Rᴴ * R = 1 := by rw [hRR]; abel
-    have hm := congrArg (fun M => M i j) hsum
-    simp only [Matrix.add_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Matrix.one_apply] at hm
-    simpa [Set.domRestrict_apply, v, PiLp.inner_apply, Fintype.sum_sum_type,
-      Subtype.ext_iff, Sum.elim_inl, Sum.elim_inr, mul_comm] using hm
-  obtain ⟨b, hb⟩ := hv.exists_orthonormalBasis_extension_of_card_eq
-    (by simp)
-  let U : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℂ :=
-    (EuclideanSpace.basisFun (Fin n ⊕ Fin n) ℂ).toBasis.toMatrix b
-  refine ⟨U, (EuclideanSpace.basisFun _ ℂ).toMatrix_orthonormalBasis_mem_unitary b, ?_⟩
-  intro i j
-  have he := hb (Sum.inl j) (by exact ⟨j, rfl⟩)
-  change (b (Sum.inl j)) (Sum.inl i) = C i j
-  simpa only [v, Sum.elim_inl] using
-    congrArg (fun w => w (Sum.inl i)) he
 
 private theorem unitary_phase_decomposition {ι : Type*} [Fintype ι] [DecidableEq ι]
     (U : Matrix ι ι ℂ) (hU : U ∈ Matrix.unitaryGroup ι ℂ) :

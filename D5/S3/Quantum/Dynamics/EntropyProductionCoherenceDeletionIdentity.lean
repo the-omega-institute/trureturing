@@ -5,11 +5,17 @@
    anchors: []
    digest: Identify entropy production under repeated unitary evolution and basis dephasing. -/
 
-import D5.S3.Divergence.GrandmotherTheorem
-import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
-import D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Pi
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+module
+
+public import D5.S3.Divergence.GrandmotherTheorem
+public import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
+public import D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Pi
+public import Mathlib.Algebra.Algebra.Spectrum.Pi
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -6,9 +6,15 @@
    utility: none
    digest: Finite-dimensional trace bridge for operator-convex matrix inversion. -/
 
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.RingInverseOrder
-import D5.S3.Weil.ZetaLinear.RankTrace
+module
+
+public import D5.S3.Quantum.Matrix.Spectral.TraceOrder
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.RingInverseOrder
+public import D5.S3.Weil.ZetaLinear.RankTrace
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /-! Finite-dimensional trace bridge for operator-convex matrix inversion. -/
 
@@ -28,14 +34,6 @@ private lemma trace_re_mono {A B : Matrix d d ℂ} (h : A ≤ B) :
   rw [Matrix.trace_sub, Complex.sub_re] at htr
   exact sub_nonneg.mp htr
 
-private lemma weighted_trace_re_mono (C : Matrix d d ℂ) (hC : C.PosSemidef)
-    {A B : Matrix d d ℂ} (h : A ≤ B) :
-    (Matrix.trace (C * A)).re ≤ (Matrix.trace (C * B)).re := by
-  have hpsd : (B - A).PosSemidef := Matrix.le_iff.mp h
-  have htr : 0 ≤ (Matrix.trace (C * (B - A))).re :=
-    RHLinalg.trace_mul_nonneg_of_posSemidef hC hpsd
-  rw [Matrix.mul_sub, Matrix.trace_sub] at htr
-  exact sub_nonneg.mp htr
 
 /-- A fixed positive witness preserves inverse convexity after taking a trace. -/
 theorem weighted_trace_inverse_convexOn (C : Matrix d d ℂ) (hC : C.PosSemidef) :

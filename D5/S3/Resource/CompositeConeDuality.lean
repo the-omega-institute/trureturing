@@ -5,8 +5,16 @@
    anchors: []
    digest: Hilbert-Schmidt duality between separable and block-positive matrix cones. -/
 
-import Mathlib
-import D5.S3.Resource.CompositeCones
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Positive
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import D5.S3.Resource.CompositeCones
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /- Provenance: Native proof over pinned mathlib. -/
 /- Search receipt (2026-08-13): searched D5 declarations and pinned mathlib for

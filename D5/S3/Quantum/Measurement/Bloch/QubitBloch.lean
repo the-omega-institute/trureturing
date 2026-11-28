@@ -10,11 +10,15 @@
    FourQubitParentConstruction.B_formula and WeightedRayStochasticRigidity.effect_factor.
    This shared helper supplies no new content or escape credit. -/
 
-import D5.S3.Quantum.Information.Pauli.PauliMatrix
+module
+
+public import D5.S3.Quantum.Information.Pauli.PauliMatrix
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
+
+@[expose] public section
 
 open Matrix
 open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator

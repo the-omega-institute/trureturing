@@ -5,8 +5,7 @@
    anchors: []
    digest: Port the Zeta23 rank-trace inequality. -/
 
-/- Ported from anthropics/zeta-23-lean commit 3635e74826a4c1fcece7d1cd2b6fa75e43a00510.
-   Modified by trureturing on 2026-08-14: repository routing and Lean v4.31.0 adaptation. -/
+/- Ported from anthropics/zeta-23-lean commit 3635e74826a4c1fcece7d1cd2b6fa75e43a00510. -/
 /-
 Copyright (c) 2026 Anthropic, PBC. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
@@ -19,9 +18,15 @@ were written first as a self-contained development (namespace `RHLinalg`) accomp
 paper's authors, and are incorporated here unchanged; they have no upstream outside this project (see README
 § Provenance and attribution).
 -/
-import D5.S3.Weil.ZetaLinear.PosIndex
-import D5.S3.Weil.ZetaLinear.VonNeumann
-import D5.S3.Weil.ZetaLinear.HermitianPosPart
+module
+
+public import D5.S3.Quantum.Matrix.Spectral.TraceOrder
+public import D5.S3.Weil.ZetaLinear.PosIndex
+public import D5.S3.Weil.ZetaLinear.VonNeumann
+public import D5.S3.Weil.ZetaLinear.HermitianPosPart
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /-!
 # The rank–trace inequality (paper §3, `lem:ranktrace`)
@@ -117,24 +122,6 @@ end Elementary
 
 /-! ### Trace and Frobenius-norm identities -/
 
-/-- `tr(AB) ≥ 0` when `A, B ⪰ 0`. Proof: diagonalise `A = U D Uᴴ`; then
-`tr(AB) = tr((UᴴBU)D) = ∑ᵢ λᵢ · (UᴴBU)ᵢᵢ`, where each `λᵢ ≥ 0` (PSD
-eigenvalues) and each `(UᴴBU)ᵢᵢ ≥ 0` (diagonal of a PSD matrix). -/
-lemma trace_mul_nonneg_of_posSemidef {A B : Matrix n n 𝕜}
-    (hA : A.PosSemidef) (hB : B.PosSemidef) :
-    0 ≤ RCLike.re (A * B).trace := by
-  -- Reduce `tr(AB)` to `tr((UᴴBU)D)` by the spectral theorem + trace cycling.
-  rw [hA.isHermitian.spectral_theorem, Unitary.conjStarAlgAut_apply, mul_assoc,
-    trace_mul_comm, ← mul_assoc]
-  set M := star (hA.isHermitian.eigenvectorUnitary : Matrix n n 𝕜) * B *
-    (hA.isHermitian.eigenvectorUnitary : Matrix n n 𝕜) with hM_def
-  -- `M = UᴴBU` is PSD.
-  have hM : M.PosSemidef := hB.conjTranspose_mul_mul_same _
-  -- Now `0 ≤ re tr(M * diag λ) = ∑ᵢ λᵢ · re Mᵢᵢ`.
-  simp only [trace, diag_apply, mul_diagonal, Function.comp_apply, map_sum,
-    RCLike.mul_re, RCLike.ofReal_re, RCLike.ofReal_im, mul_zero, sub_zero]
-  refine Finset.sum_nonneg fun i _ => ?_
-  exact mul_nonneg (RCLike.nonneg_iff.mp hM.diag_nonneg).1 (hA.eigenvalues_nonneg i)
 
 omit [DecidableEq n] in
 /-- For Hermitian `A, B`: `Re tr(BA) = Re tr(AB)`. (In fact `tr(BA) = tr(AB)`.) -/

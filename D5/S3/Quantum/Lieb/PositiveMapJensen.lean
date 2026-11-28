@@ -6,17 +6,23 @@
    utility: none
    digest: Finite positive unital matrix-map Jensen via spectral effects and rectangular isometric dilation. -/
 
-import D5.S3.Quantum.Lieb.JensenOperatorInequalityIImpIV
-import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
-import Mathlib.Algebra.Order.Module.PositiveLinearMap
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.Data.Matrix.Basis
-import Mathlib.Data.Matrix.ColumnRowPartitioned
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
+module
+
+public import D5.S3.Quantum.Matrix.Spectral.IsometricCalculus
+public import D5.S3.Quantum.Lieb.JensenOperatorInequalityIImpIV
+public import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
+public import Mathlib.Algebra.Order.Module.PositiveLinearMap
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import Mathlib.Data.Matrix.Basis
+public import Mathlib.Data.Matrix.ColumnRowPartitioned
+public import Mathlib.LinearAlgebra.Matrix.Block
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /-!
 Source candidate; current elaboration, kernel and axiom checks are pending.
@@ -48,75 +54,6 @@ namespace D5.S3.Quantum.Lieb.PositiveMapJensen
 variable {n : Type u} {m : Type v}
   [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m]
 
-/-- Rectangular congruence preserves the finite Loewner order. -/
-theorem congruence_mono {A B : Matrix n n ℂ} (hAB : A ≤ B)
-    (V : Matrix n m ℂ) : Vᴴ * A * V ≤ Vᴴ * B * V := by
-  apply Matrix.le_iff.mpr
-  simpa only [Matrix.mul_sub, Matrix.sub_mul] using
-    (Matrix.le_iff.mp hAB).conjTranspose_mul_mul_same V
-
-/-- Intertwining of Hermitian matrices is preserved by every real spectral
-function. Finiteness makes every such function continuous on these spectra. -/
-theorem cfc_intertwining (A : Matrix n n ℂ) (B : Matrix m m ℂ)
-    (hA : A.IsHermitian) (hB : B.IsHermitian) (V : Matrix n m ℂ)
-    (hAV : A * V = V * B) (f : ℝ → ℝ) :
-    cfc f A * V = V * cfc f B := by
-  classical
-  let U : Matrix n n ℂ := hA.eigenvectorUnitary
-  let T : Matrix m m ℂ := hB.eigenvectorUnitary
-  let E : Matrix n m ℂ := Uᴴ * V * T
-  have hU : Uᴴ * U = 1 := hA.eigenvectorUnitary.2.1
-  have hu : U * Uᴴ = 1 := hA.eigenvectorUnitary.2.2
-  have hT : Tᴴ * T = 1 := hB.eigenvectorUnitary.2.1
-  have ht : T * Tᴴ = 1 := hB.eigenvectorUnitary.2.2
-  have hsA : A = U * diagonal (fun i => (hA.eigenvalues i : ℂ)) * Uᴴ := by
-    simpa only [Unitary.conjStarAlgAut_apply, U, Function.comp_def,
-      RCLike.ofReal_eq_complex_ofReal, Matrix.star_eq_conjTranspose]
-      using hA.spectral_theorem
-  have hsB : B = T * diagonal (fun i => (hB.eigenvalues i : ℂ)) * Tᴴ := by
-    simpa only [Unitary.conjStarAlgAut_apply, T, Function.comp_def,
-      RCLike.ofReal_eq_complex_ofReal, Matrix.star_eq_conjTranspose]
-      using hB.spectral_theorem
-  have coeff : diagonal (fun i => (hA.eigenvalues i : ℂ)) * E =
-      E * diagonal (fun j => (hB.eigenvalues j : ℂ)) := by
-    calc
-      _ = Uᴴ * (A * V) * T := by
-        conv_rhs => rw [hsA]
-        simp only [E, Matrix.mul_assoc, ← Matrix.mul_assoc Uᴴ U, hU,
-          Matrix.one_mul]
-      _ = Uᴴ * (V * B) * T := by rw [hAV]
-      _ = _ := by
-        conv_lhs => rw [hsB]
-        simp only [E, Matrix.mul_assoc, ← Matrix.mul_assoc Tᴴ T, hT,
-          Matrix.one_mul, Matrix.mul_one]
-  have fcoeff : diagonal (fun i => (f (hA.eigenvalues i) : ℂ)) * E =
-      E * diagonal (fun j => (f (hB.eigenvalues j) : ℂ)) := by
-    ext i j
-    simp only [Matrix.diagonal_mul, Matrix.mul_diagonal]
-    have eq := congrArg (fun M : Matrix n m ℂ => M i j) coeff
-    simp only [Matrix.diagonal_mul, Matrix.mul_diagonal] at eq
-    by_cases he : hA.eigenvalues i = hB.eigenvalues j
-    · rw [he, mul_comm]
-    · have hz : E i j = 0 := by
-        have hn : (hA.eigenvalues i : ℂ) ≠ (hB.eigenvalues j : ℂ) := by
-          exact_mod_cast he
-        have heq : ((hA.eigenvalues i : ℂ) - (hB.eigenvalues j : ℂ)) * E i j = 0 := by
-          linear_combination eq
-        exact (mul_eq_zero.mp heq).resolve_left (sub_ne_zero.mpr hn)
-      simp only [hz, mul_zero, zero_mul]
-  have reconstruct : U * E * Tᴴ = V := by
-    simp only [E, Matrix.mul_assoc, ← Matrix.mul_assoc U Uᴴ, hu,
-      Matrix.one_mul, ← Matrix.mul_assoc T Tᴴ, ht, Matrix.mul_one]
-  rw [hA.cfc_eq, hB.cfc_eq, Matrix.IsHermitian.cfc, Matrix.IsHermitian.cfc,
-    Unitary.conjStarAlgAut_apply, Unitary.conjStarAlgAut_apply]
-  change (U * diagonal (fun i => (f (hA.eigenvalues i) : ℂ)) * Uᴴ) * V =
-    V * (T * diagonal (fun j => (f (hB.eigenvalues j) : ℂ)) * Tᴴ)
-  conv_lhs => rw [← reconstruct]
-  conv_rhs => rw [← reconstruct]
-  simp only [Matrix.mul_assoc, ← Matrix.mul_assoc Uᴴ U, hU, Matrix.one_mul,
-    ← Matrix.mul_assoc Tᴴ T, hT, Matrix.one_mul, Matrix.mul_one]
-  rw [← Matrix.mul_assoc _ E, fcoeff]
-  simp only [Matrix.mul_assoc]
 
 private lemma transport_cfc [Nonempty n] (f : ℝ → ℝ)
     (A : Matrix n n ℂ) (hA : A.IsHermitian) :

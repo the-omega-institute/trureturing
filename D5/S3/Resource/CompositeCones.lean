@@ -22,7 +22,13 @@ established here and no witness is exhibited. -/
    The import closure is the umbrella `Mathlib` import (generality `G`).
 -/
 
-import Mathlib
+module
+
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 namespace D5.S3.Resource.CompositeCones
 

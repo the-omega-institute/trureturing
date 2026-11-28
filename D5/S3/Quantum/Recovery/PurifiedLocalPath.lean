@@ -226,11 +226,17 @@ Full upstream license:
 
 -/
 
-import D5.S3.Quantum.Recovery.RetainedLocalProtocol
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Tactic
-import Mathlib.Analysis.Matrix.Order
+module
+
+public import D5.S3.Quantum.Recovery.RetainedLocalProtocol
+public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.Tactic.Common
+public import Mathlib.Tactic.Ring
+public import Mathlib.Analysis.Matrix.Order
+
+set_option backward.privateInPublic true
+@[expose] public section
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4000
 open Matrix

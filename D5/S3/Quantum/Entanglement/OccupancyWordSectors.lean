@@ -6,15 +6,22 @@
    utility: none
    digest: Occupation words have multinomial counts and orthonormal uniform vectors. -/
 
-import Mathlib.Data.List.OfFn
-import Mathlib.Data.Multiset.Powerset
-import Mathlib.Data.Multiset.AddSub
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Data.Complex.BigOperators
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.Data.Finsupp.Multiset
-import Mathlib.Tactic
-import D5.S1.Ledger.BoundedTimeSlice
+module
+
+public import Mathlib.Data.List.OfFn
+public import Mathlib.Data.Multiset.Powerset
+public import Mathlib.Data.Multiset.AddSub
+public import Mathlib.Analysis.SpecialFunctions.Sqrt
+public import Mathlib.Data.Complex.BigOperators
+public import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.Data.Finsupp.Multiset
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Order
+public import Mathlib.Tactic.Ring
+public import D5.S1.Ledger.BoundedTimeSlice
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /-!
 The finite-class normalization argument in `sector_gram` is adapted from

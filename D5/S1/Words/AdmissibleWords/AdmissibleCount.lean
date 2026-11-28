@@ -5,10 +5,15 @@
    anchors: []
    digest: Zeckendorf-admissible binary words of length m — those with no two consecutive true letters — are counted by the Fibonacci number F(m+2). The proof splits an admissible word of length m+2 on its first letter into a bijection with admissible words of length m+1 (first letter false) and length m (first letters true, false), giving the Fibonacci recurrence on the counts. -/
 
-import Mathlib.Data.Nat.Fib.Basic
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Fintype.Sum
+module
+
+public import Mathlib.Data.Nat.Fib.Basic
+public import Mathlib.Data.Fin.Tuple.Basic
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Fintype.Sum
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 open Nat
 

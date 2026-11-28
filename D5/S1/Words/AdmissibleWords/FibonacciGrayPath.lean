@@ -12,11 +12,16 @@ Escape audit unfinished for hamming_cons:
   https://github.com/the-omega-institute/trureturing/issues/16779
 -/
 
-import D5.S1.Words.AdmissibleWords.AdmissibleCount
-import Mathlib.InformationTheory.Hamming
-import Mathlib.Data.List.Chain
-import Mathlib.Data.List.Nodup
-import Mathlib.Algebra.BigOperators.Fin
+module
+
+public import D5.S1.Words.AdmissibleWords.AdmissibleCount
+public import Mathlib.InformationTheory.Hamming
+public import Mathlib.Data.List.Chain
+public import Mathlib.Data.List.Nodup
+public import Mathlib.Algebra.BigOperators.Fin
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

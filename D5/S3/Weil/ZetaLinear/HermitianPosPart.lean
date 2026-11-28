@@ -19,7 +19,12 @@ were written first as a self-contained development (namespace `RHLinalg`) accomp
 paper's authors, and are incorporated here unchanged; they have no upstream outside this project (see README
 § Provenance and attribution).
 -/
-import D5.S3.Weil.ZetaLinear.PosIndex
+module
+
+public import D5.S3.Weil.ZetaLinear.PosIndex
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /-!
 # Positive and negative parts of a Hermitian matrix

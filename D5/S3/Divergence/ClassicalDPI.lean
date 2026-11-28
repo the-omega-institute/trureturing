@@ -19,7 +19,15 @@
      coordinate and then by the output coordinate.
 -/
 
-import Mathlib
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 namespace D5.S3.Divergence.ClassicalDPI
 

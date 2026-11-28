@@ -5,9 +5,16 @@
    anchors: []
    digest: Prove separable-cone convexity; witness existence remains open. -/
 
-import Mathlib
-import D5.S3.Resource.CompositeCones
-import D5.S3.Resource.CompositeConeDuality
+module
+
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
+public import D5.S3.Resource.CompositeCones
+public import D5.S3.Resource.CompositeConeDuality
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /- Provenance: Native proof over pinned mathlib. -/
 /- Search receipt (2026-08-13): searched local D5 declarations for the cone

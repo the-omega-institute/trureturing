@@ -42,7 +42,18 @@ double_degree_count_pos: proof_shape: bind-only; escape_witness: none; consumer:
 mu_nonnegative: proof_shape: bind-only; escape_witness: none; consumer: sharp_gram_posSemidef | sharp_gram_posSemidef: proof_shape: content; escape_witness: urn_closed_form
 matrix_form_nonnegative: proof_shape: bind-only; escape_witness: none; consumer: sharp_positivity | sharp_positivity: proof_shape: content; escape_witness: urn_closed_form
 -/
-import D5.S3.Quantum.Entanglement.OccupancyWordSectors
+module
+
+public import D5.S3.Quantum.Entanglement.OccupancyWordSectors
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.InnerProductSpace.Positive
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
+public import Mathlib.LinearAlgebra.Matrix.Module
+import Mathlib.RingTheory.Binomial
+
+set_option backward.privateInPublic true
+@[expose] public section
 open scoped BigOperators Matrix MatrixOrder ComplexOrder InnerProductSpace Matrix.Module
 set_option backward.isDefEq.respectTransparency false
 namespace GVHunter

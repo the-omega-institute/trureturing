@@ -10,25 +10,6 @@ internal sealed class PositiveMapJensenDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite positive-map Jensen bridge with arbitrary finite carriers.",
         H("PositiveMapJensen"), Blocks(
-            Describe.Lean(DescribeId.Create("rectangular-congruence"),
-                DeclarationHandle.Create("D5/S3/Quantum/Lieb/PositiveMapJensen.congruence_mono"),
-                H("Rectangular congruence preserves order"), StatementSource.FromAuthor(Congruence()),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "For arbitrary finite decidable carriers n and m, matrices A,B in M_n(C) "
-                    + "with A <= B, and any rectangular V from C^m to C^n, one has "
-                    + "V* A V <= V* B V. This consumed helper applies the existing "
-                    + "positive-semidefinite congruence theorem to B-A."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("rectangular-cfc"),
-                DeclarationHandle.Create("D5/S3/Quantum/Lieb/PositiveMapJensen.cfc_intertwining"),
-                H("Rectangular spectral intertwining"), StatementSource.FromAuthor(Intertwining()),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "For finite complex matrix carriers n and m, Hermitian A and B, "
-                    + "and arbitrary rectangular V satisfying A V = V B, every real "
-                    + "function f satisfies cfc(f,A) V = V cfc(f,B). Every function "
-                    + "is continuous on a finite matrix spectrum. The coefficient "
-                    + "proof is extracted from the existing local rectangularCFCAmbient "
-                    + "argument in CanonicalChannelDPI; it is needed as a public "
-                    + "interface for the sum-carrier dilation and support localization."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("positive-unital-map-jensen"),
                 DeclarationHandle.Create("D5/S3/Quantum/Lieb/PositiveMapJensen.positive_unital_jensen"),
                 H("Jensen for every finite positive unital complex-linear map"),
@@ -40,7 +21,7 @@ internal sealed class PositiveMapJensenDocument : IScribeDocumentDefinition
                     + "The spectral projections E_i of A give positive effects "
                     + "Phi(E_i), whose sum is I, so finite effect Jensen applies. "
                     + "Apply that result first to f-f(0), then restore constants "
-                    + "by unitality. The consumed private dilation first stacks "
+                    + "by unitality. The dilation first stacks "
                     + "sqrt(F_i) on the product carrier k times m, with Gram I; "
                     + "the rectangular isometry is then the upper-right block "
                     + "of an endomorphism contraction on n plus m. Intertwining "
@@ -49,12 +30,7 @@ internal sealed class PositiveMapJensenDocument : IScribeDocumentDefinition
                     + "that condition. There is no sign restriction on f(0), no "
                     + "complete-positivity hypothesis, and no trace assumption. "
                     + "An empty output carrier is trivial; an empty input with a "
-                    + "nonempty output contradicts unitality.")), Paragraph(Text(
-                    "The three mathematical modules have passed explicit targeted "
-                    + "Lean builds. Their joint scoped report contains only propext, "
-                    + "Quot.sound and Classical.choice. Information-audit binding "
-                    + "is assessed separately; this document does not claim complete "
-                    + "registration, official acceptance or mathematical novelty."))), DescribeRole.Theorem))));
+                    + "nonempty output contradicts unitality."))), DescribeRole.Theorem))));
 
     private static AssessedProvenance SupplierProvenance() => AssessedProvenance.FromRepo(
         LibraryNoteRef.Create("D5/L/Divergence/tsukamotomoriyamasaki2026lieb"));
@@ -81,18 +57,6 @@ internal sealed class PositiveMapJensenDocument : IScribeDocumentDefinition
         Binder("n", Call("Type", F.Id("u"))), Binder("m", Call("Type", F.Id(mixed ? "v" : "u"))),
         Instance("Fintype", "n"), Instance("DecidableEq", "n"),
         Instance("Fintype", "m"), Instance("DecidableEq", "m"));
-    private static Formula Congruence() => Disp(Seq(Carriers(),
-        Binder("A", Mat("n", "n")), Binder("B", Mat("n", "n")), Binder("V", Mat("n", "m")),
-        F.Id("A"), Le, Sp, F.Id("B"), Sp, Implies, Sp,
-        Call("adjoint", F.Id("V")), F.Id("A"), F.Id("V"), Le,
-        Call("adjoint", F.Id("V")), F.Id("B"), F.Id("V")));
-    private static Formula Intertwining() => Disp(Seq(Carriers(),
-        Binder("A", Mat("n", "n")), Binder("B", Mat("m", "m")), Binder("V", Mat("n", "m")),
-        Binder("f", Seq(Real, Sp, To, Sp, Real)),
-        Call("Hermitian", F.Id("A")), Comma, Sp, Call("Hermitian", F.Id("B")), Comma, Sp,
-        F.Id("A"), F.Id("V"), Eq, F.Id("V"), F.Id("B"), Implies, Esc,
-        Call("cfc", F.Id("f"), F.Id("A")), F.Id("V"), Eq,
-        F.Id("V"), Call("cfc", F.Id("f"), F.Id("B"))));
     private static Formula Jensen() => Disp(Seq(Carriers(false),
         Binder("f", Seq(Real, Sp, To, Sp, Real)),
         Binder("Phi", Call("PositiveLinearMap", Complex, Mat("n", "n"), Mat("m", "m"))),

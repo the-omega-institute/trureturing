@@ -14,13 +14,19 @@
    * Searches for a packaged finite-dimensional projection-probability flow theorem returned
      no hit. -/
 
-import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
-import D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
-import D5.S3.Quantum.FiniteDimensional
-import Mathlib.Analysis.Calculus.Deriv.Star
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.CStarAlgebra.Projection
-import Mathlib.Analysis.SpecialFunctions.Exponential
+module
+
+public import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
+public import D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
+public import D5.S3.Quantum.FiniteDimensional
+public import Mathlib.Analysis.Calculus.Deriv.Star
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.CStarAlgebra.Projection
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

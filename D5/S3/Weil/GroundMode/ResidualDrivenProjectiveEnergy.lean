@@ -6,10 +6,15 @@
    utility: none
    digest: Bound the actual projective eigenvector energy from the candidate residual's complete dual energy, without an absolute lower eigenvalue premise. -/
 
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.NormNum
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Module
+public import Mathlib.Tactic.NormNum
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 /-!
 # Residual-driven projective energy

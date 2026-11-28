@@ -19,7 +19,11 @@
      and `Real.log_mul`.
 -/
 
-import D5.S3.Divergence.ClassicalDPI
+module
+
+public import D5.S3.Divergence.ClassicalDPI
+
+@[expose] public section
 
 namespace D5.S3.Divergence.ChainRule
 

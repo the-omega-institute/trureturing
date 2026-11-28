@@ -100,12 +100,18 @@ proof_shape: upper_binary: content; escape_witness: Upper.unweighted_bound; cons
 proof_shape: expectation_upper: bind-only; consumers: result
 proof_shape: result: content; escape_witness: Upper.unweighted_bound; consumers: none (final assertion)
 -/
-import D5.S3.Quantum.Recovery.PurifiedLocalPath
-import D5.S3.QuantumBounds.HybridMerminDepthBound
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
-import D5.S3.Weil.ZetaLinear.RankTrace
-import D5.S1.Words.AdmissibleWords.FibonacciGrayPath
-import D5.S3.Analytic.Hunter.NCHunterPositivity
+module
+
+public import D5.S3.Quantum.Recovery.PurifiedLocalPath
+public import D5.S3.QuantumBounds.HybridMerminDepthBound
+public import D5.S3.Quantum.Information.PartialTraceMutualInformation
+public import D5.S3.Weil.ZetaLinear.RankTrace
+public import D5.S1.Words.AdmissibleWords.FibonacciGrayPath
+public import D5.S3.Analytic.Hunter.NCHunterPositivity
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Commute
+
+set_option backward.privateInPublic true
+@[expose] public section
 
 
 noncomputable section

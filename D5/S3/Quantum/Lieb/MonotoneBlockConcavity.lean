@@ -6,10 +6,12 @@
    utility: none
    digest: Doubled-space operator monotonicity yields positive-half-line concavity. -/
 
-import Batteries.Tactic.OpenPrivate
-import D5.S3.Quantum.Lieb.JensenOperatorInequalityIImpIV
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Continuity
-import Mathlib.Tactic.Module
+module
+
+public import Batteries.Tactic.OpenPrivate
+public import D5.S3.Quantum.Lieb.JensenOperatorInequalityIImpIV
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Continuity
+public import Mathlib.Tactic.Module
 
 /-!
 The block-sandwich argument of Hansen, *The fast track to Löwner's theorem*,
@@ -17,6 +19,8 @@ arXiv:1112.0098v3, Theorem 2.1. Continuity is an explicit hypothesis here;
 automatic continuity and the Löwner representing measure are not proved by this module.
 The operators and functional calculus are actual bounded Hilbert-space operators.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -28,9 +32,6 @@ namespace D5.S3.Quantum.Lieb.MonotoneBlockConcavity
 open LownerHeinzTheorem JensenOperatorInequality
 open scoped Topology
 
-open private blockDiagonal_eq_blockOp blockOp_mul blockOp_add blockOp_smulR
-  cfcR_blockDiagonal cfcR_conj_unitary_on
-  from D5.S3.Quantum.Lieb.JensenOperatorInequalityIImpIV
 
 universe u
 variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
@@ -39,7 +40,7 @@ variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 omit [Nontrivial H] in
 /-- An arbitrarily small first-corner perturbation controls an arbitrary off-diagonal
 block once the second corner is allowed a sufficiently large scalar bound. -/
-private theorem block_scalar_sandwich (M N D : L H) (hN : IsSelfAdjoint N)
+theorem block_scalar_sandwich (M N D : L H) (hN : IsSelfAdjoint N)
     {ε : ℝ} (hε : 0 < ε) :
     ∃ bound : ℝ, 0 < bound ∧
       blockOp M D (star D) N ≤ blockDiagonal (M + ε • 1) (bound • 1) := by
@@ -106,7 +107,7 @@ private theorem diagonal_strictly_positive {A B : L H}
   exact hd.isStrictlyPositive (blockDiagonal_nonneg hA.nonneg hB.nonneg)
 
 omit [Nontrivial H] in
-private theorem corner_mono {A B : L (HSum H)} (h : A ≤ B) :
+theorem corner_mono {A B : L (HSum H)} (h : A ≤ B) :
     hsumProj H 0 ∘L A ∘L hsumIncl H 0 ≤ hsumProj H 0 ∘L B ∘L hsumIncl H 0 := by
   apply sub_nonneg.mp
   have hpos := ((ContinuousLinearMap.nonneg_iff_isPositive (f := _)).mp
