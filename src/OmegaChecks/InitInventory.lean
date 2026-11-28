@@ -145,6 +145,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     if name == ``Lean.Order.instCompleteLatticePi then
       return (``OmegaChecks.InitBoundaries.InternalOrder.MereUniqueChoice,
         ``OmegaChecks.InitBoundaries.InternalOrder.uniqueSelectionOfCompletePi)
+  if owner == `Init.Grind.Ring.CommSemiringAdapter && name == ``Lean.Grind.Ring.OfSemiring.of_diseq then
+    return (``OmegaChecks.InitBoundaries.RingEnvelopeExact.ReflectsDisequality,
+      ``OmegaChecks.InitBoundaries.RingEnvelopeExact.adapterIff)
   if owner == `Init.Grind.Norm && name == ``Lean.Grind.exists_prop then
     return (``OmegaChecks.InitBoundaries.ExistentialConjunction.ClosedEquality,
       ``OmegaChecks.InitBoundaries.ExistentialConjunction.ofRule)

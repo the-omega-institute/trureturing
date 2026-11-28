@@ -2,6 +2,7 @@ module
 public import Lean
 import OmegaChecks.InitInventory.Replay
 import all Init.Grind.Ring.Envelope
+import all Init.Grind.Ring.CommSemiringAdapter
 import all Init.Grind.Module.Envelope
 import Init.GrindInstances.Ring.Nat
 
@@ -157,3 +158,107 @@ public def counterexample (official witnesses : Environment) (source : ConstantI
   return .forallE `r relation (.forallE `h equality (mkConst ``False) .default) .default
 
 end OmegaChecks.InitBoundaries.EnvelopeCancellation
+
+open Lean.Grind Ring.OfSemiring
+namespace OmegaChecks.InitBoundaries.RingEnvelopeExact
+
+/- The upstream Q.exact descends a proposition-valued relation via propositional
+extensionality. The upstream toQ_inj applies exactness to (a, 0) and (b, 0).
+The proofs below construct these conclusions when a row of the relation is
+decidable or there is a separating additive map. The unrestricted types of
+Q.exact and toQ_inj remain open. -/
+
+variable {α : Type u} [Semiring α]
+
+private def observe (p : α × α) [∀ x, Decidable (r α p x)] : Q α → Bool :=
+  Quot.lift (fun x => decide (r α p x)) fun _ _ h =>
+    decide_eq_decide.mpr ⟨fun hx => r_trans hx h, fun hy => r_trans hy (r_sym h)⟩
+
+public theorem exactOfDecidable {p q : α × α} [∀ x, Decidable (r α p x)]
+    (eq : Q.mk p = Q.mk q) : r α p q :=
+  of_decide_eq_true ((congrArg (observe p) eq).symm.trans (decide_eq_true (r_rfl p)))
+
+public theorem cancellativeRelation [AddRightCancel α] (p q : α × α) :
+    r α p q ↔ p.1 + q.2 = p.2 + q.1 := by
+  obtain ⟨a, b⟩ := p
+  obtain ⟨c, d⟩ := q
+  constructor
+  · rintro ⟨k, h⟩
+    exact AddRightCancel.add_right_cancel _ _ k h
+  · intro h
+    exact ⟨0, congrArg (· + 0) h⟩
+
+public theorem embeddingOfDecidableEq [AddRightCancel α] [DecidableEq α] {a b : α}
+    (eq : toQ a = toQ b) : a = b := by
+  let p : α × α := (a, 0)
+  let q : α × α := (b, 0)
+  letI (x : α × α) : Decidable (r α p x) :=
+    decidable_of_iff' (p.1 + x.2 = p.2 + x.1) (cancellativeRelation p x)
+  have h := (cancellativeRelation p q).mp (exactOfDecidable (p := p) (q := q) eq)
+  exact (Semiring.add_zero a).symm.trans (h.trans (AddCommMonoid.zero_add b))
+
+section
+variable {G : Type v} [AddCommGroup G] (f : α → G)
+variable (add : ∀ a b, f (a + b) = f a + f b)
+
+private theorem regroup (a b d : G) :
+    (a - b) + (b + d) = a + d := by
+  rw [← AddCommMonoid.add_assoc, AddCommGroup.sub_add_cancel]
+
+private theorem crossEq (a b c d : G) :
+    a - b = c - d ↔ a + d = b + c := by
+  have cancel := @AddCommGroup.add_left_inj G _ (a - b) (c - d) (b + d)
+  rw [regroup, AddCommMonoid.add_comm b d, regroup, AddCommMonoid.add_comm c b] at cancel
+  exact cancel.symm
+
+private def difference : Q α → G :=
+  Quot.lift (fun x : α × α => f x.1 - f x.2) fun ⟨a, b⟩ ⟨c, d⟩ ⟨k, h⟩ => by
+    apply (crossEq _ _ _ _).mpr
+    have e := congrArg f h
+    change f (a + d + k) = f (b + c + k) at e
+    simp only [add] at e
+    exact (AddCommGroup.add_left_inj (f k)).mp e
+
+include add
+
+/-- Mapping each pair to its difference in an additive commutative group reflects
+the envelope relation when the original additive map is injective. -/
+public theorem exactOfAdditiveEmbedding (inj : ∀ {a b}, f a = f b → a = b)
+    {p q : α × α} (e : Q.mk p = Q.mk q) : r α p q := by
+  obtain ⟨a, b⟩ := p
+  obtain ⟨c, d⟩ := q
+  have eq := congrArg (difference f add) e
+  change f a - f b = f c - f d at eq
+  replace eq := (crossEq _ _ _ _).mp eq
+  have h : a + d = b + c := inj (((add _ _).trans eq).trans (add _ _).symm)
+  exact ⟨0, congrArg (· + 0) h⟩
+
+/-- The zero-class embedding reflects equality under the same hypothesis,
+without a cancellation or decidability instance on the source. -/
+public theorem embeddingOfAdditiveEmbedding (inj : ∀ {a b}, f a = f b → a = b)
+    {a b : α} (e : toQ a = toQ b) : a = b := by
+  have eq := congrArg (difference f add) e
+  change f a - f 0 = f b - f 0 at eq
+  replace eq := (crossEq _ _ _ _).mp eq
+  rw [AddCommMonoid.add_comm (f 0) (f b)] at eq
+  exact inj ((AddCommGroup.add_left_inj (f 0)).mp eq)
+
+end
+
+open Lean.Grind.CommRing
+
+public abbrev ReflectsDisequality : Prop :=
+  ∀ {α : Type u} [Semiring α] [AddRightCancel α] {a b : α}, a ≠ b → toQ a ≠ toQ b
+
+/-- Two leaves recover arbitrary semiring elements from variable expressions.
+The converse transports both sides of the interpreter agreement. -/
+public theorem adapterIff :
+    (type_of% @Ring.OfSemiring.of_diseq.{u}) ↔ ReflectsDisequality.{u} := by
+  constructor
+  · intro law α _ _ a b h
+    exact law (.branch 1 (.leaf a) (.leaf b)) (.var 0) (.var 1) h
+  · intro reflect α _ _ ctx lhs rhs h e
+    apply reflect h
+    exact (Expr.denoteAsRing_eq ctx lhs).symm.trans (e.trans (Expr.denoteAsRing_eq ctx rhs))
+
+end OmegaChecks.InitBoundaries.RingEnvelopeExact

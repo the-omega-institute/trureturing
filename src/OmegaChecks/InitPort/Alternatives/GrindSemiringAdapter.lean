@@ -11,7 +11,9 @@ reduce on those pairs, giving the representative formulas below. The public
 `of_diseq` still requires the embedding to preserve disequality for every additively
 cancellative semiring: taking the two variables in a context with leaves `a` and
 `b` gives `a ≠ b → toQ a ≠ toQ b`. The upstream proof calls `toQ_inj`, which
-uses effectiveness of the quotient via `Q.exact`.
+uses effectiveness of the quotient via `Q.exact`. The equivalence and the
+constructions for decidable equality or an additive embedding into a commutative
+group are checked in `OmegaChecks.InitBoundaries.RingEnvelopeExact`.
 -/
 
 open Lean.Grind Lean.Grind.CommRing
