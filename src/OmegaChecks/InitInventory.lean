@@ -38,6 +38,7 @@ public import OmegaChecks.InitInventory.TransformerLaws
 public import OmegaChecks.InitInventory.VectorProjection
 public import OmegaChecks.InitInventory.Traversal
 public import OmegaChecks.InitInventory.MonadicZip
+meta import OmegaChecks.InitInventory.MonadicZip
 public import OmegaChecks.InitInventory.Collector
 public import OmegaChecks.InitInventory.StringPatterns
 public import OmegaChecks.InitInventory.StringSearchLoops
