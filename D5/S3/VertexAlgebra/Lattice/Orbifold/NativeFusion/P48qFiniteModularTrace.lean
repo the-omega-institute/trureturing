@@ -7,8 +7,10 @@
    digest: Modular trace identities force twisted labels on the electric stabilizer. -/
 
 import D5.S3.FiniteGroups.CosetActions.EtalePermutationTrace
+import D5.S3.FiniteGroups.InducedCharacterFormula
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qHolomorphicExtensionObstruction
 import Mathlib.Data.Matrix.Mul
+import Mathlib.RepresentationTheory.Character
 import OmegaBuild.Commands
 
 /-!
@@ -63,6 +65,139 @@ theorem exists_coset_trace_and_positive_twisted_multiplicity
     by_contra hNotTwisted
     exact hv (hSupport g i hNotTwisted)
   exact ⟨i, hiTwisted, Nat.pos_of_ne_zero hb⟩
+
+section ElectricCharacters
+
+open scoped BigOperators
+open CategoryTheory
+open FiniteGroups.FiniteCharacterAlgebra.TauCeti (ClassFunction)
+open FiniteGroups.InducedCharacterFormula.TauCeti (characterPairing_ind indClassFun_apply)
+
+/-- The fixed-coset count is the value of the character induced from the
+trivial character of the specified subgroup. -/
+private theorem induced_trivial_apply_eq_fixed_cosets
+    {G : Type*} [Group G] [Finite G] (K : Subgroup G) (g : G) :
+    (FiniteGroups.InducedCharacterFormula.TauCeti.ClassFunction.ind K
+      (⟨fun _ => 1, fun _ _ => rfl⟩ : ClassFunction ℂ K)).1 g =
+        ({q : G ⧸ K | g • q = q}.ncard : ℂ) := by
+  classical
+  rw [FiniteGroups.InducedCharacterFormula.TauCeti.ClassFunction.ind_apply, indClassFun_apply]
+  let : Fintype (G ⧸ K) := Fintype.ofFinite _
+  have hfix (q : G ⧸ K) : q.out⁻¹ * g * q.out ∈ K ↔ g • q = q := by
+    have hq : (QuotientGroup.mk q.out : G ⧸ K) = q := Quotient.out_eq' q
+    have hgq : (QuotientGroup.mk (g * q.out) : G ⧸ K) = g • q :=
+      congrArg (g • ·) hq
+    calc
+      _ ↔ (QuotientGroup.mk q.out : G ⧸ K) = QuotientGroup.mk (g * q.out) := by
+        simpa only [mul_assoc] using
+          (QuotientGroup.eq (s := K) (a := q.out) (b := g * q.out)).symm
+      _ ↔ _ := by rw [hq, hgq, eq_comm]
+  let fixed : Set (G ⧸ K) := {q | g • q = q}
+  have hFinite : fixed.Finite := Set.toFinite _
+  have hFilter : Finset.univ.filter (fun q : G ⧸ K => g • q = q) = hFinite.toFinset := by
+    ext q
+    simp [fixed]
+  simp only [dite_eq_ite, hfix, Finset.sum_boole, hFilter]
+  exact congrArg (fun n : ℕ => (n : ℂ)) (Set.ncard_eq_toFinset_card fixed hFinite).symm
+
+/-- An irreducible coefficient of the electric algebra trace equals the
+dimension of its fixed space for the subgroup that gives the coset trace. -/
+theorem electric_multiplicity_eq_finrank_invariants
+    {G A I : Type*} [Group G] [Finite G] [Fintype I]
+    [CommRing A] [Algebra ℂ A] [Module.Finite ℂ A]
+    (K : Subgroup G) (ρ : G →* (A ≃ₐ[ℂ] A))
+    (R : I → FDRep ℂ G) [∀ i, Simple (R i)]
+    (hDistinct : Pairwise fun i j => ¬ Nonempty (R i ≅ R j)) (b : I → ℕ)
+    (hCoset : ∀ g : G,
+      LinearMap.trace ℂ A (ρ g).toLinearMap = ({q : G ⧸ K | g • q = q}.ncard : ℂ))
+    (hCharacter : ∀ g : G,
+      LinearMap.trace ℂ A (ρ g).toLinearMap = ∑ i, (b i : ℂ) * (R i).character g)
+    (j : I) : b j = Module.finrank ℂ (Representation.invariants ((R j).ρ.comp K.subtype)) := by
+  classical
+  let : Fintype G := Fintype.ofFinite G
+  have hG : (Nat.card G : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr Nat.card_pos.ne'
+  let : Invertible (Nat.card G : ℂ) := invertibleOfNonzero hG
+  let : Invertible (Nat.card K : ℂ) :=
+    invertibleOfNonzero (Nat.cast_ne_zero.mpr Nat.card_pos.ne')
+  let trivial : ClassFunction ℂ K := ⟨fun _ => 1, fun _ _ => rfl⟩
+  let induced := FiniteGroups.InducedCharacterFormula.TauCeti.ClassFunction.ind K trivial
+  have hInduced (g : G) : induced.1 g = ∑ i, (b i : ℂ) * (R i).character g :=
+    (induced_trivial_apply_eq_fixed_cosets K g).trans ((hCoset g).symm.trans (hCharacter g))
+  have hOrthogonal (i : I) :
+      (Nat.card G : ℂ)⁻¹ * ∑ g : G, (R i).character g * (R j).character g⁻¹ =
+        if i = j then 1 else 0 := by
+    rw [FDRep.char_orthonormal]
+    by_cases hij : i = j
+    · subst i
+      simp [show Nonempty (R j ≅ R j) from ⟨Iso.refl _⟩]
+    · simp [hij, hDistinct hij]
+  have hCoefficient :
+      (Nat.card G : ℂ)⁻¹ * (∑ g : G, induced.1 g * (R j).character g⁻¹) = (b j : ℂ) := by
+    simp_rw [hInduced, Finset.sum_mul, mul_assoc]
+    rw [Finset.sum_comm, Finset.mul_sum]
+    calc
+      _ = ∑ i, (b i : ℂ) *
+          ((Nat.card G : ℂ)⁻¹ * ∑ g : G, (R i).character g * (R j).character g⁻¹) := by
+        apply Finset.sum_congr rfl
+        intro i _
+        rw [← Finset.mul_sum]
+        exact mul_left_comm _ _ _
+      _ = _ := by
+        simp_rw [hOrthogonal, mul_ite, mul_one, mul_zero]
+        simp
+  have hReciprocity := characterPairing_ind (S := K) (isUnit_iff_ne_zero.mpr hG)
+    trivial (ClassFunction.ofCharacter (R j).ρ)
+  change ClassFunction.characterPairing induced (ClassFunction.ofCharacter (R j).ρ) = _
+    at hReciprocity
+  rw [ClassFunction.characterPairing_apply, ClassFunction.characterPairing_apply] at hReciprocity
+  change (Nat.card G : ℂ)⁻¹ * (∑ g : G, induced.1 g * (R j).character g⁻¹) =
+    (Nat.card K : ℂ)⁻¹ * (∑ k : K, 1 * (R j).character ((k⁻¹ : K) : G)) at hReciprocity
+  rw [hCoefficient] at hReciprocity
+  have hInverse : (∑ k : K, (R j).character ((k⁻¹ : K) : G)) =
+      ∑ k : K, (R j).character (k : G) :=
+    Fintype.sum_equiv (Equiv.inv K) _ _ fun _ => rfl
+  simp only [one_mul, hInverse] at hReciprocity
+  have hAverage :=
+    Representation.card_inv_mul_sum_char_eq_finrank ((R j).ρ.comp K.subtype)
+  exact Nat.cast_injective (hReciprocity.trans hAverage)
+
+/-- A weighted character identity on a finite grade determines its fixed
+dimension. If the target grade contains those electric dimensions and a
+nonnegative remainder, its dimension bounds the fixed dimension. -/
+theorem fixed_grade_finrank_le_of_electric_multiplicities
+    {G I Wn : Type*} [Group G] [Finite G] [Fintype I]
+    [AddCommGroup Wn] [Module ℂ Wn] [FiniteDimensional ℂ Wn]
+    (K : Subgroup G) (R : I → FDRep ℂ G) (Vn : FDRep ℂ G) (b d : I → ℕ)
+    (hMultiplicity : ∀ i,
+      b i = Module.finrank ℂ (Representation.invariants ((R i).ρ.comp K.subtype)))
+    (hGrade : ∀ g : G, Vn.character g = ∑ i, (d i : ℂ) * (R i).character g)
+    (extra : ℕ) (hTarget : Module.finrank ℂ Wn = (∑ i, b i * d i) + extra) :
+    Module.finrank ℂ (Representation.invariants (Vn.ρ.comp K.subtype)) = (∑ i, b i * d i) ∧
+    Module.finrank ℂ (Representation.invariants (Vn.ρ.comp K.subtype)) ≤ Module.finrank ℂ Wn := by
+  let : Fintype K := Fintype.ofFinite K
+  let : Invertible (Nat.card K : ℂ) :=
+    invertibleOfNonzero (Nat.cast_ne_zero.mpr Nat.card_pos.ne')
+  have hAverage (V : FDRep ℂ G) :
+      (Nat.card K : ℂ)⁻¹ * (∑ k : K, V.character (k : G)) =
+        (Module.finrank ℂ (Representation.invariants (V.ρ.comp K.subtype)) : ℂ) :=
+    Representation.card_inv_mul_sum_char_eq_finrank (V.ρ.comp K.subtype)
+  have hDimension : Module.finrank ℂ (Representation.invariants (Vn.ρ.comp K.subtype)) =
+      ∑ i, b i * d i := by
+    apply Nat.cast_injective (R := ℂ)
+    rw [← hAverage Vn]
+    push_cast
+    simp_rw [hGrade]
+    rw [Finset.sum_comm, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    calc
+      _ = (d i : ℂ) * ((Nat.card K : ℂ)⁻¹ * ∑ k : K, (R i).character (k : G)) := by
+        rw [← Finset.mul_sum]
+        exact mul_left_comm _ _ _
+      _ = _ := by rw [hAverage, ← hMultiplicity i, mul_comm]
+  exact ⟨hDimension, by rw [hDimension, hTarget]; exact Nat.le_add_right _ _⟩
+
+end ElectricCharacters
 
 open ExtremalC48 (SL47)
 open HalfFockSpectralFiberSource (actualInverse)
@@ -144,6 +279,8 @@ theorem p48q_fixed_quadratics_of_finite_modular_trace
     exact (hyNe (congrArg (fun z : sector.branch => (z : sector.space)) (hVanish ⟨y, hy⟩))).elim
 
 #print axioms exists_coset_trace_and_positive_twisted_multiplicity
+#print axioms electric_multiplicity_eq_finrank_invariants
+#print axioms fixed_grade_finrank_le_of_electric_multiplicities
 #print axioms p48q_fixed_quadratics_of_finite_modular_trace
 
 end D5.S3.VertexAlgebra.Lattice.Orbifold.NativeFusion
