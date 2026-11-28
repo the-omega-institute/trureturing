@@ -21,7 +21,7 @@ internal sealed class MesyanQuantaleClassificationDocument : IScribeDocumentDefi
                     + "of ordered pairwise products. This is Mathlib's additive-submonoid multiplication. "
                     + "It contains zero through the one-term sum of the product of two zeros. "
                     + "The shared reference for Definition 4 and Question 36 is "),
-                    Ref("D5/L/Arith/mesyan2026quantales"), Text(".")),
+                    Ref("D5/L/ArithUnits/mesyan2026quantales"), Text(".")),
                 Paragraph(Text("The quantale has a two-sided identity precisely if R has a two-sided "
                     + "multiplicative identity or its additive group is torsion and each prime-primary component "
                     + "has a two-sided identity belonging to that component. The component for p consists of "
