@@ -337,8 +337,6 @@ end Omega.List
 port_definition List.concat.match_1 with_native_code
 port_structural_code List.concat on_arg 2
 
-port_definition List.flatMap
-
 port_inductive LE
 port_definition LE.le
 port_inductive LT
@@ -565,6 +563,10 @@ port_definition List.append.match_1 with_native_code
 port_structural_code List.append on_arg 2
 port_definition instDecidableEqList.match_1 with_native_code
 port_structural_code List.map on_arg 4
+port_structural_code List.flatten on_arg 2 using
+  fun {α} xs => Omega.List.casesOn (motive := fun _ => Omega.List α) xs Omega.List.nil
+    (fun head rest => Omega.List.append head (Omega.List.flatten rest))
+port_definition List.flatMap with_native_code
 port_definition List.foldl.match_1 with_native_code
 port_structural_code List.foldl on_arg 5
 port_definition List.lengthTRAux.match_1 with_native_code
@@ -882,3 +884,29 @@ port_proof Char.utf8Size._proof_2
 port_proof Char.utf8Size._proof_3
 port_definition Char.utf8Size with_native_code
 attribute [match_pattern] Omega.Char.ofNat
+
+port_proof Nat.zero_lt_succ
+port_proof Nat.add_pos_right
+port_proof Nat.mul_pos
+port_proof Nat.pow_pos._f
+port_proof Nat.pow_pos
+port_definition Nat.instMod with_native_code
+port_definition Nat.instDiv with_native_code
+
+namespace Nat
+export _root_.Omega.Nat (add_pos_right instDiv instMod mul_pos pow_pos zero_lt_succ)
+end Nat
+port_definition Fin.Internal.ofNat with_native_code
+port_proof BitVec.ofNat._proof_1
+port_definition BitVec.ofNat with_native_code
+port_definition UInt8.ofNat with_native_code
+port_definition String.utf8EncodeChar with_native_code
+port_definition List.utf8Encode with_native_code
+port_inductive ByteArray.IsValidUTF8
+port_native_records String
+port_proof String.ofList._proof_1
+port_definition String.ofList with_native_code
+port_inductive Lean.Name
+port_definition Lean.Name.mkStr1 with_native_code
+port_definition Lean.SyntaxNodeKind
+port_inductive Lean.ParserDescr

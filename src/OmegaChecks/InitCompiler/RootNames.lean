@@ -85,4 +85,11 @@ public def aliasFor? (official : Name) : Option (Name × Name) :=
   else if (usesRoot official.getPrefix) && !official.isInternal then some (official, `Omega ++ official)
   else none
 
+/-- Express a string literal with strict character and string constructors. -/
+public def stringTerm (s : String) : Expr :=
+  let char := mkConst `Omega.Char
+  let chars := s.toList.foldr (init := mkApp (mkConst `Omega.List.nil [.zero]) char) fun ch tail =>
+    mkApp3 (mkConst `Omega.List.cons [.zero]) char (mkApp (mkConst `Omega.Char.ofNat) (mkRawNatLit ch.toNat)) tail
+  mkApp (mkConst `Omega.String.ofList) chars
+
 end OmegaChecks.InitCompiler.RootNames

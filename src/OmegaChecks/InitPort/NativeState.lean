@@ -1,6 +1,7 @@
 module
 import all Lean.Environment
 public import Lean
+import OmegaChecks.InitCompiler.Layout
 import Lean.Compiler.LCNF.EmitC
 import all Lean.Compiler.LCNF.MonoTypes
 import all Lean.Compiler.LCNF.ToImpureType
@@ -79,29 +80,14 @@ public def compile (env : Environment) (work : CoreM Unit) : IO Environment := d
   let (_, s) ← work.toIO ctx {env}
   return s.env
 
-/-- Keep the UTF-8 field in slot zero and preserve the boxed calling convention of String. -/
-public def prepareStringLayout : CoreM Unit := do
-  modifyEnv fun env =>
-    let env := trivialStructureInfoExt.insert env `Omega.String none
-    let env := impureTrivialStructureInfoExt.insert env `Omega.String none
-    impureTypeExt.insert env `Omega.String ImpureType.tobject
-
-public def finishStringLayout : CoreM Unit := do
-  let name := `Omega.String.ofByteArray
-  let some layout := ctorLayoutExt.find? (← getEnv) name | throwError "missing string constructor"
-  unless layout.ctorInfo.size == 1 && layout.ctorInfo.ssize == 0 && layout.ctorInfo.usize == 0 &&
-      layout.ctorInfo.cidx == 0 && (layout.fieldInfo matches #[.object 0 _, .erased]) do
-    throwError s!"unexpected string constructor layout {layout.ctorInfo.size} {layout.ctorInfo.ssize} {layout.ctorInfo.usize} {layout.fieldInfo.map (fun f => toString (format f))}"
-  modifyEnv fun env => ctorLayoutExt.insert env name {layout with ctorInfo := {layout.ctorInfo with ssize := 1}}
-
 public def compileLayouts (env : Environment) (name : Name) : IO Environment := do
   let some (.inductInfo ind) := env.find? name | throw <| IO.userError s!"missing inductive {name}"
   let idx := (env.getModuleIdxFor? name).get!
   let contextEnv ← localEnv env env.header.moduleNames[idx]! (#[name] ++ ind.ctors.toArray)
   compile contextEnv do
-    if name == `Omega.String then prepareStringLayout
+    if name == `Omega.String then OmegaChecks.InitCompiler.prepareStringLayout
     (← compileDeclsRef.get) #[name] {}
-    if name == `Omega.String then finishStringLayout
+    if name == `Omega.String then OmegaChecks.InitCompiler.finishStringLayout
 
 public def verify (env : Environment) (n : Name) (args : Array (IR.IRType × Bool))
     (ret : IR.IRType) (symbol : String) : IO Unit := do
