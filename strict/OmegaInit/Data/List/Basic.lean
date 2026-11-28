@@ -352,6 +352,7 @@ port_definition List.findFinIdx?.go._f
 port_definition List.findFinIdx?.go
 port_structural_code List.findFinIdx?.go on_arg 4
 port_definition List.findFinIdx? with_native_code
+port_definition List.finIdxOf? with_native_code
 
 port_definition List.lookup.match_1 with_native_code
 port_definition List.lookup._f
