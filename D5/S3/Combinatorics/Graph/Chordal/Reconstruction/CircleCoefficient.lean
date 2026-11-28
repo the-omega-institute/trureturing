@@ -1,12 +1,12 @@
 /- GID: D5/S3/Combinatorics/Graph/Chordal/Reconstruction/CircleCoefficient
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Chordal/Reconstruction/CircleCoefficient
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Exact ambient unit-quaternion reconstruction coefficient for circle gains on finite path powers. -/
 
-import OmegaMath.Combinatorics.Graph.QuaternionCircleBlockFit
+import D5.S3.Combinatorics.Graph.Chordal.QuaternionCircleBlockFit
 import D5.S3.Combinatorics.Graph.Chordal.Reconstruction.ChordalBanachExactStrata
 
 /-! The ambient unit-quaternion coefficient is one for circle-valued gains on finite path powers. -/

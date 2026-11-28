@@ -21,6 +21,10 @@ ifeq ($(origin FULL_BUILD):$(FULL_BUILD),command line:1)
 $(filter lean-cache-ensure,$(TOOLS_TARGETS)): | install-tools
 endif
 
+verify-omegamath-release:
+	@python3 -I -B .github/scripts/verify-omegamath-release.py
+.PHONY: verify-omegamath-release
+
 install-tools:
 	@python3 -I -B .github/scripts/install-tools.py
 

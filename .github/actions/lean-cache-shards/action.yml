@@ -33,6 +33,9 @@ inputs:
   staged:
     description: Verify the specified immutable candidate before advancing its publication marker
     default: 'false'
+  lake-seed:
+    description: Permit Lake-revalidated compiler seeds in the current pull request job
+    default: 'false'
   targets-file:
     description: File of whitespace-delimited Lean modules for a scoped restore
 outputs:

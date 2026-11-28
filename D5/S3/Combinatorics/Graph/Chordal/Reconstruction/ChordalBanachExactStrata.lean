@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -12,38 +12,38 @@ import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import OmegaMath.Combinatorics.Graph.ChordalGainReduction
 import OmegaMath.Combinatorics.Graph.RootedAncestorReconstruction
 import D5.S3.Combinatorics.Graph.Chordal.CliqueTreeBanachPotential
-import OmegaMath.Combinatorics.Graph.ChordalWalkHolonomy
-import OmegaMath.Combinatorics.Graph.FiniteHilbertJung
-import OmegaMath.Combinatorics.Graph.GroupCliqueStrata
-import OmegaMath.Combinatorics.Graph.ScalarCycleReconstruction
+import D5.S3.Combinatorics.Graph.Chordal.ChordalWalkHolonomy
+import D5.S3.Combinatorics.Graph.Chordal.FiniteHilbertJung
+import D5.S3.Combinatorics.Graph.Chordal.GroupCliqueStrata
+import D5.S3.Combinatorics.Graph.Chordal.ScalarCycleReconstruction
 import D5.S3.Combinatorics.Graph.Chordal.SimplicialAndIntervalPotential
-import OmegaMath.Combinatorics.Graph.PathPowerReconstruction
-import OmegaMath.Combinatorics.Graph.ChordalPath49Metric
+import D5.S3.Combinatorics.Graph.Chordal.PathPowerReconstruction
+import D5.S3.Combinatorics.Graph.Chordal.ChordalPath49Metric
 import OmegaMath.Combinatorics.Graph.L1Jung
-import OmegaMath.Combinatorics.Graph.ChordalFanLower
-import OmegaMath.Combinatorics.Graph.ChordalGroupCoefficient
+import D5.S3.Combinatorics.Graph.Chordal.ChordalFanLower
+import D5.S3.Combinatorics.Graph.Chordal.ChordalGroupCoefficient
 import D5.S3.Combinatorics.Graph.Chordal.UniformGainPotential
 import D5.S3.Combinatorics.Graph.Chordal.CompleteAndCliqueSumBanach
 import D5.S3.Combinatorics.Graph.Chordal.ChordalBanachLimitTwo
 import OmegaMath.Combinatorics.Graph.PairRetention
-import OmegaMath.Combinatorics.Graph.PathPowerRadius
+import D5.S3.Combinatorics.Graph.Chordal.PathPowerRadius
 import OmegaMath.Combinatorics.Graph.HilbertSimplexRadius
 import OmegaMath.Combinatorics.Graph.L1BalancedRadius
 import OmegaMath.Combinatorics.Graph.L1Counting
-import OmegaMath.Combinatorics.Graph.ChordalAbelianReduction
+import D5.S3.Combinatorics.Graph.Chordal.ChordalAbelianReduction
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
-import OmegaMath.Combinatorics.Graph.ChordalEightVertexMetric
-import OmegaMath.Combinatorics.Graph.CliqueTreeRadiusForm
-import OmegaMath.Combinatorics.Graph.CliqueTreeGroupSeparator
-import OmegaMath.Combinatorics.Graph.CliqueTreeL1Separator
-import OmegaMath.Combinatorics.Graph.CliqueTreeBanachOverlap
+import D5.S3.Combinatorics.Graph.Chordal.ChordalEightVertexMetric
+import D5.S3.Combinatorics.Graph.Chordal.CliqueTreeRadiusForm
+import D5.S3.Combinatorics.Graph.Chordal.CliqueTreeGroupSeparator
+import D5.S3.Combinatorics.Graph.Chordal.CliqueTreeL1Separator
+import D5.S3.Combinatorics.Graph.Chordal.CliqueTreeBanachOverlap
 import OmegaMath.Combinatorics.Graph.RollingSpanOne
 import OmegaMath.Combinatorics.Graph.RollingSpanOneLower
 import OmegaMath.Combinatorics.Graph.L1TetrahedronRadius
-import OmegaMath.Combinatorics.Graph.ChordalPathNine
+import D5.S3.Combinatorics.Graph.Chordal.ChordalPathNine
 import OmegaMath.Combinatorics.Graph.StackedThreeTreeGraph
-import OmegaMath.Combinatorics.Graph.GroupCliqueMetricStrata
-import OmegaMath.Combinatorics.Graph.PureThreeTreeReverse
+import D5.S3.Combinatorics.Graph.Chordal.GroupCliqueMetricStrata
+import D5.S3.Combinatorics.Graph.Chordal.PureThreeTreeReverse
 import OmegaMath.Combinatorics.Graph.BinaryStaircaseGraph
 import D5.S3.Combinatorics.Graph.Chordal.Dirac
 

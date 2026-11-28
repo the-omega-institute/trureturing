@@ -117,7 +117,7 @@ def provenance(api, artifact):
     attempt = run["run_attempt"]
     jobs = api.metadata(f"actions/runs/{run_id}/attempts/{attempt}/jobs?per_page=100")["jobs"]
     for job in jobs:
-        if (job["name"] == "omega" and job["run_id"] == run_id and job["run_attempt"] == attempt
+        if (job["name"] == "omega-consumer" and job["run_id"] == run_id and job["run_attempt"] == attempt
                 and job["head_sha"] == sha and job["status"] == "completed" and job["conclusion"] == "success"
                 and any(step["name"] == PUBLISH_STEP and step["conclusion"] == "success" for step in job["steps"])):
             return {"repository_id": api.repo_id, "run_id": run_id, "attempt": attempt, "sha": sha, "branch": branch}

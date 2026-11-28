@@ -82,7 +82,7 @@ class FrozenMeasurement(unittest.TestCase):
             self.assertEqual(result.read_bytes(), published)
 
     def check_source_mutation(self, request, official, inspector, result, published):
-        source = portable.SRC / (MIXED.replace(".", "/") + ".lean")
+        source = portable.UPSTREAM_SRC / (MIXED.replace(".", "/") + ".lean")
         original_fingerprint = portable.source_fingerprint
         # Change a private copy between measurements. Concurrent Lake builds can
         # continue to use the actual source and its compiled artifacts.
@@ -109,15 +109,14 @@ class FrozenMeasurement(unittest.TestCase):
 
     def check_crossed_artifacts(self, tmp):
         name = MIXED
-        source = portable.SRC / (name.replace(".", "/") + ".lean")
+        source = portable.UPSTREAM_SRC / (name.replace(".", "/") + ".lean")
         relative = Path(name.replace(".", "/") + ".olean")
-        official = portable.ROOT / ".lake/build/lib/lean" / relative
-        manifest = json.loads((portable.ROOT / "lake-manifest.json").read_text())
-        packages = {(portable.ROOT / manifest["packagesDir"] / p["name"] / ".lake/build/lib/lean").resolve()
-                    for p in manifest["packages"]}
+        official = portable.UPSTREAM / ".lake/build/lib/lean" / relative
+        packages = portable.dependency_paths()
         lean = portable.output("lake", "env", "printenv", "LEAN").strip()
         environment = {k: v for k, v in os.environ.items() if k not in {"LEAN_PATH", "LEAN_SRC_PATH"}}
-        real_output = portable.output
+        upstream = portable.upstream_portable()
+        real_output = upstream.output
 
         def crossed_path(*args, **kwargs):
             result = real_output(*args, **kwargs)
@@ -127,7 +126,7 @@ class FrozenMeasurement(unittest.TestCase):
                 return "\n".join(lines)
             return result
 
-        with patch.object(portable, "output", side_effect=crossed_path):
+        with patch.object(upstream, "output", side_effect=crossed_path):
             with self.assertRaisesRegex(RuntimeError, "unexpected source file or artifact"):
                 portable.backend_artifacts(True, False, {name: source}, tmp / "wrong-path",
                                            packages, lean, environment)
@@ -164,7 +163,7 @@ class FrozenMeasurement(unittest.TestCase):
 
     def test_rejects_unmatched_private_source_declaration(self):
         inspector = portable.ROOT / ".lake/build/lean-inspector/producer/bin/reportInspector"
-        subprocess.run(["lake", "build", "omegaAudit"], cwd=portable.ROOT, check=True)
+        portable.build_audit()
         lean = portable.output("lake", "env", "printenv", "LEAN").strip()
         official_path = portable.output("lake", "env", "printenv", "LEAN_PATH").strip()
         name = "FrozenProvenanceProbe"

@@ -61,10 +61,10 @@ def pin_blob(revision):
     return oid
 
 
-def unique_fields(pairs):
+def unique_fields(pairs, source=PIN):
     fields = dict(pairs)
     if len(fields) != len(pairs):
-        raise ValueError(f"duplicate field in {PIN}")
+        raise ValueError(f"duplicate field in {source}")
     return fields
 
 
@@ -478,6 +478,46 @@ def install(archive, pin):
     print(f"Installed tools {pin['version']}")
 
 
+def omega_package_overrides(path):
+    manifest = json.loads(path.read_bytes(), object_pairs_hook=lambda pairs: unique_fields(pairs, path))
+    packages = manifest["packages"]
+    if not isinstance(packages, list) or not all(isinstance(entry, dict) for entry in packages):
+        raise ValueError(f"invalid package entries in {path}")
+    entries = [entry for entry in packages if entry.get("name") == "omegamath"]
+    if not entries:
+        return None
+    if len(entries) != 1 or manifest["version"] != "1.3.0":
+        raise ValueError(f"expected one omegamath pin in a Lake 1.3.0 manifest: {path}")
+    entry = entries[0]
+    if (entry.get("type") != "git" or not isinstance(entry.get("rev"), str)
+            or not re.fullmatch(SHA, entry["rev"]) or not isinstance(entry.get("url"), str)
+            or not entry["url"]):
+        raise ValueError(f"omegamath must have a full Git revision pin in {path}")
+    # Installation precedes Lake's dependency checkout. The tool validator
+    # checks the actual package revision and source when it consumes this pin.
+    return {"version": "1.3.0", "packages": [entry | {"inherited": True}]}
+
+
+def prepare_tool_overrides(overrides):
+    content = None if overrides is None else (json.dumps(overrides, indent=1) + "\n").encode()
+    for name in ("lean-inspector", "lean-inspector-reg", "lean-inspector-interface"):
+        workspace = ROOT / "tools" / name
+        destination = workspace / ".lake/package-overrides.json"
+        if content is None:
+            # A protected base may reuse a tools install from a newer checkout.
+            destination.unlink(missing_ok=True)
+            continue
+        if not (workspace / "lake-manifest.json").is_file():
+            raise ValueError(f"tools release is missing {workspace / 'lake-manifest.json'}")
+        if destination.is_file() and not destination.is_symlink() and destination.read_bytes() == content:
+            continue
+        destination.parent.mkdir(exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=destination.parent) as tmp:
+            staged = Path(tmp) / destination.name
+            staged.write_bytes(content)
+            os.replace(staged, destination)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--archive", type=Path, help="use a local copy of the pinned release asset")
@@ -500,7 +540,13 @@ def main():
         fcntl.flock(lock, fcntl.LOCK_EX)
         archive = cached_archive(pin, args.archive, args.cache_from)
         if args.cache_revision is None:
+            manifest = ROOT / "lake-manifest.json"
+            # Sparse bootstrap jobs install tools without checking out Lean inputs.
+            has_manifest = manifest.exists()
+            overrides = omega_package_overrides(manifest) if has_manifest else None
             install(archive, pin)
+            if has_manifest:
+                prepare_tool_overrides(overrides)
 
 
 if __name__ == "__main__":

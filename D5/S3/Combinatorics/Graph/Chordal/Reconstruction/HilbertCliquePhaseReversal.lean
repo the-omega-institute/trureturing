@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -7,9 +7,9 @@
    digest: Hilbert and L1 clique separation and Euclidean chordal reconstruction. -/
 
 import OmegaBuild.Commands
-import OmegaMath.Combinatorics.Graph.HilbertTetrahedronInsertion
-import OmegaMath.Combinatorics.Graph.HilbertTrianglePlacement
-import OmegaMath.Combinatorics.Graph.EuclideanChordalBounds
+import D5.S3.Combinatorics.Graph.Chordal.HilbertTetrahedronInsertion
+import D5.S3.Combinatorics.Graph.Chordal.HilbertTrianglePlacement
+import D5.S3.Combinatorics.Graph.Chordal.EuclideanChordalBounds
 import D5.S3.Combinatorics.Graph.Chordal.Reconstruction.ChordalBanachExactStrata
 import D5.S3.Combinatorics.Graph.Chordal.ThreeTreeBanachSharpBounds
 

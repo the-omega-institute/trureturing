@@ -8,7 +8,7 @@ import tempfile
 import tomllib
 import unittest
 
-from strict_lake import ROOT
+from host_lake import ROOT, UPSTREAM
 
 
 class BackendScheduling(unittest.TestCase):
@@ -19,10 +19,10 @@ class BackendScheduling(unittest.TestCase):
             shutil.copyfile(ROOT / "lean-toolchain", project / "lean-toolchain")
             prefix = Path("src/OmegaChecks")
             (project / prefix).mkdir(parents=True)
-            shutil.copyfile(ROOT / prefix / "InitCompiler.lean", project / prefix / "InitCompiler.lean")
-            shutil.copytree(ROOT / prefix / "InitCompiler", project / prefix / "InitCompiler")
+            shutil.copyfile(UPSTREAM / prefix / "InitCompiler.lean", project / prefix / "InitCompiler.lean")
+            shutil.copytree(UPSTREAM / prefix / "InitCompiler", project / prefix / "InitCompiler")
             # Preserve both overlapping library selections and their order from this checkout.
-            config = tomllib.loads((ROOT / "lakefile.toml").read_text())
+            config = tomllib.loads((UPSTREAM / "lakefile.toml").read_text())
             selected = [lib for lib in config["lean_lib"] if lib["name"] in {"OmegaChecks", plugin}]
             self.assertEqual({lib["name"] for lib in selected}, {"OmegaChecks", plugin})
             source = 'name = ' + json.dumps(config['name']) + '\n'
@@ -38,8 +38,10 @@ class BackendScheduling(unittest.TestCase):
             project = Path(directory)
             for filename in ("lakefile.toml", "lake-manifest.json", "lean-toolchain"):
                 shutil.copyfile(ROOT / filename, project / filename)
-            for name in ("src", "strict"):
-                shutil.copytree(ROOT / name, project / name)
+            checks = project / "src/OmegaChecks"
+            checks.mkdir(parents=True)
+            for filename in ("portable.py", "host_lake.py"):
+                shutil.copyfile(ROOT / "src/OmegaChecks" / filename, checks / filename)
             subprocess.run(["git", "init", "--quiet"], cwd=project, check=True)
             (project / ".lake").mkdir()
             (project / ".lake/packages").symlink_to((ROOT / ".lake/packages").resolve(), target_is_directory=True)
@@ -55,15 +57,16 @@ class BackendScheduling(unittest.TestCase):
             use_factorial = "def answer (n : Omega.Nat) : Nat := Nat.factorial n\n"
             b.write_text(header + marker + use_factorial)
             (project / "Trureturing.lean").write_text("import D5.All\n")
-            (project / "src/OmegaChecks/ReviewBridge.lean").write_text(
+            (directory / "ReviewBridge.lean").write_text(
                 "import Trureturing\nexample (n : Nat) : answer n = Nat.factorial n := rfl\n")
 
             supplemental = "OmegaChecks.Portable.MathlibFactorial"
-            scope = {"shared": [], "library": [], "basis": [], "common": [supplemental], "consumers": ["D5.All"]}
-            scope_file = project / "scope.json"
-            scope_file.write_text(json.dumps(scope))
+            scope = {"shared": [], "library": [], "basis": [], "common": [supplemental, "D5.D"], "consumers": ["D5.All"]}
             def check(expected_error=None):
-                result = subprocess.run([sys.executable, "-B", "src/OmegaChecks/check.py", "--scope", scope_file],
+                script = ("import sys; sys.path.insert(0, 'src/OmegaChecks'); import portable; "
+                          f"portable.check({scope['consumers']!r}, 'both', basis_roots={scope['basis']!r}, "
+                          f"common_roots={scope['common']!r})")
+                result = subprocess.run([sys.executable, "-B", "-c", script],
                                         cwd=project, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 if expected_error:
                     self.assertNotEqual(result.returncode, 0, result.stdout)
@@ -80,17 +83,18 @@ class BackendScheduling(unittest.TestCase):
             self.assertNotIn(supplemental, reported["consumerModules"])
             self.assertNotIn(supplemental, {row["module"] for row in reported["declarations"]})
             self.assertEqual({p.stem for p in strict_artifacts.glob("*.olean")}, {"A", "D"})
+            self.assertTrue((project / ".lake/build/omega-common/lib/lean/D5/D.olean").is_file())
 
             # Every supported entry must also build the portable sibling from a cold overlay.
-            for cmd in (["lake", "test", "--", "OmegaChecks.ReviewBridge"],
-                        [sys.executable, "src/OmegaChecks/strict_lake.py", "build", "+Trureturing",
+            for cmd in ([sys.executable, "-B", "src/OmegaChecks/host_lake.py", "build", "+D5.ReviewBridge"],
+                        [sys.executable, "-B", "src/OmegaChecks/host_lake.py", "build", "+Trureturing",
                          "@trureturing/+D5.B:olean", "D5/C.lean:olean"],
-                        [sys.executable, "src/OmegaChecks/strict_lake.py", "build"]):
+                        [sys.executable, "-B", "src/OmegaChecks/host_lake.py", "build"]):
                 shutil.rmtree(strict_artifacts.parent.parent.parent)
                 result = subprocess.run(cmd, cwd=project, capture_output=True, text=True)
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                 self.assertEqual({p.stem for p in strict_artifacts.glob("*.olean")}, {"A", "D"})
-                for skipped in ("Trureturing.olean", "OmegaChecks/ReviewBridge.olean"):
+                for skipped in ("Trureturing.olean", "D5/ReviewBridge.olean"):
                     self.assertFalse((strict_artifacts.parent / skipped).exists())
 
             # A previous official success must not bypass the next strict build.

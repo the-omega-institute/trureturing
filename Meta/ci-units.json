@@ -30,10 +30,8 @@
     "!tools/scripts/agent/openproblem/README.md",
     "!tools/scripts/agent/openproblem/SCREENED-OUT*.md",
     "!tools/scripts/agent/prime_slabs/CPU.md",
-    "[omega]",
-    "src/*.lean",
+    "[omega-consumer]",
     "src/OmegaChecks/*.py",
-    "strict/*.lean",
     "D5/*.lean",
     "Reg/*.lean",
     "Reg/lakefile.toml",
@@ -42,7 +40,14 @@
     "lakefile.toml",
     "lake-manifest.json",
     "lean-toolchain",
-    "Makefile"
+    "Makefile",
+    ".github/scripts/omega-consumer.py",
+    ".github/scripts/test-omega-consumer.py",
+    ".github/scripts/omega-audit-results.py",
+    ".github/scripts/test-omega-audit-results.py",
+    "Meta/omegamath-release.json",
+    ".github/scripts/verify-omegamath-release.py",
+    ".github/scripts/test-verify-omegamath-release.py"
   ],
   "current": {
     "report_paths": "*\n",
@@ -63,11 +68,11 @@
       "command": "make filemap-conform",
       "cache-dependency-path": "tools/StrataLint.FileMap/packages.lock.json\ntools/StrataLint.Configuration/packages.lock.json\ntools/StrataLint.Engine/packages.lock.json\ntools/StrataLint.Engineering/packages.lock.json\ntools/StrataLint.Runtime/packages.lock.json\ntools/Trureturing.Truth/packages.lock.json\n"
     },
-    "omega": {
+    "omega-consumer": {
       "dotnet": false,
       "lean": "build",
       "project": "",
-      "command": "python3 src/OmegaChecks/check.py",
+      "command": "python3 -B .github/scripts/omega-consumer.py",
       "cache-dependency-path": ""
     }
   }

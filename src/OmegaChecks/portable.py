@@ -1,8 +1,5 @@
 """Compile downstream mathematical sources against the strict and pinned standard libraries."""
 import argparse
-from collections import defaultdict
-from graphlib import TopologicalSorter
-import fcntl
 import hashlib
 import json
 import os
@@ -10,12 +7,12 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
-from strict_lake import BUILD, COMMON_SRC, INSPECTOR, lake_layout, strict_config
+from host_lake import (COMMON_SRC, INSPECTOR, ROOT, UPSTREAM, UPSTREAM_SRC,
+                       lake_layout, upstream_portable)
 
 
-ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "src"
-AUDIT = ROOT / ".lake/build/bin/omegaAudit"
+AUDIT = UPSTREAM / ".lake/build/bin/omegaAudit"
 BASIS = {"OmegaInit", "OmegaMathlib"}
 STANDARD_AXIOMS = {"Classical.choice", "Quot.sound", "propext"}
 
@@ -28,255 +25,78 @@ def output(*args, **kwargs):
     return subprocess.check_output(args, cwd=ROOT, text=True, **kwargs)
 
 
-def import_graph(lean, pathspecs=("strict/*.lean", "src/*.lean", "D5/*.lean", "Trureturing.lean"), *,
-                 with_reg=False, official_basis=False):
+def import_graph(lean, pathspecs=None, *, with_reg=False, official_basis=False):
+    upstream = upstream_portable()
+    if official_basis:
+        return upstream.import_graph(lean, official_basis=True)
+    include_library = pathspecs is None or any(p.startswith(("src/", "strict/")) for p in pathspecs)
+    sources, graph = upstream.import_graph(lean) if include_library else ({}, {})
+    if pathspecs is None:
+        pathspecs = ("D5/*.lean", "Trureturing.lean")
+    else:
+        pathspecs = tuple(p for p in pathspecs if not p.startswith(("src/", "strict/")))
     if with_reg:
         pathspecs = (*pathspecs, "Reg/*.lean")
-    files = output("git", "ls-files", "-co", "--exclude-standard", "-z", "--",
-                   *pathspecs).split("\0")
-    sources = {}
-    for file in files:
-        if file and (ROOT / file).is_file():
-            path = file.removeprefix("strict/").removeprefix("src/")
-            name = path.removesuffix(".lean").replace("/", ".")
-            if file.startswith("src/") and root(name) in BASIS and not official_basis:
-                continue
-            sources[name] = ROOT / file
+    host_sources = {}
+    if pathspecs:
+        files = output("git", "ls-files", "-co", "--exclude-standard", "-z", "--",
+                       *pathspecs).split("\0")
+        for file in files:
+            if file and (ROOT / file).is_file():
+                name = file.removesuffix(".lean").replace("/", ".")
+                host_sources[name] = ROOT / file
     if with_reg:
         if not (INSPECTOR / "lakefile.toml").is_file():
             raise RuntimeError("Reg requires the pinned inspector interface; run make install-tools")
         for path in [*INSPECTOR.glob("LeanInformationAuditInterface.lean"),
                      *(INSPECTOR / "LeanInformationAuditInterface").rglob("*.lean")]:
-            sources[".".join(path.relative_to(INSPECTOR).with_suffix("").parts)] = path
-    names = sorted(sources)
-    result = json.loads(output(lean, "--deps-json", "--stdin",
-                               input="".join(str(sources[name]) + "\n" for name in names)))
-    graph = {}
-    for name, row in zip(names, result["imports"], strict=True):
-        if row["errors"]:
-            raise RuntimeError(f"{name}: {row['errors']}")
-        entries = row["result"]["imports"]
-        graph[name] = {entry["module"] for entry in entries}
-    return sources, graph
+            host_sources[".".join(path.relative_to(INSPECTOR).with_suffix("").parts)] = path
+    if sources.keys() & host_sources.keys():
+        raise RuntimeError(f"host source shadows omegamath: {sorted(sources.keys() & host_sources.keys())}")
+    graph.update(upstream.parse_import_graph(lean, host_sources, cwd=ROOT))
+    return {**sources, **host_sources}, graph
 
 
 def consumers(graph):
-    touched = {}
-    for name in TopologicalSorter(graph).static_order():
-        deps = graph.get(name, ())
-        touched[name] = root(name) in {"OmegaInit", "OmegaMathlib", "OmegaMath"} or name == "OmegaBuild.Commands" or any(touched[dep] for dep in deps)
-    # Correspondence proofs import both bases deliberately. The Portable modules are clients.
-    return sorted(n for n in graph if touched[n] and root(n) not in BASIS | {"OmegaBuild"}
-                  and (root(n) != "OmegaChecks" or n.startswith("OmegaChecks.Portable.")))
+    return upstream_portable().consumers(graph)
 
 
 def closure(graph, roots):
-    pending = list(roots)
-    seen = set()
-    while pending:
-        name = pending.pop()
-        if name not in seen:
-            seen.add(name)
-            pending.extend(dep for dep in graph[name] if dep in graph)
-    return list(TopologicalSorter({n: sorted(graph[n] & seen) for n in sorted(seen)}).static_order())
+    return upstream_portable().closure(graph, roots)
+
+
+def build_audit(environment=None):
+    subprocess.run(["lake", "build", "@omegamath/omegaAudit"], cwd=ROOT, env=environment, check=True)
 
 
 def backend_plan(official_path, names, environment=None, *, prepared=False):
-    """Read backend restrictions from the exact official artifacts about to be consumed."""
-    if not names:
-        return {"mathlibOnly": {}, "declarations": []}
-    if prepared:
-        # Run main from the selector module restored with these official artifacts.
-        env = {**(os.environ if environment is None else environment), "LEAN_PATH": official_path}
-        raw = output("lean", "--stdin", "--run", "OmegaBackendPlan.lean", official_path, *names,
-                     input="import OmegaBuild.Plan\n", env=env)
-    else:
-        subprocess.run(["lake", "build", "omegaBackendPlan"], cwd=ROOT, env=environment, check=True)
-        raw = output(ROOT / ".lake/build/bin/omegaBackendPlan", official_path, *names, env=environment)
-    plan = json.loads(raw)
-    for name, chain in plan["mathlibOnly"].items():
-        if name not in names or not chain or chain[0] != name:
-            raise RuntimeError(f"invalid backend restriction for {name}: {chain}")
-        if root(name) in BASIS:
-            raise RuntimeError(f"strict foundation cannot opt out of verification: {name}")
-        print(f"Strict build skipped: {' -> '.join(chain)} (compile_only_with_mathlib)", flush=True)
-    return plan
-
-
-def namespace_exports(lean, strict, basis, official_path):
-    helper = SRC / "OmegaChecks/Portable/Exports.lean"
-    surface = json.loads(output(lean, "--run", helper, strict, official_path, *basis,
-                                env={**os.environ, "LEAN_PATH": ""}))
-    exports = defaultdict(lambda: defaultdict(list))
-    for module, namespace, official, leaf in surface["names"]:
-        exports[module][namespace, official].append(leaf)
-    seals = defaultdict(list)
-    for module, official in surface["seals"]:
-        seals[module].append(official)
-    return dict(surface["imports"]), exports, seals
-
-
-def official_module(name):
-    if name == "OmegaMathlib":
-        # The subset umbrella gathers its admitted ports through the strict import graph.
-        return None
-    return name.replace("OmegaMathlib", "Mathlib", 1) if root(name) == "OmegaMathlib" else name[5:]
-
-
-def alias_sections(exports):
-    lines = []
-    for (namespace, original), leaves in sorted(exports.items()):
-        lines.extend([f"namespace {namespace}", f"export {original} ({' '.join(sorted(leaves))})",
-                      f"end {namespace}"])
-    return lines
-
-
-def official_basis_source(module, deps, exports, seals):
-    upstream = official_module(module)
-    imports = set(deps)
-    if upstream:
-        imports.add(upstream)
-    lines = ["module", *("public import " + n for n in sorted(imports)), "",
-             "/-! Namespace aliases to the pinned public interface. -/", "public section",
-             *alias_sections(exports)]
-    if seals:
-        lines.extend(["", "set_option allowUnsafeReducibility true in",
-                      "attribute [irreducible] " + " ".join("_root_." + name for name in sorted(seals))])
-    return "\n".join(lines) + "\n"
+    return upstream_portable().backend_plan(official_path, names, environment,
+                                            prepared=prepared, cwd=ROOT)
 
 
 def derived_facades(lean, strict, basis, official_path):
-    imports, exports, seals = namespace_exports(lean, str(strict), basis, official_path)
-    normal = {name: official_basis_source(name, imports[name], exports[name], []).encode() for name in basis}
-    common = {name: official_basis_source(name, imports[name], exports[name], seals[name]).encode() for name in basis}
-    return normal, common
+    return upstream_portable().derived_facades(lean, strict, basis, official_path)
 
 
-def regenerate_facades():
-    lean = output("lake", "env", "printenv", "LEAN").strip()
-    sources, graph = import_graph(lean, ("strict/*.lean",))
-    basis = sorted(name for name in graph if root(name) in BASIS)
-    if not BASIS.issubset(basis):
-        raise RuntimeError("strict foundation roots are missing")
-    subprocess.run(["lake", "-f", strict_config(), "build", *("+" + name for name in basis)],
-                   cwd=ROOT, check=True)
-    generated, _ = derived_facades(lean, ROOT / BUILD / "lib/lean", basis,
-                                output("lake", "env", "printenv", "LEAN_PATH").strip())
-    changed = []
-    with tempfile.TemporaryDirectory(dir=ROOT / ".lake") as temporary:
-        for name, content in generated.items():
-            relative = sources[name].relative_to(ROOT / "strict")
-            target = SRC / relative
-            if target.resolve() != target:
-                raise ValueError(f"refusing to write a facade through a symlink: {target}")
-            if target.exists() and target.read_bytes() == content:
-                continue
-            staged = Path(temporary) / relative
-            staged.parent.mkdir(parents=True, exist_ok=True)
-            staged.write_bytes(content)
-            if target.exists():
-                staged.chmod(target.stat().st_mode)
-            changed.append((staged, target))
-        for staged, target in changed:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            staged.replace(target)
-            print(f"Updated {target.relative_to(ROOT)}")
-    print(f"Updated {len(changed)} of {len(basis)} official facade modules")
+def dependency_paths():
+    manifest = json.loads((ROOT / "lake-manifest.json").read_text())
+    return {(ROOT / manifest["packagesDir"] / p["name"] / ".lake/build/lib/lean").resolve()
+            for p in manifest["packages"] if p["name"] != "omegamath"}
 
 
 def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environment,
                       common_dir=None, *, snapshots=None):
     lake, libraries = lake_layout(strict, with_reg, common_dir)
-    paths = [Path(path).resolve() for path in
-             output(*lake, "env", "printenv", "LEAN_PATH", env=environment).strip().split(os.pathsep)]
-    syslib = Path(output(lean, "--print-libdir").strip()).resolve()
-    if len(set(paths)) != len(paths) or set(paths) != {*packages, *libraries.values(), syslib}:
-        raise RuntimeError(f"unexpected Lake import path: {paths}")
-
-    # Querying the facets builds the selected modules through the normal Lake graph.
-    # Lake supplies both the actual source owner and the resulting olean in request order.
-    targets = [f"+{name}:{facet}" for name in sources for facet in ("lean", "olean")]
-    resolved = [Path(p).resolve() for p in output(*lake, "query", *targets, env=environment).splitlines()]
-    expected_paths = []
-    hashes = {}
-    for name, source in sources.items():
-        base = Path(*name.split("."))
-        lib = libraries.get(root(name), libraries[""])
-        artifact = lib / base.with_suffix(".olean")
-        if snapshots is not None and (source.resolve() != source or artifact.resolve() != artifact):
-            raise RuntimeError(f"unexpected linked source or artifact for {name}")
-        expected_paths.extend([source.resolve(), artifact.resolve()])
-        if any((directory / base.with_suffix(".olean")).exists() for directory in paths if directory != lib):
-            raise RuntimeError(f"dependency shadows project module {name}")
-        trace = json.loads((lib / base.with_suffix(".trace")).read_text())["outputs"]
-        parts = [*trace["o"], *(trace[key] for key in ("rs", "r") if key in trace)]
-        for part in parts:
-            digest, suffix = part.split(".", 1)
-            if suffix not in {"olean", "olean.server", "olean.private", "ir", "ir.sig"}:
-                raise ValueError(f"unexpected import artifact {part} for {name}")
-            relative = base.with_suffix("." + suffix)
-            staged = stage / relative
-            staged.parent.mkdir(parents=True, exist_ok=True)
-            compiled_part = lib / relative
-            if snapshots is not None and compiled_part.resolve() != compiled_part:
-                raise RuntimeError(f"unexpected linked compiler artifact: {compiled_part}")
-            shutil.copyfile(compiled_part, staged)
-            hashes[staged] = digest
-        if stage / base.with_suffix(".olean") not in hashes:
-            raise RuntimeError(f"no olean in Lake output trace for {name}")
-    if resolved != expected_paths:
-        raise RuntimeError("Lake selected an unexpected source file or artifact for the requested modules")
-    # Audit and publish these exact immutable bytes, even if another Lake build follows.
-    if snapshots is not None:
-        snapshots[stage] = artifact_snapshot(stage)
-    actual = output(lean, "--run", SRC / "OmegaChecks/Portable/ArtifactHashes.lean",
-                    input="\n".join(map(str, hashes)), env=environment).splitlines()
-    for (file, expected), observed in zip(hashes.items(), actual, strict=True):
-        if expected != observed:
-            raise RuntimeError(f"artifact differs from its Lake trace: {file}")
-    if snapshots is not None and artifact_snapshot(stage) != snapshots[stage]:
-        raise RuntimeError(f"staged compiler artifacts changed during trace verification: {stage}")
-    return os.pathsep.join(map(str, [stage, *(path for path in paths if path not in libraries.values())]))
+    return upstream_portable().stage_artifacts(lake, libraries, sources, stage, packages, lean,
+                                               environment, cwd=ROOT, snapshots=snapshots)
 
 
 def publish(tree, destination):
-    # Switch complete artifact sets atomically. Existing Lean processes may retain
-    # their resolved generation. Identical builds reuse the same generation.
-    destination = destination.absolute()
-    store = destination.with_name(f".{destination.name}.generations")
-    store.mkdir(parents=True, exist_ok=True)
-    digest = hashlib.sha256()
-    for file in sorted(tree.rglob("*")):
-        if not file.is_file():
-            continue
-        if file.suffix == ".lean":
-            file.unlink()
-            continue
-        digest.update(str(file.relative_to(tree)).encode() + b"\0")
-        with file.open("rb") as artifact:
-            digest.update(hashlib.file_digest(artifact, "sha256").digest())
-    generation = store / digest.hexdigest()
-    with (store / ".lock").open("a") as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX)
-        if destination.is_symlink():
-            if destination.readlink().parent != Path(store.name):
-                raise ValueError(f"output belongs to another build: {destination}")
-        elif destination.exists():
-            destination.rmdir()  # Only a new, empty, or previously managed output is safe.
-        if not generation.exists():
-            tree.rename(generation)
-        with tempfile.TemporaryDirectory(dir=store) as temp:
-            link = Path(temp) / "current"
-            link.symlink_to(generation.relative_to(destination.parent), target_is_directory=True)
-            link.replace(destination)
-    print(f"Lean artifacts: {destination}", flush=True)
+    return upstream_portable().publish(tree, destination)
 
 
 def source_fingerprint(path):
-    with path.open("rb") as file:
-        digest = hashlib.file_digest(file, "sha256").digest()
-        stat = os.fstat(file.fileno())
-    return digest, stat.st_ino, stat.st_ctime_ns
+    return upstream_portable().source_fingerprint(path)
 
 
 def read_measurement(path, names):
@@ -397,14 +217,11 @@ def measure_staged(inspector, request, names, search_path, destination, environm
 
 
 def artifact_snapshot(directory):
-    return {path: source_fingerprint(path) for path in directory.rglob("*") if path.is_file()}
+    return upstream_portable().artifact_snapshot(directory)
 
 
 def atomic_json(path, value):
-    with tempfile.TemporaryDirectory(dir=path.parent) as temp:
-        file = Path(temp) / path.name
-        file.write_text(json.dumps(value, separators=(",", ":")) + "\n")
-        file.replace(path)
+    return upstream_portable().atomic_json(path, value)
 
 
 def frozen_measurement(request, official_path, inspector, destination):
@@ -445,8 +262,8 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         raise RuntimeError("no downstream consumers selected")
     print(f"Portable consumer targets ({len(selected)}): {' '.join(selected)}", flush=True)
     all_basis = {name for name in graph if root(name) in BASIS}
-    facades = {str(path.relative_to(SRC).with_suffix("")).replace(os.sep, "."): path
-               for prefix in BASIS for path in (*SRC.glob(prefix + ".lean"), *(SRC / prefix).rglob("*.lean"))}
+    facades = {str(path.relative_to(UPSTREAM_SRC).with_suffix("")).replace(os.sep, "."): path
+               for prefix in BASIS for path in (*UPSTREAM_SRC.glob(prefix + ".lean"), *(UPSTREAM_SRC / prefix).rglob("*.lean"))}
     if all_basis != set(facades):
         raise RuntimeError(f"standard and strict module trees differ: {sorted(all_basis ^ set(facades))}")
     roots = [*selected, *basis_roots] if scoped else selected if only else [*selected, *all_basis]
@@ -472,25 +289,24 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         tracked.update(strict_sources.values())
         tracked.update(sources[name] for name in closure(graph, ["OmegaChecks.InitCompiler"]))
     tracked.update(official_sources.values())
-    tracked.update(ROOT / file for file in ("lakefile.toml", "lake-manifest.json", "lean-toolchain"))
+    tracked.update(directory / file for directory in (ROOT, UPSTREAM)
+                   for file in ("lakefile.toml", "lake-manifest.json", "lean-toolchain"))
     if with_reg:
         tracked.update(directory / file for directory in (ROOT / "Reg", INSPECTOR)
                        for file in ("lakefile.toml", "lake-manifest.json"))
-    tracked.update([Path(__file__), SRC / "OmegaChecks/strict_lake.py", SRC / "OmegaChecks/Portable/ArtifactHashes.lean"])
+    tracked.update([Path(__file__), SRC / "OmegaChecks/host_lake.py",
+                    UPSTREAM_SRC / "OmegaChecks/portable.py", UPSTREAM_SRC / "OmegaChecks/strict_lake.py",
+                    UPSTREAM_SRC / "OmegaChecks/Portable/ArtifactHashes.lean"])
     if backend != "mathlib":
-        tracked.update((SRC / "OmegaBuild/Commands.lean", SRC / "OmegaBuild/Plan.lean"))
+        tracked.update((UPSTREAM_SRC / "OmegaBuild/Commands.lean", UPSTREAM_SRC / "OmegaBuild/Plan.lean"))
     if backend == "both":
-        tracked.add(SRC / "OmegaChecks/Portable/Exports.lean")
+        tracked.add(UPSTREAM_SRC / "OmegaChecks/Portable/Exports.lean")
     if frozen is not None:
         tracked.update(sources[name] for name in closure(graph, ["OmegaChecks.Audit"]))
         tracked.add(frozen[1])
     source_hashes = {path: source_fingerprint(path) for path in tracked}
-    manifest = json.loads((ROOT / "lake-manifest.json").read_text())
-    packages = {(ROOT / manifest["packagesDir"] / p["name"] / ".lake/build/lib/lean").resolve()
-                for p in manifest["packages"]}
-    environment = {k: v for k, v in os.environ.items()
-                   if k not in {"LEAN_PATH", "LEAN_SRC_PATH", "OMEGA_FROZEN_INVENTORY", "OMEGA_FROZEN_CERTIFICATE",
-                                "OMEGA_OFFICIAL_AXIOM_REPORT", "OMEGA_CACHE_CONSUMER_MODE"}}
+    packages = dependency_paths()
+    environment = upstream_portable().clean_environment()
     if destination:
         destination = Path(destination).absolute()
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -518,7 +334,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             for name, expected in normal.items():
                 if facades[name].read_bytes() != expected:
                     raise RuntimeError(f"{facades[name]} does not re-export the compiled strict interface")
-                path = COMMON_SRC / facades[name].relative_to(SRC)
+                path = COMMON_SRC / facades[name].relative_to(UPSTREAM_SRC)
                 path.parent.mkdir(parents=True, exist_ok=True)
                 if not path.exists() or path.read_bytes() != common[name]:
                     with tempfile.NamedTemporaryFile(dir=path.parent, delete=False) as f:
@@ -532,27 +348,18 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             common_path = backend_artifacts(False, common_reg, common_sources, Path(temp) / "common", packages,
                                             lean, environment, COMMON_SRC)
         if backend == "both" and frozen is None:
-            subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
+            build_audit(environment)
         if common_modules:
-            subprocess.run([AUDIT, "--consumer", strict_path, common_path, *common_downstream, "--basis", *common_basis], cwd=ROOT,
-                           env={**environment, "OMEGA_CACHE_CONSUMER_MODE": "common-interface"}, check=True)
+            upstream_portable().compare_consumers(strict_path, common_path, common_downstream,
+                                                  common_basis, environment)
             print(f"Common computational interface checked: {len(common_basis)} basis modules, "
                   f"{len(common_downstream)} downstream modules", flush=True)
         if backend == "both" and frozen is None:
             staged_report = Path(temp) / "official-axioms.json"
-            report_data = {"backend": "mathlib", "consumerModules": [], "declarations": []}
             if downstream or basis:
-                subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis],
-                               cwd=ROOT, env={**environment, "OMEGA_CACHE_CONSUMER_MODE": "official-interface",
-                                              "OMEGA_OFFICIAL_AXIOM_REPORT": str(staged_report)},
-                               check=True)
-                report_data = json.loads(staged_report.read_text())
-            # Supplemental common-interface checks may cover unrelated consumers.
-            reported = {name: skipped[name] for name in modules if name in skipped}
-            report_data["mathlibOnly"] = reported
-            report_data["declarations"].extend(row for row in plan["declarations"] if row["module"] in reported)
-            report_data["consumerModules"].extend(reported)
-            atomic_json(staged_report, report_data)
+                upstream_portable().compare_consumers(strict_path, official_path, downstream, basis,
+                                                      environment, report=staged_report)
+            upstream_portable().write_official_report(staged_report, plan, modules)
         if frozen is not None:
             canonical, inspector, response = frozen
             # Both readers and the comparator must consume the very same verified
@@ -582,7 +389,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                 inventory_path = Path(temp) / "frozen-inventory.json"
                 certificate_path = Path(temp) / "frozen-certificate.json"
                 inventory_path.write_text(json.dumps(inventory))
-                subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
+                build_audit(environment)
                 subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis],
                                cwd=ROOT, env={**environment, "OMEGA_FROZEN_INVENTORY": str(inventory_path),
                                     "OMEGA_FROZEN_CERTIFICATE": str(certificate_path)}, check=True)
@@ -630,7 +437,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("modules", nargs="*", help="restrict the local check to these consumers")
     modes = parser.add_mutually_exclusive_group()
-    modes.add_argument("--regenerate-facades", action="store_true", help="write official aliases from the strict ports")
     modes.add_argument("--backend", choices=("both", "strict", "mathlib"), default="mathlib",
                         help="compile one backend locally or verify both (the admission check)")
     parser.add_argument("--output", type=Path, help="publish importable Lean artifacts into this directory")
@@ -639,11 +445,7 @@ if __name__ == "__main__":
     parser.add_argument("--inspector", type=Path, help="prepared reportInspector executable")
     parser.add_argument("--frozen-output", type=Path, help="atomic paired Inspector response")
     args = parser.parse_args()
-    if args.regenerate_facades:
-        if args.modules or args.output:
-            parser.error("--regenerate-facades takes no module selection or artifact output")
-        regenerate_facades()
-    elif args.frozen_request:
+    if args.frozen_request:
         if args.modules or args.output or not all((args.official_measurement, args.inspector, args.frozen_output)):
             parser.error("--frozen-request requires --official-measurement, --inspector and --frozen-output")
         frozen_measurement(args.frozen_request.resolve(), args.official_measurement.resolve(),

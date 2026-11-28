@@ -8,7 +8,7 @@
   },
   "report_modules": {"include": [{"pattern": "Trureturing.lean", "optional": false}, {"pattern": "D5/**/*.lean", "optional": true}, {"pattern": "Reg/**/*.lean", "optional": true}], "exclude": []},
   "inspector_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}, {"pattern": "tools/lean-inspector-interface/**/*.lean", "optional": false}], "exclude": ["**/.lake/**"]},
-  "dependency_sources": {"include": [{"pattern": "src/**/*.lean", "optional": true}, {"pattern": "tools/lean-inspector/**/*.lean", "optional": true}, {"pattern": "tools/lean-inspector-interface/**/*.lean", "optional": false}], "exclude": ["**/.lake/**"]},
+  "dependency_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}, {"pattern": "tools/lean-inspector-interface/**/*.lean", "optional": false}], "exclude": ["**/.lake/**"]},
   "config_inputs": {"include": [{"pattern": "tools/lean-inspector-interface/**/*.lean", "optional": false}, {"pattern": "lean-toolchain", "optional": false}, {"pattern": "lake-manifest.json", "optional": false}, {"pattern": "lakefile.toml", "optional": false}, {"pattern": "lakefile.lean", "optional": true}, {"pattern": "tools/lean-inspector-interface/lakefile.toml", "optional": false}, {"pattern": "tools/lean-inspector-interface/lake-manifest.json", "optional": false}, {"pattern": "Reg/lakefile.toml", "optional": false}, {"pattern": "Reg/lake-manifest.json", "optional": false}, {"pattern": "tools/lean-inspector-reg/lakefile.toml", "optional": false}, {"pattern": "tools/lean-inspector-reg/lake-manifest.json", "optional": false}], "exclude": []},
   "producer_scopes": {
     "lean-report": {
@@ -33,6 +33,8 @@
         {"pattern": "tools/Architecture/BannedSymbols.txt", "optional": false},
         {"pattern": "tools/Architecture/BannedSymbols.Determinism.txt", "optional": false},
         {"pattern": "tools/Architecture/BannedSymbols.Guid.txt", "optional": false},
+        {"pattern": "src/OmegaChecks/portable.py", "optional": false},
+        {"pattern": "src/OmegaChecks/host_lake.py", "optional": false},
         {"pattern": "tools/lean-inspector/Inspector.lean", "optional": false},
         {"pattern": "tools/lean-inspector/build_inputs.py", "optional": false},
         {"pattern": "tools/lean-inspector/build_work.py", "optional": false},

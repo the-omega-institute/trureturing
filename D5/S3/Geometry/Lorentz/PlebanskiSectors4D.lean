@@ -8,7 +8,7 @@
 
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Geometry.Lorentz.Urbantke
-import OmegaMath.Geometry.PlebanskiCoframe
+import D5.S3.Geometry.Lorentz.PlebanskiCoframe
 import Mathlib.LinearAlgebra.Matrix.Rank
 
 /-! Algebraic simplicity of triples in the oriented Urbantke pair basis. -/
