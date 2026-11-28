@@ -1,5 +1,7 @@
 module
 public import Init.Data.Vector.Monadic
+public import Init.Data.Vector.Count
+public import Init.Data.Fin.Fold
 public import Lean
 import all Lean.Util.CollectAxioms
 
@@ -101,3 +103,67 @@ run_cmd
     unless (← collectAxioms name).isEmpty do throwError "vector projection witness {name} uses axioms"
 
 end OmegaChecks.InitBoundaries.VectorProjection
+
+namespace OmegaChecks.InitBoundaries.VectorCount
+universe u
+
+/-- The pinned `Vector.countP` unfolds to the underlying array count. This indexed fold
+runs the same right-to-left traversal using the length in the vector type. -/
+@[expose] def count (p : α → Bool) (xs : Vector α n) : Nat :=
+  Fin.foldr n (fun i acc => bif p (xs.get i) then acc + 1 else acc) 0
+
+theorem count_true {α : Type u} {n : Nat} :
+    count (fun (_ : α) => true) = (fun (_ : Vector α n) => n) := by
+  have number : Fin.foldr n (fun _ (acc : Nat) => acc + 1) 0 = n := by
+    induction n with
+    | zero => rfl
+    | succ n ih => exact (Fin.foldr_succ _ _).trans (congrArg Nat.succ ih)
+  exact congrArg (fun k => fun _ : Vector α n => k) number
+
+theorem count_false {α : Type u} {n : Nat} :
+    count (fun (_ : α) => false) = (fun (_ : Vector α n) => 0) := by
+  have number : Fin.foldr n (fun _ (acc : Nat) => acc) 0 = 0 := by
+    induction n with
+    | zero => rfl
+    | succ n ih => exact (Fin.foldr_succ _ _).trans ih
+  exact congrArg (fun k => fun _ : Vector α n => k) number
+/-- The indexed fold returns the result of the pinned array fold on every vector. -/
+theorem agreement (xs : Vector α n) (p : α → Bool) : count p xs = xs.countP p := by
+  rcases xs with ⟨⟨l⟩, rfl⟩
+  let step (x : α) (a : Nat) := bif p x then a + 1 else a
+  change Fin.foldr l.length (fun i acc => step l[i.val] acc) 0 = (Array.mk l).foldr step 0
+  rw [← Array.foldr_toList]
+  induction l with
+  | nil => rfl
+  | cons x l ih => exact (Fin.foldr_succ _ _).trans (congrArg (step x) ih)
+
+/-- Composing the pinned array zero count with the vector projection gives the entire vector zero count. -/
+theorem ofArrayFalse (law : type_of% @Array.countP_false.{u}) : type_of% @Vector.countP_false.{u} := by
+  intro α n
+  exact congrArg (fun k => fun xs : Vector α n => k xs.toArray) (@law α)
+
+/-- Agreement of the two counting functions for an entire length-indexed vector domain. -/
+@[expose] def IndexedAgreement (b : Bool) : Prop :=
+  ∀ {α : Type u} {n : Nat}, (Vector.countP fun (_ : α) => b) = @count α n (fun _ => b)
+
+abbrev TrueAgreement := IndexedAgreement.{u} true
+abbrev FalseAgreement := IndexedAgreement.{u} false
+
+theorem trueIffIndexed : (type_of% @Vector.countP_true.{u}) ↔ TrueAgreement.{u} := by
+  constructor
+  · intro law α n
+    exact (@law α n).trans count_true.symm
+  · intro eq α n
+    exact (@eq α n).trans count_true
+
+theorem falseIffIndexed : (type_of% @Vector.countP_false.{u}) ↔ FalseAgreement.{u} := by
+  constructor
+  · intro law α n
+    exact (@law α n).trans count_false.symm
+  · intro eq α n
+    exact (@eq α n).trans count_false
+
+def equivalences := [(``Vector.countP_true, ``TrueAgreement, ``trueIffIndexed),
+  (``Vector.countP_false, ``FalseAgreement, ``falseIffIndexed)]
+
+end OmegaChecks.InitBoundaries.VectorCount

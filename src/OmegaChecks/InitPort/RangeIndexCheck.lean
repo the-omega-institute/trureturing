@@ -11,6 +11,8 @@ meta import OmegaChecks.InitInventory.ConstraintReflection
 import OmegaChecks.InitInventory.ConstraintReflection
 meta import OmegaChecks.InitInventory.RangeIndex
 import OmegaChecks.InitInventory.RangeIndex
+meta import OmegaChecks.InitInventory.VectorProjection
+import OmegaChecks.InitInventory.VectorProjection
 
 open Lean InitKernelPort OmegaChecks.InitBoundaries
 
@@ -19,6 +21,7 @@ public def main (args : List String) : IO Unit := do
   let lib :: output :: owners := args | throw <| IO.userError "expected strict library, JSON output and owners"
   let owners := if owners.isEmpty then [`Init.Data.Range.Polymorphic.NatLemmas] else owners.map String.toName
   let source ← importModules #[{module := `OmegaChecks.InitInventory.RangeIndex},
+    {module := `OmegaChecks.InitInventory.VectorProjection, importAll := true},
     {module := `OmegaChecks.InitInventory.ConstraintReflection, importAll := true},
     {module := `OmegaChecks.InitInventory.OrderedAlgebra, importAll := true},
     {module := `OmegaChecks.InitInventory.TransformerLaws, importAll := true}] {} (level := .private)
@@ -28,7 +31,7 @@ public def main (args : List String) : IO Unit := do
   let laws := (``Sum.forall_sum, ``SumFunctionEta, ``sumForallIffEta) ::
     (``Lean.Omega.Constraint.combine_sat, ``ConstraintReflection.AndReflection,
     ``ConstraintReflection.equivalence) :: (RangeIndex.equivalences ++ TransformerLaws.ReturnImage.equivalences ++
-      WeakRingOrder.stabilityEquivalences)
+      WeakRingOrder.stabilityEquivalences ++ VectorCount.equivalences)
   let entries := laws.filter fun (name, _, _) =>
     owners.any fun owner => source.getModuleIdxFor? name == source.getModuleIdx? owner
   let mut rows := #[]
@@ -48,6 +51,10 @@ public def main (args : List String) : IO Unit := do
       throw <| IO.userError s!"incorrect complete equivalence {name}"
     rows := rows.push #[sourceOwner.toString, name.toString, condition.toString, (portName witness).toString]
     roots := roots.push (portName witness)
+  if owners.contains `Init.Data.Vector.Count then
+    for name in [``VectorCount.agreement, ``VectorCount.ofArrayFalse] do
+      kernel ← OmegaChecks.InitPort.restoreEvidence source kernel name
+      roots := roots.push (portName name)
   let count ← OmegaChecks.InitPort.replayStrict kernel roots
   IO.FS.writeFile output (toJson rows).compress
-  IO.println s!"Fresh kernel replay of {roots.size} exact equivalences, {count} declarations, zero axioms."
+  IO.println s!"Fresh kernel replay of {rows.size} exact equivalences, {count} declarations, zero axioms."

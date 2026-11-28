@@ -37,6 +37,7 @@ public import OmegaChecks.InitInventory.ConstraintReflection
 public import OmegaChecks.InitInventory.RangeIndex
 public import OmegaChecks.InitInventory.Reductions
 public import OmegaChecks.InitInventory.TransformerLaws
+meta import OmegaChecks.InitInventory.VectorProjection
 public import OmegaChecks.InitInventory.VectorProjection
 public import OmegaChecks.InitInventory.Traversal
 public import OmegaChecks.InitInventory.MonadicZip
@@ -162,6 +163,8 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   if owner == `Init.Omega.Constraint && name == ``Lean.Omega.Constraint.combine_sat then
     return (``OmegaChecks.InitBoundaries.ConstraintReflection.AndReflection,
       ``OmegaChecks.InitBoundaries.ConstraintReflection.equivalence)
+  if owner == `Init.Data.Vector.Count then
+    if let some result := OmegaChecks.InitBoundaries.VectorCount.equivalences.lookup name then return result
   if owner == `Init.Data.Range.Polymorphic.NatLemmas || owner == `Init.Data.Range.Polymorphic.IntLemmas then
     if let some result := OmegaChecks.InitBoundaries.RangeIndex.equivalences.lookup name then return result
   if owner == `Init.System.ST || owner == `Init.Control.StateRef || owner == `Init.System.Promise then
