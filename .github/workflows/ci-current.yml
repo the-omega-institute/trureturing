@@ -324,6 +324,9 @@ jobs:
         if: ${{ !cancelled() && steps.lean_plan.outcome == 'success' && (steps.lean_plan.outputs.builds_lean == 'false' || steps.lean_seeds.outcome == 'success') }}
         env:
           LEAN_NUM_THREADS: '1'
+          LAKE_CACHE_DIR: ${{ github.workspace }}/.lake/ci-artifact-cache
+          LAKE_ARTIFACT_CACHE: 'true'
+          LAKE_RESTORE_ARTIFACTS: 'true'
           CI_BASE: ${{ steps.entry.outputs.base }}
         run: python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - id: checked
@@ -484,6 +487,9 @@ jobs:
           CI: 'true'
           OMEGA_SCOPE_FILE: ${{ runner.temp }}/omega-scope.json
           LEAN_NUM_THREADS: '1'
+          LAKE_CACHE_DIR: ${{ github.workspace }}/.lake/ci-artifact-cache
+          LAKE_ARTIFACT_CACHE: 'true'
+          LAKE_RESTORE_ARTIFACTS: 'true'
         run: bash .github/actions/lean-compile-layer/measure.sh --compile python3 tools/scripts/workflow/ci_checks.py unit omega
       - name: Publish official declaration axiom dependencies
         if: steps.omega_scope.outputs.report-file != ''
