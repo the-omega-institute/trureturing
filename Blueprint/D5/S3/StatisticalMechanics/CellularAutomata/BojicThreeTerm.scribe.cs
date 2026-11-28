@@ -30,10 +30,12 @@ internal sealed class BojicThreeTermDocument : IScribeDocumentDefinition
                         + "X^q − 1 that does not divide this trinomial, the local quotient "
                         + "of thickness 2^m has a unique semisimple factor.")),
                     Paragraph(Text(
-                        "The dyadic case split in preregisteredDegree gives the first positive "
-                        + "Taylor degree after removing the common power of two from the "
-                        + "three offsets. The valuation of the unipotent factor minus one "
-                        + "is the minimum of this degree and 2^m.")),
+                        "Let s be the largest common power of two dividing the three offsets. "
+                        + "Divide the offsets by s to compute the normalized first positive "
+                        + "Taylor degree. The function preregisteredDegree multiplies that "
+                        + "degree by s to give the first positive Taylor degree of the original "
+                        + "trinomial. The valuation of the unipotent factor minus one is the "
+                        + "minimum of this scaled degree and 2^m.")),
                     Paragraph(Text(
                         "The unipotent factor has the least power-of-two order p satisfying "
                         + "2^m ≤ preregisteredDegree · p. The semisimple factor and the "

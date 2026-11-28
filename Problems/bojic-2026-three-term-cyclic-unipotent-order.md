@@ -18,11 +18,11 @@ Let n = 2^m q > 0 with q odd, let a, b, and c be distinct representatives below 
 
 ## Motivation
 
-The local Rule 150 proof identifies the valuation of the unipotent factor from the first nonzero Taylor coefficient at the residue root. For a general trinomial, divide all offsets by their largest common power of two. If all three normalized offsets are odd, the degree is one. If exactly two are odd, order the odd pair as A < D, let d be the largest power of two dividing D − A, and let b0 be the largest power of two dividing the even offset, with the constant offset treated separately. The first surviving degree is determined by whether the residue root separates the odd pair, whether d and b0 agree, and whether the two constant coefficients cancel.
+The local Rule 150 proof identifies the valuation of the unipotent factor minus one from the first positive Taylor degree at the residue root. For a general trinomial, divide all offsets by their largest common power of two s. If one or three normalized offsets are odd, the normalized degree is one. If exactly two are odd, order the odd pair as A < D, let d be the largest power of two dividing D − A, and let b0 be the largest power of two dividing the even offset, with the constant offset treated separately. The normalized first surviving degree is determined by whether the residue root separates the odd pair, whether d and b0 agree, and whether the two constant coefficients cancel. The original trinomial's first positive Taylor degree is s times the normalized degree.
 
 ## Gap
 
-The paper leaves the extension of the local valuation argument to other three-term cyclic rules open in Section 11. The formal target covers every odd cycle factor, every thickness exponent, and every distinct triple in the cyclic window. It includes the zero offset and the cancellation branch.
+The paper leaves the extension of the local valuation argument to other three-term cyclic rules open in Section 11. The formal target covers every eligible factor of X^q − 1, every thickness exponent, and every distinct triple in the cyclic window. The full cycle of length 2^m q can be even. The statement includes the zero offset and the cancellation branch.
 
 ## Route
 
@@ -43,6 +43,10 @@ for every local decomposition, and the least power-of-two order condition
 2^m ≤ preregisteredDegree · p.
 
 The implementation imports the frozen Rule 150 module and uses its Local and IsSemisimplePart definitions. The source paper is recorded by the existing Library note bojic2026semisimple.
+
+Content admission uses the coefficient-cancellation witness. When the leading terms cancel at equal dyadic depth d, the shifted even summand has zero coefficient at the next degree and the odd prefix leaves a nonzero coefficient. The proof of `firstPositive_scaled_trinomial` transports this degree through Frobenius scaling, and the local valuation and order proofs consume that first-positive degree. [Preregistered scope](https://github.com/the-omega-institute/trureturing/issues/35045)
+
+The §3.9 audit for `BojicThreeTerm.piecewise_trinomial_interface` is incomplete. It needs a source-bound bridge to the actual degree function and variation and dependence on valid cyclic inputs. The public `BojicRule150` helpers `project_eq_zero`, `project_X_pow`, `local_pow_eq_of_reduce_eq`, `reduce_eq_of_isSemisimplePart`, and `semisimple_order_eq_residue_order` each need a typed source binding with variation, sensitivity, and dependence evidence. [#35075](https://github.com/the-omega-institute/trureturing/issues/35075)
 
 ## Triage
 

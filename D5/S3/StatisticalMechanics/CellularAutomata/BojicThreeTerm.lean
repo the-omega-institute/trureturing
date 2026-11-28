@@ -1,21 +1,26 @@
 /- GID: D5/S3/StatisticalMechanics/CellularAutomata/BojicThreeTerm
    generality: G
    mirror-B: D5/B/S3/StatisticalMechanics/CellularAutomata/BojicThreeTerm
-   mirror-E: none(waiver:external-open-problem-resolution)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The three-distinct-offset cyclic branch has the preregistered local unipotent valuation and order. -/
 
 import D5.S3.StatisticalMechanics.CellularAutomata.BojicRule150
-import Mathlib
 
 /-!
 # Bojić's three-distinct-offset cyclic branch
 
-For a trinomial over the primary factors of an odd cycle, the first
-nonzero Taylor coefficient determines the exact local unipotent valuation.
-The explicit dyadic case split in preregisteredDegree supplies that
-coefficient, and the local semisimple factor is then obtained uniquely.
+The cycle has length `2 ^ m * q` with `q` odd. The primary factors are
+indexed by irreducible factors of `X ^ q - 1`. The valuation of the local
+unipotent factor minus one is the first positive Taylor degree capped at
+the thickness `2 ^ m`. The dyadic case split in `preregisteredDegree`
+scales the normalized first positive degree by the largest common power
+of two dividing the three offsets.
+
+The source-bound Reg audit for `piecewise_trinomial_interface` is pending.
+It needs a bridge to the actual degree function over the full theorem
+scope, with variation and dependence on valid cyclic inputs. [#35075](https://github.com/the-omega-institute/trureturing/issues/35075)
 -/
 
 set_option autoImplicit false
@@ -40,10 +45,6 @@ private def jet (f : P) : P →+* (K f)[X] :=
   change (taylor (zeta f) (p.map (kMap f))).coeff 0 = _
   rw [taylor_coeff_zero, ← eval₂_eq_eval_map]
   exact AdjoinRoot.aeval_eq (f := f) p
-
-private theorem jet_coeff_hasse (f p : P) (i : ℕ) :
-    (jet f p).coeff i = (hasseDeriv i (p.map (kMap f))).eval (zeta f) :=
-  taylor_coeff _ _ _
 
 private theorem jet_f_coeff_one {f : P} [Nontrivial (K f)] (hf : f.Separable) :
     (jet f f).coeff 1 ≠ 0 := by
@@ -130,11 +131,6 @@ private def localJet {f : P} [IsDomain (K f)] (hf : f.Separable)
 @[simp] private theorem localJet_project {f p : P} [IsDomain (K f)] (hf : f.Separable)
     {m n : ℕ} (hn : n ≤ 2 ^ m) :
     localJet hf hn (project (f ^ (2 ^ m)) p) = trunc f n (jet f p) := rfl
-
-private theorem localJet_eq_zero_iff {f p : P} [IsDomain (K f)] (hf : f.Separable)
-    {m n : ℕ} (hn : n ≤ 2 ^ m) :
-    localJet hf hn (project (f ^ (2 ^ m)) p) = 0 ↔ f ^ n ∣ p := by
-  rw [localJet_project, AdjoinRoot.mk_eq_zero, f_pow_dvd_iff_X_pow_dvd_jet hf]
 
 private theorem project_onto (f : P) : Function.Surjective (project f) :=
   Ideal.Quotient.mk_surjective
@@ -285,15 +281,6 @@ noncomputable section
 
 def trinomial (a b c : ℕ) : P := X ^ a + X ^ b + X ^ c
 
-private theorem jet_coeff_trinomial (f : P) (a b c i : ℕ) :
-    (jet f (trinomial a b c)).coeff i =
-      zeta f ^ (a - i) * (a.choose i : K f) +
-      zeta f ^ (b - i) * (b.choose i : K f) +
-      zeta f ^ (c - i) * (c.choose i : K f) := by
-  change (taylor (zeta f) ((trinomial a b c).map (kMap f))).coeff i = _
-  simp only [trinomial, Polynomial.map_add, Polynomial.map_pow, map_X, LinearMap.map_add,
-    taylor_X_pow, coeff_add, coeff_X_add_C_pow]
-
 private theorem semisimple_of_odd_residue_exponent {f : P} {m d : ℕ} {g : Local f m}
     (hd : Odd d) (hg : reduce f m g ^ d = 1) :
     ∃! s : Local f m, IsSemisimplePart (f := f) (m := m) g s := by
@@ -380,11 +367,6 @@ private theorem trinomial_interface {q m a b c r : ℕ} {f : P}
 end
 noncomputable section
 
-private theorem jet_coeff_eq_residue_hasse (f p : P) (i : ℕ) :
-    (jet f p).coeff i = AdjoinRoot.mk f (hasseDeriv i p) := by
-  rw [jet_coeff_hasse, hasseDeriv_map, ← eval₂_eq_eval_map]
-  exact AdjoinRoot.aeval_eq (f := f) _
-
 private def twoOddDegree (f : P) (s a b c : ℕ) : ℕ := by
   classical
   exact
@@ -445,10 +427,6 @@ private theorem cast_odd_two {R : Type*} [Ring R] [CharP R 2] {n : ℕ} (h : Odd
 private theorem cast_even_two {R : Type*} [Ring R] [CharP R 2] {n : ℕ} (h : Even n) :
     (n : R) = 0 :=
   (CharP.cast_eq_zero_iff R 2 n).2 (even_iff_two_dvd.1 h)
-
-private theorem add_self_two {R : Type*} [Ring R] [CharP R 2] (x : R) :
-    x + x = 0 := by
-  rw [← two_mul, show (2 : R) = 0 from CharP.cast_eq_zero R 2, zero_mul]
 
 private theorem coeff_one_shifted_pow {R : Type*} [CommRing R] (z : R) (n : ℕ) :
     ((X + C z) ^ n).coeff 1 = z ^ (n - 1) * (n : R) := by
@@ -575,7 +553,7 @@ private theorem firstPositive_two_odd_noncancel {f : P} [IsDomain (K f)] [CharP 
     intro hs
     apply hroot
     have ht := congrArg (fun v => v + (1 : K f)) hs
-    rwa [add_right_comm, add_self_two, zero_add, zero_add] at ht
+    rwa [add_right_comm, CharTwo.add_self_eq_zero, zero_add, zero_add] at ht
   have hpow : zeta f ^ D = zeta f ^ A * zeta f ^ (D - A) := by
     rw [← pow_add, Nat.add_sub_of_le hAD]
   rw [hpow]
@@ -610,7 +588,7 @@ private theorem two_odd_pair_factor {R : Type*} [CommRing R] [IsDomain R] [CharP
       H ^ A + H ^ D = H ^ A * (1 + H ^ (D - A)) := by rw [hpow, mul_add, mul_one]
       _ = X ^ d * (H ^ A * Q) := by
         rw [mul_left_comm, ← hQ, hroot, C_1]
-        have htwo : (1 : R[X]) + 1 = 0 := add_self_two 1
+        have htwo : (1 : R[X]) + 1 = 0 := CharTwo.add_self_eq_zero 1
         congr 1
         linear_combination htwo
   · change (H ^ A * Q).coeff 0 * z ^ d = z ^ A
@@ -633,7 +611,7 @@ private theorem jetDifference_trinomial_two_odd {f : P} [CharP (K f) 2]
     nth_rw 1 [← Nat.add_sub_of_le hAD]
     rw [pow_add, hroot, mul_one]
   have hval : AdjoinRoot.mk f (trinomial A D c) = zeta f ^ c := by
-    simp only [trinomial, map_add, map_pow, AdjoinRoot.mk_X, hpow, add_self_two, zero_add]
+    simp only [trinomial, map_add, map_pow, AdjoinRoot.mk_X, hpow, CharTwo.add_self_eq_zero, zero_add]
   rw [jetDifference, jet_trinomial_shift, hval, add_sub_assoc]
 
 private theorem firstPositive_of_two_factors {f : P} {p : P} {d b₀ : ℕ} {U V : (K f)[X]}
@@ -699,7 +677,7 @@ private theorem firstPositive_two_odd_sorted {f : P} [IsDomain (K f)] [CharP (K 
           rw [coeff_add, add_mul, hU0, hdb, hV0]
         by_cases hval : zeta f ^ A = zeta f ^ c
         · have hW0' : (U + V).coeff 0 = 0 := by
-            rw [hval, add_self_two] at hW0
+            rw [hval, CharTwo.add_self_eq_zero] at hW0
             exact (mul_eq_zero.mp hW0).resolve_right (pow_ne_zero _ hz)
           have hbEven : Even b₀ := by
             have hk := Nat.prime_two.factorization_pos_of_dvd hc0 (even_iff_two_dvd.1 hc)
@@ -712,7 +690,7 @@ private theorem firstPositive_two_odd_sorted {f : P} [IsDomain (K f)] [CharP (K 
             rw [hW, zero_mul] at hW0
             apply hval
             have h := congrArg (fun v => v + zeta f ^ c) hW0
-            simpa only [add_assoc, add_self_two, zero_add, add_zero] using h.symm
+            simpa only [add_assoc, CharTwo.add_self_eq_zero, zero_add, add_zero] using h.symm
           simpa [twoOddDegree, min_eq_left hAD.le, max_eq_right hAD.le, hroot, hc0, d, b₀,
             hdb, hval] using firstPositive_of_factor hd hdiff hW0'
       · simpa [twoOddDegree, min_eq_left hAD.le, max_eq_right hAD.le, hroot, hc0, d, b₀,

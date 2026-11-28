@@ -15,6 +15,11 @@ The factor indexed by `f` is the quotient by `f ^ (2 ^ m)`.
 Reduction to the quotient by `f` identifies the order of the unique odd-order
 factor in the semisimple–unipotent decomposition. The lower bound on the LCM
 comes from a polynomial of degree at most twice the proposed exponent.
+
+Source-bound Reg audits are pending for `project_eq_zero`, `project_X_pow`,
+`local_pow_eq_of_reduce_eq`, `reduce_eq_of_isSemisimplePart`, and
+`semisimple_order_eq_residue_order`. Each needs a typed source binding with
+variation, sensitivity, and dependence evidence. [#35075](https://github.com/the-omega-institute/trureturing/issues/35075)
 -/
 
 set_option autoImplicit false
@@ -250,7 +255,7 @@ private theorem localIdeal_le_residueIdeal (f : P) (m : ℕ) :
 def reduce (f : P) (m : ℕ) : Local f m →+* Mod f :=
   Ideal.Quotient.factor (localIdeal_le_residueIdeal f m)
 
-@[simp] theorem reduce_project (f p : P) (m : ℕ) :
+@[simp] private theorem reduce_project (f p : P) (m : ℕ) :
     reduce f m (project (f ^ (2 ^ m)) p) = project f p :=
   Ideal.Quotient.factor_mk _ _
 
