@@ -6,6 +6,7 @@ module
 prelude
 public import OmegaInit.Core
 import OmegaInit.Data.Nat.Basic
+public import OmegaInit.WF
 import all OmegaInit.Prelude
 
 public section
@@ -332,4 +333,13 @@ port_proof Nat.mul_mod_left
 public section
 namespace Nat
 export _root_.Omega.Nat (mul_mod_left)
+end Nat
+
+port_proof Nat.mul_mod_mul_left by_constructive_casts
+port_proof Nat.mod_self by_constructive_casts
+port_proof Nat.div_self by_constructive_casts
+port_proof Nat.mul_div_cancel_left by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (div_self mod_self mul_div_cancel_left mul_mod_mul_left)
 end Nat

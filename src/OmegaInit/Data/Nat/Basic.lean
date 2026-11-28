@@ -15,3 +15,7 @@ end Omega.Nat
 namespace Omega.Nat.le
 export _root_.Nat.le (dest intro)
 end Omega.Nat.le
+
+namespace Omega.Nat
+export _root_.Nat (eq_of_mul_eq_mul_right)
+end Omega.Nat

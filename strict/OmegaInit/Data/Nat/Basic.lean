@@ -617,3 +617,9 @@ public section
 namespace Nat
 export _root_.Omega.Nat (succ_ne_self zero_ne_one)
 end Nat
+
+port_proof Nat.eq_of_mul_eq_mul_right by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (eq_of_mul_eq_mul_right)
+end Nat
