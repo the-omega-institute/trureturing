@@ -296,7 +296,7 @@ def jamEmbedding {L : ℕ} (hL : 12 ≤ L) :
 
 /-- Forgetting the sector proof recovers the labelled tile word. -/
 theorem jamEmbedding_val {L : ℕ} (hL : 12 ≤ L) (b : Fin (blocks L) → Bool) :
-    (jamEmbedding hL b).val = tiledConfig hL b := rfl
+    (jamEmbedding hL b).val = tiledConfig hL b := (rfl)
 
 /-- The witness image has exactly the stated size and lies in a sector with odd deficit. -/
 theorem jammed_charge_count {L : ℕ} (hL : 12 ≤ L) :
