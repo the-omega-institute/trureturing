@@ -77,7 +77,8 @@ public def main (args : List String) : IO Unit := do
     unless !full.contains (portName name) && !full.contains (portName dep) &&
         raw.getUsedConstants.contains (portName dep) && !(Kernel.check strict {} raw).isOk do
       throw <| IO.userError s!"invalid strict signature for {name}"
-    let kernel ← restoreEvidence evidence full.toKernelEnv witness
-    let kernel ← restoreEvidence evidence kernel equivalence
-    let _ ← replayStrict kernel #[portName witness, portName equivalence]
+    let roots := #[witness, equivalence] ++
+      (if dep == ``Order.flat_csup then #[``InternalOrder.FlatSelection.propSupLaw] else #[])
+    let kernel ← roots.foldlM (restoreEvidence evidence) full.toKernelEnv
+    let _ ← replayStrict kernel (roots.map portName)
     IO.println (toJson #[owner.toString, name.toString, dep.toString, law.toString, witness.toString]).compress

@@ -774,8 +774,8 @@ private def chooseSup (D : ∀ P : Prop, Decidable P) (choose : UniqueChoice.{u+
     | isTrue e => cases e; exact FlatOrder.rel.bot
     | isFalse ne => exact (hn ⟨y, hy, ne⟩).elim
 
-abbrev ChainLaw (pick : type_of% @flat_csup.{u+1}) : Prop :=
-  ∀ {α : Type u} {b : α} (c : FlatOrder b → Prop) (_ : chain c), is_sup c (@pick α b c)
+abbrev ChainLaw (pick : type_of% @flat_csup.{u}) : Prop :=
+  ∀ {α : Sort u} {b : α} (c : FlatOrder b → Prop) (_ : chain c), is_sup c (@pick α b c)
 
 private def picker (D : ∀ P : Prop, Decidable P) (choose : UniqueChoice.{u+1}) : type_of% @flat_csup.{u+1} :=
   fun {_ b} c => match D (chain c) with
@@ -805,10 +805,10 @@ example : ChainLaw (@flat_csup.{1}) = type_of% @flat_csup_is_sup.{1} := rfl
 
 /-- With a certified least upper bound for each chain, agreement with that bound is
 equivalent to the supremum law for the proposed selector. -/
-theorem eqIffChainLaw (pick : type_of% @flat_csup.{u+1})
-    (bound : ∀ {α : Type u} {b : α} (c : FlatOrder b → Prop), chain c → FlatOrder b)
-    (valid : ∀ {α : Type u} {b : α} (c : FlatOrder b → Prop) (hc : chain c), is_sup c (bound c hc)) :
-    (∀ {α : Type u} {b : α} (c : FlatOrder b → Prop) (hc : chain c), @pick α b c = bound c hc) ↔
+theorem eqIffChainLaw (pick : type_of% @flat_csup.{u})
+    (bound : ∀ {α : Sort u} {b : α} (c : FlatOrder b → Prop), chain c → FlatOrder b)
+    (valid : ∀ {α : Sort u} {b : α} (c : FlatOrder b → Prop) (hc : chain c), is_sup c (bound c hc)) :
+    (∀ {α : Sort u} {b : α} (c : FlatOrder b → Prop) (hc : chain c), @pick α b c = bound c hc) ↔
       ChainLaw (@pick) := by
   constructor
   · intro same α b c hc
@@ -817,8 +817,17 @@ theorem eqIffChainLaw (pick : type_of% @flat_csup.{u+1})
   · intro law α b c hc
     exact is_sup_unique (law c hc) (valid c hc)
 
-example : type_of% @flat_csup_eq.{u+1} :=
+example : type_of% @flat_csup_eq.{u} :=
   (eqIffChainLaw (@flat_csup) (fun _ hc => CCPO.csup hc) (fun _ hc => CCPO.csup_spec hc)).mpr flat_csup_is_sup
+
+/-- At universe zero every element of the pointed carrier is definitionally the bottom. -/
+theorem propSup : type_of% @flat_csup.{0} := fun {_ b} _ => b
+
+theorem propSupLaw : ChainLaw (@propSup) :=
+  fun {_ _} _ _ _ => ⟨fun _ _ _ => FlatOrder.rel.bot, fun _ => FlatOrder.rel.bot⟩
+
+example : type_of% @flat_csup_is_sup.{0} := propSupLaw
+example : type_of% @flat_csup_eq.{0} := fun _ _ => rfl
 
 end FlatSelection
 
