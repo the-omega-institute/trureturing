@@ -14,6 +14,15 @@ public def taskPrimitives : Array Name :=
 public def thunkPrimitives : Array Name :=
   #[`Thunk, `Thunk.mk, `Thunk.fn, `Thunk.get, `Thunk.pure, `Thunk.rec, `Thunk.recOn, `Thunk.casesOn]
 
+/-- The elaborator consults these three classes and their projections by literal name. -/
+public def coercionPrimitives : Array Name := Id.run do
+  let mut names := #[]
+  for cls in #[`CoeT, `CoeFun, `CoeSort] do
+    names := names.push cls
+    for memberName in #[`mk, `rec, `recOn, `casesOn, `coe] do
+      names := names.push (cls ++ memberName)
+  return names
+
 /-- The elaborator detects these constant names when generating the no-confusion API for enums. -/
 public def enumPrimitives :=
   #[`noConfusionTypeEnum, `noConfusionEnum, `noConfusionEnum._proof_1, `noConfusionEnum._proof_2]
@@ -45,7 +54,7 @@ public def natPrimitives := #[
 
 private def primitiveName (name : Name) :=
   [`Nat.div, `Nat.mod, `Nat.gcd, `Nat.xor].contains name || taskPrimitives.contains name || thunkPrimitives.contains name ||
-    binderAnnotations.contains name || natPrimitives.contains name || enumPrimitives.contains name
+    coercionPrimitives.contains name || binderAnnotations.contains name || natPrimitives.contains name || enumPrimitives.contains name
 
 /-- The resolver looks up generated theorem names under their physical parent before consulting aliases. -/
 private def reservedEquation : Name → Bool
@@ -75,6 +84,7 @@ public def isPrimitive (owner name : Name) : Bool :=
   (owner == `OmegaInit.Data.Nat.Gcd && name == `Nat.gcd) ||
   (owner == `OmegaInit.Data.Nat.Bitwise.Basic && name == `Nat.xor) ||
   (owner.getRoot == `OmegaInit && reservedEquation name) ||
+  (owner == `OmegaInit.Coe && coercionPrimitives.contains name) ||
   (owner == `OmegaInit.Core && (taskPrimitives.contains name || thunkPrimitives.contains name || enumPrimitives.contains name)) ||
   (owner == `OmegaInit.Prelude && (binderAnnotations.contains name || natPrimitives.contains name || [`Nat.div, `Nat.mod].contains name))
 
