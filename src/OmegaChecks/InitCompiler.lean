@@ -400,7 +400,7 @@ before the root PUnit used by Lean's ordinary structure elaborator is available.
       elabCommand (← `(command| port_definition $elim:ident with_native_code))
 
 @[command_parser, builtin_command_parser] def portStructuralCode := leading_parser
-  "port_structural_code " >> optional "private " >> ident >> " on_arg " >> numLit
+  "port_structural_code " >> optional "private " >> ident >> " on_arg " >> numLit >> optional (" using " >> termParser)
 
 open Compiler.LCNF in
 @[builtin_command_elab portStructuralCode] def elabPortStructuralCode : CommandElab := fun stx => do
@@ -422,19 +422,26 @@ open Compiler.LCNF in
       let value ← ofExcept (translateProofTerm src d.value)
       Lean.addDecl (.defnDecl {d with name, type, value, all := [name]})
     pure (src, .defnInfo d, name)
-  let equationName := Compiler.mkUnsafeRecName info.name
-  let some (.defnInfo recFn) := src.find? equationName | throwError "missing recursive equations"
-  unless recFn.safety == .partial && recFn.all == [equationName] do throwError "expected a single recursive definition"
+  let (recFn, body, type) ← if stx[5].isNone then do
+    let equationName := Compiler.mkUnsafeRecName info.name
+    let some (.defnInfo recFn) := src.find? equationName | throwError "missing recursive equations"
+    unless recFn.safety == .partial && recFn.all == [equationName] do throwError "expected a single recursive definition"
+    pure (recFn, ← ofExcept (translateRecursiveBody src recFn name), ← ofExcept (translateProofTerm src recFn.type))
+  else do
+    let .defnInfo d ← getConstInfo name | throwError "expected a strict definition"
+    let body ← liftTermElabM do
+      let term ← Term.elabTermEnsuringType stx[5][1] d.type
+      Term.synthesizeSyntheticMVarsNoPostponing
+      instantiateMVars term
+    pure (d, body, d.type)
   liftCoreM <| withExporting (isExporting := !isPrivateName name) do
-    let body ← ofExcept (translateRecursiveBody src recFn name)
     for dep in body.getUsedConstants do
       unless (← getEnv).contains dep do throwError "missing equation dependency {dep}"
     let tmp := {recFn with
       name := Compiler.mkUnsafeRecName name
       all := [Compiler.mkUnsafeRecName name]
       safety := .safe
-      type := ← ofExcept (translateProofTerm src recFn.type)
-      value := body}
+      type, value := body}
     let some pos := stx[4].isNatLit? | throwErrorAt stx[4] "expected a structural argument position"
     if pos == 0 then throwErrorAt stx[4] "argument positions start at one"
     Meta.MetaM.run' <| checkConstructorEquations name tmp.levelParams tmp.type body (pos - 1)

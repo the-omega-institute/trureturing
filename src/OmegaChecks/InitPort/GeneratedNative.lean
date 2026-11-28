@@ -1,6 +1,8 @@
 module
 import all Lean.Environment
 import all Lean.Structure
+import OmegaChecks.InitCompiler.Layout
+meta import OmegaChecks.InitCompiler.Layout
 import OmegaChecks.InitCompiler.StructuralEquations
 meta import OmegaChecks.InitCompiler.StructuralEquations
 import all Lean.OriginalConstKind
@@ -75,9 +77,9 @@ private partial def compileLayoutsInOrder (groups : Array InductiveVal) : CoreM 
   for group in groups do
     let before ← Core.saveState
     try
-      if group.name == `Omega.String then OmegaChecks.InitPort.NativeState.prepareStringLayout
+      if group.name == `Omega.String then OmegaChecks.InitCompiler.prepareStringLayout
       (← compileDeclsRef.get) group.all.toArray {}
-      if group.name == `Omega.String then OmegaChecks.InitPort.NativeState.finishStringLayout
+      if group.name == `Omega.String then OmegaChecks.InitCompiler.finishStringLayout
       for name in group.all do
         unless (monoTypeExt.find? (← getEnv) name).isSome do throwError "no compiled layout for {name}"
     catch ex =>

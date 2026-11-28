@@ -26,18 +26,12 @@ public def originalName (n : Name) : Name := Id.run do
         return lexical.replacePrefix `_private.OmegaInit `_private.Init ++ user.replacePrefix `Omega .anonymous
   return n.replacePrefix `Omega .anonymous
 
-private def stringTerm (s : String) : Expr :=
-  let char := mkConst `Omega.Char
-  let chars := s.toList.foldr (init := mkApp (mkConst `Omega.List.nil [.zero]) char) fun ch tail =>
-    mkApp3 (mkConst `Omega.List.cons [.zero]) char (mkApp (mkConst `Omega.Char.ofNat) (mkRawNatLit ch.toNat)) tail
-  mkApp (mkConst `Omega.String.ofList) chars
-
 /-- Replace recursively inside projection subjects, preserving binder syntax and universe levels. -/
 public partial def translate (rename : Name → Name) (e : Expr) : Expr :=
   e.replace fun
     | .const n ls => some (.const (rename n) ls)
     | .proj owner field target => some (.proj (rename owner) field (translate rename target))
-    | .lit (.strVal s) => some (stringTerm s)
+    | .lit (.strVal s) => some (OmegaChecks.InitCompiler.RootNames.stringTerm s)
     | _ => none
 
 /-- Matcher indices and smart-unfolding annotations describe a particular definition body. -/

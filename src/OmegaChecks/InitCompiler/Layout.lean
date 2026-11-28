@@ -8,7 +8,23 @@ import all Lean.Compiler.LCNF.MonoTypes
 open Lean Parser Elab Command
 namespace OmegaChecks.InitCompiler
 
-open Compiler.LCNF in
+open Compiler.LCNF
+
+/-- Keep the UTF-8 field in slot zero and preserve the boxed calling convention of String. -/
+public def prepareStringLayout : CoreM Unit := do
+  modifyEnv fun env =>
+    let env := trivialStructureInfoExt.insert env `Omega.String none
+    let env := impureTrivialStructureInfoExt.insert env `Omega.String none
+    impureTypeExt.insert env `Omega.String ImpureType.tobject
+
+public def finishStringLayout : CoreM Unit := do
+  let name := `Omega.String.ofByteArray
+  let some layout := ctorLayoutExt.find? (← getEnv) name | throwError "missing string constructor"
+  unless layout.ctorInfo.size == 1 && layout.ctorInfo.ssize == 0 && layout.ctorInfo.usize == 0 &&
+      layout.ctorInfo.cidx == 0 && (layout.fieldInfo matches #[.object 0 _, .erased]) do
+    throwError s!"unexpected string constructor layout {layout.ctorInfo.size} {layout.ctorInfo.ssize} {layout.ctorInfo.usize} {layout.fieldInfo.map (fun f => toString (format f))}"
+  modifyEnv fun env => ctorLayoutExt.insert env name {layout with ctorInfo := {layout.ctorInfo with ssize := 1}}
+
 public def compilerLayouts (types ctors : Array Name) : CoreM Unit := do
   let layoutEnv ← withoutModifyingEnv do
     -- The compiler queries the erased type markers when computing constructor layouts.
@@ -21,7 +37,9 @@ public def compilerLayouts (types ctors : Array Name) : CoreM Unit := do
         let env := trivialStructureInfoExt.insert env `Omega.ByteArray none
         let env := impureTrivialStructureInfoExt.insert env `Omega.ByteArray none
         impureTypeExt.insert env `Omega.ByteArray ImpureType.tobject
+    if types == #[`Omega.String] then prepareStringLayout
     compileInductives types
+    if types == #[`Omega.String] then finishStringLayout
     if types == #[`Omega.ByteArray] then
       let name := `Omega.ByteArray.mk
       let some l := ctorLayoutExt.find? (← getEnv) name | throwError "missing strict byte array constructor"

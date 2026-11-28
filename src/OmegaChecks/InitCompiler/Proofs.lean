@@ -37,8 +37,6 @@ private partial def translateTerm (env : Environment) (visiting : NameSet) (term
     let some value := info.value? (allowOpaque := true) | throw s!"no kernel term for private helper {n}"
     let value ← translateTerm env (visiting.insert n) value
     modify (·.insert n (info.levelParams, value))
-  if (term.find? (fun e => e matches .lit (.strVal _))).isSome then
-    throw "strict string literal encoding is unavailable"
   let helpers ← get
   let rec go (e : Expr) : Expr :=
     e.replace fun
@@ -46,6 +44,7 @@ private partial def translateTerm (env : Environment) (visiting : NameSet) (term
         if let some (params, body) := helpers[n]? then some (body.instantiateLevelParams params us)
         else some (.const (if RootNames.usesRoot n then n else `Omega ++ n) us)
       | .proj n i x => some (.proj (if RootNames.usesRoot n then n else `Omega ++ n) i (go x))
+      | .lit (.strVal s) => some (RootNames.stringTerm s)
       | _ => none
   return go term
 
