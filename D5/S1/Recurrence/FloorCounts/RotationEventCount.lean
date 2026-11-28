@@ -5,7 +5,10 @@
    anchors: []
    digest: Floor-difference event counts telescope with error below one. -/
 
-import Mathlib
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Order.Floor.Ring
+import Mathlib.Algebra.Order.Archimedean.Real.Basic
+import Mathlib.Tactic.Ring
 
 namespace D5.S1.Recurrence.FloorCounts.RotationEventCount
 

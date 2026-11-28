@@ -6,7 +6,10 @@
    utility: none
    digest: The Fibonacci triangle of OEIS A385590 satisfies its alternating binomial sum. -/
 
-import Mathlib
+import Mathlib.Data.Nat.Choose.Sum
+import Mathlib.Data.Nat.Fib.Zeckendorf
+import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.NormNum.NatFib
 
 namespace D5.S1.Recurrence.Parity.A385590
 
