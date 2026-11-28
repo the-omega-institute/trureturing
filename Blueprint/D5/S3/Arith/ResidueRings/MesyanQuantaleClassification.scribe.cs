@@ -25,6 +25,7 @@ internal sealed class MesyanQuantaleClassificationDocument : IScribeDocumentDefi
                     + "multiplicative identity or its additive group is torsion and each prime-primary component "
                     + "has a two-sided identity belonging to that component. The component for p consists of "
                     + "elements killed by some natural power of p, with inherited ring operations. "
+                    + "The dot after a prime power denotes repeated addition. "
                     + "Zero serves as the identity in a zero component and in the zero ring. "
                     + "The formula uses positive additive order for torsion since infinite additive order is "
                     + "represented by zero. The classification concerns the ring case of Question 36.")),
@@ -73,7 +74,9 @@ internal sealed class MesyanQuantaleClassificationDocument : IScribeDocumentDefi
             Bind(Exists, "u", ring, Seq(Parens(KilledByPrimePower(unit)), Sp, Land, Sp,
                 Parens(Bind(Forall, "x", ring, Seq(Parens(KilledByPrimePower(element)),
                     Sp, Rightarrow, Sp, Parens(UnitLaws(unit, element))))))));
-        return Disp(Seq(Parens(quantaleUnit), Sp, Leftrightarrow, Sp,
-            Parens(ringUnit), Sp, Lor, Sp, Parens(Seq(Parens(torsion), Sp, Land, Sp, Parens(primaryUnits)))));
+        Formula equivalence = Seq(Parens(quantaleUnit), Sp, Leftrightarrow, Sp,
+            Parens(ringUnit), Sp, Lor, Sp, Parens(Seq(Parens(torsion), Sp, Land, Sp, Parens(primaryUnits))));
+        return Disp(Bind(Forall, "R", F.Id("Type"), Seq(
+            OpenBracket, F.Id("NonUnitalRing"), Sp, ring, CloseBracket, Comma, Sp, equivalence)));
     }
 }
