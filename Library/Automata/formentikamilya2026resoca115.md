@@ -27,3 +27,11 @@ Question 1 asks
 > For RESOCA 115, in the context of finite configurations, are all multiple of 3 periods?
 
 Read period as the least positive return of the full ordered pair. The local result excludes least period nine for this two-layer update. Single-layer elementary evolution and finite cyclic lattices have different state spaces.
+
+### Question 2 — square closure
+
+Section 3, Question 2, on printed p. 97 (PDF p. 3) asks
+
+> If p is a period for RESOCA 115, is p² also a period?
+
+Section 3 defines a realized period by existence of a finite pair with that least positive return. The pair realizing the square is independently quantified. Section 2.1 on printed p. 96 defines finiteness for both layers and explicitly includes the all-zero layer among its finite configurations. [Versioned PDF, §3](https://arxiv.org/pdf/2606.13159v1#page=3)

@@ -1,5 +1,6 @@
 import Lean
 import Lean.Replay
+import OmegaChecks.AuditCache
 import OmegaChecks.Interface
 import OmegaChecks.ModuleSurface
 
@@ -62,9 +63,20 @@ private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := 
   OmegaChecks.Interface.check strict publicStrict reference (bindings ++ reexports)
   IO.println s!"Upstream names and owning modules matched for {bindings.size} declarations in {owners}."
 
+private def replayStrict (env : Environment) : IO Unit := do
+  let check : CoreM Unit := do
+    for (name, info) in env.constants.toList do
+      if info.isUnsafe || info matches .axiomInfo _ | .quotInfo _ then
+        throwError "inadmissible declaration {name}"
+      let axioms ← collectAxioms name
+      unless axioms.isEmpty do
+        throwError "{name} depends on {axioms}"
+  check.toIO' {fileName := "<audit>", fileMap := default} {env}
+  discard <| (← mkEmptyEnvironment).toKernelEnv.replay env.constants.map₁
+
 /-- Replay the imported artifacts in an empty kernel environment. -/
 private def audit (roots : List String) (path label : String)
-    (expected : Option (List String)) : IO (List String) := do
+    (expected : Option (List String)) (cacheArgs : Option (Array String) := none) : IO (List String) := do
   searchPathRef.set (System.SearchPath.parse path)
   let imports := roots.toArray.map fun name => { module := name.toName : Import }
   let env ← importModules imports {}
@@ -80,21 +92,42 @@ private def audit (roots : List String) (path label : String)
     for name in actual do
       unless isStrict name.toName do
         throw <| IO.userError s!"unexpected strict library import {name}"
-  let check : CoreM Nat := do
-    let mut count := 0
-    for (name, info) in env.constants.toList do
-      if info.isUnsafe || info matches .axiomInfo _ | .quotInfo _ then
-        throwError "inadmissible declaration {name}"
-      let axioms ← collectAxioms name
-      unless axioms.isEmpty do
-        throwError "{name} depends on {axioms}"
-      count := count + 1
-    return count
-  let count ← check.toIO' {fileName := "<audit>", fileMap := default} {env}
-  discard <| (← mkEmptyEnvironment).toKernelEnv.replay env.constants.map₁
+  if let some args := cacheArgs then
+    OmegaChecks.AuditCache.withResult "strict-kernel" args (← OmegaChecks.AuditCache.artifacts env)
+      (replayStrict env)
+  else
+    replayStrict env
   checkUpstreamNames env publicStrict
-  IO.println s!"{label}: {actual.length} modules, {count} declarations, zero axioms, fresh kernel replay passed"
+  let count := env.constants.map₂.foldl (fun n _ _ => n + 1) env.constants.map₁.size
+  IO.println s!"{label}: {actual.length} modules, {count} declarations, zero axioms, kernel replay verified"
   return actual
+
+/-- Pin the expected closure before import so the cache and kernel read the same files. -/
+private def stageStrict (stage : System.FilePath) (modules : List String) : IO Unit := do
+  for m in modules.eraseDups do
+    -- Imported names must map beneath this private directory.
+    unless (m.splitOn ".").all (fun s => !s.isEmpty && s.toList.all
+        (fun c => c.isAlphanum || c == '_' || c == '\'')) do
+      throw <| IO.userError s!"unsupported module path {m}"
+    let source ← findOLean m.toName
+    let target := modToFilePath stage m.toName "olean"
+    IO.FS.createDirAll target.parent.get!
+    for ext in ["olean", "olean.server", "olean.private", "ir", "ir.sig"] do
+      let part := source.withExtension ext
+      if ext == "olean" || (← part.pathExists) then
+        IO.FS.writeBinFile (target.withExtension ext) (← IO.FS.readBinFile part)
+
+private def auditExactRoots (roots : List String) (path : String) (expected : List String) : IO Unit := do
+  unless (← IO.getEnv "OMEGA_AUDIT_CACHE").isSome do
+    discard <| audit roots path "Omega" (some expected)
+    return
+  IO.FS.withTempDir fun stage => do
+    searchPathRef.set (System.SearchPath.parse path)
+    try stageStrict stage expected catch _ =>
+      discard <| audit roots path "Omega" (some expected)
+      return
+    let args := (["--exact-roots"] ++ roots ++ ["--"] ++ expected).toArray
+    discard <| audit roots stage.toString "Omega" (some expected) (some args)
 
 /-- Measure the published declarations in the official environment, including proof dependencies. -/
 private def reportOfficialAxioms (strict official : Environment) (modules : Array Name) (path : String) : IO Unit := do
@@ -142,28 +175,41 @@ def main (args : List String) : IO Unit := do
     let basis := strict.allImportedModuleNames.filter fun name =>
       name.getRoot == `OmegaInit || name.getRoot == `OmegaMathlib
     let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
+    let mode ← IO.getEnv "OMEGA_CACHE_CONSUMER_MODE"
+    let report := (← IO.getEnv "OMEGA_OFFICIAL_AXIOM_REPORT").map System.FilePath.mk
+    let cacheable := (← IO.getEnv "OMEGA_AUDIT_CACHE").isSome &&
+      (← IO.getEnv "OMEGA_FROZEN_INVENTORY").isNone && (← IO.getEnv "OMEGA_FROZEN_CERTIFICATE").isNone &&
+      ((mode == some "common-interface" && report.isNone) || (mode == some "official-interface" && report.isSome))
+    let strictFiles ← if cacheable then OmegaChecks.AuditCache.artifacts strict else pure #[]
     searchPathRef.set (System.SearchPath.parse officialPath)
     let official ← importModules (imports.push { module := `OmegaChecks.Interface.Equations }) {}
-    for (owner, data) in official.header.moduleNames.zip official.header.moduleData do
-      if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then
-        unless data.constants.isEmpty do
-          throw <| IO.userError s!"official import adapter {owner} contains declarations"
-    let inventory : Array OmegaChecks.Interface.FrozenInventory ←
-      if let some path ← IO.getEnv "OMEGA_FROZEN_INVENTORY" then
-        -- Strict foundation modules may not be official alias facades.
-        checkLayers strict
-        IO.ofExcept (Json.parse (← IO.FS.readFile path) >>= fromJson?)
-      else pure #[]
-    let certified ← OmegaChecks.Interface.checkConsumers strict publicStrict official modules strictSearchPath inventory
-    if let some path ← IO.getEnv "OMEGA_FROZEN_CERTIFICATE" then
-      IO.FS.writeFile path ((toJson certified).compress ++ "\n")
-    if let some report ← IO.getEnv "OMEGA_OFFICIAL_AXIOM_REPORT" then
-      reportOfficialAxioms strict official modules report
+    let compare : IO Unit := do
+      for (owner, data) in official.header.moduleNames.zip official.header.moduleData do
+        if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then
+          unless data.constants.isEmpty do
+            throw <| IO.userError s!"official import adapter {owner} contains declarations"
+      let inventory : Array OmegaChecks.Interface.FrozenInventory ←
+        if let some path ← IO.getEnv "OMEGA_FROZEN_INVENTORY" then
+          -- Strict foundation modules may not be official alias facades.
+          checkLayers strict
+          IO.ofExcept (Json.parse (← IO.FS.readFile path) >>= fromJson?)
+        else pure #[]
+      let certified ← OmegaChecks.Interface.checkConsumers strict publicStrict official modules strictSearchPath inventory
+      if let some path ← IO.getEnv "OMEGA_FROZEN_CERTIFICATE" then
+        IO.FS.writeFile path ((toJson certified).compress ++ "\n")
+      if let some report := report then
+        reportOfficialAxioms strict official modules report.toString
+    if cacheable then
+      let officialFiles ← OmegaChecks.AuditCache.artifacts official
+      let files := strictFiles.map (fun (name, file) => ("strict/" ++ name, file)) ++
+        officialFiles.map (fun (name, file) => ("reference/" ++ name, file))
+      OmegaChecks.AuditCache.withResult mode.get! names.toArray files compare report
+    else compare
   else if let "--exact-roots" :: path :: names := args then
     let roots := names.takeWhile (· != "--")
     let "--" :: expected := names.drop roots.length | throw <| IO.userError "missing expected module closure"
     if roots.isEmpty then throw <| IO.userError "expected at least one audit root"
-    discard <| audit roots path "Omega" (some expected)
+    auditExactRoots roots path expected
   else if let "--exact" :: root :: path :: expected := args then
     discard <| audit [root] path root (some expected)
   else

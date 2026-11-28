@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.RotationAvoidance;
 internal sealed class RotationAvoidanceGapsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceGaps.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/egecioglu2026rotations");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/egecioglu2026rotations");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Three strict inequalities distinguish circular classes with one containing cut.",

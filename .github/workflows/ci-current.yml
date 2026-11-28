@@ -109,6 +109,9 @@ jobs:
             node --test .github/actions/lean-cache-shards/test-generation.mjs
             python3 -B .github/scripts/test-read-module-reports.py
           fi
+          if grep -zEq '^\.github/(scripts/(test-)?omega-audit-results\.py|workflows/ci-current\.yml)$' "$RUNNER_TEMP/changed-paths"; then
+            python3 -B .github/scripts/test-omega-audit-results.py
+          fi
       - name: Cache the tools used by the protected base snapshot
         env:
           BASE: ${{ needs.detect.outputs.base }}
@@ -427,6 +430,7 @@ jobs:
         if: steps.toolchain.outcome == 'success'
         run: |
           python3 -B src/OmegaChecks/test_scope.py
+          python3 -B src/OmegaChecks/test_audit_cache.py
           python3 -B src/OmegaChecks/check.py --changed "$RUNNER_TEMP/changed-paths" \
             --write-scope "$RUNNER_TEMP/omega-scope.json" --cache-targets "$RUNNER_TEMP/omega-cache-targets"
       - id: dependency
@@ -458,6 +462,16 @@ jobs:
         with:
           operation: restore-published
           targets-file: ${{ steps.omega_scope.outputs.targets-file }}
+      - name: Restore trusted Omega audit results
+        if: steps.omega_scope.outputs.targets-file != ''
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OMEGA_AUDIT_CACHE="$(mktemp -d "$RUNNER_TEMP/omega-audit-XXXXXXXX")"
+          export OMEGA_AUDIT_CACHE
+          echo "OMEGA_AUDIT_CACHE=$OMEGA_AUDIT_CACHE" >> "$GITHUB_ENV"
+          python3 -B .github/scripts/omega-audit-results.py restore
       - name: Initialize the Omega compute allowance
         run: |
           budget="$RUNNER_TEMP/unit-compute-seconds"
@@ -476,6 +490,20 @@ jobs:
           name: omega-official-axioms
           path: ${{ steps.omega_scope.outputs.report-file }}
           include-hidden-files: true
+          if-no-files-found: error
+      - name: Prepare fresh Omega audit records
+        id: audit_results
+        if: success() && steps.run.outcome == 'success' && github.event_name == 'push' && github.ref_protected && env.OMEGA_AUDIT_CACHE != ''
+        continue-on-error: true
+        run: python3 -B .github/scripts/omega-audit-results.py prepare-upload
+      - name: Upload fresh Omega audit records
+        if: steps.audit_results.outputs.path != ''
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: omega-audit-results-v1
+          path: ${{ steps.audit_results.outputs.path }}
+          overwrite: true
           if-no-files-found: error
 
   # The one required check. It always runs, so a failed or cancelled unit, or a

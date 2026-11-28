@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.RotationAvoidance;
 internal sealed class RotationAvoidanceFibonacciDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceFibonacci.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/egecioglu2026rotations");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/egecioglu2026rotations");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Two classical pattern avoidance classes have cardinalities given by odd-indexed Fibonacci numbers and powers of two.",

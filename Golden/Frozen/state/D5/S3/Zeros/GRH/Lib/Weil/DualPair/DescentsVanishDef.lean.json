@@ -1,0 +1,1 @@
+{"statement_id":"sha256:0b03825fef2bc7fa852660b77a57d06c07590875ef325e6dc112ac7f3ee3dfaf","declarations":[{"declaration_name_key":"ns(n0,14:DescentsVanish)","kind":"def","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

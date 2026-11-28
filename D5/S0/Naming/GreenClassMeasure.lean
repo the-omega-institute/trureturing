@@ -5,7 +5,8 @@
    anchors: []
    digest: Under the uniform product measure on infinite strings over a finite nonempty alphabet O with n = card O, the green class G(S,t) = {x : x|_S = t|_S} (strings agreeing with a target t on a finite support S of size m = |S|) has measure exactly n^(−m), and in particular strictly positive measure. The residual uncertainty of a finite certificate depends only on the budget m, not on the pinned content t. Proof: the green class is the cylinder Set.pi ↑S (fun i => {t i}); Measure.infinitePi_pi evaluates it as the product over i∈S of the per-coordinate uniform singleton mass (card O)⁻¹, which Finset.prod_const folds to (card O)⁻¹^m. This is the green-class positive-measure clause (定理 4.4 clause (a)); the constant-way conservation clause (b) is covered elsewhere (NamingSystem.dark_side_conservation), and the varying-marginal generalization (non-uniform coordinate marginals, the value becoming the product ∏_{i∈S} μᵢ({t i}) of the pinned singleton masses, positive exactly when each pinned singleton has positive marginal mass) and the sibling metric diameter formula are not covered. -/
 
-import Mathlib
+import Mathlib.Probability.ProbabilityMassFunction.Constructions
+import Mathlib.Probability.ProductMeasure
 
 open MeasureTheory Measure
 open scoped ENNReal
