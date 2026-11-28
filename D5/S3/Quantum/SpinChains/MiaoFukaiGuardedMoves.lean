@@ -459,7 +459,7 @@ private def control {L : ℕ} (j : Fin L) (x : Config L) : ℂ :=
 private theorem C_eq {L : ℕ} (j : Fin L) :
     C j = Matrix.diagonal (control j) := by
   classical
-  simp only [C, P, Matrix.diagonal_sub, Matrix.diagonal_pow, Pi.pow_apply]
+  simp only [C, P, Matrix.diagonal_sub, Matrix.diagonal_pow]
   rfl
 
 private theorem p_le_one {L : ℕ} (x : Config L) (j : Fin L) : p x j ≤ 1 := by
@@ -471,7 +471,7 @@ private theorem p_le_one {L : ℕ} (x : Config L) (j : Fin L) : p x j ≤ 1 := b
       exact hb.resolve_right he
     have hr := (x.property j).resolve_left he
     simp [p, pTriple, bit, hm, hl, hr]
-  · simp only [p, pTriple, bit, if_neg hm, zero_add]
+  · simp only [p, pTriple, bit, ite_eq_right hm, zero_add]
     split <;> omega
 
 private theorem control_bit {L : ℕ} (j : Fin L) (x : Config L) :
@@ -480,7 +480,7 @@ private theorem control_bit {L : ℕ} (j : Fin L) (x : Config L) :
   have hr := p_le_one x (next j)
   rcases (show p x (prev j) = 0 ∨ p x (prev j) = 1 by omega) with h0 | h1 <;>
     rcases (show p x (next j) = 0 ∨ p x (next j) = 1 by omega) with h2 | h3 <;>
-    simp [control, *, zero_sub, neg_sq]
+    simp [control, *, zero_sub]
 
 private theorem control_invariant {L : ℕ} {j : Fin L} {x y : Config L}
     (hl : p y (prev j) + p x (prev j) = 1)
@@ -490,10 +490,10 @@ private theorem control_invariant {L : ℕ} {j : Fin L} {x y : Config L}
   have hr' : (p y (next j) : ℂ) + (p x (next j) : ℂ) = 1 := by
     exact_mod_cast hr
   unfold control
-  rw [← neg_sq ((p x (prev j) : ℂ) - (p x (next j) : ℂ)) 2]
+  rw [← neg_sq ((p x (prev j) : ℂ) - (p x (next j) : ℂ))]
   congr 1
   rw [neg_sub]
-  exact (sub_eq_sub_iff_add_eq_add).mpr (hl'.trans hr'.symm)
+  exact sub_eq_sub_iff_add_eq_add.mpr (hl'.trans (hr'.symm.trans (add_comm _ _)))
 
 private theorem center_flanks_disjoint {L : ℕ} {j : Fin L} {x : Word L}
     (ha : centerAllowed j x) (hf : flanksAllowed j x) : False :=
@@ -524,6 +524,7 @@ theorem controlled_square {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
   rw [T, pow_two, pow_two, mul_assoc, ← mul_assoc (S j), C_comm_S hL,
     mul_assoc (C j), ← mul_assoc (C j), hC]
 
+open scoped Classical in
 private theorem guarded_sq {L : ℕ} (M : Op L) (g : Word L → Prop) (f : Word L → Word L)
     (hm : ∀ y x, M y x = if h : g x.val ∧ y.val = f x.val then 1 else 0)
     (hmove : ∀ x : Config L, g x.val → Blockade (f x.val) ∧ g (f x.val) ∧ f (f x.val) = x.val) :
@@ -545,6 +546,7 @@ private theorem guarded_sq {L : ℕ} (M : Op L) (g : Word L → Prop) (f : Word 
   · have hz : ∀ w : Config L, M w x = 0 := by intro w; simp [hm, hg]
     by_cases hy : y = x <;> simp [Matrix.diagonal_apply, hy, hg, hz]
 
+open scoped Classical in
 private theorem DA_eq {L : ℕ} (j : Fin L) :
     DA j = Matrix.diagonal (fun x : Config L => if h : centerAllowed j x.val then 1 else 0) := by
   classical
@@ -555,6 +557,7 @@ private theorem DA_eq {L : ℕ} (j : Fin L) :
   by_cases hl : x.val (prev j) = .e <;> by_cases hc : x.val j = .minus <;>
     by_cases hr : x.val (next j) = .e <;> simp [centerAllowed, bit, hl, hc, hr]
 
+open scoped Classical in
 private theorem DF_eq {L : ℕ} (j : Fin L) :
     DF j = Matrix.diagonal (fun x : Config L => if h : flanksAllowed j x.val then 1 else 0) := by
   classical
@@ -588,7 +591,7 @@ private theorem center_control_value {L : ℕ} {j : Fin L} {x : Config L}
   simp only [control, p, next_prev, prev_next, hl, hr]
   cases hleft : x.val (prev (prev j)) <;> cases hcenter : x.val j <;>
     cases hright : x.val (next (next j)) <;>
-    simp_all [pTriple, bit, zero_sub, neg_sq]
+    simp_all [pTriple, bit, zero_sub]
 
 private theorem flank_control_value {L : ℕ} {j : Fin L} {x : Config L}
     (h : flanksAllowed j x.val) :
@@ -611,7 +614,8 @@ private theorem split_control {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
     · have hy : centerAllowed j y.val := h.2 ▸ (center_allowed hL j x.val).mpr h.1
       rw [center_control_value hy]
     · simp [A, h]
-  · simp only [Um, Nminus, Matrix.diagonal_sub, Matrix.diagonal_pow, Matrix.diagonal_mul, Pi.pow_apply]
+  · simp only [Um, Nminus, Matrix.diagonal_sub, Matrix.diagonal_pow,
+      Matrix.diagonal_mul, Pi.pow_apply]
     by_cases h : flanksAllowed j x.val ∧ y.val = flankMove j x.val
     · have hy : flanksAllowed j y.val := h.2 ▸ flanks_allowed j x.val h.1
       rw [flank_control_value hy]

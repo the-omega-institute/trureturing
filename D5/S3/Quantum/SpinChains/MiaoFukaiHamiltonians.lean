@@ -221,7 +221,7 @@ abbrev Sector (L q : ℕ) := {x : Config L // charge x = q}
 /-- The support of the Hamiltonian restricted to the fixed-charge basis. -/
 def sectorSupport {L q : ℕ} (M : Op L) : SimpleGraph (Sector L q) where
   Adj x y := x ≠ y ∧ (M y.val x.val ≠ 0 ∨ M x.val y.val ≠ 0)
-  symm := fun _ _ h => ⟨h.1.symm, h.2.symm⟩
+  symm := ⟨fun _ _ h => ⟨h.1.symm, h.2.symm⟩⟩
   loopless := ⟨fun _ h => h.1 rfl⟩
 
 private theorem singleton_of_kills {L q : ℕ} {M : Op L} (x : Sector L q)
@@ -242,7 +242,7 @@ private theorem singleton_of_kills {L q : ℕ} {M : Op L} (x : Sector L q)
   constructor
   · intro hr
     by_contra hne
-    exact ((SimpleGraph.notMem_support_iff_isIsolated _ _).mpr hi)
+    exact ((SimpleGraph.notMem_support_iff_isIsolated _ (v := x)).mpr hi)
       (SimpleGraph.mem_support_of_reachable (Ne.symm hne) hr.symm)
   · rintro rfl
     exact SimpleGraph.Reachable.refl _
