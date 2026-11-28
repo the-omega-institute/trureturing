@@ -138,7 +138,8 @@ internal sealed class DetourPathDocument : IScribeDocumentDefinition
     }
 
     private static Formula SetOf(Formula x, Formula type, Formula condition) =>
-        Seq(OpenBrace, x, Colon, type, Sp, Mid, Sp, condition, CloseBrace);
+        Seq(Operatorname, Grp(F.Id("Set"), Dot, F.Id("ofPred")),
+            Paren(Bind(LambdaLower, x, type, condition)));
     private static Formula All(Formula x, Formula type, Formula body) => Bind(Forall, x, type, body);
     private static Formula Bind(Formula binder, Formula x, Formula type, Formula body) =>
         Seq(binder, Sp, Paren(Seq(x, Colon, type)), Comma, Sp, body);

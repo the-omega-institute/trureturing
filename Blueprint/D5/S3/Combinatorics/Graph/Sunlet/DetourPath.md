@@ -22,7 +22,7 @@ The index lies in the cycle Cₙ. At each index, the vertex of height zero is on
 
 **Theorem 1.2 (Distinct indices).**
 
-$$\forall (n:\mathbb{N}), (3 \leq n) \implies \forall (i:\operatorname{Fin}\left(n\right)), \forall (j:\operatorname{Fin}\left(n\right)), (i \neq j) \implies \forall (a:\operatorname{Fin}\left(2\right)), \forall (b:\operatorname{Fin}\left(2\right)), \operatorname{IsGreatest}\left(\{L:\mathbb{N} \mid \exists (p:\operatorname{Walk}\left(\operatorname{sunlet}\left(n\right), (i,a), (j,b)\right)), \operatorname{IsPath}\left(p\right) \land \operatorname{length}\left(p\right)=L\}, \operatorname{max}\left(\operatorname{val}\left(i-j\right), \operatorname{val}\left(j-i\right)\right)+\operatorname{val}\left(a\right)+\operatorname{val}\left(b\right)\right)$$
+$$\forall (n:\mathbb{N}), (3 \leq n) \implies \forall (i:\operatorname{Fin}\left(n\right)), \forall (j:\operatorname{Fin}\left(n\right)), (i \neq j) \implies \forall (a:\operatorname{Fin}\left(2\right)), \forall (b:\operatorname{Fin}\left(2\right)), \operatorname{IsGreatest}\left(\operatorname{Set.ofPred}(\lambda (L:\mathbb{N}), \exists (p:\operatorname{Walk}\left(\operatorname{sunlet}\left(n\right), (i,a), (j,b)\right)), \operatorname{IsPath}\left(p\right) \land \operatorname{length}\left(p\right)=L), \operatorname{max}\left(\operatorname{val}\left(i-j\right), \operatorname{val}\left(j-i\right)\right)+\operatorname{val}\left(a\right)+\operatorname{val}\left(b\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Sunlet/DetourPath.sunlet_isGreatest_pathLength_of_index_ne` (`✓ std3`). ∎
 
@@ -36,7 +36,7 @@ Simple walks have no repeated vertices. Removing any leaf endpoint edges leaves 
 
 **Definition 1.3 (Detour distance).**
 
-$$\forall (n:\mathbb{N}), \forall (u:\operatorname{Fin}\left(n\right)\times\operatorname{Fin}\left(2\right)), \forall (v:\operatorname{Fin}\left(n\right)\times\operatorname{Fin}\left(2\right)), \operatorname{detourDistance}\left(u, v\right)=\operatorname{sSup}\left(\{L:\mathbb{N} \mid \exists (p:\operatorname{Walk}\left(\operatorname{sunlet}\left(n\right), u, v\right)), \operatorname{IsPath}\left(p\right) \land \operatorname{length}\left(p\right)=L\}\right)$$
+$$\forall (n:\mathbb{N}), \forall (u:\operatorname{Fin}\left(n\right)\times\operatorname{Fin}\left(2\right)), \forall (v:\operatorname{Fin}\left(n\right)\times\operatorname{Fin}\left(2\right)), \operatorname{detourDistance}\left(u, v\right)=\operatorname{sSup}\left(\operatorname{Set.ofPred}(\lambda (L:\mathbb{N}), \exists (p:\operatorname{Walk}\left(\operatorname{sunlet}\left(n\right), u, v\right)), \operatorname{IsPath}\left(p\right) \land \operatorname{length}\left(p\right)=L)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Sunlet/DetourPath.detourDistance` (`✓ std3`).
 
@@ -64,7 +64,7 @@ The set is nonempty, proper, and distinguished in detour distance by every outsi
 
 **Definition 1.5 (Orders of maximal sets).**
 
-$$\forall (n:\mathbb{N}), \operatorname{maximalDDDOrders}\left(n\right)=\{m:\mathbb{N} \mid \exists (S:\operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\times\operatorname{Fin}\left(2\right)\right)), \operatorname{IsDDD}\left(S\right) \land (\forall (T:\operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\times\operatorname{Fin}\left(2\right)\right)), (\operatorname{IsDDD}\left(T\right) \land S \subseteq T) \implies T \subseteq S) \land \operatorname{card}\left(S\right)=m\}$$
+$$\forall (n:\mathbb{N}), \operatorname{maximalDDDOrders}\left(n\right)=\operatorname{Set.ofPred}(\lambda (m:\mathbb{N}), \exists (S:\operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\times\operatorname{Fin}\left(2\right)\right)), \operatorname{IsDDD}\left(S\right) \land (\forall (T:\operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\times\operatorname{Fin}\left(2\right)\right)), (\operatorname{IsDDD}\left(T\right) \land S \subseteq T) \implies T \subseteq S) \land \operatorname{card}\left(S\right)=m)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Sunlet/DetourPath.maximalDDDOrders` (`✓ std3`).
 
