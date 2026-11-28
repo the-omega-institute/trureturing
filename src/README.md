@@ -192,6 +192,8 @@ import OmegaMath
 
 `originalTypesChecked` 统计在严格公开环境中核对过官方原类型的声明位置。清点器按普通名称翻译类型，保留宇宙参数，并检查与生成声明的定义等价。`matchingNameAndModule` 统计同名同模块的位置，其中也包括只完成特化的接口。输出目录中的 `init-gaps.tsv` 按官方模块和名称列出剩余非公理声明、此次尝试遇到的依赖和原因。已生成的声明如保留特化类型，`originalTypeGap` 说明原类型核验遇到的缺口。`init-inventory.json` 列出全部公开声明。`audit.txt` 和 `omegamath-audit.txt` 分别保存基础库与 OmegaMath 导入闭包的内核审计。`init-public-reductions.tsv` 逐项列出普通导入时，到严格库封装实现的定义体依赖路径，以及该接口在官方环境中的计算机制。例如，公开导入 `OmegaInit.Data.Nat.Div.Basic` 后可应用 `Omega.Nat.div_zero`。直接展开严格除法实现的用法见 [生成说明](OmegaChecks/InitPort/README.md)。批量生成器只复制源码库已有的原生编译数据。可单独导入的官方模块保留对应的 `OmegaInit.*` 模块路径。
 
+`Ring.OfSemiring.pow_zero` 的官方原类型含 `npow a 0`。普通导入官方模块即可将它归约为 `natCast 1`。清点器核对这一处归约，再在严格公开环境核对完整类型。严格库可以按原参数调用该定理；直接书写含 `npow` 的表达式仍需要移植幂运算。
+
 ## 严格库与可替换接口
 
 `OmegaInit` 可以导入本层模块。`OmegaMathlib` 可以导入本层与 `OmegaInit`。`OmegaMath` 可以导入三个严格库。审计器从编译产物读取每条导入边，并在空内核中重放选定的严格闭包。官方 Init 与 Mathlib 由外部核验器分别加载。[严格闭包审计](OmegaChecks/Audit.lean)

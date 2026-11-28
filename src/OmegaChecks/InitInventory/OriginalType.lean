@@ -45,6 +45,28 @@ private def checkedFinBound (official strict : Environment) (owner name : Name)
   let expected := translate revised
   guard ((Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target))
 
+/-- The public `npow a 0` branch reduces for an arbitrary `a`. Check the application
+in the exported upstream environment, then check both translated endpoints in the strict one. -/
+private def checkedEnvelopePowZero (visible strict : Environment) (owner : Name) (source : ConstantInfo)
+    (pinned target : Expr) : Bool := (Option.isSome <| do
+  guard (owner == `Init.Grind.Ring.Envelope && source.name == `Lean.Grind.Ring.OfSemiring.pow_zero)
+  let entry ← visible.find? source.name
+  guard (source.isTheorem && entry.levelParams == source.levelParams && entry.type.equal source.type &&
+    pinned.getForallArity == 3)
+  let (_, lhs, rhs) ← pinned.getForallBody.eq?
+  guard (lhs.isAppOfArity `Lean.Grind.Ring.OfSemiring.npow 4 &&
+    rhs.isAppOfArity `Lean.Grind.Ring.OfSemiring.natCast 3)
+  let args := lhs.getAppArgs
+  guard (args.extract 0 3 == #[.bvar 2, .bvar 1, .bvar 0] &&
+    rhs.getAppArgs.extract 0 2 == #[.bvar 2, .bvar 1])
+  guard (Kernel.isDefEqGuarded visible {} lhs.appArg! (mkRawNatLit 0) &&
+    Kernel.isDefEqGuarded visible {} rhs.appArg! (mkRawNatLit 1))
+  let reduced := pinned.replace fun e => if e.equal lhs then some rhs else none
+  guard ((Kernel.check visible {} pinned).isOk && (Kernel.check visible {} reduced).isOk &&
+    Kernel.isDefEqGuarded visible {} pinned reduced)
+  let translated := InitKernelPort.translate InitKernelPort.portName reduced
+  guard ((Kernel.check strict {} translated).isOk && Kernel.isDefEqGuarded strict {} translated target))
+
 /-- The kernel names a recursor's minor premises after its constructors. Translate those
 binder labels alongside the constructor constants when comparing serialized public types. -/
 private def recursorBinders (rules : List RecursorRule) : Expr → Expr
@@ -55,7 +77,7 @@ private def recursorBinders (rules : List RecursorRule) : Expr → Expr
 
 /-- Check the pinned type in the strict public environment with the original universe
 binders. A Fin bound proof may be replaced only after checking proof irrelevance. -/
-public def originalTypeGap? (official strict : Environment) (owner : Name)
+public def originalTypeGap? (official visible strict : Environment) (owner : Name)
     (source target : ConstantInfo) : Option String := Id.run do
   if source.numLevelParams != target.numLevelParams then return some "universe parameter count"
   let pinned := source.type.instantiateLevelParams source.levelParams (target.levelParams.map Level.param)
@@ -65,7 +87,8 @@ public def originalTypeGap? (official strict : Environment) (owner : Name)
     if (recursorBinders recursor.rules expected).equal target.type then return none
   let missing := (expected.getUsedConstants.filter (fun n => !strict.contains n)).qsort Name.lt
   unless missing.isEmpty do
-    if checkedFinBound official strict owner source.name pinned target.type then return none
+    if checkedFinBound official strict owner source.name pinned target.type ||
+        checkedEnvelopePowZero visible strict owner source pinned target.type then return none
     return some ("missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString))
   if (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target.type then
     return none
