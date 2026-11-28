@@ -101,3 +101,8 @@ attribute [instance] Omega.Int.instLEInt Omega.Int.instLTInt Omega.Int.instDecid
 port_proof Int.ofNat_zero
 port_definition Int.ctorIdx with_native_code
 port_proof Int.ofNat.inj
+
+port_definition Int.pow.match_1
+port_definition Int.pow with_native_code
+port_definition Int.instNatPow with_native_code
+attribute [instance] Omega.Int.instNatPow
