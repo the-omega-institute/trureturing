@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.ZeroDivisor;
 internal sealed class MekeraRankIntegrationDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Certificates/mekerasomeryesil2026matrixarcranks");
+        LibraryNoteRef.Create("D5/L/Semigroups/mekerasomeryesil2026matrixarcranks");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Block ranks characterize ordered arcs in full matrix rings over fields.",

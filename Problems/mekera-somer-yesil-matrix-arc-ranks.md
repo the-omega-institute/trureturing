@@ -16,7 +16,7 @@ Mekera, Somer and Yeşil ask in §7, p. 17, how the arcs of
 \(\overrightarrow{\mathrm{AG}}(M_n(F))\) can be characterized in terms
 of matrix ranks.
 [Versioned question](https://arxiv.org/html/2608.09243v2#S7.p2.1) ·
-[Reading note](../Library/Certificates/mekerasomeryesil2026matrixarcranks.md)
+[Reading note](../Library/Semigroups/mekerasomeryesil2026matrixarcranks.md)
 
 ## Motivation
 
