@@ -132,6 +132,17 @@ public theorem BitVec.Signed.instLawfulUpwardEnumerable :
     (fun _ => _root_.BitVec.Signed.rotate_rotate) (fun _ => _root_.BitVec.Signed.succ?_rotate)
     (fun _ _ => _root_.BitVec.Signed.succMany?_rotate)
 
+public theorem BitVec.Signed.instRxcLawfulHasSize :
+    type_of% (private_decl% @_root_.BitVec.Signed.instRxcLawfulHasSize) := by
+  intro n
+  exact @closedSizeImage (BitVec n) (BitVec n)
+    _root_.BitVec.instUpwardEnumerable _root_.BitVec.Signed.instUpwardEnumerable
+    _root_.instLEBitVec _root_.BitVec.Signed.instLE
+    _root_.BitVec.instRxcHasSize _root_.BitVec.Signed.instRxcHasSize _root_.BitVec.instRxcLawfulHasSize
+    _root_.BitVec.Signed.rotate _root_.BitVec.Signed.rotate (fun _ => _root_.BitVec.Signed.rotate_rotate)
+    (fun _ => _root_.BitVec.Signed.rotate_rotate) (fun _ => _root_.BitVec.Signed.succ?_rotate)
+    (fun _ _ => _root_.BitVec.Signed.sle_iff_rotate_le_rotate) (fun _ _ => rfl)
+
 private theorem closedOfFiniteEnumeration {α : Type u} [UpwardEnumerable α] [LE α]
     (finite : Rxi.IsAlwaysFinite α) : Rxc.IsAlwaysFinite α where
   finite lo _ := by
