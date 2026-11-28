@@ -1,11 +1,15 @@
 module
 public import Init.Grind.Lemmas
-public import OmegaInit.Prelude
+public import OmegaInit.GetElem
+public import OmegaInit.SimpLemmas
 
 /-! Namespace aliases to the pinned public interface. -/
 public section
 namespace Omega.Lean.Grind
-export _root_.Lean.Grind (eqNDRec_heq eqRecOn_heq eqRec_heq eval_congr₁ eval_congr₂ heq_congr rfl_true)
+export _root_.Lean.Grind (
+  decide_eq_false decide_eq_true eqNDRec_heq eqRecOn_heq eqRec_heq eq_congr eq_of_beq_eq_true
+  eval_congr₁ eval_congr₂ false_of_not_eq_self getElem_congr heq_congr intro_with_eq intro_with_eq'
+  ne_of_ne_of_eq_left ne_of_ne_of_eq_right rfl_true)
 end Omega.Lean.Grind
 
 namespace Omega.Lean.Grind.Bool

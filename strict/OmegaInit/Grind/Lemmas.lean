@@ -5,7 +5,8 @@ Authors: Leonardo de Moura
 -/
 module
 prelude
-public import OmegaInit.Prelude
+public import OmegaInit.GetElem
+public import OmegaInit.SimpLemmas
 
 port_proof Lean.Grind.eqNDRec_heq
 port_proof Lean.Grind.eqRecOn_heq
@@ -51,3 +52,36 @@ theorem false_of_not_eq_self {a : Bool} (h : Eq (Omega.Bool.not a) a) : False :=
 
 end
 end Omega.Lean.Grind.Bool
+
+port_definition Lean.Grind.intro_with_eq with_native_code
+port_definition Lean.Grind.intro_with_eq' with_native_code
+port_proof Lean.Grind.getElem_congr
+port_proof Lean.Grind.eq_of_beq_eq_true using Omega.LawfulBEq.eq_of_beq
+
+namespace Omega.Lean.Grind
+public section
+
+theorem eq_congr {α : Sort u} {a₁ b₁ a₂ b₂ : α} (h₁ : Eq a₁ a₂) (h₂ : Eq b₁ b₂) :
+    Eq (Eq a₁ b₁) (Eq a₂ b₂) :=
+  (congrArg (fun x => Eq x b₁) h₁).trans (congrArg (Eq a₂) h₂)
+
+theorem ne_of_ne_of_eq_left {α : Sort u} {a b c : α} (h₁ : Eq a b) (h₂ : Ne b c) : Ne a c :=
+  fun eq => h₂ (h₁.symm.trans eq)
+
+theorem ne_of_ne_of_eq_right {α : Sort u} {a b c : α} (h₁ : Eq a c) (h₂ : Ne b c) : Ne b a :=
+  fun eq => h₂ (eq.trans h₁)
+
+theorem false_of_not_eq_self {a : Prop} (h : Eq (Not a) a) : False :=
+  let neg : Not a := fun ha => (Eq.mpr h ha) ha
+  neg (Eq.mp h neg)
+
+theorem decide_eq_true {p : Prop} {d : Decidable p} (h : Eq p True) :
+    Eq (@Decidable.decide p d) Bool.true :=
+  Decidable.falseTrueCases (motive := fun d => Eq (@Decidable.decide p d) Bool.true)
+    (fun neg => False.elim (neg (of_eq_true h))) (fun _ => Omega.rfl) d
+
+theorem decide_eq_false {p : Prop} {d : Decidable p} (h : Eq p False) :
+    Eq (@Decidable.decide p d) Bool.false := @Omega.decide_eq_false p d (of_eq_false h)
+
+end
+end Omega.Lean.Grind
