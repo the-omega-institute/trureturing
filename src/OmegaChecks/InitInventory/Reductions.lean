@@ -50,6 +50,8 @@ meta import OmegaChecks.InitInventory.Quotient
 public import OmegaChecks.InitInventory.TransformerLaws
 import all OmegaChecks.InitInventory.TransformerLaws
 meta import OmegaChecks.InitInventory.TransformerLaws
+import all OmegaChecks.InitInventory.ReturnImage
+meta import OmegaChecks.InitInventory.ReturnImage
 public import OmegaChecks.InitInventory.StrictRingOrder
 import all OmegaChecks.InitInventory.StrictRingOrder
 meta import OmegaChecks.InitInventory.StrictRingOrder
