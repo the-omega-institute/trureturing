@@ -55,6 +55,7 @@ strata_touched:
   - D5/S3/Topology/StableCategory/SevenTrianglePowerCovers
   - D5/S3/Topology/StableCategory/UnrestrictedFactorPowers
   - D5/S3/Topology/StableCategory/ShellingColourCriterion
+  - D5/S3/Topology/StableCategory/CategoricalCoverFactorization
 license: citation-only
 triage: anchor
 ---
@@ -1348,3 +1349,51 @@ inclusions of the two induced colour complexes contract by contiguity
 throughout the shelling in a fixed final ambient complex. The colour
 partition yields the two lower sets at a common subdivision depth.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
+
+## Reduction to weakly contractible finite spaces
+
+Fix a positive integer \(b\). The inequality
+\(\operatorname{cat}_s(X) \le b\operatorname{cat}_w(X)\) for all finite
+nonempty spaces is equivalent to the bound \(\operatorname{cat}_s(X)\le b\)
+for finite weakly contractible spaces. The case \(b=2\) is Question 6.3.
+
+Take a weak categorical open cover with \(a\) members. At one ordinary
+subdivision depth the closed stars are subordinate to those opens, giving
+\(a\) subcomplexes with nullhomotopic inclusions in the subdivided order
+complex. The arbitrary-dimension mesh estimate and this choice of
+subcomplexes are formalized in `LebesgueStarAssignment`.
+
+A nullhomotopic inclusion \(A\hookrightarrow K\) extends continuously over
+the cone on \(A\). Zeeman’s 1964 relative simplicial approximation theorem
+gives a triangulation retaining the given base and a simplicial map to \(K\)
+which extends the inclusion. The cone has contractible realization, so
+its face poset lies in the weak-category-one branch. At any common
+subdivision depth witnessing the \(b\)-bound for these factors, pull back
+their categorical pieces to the original regions and compose their
+contractions with the maps to \(K\). Both maps preserve the given
+inclusion on the base. The order-level assembly is formalized in
+`CategoricalCoverFactorization`, giving \(ab\) categorical lower sets.
+The relative approximation step uses the cited classical theorem.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Relative simplicial approximation](https://doi.org/10.1017/S0305004100037415)
+
+For the universal bound, shellable PL balls of unrestricted dimension
+suffice. Embed a finite complex with contractible realization as a
+subcomplex of the simplex on its vertices. Extend the identity over the
+missing faces in increasing dimension, using relative simplicial
+approximation on each face with its already triangulated boundary fixed.
+This gives a triangulated PL ball which retracts simplicially onto the
+original complex. The retraction survives passage to face posets and
+ordinary subdivision. Every PL ball admits a shellable derived
+subdivision. Equivalently the universal bound may be tested on
+non-evasive complexes. For a complex with contractible realization,
+Adiprasito and Benedetti make its actual product with a cube collapsible,
+and its face poset retracts onto the original face poset. Further ordinary
+subdivisions give a non-evasive complex. These equivalences use the
+classical subdivision and collapse results below. Lean checks the
+open-cover-to-subcomplex step and the order-level assembly described
+above. The universal equivalences use the paper proofs with relative
+approximation and the cited results on subdivision and collapse.
+Question 6.3, the case \(b=2\), remains open.
+[Adiprasito and Benedetti](https://arxiv.org/abs/1202.6606) ·
+[Barmak and Minian](https://arxiv.org/abs/0907.2954)

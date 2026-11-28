@@ -834,3 +834,120 @@ theorem result : claim := by
 end
 
 end D5.S3.Combinatorics.Matroids.QTransversalRepresentability
+
+namespace D5.S3.Combinatorics.Matroids.QTransversalRepresentability
+
+open Module Submodule
+
+variable {F : Type} [Field F] [Fintype F] {m k : ℕ}
+
+omit [Fintype F] in
+private lemma rank_ge_of_partial (X : Fin k → Submodule F (Fin m → F))
+    {T U : Submodule F (Fin m → F)} (hTU : T ≤ U) (hT : IsPartialQTransversal X T) :
+    finrank F T ≤ qTransversalRank X U := by
+  unfold qTransversalRank
+  apply le_csSup
+  · refine ⟨finrank F U, ?_⟩
+    rintro d ⟨S, hSU, _, rfl⟩
+    exact Submodule.finrank_mono hSU
+  · exact ⟨T, hTU, hT, rfl⟩
+
+private lemma rank_ge_of_restricted_representatives
+    (X : Fin k → Submodule F (Fin m → F)) (U : Submodule F (Fin m → F))
+    (l : Fin k → Dual F U) (hl : ∀ i, l i ∈ (X i).dualAnnihilator.map U.dualRestrict) :
+    finrank F (span F (Set.range l)) ≤ qTransversalRank X U := by
+  classical
+  have hLift : ∀ i, ∃ φ ∈ (X i).dualAnnihilator, U.dualRestrict φ = l i :=
+    fun i => hl i
+  choose φ hφ heq using hLift
+  let g : (Fin m → F) →ₗ[F] (Fin k → F) := LinearMap.pi φ
+  have hz : ∀ i v, v ∈ X i → g v i = 0 := by
+    intro i v hv
+    exact ((X i).mem_dualAnnihilator (φ i)).mp (hφ i) v hv
+  have heval (u : U) (i : Fin k) : (g.domRestrict U) u i = l i u := by
+    exact congrArg (fun a : Dual F U => a u) (heq i)
+  have hker : (g.domRestrict U).ker = (span F (Set.range l)).dualCoannihilator := by
+    apply SetLike.coe_injective
+    rw [coe_dualCoannihilator_span]
+    ext u
+    simp only [SetLike.mem_coe, LinearMap.mem_ker, Set.mem_ofPred_eq, Set.forall_mem_range]
+    constructor
+    · intro hu i
+      exact (heval u i).symm.trans (congrFun hu i)
+    · intro hu
+      funext i
+      exact (heval u i).trans (hu i)
+  have hd := (g.domRestrict U).finrank_range_add_finrank_ker
+  rw [hker] at hd
+  have hspan := Subspace.finrank_add_finrank_dualCoannihilator_eq (span F (Set.range l))
+  have himage : imageSpace g U = (g.domRestrict U).range := by
+    rw [imageSpace, LinearMap.range_domRestrict]
+    change span F ((U.map g : Submodule F (Fin k → F)) : Set (Fin k → F)) = _
+    exact Submodule.span_eq _
+  obtain ⟨T, hTU, hT, hr⟩ := imageRank_attained X g hz U
+  rw [himage] at hr
+  have he : finrank F (span F (Set.range l)) = finrank F T := by omega
+  exact he.le.trans (rank_ge_of_partial X hTU hT)
+
+private noncomputable def hallCost (X : Fin k → Submodule F (Fin m → F))
+    (U : Submodule F (Fin m → F)) (J : Finset (Fin k)) : ℕ :=
+  (finrank F U - finrank F ↥(U ⊓ ⨅ i : {i : Fin k // i ∈ J}, X i.1)) +
+    (k - J.card)
+
+/-- The rank is the minimum Hall bound over the subsets of presentation slots. -/
+theorem presentation_rank_eq_hallMinimum (X : Fin k → Submodule F (Fin m → F))
+    (U : Submodule F (Fin m → F)) :
+    qTransversalRank X U = sInf (Set.range fun J : Finset (Fin k) =>
+      (finrank F U - finrank F ↥(U ⊓ ⨅ i : {i : Fin k // i ∈ J}, X i.1)) +
+        (k - J.card)) := by
+  classical
+  change qTransversalRank X U = sInf (Set.range (hallCost X U))
+  let r := sInf (Set.range (hallCost X U))
+  have hrJ (J : Finset (Fin k)) : r ≤ hallCost X U J := Nat.sInf_le ⟨J, rfl⟩
+  have hJr : ∃ J, hallCost X U J = r :=
+    Nat.sInf_mem (s := Set.range (hallCost X U)) ⟨hallCost X U ∅, ∅, rfl⟩
+  apply le_antisymm
+  · obtain ⟨J, hJ⟩ := hJr
+    change qTransversalRank X U ≤ r
+    rw [← hJ]
+    unfold qTransversalRank
+    apply csSup_le
+    · have hbot : IsPartialQTransversal X ⊥ := (hall_criterion X ⊥).mpr (by
+        intro I
+        rw [bot_inf_eq, finrank_bot, zero_add]
+        simpa using Finset.card_le_card (Finset.subset_univ I))
+      exact ⟨0, ⊥, bot_le, hbot, finrank_bot _ _⟩
+    · rintro d ⟨S, hSU, hS, rfl⟩
+      let A := ⨅ i : {i : Fin k // i ∈ J}, X i.1
+      let C := U ⊓ A
+      have hHall : finrank F ↥(S ⊓ A) + J.card ≤ k := (hall_criterion X S).mp hS J
+      have hd := Submodule.finrank_sup_add_finrank_inf_eq C S
+      have hu : finrank F ↥(C ⊔ S) ≤ finrank F U :=
+        Submodule.finrank_mono (sup_le inf_le_left hSU)
+      have hInf : C ⊓ S = S ⊓ A := by
+        rw [inf_comm C S]
+        change S ⊓ (U ⊓ A) = S ⊓ A
+        rw [← inf_assoc, inf_eq_left.mpr hSU]
+      rw [hInf] at hd
+      change finrank F S ≤ (finrank F U - finrank F C) + (k - J.card)
+      omega
+  · have hEmpty : (⨅ i : {i : Fin k // i ∈ (∅ : Finset (Fin k))}, X i.1) = ⊤ :=
+      top_unique (le_iInf fun i => (Finset.notMem_empty i.1 i.2).elim)
+    have hrk : r ≤ k := (hrJ ∅).trans (by
+      unfold hallCost
+      rw [hEmpty, inf_top_eq, Nat.sub_self, Finset.card_empty, Nat.sub_zero, zero_add])
+    let L : Fin k → Submodule F (Dual F U) :=
+      fun i => (X i).dualAnnihilator.map U.dualRestrict
+    have hHall (J : Finset (Fin k)) : r + J.card ≤ k +
+        finrank F (↥(⨆ i : {i : Fin k // i ∈ J}, L i.1)) := by
+      have hcard : J.card ≤ k := by simpa using Finset.card_le_card (Finset.subset_univ J)
+      have hAnn := restricted_annihilator_finrank X U J
+      have h := hrJ J
+      unfold hallCost at h
+      change finrank F (↥(⨆ i : {i : Fin k // i ∈ J}, L i.1)) +
+        finrank F (↥(U ⊓ ⨅ i : {i : Fin k // i ∈ J}, X i.1)) = finrank F U at hAnn
+      omega
+    obtain ⟨l, hl, hd⟩ := LinearRado.deficit_representatives L hrk hHall
+    exact hd.trans (rank_ge_of_restricted_representatives X U l hl)
+
+end D5.S3.Combinatorics.Matroids.QTransversalRepresentability
