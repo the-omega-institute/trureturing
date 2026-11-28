@@ -106,6 +106,12 @@ end Omega.Setoid
 namespace Omega.Sigma
 export _root_.Sigma (casesOn fst mk noConfusion noConfusionType rec recOn snd)
 end Omega.Sigma
+namespace Omega.Std
+export _root_.Std (Commutative)
+end Omega.Std
+namespace Omega.Std.Commutative
+export _root_.Std.Commutative (casesOn comm mk rec recOn)
+end Omega.Std.Commutative
 namespace Omega.Subsingleton
 export _root_.Subsingleton (allEq casesOn elim intro rec recOn)
 end Omega.Subsingleton

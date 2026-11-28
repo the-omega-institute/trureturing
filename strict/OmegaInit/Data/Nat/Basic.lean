@@ -10,6 +10,14 @@ public import OmegaInit.Core
 
 @[expose] public section
 
+port_definition Nat.min with_native_code
+port_definition Nat.instMax with_native_code
+port_definition Nat.max with_native_code
+port_proof Nat.min_def by_reflexivity
+port_proof Nat.max_def by_reflexivity
+
+attribute [instance] Omega.Nat.instMax
+
 
 namespace Omega.Nat
 
