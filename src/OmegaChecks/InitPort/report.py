@@ -297,6 +297,15 @@ def check_strict_range_equivalences(product, stage):
     return {(owner, name): (condition, proof) for owner, name, condition, proof in json.loads(output.read_text())}
 
 
+def check_strict_fin_folds(product, stage):
+    lib = product / "lib"
+    if not (lib / "OmegaInit/Data/Fin/Fold.olean").is_file():
+        return {}
+    output = stage / "strict-fin-folds.json"
+    subprocess.run(["lake", "env", "lean", "--run", HERE / "FinFoldCheck.lean", lib, output], cwd=ROOT, check=True)
+    return {(owner, name): (condition, proof) for owner, name, condition, proof in json.loads(output.read_text())}
+
+
 def report(product, require_complete=False):
     with tempfile.TemporaryDirectory(dir=product) as work:
         stage = Path(work)
@@ -314,8 +323,10 @@ def report(product, require_complete=False):
                 owners[name].append(owner)
         strict_choices = check_strict_reference_choices(product, stage, attempts)
         strict_matches = check_strict_longest_matches(product, stage)
+        strict_folds = check_strict_fin_folds(product, stage)
         strict_ranges = check_strict_range_equivalences(product, stage)
-        pending = {site: (*result, "strictLogicalConsequenceWitness") for site, result in strict_matches.items()}
+        pending = {site: (*result, "strictLogicalConsequenceWitness")
+                   for site, result in (strict_matches | strict_folds).items()}
         pending.update({site: (*result, "strictEquivalenceWitness") for site, result in strict_ranges.items()})
         for row in official["declarations"]:
             site = (row["module"], row["name"])
@@ -325,14 +336,15 @@ def report(product, require_complete=False):
                 row["strictImpliesAxiom"] = "Classical.choice.{1}"
             if consequence := pending.pop(site, None):
                 target, proof, column = consequence
-                if row.get("logicalConsequence") != target or row.get("requiredBehavior") or row["kind"] != "theorem":
+                if (row.get("logicalConsequence") != target or row["kind"] != "theorem" or
+                        (row.get("requiredBehavior") and site not in strict_folds)):
                     raise ValueError(f"official logical consequence differs from strict proof for {site}")
                 row["strictLogicalConsequence"] = target
                 row[column] = proof
         if pending:
             raise ValueError(f"missing official definition sites for strict consequences: {sorted(pending)}")
         reduction_count, unresolved = check_coverage(official)
-        if strict_choices or strict_matches or strict_ranges:
+        if strict_choices or strict_matches or strict_ranges or strict_folds:
             inventory.write_text(json.dumps(official, ensure_ascii=False, separators=(",", ":")) + "\n")
         with (product / "interface-rejections.jsonl").open() as f:
             rejected = dict(map(json.loads, f))

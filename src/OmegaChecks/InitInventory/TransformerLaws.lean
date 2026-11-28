@@ -691,26 +691,34 @@ theorem funextOfRepeatUnit (law : RepeatUnit.{max 1 u v}) : type_of% @funext.{u,
   letI := lawful (@swap T) swap_eq
   exact (congrArg observe (@law (Except (Twin T)) _ _ T (step h))).symm
 
-example (rule : type_of% @Fin.foldlM_succ_last.{u,u}) : MoveUnit.{u} := by
+public theorem funextOfLeftSuccessor (rule : type_of% @Fin.foldlM_succ_last.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextOfMoveUnit
   intro m _ _ T s
   have e := @rule m T 0 _ _ (fun x _ => s x)
   rw [Fin.foldlM_succ, Fin.foldlM_zero] at e
   exact e
 
-example (rule : type_of% @Fin.foldrM_succ.{u,u}) : MoveUnit.{u} := by
+public theorem funextOfRightSuccessor (rule : type_of% @Fin.foldrM_succ.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextOfMoveUnit
   intro m _ _ T s
   have e := @rule m 0 T _ _ (fun _ x => s x)
   rw [Fin.foldrM_succ_last, Fin.foldrM_zero] at e
   exact e
 
-example (rule : type_of% @Fin.foldlM_add.{u,u}) : RepeatUnit.{u} := by
+public theorem funextOfLeftAddition (rule : type_of% @Fin.foldlM_add.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextOfRepeatUnit
   intro m _ _ T s
   have e := @rule m T 1 0 _ _ (fun x _ => s x)
   change Fin.foldlM 1 (fun x _ => s x) = fun x => Fin.foldlM 1 (fun x _ => s x) x >>= Fin.foldlM 0 (fun x _ => s x) at e
   rw [Fin.foldlM_succ, Fin.foldlM_zero] at e
   exact e
 
-example (rule : type_of% @Fin.foldrM_add.{u,u}) : RepeatUnit.{u} := by
+public theorem funextOfRightAddition (rule : type_of% @Fin.foldrM_add.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextOfRepeatUnit
   intro m _ _ T s
   have e := @rule m 0 1 T _ _ (fun _ x => s x)
   change Fin.foldrM 1 (fun _ x => s x) = fun x => Fin.foldrM 1 (fun _ x => s x) x >>= Fin.foldrM 0 (fun _ x => s x) at e
