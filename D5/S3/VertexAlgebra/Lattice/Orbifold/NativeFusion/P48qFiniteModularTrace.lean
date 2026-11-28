@@ -200,15 +200,46 @@ theorem fixed_grade_finrank_le_of_electric_multiplicities
 end ElectricCharacters
 
 open ExtremalC48 (SL47)
-open HalfFockSpectralFiberSource (actualInverse)
+open HalfFockSpectralFiberSource (actualInverse actualInverse_left)
 open LatticeActualConformalState (omega)
 open LatticeGeneratingFieldLocality (Carrier Charge bilinear)
-open LatticePositiveEnergy (grade)
+open LatticePositiveEnergy (grade grade_finiteDimensional)
 open DiagonalCharacterConjugacy (PreservesModes)
 open P48qFiniteActionObstruction (p48q_finite_action_obstruction)
+open P48qGramCertificate (gram_inverse_certificate)
+open P48qGramPositivity (nebeGram_posDef)
 open P48qHolomorphicExtensionObstruction (CubicSectorRealization)
 open P48qOrderThreeSpectrumTransport (conformalZeroMode)
 open P48qTwistedChargeAction (lattice)
+open CategoryTheory
+
+open private grade_preserved from
+  D5.S3.VertexAlgebra.Lattice.Automorphisms.ConformalGroundTransport
+
+/-- The conformal action restricted to the actual weight-two lattice states. -/
+noncomputable def p48qWeightTwoRepresentation
+    {G : Type*} [Group G]
+    (U : G →* (Carrier lattice ≃ₗ[ℂ] Carrier lattice))
+    (hMode : ∀ g, PreservesModes lattice (U g))
+    (hOmega : ∀ g, U g (omega lattice (actualInverse lattice)) =
+      omega lattice (actualInverse lattice)) :
+    Representation ℂ G (grade lattice 2) where
+  toFun g := (U g).toLinearMap.restrict
+    (grade_preserved lattice (actualInverse lattice)
+      (actualInverse_left lattice (Matrix.isUnit_det_of_left_inverse gram_inverse_certificate))
+      (U g) (fun a n v => hMode g a v n) (hOmega g) 2)
+  map_one' := by
+    apply LinearMap.ext
+    intro x
+    apply Subtype.ext
+    change U 1 x.val = x.val
+    exact congrArg (fun e : Carrier lattice ≃ₗ[ℂ] Carrier lattice => e x.val) (map_one U)
+  map_mul' g h := by
+    apply LinearMap.ext
+    intro x
+    apply Subtype.ext
+    change U (g * h) x.val = U g (U h x.val)
+    exact congrArg (fun e : Carrier lattice ≃ₗ[ℂ] Carrier lattice => e x.val) (map_mul U g h)
 
 universe w x
 
@@ -278,9 +309,79 @@ theorem p48q_fixed_quadratics_of_finite_modular_trace
     obtain ⟨y, hy, hyNe⟩ := Submodule.exists_mem_ne_zero_of_ne_bot sector.nonzero
     exact (hyNe (congrArg (fun z : sector.branch => (z : sector.space)) (hVanish ⟨y, hy⟩))).elim
 
+/-- The electric coset stabilizer has at least two fixed states in the actual
+weight-two lattice representation. Its fixed dimension equals the weighted
+electric contribution and bounds the extension's weight-two dimension from below. -/
+theorem p48q_extension_weight_two_of_finite_modular_trace
+    {G A I : Type*} [Group G] [Finite G] [Fintype I]
+    [CommRing A] [Nontrivial A] [Algebra ℂ A] [Module.Finite ℂ A] [Algebra.Etale ℂ A]
+    (ρ : G →* (A ≃ₐ[ℂ] A))
+    (hfixed : ∀ a : A, (∀ g : G, ρ g a = a) → ∃ z : ℂ, a = algebraMap ℂ A z)
+    (b : I → ℕ) (S : Matrix I I ℂ)
+    (hInvariant : coeffs(b) ᵥ* S = coeffs(b))
+    (u v : G → I → ℂ) (c : G → ℂˣ) (twisted : G → Set I)
+    (hCovariance : ∀ g, S *ᵥ u g = (c g : ℂ) • v g)
+    (hTrace : ∀ g, coeffs(b) ⬝ᵥ u g = LinearMap.trace ℂ A (ρ g).toLinearMap)
+    (hSupport : ∀ g i, i ∉ twisted g → v g i = 0)
+    (realization : Additive SL47 →+ AddAut (Charge lattice))
+    (hFaithful : Function.Injective realization)
+    (hIsometry : ∀ s : Additive SL47, ∀ a b,
+      bilinear lattice (realization s a) (realization s b) = bilinear lattice a b)
+    (hExhaustive : ∀ s : AddAut (Charge lattice),
+      (∀ a b, bilinear lattice (s a) (s b) = bilinear lattice a b) → ∃ k, realization k = s)
+    (U : G →* (Carrier lattice ≃ₗ[ℂ] Carrier lattice))
+    (hU : Function.Injective U) (hMode : ∀ g, PreservesModes lattice (U g))
+    (hOmega : ∀ g, U g (omega lattice (actualInverse lattice)) =
+      omega lattice (actualInverse lattice))
+    {W : Type x} [AddCommGroup W] [Module ℂ W] (L_W : Module.End ℂ W)
+    (hGraded : (⨆ n : ℤ, L_W.eigenspace (n : ℂ)) = ⊤)
+    (hRealizeCubic : ∀ g, orderOf g = 3 → ∀ i ∈ twisted g, 0 < b i →
+      Nonempty (CubicSectorRealization.{w, x} (U g) L_W))
+    [FiniteDimensional ℂ (L_W.eigenspace (2 : ℂ))]
+    (R : I → FDRep ℂ G) [∀ i, Simple (R i)]
+    (hDistinct : Pairwise fun i j => ¬ Nonempty (R i ≅ R j))
+    (hElectricCharacter : ∀ g : G,
+      LinearMap.trace ℂ A (ρ g).toLinearMap = ∑ i, (b i : ℂ) * (R i).character g)
+    (d : I → ℕ)
+    (hWeightedGrade : ∀ g : G,
+      LinearMap.trace ℂ _ (p48qWeightTwoRepresentation U hMode hOmega g) =
+        ∑ i, (d i : ℂ) * (R i).character g)
+    (extra : ℕ)
+    (hExtensionWeightTwo : Module.finrank ℂ (L_W.eigenspace (2 : ℂ)) =
+      (∑ i, b i * d i) + extra) :
+    ∃ K : Subgroup G,
+      (∀ g : G,
+        LinearMap.trace ℂ A (ρ g).toLinearMap = ({q : G ⧸ K | g • q = q}.ncard : ℂ)) ∧
+      let fixed := Representation.invariants
+        ((p48qWeightTwoRepresentation U hMode hOmega).comp K.subtype)
+      2 ≤ Module.finrank ℂ fixed ∧ Module.finrank ℂ fixed = (∑ i, b i * d i) ∧
+        Module.finrank ℂ fixed ≤ Module.finrank ℂ (L_W.eigenspace (2 : ℂ)) ∧
+        2 ≤ Module.finrank ℂ (L_W.eigenspace (2 : ℂ)) := by
+  obtain ⟨K, hCoset, q, hGrade, hFixed, hIndependent⟩ :=
+    p48q_fixed_quadratics_of_finite_modular_trace.{w, x}
+      ρ hfixed b S hInvariant u v c twisted hCovariance hTrace hSupport
+      realization hFaithful hIsometry hExhaustive U hU hMode hOmega L_W hGraded hRealizeCubic
+  let : FiniteDimensional ℂ (grade lattice 2) := grade_finiteDimensional lattice nebeGram_posDef 2
+  let V₂ := p48qWeightTwoRepresentation U hMode hOmega
+  let fixed := Representation.invariants (V₂.comp K.subtype)
+  let qFixed (i : Fin 2) : fixed := ⟨⟨q i, hGrade i⟩, fun k => Subtype.ext (hFixed k i)⟩
+  have hFixedIndependent : LinearIndependent ℂ qFixed :=
+    LinearIndependent.of_comp ((grade lattice 2).subtype.comp fixed.subtype) hIndependent
+  have hTwo : 2 ≤ Module.finrank ℂ fixed := by
+    simpa only [Fintype.card_fin] using hFixedIndependent.fintype_card_le_finrank
+  have hMultiplicity (i : I) :
+      b i = Module.finrank ℂ (Representation.invariants ((R i).ρ.comp K.subtype)) :=
+    electric_multiplicity_eq_finrank_invariants K ρ R hDistinct b hCoset hElectricCharacter i
+  have hComparison : Module.finrank ℂ fixed = (∑ i, b i * d i) ∧
+      Module.finrank ℂ fixed ≤ Module.finrank ℂ (L_W.eigenspace (2 : ℂ)) :=
+    fixed_grade_finrank_le_of_electric_multiplicities K R (FDRep.of V₂) b d hMultiplicity
+      hWeightedGrade extra hExtensionWeightTwo
+  exact ⟨K, hCoset, hTwo, hComparison.1, hComparison.2, hTwo.trans hComparison.2⟩
+
 #print axioms exists_coset_trace_and_positive_twisted_multiplicity
 #print axioms electric_multiplicity_eq_finrank_invariants
 #print axioms fixed_grade_finrank_le_of_electric_multiplicities
 #print axioms p48q_fixed_quadratics_of_finite_modular_trace
+#print axioms p48q_extension_weight_two_of_finite_modular_trace
 
 end D5.S3.VertexAlgebra.Lattice.Orbifold.NativeFusion
