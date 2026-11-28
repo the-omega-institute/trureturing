@@ -49,6 +49,31 @@ public theorem SubarrayIterator.val_step_eq :
   · rw [dite_eq_right h, dite_eq_right h]
     rfl
 
+set_option backward.proofsInPublic true in
+public theorem SubarrayIterator.step_eq {α : Type u} {it : Iter (α := _root_.SubarrayIterator α) α} :
+    it.step = if h : it.internalState.xs.start < it.internalState.xs.stop then
+        ⟨.yield ⟨⟨it.internalState.xs.array, it.internalState.xs.start + 1, it.internalState.xs.stop,
+                h, it.internalState.xs.stop_le_array_size⟩⟩
+            (it.internalState.xs.array[it.internalState.xs.start]'(Nat.lt_of_lt_of_le h it.internalState.xs.stop_le_array_size)),
+          by
+            change .yield _ _ = _root_.SubarrayIterator.step _
+            rcases it with ⟨⟨s⟩⟩
+            dsimp only [_root_.SubarrayIterator.step, Iter.toIterM]
+            rw [dite_eq_left h]⟩
+      else
+        ⟨.done, by
+          change .done = _root_.SubarrayIterator.step _
+          rcases it with ⟨⟨s⟩⟩
+          dsimp only [_root_.SubarrayIterator.step, Iter.toIterM]
+          rw [dite_eq_right h]⟩ := by
+  by_cases h : it.internalState.xs.start < it.internalState.xs.stop
+  · rw [dite_eq_left h]
+    apply Subtype.ext
+    exact ((private_decl% _root_.SubarrayIterator.val_step_eq) : it.step.val = _).trans (dite_eq_left h)
+  · rw [dite_eq_right h]
+    apply Subtype.ext
+    exact ((private_decl% _root_.SubarrayIterator.val_step_eq) : it.step.val = _).trans (dite_eq_right h)
+
 public theorem SubarrayIterator.toList_eq :
     type_of% (private_decl% @_root_.SubarrayIterator.toList_eq) := by
   intro α it
