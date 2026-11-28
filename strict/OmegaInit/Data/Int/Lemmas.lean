@@ -7,7 +7,6 @@ prelude
 import all OmegaInit.Prelude
 public import OmegaInit.Data.Int.Basic
 import all OmegaInit.Data.Int.Basic
-import OmegaInit.Data.Nat.Lemmas
 
 @[expose] public section
 
@@ -71,6 +70,10 @@ theorem subNatNat_add_right {m n : Nat} : Eq (subNatNat m (m.add n.succ)) (negSu
   (congrArg (subNatNat m) (Nat.add_comm m n.succ)).trans
     (Eq.subst (motive := fun k => Eq (subNatNat k (n.succ.add m)) (negSucc n)) (Nat.zero_add m)
       (subNatNat_add_add Nat.zero n.succ m))
+
+theorem ofNat_add_negSucc_of_lt {m n : Nat} (h : Nat.lt m n.succ) :
+    Eq ((ofNat m).add (negSucc n)) (negSucc (Nat.sub n m)) :=
+  congrArg (ofDifferences (Nat.sub m n.succ)) (Nat.succ_sub (Nat.le_of_succ_le_succ h))
 
 protected theorem neg_neg (a : Int) : Eq a.neg.neg a :=
   Int.rec (motive := fun a => Eq a.neg.neg a)
@@ -351,20 +354,23 @@ private theorem negOfNat_eq_zero {n : Nat} (h : Eq (negOfNat n) (ofNat Nat.zero)
 
 protected theorem mul_eq_zero {a b : Int} :
     Iff (Eq (a.mul b) (ofNat Nat.zero)) (Or (Eq a (ofNat Nat.zero)) (Eq b (ofNat Nat.zero))) :=
+  let zeroFactors {n m : Nat} : Eq (Nat.mul n m) Nat.zero → Or (Eq n Nat.zero) (Eq m Nat.zero) :=
+    Nat.casesOn (motive := fun m => Eq (Nat.mul n m) Nat.zero → Or (Eq n Nat.zero) (Eq m Nat.zero))
+      m (fun _ => Or.inr rfl) (fun _ h => Or.inl (Nat.eq_zero_of_add_eq_zero h).right)
   let zero := ofNat Nat.zero
   let P := fun (a b : Int) => Eq (a.mul b) zero → Or (Eq a zero) (Eq b zero)
   Iff.intro
     (Int.rec (motive := fun a => P a b)
       (fun m => Int.rec (motive := fun b => P (ofNat m) b)
-        (fun _ h => (Nat.mul_eq_zero.mp (ofNat_inj.mp h)).elim
+        (fun _ h => (zeroFactors (ofNat_inj.mp h)).elim
           (fun hm => Or.inl (congrArg ofNat hm)) (fun hn => Or.inr (congrArg ofNat hn)))
-        (fun n h => (Nat.mul_eq_zero.mp (negOfNat_eq_zero h)).elim
+        (fun n h => (zeroFactors (negOfNat_eq_zero h)).elim
           (fun hm => Or.inl (congrArg ofNat hm)) (fun hn => False.elim (Nat.succ_ne_zero n hn))) b)
       (fun m => Int.rec (motive := fun b => P (negSucc m) b)
-        (fun _ h => (Nat.mul_eq_zero.mp (negOfNat_eq_zero h)).elim
+        (fun _ h => (zeroFactors (negOfNat_eq_zero h)).elim
           (fun hm => False.elim (Nat.succ_ne_zero m hm)) (fun hn => Or.inr (congrArg ofNat hn)))
         (fun n h => False.elim
-          ((Nat.mul_eq_zero.mp (ofNat_inj.mp h)).elim (Nat.succ_ne_zero m) (Nat.succ_ne_zero n))) b) a)
+          ((zeroFactors (ofNat_inj.mp h)).elim (Nat.succ_ne_zero m) (Nat.succ_ne_zero n))) b) a)
     (fun h => h.elim
       (fun ha => Eq.subst (motive := fun a => Eq (Int.mul a b) zero) ha.symm (Int.zero_mul b))
       (fun hb => Eq.subst (motive := fun b => Eq (a.mul b) zero) hb.symm (Int.mul_zero a)))
