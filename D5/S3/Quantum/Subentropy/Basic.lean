@@ -12,6 +12,7 @@ public import D5.S3.Quantum.Foundation.FiniteStateChannel
 public import D5.S3.Quantum.Information.PartialTraceMutualInformation
 public import Mathlib.LinearAlgebra.Matrix.SchurComplement
 public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.MeasureTheory.Measure.Haar.OfBasis
 public import Mathlib.Tactic.FieldSimp
 public import Mathlib.Tactic.Ring
 

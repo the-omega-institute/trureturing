@@ -39,7 +39,8 @@ variable {X B : Type*} [Fintype X] [DecidableEq X] [Fintype B] [DecidableEq B]
 def blockPinch (A : Matrix (X × B) (X × B) ℂ) : Matrix (X × B) (X × B) ℂ :=
   fun i j => if i.1 = j.1 then A i j else 0
 
-private def weightedRoot (p : X → ℝ) (ρ : X → DensityState B) (x : X) :
+/-- The weighted square root of one ensemble component. -/
+def weightedRoot (p : X → ℝ) (ρ : X → DensityState B) (x : X) :
     Matrix B B ℂ :=
   CFC.sqrt (p x • CStarMatrix.ofMatrix.symm (ρ x).1)
 

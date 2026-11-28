@@ -19,8 +19,9 @@ module
 
 public import Mathlib.Algebra.MvPolynomial.Degrees
 public import Mathlib.Algebra.BigOperators.Fin
-public import Mathlib.Data.Real.Basic
+public import Mathlib.Basic.Real.Basic
 public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
 
 /-! Nikolov–Savov Conjecture 3.7: Q_4 is not a maximal renewal minorant. -/
 
