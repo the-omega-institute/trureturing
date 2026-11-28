@@ -23,6 +23,54 @@ public theorem List.minIdxOn_eq_go_drop._proof_1_14.{u, v} :
   intro _ _ _ _ _ _ _ _ _ _ _ hk denied
   exact denied (Nat.succ_lt_succ hk)
 
+private theorem minimumAfterPrefix.{u, v} {β : Type u} {α : Type v}
+    [LE β] [DecidableLE β] [Std.IsLinearPreorder β] {f : α → β} {xs : List α}
+    (nonempty : xs ≠ []) {k : Nat} :
+    let front := xs.take (k + 1)
+    let frontNE : front ≠ [] := fun h =>
+      (_root_.List.take_eq_nil_iff.mp h).elim (Nat.succ_ne_zero k) nonempty
+    ∃ (i : Nat) (hlt : i < xs.length), i ≤ k ∧ xs[i] = front.minOn f frontNE ∧
+      xs.minIdxOn f nonempty = _root_.List.minIdxOn.go f (front.minOn f frontNE) i (k + 1) (xs.drop (k + 1)) := by
+  let front := xs.take (k + 1)
+  let tail := xs.drop (k + 1)
+  have frontNE : front ≠ [] := by cases xs with
+    | nil => exact (nonempty rfl).elim
+    | cons x xs => exact _root_.List.cons_ne_nil _ _
+  let i := front.minIdxOn f frontNE
+  have hi : i < front.length := _root_.List.minIdxOn_lt_length frontNE
+  have hiFull : i < xs.length :=
+    Nat.lt_of_lt_of_le hi (by
+      change (xs.take (k + 1)).length ≤ xs.length
+      rw [_root_.List.length_take]
+      exact Nat.min_le_right _ _)
+  refine ⟨i, hiFull, Nat.le_of_lt_succ (Nat.lt_of_lt_of_le hi (_root_.List.length_take_le _ _)), ?_, ?_⟩
+  · exact (_root_.List.getElem_take (xs := xs) (j := k + 1) (h := hi)).symm.trans
+      (_root_.List.getElem_minIdxOn frontNE)
+  · change xs.minIdxOn f nonempty = _root_.List.minIdxOn.go f (front.minOn f frontNE) i (k + 1) tail
+    have appendEq : front ++ tail = xs := _root_.List.take_append_drop _ _
+    have replace {other : List α} (e : other = xs) (hne : other ≠ []) :
+        xs.minIdxOn f nonempty = other.minIdxOn f hne := by cases e; rfl
+    cases ht : tail with
+    | nil =>
+      have same : front = xs := by
+        rw [ht, _root_.List.append_nil] at appendEq
+        exact appendEq
+      exact replace same frontNE
+    | cons y ys =>
+      have tailNE : tail ≠ [] := fun e => _root_.List.cons_ne_nil y ys (ht.symm.trans e)
+      have appendedNE : front ++ tail ≠ [] := fun e => nonempty (appendEq.symm.trans e)
+      have fullIndex : k + 1 ≤ xs.length := by
+        apply Nat.le_of_not_lt
+        intro shorter
+        exact tailNE (_root_.List.drop_of_length_le (Nat.le_of_lt shorter))
+      have lengthEq : front.length = k + 1 := _root_.List.length_take_of_le fullIndex
+      rw [← ht, _root_.List.minIdxOn.go_eq, dite_eq_right tailNE, replace appendEq appendedNE,
+        _root_.List.minIdxOn_append frontNE tailNE, lengthEq]
+      exact congrArg (fun j => if f (front.minOn f frontNE) ≤ f (tail.minOn f tailNE) then i else j)
+        (Nat.add_comm _ _)
+
+public theorem List.minIdxOn_eq_go_drop : type_of% (private_decl% @minimumAfterPrefix) := @minimumAfterPrefix
+
 public theorem List.minIdxOn_append_aux.{u, v} :
     type_of% (private_decl% @_root_.List.minIdxOn_append_aux.{u, v}) := by
   intro β α _ _ _ xs ys f hxs hys
