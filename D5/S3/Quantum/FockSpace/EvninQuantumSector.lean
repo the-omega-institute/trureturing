@@ -232,7 +232,7 @@ private def raise {L N M : ℕ} (hN : 2 ≤ N) (i j : Mode L)
       omega⟩
 
 /-- Matrix of the ordered pair annihilator on the normalized occupation basis. -/
-def pairAnnihilator {L N M : ℕ} (hN : 2 ≤ N) (i j : Mode L)
+private def pairAnnihilator {L N M : ℕ} (hN : 2 ≤ N) (i j : Mode L)
     (hM : i.val + j.val ≤ M) :
     Matrix (Sector L (N - 2) (M - (i.val + j.val))) (Sector L N M) ℂ :=
   fun ζ η => if raise hN i j hM ζ = η then (Real.sqrt (pairCount η.val i j) : ℂ) else 0
@@ -329,7 +329,7 @@ private theorem coordinate_bump {L : ℕ} (A : ℕ → ℝ) (η : Mode L → ℕ
   field_simp [hs.ne', hf.ne']
 
 /-- The coefficient in the source, with the entire pair product under the square root. -/
-def pairWeight (A : ℕ → ℝ) (i j : ℕ) : ℝ := Real.sqrt (A i * A j)
+private def pairWeight (A : ℕ → ℝ) (i j : ℕ) : ℝ := Real.sqrt (A i * A j)
 
 private theorem pair_lowers_vector {L N M : ℕ} (hN : 2 ≤ N) (i j : Mode L)
     (hM : i.val + j.val ≤ M) (A : ℕ → ℝ) (hA : ∀ n, 0 < A n) :
@@ -447,7 +447,7 @@ private def pairBlock {N M : ℕ} (hN : 2 ≤ N) (A : ℕ → ℝ) (j : Mode M) 
   ∑ k, blockWeight A j k • blockPair hN j k
 
 /-- The ordered four-operator sum with mode weights `A` and block coefficients `c`. -/
-def weightedHamiltonian (A c : ℕ → ℝ) (N M : ℕ) : Matrix (Sector M N M) (Sector M N M) ℂ :=
+private def weightedHamiltonian (A c : ℕ → ℝ) (N M : ℕ) : Matrix (Sector M N M) (Sector M N M) ℂ :=
   if hN : 2 ≤ N then
     ∑ j : Mode M, (c j.val / 2) • ∑ k, ∑ l,
       (blockWeight A j k * blockWeight A j l) • ((blockPair hN j k)ᴴ * blockPair hN j l)
@@ -626,7 +626,7 @@ def raney (σ r : ℝ) (j : ℕ) : ℝ :=
     (Real.Gamma ((σ - 1) * j + r + 1) * Real.Gamma ((j : ℝ) + 1))
 
 /-- The prefactor of the squared block in Evnin's Eq. (32). -/
-def blockCoefficient (σ : ℝ) (j : ℕ) : ℝ :=
+private def blockCoefficient (σ : ℝ) (j : ℕ) : ℝ :=
   (1 + j * (σ - 1) / 2) / raney σ 1 j
 
 private theorem raney_pos (σ r : ℝ) (hσ : 1 ≤ σ) (hr : 0 < r) (j : ℕ) :
