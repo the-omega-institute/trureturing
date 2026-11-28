@@ -1364,8 +1364,8 @@ complex. The arbitrary-dimension mesh estimate and this choice of
 subcomplexes are formalized in `LebesgueStarAssignment`.
 
 A nullhomotopic inclusion \(A\hookrightarrow K\) extends continuously over
-the cone on \(A\). Relative simplicial approximation gives a triangulation
-of that cone retaining the given base and gives a simplicial map to \(K\)
+the cone on \(A\). Zeeman’s 1964 relative simplicial approximation theorem
+gives a triangulation retaining the given base and a simplicial map to \(K\)
 which extends the inclusion. The cone has contractible realization, so
 its face poset lies in the weak-category-one branch. At any common
 subdivision depth witnessing the \(b\)-bound for these factors, pull back
@@ -1390,7 +1390,10 @@ non-evasive complexes. For a complex with contractible realization,
 Adiprasito and Benedetti make its actual product with a cube collapsible,
 and its face poset retracts onto the original face poset. Further ordinary
 subdivisions give a non-evasive complex. These equivalences use the
-classical subdivision and collapse results below. The value \(b=2\)
-remains open.
+classical subdivision and collapse results below. Lean checks the
+open-cover-to-subcomplex step and the order-level assembly described
+above. The universal equivalences use the paper proofs with relative
+approximation and the cited results on subdivision and collapse.
+Question 6.3, the case \(b=2\), remains open.
 [Adiprasito and Benedetti](https://arxiv.org/abs/1202.6606) ·
 [Barmak and Minian](https://arxiv.org/abs/0907.2954)
