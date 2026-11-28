@@ -34,7 +34,7 @@ is outside the scope of this construction. [Construction in #35254](https://gith
 
 ## The domain clause of Question 34
 
-[Question 34](https://arxiv.org/html/2611.31109v1#Thmtheorem34) asks, “For a domain
+[Question 34](https://arxiv.org/html/2611.31109v1#Thmtheorem34) on page 24 asks, “For a domain
 \(R\), is \(R\) being commutative equivalent to \(\mathcal M(R)\) being
 commutative?” Section 2.2 permits semirings without a multiplicative identity.
 [Remark 14](https://arxiv.org/html/2611.31109v1#Thmtheorem14) uses domain for a

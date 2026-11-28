@@ -21,7 +21,8 @@ internal sealed class MesyanDomainCommutativityDocument : IScribeDocumentDefinit
                 StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(
-                    Paragraph(Text("Mesyan asks, “For a domain R, is R being commutative equivalent to "
+                    Paragraph(Text("On page 24 of the first arXiv revision, Mesyan asks, "
+                        + "“For a domain R, is R being commutative equivalent to "
                         + "ℳ(R) being commutative?” Remark 14 uses domain for a nonzero semiring in which "
                         + "a product of two nonzero elements is nonzero. The semiring convention allows "
                         + "multiplication without an identity.")),
@@ -52,6 +53,8 @@ internal sealed class MesyanDomainCommutativityDocument : IScribeDocumentDefinit
                         + "is the double of a generator of B times A. Closure under addition gives "
                         + "one containment, and exchanging A and B gives the other."))),
                 DescribeRole.Theorem))));
+
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
 
     private static Formula Binder(Formula names, Formula type) =>
         Parenthesized(Seq(names, Sp, Colon, Sp, type));

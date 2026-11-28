@@ -9,7 +9,6 @@
 module
 
 public import Mathlib.Algebra.Ring.Submonoid.Pointwise
-import Mathlib.Algebra.Group.Prod
 import Mathlib.Algebra.Ring.WithZero
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.Ring
