@@ -28,9 +28,6 @@ private abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-private def actual : Realization signature.{u} :=
-  realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
-
 private def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
@@ -53,7 +50,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   exact ((h 0 0 0 0 (gi 0 0) (gi 0 0)).mp ⟨hm, gi _ _⟩).1
 
 noncomputable def family : Registration arena.{u} (type_of% @result.{u}) where
-  actual := actual
+  actual := realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@result.{u}, rejected, rejected_law⟩
   sensitivity := by
@@ -84,7 +81,7 @@ noncomputable def registration :
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -95,7 +92,7 @@ noncomputable def registration :
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "fn", "arg", "fn"]
+        "arg", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

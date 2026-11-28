@@ -69,16 +69,19 @@ internal sealed class RakicTheorem213RingExtensionDocument : IScribeDocumentDefi
                     ProblemSlugRef.Create("rakic-2026-theorem-2-13-ring-extension"),
                     ResolutionKind.Proved)))));
 
-    private static Formula ResultFormula() =>
-        Quantify(Seq(A, Comma, Alpha, Comma, B, Comma, Beta),
+    private static Formula ResultFormula()
+    {
+        var inverseCondition = Conjoin(Apply("MinusOrder", A, B),
+            Apply("GroupInv", Subtract(B, A), Subtract(Beta, Alpha)));
+        var cubicCondition = Conjoin(
+            Equal(Power(A, 3), Seq(A, B, A)),
+            Equal(Power(A, 3), Seq(A, Power(B, 2))),
+            Equal(Power(A, 3), Seq(Power(B, 2), A)),
+            Equal(Power(Paren(Subtract(B, A)), 3), Subtract(Power(B, 3), Power(A, 3))));
+        return Quantify(Seq(A, Comma, Alpha, Comma, B, Comma, Beta),
             Seq(Apply("GroupInv", A, Alpha), Sp, To, Sp, Apply("GroupInv", B, Beta), Sp, To, Sp,
-                Paren(Equivalent(
-                    Paren(Conjoin(Apply("MinusOrder", A, B),
-                        Apply("GroupInv", Subtract(B, A), Subtract(Beta, Alpha)))),
-                    Paren(Conjoin(Equal(Power(A, 3), Seq(A, B, A)),
-                        Equal(Power(A, 3), Seq(A, Power(B, 2))),
-                        Equal(Power(A, 3), Seq(Power(B, 2), A)),
-                        Equal(Power(Paren(Subtract(B, A)), 3), Subtract(Power(B, 3), Power(A, 3))))))));
+                Paren(Equivalent(Paren(inverseCondition), Paren(cubicCondition)))));
+    }
 
     private static Formula Quantify(Formula variables, Formula body) =>
         Seq(Forall, Sp, Binder(R, Name("Type")), Sp, OpenBracket, Apply("Ring", R), CloseBracket, Sp,
