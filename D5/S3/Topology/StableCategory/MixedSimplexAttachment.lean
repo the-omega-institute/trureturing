@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/StableCategory/MixedSimplexAttachment
+   generality: I
+   mirror-B: D5/B/S3/Topology/StableCategory/MixedSimplexAttachment
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: A mixed simplex attachment admits categorical transport with exact old intersections. -/
+
 import D5.S3.Topology.StableCategory.MixedSimplexChart
 import D5.S3.Topology.StableCategory.ExactCategoricalExtension
 

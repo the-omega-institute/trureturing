@@ -9,15 +9,6 @@ internal sealed class MixedSimplexAttachmentDocument : IScribeDocumentDefinition
         H("Exact categorical transport across a mixed simplex attachment"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("mixed-block-cover"),
-                DeclarationHandle.Create("D5/S3/Topology/StableCategory/MixedSimplexChart.mixed_block_cover"),
-                H("Two regions from disjoint vertex blocks"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/Topology/mosqueraloistanaka2026stablecategory")),
-                Blocks(Paragraph(Text("A forbidden image requires a nonempty face in its own vertex block. Disjoint blocks give incomparable faces, which cannot both occur in the same chain. Their two pullbacks therefore cover the second ordinary barycentric subdivision."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("mixed-exact-transport"),
                 DeclarationHandle.Create("D5/S3/Topology/StableCategory/MixedSimplexAttachment.mixed_exact_transport"),
                 H("Transport with exact old intersections"),
