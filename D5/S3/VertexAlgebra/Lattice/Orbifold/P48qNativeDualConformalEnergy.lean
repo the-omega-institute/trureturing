@@ -31,6 +31,8 @@ open scoped BigOperators Classical DirectSum
 open HalfFockSpectralFiberSource (actualInverse actualInverse_left actualInverse_right)
 open LatticeActualConformalState (omega)
 open LatticeActualConformalWard (omega_product)
+open LatticePositiveEnergy (actualL0_eigen_iff_grade gradeProjection gradeProjection_mem
+  stateEnergies_nonneg sum_gradeProjections)
 open LatticeSugawaraCurrents (sugawaraMode)
 open P48qAllJetWickField (NativeStates nativeField)
 open P48qCubicMonodromy
@@ -142,7 +144,7 @@ theorem gradedPairing_dual_conformal_monodromy (f : RestrictedDual) (v : State) 
     LinearMap.congr_fun hState (stateDecompose v)
 
 /-! The unnormalized coefficient covariance, first for a homogeneous source. -/
-theorem dual_conformal_monodromy_coeff_of_weight (a : NativeStates) (d : ℕ)
+private theorem dual_conformal_monodromy_coeff_of_weight (a : NativeStates) (d : ℕ)
     (ha : L₀ a = (d : ℂ) • a) (k : ℤ) :
     dualConformalMonodromy * C (dualField a) k =
       (ThirdTwistedChargeCocycle.zeta : ℂ) ^ k •
@@ -208,6 +210,34 @@ theorem dual_conformal_monodromy_coeff_of_weight (a : NativeStates) (d : ℕ)
   simp only [LinearMap.smul_apply, Module.End.mul_apply, map_smul, smul_eq_mul]
   rw [gradedPairing_dual_conformal_monodromy]
 
+/-- Coefficient covariance of the dual field for an arbitrary actual source. -/
+theorem dual_conformal_monodromy_coeff (a : NativeStates) (k : ℤ) :
+    dualConformalMonodromy * C (dualField a) k =
+      (ThirdTwistedChargeCocycle.zeta : ℂ) ^ k •
+        (C (dualField a) k * dualConformalMonodromy) := by
+  let read : NativeStates →ₗ[ℂ] Module.End ℂ RestrictedDual :=
+    ((LinearMap.proj k).comp HVertexOperator.coeff).comp dualField
+  have hsum := congrArg read (sum_gradeProjections lattice a)
+  rw [map_sum] at hsum
+  change dualConformalMonodromy * read a =
+    (ThirdTwistedChargeCocycle.zeta : ℂ) ^ k • (read a * dualConformalMonodromy)
+  rw [← hsum, Finset.mul_sum, Finset.sum_mul, Finset.smul_sum]
+  apply Finset.sum_congr rfl
+  intro d hd
+  let x := gradeProjection lattice d a
+  have hx : L₀ x = (d : ℂ) • x :=
+    (actualL0_eigen_iff_grade lattice (actualInverse lattice)
+      (actualInverse_left lattice gram_det_unit) (actualInverse_right lattice gram_det_unit)
+      d x).mpr (gradeProjection_mem lattice d a)
+  have hdNat : (d.toNat : ℤ) = d :=
+    Int.toNat_of_nonneg (stateEnergies_nonneg P48qGramPositivity.nebeGram_posDef a d hd)
+  have hxNat : L₀ x = (d.toNat : ℂ) • x := by
+    have hcast := congrArg (fun n : ℤ => (n : ℂ)) hdNat
+    rw [Int.cast_natCast] at hcast
+    rw [hcast]
+    exact hx
+  exact dual_conformal_monodromy_coeff_of_weight x d.toNat hxNat k
+
 /-- The cube of the positive dual rotation is the same third-root scalar
 as on the native state space. -/
 theorem dualConformalMonodromy_cube :
@@ -227,7 +257,8 @@ theorem dualConformalMonodromy_cube :
 
 run_cmd do
   for name in [``gradedPairing_dual_conformal_monodromy,
-      ``dual_conformal_monodromy_coeff_of_weight, ``dualConformalMonodromy_cube] do
+      ``dual_conformal_monodromy_coeff_of_weight, ``dual_conformal_monodromy_coeff,
+      ``dualConformalMonodromy_cube] do
     let axioms ← Lean.collectAxioms name
     unless axioms.all (fun ax => [``propext, ``Classical.choice, ``Quot.sound].contains ax) do
       throwError "Unexpected axiom closure for {name}: {axioms}"
