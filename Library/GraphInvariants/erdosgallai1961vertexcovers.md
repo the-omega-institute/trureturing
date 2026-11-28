@@ -4,7 +4,7 @@ authors: Paul Erdős, Tibor Gallai
 year: 1961
 title: On the minimal number of vertices representing the edges of a graph
 doi: null
-url: https://www.renyi.hu/~p_erdos/1961-09.pdf
+url: https://arxiv.org/abs/2611.34386v1
 claim: A vertex-cover-critical graph with no isolated vertices has at most twice its vertex-cover number many vertices.
 strata_touched:
   - D5/S3/Combinatorics/Graph/DeletionResilientCliques/CriticalVertexCover
@@ -23,7 +23,7 @@ of exact cover number is Lemma 3.1 of the CPECC paper.
 
 ## Verified locator
 
-https://www.renyi.hu/~p_erdos/1961-09.pdf
+https://arxiv.org/abs/2611.34386v1
 
 The statement used here is identified as the Erdős–Gallai theorem in
-arXiv:2611.34386v1, Theorem 2.5 and the proof of Lemma 3.1.
+arXiv:2611.34386v1, Theorem 2.4 and the proof of Lemma 3.1.

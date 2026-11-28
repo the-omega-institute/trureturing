@@ -48,7 +48,7 @@ private theorem design_block_count {V : Type*} [Fintype V] [DecidableEq V]
     G.blocks.card = Fintype.card V * (Fintype.card V - g) / (k * (k - 1)) := by
   classical
   let H := packedGraph G.blocks id
-  letI : DecidableRel H.Adj := Classical.decRel _
+  let : DecidableRel H.Adj := Classical.decRel _
   have hdegree (v : V) : H.degree v = Fintype.card V - g := by
     rw [← H.ncard_neighborSet]
     have hneighbors : H.neighborSet v = ({u | G.groups.r v u} : Set V)ᶜ := by
@@ -66,11 +66,14 @@ private theorem design_block_count {V : Type*} [Fintype V] [DecidableEq V]
     rw [hneighbors, Set.ncard_compl, G.group_card, Nat.card_eq_fintype_card]
   have hsum : (∑ v : V, H.degree v) = Fintype.card V * (Fintype.card V - g) := by
     simp [hdegree]
+  have hincidence : (∑ v : V, (G.blocks.filter (fun B => v ∈ B)).card) =
+      k * G.blocks.card := by
+    simpa only [id_eq] using incidence_sum G.blocks id k G.block_card
   rw [show (∑ v : V, H.degree v) =
       ∑ v : V, (k - 1) * (G.blocks.filter (fun B => v ∈ B)).card by
         exact Finset.sum_congr rfl fun v _ =>
           packedGraph_degree G.blocks id k G.block_card (design_blocks_inter_le_one G) v,
-    ← Finset.mul_sum, incidence_sum G.blocks id k G.block_card] at hsum
+    ← Finset.mul_sum, hincidence] at hsum
   symm
   apply Nat.div_eq_of_eq_mul_left (Nat.mul_pos (by omega) (by omega))
   simpa [Nat.mul_assoc, Nat.mul_left_comm, Nat.mul_comm] using hsum.symm
@@ -108,7 +111,7 @@ private theorem wsubsets_deletion_of_block_size {V : Type*} [DecidableEq V]
   omega
 
 private theorem block_support_family
-    {V : Type*} [Fintype V] [DecidableEq V]
+    {V : Type*} [DecidableEq V]
     (blocks : Finset (Finset V)) (w t k : ℕ)
     (hblock : ∀ B ∈ blocks, B.card = k)
     (hk : k = w + t)
