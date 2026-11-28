@@ -8,6 +8,7 @@ internal sealed class CircleCoefficientDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Circle-supported gains on finite powers of paths have uniform coefficient one for reconstruction with unrestricted unit-quaternion potentials.",
+        H("Circle gains on finite power paths"),
         Blocks(
             Result("powerPath-circle-coefficient-one", "powerPath_circle_coefficient_one", "Uniform ambient upper bound",
                 "At every finite path order and width, circle-supported gains can be fitted in the full round unit-quaternion group with error at most the triangle-defect budget.",

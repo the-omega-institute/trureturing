@@ -8,6 +8,7 @@ internal sealed class SU2TangentLowerDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Round unit-quaternion reconstruction dominates three-dimensional Euclidean reconstruction on each fixed finite connected graph.",
+        H("Tangent transfer and round quaternion obstructions"),
         Blocks(
             Result("fixed-graph-euclidean-three-transfer", "fixed_graph_euclidean_three_transfer", "Fixed-graph tangent transfer",
                 "Every round unit-quaternion coefficient on a fixed finite connected graph is an admissible coefficient for three-dimensional Euclidean gains on that graph.",

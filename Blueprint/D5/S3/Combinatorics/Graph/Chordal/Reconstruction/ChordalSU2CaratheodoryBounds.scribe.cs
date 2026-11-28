@@ -8,6 +8,7 @@ internal sealed class ChordalSU2CaratheodoryBoundsDocument : IScribeDocumentDefi
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Caratheodory caps control round unit-quaternion reconstruction on all finite chordal graphs at small defect and across all defects at clique cutoffs five and six.",
+        H("Carathéodory bounds for round quaternion gains"),
         Blocks(
             Result("exists-su2-gain-potential-caratheodory", "exists_su2_gain_potential_caratheodory", "Small defects at arbitrary clique number",
                 "For every finite chordal graph and every nonnegative defect budget through arcsine of the square root of 5 over 12, the edge error is bounded by twice arcsine of the product of the square root of 3 over 2 and the sine of the budget.",
