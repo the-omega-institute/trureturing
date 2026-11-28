@@ -1,5 +1,5 @@
 import D5.S3.Geometry.Lorentz.PenroseHawkingSingularityBPS4D
-import Reg.Support.UnitSixO
+import Reg.Support.UnitSixO.Common
 
 /-! Source observations and interventions for optical and cosmological bounds. -/
 

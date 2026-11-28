@@ -1,5 +1,5 @@
 import D5.S3.Quantum.Gauge.E8RootSystemUnification4D
-import Reg.Support.UnitSixO
+import Reg.Support.UnitSixO.Common
 
 /-! Source observations and interventions for the two exceptional weight families. -/
 
