@@ -10,16 +10,15 @@ set_option linter.style.longLine false
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9ThreeMaskCutFlux
 
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
-open BalancedCriticalSpectrum (Q flip IsBalanced)
-open BalancedCubeGirth (flip_comm)
-open Q9IsotropicHuang (flipSign parity weightedLinear)
+open BalancedCriticalSpectrum (Q IsBalanced)
+open Q9IsotropicHuang (parity weightedLinear)
 open Q9WeightedSaturation (defect signedBiadjacency)
 open Placement.Q9ContactMaskCut (cutMasks)
-open private cutPairs mask translate translate_comm cutMasks_swap contact_of_mask parity_translate
+open private mask translate cutMasks_swap parity_translate
   two_contact_row cutTerm other_contact_of_three_mask_cut no_alternating_square_of_small_cut
   abs_cutTerm from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9ContactMaskCut
-open private direction direction_apply direction_square direction_anticommute from
+open private direction direction_apply from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHuang
 
 open Q9ThreeMaskCutSign (CrossingPair)
@@ -143,7 +142,8 @@ private theorem flux_of_companion
     simpa only [operator, cutTerm, translate, Module.End.mul_apply, direction_apply, one_mul] using
       two_contact_row hsep' hrC hbC hzq hvb hcard' hfout hAf hq hp hpq'.symm hvq hvp
   have h₁ := flux_neg_of_row g f p r y rowY
-  rw [flux_reverse f g p x, ← show step r y = z from rfl] at h₁
+  change flux g f p (step p x) = -flux g f r y at h₁
+  rw [flux_reverse f g p x] at h₁
   have h₁' := flux_reverse f g r z
   rw [show step r z = y from step_involution r y] at h₁'
   have h₂ := flux_neg_of_row f g r q z rowZ
@@ -154,5 +154,38 @@ private theorem flux_of_companion
   rw [← htEq]
   change flux g f q v = -flux f g q z at h₃'
   linarith only [h₁, h₁', h₂, h₃, h₃', h₄]
+
+open Classical in
+/-- For a contact across a three-mask cut, translation by the other two
+masks reverses the signed product of the endpoint amplitudes. The
+functions need only satisfy the unit-weight exterior equations. -/
+theorem contact_flux_negated_by_three_mask_cut
+    {C D : Finset (Q 9)} {b : Bool} {A : Finset (Fin 9)}
+    (p q r : CrossingPair (A : Set (Fin 9))) (hpq : p ≠ q) (hpr : p ≠ r) (hqr : q ≠ r)
+    (hcut : cutMasks C D b A = {mask p.val, mask q.val, mask r.val})
+    (hsep : ∀ u ∈ C, ∀ v ∈ D, 2 ≤ hammingDist u v)
+    (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
+    (hcD : ((hypercube 9).induce (D : Set (Q 9))).Connected)
+    (hbC : IsBalanced C) (hbD : IsBalanced D)
+    (hdetD : ∀ w : Fin 9 → ℝ, (defect w (signedBiadjacency w D false)).det = 0)
+    {f g : Q 9 → ℝ}
+    (hfout : ∀ v ∉ C, f v = 0)
+    (hgout : ∀ v ∉ D, g v = 0)
+    (hAf : ∀ v ∉ C, weightedLinear (fun _ => 1) f v = 0)
+    (hAg : ∀ v ∉ D, weightedLinear (fun _ => 1) g v = 0)
+    {x : Q 9} (hx : x ∈ C) (hxb : parity x = b) (hpx : step p x ∈ D) :
+    flux f g p (step q (step r x)) = -flux f g p x := by
+  rcases other_contact_of_three_mask_cut hsep hrD hbD hx hxb
+    (crossing_pair_mem p) (crossing_pair_mem q) (crossing_pair_mem r) hcut hpx with h | h
+  · exact flux_of_companion hpq hpr hqr hcut hsep hrC hrD hcD hbC hbD hdetD
+      hfout hgout hAf hAg hx hxb hpx h
+  · have hcut' : cutMasks C D b A = {mask p.val, mask r.val, mask q.val} := by
+      rw [hcut, Finset.pair_comm (mask q.val)]
+    rw [step_comm q r]
+    exact flux_of_companion hpr hpq hqr.symm hcut' hsep hrC hrD hcD hbC hbD hdetD
+      hfout hgout hAf hAg hx hxb hpx h
+
+#print axioms contact_flux_negated_by_three_mask_cut
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9ThreeMaskCutFlux
