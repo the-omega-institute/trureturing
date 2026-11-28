@@ -11,6 +11,7 @@ import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qProjectedDual
 import D5.S3.VertexAlgebra.Lattice.LatticeSectorCharacterWeilCovariance
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalZero
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFullEnergySpectrum
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qCubicMonodromy
 
 /-! The real P48q Gram controls the charge sum. The actual integer-grade trace
 groups the product of this fixed-charge sum and the sixteen-colour occupation
@@ -51,6 +52,8 @@ open P48qAllJetWickField (nativeField)
 open P48qTwistedStateEnergy (occupationFrequency totalWeight totalLZero)
 open LatticeActualConformalState (omega)
 open HalfFockSpectralFiberSource (actualInverse)
+open P48qCubicMonodromy (conformalMonodromy conformalMonodromy_cube
+  conformalMonodromy_native_conformal_eigenvector)
 
 noncomputable section
 
@@ -784,6 +787,253 @@ theorem actual_cubic_trace_S_interchange (τ : ℂ) (hτ : 0 < τ.im) :
   refine ⟨forward τ hτ, (forward _ hS).symm.trans ?_⟩
   simp [div_eq_mul_inv]
 
+local notation "period" => (2 * (Real.pi : ℂ) * I)
+local notation "ζ" => (ThirdTwistedChargeCocycle.zeta : ℂ)
+
+/-- The weight `16 / 9 + k / 3` eigenspace of the actual native conformal mode. -/
+abbrev NativeConformalGrade (k : ℕ) : Submodule ℂ P48qThirdTwistedField.State :=
+  Module.End.eigenspace
+    (HVertexOperator.coeff (nativeField (omega lattice (actualInverse lattice))) (-6))
+    (16 / 9 + (k : ℂ) / 3)
+
+private theorem nativeConformalGrade_finiteDimensional (k : ℕ) :
+    FiniteDimensional ℂ (NativeConformalGrade k) := by
+  unfold NativeConformalGrade
+  rw [native_conformal_coeff_neg_six_eq_totalLZero]
+  exact totalLZero_eigenspace_finiteDimensional _
+
+/-- The restriction of the actual conformal monodromy to one conformal grade. -/
+def nativeGradeMonodromy (k : ℕ) : Module.End ℂ (NativeConformalGrade k) :=
+  conformalMonodromy.restrict fun v hv => by
+    rw [conformalMonodromy_native_conformal_eigenvector v _
+      (Module.End.mem_eigenspace_iff.mp hv)]
+    exact (NativeConformalGrade k).smul_mem _ hv
+
+private theorem nativeGradeMonodromy_eq_smul (k : ℕ) :
+    nativeGradeMonodromy k = exp (period * (16 / 9 + (k : ℂ) / 3)) • 1 := by
+  apply LinearMap.ext
+  intro v
+  apply Subtype.ext
+  exact conformalMonodromy_native_conformal_eigenvector v _
+    (Module.End.mem_eigenspace_iff.mp v.property)
+
+private theorem nativeGradeMonodromy_pow_coe (k j : ℕ) (v : NativeConformalGrade k) :
+    ((nativeGradeMonodromy k ^ j) v : P48qThirdTwistedField.State) =
+      (conformalMonodromy ^ j) v := by
+  unfold nativeGradeMonodromy
+  rw [Module.End.pow_restrict]
+  rfl
+
+/-- The finite conformal-grade trace of a power of the inserted monodromy. -/
+theorem native_twisted_monodromy_trace_eq (k j : ℕ) :
+    LinearMap.trace ℂ (NativeConformalGrade k) (nativeGradeMonodromy k ^ j) =
+      exp (period * (j : ℂ) * (16 / 9 + (k : ℂ) / 3)) * nativeTwistedTraceCoeff k := by
+  rw [nativeGradeMonodromy_eq_smul, smul_pow, one_pow, map_smul, smul_eq_mul,
+    Module.End.one_eq_id, native_twisted_identity_trace_eq_weight_fiber_card,
+    ← native_twisted_trace_coeff_eq_weight_fiber_card, ← exp_nat_mul]
+  congr 2
+  ring
+
+/-- The third insertion is multiplication of the identity trace by the primitive cubic root. -/
+theorem native_twisted_monodromy_cube_trace (k : ℕ) :
+    LinearMap.trace ℂ (NativeConformalGrade k) (nativeGradeMonodromy k ^ 3) =
+      ζ * nativeTwistedTraceCoeff k := by
+  have hcube : nativeGradeMonodromy k ^ 3 = ζ • 1 := by
+    apply LinearMap.ext
+    intro v
+    apply Subtype.ext
+    rw [nativeGradeMonodromy_pow_coe, conformalMonodromy_cube]
+    rfl
+  rw [hcube, map_smul, smul_eq_mul, Module.End.one_eq_id,
+    native_twisted_identity_trace_eq_weight_fiber_card,
+    ← native_twisted_trace_coeff_eq_weight_fiber_card]
+
+/-- An inserted conformal-grade trace with its rank-48 vacuum shift. -/
+def nativeTwistedInsertedTerm (τ : ℂ) (j k : ℕ) : ℂ :=
+  LinearMap.trace ℂ (NativeConformalGrade k) (nativeGradeMonodromy k ^ j) *
+    exp (period * τ * ((16 / 9 + (k : ℂ) / 3) - lattice.rank / 24))
+
+/-- The normalized sum of the traces with the `j`-th monodromy insertion. -/
+def nativeTwistedInsertedCharacter (τ : ℂ) (j : ℕ) : ℂ :=
+  ∑' k : ℕ, nativeTwistedInsertedTerm τ j k
+
+private theorem nativeTwistedInsertedTerm_eq_shift (τ : ℂ) (j k : ℕ) :
+    nativeTwistedInsertedTerm τ j k = nativeTwistedTraceTerm (τ + (j : ℂ)) k := by
+  have hperiod : exp (period * (j : ℂ) * 2) = 1 := by
+    rw [show period * (j : ℂ) * 2 = ((2 * j : ℕ) : ℂ) * period by push_cast; ring]
+    exact exp_nat_mul_two_pi_mul_I _
+  have hrank : (lattice.rank : ℂ) / 24 = 2 := by
+    change (48 : ℂ) / 24 = 2
+    norm_num
+  rw [nativeTwistedInsertedTerm, native_twisted_monodromy_trace_eq, nativeTwistedTraceTerm, hrank]
+  rw [mul_comm (exp _) (nativeTwistedTraceCoeff k), mul_assoc, ← exp_add]
+  rw [show period * (j : ℂ) * (16 / 9 + (k : ℂ) / 3) +
+      period * τ * ((16 / 9 + (k : ℂ) / 3) - 2) =
+    period * (τ + (j : ℂ)) * ((16 / 9 + (k : ℂ) / 3) - 2) + period * (j : ℂ) * 2 by ring,
+    exp_add, hperiod, mul_one]
+
+/-- Every monodromy-inserted trace series converges absolutely on the upper
+half-plane and equals the native character at `τ + j`. -/
+theorem native_twisted_inserted_character_eq_shift (τ : ℂ) (hτ : 0 < τ.im) (j : ℕ) :
+    Summable (fun k : ℕ => ‖nativeTwistedInsertedTerm τ j k‖) ∧
+      nativeTwistedInsertedCharacter τ j = nativeTwistedCharacter (τ + (j : ℂ)) := by
+  have him : 0 < (τ + (j : ℂ)).im := by simpa using hτ
+  exact ⟨(native_twisted_character_eq_twining _ him).1.congr
+    (fun k => congrArg norm (nativeTwistedInsertedTerm_eq_shift τ j k).symm),
+    tsum_congr (nativeTwistedInsertedTerm_eq_shift τ j)⟩
+
+/-- The monodromy eigenphase at weight `16 / 9 + k / 3`. -/
+def nativeCubicPhase (k : ℕ) : ℂ := exp (period * (16 / 9 + (k : ℂ) / 3))
+
+private theorem nativeCubicPhase_eq_vacuum_mul (k : ℕ) :
+    nativeCubicPhase k = nativeCubicPhase 0 * ζ ^ k := by
+  change exp (period * (16 / 9 + (k : ℂ) / 3)) =
+    exp (period * (16 / 9 + ((0 : ℕ) : ℂ) / 3)) * exp (period / 3) ^ k
+  rw [← exp_nat_mul, ← exp_add]
+  congr 1
+  simp only [Nat.cast_zero]
+  ring
+
+private theorem nativeCubicPhase_eq_iff (k : ℕ) (r : Fin 3) :
+    nativeCubicPhase k = nativeCubicPhase r.val ↔ k % 3 = r.val := by
+  have hζ : IsPrimitiveRoot ζ 3 :=
+    IsPrimitiveRoot.coe_units_iff.mpr ThirdTwistedChargeCocycle.zeta_primitive
+  have hphase : nativeCubicPhase 0 ≠ 0 := exp_ne_zero _
+  rw [nativeCubicPhase_eq_vacuum_mul k, nativeCubicPhase_eq_vacuum_mul r.val,
+    mul_right_inj' hphase, (hζ.isOfFinOrder (by decide)).pow_inj_mod, ← hζ.eq_orderOf]
+  rw [Nat.mod_eq_of_lt r.isLt]
+
+/-- The actual monodromy eigenspace in grade `k` for the phase indexed by `r`. -/
+abbrev NativeCubicEigenspace (r : Fin 3) (k : ℕ) : Submodule ℂ (NativeConformalGrade k) :=
+  (nativeGradeMonodromy k).eigenspace (nativeCubicPhase r.val)
+
+/-- The identity trace on one of the three monodromy eigenspaces in grade `k`. -/
+def nativeTwistedEigenspaceTraceCoeff (r : Fin 3) (k : ℕ) : ℂ :=
+  LinearMap.trace ℂ (NativeCubicEigenspace r k) LinearMap.id
+
+/-- Each eigenspace trace keeps exactly the grades in its residue class. -/
+theorem native_twisted_eigenspace_trace_coeff_eq (r : Fin 3) (k : ℕ) :
+    nativeTwistedEigenspaceTraceCoeff r k =
+      if k % 3 = r.val then nativeTwistedTraceCoeff k else 0 := by
+  let := nativeConformalGrade_finiteDimensional k
+  have hrot : nativeGradeMonodromy k = nativeCubicPhase k • 1 :=
+    nativeGradeMonodromy_eq_smul k
+  rw [nativeTwistedEigenspaceTraceCoeff, LinearMap.trace_id]
+  by_cases hr : k % 3 = r.val
+  · have htop : NativeCubicEigenspace r k = ⊤ := by
+      rw [eq_top_iff]
+      intro v _
+      apply Module.End.mem_eigenspace_iff.mpr
+      rw [hrot, (nativeCubicPhase_eq_iff k r).mpr hr, LinearMap.smul_apply,
+        Module.End.one_apply]
+    rw [htop, finrank_top, ite_eq_left hr]
+    rfl
+  · have hbot : NativeCubicEigenspace r k = ⊥ := by
+      rw [Submodule.eq_bot_iff]
+      intro v hv
+      have h := Module.End.mem_eigenspace_iff.mp hv
+      rw [hrot, LinearMap.smul_apply, Module.End.one_apply] at h
+      by_contra hv0
+      exact hr ((nativeCubicPhase_eq_iff k r).mp (smul_left_injective ℂ hv0 h))
+    rw [hbot, finrank_bot, Nat.cast_zero, ite_eq_right hr]
+
+private theorem nativeTwistedTraceCoeff_ne_zero (k : ℕ) : nativeTwistedTraceCoeff k ≠ 0 := by
+  let := nativeConformalGrade_finiteDimensional k
+  obtain ⟨v, hv, heig⟩ := (P48qFullEnergySpectrum.totalLZero_exact_eigenvalues
+    (16 / 9 + (k : ℂ) / 3)).mpr ⟨k, rfl⟩
+  have hmem : v ∈ NativeConformalGrade k := by
+    unfold NativeConformalGrade
+    rw [native_conformal_coeff_neg_six_eq_totalLZero]
+    exact Module.End.mem_eigenspace_iff.mpr heig
+  let : Nontrivial (NativeConformalGrade k) :=
+    ⟨⟨⟨v, hmem⟩, 0, fun h => hv (congrArg Subtype.val h)⟩⟩
+  have hdim : 0 < Module.finrank ℂ (NativeConformalGrade k) := Module.finrank_pos
+  exact Nat.cast_ne_zero.mpr hdim.ne'
+
+/-- Every grade in the given residue class contributes a nonzero trace. -/
+theorem native_twisted_eigenspace_trace_coeff_ne_zero_iff (r : Fin 3) (k : ℕ) :
+    nativeTwistedEigenspaceTraceCoeff r k ≠ 0 ↔ k % 3 = r.val := by
+  rw [native_twisted_eigenspace_trace_coeff_eq]
+  split <;> simp_all [nativeTwistedTraceCoeff_ne_zero]
+
+/-- The normalized term of the actual graded monodromy eigenspace trace. -/
+def nativeTwistedEigenspaceTerm (τ : ℂ) (r : Fin 3) (k : ℕ) : ℂ :=
+  nativeTwistedEigenspaceTraceCoeff r k *
+    exp (period * τ * ((16 / 9 + (k : ℂ) / 3) - lattice.rank / 24))
+
+/-- The normalized character of one of the three monodromy eigenspaces. -/
+def nativeTwistedEigenspaceCharacter (τ : ℂ) (r : Fin 3) : ℂ :=
+  ∑' k : ℕ, nativeTwistedEigenspaceTerm τ r k
+
+private theorem nativeTwistedEigenspaceTerm_eq_filter (τ : ℂ) (r : Fin 3) (k : ℕ) :
+    nativeTwistedEigenspaceTerm τ r k =
+      if k % 3 = r.val then nativeTwistedTraceTerm τ k else 0 := by
+  rw [nativeTwistedEigenspaceTerm, native_twisted_eigenspace_trace_coeff_eq]
+  split <;> simp [nativeTwistedTraceTerm]
+
+private theorem nativeCubicPhase_cube (k : ℕ) : nativeCubicPhase k ^ 3 = ζ := by
+  unfold nativeCubicPhase
+  rw [← exp_nat_mul, show (↑(3 : ℕ) : ℂ) * (period * (16 / 9 + (k : ℂ) / 3)) =
+      period / 3 + ((5 + k : ℕ) : ℂ) * period by push_cast; ring,
+    exp_add, exp_nat_mul_two_pi_mul_I, mul_one]
+  rfl
+
+private theorem nativeTwistedEigenspaceTerm_eq_fourier (τ : ℂ) (r : Fin 3) (k : ℕ) :
+    nativeTwistedEigenspaceTerm τ r k = (3 : ℂ)⁻¹ *
+      ∑ j ∈ Finset.range 3, (nativeCubicPhase r.val)⁻¹ ^ j * nativeTwistedInsertedTerm τ j k := by
+  let x := (nativeCubicPhase r.val)⁻¹ * nativeCubicPhase k
+  have hcube : x ^ 3 = 1 := by
+    dsimp only [x]
+    rw [mul_pow, inv_pow, nativeCubicPhase_cube, nativeCubicPhase_cube]
+    exact inv_mul_cancel₀ (Units.ne_zero ThirdTwistedChargeCocycle.zeta)
+  have hphase : x = 1 ↔ k % 3 = r.val := by
+    rw [← nativeCubicPhase_eq_iff k r]
+    change (nativeCubicPhase r.val)⁻¹ * nativeCubicPhase k = 1 ↔ _
+    have hphase_ne : nativeCubicPhase r.val ≠ 0 := exp_ne_zero _
+    rw [inv_mul_eq_iff_eq_mul₀ hphase_ne, mul_one]
+  have hsum : (3 : ℂ)⁻¹ * (∑ j ∈ Finset.range 3, x ^ j) =
+      if k % 3 = r.val then 1 else 0 := by
+    by_cases hr : k % 3 = r.val
+    · rw [hphase.mpr hr, ite_eq_left hr]
+      norm_num
+    · have hgeom := geom_sum_mul x 3
+      rw [hcube, sub_self] at hgeom
+      have hzero := (mul_eq_zero.mp hgeom).resolve_right (sub_ne_zero.mpr (mt hphase.mp hr))
+      rw [hzero, mul_zero, ite_eq_right hr]
+  have hterm (j : ℕ) : nativeTwistedInsertedTerm τ j k =
+      nativeCubicPhase k ^ j * nativeTwistedTraceTerm τ k := by
+    rw [nativeTwistedInsertedTerm, native_twisted_monodromy_trace_eq, nativeTwistedTraceTerm,
+      nativeCubicPhase, ← exp_nat_mul, mul_assoc]
+    congr 2
+    ring
+  simp_rw [hterm, ← mul_assoc ((nativeCubicPhase r.val)⁻¹ ^ _) (nativeCubicPhase k ^ _),
+    ← mul_pow]
+  rw [← Finset.sum_mul, ← mul_assoc, hsum, nativeTwistedEigenspaceTerm_eq_filter]
+  split <;> simp_all
+
+/-- The three actual eigenspace characters are the cubic Fourier filters of
+the shifted native twisted character, with absolutely convergent grade sums. -/
+theorem native_twisted_eigenspace_character_eq_fourier (τ : ℂ) (hτ : 0 < τ.im) (r : Fin 3) :
+    Summable (fun k : ℕ => ‖nativeTwistedEigenspaceTerm τ r k‖) ∧
+      nativeTwistedEigenspaceCharacter τ r = (3 : ℂ)⁻¹ *
+        ∑ j ∈ Finset.range 3, (nativeCubicPhase r.val)⁻¹ ^ j *
+          nativeTwistedCharacter (τ + (j : ℂ)) := by
+  refine ⟨(native_twisted_character_eq_twining τ hτ).1.of_nonneg_of_le
+    (fun k => norm_nonneg _) (fun k => ?_), ?_⟩
+  · rw [nativeTwistedEigenspaceTerm_eq_filter]
+    split <;> simp
+  · unfold nativeTwistedEigenspaceCharacter
+    simp_rw [nativeTwistedEigenspaceTerm_eq_fourier, tsum_mul_left]
+    rw [Summable.tsum_finsetSum]
+    · congr 1
+      apply Finset.sum_congr rfl
+      intro j _
+      rw [tsum_mul_left]
+      exact congrArg ((nativeCubicPhase r.val)⁻¹ ^ j * ·)
+        (native_twisted_inserted_character_eq_shift τ hτ j).2
+    · intro j _
+      exact (native_twisted_inserted_character_eq_shift τ hτ j).1.of_norm.mul_left _
+
 run_cmd do
   for name in [``fixed_dual_iff_third_fixed_charge, ``fixed_charge_pairing_even_pos,
       ``actual_cubic_twining_character_eq_theta_div_eta, ``fixed_charge_theta_S,
@@ -791,7 +1041,12 @@ run_cmd do
       ``native_twisted_trace_coeff_eq_weight_fiber_card,
       ``native_twisted_identity_trace_eq_weight_fiber_card,
       ``native_twisted_trace_coeff_eq_actual_full_grade_trace,
-      ``native_twisted_character_eq_twining, ``actual_cubic_trace_S_interchange] do
+      ``native_twisted_character_eq_twining, ``actual_cubic_trace_S_interchange,
+      ``nativeGradeMonodromy, ``native_twisted_monodromy_trace_eq,
+      ``native_twisted_monodromy_cube_trace, ``native_twisted_inserted_character_eq_shift,
+      ``nativeTwistedInsertedCharacter, ``nativeTwistedEigenspaceTraceCoeff,
+      ``native_twisted_eigenspace_trace_coeff_eq, ``native_twisted_eigenspace_trace_coeff_ne_zero_iff,
+      ``native_twisted_eigenspace_character_eq_fourier] do
     let axioms ← Lean.collectAxioms name
     unless axioms.all (fun ax => [``propext, ``Classical.choice, ``Quot.sound].contains ax) do
       throwError "Unexpected axiom closure for {name}: {axioms}"
