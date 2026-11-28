@@ -55,10 +55,12 @@ private theorem inverseFifth_tail (J : ℝ) (hJ : 0 < J) (n : ℕ) :
 def modeRadius (m : ℤ × ℤ) : ℕ :=
   max m.1.natAbs m.2.natAbs
 
-private def modeBox (n : ℕ) : Finset (ℤ × ℤ) :=
+/-- The square of integer frequencies with radius at most `n`. -/
+def modeBox (n : ℕ) : Finset (ℤ × ℤ) :=
   Icc (-n : ℤ × ℤ) n
 
-private theorem mem_modeBox {n : ℕ} {m : ℤ × ℤ} :
+/-- Square membership is the cutoff on the maximum absolute coordinate. -/
+theorem mem_modeBox {n : ℕ} {m : ℤ × ℤ} :
     m ∈ modeBox n ↔ modeRadius m ≤ n := by
   have hcoord (z : ℤ) : z ∈ Icc (-(n : ℤ)) n ↔ z.natAbs ≤ n := by
     rw [mem_Icc, ← abs_le, Int.abs_eq_natAbs, Int.ofNat_le]
