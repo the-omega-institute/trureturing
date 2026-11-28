@@ -5,9 +5,10 @@ year: 2026
 title: Classification of some cohomologically C0-stable continuous group actions on metric spaces
 doi: null
 url: https://arxiv.org/abs/2607.11171v1
-claim: The smooth simultaneous-Diophantine stability conjecture remains separate from continuous reconstruction of bounded real cocycles.
+claim: Infinite-image finitely generated continuous actions admit continuous word-ball tents; smooth simultaneous-Diophantine stability remains a separate question.
 strata_touched:
   - D5/S1/Dynamics/OrbitClosure/BoundedRealCocycle
+  - D5/S1/Dynamics/OrbitClosure/WordBallTent
 license: citation-only
 triage: anchor
 ---
@@ -44,6 +45,28 @@ for a particular smooth action still requires its one-orbit all-elements
 bound and minimality. It establishes neither smooth regularity of the
 continuous transfer nor closedness of the smooth coboundary space. Those
 bridges and the conjectured necessity remain unresolved here.
+
+Construction `con:tent` and Lemma `lem:tent-properties` use the maximum of
+transported continuous bumps weighted by the truncated word-length profile.
+For a finite symmetric generating set and infinite permutation image, the
+orbit lemmas supply a point with a distant point on its orbit. The resulting
+function takes values in [0,1], takes the values 1 and 0 on that same orbit,
+has every generator defect at most 1/R, and lies at least 1/2 from every
+continuous invariant function in the supremum norm.
+
+The corresponding Lean theorem permits the identity among the generators
+and assumes continuity of each individual action map. It uses finite
+homomorphism families to find a common orbit escaping the finite word ball,
+and Urysohn separation of one point from the finite set of transported
+endpoints. The maximum and weight estimate then give the same conclusions.
+Its positive natural radius interface includes R = 1; the source states
+R at least 2. No orbit is assumed infinite, and finite orbits of unbounded
+sizes are included.
+
+These continuous tents obstruct a uniform supremum-norm estimate controlling
+distance to invariants by generator defects. They supply no estimates on
+derivatives. Transferring this obstruction to the smooth Frechet topology
+or to non-linearizable non-SDC actions remains unresolved.
 
 No article code or substantial article text is reproduced.
 
