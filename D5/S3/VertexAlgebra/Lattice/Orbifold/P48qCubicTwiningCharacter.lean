@@ -4,12 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Absolute convergence, theta-eta factorization and S inversion for the cubic trace. -/
+   digest: Absolute convergence, theta-eta factorization and S interchange of the cubic traces. -/
 
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qCubicOscillatorTrace
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qProjectedDual
 import D5.S3.VertexAlgebra.Lattice.LatticeSectorCharacterWeilCovariance
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalZero
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFullEnergySpectrum
 
 /-! The real P48q Gram controls the charge sum. The actual integer-grade trace
 groups the product of this fixed-charge sum and the sixteen-colour occupation
@@ -22,7 +23,7 @@ set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.VertexAlgebra.Lattice.Orbifold.P48qCubicTwiningCharacter
 
 open Complex LatticeGeneratingFieldLocality LatticePositiveEnergy LatticeThetaCharacter
-open P48qTwistedChargeAction (lattice g g_apply)
+open P48qTwistedChargeAction (Momentum lattice g g_apply g_cube momentum_index_iff)
 open P48qGramCertificate (nebeGram)
 open P48qGramPositivity (nebeGram_posDef)
 open P48qFixedRankCertificate (nebeOrderThree rowAction nebeOrderThree_fixedRank16)
@@ -42,10 +43,12 @@ open private gram_integral norm_fixed action_embed from
 open private eta_S_principal from D5.S3.VertexAlgebra.Characters.LatticeThetaCharacter
 open P48qFiniteEnergyEigenspaces (totalLZeroEigenspaceCoeffEquiv
   totalLZero_eigenspace_finiteDimensional totalWeight_fiber_finite)
+open private momentumWeight_eq_chargeEnergy occupationSublevel_finite from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFiniteEnergyEigenspaces
 open P48qNativeConformalZero (native_conformal_coeff_neg_six_eq_totalLZero)
-open P48qThirdTwistedField (State)
+open P48qThirdTwistedField (frequency)
 open P48qAllJetWickField (nativeField)
-open P48qTwistedStateEnergy (totalWeight totalLZero)
+open P48qTwistedStateEnergy (occupationFrequency totalWeight totalLZero)
 open LatticeActualConformalState (omega)
 open HalfFockSpectralFiberSource (actualInverse)
 
@@ -488,47 +491,46 @@ private def gradeFiberEquiv (n : ℤ) :
     apply heq_of_eq
     rfl
 
-private theorem occupationFiber_finite (τ : ℂ)
-    (ho : Summable (fun d : Occupation => ‖occupationTerm τ d‖)) (n : ℤ) (a : Charge lattice) :
-    Finite (OccupationFiber n a) := by
-  let m := (n - chargeEnergy lattice a).toNat / 3
-  have hz : occupationQ τ ^ m ≠ 0 := pow_ne_zero _ (exp_ne_zero _)
-  apply Finite.of_summable_const (norm_pos_iff.mpr hz)
-  refine (ho.subtype {d | 3 * (integerEnergy (Fin 16) d : ℤ) =
-    n - chargeEnergy lattice a}).congr ?_
-  intro d
-  have hd := d.2
-  change 3 * (integerEnergy (Fin 16) d.1 : ℤ) = n - chargeEnergy lattice a at hd
-  have he : integerEnergy (Fin 16) d.1 = m := by
-    dsimp [m]
-    omega
-  change ‖occupationQ τ ^ integerEnergy (Fin 16) d.1‖ = ‖occupationQ τ ^ m‖
-  rw [he]
+private theorem occupationFrequency_eq_integerEnergy (d : Occupation) :
+    occupationFrequency d = integerEnergy (Fin 16) d := by
+  simp only [occupationFrequency, integerEnergy, frequency, Finsupp.weight_apply,
+    Nat.nsmul_eq_mul, Nat.mul_comm]
 
-private theorem traceTerm_eq_fiber (τ : ℂ)
-    (ho : Summable (fun d : Occupation => ‖occupationTerm τ d‖)) (n : ℤ) :
+private theorem occupationFiber_finite (n : ℤ) (a : Charge lattice) :
+    Finite (OccupationFiber n a) := by
+  let m := (n - chargeEnergy lattice a).toNat
+  let := occupationSublevel_finite m
+  let includeSublevel (d : OccupationFiber n a) : {d : Occupation // occupationFrequency d ≤ m} :=
+    ⟨d.1, by
+      rw [occupationFrequency_eq_integerEnergy]
+      have hd := d.2
+      change 3 * (integerEnergy (Fin 16) d.1 : ℤ) = n - chargeEnergy lattice a at hd
+      dsimp only [m]
+      omega⟩
+  refine Finite.of_injective includeSublevel (fun _ _ h => Subtype.ext ?_)
+  exact congrArg (fun d : {d : Occupation // occupationFrequency d ≤ m} => d.1) h
+
+private theorem actual_full_grade_trace_eq_grade_fiber_card (n : ℤ) :
+    actualFullGradeStandardLiftTrace n = (Nat.card (GradeFiber n) : ℂ) := by
+  classical
+  let (a : fixedChargeCutoff n) : Finite (OccupationFiber n a.1) := occupationFiber_finite n a.1
+  rw [actual_full_grade_trace_eq_fixed_occupation, Nat.card_congr (gradeFiberEquiv n),
+    Nat.card_sigma, Nat.cast_sum]
+  exact (Finset.sum_coe_sort (fixedChargeCutoff n)
+    (fun a : Charge lattice => (Nat.card (OccupationFiber n a) : ℂ))).symm
+
+private theorem traceTerm_eq_fiber (τ : ℂ) (n : ℤ) :
     (∑' x : GradeFiber n, gradePhase τ (totalEnergy x.1)) = traceTerm τ n := by
   classical
-  let (a : fixedChargeCutoff n) : Finite (OccupationFiber n a.1) :=
-    occupationFiber_finite τ ho n a.1
-  let (a : fixedChargeCutoff n) : Fintype (OccupationFiber n a.1) := Fintype.ofFinite _
+  let (a : fixedChargeCutoff n) : Finite (OccupationFiber n a.1) := occupationFiber_finite n a.1
+  let : Finite (GradeFiber n) := Finite.of_equiv _ (gradeFiberEquiv n).symm
+  let : Fintype (GradeFiber n) := Fintype.ofFinite _
   calc
     _ = ∑' _x : GradeFiber n, gradePhase τ n :=
       tsum_congr (fun x => congrArg (gradePhase τ) x.2)
-    _ = ∑ _x : (Σ a : fixedChargeCutoff n, OccupationFiber n a.1), gradePhase τ n := by
-      rw [← (gradeFiberEquiv n).symm.tsum_eq, tsum_fintype]
     _ = _ := by
-      rw [traceTerm, actual_full_grade_trace_eq_fixed_occupation]
-      change _ = (∑ a ∈ fixedChargeCutoff n, (Nat.card (OccupationFiber n a) : ℂ)) *
-        gradePhase τ n
-      rw [Finset.sum_mul, Fintype.sum_sigma]
-      calc
-        _ = ∑ a : fixedChargeCutoff n, (Nat.card (OccupationFiber n a.1) : ℂ) * gradePhase τ n := by
-          apply Finset.sum_congr rfl
-          intro a _
-          simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, Nat.card_eq_fintype_card]
-        _ = _ := Finset.sum_coe_sort (fixedChargeCutoff n)
-          (fun a : Charge lattice => (Nat.card (OccupationFiber n a) : ℂ) * gradePhase τ n)
+      rw [traceTerm, actual_full_grade_trace_eq_grade_fiber_card, tsum_fintype]
+      simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, Nat.card_eq_fintype_card]
 
 /-- In the upper half-plane the actual normalized cubic trace converges
 absolutely and equals the fixed-charge theta series divided by eta(3τ) to
@@ -551,12 +553,12 @@ theorem actual_cubic_twining_character_eq_theta_div_eta (τ : ℂ) (hτ : 0 < τ
   have habs : Summable (fun x => ‖f x‖) := by
     simpa only [f, gradePhase_totalEnergy, norm_mul] using (hc.mul_norm ho).mul_left ‖vacuum τ‖
   have hnorm (n : ℤ) : ‖traceTerm τ n‖ ≤ ∑' x : GradeFiber n, ‖f x.1‖ := by
-    rw [← traceTerm_eq_fiber τ ho n]
+    rw [← traceTerm_eq_fiber τ n]
     exact norm_tsum_le_tsum_norm (habs.subtype _)
   have hgroup := habs.hasSum.tsum_fiberwise totalEnergy
   have hsum : HasSum (traceTerm τ) (∑' x, f x) :=
     (habs.of_norm.hasSum.tsum_fiberwise totalEnergy).congr_fun
-      (fun n => (traceTerm_eq_fiber τ ho n).symm)
+      (fun n => (traceTerm_eq_fiber τ n).symm)
   refine ⟨hgroup.summable.of_nonneg_of_le (fun _ => norm_nonneg _) hnorm, ?_⟩
   rw [actualCubicTwiningCharacter, hsum.tsum_eq]
   simp_rw [f, gradePhase_totalEnergy]
@@ -664,12 +666,132 @@ theorem native_twisted_identity_trace_eq_weight_fiber_card (n : ℕ) :
   simpa [nativeTwistedTraceCoeff, a] using
     native_twisted_trace_coeff_eq_weight_fiber_card n
 
+private def momentumEquivFixedCharge : Momentum ≃ FixedCharge :=
+  Equiv.subtypeEquivRight fun a => by
+    constructor
+    · rintro ⟨b, rfl⟩
+      exact ThirdTwistedChargeAction.norm_fixed lattice g g_cube b
+    · intro ha
+      exact (momentum_index_iff a).mpr
+        (nebeOrderThree_fixed_is_norm_image a ((g_apply a).symm.trans ha))
+
+private theorem totalWeight_eq_totalEnergy (p : Momentum) (d : Occupation) :
+    (totalWeight p d : ℂ) =
+      16 / 9 + (totalEnergy (momentumEquivFixedCharge p, d) : ℂ) / 9 := by
+  rw [totalWeight, occupationFrequency_eq_integerEnergy, momentumWeight_eq_chargeEnergy]
+  simp only [Complex.ofReal_add, Complex.ofReal_div, Complex.ofReal_ofNat, Complex.ofReal_natCast,
+    Complex.ofReal_intCast]
+  change _ = 16 / 9 + ((chargeEnergy lattice p.1 +
+    3 * (integerEnergy (Fin 16) d : ℤ) : ℤ) : ℂ) / 9
+  push_cast
+  ring
+
+/-- The native twisted coefficient at weight `16 / 9 + k / 3` equals the
+actual standard-lift trace at untwisted grade `3 * k`. -/
+theorem native_twisted_trace_coeff_eq_actual_full_grade_trace (k : ℕ) :
+    nativeTwistedTraceCoeff k = actualFullGradeStandardLiftTrace (3 * (k : ℤ)) := by
+  rw [native_twisted_trace_coeff_eq_weight_fiber_card,
+    actual_full_grade_trace_eq_grade_fiber_card]
+  apply congrArg (fun n : ℕ => (n : ℂ))
+  apply Nat.card_congr
+  refine (momentumEquivFixedCharge.prodCongr (Equiv.refl Occupation)).subtypeEquiv ?_
+  rintro ⟨p, d⟩
+  rw [totalWeight_eq_totalEnergy]
+  let n := totalEnergy (momentumEquivFixedCharge p, d)
+  change 16 / 9 + (n : ℂ) / 9 = 16 / 9 + (k : ℂ) / 3 ↔ n = 3 * (k : ℤ)
+  constructor
+  · intro h
+    apply Int.cast_injective (α := ℂ)
+    push_cast
+    linear_combination 9 * h
+  · intro h
+    rw [h]
+    push_cast
+    ring
+
+private theorem actual_full_grade_trace_eq_zero_off_range (n : ℤ)
+    (hn : n ∉ Set.range (fun k : ℕ => 3 * (k : ℤ))) :
+    actualFullGradeStandardLiftTrace n = 0 := by
+  have : IsEmpty (GradeFiber n) := ⟨fun x => by
+    let p := momentumEquivFixedCharge.symm x.1.1
+    obtain ⟨m, hm⟩ := P48qFullEnergySpectrum.six_dvd_momentumNorm p
+    change bilinear lattice x.1.1.1 x.1.1.1 = 6 * m at hm
+    have hnorm := two_chargeEnergy lattice x.1.1.1
+    have hpos := chargeEnergy_nonneg lattice nebeGram_posDef x.1.1.1
+    have hx := x.2
+    change chargeEnergy lattice x.1.1.1 + 3 * (integerEnergy (Fin 16) x.1.2 : ℤ) = n at hx
+    apply hn
+    refine ⟨(m + (integerEnergy (Fin 16) x.1.2 : ℤ)).toNat, ?_⟩
+    change 3 * (((m + (integerEnergy (Fin 16) x.1.2 : ℤ)).toNat : ℕ) : ℤ) = n
+    omega⟩
+  simp [actual_full_grade_trace_eq_grade_fiber_card]
+
+/-- A native twisted identity-trace coefficient with its rank-48 vacuum shift. -/
+def nativeTwistedTraceTerm (τ : ℂ) (k : ℕ) : ℂ :=
+  nativeTwistedTraceCoeff k * exp (2 * Real.pi * I * τ *
+    ((16 / 9 + (k : ℂ) / 3) - lattice.rank / 24))
+
+/-- The normalized trace series of the native cubic twisted module. -/
+def nativeTwistedCharacter (τ : ℂ) : ℂ :=
+  ∑' k : ℕ, nativeTwistedTraceTerm τ k
+
+private theorem nativeTwistedTraceTerm_eq_traceTerm (τ : ℂ) (k : ℕ) :
+    nativeTwistedTraceTerm τ k = traceTerm (τ / 9) (3 * (k : ℤ)) := by
+  rw [nativeTwistedTraceTerm, traceTerm, native_twisted_trace_coeff_eq_actual_full_grade_trace,
+    gradePhase]
+  congr 2
+  change 2 * Real.pi * I * τ * ((16 / 9 + (k : ℂ) / 3) - 48 / 24) =
+    2 * Real.pi * I * (τ / 9) * (((3 * (k : ℤ) : ℤ) : ℂ) - 48 / 24)
+  push_cast
+  ring
+
+/-- On the upper half-plane the native twisted trace series converges
+absolutely and is the actual untwisted twining character at `τ / 9`. -/
+theorem native_twisted_character_eq_twining (τ : ℂ) (hτ : 0 < τ.im) :
+    Summable (fun k : ℕ => ‖nativeTwistedTraceTerm τ k‖) ∧
+      nativeTwistedCharacter τ = actualCubicTwiningCharacter (τ / 9) := by
+  have hτ9 : 0 < (τ / 9).im := by
+    rw [Complex.div_ofNat_im]
+    exact div_pos hτ (by norm_num)
+  let scale (k : ℕ) : ℤ := 3 * (k : ℤ)
+  have hinj : Function.Injective scale := by
+    intro j k h
+    dsimp only [scale] at h
+    omega
+  refine ⟨((actual_cubic_twining_character_eq_theta_div_eta _ hτ9).1.comp_injective hinj).congr
+    (fun k => congrArg norm (nativeTwistedTraceTerm_eq_traceTerm τ k).symm), ?_⟩
+  have hs : Function.support (traceTerm (τ / 9)) ⊆ Set.range scale := by
+    intro n hn
+    by_contra h
+    exact hn (by rw [traceTerm, actual_full_grade_trace_eq_zero_off_range n h, zero_mul])
+  exact (tsum_congr (nativeTwistedTraceTerm_eq_traceTerm τ)).trans (hinj.tsum_eq hs)
+
+/-- Modular inversion interchanges the two actual normalized cubic trace
+series on the upper half-plane. -/
+theorem actual_cubic_trace_S_interchange (τ : ℂ) (hτ : 0 < τ.im) :
+    actualCubicTwiningCharacter (-1 / τ) = nativeTwistedCharacter τ ∧
+      nativeTwistedCharacter (-1 / τ) = actualCubicTwiningCharacter τ := by
+  have forward (z : ℂ) (hz : 0 < z.im) :
+      actualCubicTwiningCharacter (-1 / z) = nativeTwistedCharacter z := by
+    have hz9 : 0 < (z / 9).im := by
+      rw [Complex.div_ofNat_im]
+      exact div_pos hz (by norm_num)
+    rw [actual_cubic_twining_character_S z hz, (native_twisted_character_eq_twining z hz).2,
+      (actual_cubic_twining_character_eq_theta_div_eta _ hz9).2]
+    rw [show 3 * (z / 9) = z / 3 by ring]
+  have hS : 0 < (-1 / τ).im := by
+    simpa using UpperHalfPlane.im_pnat_div_pos 1 (⟨τ, hτ⟩ : UpperHalfPlane)
+  refine ⟨forward τ hτ, (forward _ hS).symm.trans ?_⟩
+  simp [div_eq_mul_inv]
+
 run_cmd do
   for name in [``fixed_dual_iff_third_fixed_charge, ``fixed_charge_pairing_even_pos,
       ``actual_cubic_twining_character_eq_theta_div_eta, ``fixed_charge_theta_S,
       ``actual_cubic_twining_character_S,
       ``native_twisted_trace_coeff_eq_weight_fiber_card,
-      ``native_twisted_identity_trace_eq_weight_fiber_card] do
+      ``native_twisted_identity_trace_eq_weight_fiber_card,
+      ``native_twisted_trace_coeff_eq_actual_full_grade_trace,
+      ``native_twisted_character_eq_twining, ``actual_cubic_trace_S_interchange] do
     let axioms ← Lean.collectAxioms name
     unless axioms.all (fun ax => [``propext, ``Classical.choice, ``Quot.sound].contains ax) do
       throwError "Unexpected axiom closure for {name}: {axioms}"

@@ -7,8 +7,8 @@ internal sealed class P48qCubicTwiningCharacterDocument : IScribeDocumentDefinit
     private const string Prefix = "D5/S3/VertexAlgebra/Lattice/Orbifold/P48qCubicTwiningCharacter.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The normalized trace series of the standard cubic lift on P48q",
-        H("The P48q Cubic Twining Character"),
+        "The normalized cubic twining and twisted trace series on P48q",
+        H("The P48q Cubic Trace Characters"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("p48q-cubic-twining-trace-term"),
@@ -83,5 +83,40 @@ internal sealed class P48qCubicTwiningCharacterDocument : IScribeDocumentDefinit
                 H("S transform of the actual cubic twining character"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("At minus one over tau, the normalized full-grade trace sum equals the fixed-charge theta series at tau divided by nine over the sixteenth power of eta at tau divided by three. The principal eta transformation at tau divided by three cancels the Poisson inversion factor."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("p48q-native-twisted-coeff-grade"),
+                DeclarationHandle.Create(Prefix + "native_twisted_trace_coeff_eq_actual_full_grade_trace"),
+                H("Equality of the finite trace coefficients"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each natural number k, the native twisted identity trace at conformal weight 16/9 + k/3 equals the actual untwisted twining trace at grade 3k. The integral norm image identifies the momentum numerators with the fixed charges. Both coefficient formulas count the same pairs of a fixed charge and a sixteen-colour occupation. Subtracting the twisted vacuum weight and multiplying by nine gives the untwisted grade."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("p48q-native-twisted-trace-term"),
+                DeclarationHandle.Create(Prefix + "nativeTwistedTraceTerm"),
+                H("Normalized twisted trace term"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The identity trace at weight 16/9 + k/3 is multiplied by the exponential of 2 pi i tau times that weight minus the central charge shift 48/24."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("p48q-native-twisted-character"),
+                DeclarationHandle.Create(Prefix + "nativeTwistedCharacter"),
+                H("Native cubic twisted character"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The character sums the normalized twisted trace terms over the natural-number weight index."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("p48q-native-twisted-character-twining"),
+                DeclarationHandle.Create(Prefix + "native_twisted_character_eq_twining"),
+                H("Absolute convergence and reindexing of the twisted trace"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For tau in the upper half-plane, the twisted trace converges absolutely and equals the untwisted twining character at tau divided by nine. The untwisted coefficients are supported on nonnegative multiples of three because every fixed charge has nonnegative energy divisible by three. At grade 3k, the untwisted phase at tau divided by nine uses the same exponent as the twisted phase at tau."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("p48q-actual-cubic-trace-s-interchange"),
+                DeclarationHandle.Create(Prefix + "actual_cubic_trace_S_interchange"),
+                H("S interchange of the actual cubic traces"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("On the upper half-plane, modular inversion interchanges the actual cubic twining and native twisted characters. The twisted character at tau and the twining character at minus one over tau have the common value given by the fixed-charge theta series at tau divided by nine over the sixteenth power of eta at tau divided by three."))),
                 DescribeRole.Theorem))));
 }
