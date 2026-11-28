@@ -1,7 +1,10 @@
+import OmegaBuild.Commands
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.Topology.MetricSpace.HausdorffDistance
 import Mathlib.Combinatorics.SimpleGraph.Basic
 import Mathlib.Tactic
+
+compile_only_with_mathlib
 
 /-! Omega original.
 
@@ -22,7 +25,7 @@ theorem exists_gain_fit_of_forall_pos (G : SimpleGraph V) (g : V → V → E) {C
       ∀ u v, G.Adj u v → ‖g u v - (p v - p u)‖ ≤ C + η) :
     ∃ p : V → E, ∀ u v, G.Adj u v → ‖g u v - (p v - p u)‖ ≤ C := by
   classical
-  letI := Fintype.ofFinite V
+  let := Fintype.ofFinite V
   let I := {e : V × V // G.Adj e.1 e.2}
   let a : I → E := fun e => g e.val.1 e.val.2
   let d : (V → E) →ₗ[ℝ] (I → E) :=
