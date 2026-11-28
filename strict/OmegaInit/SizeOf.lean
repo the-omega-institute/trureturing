@@ -89,6 +89,15 @@ port_definition UInt64._sizeOf_1
 port_definition UInt64._sizeOf_inst
 port_proof UInt64.ofBitVec.sizeOf_spec by_reflexivity
 
+port_definition Char._sizeOf_1
+port_definition Char._sizeOf_inst
+port_proof Char.mk.sizeOf_spec by_reflexivity
+port_proof Char.mk.congr_simp
+
+port_definition String.Pos.Raw._sizeOf_1
+port_definition String.Pos.Raw._sizeOf_inst
+port_proof String.Pos.Raw.mk.sizeOf_spec by_reflexivity
+
 port_definition Option._sizeOf_1
 port_definition Option._sizeOf_inst
 port_proof Option.none.sizeOf_spec by_reflexivity
@@ -134,10 +143,12 @@ attribute [instance] Omega.UInt8._sizeOf_inst
 attribute [instance] Omega.UInt16._sizeOf_inst
 attribute [instance] Omega.UInt32._sizeOf_inst
 attribute [instance] Omega.UInt64._sizeOf_inst
+attribute [instance] Omega.Char._sizeOf_inst
 attribute [instance] Omega.Option._sizeOf_inst
 attribute [instance] Omega.List._sizeOf_inst
 attribute [instance] Omega.Array._sizeOf_inst
 attribute [instance] Omega.ByteArray._sizeOf_inst
+attribute [instance] Omega.String.Pos.Raw._sizeOf_inst
 attribute [instance] Omega.Except._sizeOf_inst
 attribute [instance] Omega.EStateM.Result._sizeOf_inst
 
