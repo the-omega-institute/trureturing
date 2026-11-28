@@ -1,6 +1,7 @@
 module
 public import Lean
 import OmegaChecks.InitPort.Translation
+import OmegaChecks.InitPort.LawfulLoop
 import OmegaChecks.InitCompiler.FiniteCollectors
 import OmegaChecks.InitInventory.EnvelopePublicTypes
 
@@ -144,6 +145,31 @@ private def checkFiniteConsumer (official visible strict : Environment) (owner :
   return .gap (s!"missing type dependencies: {names missing}. The upstream public interface hides the body of " ++
     s!"{names hiddenSlices}. {sourceResult} {strictResult}")
 
+/-- The default forward and backward string searchers need a loop on arbitrary
+patterns. For a finite pattern the strict signature uses the well-founded consumer.
+Check the exported, public spelling of that consumer on both sides. -/
+private def finiteSearchLoopGap? (visible strict : Environment) (owner : Name)
+    (source : ConstantInfo) (pinned target : Expr) (missing : Array Name) : Option String := do
+  let #[absent] := missing | none
+  let name := InitKernelPort.originalName absent
+  guard (name == `String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorLoopIdSearchStep ||
+    name == `String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorLoopIdSearchStep)
+  guard (source.isTheorem && visible.getModuleIdxFor? source.name == visible.getModuleIdx? owner &&
+    (visible.find? source.name).any (fun ci => ci.type.equal source.type))
+  let helper := OmegaChecks.InitPort.LawfulLoop.helper
+  let recovered := InitKernelPort.translate InitKernelPort.originalName target
+  guard (recovered.getUsedConstants.contains helper)
+  let published := recovered.replace fun
+    | .const n us => if n == helper then some (.const ``Std.IterM.DefaultConsumers.forIn'.wf us) else none
+    | _ => none
+  let translated := InitKernelPort.translate InitKernelPort.portName published
+  guard ((Kernel.check visible {} pinned).isOk && (Kernel.check visible {} published).isOk &&
+    (Kernel.check strict {} translated).isOk && Kernel.isDefEqGuarded strict {} translated target &&
+    !Kernel.isDefEqGuarded visible {} published pinned)
+  return s!"missing type dependencies: {absent}. The full type using Std.IterM.DefaultConsumers.forIn'.wf " ++
+    "checks in both public environments and converts to the strict signature. The pinned public " ++
+    "signature retains the default string search loop and fails this conversion."
+
 /-- Compare the concrete forward or backward skip call with the model call wherever it
 occurs in the full signature. The character and predicate instances and the pattern
 available to a generic position are resolved under the declaration's binders. -/
@@ -197,6 +223,8 @@ public def originalTypeGap? (official visible strict : Environment) (owner : Nam
     | .checked => return none
     | .gap reason => return some reason
     | .notApplicable => pure ()
+    if let some gap := finiteSearchLoopGap? visible strict owner source pinned target.type missing then
+      return some gap
     if let some gap ← patternSkipGap? official visible strict owner source pinned target.type missing then
       return some gap
     let gap := "missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString)
