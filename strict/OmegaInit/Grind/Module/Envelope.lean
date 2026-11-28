@@ -19,7 +19,7 @@ variable {α : Type u} [NatModule α]
 public theorem r_rfl (a : Prod α α) : r α a a :=
   Exists.intro Zero.zero (congrArg (fun s => Add.add s Zero.zero) (add_comm a.fst a.snd))
 
-public theorem r_sym {a b : Prod α α} (h : r α a b) : r α b a :=
+public theorem r_sym {a b : Prod α α} : r α a b → r α b a := fun h =>
   Exists.elim h (fun k eq => Exists.intro k
     ((congrArg (fun s => Add.add s k) (add_comm b.fst a.snd)).trans
       (eq.symm.trans (congrArg (fun s => Add.add s k) (add_comm a.fst b.snd)))))
@@ -37,7 +37,7 @@ private theorem collectWitness (a b c d k l : α) :
     ((congrArg (fun s => Add.add s (Add.add k l)) regroup).trans
       (add_assoc (Add.add a d) (Add.add b c) (Add.add k l)))
 
-public theorem r_trans {a b c : Prod α α} (hab : r α a b) (hbc : r α b c) : r α a c :=
+public theorem r_trans {a b c : Prod α α} : r α a b → r α b c → r α a c := fun hab hbc =>
   Exists.elim hab (fun k h₁ => Exists.elim hbc (fun l h₂ =>
     let swap := congrArg (fun s => Add.add (Add.add a.fst c.snd) (Add.add s (Add.add k l))) (add_comm b.fst b.snd)
     let lhs := collectWitness a.fst b.snd b.fst c.snd k l
