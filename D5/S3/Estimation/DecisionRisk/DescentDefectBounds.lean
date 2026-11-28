@@ -5,8 +5,14 @@
    anchors: []
    digest: Finite maxima and an infimum bound descent; TV contraction lifts pairwise to maxima. -/
 
-import D5.S3.TotalVariation.DataProcessing
-import D5.S3.TotalVariation.Metric
+module
+
+public import D5.S3.TotalVariation.DataProcessing
+public import D5.S3.TotalVariation.Metric
+
+/-! Finite stochastic kernels, descent defects, and uniform quotient errors. -/
+
+@[expose] public section
 
 /- Library-search audit trail (2026-08-24):
    * `rg -n -F 'best_descent_error_lower_bound' D5 Golden/Frozen/accepted` and the
