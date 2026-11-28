@@ -20,3 +20,11 @@ OmegaChecks.InitBoundaries.EnvelopeCancellation checks these obligations.
 The public types of instIsPreorderQ and instOrderedAddQ fix the unrestricted quotient
 comparison. Its representative coherence is equivalent to propext at universe zero
 by propextFromRingLift and ringLiftFromPropext in OmegaChecks.InitBoundaries.EnvelopeOrder. -/
+
+/- The official types of toQ_natCast, toQ_pow, instNoNatZeroDivisorsQOfAddRightCancel
+and instIsCharPQOfAddRightCancel use the semiring projection of ofSemiring. Its
+specified arithmetic on Nat representatives forces the classes of (1, 1) and (0, 0)
+to agree. Both class premises hold over the same Nat, with characteristic zero.
+The natural-cast equality is in the second envelope. EnvelopeCancellation.nestedNatCast
+constructs it for any semiring on the first envelope whose casts have the specified
+values. RingInstanceFormation checks all four occurrences of the pinned instance. -/

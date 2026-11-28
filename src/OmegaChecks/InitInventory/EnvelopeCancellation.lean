@@ -12,6 +12,16 @@ open Lean Lean.Grind Std
 private abbrev ringPoint := Ring.OfSemiring.Q.mk (α := Nat) (1, 0)
 private abbrev modulePoint := IntModule.OfNatModule.Q.mk (α := Nat) (1, 0)
 
+/-- The pinned natural-cast equation lives in the iterated envelope. An arbitrary semiring
+on the first envelope suffices when its natural cast has the specified value. -/
+public theorem nestedNatCast {α : Type u} [Semiring α] (s : Semiring (Ring.OfSemiring.Q α))
+    (cast : ∀ n, @NatCast.natCast _ s.natCast n = Ring.OfSemiring.natCast (α := α) n) (n : Nat) :
+    @Ring.OfSemiring.toQ _ s (Ring.OfSemiring.natCast (α := α) n) = @Ring.OfSemiring.natCast _ s n :=
+  congrArg (fun x => @Ring.OfSemiring.toQ _ s x) (cast n).symm
+
+example : type_of% @Ring.OfSemiring.toQ_natCast.{u} :=
+  fun n => nestedNatCast Ring.OfSemiring.ofSemiring.toSemiring (fun _ => rfl) n
+
 private theorem ringLaw :
     Ring.OfSemiring.add (Ring.OfSemiring.neg ringPoint) ringPoint = Ring.OfSemiring.natCast 0 := Ring.OfSemiring.neg_add_cancel ringPoint
 private theorem moduleLaw :
