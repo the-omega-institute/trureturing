@@ -157,10 +157,10 @@ class GitHub:
 
     def matches(self, row, title):
         return (row.get("workflow_id") == self.workflow_id and row.get("display_title") == title
-                and row.get("actor", {}).get("login") == "github-actions[bot]"
+                and (row.get("actor") or {}).get("login") == "github-actions[bot]"
                 and row.get("event") == "workflow_dispatch" and row.get("head_branch") == "dev"
-                and row.get("repository", {}).get("full_name") == self.repo
-                and row.get("head_repository", {}).get("full_name") == self.repo)
+                and (row.get("repository") or {}).get("full_name") == self.repo
+                and (row.get("head_repository") or {}).get("full_name") == self.repo)
 
     def dispatch(self, batch, phase, assignment):
         time.sleep(max(0, self.last_dispatch + 1.0 - time.monotonic()))
@@ -242,11 +242,17 @@ def coordinate(github, schedule, maximum, unit_size, shard_size, refresh=None):
         recent = {row["id"]: row for row in github.runs(min(oldest.values()), all_pages=len(active) > 80)}
         completed = False
         for identifier, (batch, phase, values) in list(active.items()):
-            row = recent.get(identifier) or github.json(f"actions/runs/{identifier}")
-            if not github.matches(row, github.title(batch, phase)):
-                raise ValueError(f"untrusted compiler workflow run {identifier}")
-            if row["status"] != "completed":
+            row = recent.get(identifier)
+            if row is not None and row.get("status") != "completed":
                 continue
+            title = github.title(batch, phase)
+            # A dispatched run can be listed before its identity metadata is populated.
+            if row is None or not github.matches(row, title):
+                row = github.json(f"actions/runs/{identifier}")
+            if row.get("status") != "completed":
+                continue
+            if row.get("id") != identifier or not github.matches(row, title):
+                raise ValueError(f"untrusted compiler workflow run {identifier}")
             if row["conclusion"] == "success":
                 schedule.accept(phase, values, github.result(identifier, batch))
             else:
