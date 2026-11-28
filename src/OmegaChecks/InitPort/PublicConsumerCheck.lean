@@ -14,7 +14,8 @@ private def falseResult : Expr → Expr
   | _ => mkConst `False
 
 public unsafe def main (args : List String) : IO Unit := do
-  let [lib, dir] := args | throw <| IO.userError "expected library and module directories"
+  let [lib, dir, category] := args | throw <| IO.userError "expected library, module directories and type check"
+  unless ["finite", "projection"].contains category do throw <| IO.userError s!"unknown type check {category}"
   initSearchPath (← findSysroot)
   let officialPath ← searchPathRef.get
   for entry in (← (System.FilePath.mk dir).readDir) do
@@ -42,8 +43,21 @@ public unsafe def main (args : List String) : IO Unit := do
         throw <| IO.userError s!"universe parameters or defining modules differ for {name}"
       let pinned := src.type.instantiateLevelParams src.levelParams (dst.levelParams.map Level.param)
       let missing := (translate portName pinned).getUsedConstants.filter fun d => !strict.contains d
-      let .checked ← checkFiniteConsumer official visible strict owner src pinned dst.type missing
-        | throw <| IO.userError s!"unverified finite consumer at {name}"
+      if category == "finite" then
+        let .checked ← checkFiniteConsumer official visible strict owner src pinned dst.type missing
+          | throw <| IO.userError s!"unverified finite consumer at {name}"
+      else
+        let checked := match owner with
+          | `Init.Grind.Ring.Envelope | `Init.Grind.Ring.CommSemiringAdapter =>
+            checkedEnvelopePowZero visible strict owner src pinned dst.type ||
+            checkedOrderFields visible strict owner src pinned dst.type missing ||
+            EnvelopePublicTypes.checked visible strict owner src pinned dst.type
+          | `Init.Internal.Order.Basic =>
+            let orders := [`Lean.Order.ImplicationOrder.instOrder, `Lean.Order.ReverseImplicationOrder.instOrder]
+            missing.any (fun n => orders.contains (originalName n)) &&
+              checkedOrderFields visible strict owner src pinned dst.type missing
+          | _ => false
+        unless src.isTheorem && checked do throw <| IO.userError s!"unverified public projection for {name}"
       let common := translate originalName dst.type
       let lifted := translate portName common
       let wrong := falseResult common

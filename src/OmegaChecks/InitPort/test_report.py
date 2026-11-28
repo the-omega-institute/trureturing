@@ -274,6 +274,26 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(invalid=invalid), self.assertRaisesRegex(ValueError, "finite consumer"):
                 check_coverage(data | {"certifiedFiniteConsumerTypes": invalid})
 
+    def test_projected_ring_proposition_keeps_a_callable_complete_type(self):
+        owner = "Init.Grind.Ring.Envelope"
+        name = "Lean.Grind.Ring.OfSemiring.pow_zero"
+        row = site(owner, name, matchingNameAndModule=True, strictModule="Omega" + owner,
+                   originalTypeChecked=False, originalTypeGap="missing type dependencies: Omega.Lean.Grind.Ring.OfSemiring.npow. "
+                   "A definitionally equal reformulation checks in the public kernels.")
+        data = inventory(row)
+        data["schemaVersion"] = 6
+        data["summary"]["originalTypesChecked"] = 0
+        self.assertEqual(check_coverage(data), (0, [(owner, name)]))
+        row["publicProjectionTypeChecked"] = True
+        data["certifiedProjectionTypes"] = [[owner, name]]
+        data["summary"]["publicProjectionTypesChecked"] = 1
+        self.assertEqual(check_coverage(data), (0, []))
+        with patch("report.finite_consumers.certificates", return_value=[]), self.assertRaisesRegex(ValueError, "live public projection"):
+            verify_complete(data, Path("product"), *check_coverage(data))
+        for bad in ({"originalTypeGap": "equivalence failed"}, {"unsafe": True}, {"matchingNameAndModule": False}):
+            with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, "public projection"):
+                check_coverage(data | {"declarations": [row | bad]})
+
     def test_strict_excluded_middle_is_a_logical_consequence(self):
         row = site("Init.Data.String.Lemmas.Pattern.Basic", "String.Slice.Pattern.Model.IsMatch.exists_isLongestMatch",
                    logicalConsequence="Classical.em", strictLogicalConsequence="Classical.em",

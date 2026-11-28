@@ -163,6 +163,8 @@ def check_coverage(official):
     pointwise_sites = order_consumers.sites(official.get("certifiedPointwiseOrderTypes", []))
     finite_sites = finite_consumers.sites(official.get("certifiedFiniteConsumerTypes", []))
     candidates = finite_consumers.candidates(official["declarations"])
+    projections = finite_consumers.sites(official.get("certifiedProjectionTypes", []))
+    projected_candidates = finite_consumers.candidates(official["declarations"], "projection")
     sites = set()
     direct = 0
     matched = 0
@@ -334,6 +336,12 @@ def check_coverage(official):
                 any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")) or
                 private_type or orders or equivalent or choice_operand or pointwise)):
             raise ValueError(f"uncertified finite consumer public type for {site}")
+        projected = site in projections
+        if projected != row.get("publicProjectionTypeChecked", False) or (projected and (
+                site not in projected_candidates or not port or row["kind"] != "theorem" or
+                any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")) or
+                (owner == ORDER_OWNER and not orders) or private_type or equivalent or choice_operand or pointwise or finite)):
+            raise ValueError(f"uncertified public projection proposition for {site}")
         if port:
             if axiom or witness or (runtime and not (unsafe_runtime or effect or comparison or pointer_hash)) or row["strictModule"] != "Omega" + owner:
                 raise ValueError(f"inconsistent strict match for {owner}/{name}")
@@ -342,7 +350,7 @@ def check_coverage(official):
                 if row.get("originalTypeChecked") is True and row.get("originalTypeGap") is None:
                     original_types += 1
                 elif row.get("originalTypeChecked") is False and row.get("originalTypeGap"):
-                    if not private_type and not orders and not choice_operand and not equivalent and not pointwise and not finite:
+                    if not private_type and not orders and not choice_operand and not equivalent and not pointwise and not finite and not projected:
                         unresolved.append(site)
                 else:
                     raise ValueError(f"inconsistent original type check for {owner}/{name}")
@@ -354,6 +362,8 @@ def check_coverage(official):
             reductions += 1
         elif not endpoint and not argument and not refuter and path != "Quot.sound":
             unresolved.append(site)
+    if not projections <= sites:
+        raise ValueError("public projection certificate has no definition site")
     if not finite_sites <= sites:
         raise ValueError("finite consumer certificate has no definition site")
     if not pointwise_sites <= sites:
@@ -388,6 +398,8 @@ def check_coverage(official):
         raise ValueError("pointwise order count does not agree with the checked sites")
     if summary.get("finiteConsumerTypesChecked", 0) != len(finite_sites):
         raise ValueError("finite consumer count does not agree with the checked sites")
+    if summary.get("publicProjectionTypesChecked", 0) != len(projections):
+        raise ValueError("public projection count does not agree with the checked sites")
     return reductions, unresolved
 
 
@@ -422,7 +434,11 @@ def verify_complete(official, product, reductions, unresolved):
     finite = official.get("certifiedFiniteConsumerTypes", [])
     if finite and finite_consumers.certificates(product, official["declarations"]) != finite:
         raise ValueError("live finite consumer certificates differ from inventory")
-    raw_type_alternatives = blocked | fin_bounds.sites(bounds) | order_consumers.sites(pointwise) | finite_consumers.sites(finite)
+    projections = official.get("certifiedProjectionTypes", [])
+    if projections and finite_consumers.certificates(product, official["declarations"], "projection") != projections:
+        raise ValueError("live public projection certificates differ from inventory")
+    raw_type_alternatives = (blocked | fin_bounds.sites(bounds) | order_consumers.sites(pointwise) |
+                             finite_consumers.sites(finite) | finite_consumers.sites(projections))
     certified = {(owner, name) for owner, name, _, _ in official.get("certifiedImportAllOriginalTypes", [])}
     if any(row["matchingNameAndModule"] and row.get("originalTypeChecked") is not True and
            (row["module"], row["name"]) not in raw_type_alternatives and
@@ -571,6 +587,10 @@ def report(product, require_complete=False):
         official["certifiedFiniteConsumerTypes"] = finite_checks
         official["summary"]["finiteConsumerTypesChecked"] = len(finite_checks)
         finite_sites = finite_consumers.sites(finite_checks)
+        projection_checks = finite_consumers.certificates(product, official["declarations"], "projection")
+        official["certifiedProjectionTypes"] = projection_checks
+        official["summary"]["publicProjectionTypesChecked"] = len(projection_checks)
+        projections = finite_consumers.sites(projection_checks)
         strict_choices = check_strict_reference_choices(product, stage, attempts)
         strict_matches = check_strict_longest_matches(product, stage)
         strict_folds = check_strict_fin_folds(product, stage)
@@ -584,6 +604,8 @@ def report(product, require_complete=False):
         pending.update({site: (*result, "strictEquivalenceWitness") for site, result in strict_equivalences.items()})
         for row in official["declarations"]:
             site = (row["module"], row["name"])
+            if site in projections:
+                row["publicProjectionTypeChecked"] = True
             if site in finite_sites:
                 row["finiteConsumerTypeChecked"] = True
             if site in pointwise_sites:
@@ -633,7 +655,7 @@ def report(product, require_complete=False):
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
                              "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap",
                              "importAllOriginalTypeChecked", "originalTypeOrderDependencies", "originalTypeChoiceDependency", "finBoundProofReplacementChecked",
-                             "pointwiseOrderTypeChecked", "finiteConsumerTypeChecked"])
+                             "pointwiseOrderTypeChecked", "finiteConsumerTypeChecked", "publicProjectionTypeChecked"])
             for row in official["declarations"]:
                 if row["originalTypeChecked"] or row["kind"] == "axiom":
                     continue
@@ -683,7 +705,8 @@ def report(product, require_complete=False):
                                  row.get("originalTypeChoiceDependency"),
                                  "true" if row.get("finBoundProofReplacementChecked") else "",
                                  "true" if row.get("pointwiseOrderTypeChecked") else "",
-                                 "true" if row.get("finiteConsumerTypeChecked") else ""])
+                                 "true" if row.get("finiteConsumerTypeChecked") else "",
+                                 "true" if row.get("publicProjectionTypeChecked") else ""])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
