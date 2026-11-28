@@ -4,7 +4,7 @@
 
 A recoverable binary tile code gives a jammed family at a common charge.
 
-Let m be the floor of (L−8)/5. The tiles A and B comprise a minus rung followed by one and two empty rungs, respectively. Each of the m five-rung blocks independently reads AB or BA. At zero-based site 5i+2, those two choices read minus and empty, respectively. Reading that coordinate recovers the bit in each block, so the construction is injective on labelled words.
+Assume L ≥ 12 throughout this construction. Let m be the floor of (L−8)/5. The tiles A and B comprise a minus rung followed by one and two empty rungs, respectively. Each of the m five-rung blocks independently reads AB or BA. At zero-based site 5i+2, those two choices read minus and empty, respectively. Reading that coordinate recovers the bit in each block, so the construction is injective on labelled words.
 
 The residual length r=L−5m−6 lies between two and six. Its tail, in increasing order of r, is A, B, AA, AB, or BB. The respective numbers of one-empty gaps are 1, 0, 2, 1, and 0. If m plus that tail count is even, the six-rung pad is AAA, which adds three one-empty gaps. Otherwise the pad is BB, which adds none.
 
