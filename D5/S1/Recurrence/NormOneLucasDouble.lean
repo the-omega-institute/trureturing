@@ -56,7 +56,7 @@
    because a second instance has appeared in the source volume, not in advance of one.
 -/
 
-import Mathlib
+import Mathlib.Tactic.LinearCombination
 
 /-!
 # Doubling for a norm-one conjugate pair
