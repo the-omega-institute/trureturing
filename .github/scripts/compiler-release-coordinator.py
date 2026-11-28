@@ -297,7 +297,7 @@ def main():
     parser.add_argument("--directory", type=Path)
     parser.add_argument("--pending", type=Path)
     parser.add_argument("--max-active", type=positive)
-    parser.add_argument("--units-per-batch", type=positive, default=8)
+    parser.add_argument("--units-per-batch", type=positive, default=1)
     parser.add_argument("--shards-per-batch", type=positive, default=1)
     args = parser.parse_args()
     if args.prepare_only:

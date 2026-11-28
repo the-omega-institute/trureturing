@@ -5,7 +5,8 @@
    anchors: []
    digest: For any root x of x²=x+1 (both golden faces φ=goldenRatio and ψ=goldenConj), the adjacency carry x^{k+1}+x^{k+2}=x^{k+3} and the doubling carry 2x^{k+2}=x^{k+3}+x^k preserve value; the two-face invariance is the zero-deficit internal carry ledger. -/
 
-import Mathlib
+import Mathlib.NumberTheory.Real.GoldenRatio
+import Mathlib.Tactic.LinearCombination
 
 namespace D5.S1.Deficit.GoldenCarryLedger
 

@@ -39,12 +39,39 @@ private theorem active_numeric : ∀ (r : Row) (c d : Fin 3) (j : Fin 28),
     0 < d.val →
     ((c.val ≤ d.val ∧ cl r (d.val - c.val) = j.castAdd 14) ↔
       c.val ≤ d.val - 1 ∧ HardinA229589StripData.cl r (d.val - 1 - c.val) = j) := by
-  decide +kernel
+  intro r c d j hd
+  have hs : 0 < d.val - c.val ↔ c.val ≤ d.val - 1 := by omega
+  by_cases hz : 0 < d.val - c.val
+  · have hc0 : c.val ≤ d.val := by omega
+    have hc1 := hs.mp hz
+    have hr : d.val - c.val - 1 = d.val - 1 - c.val := by omega
+    simp only [cl, ite_eq_left hz, hc0, hc1, hr, true_and, Fin.ext_iff, Fin.val_castAdd]
+  · have hc1 : ¬ c.val ≤ d.val - 1 := fun h => hz (hs.mpr h)
+    have hne : (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.cls
+        (r 0, r 1, r 2, r 3)).natAdd 28 ≠ j.castAdd 14 := by
+      intro h
+      have hj := j.isLt
+      have hv := congrArg Fin.val h
+      simp only [Fin.val_natAdd, Fin.val_castAdd] at hv
+      omega
+    simp only [cl, ite_eq_right hz, hc1, hne, and_false, false_and]
 
 private theorem tail_numeric : ∀ (r : Row) (c : Fin 3) (d : Fin 2) (j : Fin 14),
     ((c.val ≤ d.val ∧ cl r (d.val - c.val) = j.natAdd 28) ↔
       c.val ≤ d.val ∧ HardinA229589StripData.cl r (d.val - c.val) = j.natAdd 14) := by
-  decide +kernel
+  intro r c d j
+  by_cases hc : c.val ≤ d.val
+  · have h0 : d.val - c.val = 0 ∨ d.val - c.val = 1 := by omega
+    rcases h0 with h | h
+    · simp only [h, hc, true_and, cl, Nat.lt_irrefl, ite_false,
+        HardinA229589StripData.cl, Nat.zero_ne_one, ite_true, Fin.ext_iff, Fin.val_natAdd,
+        Nat.add_left_cancel_iff]
+    · simp only [h, hc, true_and]
+      unfold cl HardinA229589StripData.cl
+      simp only [Nat.zero_lt_one, ite_true, Nat.sub_self]
+      simp only [Fin.ext_iff, Fin.val_castAdd, Fin.val_natAdd]
+      omega
+  · simp only [hc, false_and]
 
 private theorem active_cut (r : Row) (c : ℕ) (d : Fin 3) (j : Fin 28)
     (hd : 0 < d.val) :
@@ -66,11 +93,25 @@ private theorem tail_cut (r : Row) (c : ℕ) (d : Fin 2) (j : Fin 14) :
 
 private theorem active_table : ∀ (p : Row) (d : Fin 3) (j : Fin 28),
     0 < d.val → HardinA229589StripData.T (HardinA229589StripData.cl p (d.val - 1)) j = T (cl p d.val) (j.castAdd 14) := by
-  decide +kernel
+  intro p d j hd
+  simp only [cl, ite_eq_left hd, T, Matrix.reindex_apply, Matrix.submatrix_apply,
+    finSumFinEquiv_symm_apply_castAdd]
+  rfl
 
 private theorem tail_table : ∀ (p : Row) (d : Fin 2) (j : Fin 14),
     HardinA229589StripData.T (HardinA229589StripData.cl p d.val) (j.natAdd 14) = T (cl p d.val) (j.natAdd 28) := by
-  decide +kernel
+  intro p d j
+  have hd : d.val = 0 ∨ d.val = 1 := by omega
+  rcases hd with h | h
+  · simp only [h, cl, HardinA229589StripData.cl, Nat.lt_irrefl, Nat.zero_ne_one,
+      ite_false, ite_true, T, HardinA229589StripData.T, Matrix.reindex_apply,
+      Matrix.submatrix_apply, finSumFinEquiv_symm_apply_natAdd]
+    rfl
+  · simp only [h, cl, HardinA229589StripData.cl, Nat.zero_lt_one, Nat.sub_self,
+      Nat.zero_ne_one, ite_false, ite_true, T, Matrix.reindex_apply,
+      Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
+      finSumFinEquiv_symm_apply_natAdd]
+    erw [Matrix.fromBlocks_apply₁₂, Fin.append_right, Matrix.submatrix_apply]
 
 /-- The leading two budget sectors reuse the frozen one-defect certificate. -/
 theorem leading_counts (p : Row) (d : Fin 3) (j : Fin 28) :
