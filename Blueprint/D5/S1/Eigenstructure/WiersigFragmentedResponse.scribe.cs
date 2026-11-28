@@ -22,7 +22,13 @@ internal sealed class WiersigFragmentedResponseDocument : IScribeDocumentDefinit
             AssessedProvenance.FromRepo(Source),
             Blocks(
                 Paragraph(Text(
-                    "The partition is a positive size function m on Fin(b). The largest size p "
+                    "The closing paragraph of Wiersig's Section VII asks whether the passive "
+                    + "response bound and rank-one optimality extend to fragmented exceptional "
+                    + "points. The resolution here concerns a collision at a sole eigenvalue E "
+                    + "with strictly positive linewidth, two or more blocks, and a largest "
+                    + "block of size at least two.")),
+                Paragraph(Text(
+                    "The entire partition is prescribed by a positive size function m on Fin(b). The largest size p "
                     + "bounds every size and occurs among them. Positions(m) is the dependent sum "
                     + "of Fin(m(j)) over the block labels j. The complex matrices use orthonormal "
                     + "coordinates indexed by Positions(m).")),
@@ -39,7 +45,8 @@ internal sealed class WiersigFragmentedResponseDocument : IScribeDocumentDefinit
                     + "coefficient N^(p−1) is "
                     + "nonzero. The coefficient norm is at most the linewidth to power p−1 "
                     + "and the loss rank is at least b. One matrix of the same partition "
-                    + "attains both bounds.")),
+                    + "attains both bounds. In particular the minimum feasible loss rank is b, "
+                    + "which makes rank-one loss infeasible in this fragmented setting.")),
                 Paragraph(Text(
                     "The normalized Cayley transform gives the norm bound. Restricting the loss "
                     + "to the eigenspace gives an injective map. For attainment use the "
@@ -47,8 +54,14 @@ internal sealed class WiersigFragmentedResponseDocument : IScribeDocumentDefinit
                     + "loss block is the all-ones matrix. The largest block supplies a unit "
                     + "vector on which A^(p−1) has norm one. Ranks of powers give the "
                     + "prescribed chain multiplicities, and the nilpotent Jordan-chain theorem "
-                    + "gives a basis with those sizes."))),
-            DescribeRole.Theorem))));
+                    + "gives a basis with those sizes.")),
+                Paragraph(Text(
+                    "Collisions embedded in a spectrum with spectator eigenvalues and the "
+                    + "physical response measured by the Frobenius norm are outside this theorem's scope."))),
+            DescribeRole.Theorem,
+            openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("wiersig-2026-passive-fragmented-response"),
+                ResolutionKind.Proved)))));
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);

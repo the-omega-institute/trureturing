@@ -14,6 +14,15 @@ triage: anchor
 
 # Passive response at a fragmented exceptional point
 
+## Verified locator
+
+The source question is the closing paragraph of Section VII, page 6 of
+[arXiv:2610.31268v1](https://arxiv.org/pdf/2610.31268v1). The version of
+record is *Physical Review Research* 8, 043166 (2026).
+[DOI](https://doi.org/10.1103/5451-5wd1)
+
+## Source question and scope
+
 Page 6, Section VII of arXiv:2610.31268v1 asks whether a sharp bound of the
 kind obtained for a single Jordan chain survives fragmentation, and whether
 rank-one loss remains optimal when several chains are present. Equations
