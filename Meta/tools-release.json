@@ -1,6 +1,6 @@
 {
-  "version": "v0.1.1-pr.91.141.gbe3f3eb70a06",
-  "sha256": "058031cfebd6bfa00b64a88da19214ef988560ceb01cb6f7ec0d91586bb6a390",
-  "source_sha": "be3f3eb70a062af6ead14843a7513332dce31f31",
-  "previous_pin": "141668d7d11ce459cff0f83293287dadf75d0a89"
+  "version": "v0.1.1-pr.92.143.g50ea24b92066",
+  "sha256": "dee4061497ecc83297e3232e28ef31e987e9efb56a5a2c8db66759ad705f1d3a",
+  "source_sha": "50ea24b920666e8f54dcc53577d16513d7c20e21",
+  "previous_pin": "4e5034ad72398dd5db2ea5125cf5bec0d6204d31"
 }
