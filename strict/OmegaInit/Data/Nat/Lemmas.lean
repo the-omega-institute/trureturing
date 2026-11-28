@@ -9,6 +9,12 @@ import all OmegaInit.Prelude
 public import OmegaInit.Data.Nat.Basic
 public import OmegaInit.Data.Nat.Div.Basic
 public import OmegaInit.Data.Nat.Log2
+public import OmegaInit.PropLemmas
+public import OmegaInit.Data.Nat.Bitwise.Basic
+import all OmegaInit.Data.Nat.Bitwise.Basic
+import OmegaInit.Data.Nat.Dvd
+import OmegaInit.Data.Nat.MinMax
+import OmegaInit.Data.Nat.Mod
 
 @[expose] public section
 
@@ -461,4 +467,172 @@ export _root_.Omega.Nat (add_lt_add_iff_left add_lt_add_iff_right add_lt_add_of_
   sub_mul_mod sub_one_add_self sub_sub_self succ_mul_pos succ_mul_succ succ_mul_succ_eq
   succ_sub_sub_succ two_pow_pred_add_two_pow_pred two_pow_pred_mul_two two_pow_sub_two_pow_pred
   zero_eq_mul)
+end Nat
+
+port_proof Nat.add_left_max_self by_constructive_casts
+port_proof Nat.add_left_min_self by_constructive_casts
+port_proof Nat.add_right_max_self by_constructive_casts
+port_proof Nat.add_right_min_self by_constructive_casts
+port_definition Nat.decidableBallLT.match_1
+port_definition Nat.decidableBallLT.match_3
+port_definition Nat.decidableBallLT.match_5
+port_definition Nat.decidableExistsFin.match_1
+port_definition Nat.decidableExistsFin.match_3
+port_definition Nat.decidableExistsLT'.match_1
+port_definition Nat.decidableExistsLT.match_1
+port_definition Nat.decidableForallFin.match_1
+port_private_declaration Nat.div_div_div_eq_div.match_1_1
+port_proof Nat.div_div_div_eq_div by_constructive_casts
+port_proof Nat.div_dvd_div by_constructive_casts
+port_private_declaration Nat.mul_dvd_mul_iff_left.match_1_1
+port_proof Nat.mul_dvd_mul_iff_left by_constructive_casts
+port_proof Nat.div_dvd_iff_dvd_mul by_constructive_casts
+port_proof Nat.div_dvd_of_dvd by_constructive_casts
+port_proof Nat.eq_mul_of_div_eq_right by_constructive_casts
+port_proof Nat.eq_mul_of_div_eq_left by_constructive_casts
+port_proof Nat.div_eq_iff_eq_of_dvd_dvd by_constructive_casts
+port_proof Nat.div_left_inj by_constructive_casts
+port_proof Nat.lt_div_iff_mul_lt' by_constructive_casts
+port_proof Nat.div_lt_div_of_lt_of_dvd by_constructive_casts
+port_proof Nat.div_lt_div_right by_constructive_casts
+port_private_declaration Nat.div_mod_unique.match_1_1
+port_private_declaration Nat.div_mod_unique.match_1_3
+port_proof Nat.div_mod_unique by_constructive_casts
+port_proof Nat.div_mul_right_comm by_constructive_casts
+port_alternative_proof Nat.le_iff_ne_zero_of_dvd from OmegaChecks.InitPort.Alternatives.NatOrder
+namespace Omega.Nat
+public theorem div_ne_zero_iff_of_dvd {b a : Nat} (hba : @Omega.Dvd.dvd Nat Omega.Nat.instDvd b a) :
+    Iff (Ne (Nat.div a b) Nat.zero) (And (Ne a Nat.zero) (Ne b Nat.zero)) :=
+  Iff.intro (fun nz =>
+    let h := Nat.div_ne_zero_iff.mp nz
+    And.intro ((Nat.le_iff_ne_zero_of_dvd h.left hba).mp h.right) h.left)
+    (fun h => Nat.div_ne_zero_iff.mpr (And.intro h.right ((Nat.le_iff_ne_zero_of_dvd h.right hba).mpr h.left)))
+end Omega.Nat
+port_proof Nat.div_pos_iff by_constructive_casts
+port_proof Nat.dvd_add_left by_constructive_casts
+port_proof Nat.dvd_add_right by_constructive_casts
+port_proof Nat.dvd_iff_div_mul_eq by_constructive_casts
+port_proof Nat.dvd_iff_dvd_dvd by_constructive_casts
+port_proof Nat.dvd_mul_of_div_dvd by_constructive_casts
+port_proof Nat.pow_dvd_pow by_constructive_casts
+port_proof Nat.pow_dvd_of_le_of_pow_dvd by_constructive_casts
+port_proof Nat.dvd_of_pow_dvd by_constructive_casts
+port_proof Nat.eq_of_dvd_of_div_eq_one by_constructive_casts
+port_proof Nat.eq_one_of_mul_eq_one_right by_constructive_casts
+port_proof Nat.eq_one_of_mul_eq_one_left by_constructive_casts
+port_proof Nat.eq_zero_of_dvd_of_div_eq_zero by_constructive_casts
+port_alternative_proof Nat.eq_zero_of_dvd_of_lt from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.succ_max_succ by_constructive_casts
+port_private_declaration Nat.max_assoc.match_1_1
+port_definition Nat.max_assoc._f by_constructive_casts
+port_proof Nat.max_assoc by_constructive_casts
+port_proof Nat.instAssociativeMax by_constructive_casts
+port_alternative_proof Nat.min_assoc from OmegaChecks.InitPort.Alternatives.Extract
+port_proof Nat.instAssociativeMin by_constructive_casts
+public protected theorem Omega.Nat.max_self (a : Nat) : Eq (Nat.max a a) a :=
+  Omega.Nat.max_eq_right (Omega.Nat.le_refl a)
+port_proof Nat.instIdempotentOpMax by_constructive_casts
+public protected theorem Omega.Nat.min_self (a : Nat) : Eq (Nat.min a a) a :=
+  Omega.Nat.min_eq_left (Omega.Nat.le_refl a)
+port_proof Nat.instIdempotentOpMin by_constructive_casts
+port_proof Nat.instLawfulIdentityMaxOfNat by_constructive_casts
+port_proof Nat.le_of_lt_add_of_dvd by_constructive_casts
+port_proof Nat.mul_ne_zero_iff by_constructive_casts
+port_proof Nat.mul_ne_zero by_constructive_casts
+port_proof Nat.log2_two_mul by_constructive_casts
+port_alternative_proof Nat.lt_div_iff_mul_lt_of_dvd from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.lt_mul_iff_one_lt_left by_constructive_casts
+port_proof Nat.lt_mul_iff_one_lt_right by_constructive_casts
+port_private_declaration Nat.lt_mul_self_iff.match_1_1
+port_proof Nat.lt_mul_self_iff by_constructive_casts
+port_proof Nat.max_add_left_self by_constructive_casts
+port_proof Nat.max_add_right_self by_constructive_casts
+port_proof Nat.max_left_comm by_constructive_casts
+port_proof Nat.succ_min_succ by_constructive_casts
+port_private_declaration Nat.max_min_distrib_left.match_1_1
+port_definition Nat.max_min_distrib_left._f by_constructive_casts
+port_proof Nat.max_min_distrib_left by_constructive_casts
+port_proof Nat.max_min_distrib_right by_constructive_casts
+port_proof Nat.max_right_comm by_constructive_casts
+port_proof Nat.min_add_left_self by_constructive_casts
+port_proof Nat.min_add_right_self by_constructive_casts
+port_alternative_proof Nat.min_eq_zero_iff from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.min_left_comm by_constructive_casts
+port_private_declaration Nat.min_max_distrib_left.match_1_1
+port_definition Nat.min_max_distrib_left._f by_constructive_casts
+port_proof Nat.min_max_distrib_left by_constructive_casts
+port_proof Nat.min_max_distrib_right by_constructive_casts
+port_proof Nat.min_right_comm by_constructive_casts
+port_proof Nat.min_self_assoc by_constructive_casts
+port_proof Nat.min_self_assoc' by_constructive_casts
+port_proof Nat.mod_mod by_constructive_casts
+port_proof Nat.mul_mod_mod by_constructive_casts
+port_proof Nat.mod_mul_mod by_constructive_casts
+port_proof Nat.mul_div_cancel_left' by_constructive_casts
+port_proof Nat.mul_div_eq_iff_dvd by_constructive_casts
+port_proof Nat.mul_div_right_comm by_constructive_casts
+port_proof Nat.mul_dvd_mul_iff_right by_constructive_casts
+port_private_declaration Nat.mul_dvd_of_dvd_div.match_1_1
+port_proof Nat.mul_dvd_of_dvd_div by_constructive_casts
+port_proof Nat.mul_lt_mul_pow_succ by_constructive_casts
+port_proof Nat.ne_zero_of_mul_ne_zero_left by_constructive_casts
+port_proof Nat.ne_zero_of_mul_ne_zero_right by_constructive_casts
+port_proof Nat.one_shiftLeft by_constructive_casts
+port_proof Nat.pow_mod by_constructive_casts
+port_private_declaration Nat.pred_max_pred.match_1_1
+port_proof Nat.pred_max_pred by_constructive_casts
+port_private_declaration Nat.pred_min_pred.match_1_1
+port_proof Nat.pred_min_pred by_constructive_casts
+port_proof Nat.shiftLeft_succ_inside by_constructive_casts
+port_private_declaration Nat.shiftLeft_succ.match_1_1
+port_definition Nat.shiftLeft_succ._f by_constructive_casts
+port_proof Nat.shiftLeft_succ by_constructive_casts
+port_private_declaration Nat.shiftLeft_add._simp_1_3
+port_private_declaration Nat.shiftLeft_add.match_1_1
+port_definition Nat.shiftLeft_add._f by_constructive_casts
+port_proof Nat.shiftLeft_add by_constructive_casts
+port_proof Nat.shiftLeft_shiftRight by_constructive_casts
+port_proof Nat.shiftLeft_zero by_constructive_casts
+port_private_declaration Nat.shiftRight_succ_inside.match_1_1
+port_definition Nat.shiftRight_succ_inside._f by_constructive_casts
+port_proof Nat.shiftRight_succ_inside by_constructive_casts
+port_proof Nat.sub_eq_sub_min by_constructive_casts
+port_proof Nat.sub_add_min_cancel by_constructive_casts
+port_proof Nat.sub_eq_max_sub by_constructive_casts
+port_definition Nat.sub_lt_self
+port_private_declaration Nat.sub_max_sub_right.match_1_1
+port_definition Nat.sub_max_sub_right._f by_constructive_casts
+port_proof Nat.sub_max_sub_right by_constructive_casts
+port_alternative_proof Nat.sub_min_sub_right from OmegaChecks.InitPort.Alternatives.Extract
+port_private_declaration Nat.sub_sub_eq_min.match_1_1
+port_definition Nat.sub_sub_eq_min._f by_constructive_casts
+port_proof Nat.sub_sub_eq_min by_constructive_casts
+port_private_declaration Nat.zero_shiftLeft.match_1_1
+port_definition Nat.zero_shiftLeft._f by_constructive_casts
+port_proof Nat.zero_shiftLeft by_constructive_casts
+port_private_declaration Nat.zero_shiftRight.match_1_1
+port_definition Nat.zero_shiftRight._f by_constructive_casts
+port_proof Nat.zero_shiftRight by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (add_left_max_self add_left_min_self add_right_max_self add_right_min_self
+  div_div_div_eq_div div_dvd_div div_dvd_iff_dvd_mul div_dvd_of_dvd div_eq_iff_eq_of_dvd_dvd
+  div_left_inj div_lt_div_of_lt_of_dvd div_lt_div_right div_mod_unique div_mul_right_comm
+  div_ne_zero_iff_of_dvd div_pos_iff dvd_add_left dvd_add_right dvd_iff_div_mul_eq dvd_iff_dvd_dvd
+  dvd_mul_of_div_dvd dvd_of_pow_dvd eq_mul_of_div_eq_left eq_mul_of_div_eq_right
+  eq_of_dvd_of_div_eq_one eq_one_of_mul_eq_one_left eq_one_of_mul_eq_one_right
+  eq_zero_of_dvd_of_div_eq_zero eq_zero_of_dvd_of_lt instAssociativeMax instAssociativeMin
+  instIdempotentOpMax instIdempotentOpMin instLawfulIdentityMaxOfNat le_iff_ne_zero_of_dvd
+  le_of_lt_add_of_dvd log2_two_mul lt_div_iff_mul_lt' lt_div_iff_mul_lt_of_dvd lt_mul_iff_one_lt_left
+  lt_mul_iff_one_lt_right lt_mul_self_iff max_add_left_self max_add_right_self max_assoc max_left_comm
+  max_min_distrib_left max_min_distrib_right max_right_comm max_self min_add_left_self
+  min_add_right_self min_assoc min_eq_zero_iff min_left_comm min_max_distrib_left
+  min_max_distrib_right min_right_comm min_self min_self_assoc min_self_assoc' mod_mod mod_mul_mod
+  mul_div_cancel_left' mul_div_eq_iff_dvd mul_div_right_comm mul_dvd_mul_iff_left
+  mul_dvd_mul_iff_right mul_dvd_of_dvd_div mul_lt_mul_pow_succ mul_mod_mod mul_ne_zero mul_ne_zero_iff
+  ne_zero_of_mul_ne_zero_left ne_zero_of_mul_ne_zero_right one_shiftLeft pow_dvd_of_le_of_pow_dvd
+  pow_dvd_pow pow_mod pred_max_pred pred_min_pred shiftLeft_add shiftLeft_shiftRight shiftLeft_succ
+  shiftLeft_succ_inside shiftLeft_zero shiftRight_succ_inside sub_add_min_cancel sub_eq_max_sub
+  sub_eq_sub_min sub_lt_self sub_max_sub_right sub_min_sub_right sub_sub_eq_min succ_max_succ
+  succ_min_succ zero_shiftLeft zero_shiftRight)
 end Nat

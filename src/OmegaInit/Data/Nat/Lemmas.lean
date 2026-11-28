@@ -3,6 +3,8 @@ public import Init.Data.Nat.Lemmas
 public import OmegaInit.Data.Nat.Basic
 public import OmegaInit.Data.Nat.Div.Basic
 public import OmegaInit.Data.Nat.Log2
+public import OmegaInit.PropLemmas
+public import OmegaInit.Data.Nat.Bitwise.Basic
 
 /-! Namespace aliases to the pinned public interface. -/
 public section
@@ -37,3 +39,46 @@ export _root_.Nat (add_lt_add_iff_left add_lt_add_iff_right add_lt_add_of_le_of_
   succ_sub_sub_succ two_pow_pred_add_two_pow_pred two_pow_pred_mul_two two_pow_sub_two_pow_pred
   zero_eq_mul)
 end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_left_max_self add_left_min_self add_right_max_self add_right_min_self
+  div_div_div_eq_div div_dvd_div div_dvd_iff_dvd_mul div_dvd_of_dvd div_eq_iff_eq_of_dvd_dvd
+  div_left_inj div_lt_div_of_lt_of_dvd div_lt_div_right div_mod_unique div_mul_right_comm
+  div_ne_zero_iff_of_dvd div_pos_iff dvd_add_left dvd_add_right dvd_iff_div_mul_eq dvd_iff_dvd_dvd
+  dvd_mul_of_div_dvd dvd_of_pow_dvd eq_mul_of_div_eq_left eq_mul_of_div_eq_right
+  eq_of_dvd_of_div_eq_one eq_one_of_mul_eq_one_left eq_one_of_mul_eq_one_right
+  eq_zero_of_dvd_of_div_eq_zero eq_zero_of_dvd_of_lt instAssociativeMax instAssociativeMin
+  instIdempotentOpMax instIdempotentOpMin instLawfulIdentityMaxOfNat le_iff_ne_zero_of_dvd
+  le_of_lt_add_of_dvd log2_two_mul lt_div_iff_mul_lt' lt_div_iff_mul_lt_of_dvd lt_mul_iff_one_lt_left
+  lt_mul_iff_one_lt_right lt_mul_self_iff max_add_left_self max_add_right_self max_assoc max_left_comm
+  max_min_distrib_left max_min_distrib_right max_right_comm max_self min_add_left_self
+  min_add_right_self min_assoc min_eq_zero_iff min_left_comm min_max_distrib_left
+  min_max_distrib_right min_right_comm min_self min_self_assoc min_self_assoc' mod_mod mod_mul_mod
+  mul_div_cancel_left' mul_div_eq_iff_dvd mul_div_right_comm mul_dvd_mul_iff_left
+  mul_dvd_mul_iff_right mul_dvd_of_dvd_div mul_lt_mul_pow_succ mul_mod_mod mul_ne_zero mul_ne_zero_iff
+  ne_zero_of_mul_ne_zero_left ne_zero_of_mul_ne_zero_right one_shiftLeft pow_dvd_of_le_of_pow_dvd
+  pow_dvd_pow pow_mod pred_max_pred pred_min_pred shiftLeft_add shiftLeft_shiftRight shiftLeft_succ
+  shiftLeft_succ_inside shiftLeft_zero shiftRight_succ_inside sub_add_min_cancel sub_eq_max_sub
+  sub_eq_sub_min sub_lt_self sub_max_sub_right sub_min_sub_right sub_sub_eq_min succ_max_succ
+  succ_min_succ zero_shiftLeft zero_shiftRight)
+end Omega.Nat
+
+namespace Omega.Nat.decidableBallLT
+export _root_.Nat.decidableBallLT (match_1 match_3 match_5)
+end Omega.Nat.decidableBallLT
+
+namespace Omega.Nat.decidableExistsFin
+export _root_.Nat.decidableExistsFin (match_1 match_3)
+end Omega.Nat.decidableExistsFin
+
+namespace Omega.Nat.decidableExistsLT'
+export _root_.Nat.decidableExistsLT' (match_1)
+end Omega.Nat.decidableExistsLT'
+
+namespace Omega.Nat.decidableExistsLT
+export _root_.Nat.decidableExistsLT (match_1)
+end Omega.Nat.decidableExistsLT
+
+namespace Omega.Nat.decidableForallFin
+export _root_.Nat.decidableForallFin (match_1)
+end Omega.Nat.decidableForallFin
