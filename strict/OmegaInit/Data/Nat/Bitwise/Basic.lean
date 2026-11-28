@@ -1,6 +1,6 @@
 module
 prelude
-public import OmegaInit.Prelude
+public import OmegaInit.Core
 
 noncomputable section
 
@@ -50,3 +50,5 @@ public section
 namespace Nat
 export _root_.Omega.Nat (bitwise land lor shiftRight testBit)
 end Nat
+
+port_definition Nat.hasNotBit

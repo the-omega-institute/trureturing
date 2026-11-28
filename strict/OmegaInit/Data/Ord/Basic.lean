@@ -6,6 +6,9 @@ Authors: Dany Fabian, Sebastian Ullrich
 module
 prelude
 public import OmegaInit.Core
+public import OmegaInit.Data.Nat.Bitwise.Basic
+import all OmegaInit.Data.Nat.Bitwise.Basic
+import all OmegaInit.Prelude
 
 noncomputable section
 
@@ -13,27 +16,28 @@ noncomputable section
 
 port_inductive Ordering
 
+port_definition Ordering.ctorIdx
+port_definition Ordering.then._sparseCasesOn_1
+port_definition Ordering.then.match_1
+port_definition Ordering.isLE._sparseCasesOn_1
+port_definition Ordering.isLE.match_1
+port_definition Ordering.isLT._sparseCasesOn_1
+port_definition Ordering.isLT.match_1
+port_definition Ordering.then
+port_definition Ordering.isEq
+port_definition Ordering.isNe
+port_definition Ordering.isLE
+port_definition Ordering.isLT
+port_definition Ordering.isGT
+port_definition Ordering.isGE
+
 namespace Omega
 
 namespace Ordering
 
 def swap : Ordering → Ordering := Ordering.rec gt «eq» lt
 
-@[no_expose] def «then» (a b : Ordering) : Ordering := Ordering.rec a b a a
-
 def then' (a b : Ordering) : Ordering := Ordering.rec a b a a
-
-@[no_expose] def isEq : Ordering → Bool := Ordering.rec Bool.false Bool.true Bool.false
-
-@[no_expose] def isNe : Ordering → Bool := Ordering.rec Bool.true Bool.false Bool.true
-
-@[no_expose] def isLE : Ordering → Bool := Ordering.rec Bool.true Bool.true Bool.false
-
-@[no_expose] def isLT : Ordering → Bool := Ordering.rec Bool.true Bool.false Bool.false
-
-@[no_expose] def isGT : Ordering → Bool := Ordering.rec Bool.false Bool.false Bool.true
-
-@[no_expose] def isGE : Ordering → Bool := Ordering.rec Bool.false Bool.true Bool.true
 
 protected theorem «forall» {p : Ordering → Prop} :
     Iff (∀ o, p o) (And (p lt) (And (p «eq») (p gt))) :=
@@ -420,7 +424,8 @@ theorem isLE_and_isGE_eq : ∀ {o : Ordering}, Eq (Bool.and (isLE o) (isGE o)) (
   @Ordering.rec _ Omega.rfl Omega.rfl Omega.rfl
 
 theorem then'_eq_then : ∀ (a b : Ordering), Eq (then' a b) («then» a b) :=
-  fun _ _ => Omega.rfl
+  fun a => Ordering.rec (motive := fun o => ∀ b, Eq (then' o b) («then» o b))
+    (fun _ => Omega.rfl) (fun _ => Omega.rfl) (fun _ => Omega.rfl) a
 
 end Ordering
 
