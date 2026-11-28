@@ -302,13 +302,14 @@ port_proof Nat.add_div_right
 port_proof Nat.add_mul_div_left
 port_proof Nat.add_mul_div_right
 port_proof Nat.div_eq_of_lt_le
+port_proof Nat.div_div_eq_div_mul
 port_proof Nat.mul_sub_div by_constructive_casts
 port_definition Nat.instDvd with_native_code
 attribute [instance] Omega.Nat.instDvd
 
 public section
 namespace Nat
-export _root_.Omega.Nat (add_div_right add_mul_div_left add_mul_div_right div_eq_of_lt_le instDvd mul_sub_div sub_mul_div_of_le)
+export _root_.Omega.Nat (add_div_right add_mul_div_left add_mul_div_right div_div_eq_div_mul div_eq_of_lt_le instDvd mul_sub_div sub_mul_div_of_le)
 end Nat
 
 port_proof Nat.zero_mod
