@@ -16,17 +16,9 @@ port_definition Lean.Loop.ctorIdx with_native_code
 port_definition Lean.Loop.noConfusionType
 port_definition Lean.Loop.noConfusion
 port_definition Lean.Loop.forIn.match_1 with_native_code
-namespace Omega.Lean.Loop
-
-@[expose] public def _sizeOf_1 (loop : Omega.Lean.Loop) : Nat :=
-  match loop with
-  | .mk => 1
-
-public instance _sizeOf_inst : Omega.SizeOf Omega.Lean.Loop :=
-  Omega.SizeOf.mk _sizeOf_1
-
-end Omega.Lean.Loop
-
+port_definition Lean.Loop._sizeOf_1
+port_definition Lean.Loop._sizeOf_inst
+attribute [instance] Omega.Lean.Loop._sizeOf_inst
 port_proof Lean.Loop.mk.sizeOf_spec by_reflexivity
 
 /- At the identity monad, repeatM on an always-continuing step supplies an
