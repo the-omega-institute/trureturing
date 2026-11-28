@@ -9,3 +9,31 @@ public section
 namespace Omega.Nat
 export _root_.Nat (add_add_add_comm add_eq_left add_eq_right add_eq_zero_iff add_left_cancel_iff add_left_inj add_right_cancel_iff add_right_inj add_sub_cancel_right add_succ_sub_one eq_zero_of_add_eq_zero_right le_log2 left_eq_add log2_eq_iff log2_lt lt_iff_add_one_le lt_one_add_iff mul_eq_zero mul_right_comm one_add one_add_le_iff one_add_sub_one one_le_of_lt one_lt_succ_succ one_pow pow_add pow_add' pow_add_one' pow_mul pow_mul' pow_right_comm pow_succ' pow_two pred_eq_of_eq_succ pred_one_add pred_sub right_eq_add sub_one sub_right_comm sub_succ' succ_add_eq_add_succ succ_add_sub_one succ_eq_one_add succ_le succ_ne_succ succ_sub_one two_pow_succ)
 end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_lt_add_iff_left add_lt_add_iff_right add_lt_add_of_le_of_lt
+  add_lt_add_of_lt_of_le add_mod add_mod_eq_add_mod_left add_mod_eq_add_mod_right add_mod_mod
+  add_one_mul_add_one add_pos_left add_self_ne_one add_sub_cancel' add_sub_one_le_mul
+  add_sub_sub_add_right div_add_mod' div_eq_zero_iff div_le_div_right div_le_iff_le_mul_add_pred
+  div_lt_one_iff div_mul_div_comm div_mul_div_le div_ne_zero_iff eq_div_of_mul_eq_left
+  eq_div_of_mul_eq_right eq_of_dvd_of_lt_two_mul exists_eq_add_of_le exists_eq_add_of_le'
+  exists_eq_add_of_lt exists_ne_zero le_mul_of_pos_left le_mul_of_pos_right le_mul_self le_of_mod_lt
+  le_of_pred_lt le_self_pow le_sub_of_add_le' log2_self_le log2_zero lt_div_mul_add lt_iff_le_pred
+  lt_log2_self lt_mul_div_succ lt_mul_of_div_lt lt_of_add_lt_add_left lt_of_add_lt_add_right
+  lt_of_div_lt_div lt_pow_self lt_two_pow_self mod_add_div' mod_add_mod mod_div_self mod_eq_iff_lt
+  mod_eq_sub mod_succ mod_succ_eq_iff_lt mod_two_bne_zero mod_two_eq_zero_or_one mod_two_ne_one
+  mod_two_ne_zero mod_two_not_eq_one mod_two_not_eq_zero mod_two_pow_self mul_add_div
+  mul_div_le_mul_div_assoc mul_div_mul_comm mul_eq_left mul_eq_right mul_le_add_right mul_le_of_le_div
+  mul_left_cancel mul_left_cancel_iff mul_left_inj mul_lt_mul_of_le_of_lt mul_lt_mul_of_le_of_lt'
+  mul_lt_mul_of_lt_of_le mul_lt_mul_of_lt_of_le' mul_mod mul_mod_mul_right mul_mul_mul_comm
+  mul_ne_mul_left mul_ne_mul_right mul_right_cancel mul_right_cancel_iff mul_right_inj
+  mul_self_le_mul_self mul_self_sub_mul_self_eq not_dvd_of_pos_of_lt not_succ_lt_self one_le_div_iff
+  one_le_iff_ne_zero one_le_two_pow one_lt_pow one_lt_two_pow one_lt_two_pow' one_lt_two_pow_iff
+  one_mod one_mod_eq_one one_mod_two_pow one_mod_two_pow_eq_one one_sub pos_of_lt_add_left
+  pos_of_lt_add_right pow_eq pow_lt_pow_of_lt pow_lt_pow_succ pow_pred_mul pow_sub_mul_pow
+  pow_two_sub_pow_two pred_add_self pred_eq_self_iff self_add_pred self_add_sub_one sub_add_comm
+  sub_add_lt_sub sub_lt_add_one sub_lt_of_pos_le sub_lt_succ sub_mod_eq_zero_of_mod_eq sub_mul_div
+  sub_mul_mod sub_one_add_self sub_sub_self succ_mul_pos succ_mul_succ succ_mul_succ_eq
+  succ_sub_sub_succ two_pow_pred_add_two_pow_pred two_pow_pred_mul_two two_pow_sub_two_pow_pred
+  zero_eq_mul)
+end Omega.Nat

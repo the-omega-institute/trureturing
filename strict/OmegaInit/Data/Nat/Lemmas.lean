@@ -257,3 +257,208 @@ port_proof Nat.log2_eq_iff using Omega.Nat.logEq
 namespace Nat
 export _root_.Omega.Nat (le_log2 log2_eq_iff log2_lt)
 end Nat
+
+port_private_declaration Nat.lt_of_add_lt_add_right.match_1_1
+port_definition Nat.lt_of_add_lt_add_right._f
+port_proof Nat.lt_of_add_lt_add_right by_constructive_casts
+port_proof Nat.lt_of_add_lt_add_left by_constructive_casts
+port_proof Nat.add_lt_add_iff_left by_constructive_casts
+port_proof Nat.add_lt_add_iff_right by_constructive_casts
+port_proof Nat.add_lt_add_of_le_of_lt by_constructive_casts
+port_proof Nat.add_lt_add_of_lt_of_le by_constructive_casts
+port_proof Nat.mod_add_mod by_constructive_casts
+port_proof Nat.add_mod_mod by_constructive_casts
+port_proof Nat.add_mod by_constructive_casts
+port_proof Nat.add_mod_eq_add_mod_right by_constructive_casts
+port_proof Nat.add_mod_eq_add_mod_left by_constructive_casts
+port_proof Nat.add_one_mul_add_one by_constructive_casts
+port_proof Nat.add_pos_left by_constructive_casts
+port_private_declaration Nat.add_self_ne_one.match_1_1
+port_proof Nat.add_self_ne_one by_constructive_casts
+port_proof Nat.add_sub_cancel' by_constructive_casts
+port_proof Nat.le_mul_of_pos_right by_constructive_casts
+port_proof Nat.add_sub_one_le_mul by_constructive_casts
+port_proof Nat.add_sub_sub_add_right by_constructive_casts
+port_proof Nat.div_add_mod' by_constructive_casts
+port_alternative_proof Nat.div_lt_one_iff from OmegaChecks.InitPort.Alternatives.NatOrder
+namespace Omega.Nat
+protected theorem div_eq_zero_iff {a b : Nat} :
+    Iff (Eq (Nat.div a b) 0) (Or (Eq b 0) (Nat.lt a b)) :=
+  Iff.intro (fun eq => (eq_zero_or_pos b).elim Or.inl (fun pos =>
+    Or.inr ((div_lt_one_iff pos).mp (Eq.subst (motive := fun k => Nat.lt k 1) eq.symm Nat.zero_lt_one))))
+    (fun h => h.elim (fun z => z.symm ▸ Nat.div_zero a) (fun lt => Nat.div_eq_of_lt lt))
+end Omega.Nat
+namespace Omega.Nat
+protected theorem div_le_div_right {a b c : Nat} (h : Nat.le a b) :
+    Nat.le (Nat.div a c) (Nat.div b c) :=
+  Nat.rec (motive := fun k => Nat.le (Nat.div a k) (Nat.div b k))
+    ((Nat.div_zero a).symm ▸ (Nat.div_zero b).symm ▸ Nat.le_refl 0)
+    (fun k _ => (le_div_iff_mul_le (Nat.zero_lt_succ k)).2 (Nat.le_trans (div_mul_le_self ..) h)) c
+end Omega.Nat
+port_proof Nat.div_le_iff_le_mul_add_pred by_constructive_casts
+port_proof Nat.div_mul_div_comm by_constructive_casts
+port_proof Nat.mul_mul_mul_comm by_constructive_casts
+port_alternative_proof Nat.div_mul_div_le from OmegaChecks.InitPort.Alternatives.NatOrder
+namespace Omega.Nat
+protected theorem div_ne_zero_iff {a b : Nat} :
+    Iff (Ne (Nat.div a b) 0) (And (Ne b 0) (Nat.le b a)) :=
+  Iff.intro (fun nz => And.intro (fun z => nz (Nat.div_eq_zero_iff.mpr (Or.inl z)))
+    (Nat.le_of_not_gt (fun lt => nz (Nat.div_eq_zero_iff.mpr (Or.inr lt)))))
+    (fun h z => (Nat.div_eq_zero_iff.mp z).elim h.left (Nat.not_lt_of_ge h.right))
+end Omega.Nat
+port_proof Nat.eq_div_of_mul_eq_left by_constructive_casts
+port_proof Nat.eq_div_of_mul_eq_right by_constructive_casts
+port_alternative_proof Nat.eq_of_dvd_of_lt_two_mul from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.exists_eq_add_of_le by_constructive_casts
+port_proof Nat.exists_eq_add_of_le' by_constructive_casts
+port_proof Nat.exists_eq_add_of_lt by_constructive_casts
+port_alternative_proof Nat.exists_ne_zero from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.le_mul_of_pos_left by_constructive_casts
+port_private_declaration Nat.le_mul_self.match_1_1
+port_proof Nat.le_mul_self by_constructive_casts
+port_proof Nat.le_of_mod_lt by_constructive_casts
+port_private_declaration Nat.le_of_pred_lt.match_1_1
+port_proof Nat.le_of_pred_lt by_constructive_casts
+port_proof Nat.one_le_iff_ne_zero by_constructive_casts
+port_private_declaration Nat.le_self_pow.match_1_1
+port_proof Nat.le_self_pow by_constructive_casts
+port_proof Nat.le_sub_of_add_le' by_constructive_casts
+port_proof Nat.log2_self_le by_constructive_casts
+port_proof Nat.log2_zero by_constructive_casts
+port_proof Nat.lt_div_mul_add by_constructive_casts
+port_private_declaration Nat.lt_iff_le_pred.match_1_1
+port_proof Nat.lt_iff_le_pred by_constructive_casts
+port_private_declaration Nat.lt_log2_self.match_1_1
+port_proof Nat.lt_log2_self by_constructive_casts
+port_proof Nat.lt_mul_div_succ by_constructive_casts
+port_proof Nat.lt_mul_of_div_lt by_constructive_casts
+port_proof Nat.lt_of_div_lt_div by_constructive_casts
+port_proof Nat.mul_lt_mul_of_le_of_lt by_constructive_casts
+port_proof Nat.pow_lt_pow_succ by_constructive_casts
+port_proof Nat.lt_pow_self by_constructive_casts
+port_proof Nat.lt_two_pow_self by_constructive_casts
+port_proof Nat.mod_add_div' by_constructive_casts
+port_proof Nat.mod_div_self by_constructive_casts
+port_proof Nat.mod_eq_iff_lt by_constructive_casts
+port_proof Nat.mod_eq_sub by_constructive_casts
+port_proof Nat.mod_succ by_constructive_casts
+port_proof Nat.mod_succ_eq_iff_lt by_constructive_casts
+port_alternative_proof Nat.mod_two_eq_zero_or_one from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.mod_two_bne_zero from OmegaChecks.InitPort.Alternatives.NatBits
+port_alternative_proof Nat.mod_two_not_eq_one from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.mod_two_ne_one by_constructive_casts
+port_alternative_proof Nat.mod_two_not_eq_zero from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.mod_two_ne_zero by_constructive_casts
+port_proof Nat.mod_two_pow_self by_constructive_casts
+port_alternative_proof Nat.mul_add_div from OmegaChecks.InitPort.Alternatives.NatOrder
+namespace Omega.Nat
+theorem mul_div_le_mul_div_assoc (a b c : Nat) :
+    Nat.le (Nat.mul a (Nat.div b c)) (Nat.div (Nat.mul a b) c) :=
+  Nat.rec (motive := fun k => Nat.le (Nat.mul a (Nat.div b k)) (Nat.div (Nat.mul a b) k))
+    ((Nat.div_zero b).symm ▸ (Nat.div_zero (Nat.mul a b)).symm ▸ Nat.le_refl 0)
+    (fun k _ => (le_div_iff_mul_le (Nat.zero_lt_succ k)).2
+      ((Nat.mul_assoc a (Nat.div b (succ k)) (succ k)).symm ▸
+        Nat.mul_le_mul_left a (div_mul_le_self ..))) c
+end Omega.Nat
+port_proof Nat.mul_div_mul_comm by_constructive_casts
+port_private_declaration Nat.mul_left_cancel.match_1_1
+port_proof Nat.mul_left_cancel by_constructive_casts
+port_private_declaration Nat.mul_left_cancel_iff.match_1_1
+port_proof Nat.mul_left_cancel_iff by_constructive_casts
+port_proof Nat.mul_right_inj by_constructive_casts
+port_proof Nat.mul_eq_left by_constructive_casts
+port_proof Nat.mul_right_cancel by_constructive_casts
+port_private_declaration Nat.mul_right_cancel_iff.match_1_1
+port_proof Nat.mul_right_cancel_iff by_constructive_casts
+port_proof Nat.mul_left_inj by_constructive_casts
+port_proof Nat.mul_eq_right by_constructive_casts
+port_private_declaration Nat.mul_le_add_right.match_1_1
+port_proof Nat.mul_le_add_right by_constructive_casts
+port_proof Nat.mul_le_of_le_div by_constructive_casts
+port_proof Nat.mul_lt_mul_of_le_of_lt' by_constructive_casts
+port_proof Nat.mul_lt_mul_of_lt_of_le by_constructive_casts
+port_proof Nat.mul_lt_mul_of_lt_of_le' by_constructive_casts
+port_proof Nat.mul_mod by_constructive_casts
+port_proof Nat.mul_mod_mul_right by_constructive_casts
+port_proof Nat.mul_ne_mul_left by_constructive_casts
+port_proof Nat.mul_ne_mul_right by_constructive_casts
+port_proof Nat.mul_self_le_mul_self by_constructive_casts
+port_proof Nat.mul_self_sub_mul_self_eq by_constructive_casts
+port_proof Nat.not_dvd_of_pos_of_lt by_constructive_casts
+port_proof Nat.not_succ_lt_self by_constructive_casts
+port_proof Nat.one_le_div_iff by_constructive_casts
+port_private_declaration Nat.one_lt_two_pow.match_1_1
+port_proof Nat.one_lt_two_pow by_constructive_casts
+namespace Omega.Nat
+protected theorem one_le_two_pow {n : Nat} : Nat.le 1 (Nat.pow 2 n) :=
+  Nat.two_pow_pos n
+end Omega.Nat
+port_proof Nat.one_lt_pow by_constructive_casts
+port_proof Nat.one_lt_two_pow' by_constructive_casts
+port_proof Nat.one_lt_two_pow_iff by_constructive_casts
+port_proof Nat.one_mod by_constructive_casts
+port_alternative_proof Nat.one_mod_eq_one from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.one_mod_two_pow_eq_one from OmegaChecks.InitPort.Alternatives.Word.BitVec
+port_proof Nat.one_mod_two_pow by_constructive_casts
+port_private_declaration Nat.one_sub.match_1_1
+port_proof Nat.one_sub by_constructive_casts
+port_proof Nat.pos_of_lt_add_right by_constructive_casts
+port_proof Nat.pos_of_lt_add_left by_constructive_casts
+port_proof Nat.pow_eq by_constructive_casts
+port_proof Nat.pow_lt_pow_of_lt by_constructive_casts
+port_proof Nat.pow_pred_mul by_constructive_casts
+port_proof Nat.pow_sub_mul_pow by_constructive_casts
+port_proof Nat.pow_two_sub_pow_two by_constructive_casts
+port_private_declaration Nat.self_add_sub_one.match_1_1
+port_proof Nat.self_add_sub_one by_constructive_casts
+port_proof Nat.sub_one_add_self by_constructive_casts
+port_proof Nat.pred_add_self by_constructive_casts
+port_alternative_proof Nat.pred_eq_self_iff from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.self_add_pred by_constructive_casts
+port_proof Nat.sub_add_comm by_constructive_casts
+port_proof Nat.sub_lt_of_pos_le by_constructive_casts
+port_proof Nat.sub_add_lt_sub by_constructive_casts
+port_proof Nat.sub_lt_add_one by_constructive_casts
+port_proof Nat.sub_lt_succ by_constructive_casts
+port_proof Nat.sub_mod_eq_zero_of_mod_eq by_constructive_casts
+port_proof Nat.sub_mul_div by_constructive_casts
+port_private_declaration Nat.sub_mul_mod.match_1_1
+port_definition Nat.sub_mul_mod._f
+port_proof Nat.sub_mul_mod by_constructive_casts
+port_proof Nat.sub_sub_self by_constructive_casts
+port_proof Nat.succ_mul_pos by_constructive_casts
+port_proof Nat.succ_mul_succ by_constructive_casts
+port_proof Nat.succ_mul_succ_eq by_constructive_casts
+port_proof Nat.succ_sub_sub_succ by_constructive_casts
+port_proof Nat.two_pow_pred_mul_two by_constructive_casts
+port_alternative_proof Nat.two_pow_pred_add_two_pow_pred from OmegaChecks.InitPort.Alternatives.Word.BitVec
+port_proof Nat.two_pow_sub_two_pow_pred by_constructive_casts
+port_proof Nat.zero_eq_mul by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (add_lt_add_iff_left add_lt_add_iff_right add_lt_add_of_le_of_lt
+  add_lt_add_of_lt_of_le add_mod add_mod_eq_add_mod_left add_mod_eq_add_mod_right add_mod_mod
+  add_one_mul_add_one add_pos_left add_self_ne_one add_sub_cancel' add_sub_one_le_mul
+  add_sub_sub_add_right div_add_mod' div_eq_zero_iff div_le_div_right div_le_iff_le_mul_add_pred
+  div_lt_one_iff div_mul_div_comm div_mul_div_le div_ne_zero_iff eq_div_of_mul_eq_left
+  eq_div_of_mul_eq_right eq_of_dvd_of_lt_two_mul exists_eq_add_of_le exists_eq_add_of_le'
+  exists_eq_add_of_lt exists_ne_zero le_mul_of_pos_left le_mul_of_pos_right le_mul_self le_of_mod_lt
+  le_of_pred_lt le_self_pow le_sub_of_add_le' log2_self_le log2_zero lt_div_mul_add lt_iff_le_pred
+  lt_log2_self lt_mul_div_succ lt_mul_of_div_lt lt_of_add_lt_add_left lt_of_add_lt_add_right
+  lt_of_div_lt_div lt_pow_self lt_two_pow_self mod_add_div' mod_add_mod mod_div_self mod_eq_iff_lt
+  mod_eq_sub mod_succ mod_succ_eq_iff_lt mod_two_bne_zero mod_two_eq_zero_or_one mod_two_ne_one
+  mod_two_ne_zero mod_two_not_eq_one mod_two_not_eq_zero mod_two_pow_self mul_add_div
+  mul_div_le_mul_div_assoc mul_div_mul_comm mul_eq_left mul_eq_right mul_le_add_right mul_le_of_le_div
+  mul_left_cancel mul_left_cancel_iff mul_left_inj mul_lt_mul_of_le_of_lt mul_lt_mul_of_le_of_lt'
+  mul_lt_mul_of_lt_of_le mul_lt_mul_of_lt_of_le' mul_mod mul_mod_mul_right mul_mul_mul_comm
+  mul_ne_mul_left mul_ne_mul_right mul_right_cancel mul_right_cancel_iff mul_right_inj
+  mul_self_le_mul_self mul_self_sub_mul_self_eq not_dvd_of_pos_of_lt not_succ_lt_self one_le_div_iff
+  one_le_iff_ne_zero one_le_two_pow one_lt_pow one_lt_two_pow one_lt_two_pow' one_lt_two_pow_iff
+  one_mod one_mod_eq_one one_mod_two_pow one_mod_two_pow_eq_one one_sub pos_of_lt_add_left
+  pos_of_lt_add_right pow_eq pow_lt_pow_of_lt pow_lt_pow_succ pow_pred_mul pow_sub_mul_pow
+  pow_two_sub_pow_two pred_add_self pred_eq_self_iff self_add_pred self_add_sub_one sub_add_comm
+  sub_add_lt_sub sub_lt_add_one sub_lt_of_pos_le sub_lt_succ sub_mod_eq_zero_of_mod_eq sub_mul_div
+  sub_mul_mod sub_one_add_self sub_sub_self succ_mul_pos succ_mul_succ succ_mul_succ_eq
+  succ_sub_sub_succ two_pow_pred_add_two_pow_pred two_pow_pred_mul_two two_pow_sub_two_pow_pred
+  zero_eq_mul)
+end Nat
