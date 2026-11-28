@@ -2,6 +2,7 @@ module
 public import Lean
 import all Init.Data.List.Scan.Basic
 import all Init.Data.Option.Instances
+public import Init.Control.Lawful.MonadLift.Instances
 public import Init.Data.Option.Monadic
 import Lean.Replay
 import all Lean.Util.CollectAxioms
@@ -618,6 +619,26 @@ public theorem funextFromMapBind (law : type_of% @map_bind.{max 1 u v, max 1 u v
   let action (t : T) : Paired T T := ⟨(fun _ => f t, fun _ => g t), congrArg (fun x (_ : T) => x) (agree t)⟩
   exact (congrArg (fun z : Paired T T => z.val.1) (@law (Paired T) T T T _ _ id read action)).symm
 
+/-- Lifting a bind through the exception transformer compares the two readers of its continuation. -/
+public theorem funextFromExceptLiftBind
+    (law : type_of% @ExceptT.lift_bind.{max 1 u v, max 1 u v}) : type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g agree
+  letI := monad T
+  letI := lawful T
+  let read : Paired T T := diagonal id
+  let action (t : T) : Paired T T := ⟨(fun _ => f t, fun _ => g t), congrArg (fun x (_ : T) => x) (agree t)⟩
+  let observe (z : Paired T (Except T T)) (t : T) :=
+    match z.val.1 t with | .ok a => a | .error e => e
+  exact (congrArg observe (law (ε := T) read action)).symm
+
+public theorem funextFromExceptLift
+    (law : type_of% @ExceptT.instLawfulMonadLift.{max 1 u v, max 1 u v}) : type_of% @funext.{u,v} := by
+  apply funextFromExceptLiftBind
+  intro m _ _ α β ε ma f
+  letI : LawfulMonadLift m (ExceptT ε m) := law
+  exact LawfulMonadLift.monadLift_bind (m := m) (n := ExceptT ε m) ma f
+
 /-- Sequencing stateful readers can compare the two projections of an input-dependent action. -/
 public theorem funextFromStateRunSeq (rule : type_of% @StateT.run_seq.{max 1 u v,max 1 u v}) :
     type_of% @funext.{u,v} := by
@@ -650,7 +671,8 @@ public theorem funextFromScanlCons (rule : type_of% @List.scanlM_cons.{max 1 u v
 
 open Lean in
 run_cmd
-  for name in [``funextFromMapBind, ``funextFromStateRunSeq, ``funextFromScanlCons] do
+  for name in [``funextFromMapBind, ``funextFromExceptLiftBind, ``funextFromExceptLift,
+      ``funextFromStateRunSeq, ``funextFromScanlCons] do
     unless (← collectAxioms name).isEmpty do throwError "monad witness {name} depends on axioms"
 
 end MapAfterBind

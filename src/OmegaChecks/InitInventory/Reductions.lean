@@ -161,6 +161,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     TransformerLaws.OptionIteration.directConsequences.map (fun row => row.2.2) ++
     TransformerLaws.OptionIteration.constructions ++
     [``TransformerLaws.MapAfterBind.funextFromMapBind, ``TransformerLaws.MapAfterBind.funextFromStateRunSeq,
+     ``TransformerLaws.MapAfterBind.funextFromExceptLiftBind, ``TransformerLaws.MapAfterBind.funextFromExceptLift,
      ``TransformerLaws.MapAfterBind.funextFromScanlCons] ++
     TransformerLaws.ReturnImage.equivalences.map (fun row => row.2.2) ++
     [``TransformerLaws.FiniteFold.funextOfMoveUnit, ``TransformerLaws.FiniteFold.funextOfRepeatUnit] ++

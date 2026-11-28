@@ -262,6 +262,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateTWeakAttach)
   | `Init.Control.Lawful.MonadAttach.Instances, ``instLawfulMonadAttachStateTOfLawfulMonad =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateTAttach)
+  | `Init.Control.Lawful.MonadLift.Instances, ``ExceptT.lift_bind =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.MapAfterBind.funextFromExceptLiftBind)
+  | `Init.Control.Lawful.MonadLift.Instances, ``ExceptT.instLawfulMonadLift =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.MapAfterBind.funextFromExceptLift)
   | `Init.Control.Lawful.MonadLift.Instances, ``StateCpsT.instLawfulMonadLiftOfLawfulMonad =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateCpsLift)
   | `Init.Control.Lawful.MonadLift.Instances, ``ExceptCpsT.instLawfulMonadLiftOfLawfulMonad =>
