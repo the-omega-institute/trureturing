@@ -80,11 +80,12 @@ internal sealed class GlampeSixPeriodMultipliersDocument : IScribeDocumentDefini
         var indices = new Formula.Apply(Seq(Operatorname, Grp(F.Id("Fin"))), [Seq(k, Plus, D(1))]);
         var signedSum = Seq(Sum, Underscore, Grp(i, Eq, D(0)), Caret, Grp(k), Sp,
             Sub(c, i), Pow(Par(Seq(Minus, D(1))), Seq(n, Sub(Varepsilon, i))), Pow(G(n), i));
-        var identity = Seq(Exists, Sp, c, InMacro, Pow(field, Seq(k, Plus, D(1))), Comma, Sp,
+        var identity = Seq(Exists, Sp, c, Sp, InMacro, Sp, Pow(field, Seq(k, Plus, D(1))), Comma, Sp,
             Exists, Sp, Varepsilon, Colon, Sp, indices, Sp, To, Sp, bits, Comma, Sp,
             Forall, Sp, n, InMacro, Naturals, Comma, Sp, G(Seq(k, n)), Eq, signedSum);
         return Seq(Forall, Sp, t, InMacro, Integers, Comma, Sp, Forall, Sp, k, InMacro, Naturals,
-            Comma, Sp, Par(Seq(D(2), Leq, Lvert, t, Rvert, Land, k, Gt, D(0))), Sp, Rightarrow, Sp,
+            Comma, Sp, Par(Seq(D(2), Sp, Leq, Sp, Lvert, Sp, t, Rvert, Sp, Land, Sp, k, Gt, D(0))),
+            Sp, Rightarrow, Sp,
             Par(Seq(Par(identity), Sp, Iff, Sp, k, Equiv, D(1), Pmod, Grp(D(6)))));
     }
 }
