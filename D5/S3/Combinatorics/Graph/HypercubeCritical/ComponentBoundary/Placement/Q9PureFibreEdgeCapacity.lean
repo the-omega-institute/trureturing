@@ -629,22 +629,15 @@ open private five_axis_cross_distance from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9InactiveContactFibre
 
 open Classical in
-/-- A bank in a mixed fibre lies among the free neighbours of the antipode
-of an opposite-bank point. Its two forbidden translations intersect in at
-most two points, so they exclude at least twice its size minus two. -/
-theorem adjacent_fibre_majority_hole_capacity {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
-    (e : Fin 5 ↪ Fin 9) {i j k : Fin 9} (hi : i ∉ univ.map e)
-    (hj : j ∈ univ.map e) (hk : k ∈ univ.map e) (hjk : j ≠ k)
-    (hmj : ({i, j} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2)
-    (hmk : ({i, k} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2)
+private theorem mixed_bank_in_free_neighbourhood {C D : Finset (Q 9)} (b : Bool)
+    (z : Q 9) (e : Fin 5 ↪ Fin 9)
     (hsep : ∀ x ∈ C, ∀ y ∈ D, 2 ≤ hammingDist x y)
     (hmask : ∀ T ∈ minimumDisplacements C D b 2, ¬ T ⊆ univ.map e) :
     let A := univ.map e
     let L := (restrictToFibre C A z).filter (fun x => parity x = b)
-    let R := (restrictToFibre D A (flip z i)).filter (fun x => parity x = b)
     ((restrictToFibre D A z).filter (fun x => parity x = b)).Nonempty →
-      2 * L.card + R.card ≤ 18 := by
-  intro A L R hD
+      ∃ t, sameFibre A z t ∧ ∀ y ∈ L, ∃ l ∈ A, y = flip t l := by
+  intro A L hD
   obtain ⟨x, hx⟩ := hD
   obtain ⟨hxF, hxb⟩ := mem_filter.mp hx
   obtain ⟨hxD, hxF⟩ := mem_filter.mp hxF
@@ -680,6 +673,28 @@ theorem adjacent_fibre_majority_hole_capacity {C D : Finset (Q 9)} (b : Bool) (z
           (Bool.eq_not_of_ne (Ne.symm hdxy))
       · simpa [t, BalancedCriticalSpectrum.flip, he, hq] using
           (hyF q hq).trans (hxF q hq).symm
+  refine ⟨t, ?_, hnear⟩
+  intro l hl
+  simpa [t, hl] using hxF l hl
+
+open Classical in
+/-- A bank in a mixed fibre lies among the free neighbours of the antipode
+of an opposite-bank point. Its two forbidden translations intersect in at
+most two points, so they exclude at least twice its size minus two. -/
+theorem adjacent_fibre_majority_hole_capacity {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
+    (e : Fin 5 ↪ Fin 9) {i j k : Fin 9} (hi : i ∉ univ.map e)
+    (hj : j ∈ univ.map e) (hk : k ∈ univ.map e) (hjk : j ≠ k)
+    (hmj : ({i, j} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2)
+    (hmk : ({i, k} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2)
+    (hsep : ∀ x ∈ C, ∀ y ∈ D, 2 ≤ hammingDist x y)
+    (hmask : ∀ T ∈ minimumDisplacements C D b 2, ¬ T ⊆ univ.map e) :
+    let A := univ.map e
+    let L := (restrictToFibre C A z).filter (fun x => parity x = b)
+    let R := (restrictToFibre D A (flip z i)).filter (fun x => parity x = b)
+    ((restrictToFibre D A z).filter (fun x => parity x = b)).Nonempty →
+      2 * L.card + R.card ≤ 18 := by
+  intro A L R hD
+  obtain ⟨t, _, hnear⟩ := mixed_bank_in_free_neighbourhood b z e hsep hmask hD
   let tau (l : Fin 9) (y : Q 9) := flip (flip y i) l
   let move (l : Fin 9) := L.image (tau l)
   have invol (a : Fin 9) : Function.Involutive (fun y : Q 9 => flip y a) :=
@@ -719,9 +734,6 @@ theorem adjacent_fibre_majority_hole_capacity {C D : Finset (Q 9)} (b : Bool) (z
   rw [biUnion_insert, singleton_biUnion] at hb
   omega
 
-private theorem eight_point_edge_limit :
-    ∀ edge : Fin 25, edge.val ^ 2 ≤ 40 * (8 + edge.val / 5) → edge.val ≤ 21 := by decide
-
 open Classical in
 /-- A bank of size five in a mixed fibre forces an additional edge deficit on
 an adjacent pure fibre of the opposite component. -/
@@ -738,46 +750,51 @@ theorem adjacent_fibre_five_point_edge_deficit {C D : Finset (Q 9)} (b : Bool) (
     let L := (restrictToFibre C A z).filter (fun x => parity x = b)
     let R := (restrictToFibre D A (flip z i)).filter (fun x => parity x = b)
     ((restrictToFibre D A z).filter (fun x => parity x = b)).Nonempty →
-      L.card = 5 → (freeEdges D R A).card + 19 ≤ 5 * (16 - R.card) := by
+      L.card = 5 → (freeEdges D R A).card + 27 ≤ 5 * (16 - R.card) := by
   intro A L R hD hL
-  have hpack := adjacent_fibre_majority_hole_capacity b z e hi hj hk hjk hmj hmk hsep hmask hD
-  change 2 * L.card + R.card ≤ 18 at hpack
-  have hR : R.card ≤ 8 := by omega
-  let E := (freeEdges D R A).card
-  have hE : E ≤ 3 * R.card :=
-    freeEdges_le_degree_sum (fun x hx => hdeg x (mem_filter.mp (mem_filter.mp hx).1).1)
-  change E + 19 ≤ 5 * (16 - R.card)
-  by_cases hsmall : R.card ≤ 7
-  · omega
-  have hr8 : R.card = 8 := by omega
-  let y := flip z i
-  let F := (restrictToFibre univ A y).filter (fun x => parity x = b)
-  let H := F.filter (fun x => x ∉ D)
-  have hF : F.card ≤ 16 := by
-    have hb := Q9InactiveContactFibre.adjacent_fibre_capacity (C := ∅) (D := univ) b
-      z e hi ∅ (empty_subset _) (by simp)
-    simpa [A, F, y] using hb
-  have hselect : F.filter (fun x => x ∈ D) = R := by
-    ext x
-    simp [F, R, y, restrictToFibre, and_comm, and_assoc]
-  have hsplit := card_filter_add_card_filter_not (s := F) (fun x => x ∈ D)
-  rw [hselect] at hsplit
-  change R.card + H.card = F.card at hsplit
-  have hH : H.card ≤ 8 := by omega
-  have hspec := five_axis_hole_energy D A (by simp [A]) y b hbal
-  have hholes : (restrictToFibre univ A y).filter (fun x => parity x = b ∧ x ∉ D) = H := by
-    ext x
-    simp [H, F, and_assoc]
-  change E ^ 2 ≤ 5 *
-    (R.card * (((restrictToFibre univ A y).filter (fun x => parity x = b ∧ x ∉ D)).card + E / 5))
-    at hspec
-  rw [hholes, hr8] at hspec
-  have hspec' : E ^ 2 ≤ 40 * (8 + E / 5) := by
-    rw [← Nat.mul_assoc] at hspec
-    exact hspec.trans (Nat.mul_le_mul_left 40 (Nat.add_le_add_right hH (E / 5)))
-  have he21 := eight_point_edge_limit ⟨E, by omega⟩ hspec'
-  change E ≤ 21 at he21
-  omega
+  obtain ⟨t, ht, hnear⟩ := mixed_bank_in_free_neighbourhood b z e hsep hmask hD
+  have hA : A.card = 5 := by simp [A]
+  have himage : L = A.image (flip t) := by
+    apply eq_of_subset_of_card_le
+    · intro x hx
+      obtain ⟨l, hl, rfl⟩ := hnear x hx
+      exact mem_image_of_mem _ hl
+    · rw [card_image_of_injective _ (flip_injective t), hA, hL]
+  have hmem (l : Fin 9) (hl : l ∈ A) : flip t l ∈ L :=
+    himage ▸ mem_image_of_mem _ hl
+  have hpar : parity (flip t i) = b := by
+    have h := (mem_filter.mp (hmem j hj)).2
+    rwa [parity_flip] at h ⊢
+  have hsepAxis (l : Fin 9) (hl : l ∈ A) : i ≠ l := by
+    intro he
+    exact hi (he.symm ▸ hl)
+  have hban (l : Fin 9) (hl : l ∈ A) :
+      flip (flip t i) l ∉ D ∧
+        flip (flip (flip t i) l) j ∉ D ∧
+        flip (flip (flip t i) l) k ∉ D := by
+    have hx := hmem l hl
+    have h := Q9InactiveContactFibre.adjacent_fibre_missing_centre b
+      (mem_filter.mp (mem_filter.mp hx).1).1 (mem_filter.mp hx).2 hsep
+      (hsepAxis j hj) (hsepAxis k hk) hmj hmk
+    rw [BalancedCubeGirth.flip_comm t l i] at h
+    exact ⟨h.1, h.2.2⟩
+  have hF (l : Fin 9) (hl : l ∉ A) : flip t i l = flip z i l := by
+    by_cases he : l = i
+    · subst l
+      simp [ht i hi]
+    · simp [BalancedCriticalSpectrum.flip, he, ht l hl]
+  have hrestr : restrictToFibre D A (flip t i) = restrictToFibre D A (flip z i) := by
+    ext v
+    simp only [restrictToFibre, mem_filter, sameFibre]
+    apply and_congr_right'
+    exact ⟨fun hv l hl => (hv l hl).trans (hF l hl),
+      fun hv l hl => (hv l hl).trans (hF l hl).symm⟩
+  have h := Q9FiveAxisExcessCycles.missing_five_neighbours_edge_deficit D e (flip t i)
+    hj hk hjk hbal hdeg hban
+  change (freeEdges D ((restrictToFibre D A (BalancedCriticalSpectrum.flip t i)).filter _) A).card + 27 ≤
+    5 * (16 - ((restrictToFibre D A (BalancedCriticalSpectrum.flip t i)).filter _).card) at h
+  rw [hrestr, hpar] at h
+  exact h
 
 open scoped BigOperators in
 private theorem pure_edge_capacity_sum (P M : Finset (Q 4)) (holes edges : Q 4 → ℕ)
@@ -872,8 +889,8 @@ private theorem mixed_fibre_deficit_with_large_bank_exposure
     (hline : ∀ p ∈ P, edges p ≤ 5 * holes p + 1)
     (hboundary : ∀ p ∈ P, (∃ i : Fin 4, flip p i ∈ M) → edges p + 6 ≤ 5 * holes p)
     (hT : T ⊆ P.filter (fun p => ∃ i : Fin 4, flip p i ∈ M))
-    (hstrong : ∀ p ∈ T, edges p + 19 ≤ 5 * holes p) :
-    853 + 5 * deficit + loss + 13 * T.card ≤ 74 * P.card + 45 * M.card := by
+    (hstrong : ∀ p ∈ T, edges p + 27 ≤ 5 * holes p) :
+    853 + 5 * deficit + loss + 21 * T.card ≤ 74 * P.card + 45 * M.card := by
   classical
   let boundary := P.filter (fun p => ∃ i : Fin 4, flip p i ∈ M)
   have hT' : T ⊆ P := hT.trans (filter_subset _ _)
@@ -884,10 +901,10 @@ private theorem mixed_fibre_deficit_with_large_bank_exposure
     ext p
     exact ⟨fun hp => (mem_filter.mp hp).2, fun hp => mem_filter.mpr ⟨hU hp, hp⟩⟩
   have hsum :
-      (∑ p ∈ P, edges p) + 7 * boundary.card + 13 * T.card ≤
+      (∑ p ∈ P, edges p) + 7 * boundary.card + 21 * T.card ≤
       5 * (∑ p ∈ P, holes p) + P.card := by
     calc
-      _ = ∑ p ∈ P, (edges p + 7 * penalty boundary p + 13 * penalty T p) := by
+      _ = ∑ p ∈ P, (edges p + 7 * penalty boundary p + 21 * penalty T p) := by
         rw [sum_add_distrib, sum_add_distrib, ← mul_sum, ← mul_sum,
           hpen boundary (filter_subset _ _), hpen T hT']
       _ ≤ ∑ p ∈ P, (5 * holes p + 1) := by
@@ -943,7 +960,7 @@ theorem triangle_complement_mixed_fibre_deficits {C D : Finset (Q 9)} (b : Bool)
     let loss := 15 * M.card - ∑ p ∈ M, edges p
     (P.card = 5 → M.card = 11 ∧ 5 * deficit + loss ≤ 12 ∧
       (∀ p ∈ M, 5 ≤ occ p) ∧ largeExposure = ∅) ∧
-      (P.card = 6 → M.card = 10 ∧ 5 * deficit + loss + 13 * largeExposure.card ≤ 41) := by
+      (P.card = 6 → M.card = 10 ∧ 5 * deficit + loss + 21 * largeExposure.card ≤ 41) := by
   intro bank M P largeExposure A occ edges deficit loss
   let project (x : Q 9) : Q 4 := fun i => x (g i)
   let lift (p : Q 4) (l : Fin 9) : Bool :=
@@ -1252,19 +1269,19 @@ theorem triangle_complement_mixed_fibre_deficits {C D : Finset (Q 9)} (b : Bool)
       (hmj : ({g i, j} : Finset (Fin 9)) ∉ minimumDisplacements S T b 2)
       (hmk : ({g i, k} : Finset (Fin 9)) ∉ minimumDisplacements S T b 2)
       (hS : (bank S (flip p i)).card = 5) (hT : (bank T (flip p i)).Nonempty) :
-      (freeEdges T (bank T p) A).card + 19 ≤ 5 * (16 - (bank T p).card) := by
+      (freeEdges T (bank T p) A).card + 27 ≤ 5 * (16 - (bank T p).card) := by
     rw [← hflip p i, hbank] at hS hT
     have hh := adjacent_fibre_five_point_edge_deficit b (flip (lift p) (g i)) e
       (hout i) hj hk hjk hmj hmk hST hmask hbal hdg hT hS
     rw [BalancedCriticalSpectrum.flip_flip] at hh
-    change (freeEdges T ((restrictToFibre T A (lift p)).filter _) A).card + 19 ≤
+    change (freeEdges T ((restrictToFibre T A (lift p)).filter _) A).card + 27 ≤
       5 * (16 - ((restrictToFibre T A (lift p)).filter _).card) at hh
     rwa [← hrepr T] at hh
   have hlargeSubset : largeExposure ⊆ P.filter (fun p => ∃ i : Fin 4, flip p i ∈ M) := by
     intro p hp
     obtain ⟨hpP, i, hi, _⟩ := mem_filter.mp hp
     exact mem_filter.mpr ⟨hpP, i, hi⟩
-  have hstrong (p : Q 4) (hp : p ∈ largeExposure) : edges p + 19 ≤ 5 * holes p := by
+  have hstrong (p : Q 4) (hp : p ∈ largeExposure) : edges p + 27 ≤ 5 * holes p := by
     obtain ⟨hpP, i, hi, hside⟩ := mem_filter.mp hp
     obtain ⟨hmC, hmD⟩ := (mem_filter.mp hi).2
     have hfs := hmissing _ (hout i)

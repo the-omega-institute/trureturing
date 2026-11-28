@@ -745,6 +745,41 @@ private theorem normalized_local_capacity (S : Finset (Q 9)) (e : Fin 5 ↪ Fin 
   dsimp [limit] at hbound
   omega
 
+open Classical in
+private theorem reindex_last_two_axes (e : Fin 5 ↪ Fin 9) {j k : Fin 9}
+    (hj : j ∈ univ.map e) (hk : k ∈ univ.map e) (hjk : j ≠ k) :
+    ∃ f : Fin 5 ↪ Fin 9, (univ.map f : Finset (Fin 9)) = univ.map e ∧
+      f 3 = j ∧ f 4 = k := by
+  obtain ⟨a, _, ha⟩ := mem_map.mp hj
+  obtain ⟨c, _, hc⟩ := mem_map.mp hk
+  let τ := Equiv.swap (3 : Fin 5) a
+  let σ := (Equiv.swap (4 : Fin 5) (τ.symm c)).trans τ
+  let f := σ.toEmbedding.trans e
+  have hτ : τ 3 = a := Equiv.swap_apply_left _ _
+  have h3 : f 3 = j := by
+    have hne : (3 : Fin 5) ≠ τ.symm c := by
+      intro he
+      have h := congrArg τ he
+      rw [hτ, Equiv.apply_symm_apply] at h
+      exact hjk (ha.symm.trans ((congrArg e h).trans hc))
+    change e (τ (Equiv.swap 4 (τ.symm c) 3)) = j
+    rw [Equiv.swap_apply_of_ne_of_ne (by decide : (3 : Fin 5) ≠ 4) hne, hτ, ha]
+  have h4 : f 4 = k := by
+    change e (τ (Equiv.swap 4 (τ.symm c) 4)) = k
+    rw [Equiv.swap_apply_left, Equiv.apply_symm_apply, hc]
+  have hA : (univ.map f : Finset (Fin 9)) = univ.map e := by
+    ext l
+    constructor
+    · intro hl
+      obtain ⟨t, _, rfl⟩ := mem_map.mp hl
+      exact mem_map.mpr ⟨σ t, mem_univ _, rfl⟩
+    · intro hl
+      obtain ⟨t, _, rfl⟩ := mem_map.mp hl
+      refine mem_map.mpr ⟨σ.symm t, mem_univ _, ?_⟩
+      change e (σ (σ.symm t)) = e t
+      rw [Equiv.apply_symm_apply]
+  exact ⟨f, hA, h3, h4⟩
+
 open Q9MinimumDistanceOperator (minimumDisplacements)
 open Q9InactiveContactFibre (adjacent_fibre_missing_centre)
 open private flip_same_fibre from
@@ -772,34 +807,8 @@ theorem adjacent_fibre_four_five_hole_capacity {C D : Finset (Q 9)} (b : Bool) {
   obtain ⟨hyD, hypar, hjD, hkD⟩ :=
     adjacent_fibre_missing_centre b hx hp hsep (hne j hj) (hne k hk) hmj hmk
   let z := flip y j
-  obtain ⟨a, _, ha⟩ := mem_map.mp hj
-  obtain ⟨c, _, hc⟩ := mem_map.mp hk
-  let τ := Equiv.swap (3 : Fin 5) a
-  let σ := (Equiv.swap (4 : Fin 5) (τ.symm c)).trans τ
-  let f := σ.toEmbedding.trans e
-  have hτ : τ 3 = a := Equiv.swap_apply_left _ _
-  have h3 : f 3 = j := by
-    have hne : (3 : Fin 5) ≠ τ.symm c := by
-      intro he
-      have h := congrArg τ he
-      rw [hτ, Equiv.apply_symm_apply] at h
-      exact hjk (ha.symm.trans ((congrArg e h).trans hc))
-    change e (τ (Equiv.swap 4 (τ.symm c) 3)) = j
-    rw [Equiv.swap_apply_of_ne_of_ne (by decide : (3 : Fin 5) ≠ 4) hne, hτ, ha]
-  have h4 : f 4 = k := by
-    change e (τ (Equiv.swap 4 (τ.symm c) 4)) = k
-    rw [Equiv.swap_apply_left, Equiv.apply_symm_apply, hc]
-  have hA : (univ.map f : Finset (Fin 9)) = A := by
-    ext l
-    constructor
-    · intro hl
-      obtain ⟨t, _, rfl⟩ := mem_map.mp hl
-      exact mem_map.mpr ⟨σ t, mem_univ _, rfl⟩
-    · intro hl
-      obtain ⟨t, _, rfl⟩ := mem_map.mp hl
-      refine mem_map.mpr ⟨σ.symm t, mem_univ _, ?_⟩
-      change e (σ (σ.symm t)) = e t
-      rw [Equiv.apply_symm_apply]
+  obtain ⟨f, hA, h3, h4⟩ := reindex_last_two_axes e hj hk hjk
+  change _ = A at hA
   have hpar : parity z = b := by
     change parity (flip (flip x i) j) = b
     rw [parity_flip, parity_flip, Bool.not_not, hp]
@@ -830,6 +839,166 @@ theorem adjacent_fibre_four_five_hole_capacity {C D : Finset (Q 9)} (b : Bool) {
 
 #print axioms adjacent_fibre_four_five_hole_capacity
 
+open private freeEdges_le_degree_sum from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9InactiveContactFibre
+
+private def majorityEven : List Nat := [3, 5, 6, 15, 23, 27, 29, 30]
+
+private def majorityOdd (P : List Nat) : List Nat :=
+  odd.filter (fun w => !axes.contains w &&
+    let d := (neighbors P w).length
+    decide (1 ≤ d ∧ d ≤ 3))
+
+private def majorityChecked (size limit : Nat) : Bool :=
+  (majorityEven.sublistsLen size).all fun P =>
+    (majorityOdd P).sublists.all fun R => !survives P R limit
+
+/-- The forced holes leave three pairs of degree-three opposite vertices.
+The square and hexagon exclusions bound their contribution. -/
+private theorem majorityChecked_two_sizes :
+    majorityChecked 8 13 = true ∧ majorityChecked 7 18 = true := by
+  constructor <;> decide +kernel
+
+open Classical in
+private theorem normalized_majority_capacity (S : Finset (Q 9)) (e : Fin 5 ↪ Fin 9) (z : Q 9)
+    (hbal : BalancedCriticalSpectrum.IsBalanced S)
+    (hdeg : ∀ x ∈ S, (directions S x).card ≤ 3)
+    (heven : ∀ w ∈ even, w ∉ majorityEven → wordPoint e z w ∉ S)
+    (hodd : ∀ w ∈ axes, wordPoint e z w ∉ S) :
+    let A := univ.map e
+    let L := (restrictToFibre S A z).filter (fun v => parity v = parity z)
+    (freeEdges S L A).card + 27 ≤ 5 * (16 - L.card) := by
+  intro A L
+  let point := wordPoint e z
+  let P := majorityEven.filter (fun x => decide (point x ∈ S))
+  let R := (majorityOdd P).filter (fun y => decide (point y ∈ S))
+  have hbase : ∀ w ∈ majorityEven, w ∈ even := by decide
+  have hP (x : Nat) : x ∈ P ↔ x ∈ even ∧ point x ∈ S := by
+    simp only [P, List.mem_filter, decide_eq_true_eq]
+    exact ⟨fun h => ⟨hbase _ h.1, h.2⟩, fun h => ⟨by
+      by_contra hn
+      exact heven x h.1 hn h.2, h.2⟩⟩
+  have hR (y : Nat) : y ∈ R ↔ y ∈ odd ∧ point y ∈ S ∧ (neighbors P y).length ≠ 0 := by
+    have ha : (!axes.contains y) = true ↔ y ∉ axes := by simp
+    simp only [R, majorityOdd, List.mem_filter, Bool.and_eq_true, ha, decide_eq_true_eq]
+    constructor
+    · rintro ⟨⟨hy, _, hdegree⟩, hyS⟩
+      exact ⟨hy, hyS, by omega⟩
+    · rintro ⟨hy, hyS, hpos⟩
+      refine ⟨⟨hy, fun he => hodd y he hyS, ?_, ?_⟩, hyS⟩
+      · omega
+      · exact degree_of_neighbors S e z P y (fun _ hx => ((hP _).mp hx).2) hdeg hyS
+  have hRsub : List.Sublist R (majorityOdd P) := List.filter_sublist
+  have hRnodup : R.Nodup := ((show odd.Nodup by decide).filter _).filter _
+  have hPnodup : P.Nodup := (show majorityEven.Nodup by decide).filter _
+  have hcount : P.length = L.card := by
+    rw [← List.toFinset_card_of_nodup hPnodup]
+    apply Finset.card_bij (fun w _ => point w)
+    · intro w hw
+      obtain ⟨hwe, hwS⟩ := (hP w).mp (List.mem_toFinset.mp hw)
+      exact mem_filter.mpr ⟨mem_filter.mpr ⟨hwS,
+        fun k hk => wordPoint_sameFibre e z w hk⟩,
+        (wordPoint_mem_even e z (even_bounds _ hwe)).mp hwe⟩
+    · intro u hu v hv h
+      exact wordPoint_injOn e z
+        (even_bounds _ ((hP _).mp (List.mem_toFinset.mp hu)).1)
+        (even_bounds _ ((hP _).mp (List.mem_toFinset.mp hv)).1) h
+    · intro v hv
+      obtain ⟨hvF, hvb⟩ := mem_filter.mp hv
+      obtain ⟨hvS, hvF⟩ := mem_filter.mp hvF
+      obtain ⟨w, hw, rfl⟩ := wordPoint_surj e z v hvF
+      exact ⟨w, List.mem_toFinset.mpr ((hP w).mpr
+        ⟨(wordPoint_mem_even e z hw).mpr hvb, hvS⟩), rfl⟩
+  let E := (freeEdges S L A).card
+  have hE : E ≤ 3 * L.card :=
+    freeEdges_le_degree_sum
+      (fun x hx => hdeg x (mem_filter.mp (mem_filter.mp hx).1).1)
+  change E + 27 ≤ 5 * (16 - L.card)
+  by_cases hsmall : L.card ≤ 6
+  · omega
+  have hPsub : List.Sublist P majorityEven := List.filter_sublist
+  have hcap : L.card ≤ 8 := by
+    have hlen := hPsub.length_le
+    change P.length ≤ 8 at hlen
+    omega
+  have hpoint (x : Nat) (hx : x ∈ P ++ R) : point x ∈ S := by
+    rcases List.mem_append.mp hx with hx | hx
+    · exact ((hP x).mp hx).2
+    · exact ((hR x).mp hx).2.1
+  have hword (x : Nat) (hx : x ∈ P ++ R) : x < 32 := by
+    rcases List.mem_append.mp hx with hx | hx
+    · exact even_bounds x ((hP x).mp hx).1
+    · exact odd_bounds x ((hR x).mp hx).1
+  have hcycle := no_short_cycles_in_rows P R hRnodup (by
+      intro x hx y hy he
+      subst y
+      exact even_odd_disjoint x ((hP x).mp hy).1 ((hR x).mp hx).1)
+    point (e ∘ axisIndex) (fun x hx y hy => wordPoint_injOn e z (hword x hx) (hword y hy))
+    hpoint (wordPoint_xor_axis e z) hbal
+  have hdegP : P.all (fun x => decide ((neighbors R x).length ≤ 3)) = true := by
+    apply List.all_eq_true.mpr
+    intro x hx
+    exact decide_eq_true (degree_of_neighbors S e z R x
+      (fun y hy => ((hR y).mp hy).2.1) hdeg ((hP x).mp hx).2)
+  have hbound (limit : Nat) (hc : majorityChecked L.card limit = true) : E ≤ limit := by
+    unfold majorityChecked at hc
+    have hrow := List.all_eq_true.mp hc P (List.mem_sublistsLen.mpr ⟨hPsub, hcount⟩)
+    have hv := List.all_eq_true.mp hrow R (List.mem_sublists.mpr hRsub)
+    simp only [survives, hdegP, hcycle.1, hcycle.2, Bool.not_false, Bool.and_true,
+      List.map_map] at hv
+    rw [show E = _ from word_edge_equiv_count S e z P R hRnodup hP hR]
+    simpa [Function.comp_def] using hv
+  by_cases h8 : L.card = 8
+  · have h := hbound 13 (by rw [h8]; exact majorityChecked_two_sizes.1)
+    omega
+  · have h7 : L.card = 7 := by omega
+    have h := hbound 18 (by rw [h7]; exact majorityChecked_two_sizes.2)
+    omega
+
+private theorem forced_majority_even :
+    ∀ w ∈ even, w ∉ majorityEven → ∃ a ∈ axes, w = a ^^^ 8 ∨ w = a ^^^ 16 := by decide
+
+open Classical in
+/-- Removing the five neighbours of a centre and their translates along two
+axes bounds the edge capacity of its parity fibre. -/
+theorem missing_five_neighbours_edge_deficit (S : Finset (Q 9)) (e : Fin 5 ↪ Fin 9) (z : Q 9)
+    {j k : Fin 9} (hj : j ∈ univ.map e) (hk : k ∈ univ.map e) (hjk : j ≠ k)
+    (hbal : BalancedCriticalSpectrum.IsBalanced S)
+    (hdeg : ∀ x ∈ S, (directions S x).card ≤ 3)
+    (hban : ∀ l ∈ univ.map e, flip z l ∉ S ∧ flip (flip z l) j ∉ S ∧ flip (flip z l) k ∉ S) :
+    let A := univ.map e
+    let L := (restrictToFibre S A z).filter (fun v => parity v = parity z)
+    (freeEdges S L A).card + 27 ≤ 5 * (16 - L.card) := by
+  intro A L
+  obtain ⟨f, hA, h3, h4⟩ := reindex_last_two_axes e hj hk hjk
+  change _ = A at hA
+  have haxis (a : Nat) (ha : a ∈ axes) :
+      wordPoint f z a = flip z (f (axisIndex a)) := by
+    have h := wordPoint_xor_axis f z 0 a ha
+    simpa only [Nat.zero_xor, wordPoint_zero] using h
+  have hmem (a : Nat) : f (axisIndex a) ∈ A := by
+    rw [← hA]
+    exact mem_map.mpr ⟨_, mem_univ _, rfl⟩
+  have hEven (w : Nat) (hw : w ∈ even) (hn : w ∉ majorityEven) : wordPoint f z w ∉ S := by
+    obtain ⟨a, ha, rfl | rfl⟩ := forced_majority_even w hw hn
+    · have he := wordPoint_flip f z a (3 : Fin 5)
+      change wordPoint f z (a ^^^ 8) = flip (wordPoint f z a) (f 3) at he
+      rw [he, haxis a ha, h3]
+      exact (hban _ (hmem a)).2.1
+    · have he := wordPoint_flip f z a (4 : Fin 5)
+      change wordPoint f z (a ^^^ 16) = flip (wordPoint f z a) (f 4) at he
+      rw [he, haxis a ha, h4]
+      exact (hban _ (hmem a)).2.2
+  have hOdd (w : Nat) (hw : w ∈ axes) : wordPoint f z w ∉ S := by
+    rw [haxis w hw]
+    exact (hban _ (hmem w)).1
+  have h := normalized_majority_capacity S f z hbal hdeg hEven hOdd
+  change (freeEdges S ((restrictToFibre S (univ.map f) z).filter _) (univ.map f)).card + 27 ≤
+    5 * (16 - ((restrictToFibre S (univ.map f) z).filter _).card) at h
+  rw [hA] at h
+  exact h
+
+#print axioms missing_five_neighbours_edge_deficit
 #print axioms local_excess_cycles
 #print axioms no_mapped_excess
 
