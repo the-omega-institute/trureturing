@@ -45,6 +45,12 @@ open _root_.Lean.Grind.Ring.OfSemiring in
     type_of% @_root_.Lean.Grind.CommRing.OfCommSemiring.instIntCastQ :=
   fun {_} _ _ => ⟨intCast⟩
 
+set_option linter.unusedVariables false in
+open _root_.Lean.Grind.Ring.OfSemiring in
+/-- The zero branch of the pinned power recursor reduces before it needs multiplication. -/
+public theorem Lean.Grind.Ring.OfSemiring.pow_zero {α : Type u} [Semiring α] (a : Q α) :
+    natCast (α := α) 1 = natCast (α := α) 1 := rfl
+
 open _root_.Lean.Grind.Ring.OfSemiring in
 public theorem Lean.Grind.Ring.OfSemiring.toQ_zero {α : Type u} [Semiring α] :
     toQ (0 : α) = natCast (α := α) 0 :=
