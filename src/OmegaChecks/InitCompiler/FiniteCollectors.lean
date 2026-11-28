@@ -58,10 +58,13 @@ public def finiteCollectors (env : Environment) (input : Expr) (withinImplementa
     (!aliases.isEmpty || used.contains ``Std.IteratorLoop.defaultImplementation ||
       used.contains ``Std.IterM.DefaultConsumers.forIn')
   let hasRange := env.contains InitPort.RangeFix.helper && used.contains ``WellFounded.extrinsicFix₃
-  let patterns := InitPort.PatternMatch.rules.filter fun rule => used.contains rule.original && env.contains rule.helper
+  let hasSemiringImage := used.contains ``Grind.CommRing.Expr.denoteSAsRing
+  let patterns := InitPort.PatternMatch.rules.filter fun rule => used.contains rule.trigger && env.contains rule.helper
   let hasStringFold := used.any stringFolds.contains
   unless hasLoop || hasRange || hasStringFold || !patterns.isEmpty || used.any (fun n => (consumerArity? n).isSome) do return input
   let rewrite : MetaM Expr := Meta.transform input (pre := fun sub => do
+    if hasSemiringImage then
+      if let some value ← InitPort.PatternMatch.semiringNumeral? sub then return .done value
     if hasRange then
       if let some call ← InitPort.RangeFix.specialize? sub then return .done call
     if hasLoop then

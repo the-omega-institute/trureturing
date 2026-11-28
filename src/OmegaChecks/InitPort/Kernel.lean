@@ -793,6 +793,15 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
     {fileName := "<character split equation>", fileMap := default} {env := patternTemplates}
   alternatives := alternatives.insert ``String.Slice.Pattern.Model.split_bool_eq_internal
     (.thmInfo {splitStep with value := stepBody})
+  let imageProofs ← importModules #[{module := `OmegaChecks.InitPort.Alternatives.GrindRing}] {} (level := .private)
+  let some (.thmInfo cases) := imageProofs.find? ``OmegaChecks.InitPort.SemiringImage.denoteCases
+    | throw <| IO.userError "missing semiring interpreter cases"
+  let casesBody := cases.value.replace fun e => do
+    let .const name levels := e | none
+    guard <| `OmegaChecks.InitPort.Alternatives |>.isPrefixOf name
+    return .const (name.replacePrefix `OmegaChecks.InitPort.Alternatives .anonymous) levels
+  alternatives := alternatives.insert `Lean.Grind.CommRing.Expr.denoteSAsRing.eq_def
+    (.thmInfo {cases with value := casesBody})
   let ruleModule := `OmegaChecks.InitCompiler.ProofRules
   let ruleEnv ← importModules #[{module := ruleModule}] {} (level := .private)
   let mut proofRules := {}

@@ -2,6 +2,7 @@ module
 public import OmegaChecks.InitPort.CharacterSplit
 public import OmegaChecks.InitPort.SingletonSelection
 public import OmegaChecks.InitPort.SearcherSplit
+public import OmegaChecks.InitPort.SemiringImage
 public import OmegaChecks.InitPort.Translation
 public import Init.Data.String.Lemmas.Pattern.TakeDrop.Basic
 
@@ -42,6 +43,8 @@ private def predOwner := `Init.Data.String.Lemmas.Pattern.Split.Pred
 private def splitOwner := `Init.Data.String.Lemmas.Pattern.Split.Basic
 private def charOwner := `Init.Data.String.Lemmas.Pattern.Split.Char
 
+private def ringOwner := `Init.Grind.Ring.CommSemiringAdapter
+
 public def rules : List MatchRule := [
   ⟨`Init.Classical, ``Classical.epsilon, mkPrivateNameCore `Init.Classical `Classical.selectSingleton,
     ``SingletonSelection.epsilon, ``SingletonSelection.witness, ``SingletonSelection.epsilonAgreement⟩,
@@ -60,12 +63,40 @@ public def rules : List MatchRule := [
   ⟨splitOwner, ``Model.split, mkPrivateNameCore splitOwner `String.Slice.splitAtEnd,
     ``SearcherSplit.terminalReference, ``SearcherSplit.terminal, ``SearcherSplit.terminalAgreement⟩,
   ⟨splitOwner, ``Model.split, mkPrivateNameCore splitOwner `String.Slice.splitFromLawfulSearcher,
-    ``SearcherSplit.searchReference, ``SearcherSplit.search, ``SearcherSplit.searchAgreement⟩]
+    ``SearcherSplit.searchReference, ``SearcherSplit.search, ``SearcherSplit.searchAgreement⟩,
+  ⟨ringOwner, ``HAdd.hAdd, mkPrivateNameCore ringOwner `Lean.Grind.CommRing.Expr.addDenoted,
+    ``SemiringImage.addReference, ``SemiringImage.add, ``SemiringImage.addAgreement⟩,
+  ⟨ringOwner, ``HMul.hMul, mkPrivateNameCore ringOwner `Lean.Grind.CommRing.Expr.mulDenoted,
+    ``SemiringImage.mulReference, ``SemiringImage.mul, ``SemiringImage.mulAgreement⟩,
+  ⟨ringOwner, ``HPow.hPow, mkPrivateNameCore ringOwner `Lean.Grind.CommRing.Expr.powDenoted,
+    ``SemiringImage.powReference, ``SemiringImage.pow, ``SemiringImage.powAgreement⟩]
 
-/-- Specialize a call when its arguments determine a certified computation. -/
+public def MatchRule.trigger (rule : MatchRule) : Name :=
+  if rule.owner == ringOwner then ``Grind.CommRing.Expr.denoteSAsRing else rule.original
+
+/-- Numerals in the quotient envelope reduce to the explicit nonnegative representative. -/
+public def semiringNumeral? (sub : Expr) : MetaM (Option Expr) := do
+  unless sub.getAppFn.isConstOf ``OfNat.ofNat do return none
+  let #[type, k, _] := sub.getAppArgs | return none
+  unless type.getAppFn.isConstOf ``Grind.Ring.OfSemiring.Q do return none
+  let #[α, inst] := type.getAppArgs | return none
+  let result ← Meta.mkAppOptM ``Grind.Ring.OfSemiring.natCast #[α, inst, k]
+  if ← Meta.isDefEq sub result then return some result else return none
+
+/-- Match the reference implementation and its instances at the applied operands. -/
 public def specialize? (rule : MatchRule) (sub : Expr) : MetaM (Option Expr) := do
   if rule.original == ``Classical.epsilon || rule.original == ``Erased.out then
     return ← SingletonSelection.specialize? rule.helper sub
+  if rule.owner == ringOwner then
+    let #[_, _, _, _, lhs, rhs] := sub.getAppArgs | return none
+    unless lhs.getAppFn.isConstOf ``Grind.CommRing.Expr.denoteSAsRing do return none
+    let #[α, inst, ctx, a] := lhs.getAppArgs | return none
+    let b ← if rule.original == ``HPow.hPow then pure rhs else do
+      unless rhs.getAppFn.isConstOf ``Grind.CommRing.Expr.denoteSAsRing do return none
+      let #[_, _, _, b] := rhs.getAppArgs | return none
+      pure b
+    let candidate := mkAppN (.const rule.helper lhs.getAppFn.constLevels!) #[α, inst, ctx, a, b]
+    if ← Meta.isDefEq candidate sub then return some candidate else return none
   if rule.original == ``Model.split then
     let #[ρ, pat, model, strict, s, first, curr, le] := sub.getAppArgs | return none
     let args : Array (Option Expr) :=

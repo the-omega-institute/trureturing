@@ -66,6 +66,23 @@ public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.Lean.Grind.CommR
     (k : Nat) : Lean.Grind.CommRing.Expr.denoteSAsRing ctx (.natCast k) = Ring.OfSemiring.natCast (α := α) k :=
   Lean.Grind.Ring.OfSemiring.toQ_ofNat k
 
+public theorem _root_.OmegaChecks.InitPort.SemiringImage.denoteCases
+    (x : Expr) : Lean.Grind.CommRing.Expr.denoteSAsRing ctx x =
+      _root_.Lean.Grind.CommRing.Expr.denoteS.match_1 (fun _ => Ring.OfSemiring.Q α) x
+        (fun k => Ring.OfSemiring.natCast (α := α) k.natAbs)
+        (fun k => Ring.OfSemiring.natCast (α := α) k)
+        (fun v => Ring.OfSemiring.toQ (v.denote ctx))
+        (fun a b => Ring.OfSemiring.toQ (a.denoteS ctx + b.denoteS ctx))
+        (fun a b => Ring.OfSemiring.toQ (a.denoteS ctx * b.denoteS ctx))
+        (fun a k => Ring.OfSemiring.toQ (a.denoteS ctx ^ k))
+        (fun _ _ => Ring.OfSemiring.natCast (α := α) 0)
+        (fun _ => Ring.OfSemiring.natCast (α := α) 0)
+        (fun _ => Ring.OfSemiring.natCast (α := α) 0) := by
+  cases x <;> first
+    | rfl
+    | exact Lean.Grind.Ring.OfSemiring.toQ_ofNat _
+    | exact Lean.Grind.Ring.OfSemiring.toQ_zero
+
 public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.Lean.Grind.CommRing.Expr.denoteSAsRing.eq_7
     (a b : Expr) : Lean.Grind.CommRing.Expr.denoteSAsRing ctx (.sub a b) = Ring.OfSemiring.natCast (α := α) 0 :=
   Lean.Grind.Ring.OfSemiring.toQ_zero
