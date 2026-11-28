@@ -23,7 +23,7 @@ namespace InitKernelPort
 
 def moduleOf (env : Environment) (n : Name) : Option Name := do
   if let some rule := OmegaChecks.InitPort.LawfulLoop.rules.find? (·.helper == n) then return rule.owner
-  if OmegaChecks.InitPort.PatternMatch.rules.any (·.helper == n) then return OmegaChecks.InitPort.PatternMatch.owner
+  if let some rule := OmegaChecks.InitPort.PatternMatch.rules.find? (·.helper == n) then return rule.owner
   let i ← env.getModuleIdxFor? n
   return env.header.moduleNames[i]!
 
@@ -781,9 +781,18 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
       {fileName := "<well-founded iterator>", fileMap := default} {env := loopTemplates}
     alternatives := alternatives.insert rule.helper (.defnInfo {impl with value := body})
   let patternTemplates ← importModules #[{module := `OmegaChecks.InitPort.PatternMatch}] {} (level := .private)
+  let isSplitLocal := fun n => patternTemplates.getModuleIdxFor? n == patternTemplates.getModuleIdx? `OmegaChecks.InitPort.CharacterSplit
   for rule in OmegaChecks.InitPort.PatternMatch.rules do
-    let some impl := patternTemplates.find? rule.implementation | throw <| IO.userError s!"missing {rule.implementation}"
-    alternatives := alternatives.insert rule.helper impl
+    let some (.defnInfo impl) := patternTemplates.find? rule.implementation | throw <| IO.userError s!"missing {rule.implementation}"
+    let body ← (Meta.deltaExpand impl.value isSplitLocal (allowOpaque := true)).toIO'
+      {fileName := "<character split>", fileMap := default} {env := patternTemplates}
+    alternatives := alternatives.insert rule.helper (.defnInfo {impl with value := body})
+  let some (.thmInfo splitStep) := patternTemplates.find? ``OmegaChecks.InitPort.CharacterSplit.splitStep
+    | throw <| IO.userError "missing character split equation"
+  let stepBody ← (Meta.deltaExpand splitStep.value isSplitLocal (allowOpaque := true)).toIO'
+    {fileName := "<character split equation>", fileMap := default} {env := patternTemplates}
+  alternatives := alternatives.insert ``String.Slice.Pattern.Model.split_bool_eq_internal
+    (.thmInfo {splitStep with value := stepBody})
   let ruleModule := `OmegaChecks.InitCompiler.ProofRules
   let ruleEnv ← importModules #[{module := ruleModule}] {} (level := .private)
   let mut proofRules := {}

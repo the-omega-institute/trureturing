@@ -518,3 +518,12 @@ public theorem toList_split_intercalate_beq :
     exact (same _).symm
 
 end OmegaChecks.InitPort.Alternatives.String
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model
+
+public theorem split_bool_eq_internal._proof_3 :
+    type_of% @_root_.String.Slice.Pattern.Model.split_bool_eq_internal._proof_3 := by
+  intro s f curr hle h
+  exact Nat.le_trans hle _root_.String.Slice.Pos.le_next
+
+end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model

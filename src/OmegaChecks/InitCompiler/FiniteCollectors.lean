@@ -81,7 +81,8 @@ public def finiteCollectors (env : Environment) (input : Expr) (withinImplementa
     if (hasLoop && aliases.contains head) || (hasStringFold && isDefaultLoopAlias env head) then
       if let some core ← unfoldDefinition? sub then
         if let some loop ← InitPort.LawfulLoop.specializeFiniteDefault? core then return .done loop
-    if let some rule := patterns.find? (·.original == head) then
+    for rule in patterns do
+      unless rule.original == head do continue
       if let some call ← InitPort.PatternMatch.specialize? rule sub then return .done call
     let isSlice := sliceCollectors.contains head
     let some arity := consumerArity? head | return .continue

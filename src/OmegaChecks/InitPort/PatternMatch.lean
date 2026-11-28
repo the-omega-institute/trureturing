@@ -1,5 +1,5 @@
 module
-public import OmegaChecks.InitPort.CertifiedFunction
+public import OmegaChecks.InitPort.CharacterSplit
 public import OmegaChecks.InitPort.Translation
 public import Init.Data.String.Lemmas.Pattern.TakeDrop.Basic
 
@@ -27,22 +27,41 @@ public theorem backward_eq : @backward = @revSkip := by
   exact Pos.revSkip?_eq_revMatchAt?.symm
 
 public structure MatchRule where
+  owner : Name
   original : Name
   helper : Name
   reference : Name
   implementation : Name
   agreement : Name
 
-public def owner := `Init.Data.String.Lemmas.Pattern.Basic
+private def owner := `Init.Data.String.Lemmas.Pattern.Basic
+
+private def predOwner := `Init.Data.String.Lemmas.Pattern.Split.Pred
+private def charOwner := `Init.Data.String.Lemmas.Pattern.Split.Char
 
 public def rules : List MatchRule := [
-  ⟨``matchAt?, mkPrivateNameCore owner `String.Slice.Pos.matchWithForwardPattern,
+  ⟨owner, ``matchAt?, mkPrivateNameCore owner `String.Slice.Pos.matchWithForwardPattern,
     ``forward, ``skip, ``forward_eq⟩,
-  ⟨``revMatchAt?, mkPrivateNameCore owner `String.Slice.Pos.matchWithBackwardPattern,
-    ``backward, ``revSkip, ``backward_eq⟩]
+  ⟨owner, ``revMatchAt?, mkPrivateNameCore owner `String.Slice.Pos.matchWithBackwardPattern,
+    ``backward, ``revSkip, ``backward_eq⟩,
+  ⟨predOwner, ``Model.split, mkPrivateNameCore predOwner `String.Slice.splitOnBool,
+    ``CharacterSplit.boolReference, ``CharacterSplit.split, ``CharacterSplit.boolAgreement⟩,
+  ⟨predOwner, ``Model.split, mkPrivateNameCore predOwner `String.Slice.splitOnDecidablePred,
+    ``CharacterSplit.predReference, ``CharacterSplit.predSplit, ``CharacterSplit.predAgreement⟩,
+  ⟨charOwner, ``Model.split, mkPrivateNameCore charOwner `String.Slice.splitOnChar,
+    ``CharacterSplit.charReference, ``CharacterSplit.charSplit, ``CharacterSplit.charAgreement⟩]
 
 /-- Only a lawful search operation for the exact pattern model can realize its longest match. -/
 public def specialize? (rule : MatchRule) (sub : Expr) : MetaM (Option Expr) := do
+  if rule.original == ``Model.split then
+    let #[_, pat, _, _, s, first, curr, le] := sub.getAppArgs | return none
+    let args : Array (Option Expr) := if rule.reference == ``CharacterSplit.predReference then
+      #[pat, none, s, first, curr, le] else #[pat, s, first, curr, le]
+    try
+      let candidate ← Meta.mkAppOptM rule.helper args
+      -- The same pattern type can have a different local model. Match its instance too.
+      if ← Meta.isDefEq candidate sub then return some candidate else return none
+    catch _ => return none
   let #[ρ, pat, model, s, p] := sub.getAppArgs | return none
   try
     return some (← Meta.mkAppOptM rule.helper #[ρ, pat, model, none, none, s, p])
@@ -53,6 +72,7 @@ public def addReferences (source templates : Environment) : IO Environment := do
   for rule in rules do
     unless source.contains rule.original do continue
     let some (.defnInfo ref) := templates.find? rule.reference | throw <| IO.userError s!"missing {rule.reference}"
+    unless ref.type.getUsedConstants.all source.contains && ref.value.getUsedConstants.all source.contains do continue
     let decl := Declaration.defnDecl {ref with name := rule.helper, all := [rule.helper]}
     match env.addDeclCore 0 1000 decl none with
     | .ok out => env := out
