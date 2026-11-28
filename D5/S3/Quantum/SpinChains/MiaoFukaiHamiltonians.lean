@@ -284,6 +284,7 @@ theorem tiled_singleton_components {L : ℕ} (hL : 12 ≤ L) :
     Odd (L - targetCharge L) ∧ (Finset.univ.map (sectorEmbedding hL)).card = 2 ^ blocks L ∧
     ∀ b : Fin (blocks L) → Bool,
       let x := sectorEmbedding hL b
+      x.val = tiledConfig hL b ∧
       ket x.val ≠ 0 ∧ NP L *ᵥ ket x.val = (targetCharge L : ℂ) • ket x.val ∧
       (∀ Δ : ℂ,
         (Kills (H46minus L Δ) x.val ∧
@@ -305,7 +306,7 @@ theorem tiled_singleton_components {L : ℕ} (hL : 12 ≤ L) :
     simp [ket] at hz
   have hq : NP L *ᵥ ket x.val = (targetCharge L : ℂ) • ket x.val := by
     rw [charge_eigenvalue, x.property]
-  refine ⟨hn, hq, ?_, ?_⟩
+  refine ⟨jamEmbedding_val hL b, hn, hq, ?_, ?_⟩
   · intro Δ
     obtain ⟨hm, hp, h71⟩ := ordinary_kills (by omega) hj Δ
     exact ⟨⟨hm, singleton_of_kills x hm⟩, ⟨hp, singleton_of_kills x hp⟩,

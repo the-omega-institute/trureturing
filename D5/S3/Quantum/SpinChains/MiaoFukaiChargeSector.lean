@@ -286,13 +286,17 @@ noncomputable instance jamSectorFintype (L q : ℕ) : Fintype (JamSector L q) :=
   unfold JamSector
   infer_instance
 
-@[expose] def jamEmbedding {L : ℕ} (hL : 12 ≤ L) :
+def jamEmbedding {L : ℕ} (hL : 12 ≤ L) :
     (Fin (blocks L) → Bool) ↪ JamSector L (targetCharge L) where
   toFun b := ⟨tiledConfig hL b, by
     have h := tiled_charge_add hL b
     unfold targetCharge
     omega, tiled_jammed hL b⟩
   inj' := fun _ _ h => tiled_injective hL (congrArg Subtype.val h)
+
+/-- Forgetting the sector proof recovers the labelled tile word. -/
+theorem jamEmbedding_val {L : ℕ} (hL : 12 ≤ L) (b : Fin (blocks L) → Bool) :
+    (jamEmbedding hL b).val = tiledConfig hL b := rfl
 
 /-- The witness image has exactly the stated size and lies in a sector with odd deficit. -/
 theorem jammed_charge_count {L : ℕ} (hL : 12 ≤ L) :
