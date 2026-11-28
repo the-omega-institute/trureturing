@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2611.33384v1
 claim: "For coherent scalar perturbations the paper proves a thermodynamic uncertainty relation for boost-energy transfer. Section VI asks whether an analogous bound holds for arbitrary unitaries in the half-horizon algebra."
 strata_touched:
   - D5/S3/Quantum/Decoherence/GibbsLadderForwardVariance
+  - D5/S3/Quantum/Decoherence/GibbsLadderReverseBudget
 license: citation-only
 triage: anchor
 ---
@@ -153,3 +154,54 @@ above. Priority of the horizon construction remains unverified.
 
 [Forward and inverse fluctuation relation](https://arxiv.org/html/2611.33384v1#S3.E29) ·
 [Hysteretic thermodynamic uncertainty relation](https://arxiv.org/abs/1902.07008)
+
+## Sharp rate under a reverse mean budget
+
+Fix inverse temperature \(\beta>0\) and forward mean \(a>0\). Impose a
+budget \(B\) on the mean of the inverse law from Eq. (29). For finite
+reflected-tilt laws, let \(V(B)\) be the infimum of the forward variances
+at that budget. The class is nonempty for all sufficiently large \(B\).
+Then
+\[
+  \lim_{B\to\infty}\frac{\log V(B)}{B}
+  =-\frac{\beta}{1-e^{-\beta a}}.
+\]
+The same limit holds for the subclass realized by finite cyclic Gibbs
+ladders. The Lean theorem applies to any class between these two. The
+budget uses the inverse protocol's mean energy change. Interpreting
+\(\beta B\) as an entropy budget for a horizon requires the modular
+identification in Eq. (30).
+
+For a forward law \(P\) of variance \(v\), the inverse law \(Q\) obeys
+\(Q((R,\infty))=1-\int_{q\ge -R}e^{-\beta q}\,dP(q)\).
+For \(0<\delta<a\), splitting the integral at \(|q-a|=\delta\) bounds
+this inverse tail from below by
+\(1-e^{-\beta(a-\delta)}-e^{\beta R}v/\delta^2\). The inverse negative
+first moment is at most \(1/(e\beta)\), so the budget bounds the same
+tail from above by \((B+1/(e\beta))/R\). Taking
+\(R=(1+\gamma)(B+1/(e\beta))/(1-e^{-\beta(a-\delta)})\) with
+\(\gamma>0\) gives a strictly positive variance floor. Sending
+\(\gamma\) and \(\delta\) to zero gives the lower logarithmic rate.
+
+For the matching upper rate, calibrate the spacing \(\nu_N\) of a
+cyclic \(N\)-level Gibbs ladder so that its forward mean is exactly
+\(a\). The same continuity argument used for the forward variance
+gives \(\nu_N\to a\). If \(p_0\) and \(p_{N-1}\) are the bottom and top
+Gibbs weights, the reverse mean is \(\nu_N(Np_0-1)\) and the forward
+variance is \((N\nu_N)^2p_{N-1}(1-p_{N-1})\). Dividing the reverse mean
+and the log variance by \(N\) gives limits \(a(1-e^{-\beta a})\) and
+\(-\beta a\), respectively. Choosing the ladder size just below
+\(B/[a(1-e^{-\beta a})]\), with a fixed relative margin that can be
+sent to zero, yields the upper rate.
+
+The inverse-budget calculation uses the distinct forward and reverse
+laws of Eq. (29). The cited hysteretic uncertainty relation concerns
+a sum of forward and reverse fluctuations. The literature search
+identified that antecedent and same-protocol exchange bounds. Priority
+for this sharp one-sided rate remains unverified.
+
+[Eq. (29)](https://arxiv.org/html/2611.33384v1#S3.E29) ·
+[Eq. (30)](https://arxiv.org/html/2611.33384v1#S3.E30) ·
+[Proesmans–Horowitz 2019](https://arxiv.org/abs/1902.07008) ·
+[Timpanaro et al. 2019](https://arxiv.org/abs/1904.07574) ·
+[Hasegawa–Vu 2019](https://arxiv.org/abs/1902.06376)
