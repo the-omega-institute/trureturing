@@ -202,7 +202,7 @@ def envelope_type_certificates(product, *, order=False):
 def envelope_order_formations(checks):
     sites = {}
     witness = "OmegaChecks.InitBoundaries.EnvelopeOrder."
-    for owner, name, order, coherence, forward, reverse in checks:
+    for owner, name, order, coherence, forward, reverse, *construction in checks:
         if owner == MODULE_ENVELOPE:
             scope, suffix, model = MODULE_ENVELOPE_PREFIX, "_proof_3", "Module"
         elif owner == "Init.Grind.Ring.Envelope":
@@ -210,8 +210,9 @@ def envelope_order_formations(checks):
         else:
             raise ValueError(f"invalid quotient order owner {owner}")
         site = (owner, name)
-        if (site in sites or name not in {scope + ".instIsPreorderQ", scope + ".instOrderedAddQ"} or
-                order != scope + ".instLEQOfOrderedAdd" or coherence != order + "." + suffix or
+        expected_construction = [witness + model.lower() + "OrderFromPropext"] if name == order else []
+        if (site in sites or name not in {order, scope + ".instIsPreorderQ", scope + ".instOrderedAddQ"} or
+                construction != expected_construction or order != scope + ".instLEQOfOrderedAdd" or coherence != order + "." + suffix or
                 forward != witness + "propextFrom" + model + "Lift" or reverse != witness + model.lower() + "LiftFromPropext"):
             raise ValueError(f"invalid quotient order formation dependency for {site}")
         sites[site] = order
@@ -441,6 +442,7 @@ def check_coverage(official):
         order_formation = comparison_formations.get(site)
         if row.get("quotientOrderFormation") != order_formation or (order_formation and (
                 port or row["kind"] not in ("theorem", "definition") or row["unsafe"] or row["partial"] or
+                (order_formation == name and row["kind"] != "definition") or
                 row.get("originalTypeChecked") is not False or row.get("originalTypeGap") is not None)):
             raise ValueError(f"uncertified public quotient order formation for {site}")
         ring_formation = site in ring_formations

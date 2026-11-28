@@ -165,6 +165,21 @@ theorem ringLiftFromPropext (ext : type_of% @propext) :
   intro α ring order preorder ordered ⟨a, b⟩ ⟨e, f⟩ ⟨c, d⟩ ⟨g, h⟩ ⟨k, first⟩ ⟨l, second⟩
   exact ext (compareRepresentatives first second)
 
+open IntModule.OfNatModule in
+/-- Given propositional extensionality, construct the entire order using the pinned binary lift. -/
+@[instance_reducible] def moduleOrderFromPropext (ext : type_of% @propext) : type_of% @instLEQOfOrderedAdd.{u} :=
+  fun {_} _ _ _ _ => ⟨fun x y => Q.liftOn₂ x y
+    (fun (a, b) (c, d) => a + d ≤ b + c) (moduleLiftFromPropext ext)⟩
+
+open Ring.OfSemiring in
+/-- The semiring envelope uses the same comparison with its own carrier and relation. -/
+@[instance_reducible] def ringOrderFromPropext (ext : type_of% @propext) : type_of% @instLEQOfOrderedAdd.{u} :=
+  fun {_} _ _ _ _ => ⟨fun x y => Q.liftOn₂ x y
+    (fun (a, b) (c, d) => a + d ≤ b + c) (ringLiftFromPropext ext)⟩
+
+example : @moduleOrderFromPropext.{u} propext = @IntModule.OfNatModule.instLEQOfOrderedAdd.{u} := rfl
+example : @ringOrderFromPropext.{u} propext = @Ring.OfSemiring.instLEQOfOrderedAdd.{u} := rfl
+
 /-- Cancellation identifies the diagonal Boolean representative with zero. -/
 private theorem diagonalEq {A : Type} (mk : Bool × Bool → A)
     (plus : A → A → A) (minus : A → A) (zero : A)

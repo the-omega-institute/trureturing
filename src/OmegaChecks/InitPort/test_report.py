@@ -195,6 +195,22 @@ class CoverageTest(unittest.TestCase):
                    runtimeConflictWitness="PointerModel", originalTypeGap=None)
         self.assertEqual(check_coverage(inventory(row)), (0, []))
 
+    def test_order_operation_requires_the_constructor_at_its_full_type(self):
+        owner = "Init.Grind.Ring.Envelope"
+        order = "Lean.Grind.Ring.OfSemiring.instLEQOfOrderedAdd"
+        proofs = "OmegaChecks.InitBoundaries.EnvelopeOrder."
+        cert = [owner, order, order, order + "._proof_1", proofs + "propextFromRingLift",
+                proofs + "ringLiftFromPropext", proofs + "ringOrderFromPropext"]
+        row = site(owner, order, kind="definition", originalTypeGap=None)
+        data = inventory(row)
+        self.assertEqual(check_coverage(data), (0, [(owner, order)]))
+        row["quotientOrderFormation"] = order
+        data["certifiedEnvelopeOrderFormations"] = [cert]
+        self.assertEqual(check_coverage(data), (0, []))
+        for damaged in (cert[:-1], cert[:-1] + [proofs + "moduleOrderFromPropext"]):
+            with self.subTest(damaged=damaged), self.assertRaisesRegex(ValueError, "quotient order formation"):
+                check_coverage(data | {"certifiedEnvelopeOrderFormations": [damaged]})
+
     def test_order_class_formation_requires_its_complete_coherence(self):
         owner = "Init.Grind.Ring.Envelope"
         scope = "Lean.Grind.Ring.OfSemiring."
