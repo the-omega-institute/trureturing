@@ -27,7 +27,18 @@ The sequence pairs a restriction on adjacent positions in partial partitions wit
 
 ## Gap
 
-The linked inclusion–exclusion answer gives a generating function for the partial partitions. The comparison needs a bijection with the stated full partitions. A scan on labels must be invertible and independent of the chosen labels on the blocks. The cited papers on consecutive subwords and successions concern different restrictions. [Generating function](https://mathoverflow.net/q/478446) · [Mansour–Shattuck–Yan](https://doi.org/10.37236/291) · [Munagi](https://doi.org/10.1155/IJMMS.2005.451)
+The full class on $n+1$ points jointly avoids the consecutive subwords `121` and `212` in the sense of Mansour–Shattuck–Yan. Their reduction ranks the distinct labels by numeric order, so the two patterns distinguish whether the repeated endpoint label is smaller or larger than the middle label. The canonical partition word `12212` avoids `121` and has the forbidden triple `212`. Theorem 3.1 at $y=0$ and the specialization following Theorem 2.9 count single-pattern avoiders separately. Munagi studies successions and separations in full partitions. [Mansour–Shattuck–Yan, §1 and Theorems 2.9 and 3.1](https://doi.org/10.37236/291) · [Munagi](https://doi.org/10.1155/IJMMS.2005.451)
+
+The numerical equality also follows by comparing generating functions. Label the block containing the first point by $0$ and give the other blocks distinct labels from $q\ge1$ available labels. Let $f_n(q)$ count the resulting allowed words of length $n+1$ starting with $0$. When the last two letters are equal, there is one extension with an equal final pair and $q$ with an unequal pair. When they are unequal, there is one extension with an equal pair and $q-1$ with an unequal pair, because repeating the penultimate letter would create a forbidden triple. Start in the equal state by treating the initial $0$ as preceded by another $0$. This leaves the first extension unrestricted. The transition matrix $\begin{pmatrix}1&q\\1&q-1\end{pmatrix}$ gives $f_n=qf_{n-1}+f_{n-2}$ for $n\ge2$, with $f_0=1$ and $f_1=q+1$. Hence
+
+$$
+\sum_{n\ge0} f_n(q)x^n = \frac{1+x}{1-qx-x^2}
+ = \frac{1}{1-x}\sum_{j\ge0}q^j\left(\frac{x}{1-x^2}\right)^j.
+$$
+
+Each partition with $k+1$ blocks contributes the falling factorial $(q)_k$. The linear map $(q)_k\mapsto 1$ removes the labels and takes $q^j$ to the Bell number $B_j$ by the Stirling-number expansion. The resulting ordinary generating function is exactly Max Alekseyev's inclusion–exclusion formula for the partial partitions, including the constant term $1$. This gives a separate proof of the all-$n$ count equality. [Alekseyev's enumeration](https://mathoverflow.net/a/478471)
+
+The public proof report describes the swap-scan construction. The Lean development supplies the checked equivalence on literal partitions and the checked cardinality equality. [Public proof report](https://github.com/the-omega-institute/trureturing/issues/34937#issuecomment-7226553589)
 
 ## Route
 
@@ -52,7 +63,7 @@ The Reg mirror supplies a `declared_validated` source-equivalence registration f
 - **Proved.** The two cardinalities agree for every natural number by `result`, with the literal equivalence given by `wisemanBijection`.
 - **Proved.** The zero boundary has cardinality one on both sides. The Reg mirror's `right_zero` gives the singleton count on the right, and `result 0` transports it to the left.
 - **Proved by the prefix argument.** The scan preserves the set of used labels and padding adds one block. This gives an explanatory pointwise refinement. The frozen theorem states the equality of total counts.
-- **Proved.** The generating function for the partial class also enumerates the stated full class by `result`. The checked sources identify no further dependent published result. [Generating function](https://mathoverflow.net/q/478446)
+- **Proved by enumeration.** Both classes have Alekseyev's generating function, as shown by the independent full-class count above. [Generating function](https://mathoverflow.net/a/478471)
 - **Open.** Which other local avoidance conditions admit a corresponding reversible scan.
 
 ## ASSUMED-UNVERIFIED
