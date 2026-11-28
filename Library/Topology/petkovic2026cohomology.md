@@ -54,13 +54,15 @@ function takes values in [0,1], takes the values 1 and 0 on that same orbit,
 has every generator defect at most 1/R, and lies at least 1/2 from every
 continuous invariant function in the supremum norm.
 
-The corresponding Lean theorem permits the identity among the generators
-and assumes continuity of each individual action map. It uses finite
+The corresponding Lean theorem applies to arbitrary compact Hausdorff spaces,
+permits the identity among the generators, and assumes continuity of each
+individual action map. It uses finite
 homomorphism families to find a common orbit escaping the finite word ball,
 and Urysohn separation of one point from the finite set of transported
 endpoints. The maximum and weight estimate then give the same conclusions.
 Its positive natural radius interface includes R = 1; the source states
-R at least 2. No orbit is assumed infinite, and finite orbits of unbounded
+compact metric spaces and R at least 2. No metric is assumed in the Lean
+construction. No orbit is assumed infinite, and finite orbits of unbounded
 sizes are included.
 
 These continuous tents obstruct a uniform supremum-norm estimate controlling

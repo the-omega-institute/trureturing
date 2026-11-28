@@ -14,7 +14,7 @@ public import Mathlib.GroupTheory.Generators
 public import Mathlib.GroupTheory.GroupAction.Basic
 public import Mathlib.GroupTheory.GroupAction.Quotient
 public import Mathlib.GroupTheory.Index
-public import Mathlib.Topology.MetricSpace.Defs
+public import Mathlib.Topology.Separation.Regular
 public import Mathlib.Topology.UrysohnsLemma
 public import Mathlib.Topology.ContinuousMap.Compact
 public import Mathlib.Topology.Order.Lattice
@@ -22,7 +22,7 @@ public import Mathlib.Tactic.Linarith
 public import OmegaMath.Combinatorics.Graph.GroupWordMetric
 public import OmegaBuild.Commands
 
-/-! Word-ball constructions for continuous actions on compact metric spaces. -/
+/-! Word-ball constructions for continuous actions on compact Hausdorff spaces. -/
 
 @[expose] public section
 
@@ -238,7 +238,8 @@ continuous function has simultaneous generator defect at most the reciprocal
 radius and takes both endpoint values on one actual orbit.
 admission_basis: escape-witness. The private finite-family and word-ball helpers
 are consumed by this construction and receive no independent content credit. -/
-theorem exists_continuous_wordBall_tent [MetricSpace X] [CompactSpace X] [MulAction G X]
+theorem exists_continuous_wordBall_tent
+    [TopologicalSpace X] [CompactSpace X] [T2Space X] [MulAction G X]
     (S : Finset G) (hsym : ∀ s ∈ S, s⁻¹ ∈ S)
     (hS : Subgroup.closure (S : Set G) = ⊤)
     (hcont : ∀ g : G, Continuous (fun x : X => g • x))

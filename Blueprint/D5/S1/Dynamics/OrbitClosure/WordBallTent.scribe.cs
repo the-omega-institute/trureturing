@@ -40,7 +40,8 @@ internal sealed class WordBallTentDocument : IScribeDocumentDefinition
         var maps = C("ContinuousMap", xType, real);
         var classes = Seq(
             OpenBracket, C("Group", gType), CloseBracket, Sp,
-            OpenBracket, C("MetricSpace", xType), CloseBracket, Sp,
+            OpenBracket, C("TopologicalSpace", xType), CloseBracket, Sp,
+            OpenBracket, C("T2Space", xType), CloseBracket, Sp,
             OpenBracket, C("CompactSpace", xType), CloseBracket, Sp,
             OpenBracket, C("MulAction", gType, xType), CloseBracket, Comma, Sp);
         var hypotheses = And(
@@ -77,14 +78,14 @@ internal sealed class WordBallTentDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Topology/petkovic2026cohomology")),
                 Blocks(
-                    Paragraph(Text("G and X range over independent universes. The finite set S is inverse closed: s in S implies its inverse lies in S. "
+                    Paragraph(Text("G and X range over independent universes, and X is an arbitrary compact Hausdorff space. The finite set S is inverse closed: s in S implies its inverse lies in S. "
                         + "Generates(S) means that the subgroup closure of S is all of G. The notation smul(g,x) is the given action, "
                         + "actionSlice(g) is x mapped to g acting on x, and permutationImage(G,X) is the range of MulAction.toPermHom for this action. "
                         + "Only each individual action slice is assumed continuous; there is no topology on G. ContinuousMap(X,R) denotes real-valued continuous functions, "
-                        + "and supnorm is their usual supremum norm on the same compact metric space. The natural R in the denominator is cast to the real numbers.")),
+                        + "and supnorm is their usual supremum norm on the same compact Hausdorff space. The natural R in the denominator is cast to the real numbers.")),
                     Paragraph(Text("For each positive natural R, the same function u satisfies every displayed clause. The points b and h acting on b lie in one actual orbit, "
                         + "with values 1 and 0 respectively. The generator estimate holds at every point for every generator simultaneously. The final quantifier ranges over "
-                        + "every continuous invariant real function for this same action. In particular the conclusion includes the source's radii R at least 2.")),
+                        + "every continuous invariant real function for this same action. In particular the conclusion includes the source's compact metric spaces and radii R at least 2.")),
                     Paragraph(Text("First suppose a finite set B of group elements covers every orbit from its base point. Then each orbit is finite with cardinality at most card(B). "
                         + "A homomorphism from G to any fixed finite symmetric group is determined by its values on S, so there are finitely many such homomorphisms. "
                         + "Intersect their kernels for all orbit sizes at most card(B). The intersection has finite index and acts trivially on every orbit, "
@@ -94,7 +95,7 @@ internal sealed class WordBallTentDocument : IScribeDocumentDefinition
                     Paragraph(Text("Let B_R consist of products of at most R letters from S. Recursive finite unions and images construct this finite ball; "
                         + "the checked word representation identifies membership with word length at most R. The identity belongs to B_R even when S is empty. "
                         + "For each g in B_R, the point g inverse acting on z differs from b. These form a finite closed set F disjoint from {b}. "
-                        + "Urysohn separation gives a continuous phi with values in [0,1], value 1 at b and value 0 on F.")),
+                        + "Compactness and the Hausdorff property make X normal. Urysohn separation gives a continuous phi with values in [0,1], value 1 at b and value 0 on F.")),
                     Paragraph(Text("Write tau(g)=max(0,1-length(g)/R), and define u(y) as the maximum over g in B_R of tau(g) times phi(g inverse acting on y). "
                         + "The finite maximum is continuous and lies in [0,1]. Its identity term gives u(b)=1, and every term vanishes at z. "
                         + "Outside B_R the weight is zero, so the same maximum bounds every transported term indexed by any group element.")),
