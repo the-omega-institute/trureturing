@@ -294,7 +294,9 @@ private def limitedOmniscienceFromLength
     exact Bool.noConfusion (h.symm.trans (by simpa only [Nat.zero_add] using result))
 
 /-- Agreement with the official collector on finite iterators gives the limited principle
-of omniscience for arbitrary Boolean streams. -/
+of omniscience for arbitrary Boolean streams. On streams of bounded machine evaluations,
+`not_computable_collector_halting_test` in the companion module `CollectorHalting` specializes
+this decision to the halting problem in the official Mathlib backend. -/
 def limitedOmniscienceFromCollector (collect : type_of% (@Std.Iter.toList.{0}))
     (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : Iter (α := α) β),
       collect it = it.toList) (f : Nat → Bool) : Decidable (∃ n, f n = true) :=
