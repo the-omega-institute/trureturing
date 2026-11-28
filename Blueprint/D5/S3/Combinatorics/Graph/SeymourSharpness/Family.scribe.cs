@@ -7,10 +7,13 @@ internal sealed class SeymourSharpnessFamilyDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/SeymourSharpness/Family.";
 
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Combinatorics/sadhukhan2026locating");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact Seymour-distance sharpness for every parameter", H("Exact Seymour-distance sharpness for every parameter"),
         Blocks(
-            Paragraph(Text("Sadhukhan and Sen, Locating a Seymour vertex in oriented graphs having minimum outdegree at most 7, arXiv:2606.30588v2, Theorem 1.2 and Section 3, give this sharpness construction. The source theorem states the lower distance bound; its block V_r supplies exact attainment. The result is a formalization of known mathematics. It does not prove the proposed universal upper bound for arbitrary oriented graphs. The primary TeX source has SHA-256 401a2d84b5f1a7fb9a1feded5b269cea318251acdf990bec65d2bca301612666.")),
+            Paragraph(Text("Theorem 1.2 of the cited paper gives the sharpness construction developed in its Section 3. The stated theorem gives the lower distance bound; its block V_r supplies exact attainment. The result formalizes known mathematics and does not prove the proposed universal upper bound for arbitrary oriented graphs.")),
             Node("family-asymm", "The oriented decreasing-block graph", "family_asymm",
                 "There are r+3 blocks arranged in a directed cycle. Their sizes are q, delta, delta-1, through delta-r, and 2delta+1, with delta=3r+2. Block zero is independent; each other block has the short-arc circulant relation. The cross edges are complete from each block to its successor. The resulting relation is asymmetric for every natural q and r. Positivity of q is needed for the finite sharpness theorem, but orientation uses only positivity of the nonzero blocks."),
             Node("family-degrees", "Actual neighborhood counts", "family_degrees",
@@ -23,6 +26,6 @@ internal sealed class SeymourSharpnessFamilyDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 }

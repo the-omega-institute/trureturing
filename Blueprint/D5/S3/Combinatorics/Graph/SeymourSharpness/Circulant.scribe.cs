@@ -7,6 +7,9 @@ internal sealed class SeymourSharpnessCirculantDocument : IScribeDocumentDefinit
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/SeymourSharpness/Circulant.";
 
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Combinatorics/sadhukhan2026locating");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Short-arc modular circulants", H("Short-arc modular circulants"),
         Blocks(
@@ -21,6 +24,6 @@ internal sealed class SeymourSharpnessCirculantDocument : IScribeDocumentDefinit
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 }
