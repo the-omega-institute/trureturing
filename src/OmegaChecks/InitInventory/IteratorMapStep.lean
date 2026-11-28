@@ -4,6 +4,7 @@ public import OmegaChecks.InitInventory.Extensionality
 import all Init.Data.Iterators.Basic
 import all Init.Data.Iterators.Combinators.Monadic.FilterMap
 import all Init.Data.Iterators.Lemmas.Combinators.Monadic.FilterMap
+import all Init.Data.Iterators.Lemmas.Combinators.FilterMap
 
 /-! Monadic mapping and filtering can expose which of two equal continuations is used. -/
 
@@ -11,6 +12,25 @@ public section
 open Std Std.Iterators
 namespace OmegaChecks.InitBoundaries.IteratorStepLift
 universe u v
+
+/-- For a pure source iterator, the map step only needs the map-before-bind law in
+the target monad. The outer iterator step is eliminated before using this law. -/
+theorem pureMapOfBindMapLeft (fusion : type_of% @bind_map_left.{u,v}) :
+    type_of% @Std.Iter.step_mapWithPostcondition.{u,v} := by
+  intro α β γ inst it n f mon law
+  letI : MonadLift Id n := ⟨pure⟩
+  refine (Std.Iter.step_filterMapWithPostcondition (m := Id) (it := it)
+    (f := fun b => PostconditionT.map some (f b))).trans ?_
+  generalize it.step = s
+  cases s using PlausibleIterStep.casesOn <;> try rfl
+  simp only [PostconditionT.operation_map, fusion, bind_pure_comp]
+  rfl
+
+/-- Attaching the result gives the same sufficient law for an effectful map. -/
+theorem pureMapMOfBindMapLeft (fusion : type_of% @bind_map_left.{u,v}) :
+    type_of% @Std.Iter.step_mapM.{u,v} := by
+  intro α β γ inst it n f mon att law
+  exact pureMapOfBindMapLeft fusion (it := it) (f := fun a => PostconditionT.attachLift (f a))
 
 private theorem cancelFamilyCasts (s : {q : Type u → Type u // q = id}) :
     (fun (A : Type u) (a : A) =>
