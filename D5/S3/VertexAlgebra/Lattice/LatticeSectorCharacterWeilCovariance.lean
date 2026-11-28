@@ -100,44 +100,45 @@ private lemma trace_eq_card (D : LatticeData) (hD : (gramReal D).PosDef)
   letI := Module.Finite.of_basis b
   rw [LinearMap.trace_id, Module.finrank_eq_card_basis b, Nat.card_eq_fintype_card]
 
-private lemma oscillator_norm (D : LatticeData) {q : ℂ} (hq : ‖q‖ < 1) :
-    Summable (fun d : Exponent D => ‖q ^ oscillatorEnergy d‖) := by
-  simpa [signedIntegerMonomial, integerEnergy, oscillatorEnergy] using
-    summable_norm_signed_integer_occupations (Fin D.rank) hq
+/-- Absolute summability of the unsigned integer-mode occupation weights. -/
+lemma oscillator_norm (r : ℕ) {q : ℂ} (hq : ‖q‖ < 1) :
+    Summable (fun d : (Fin r × ℕ) →₀ ℕ => ‖q ^ integerEnergy (Fin r) d‖) := by
+  simpa [signedIntegerMonomial] using summable_norm_signed_integer_occupations (Fin r) hq
 
-private lemma oscillator_monomial (D : LatticeData) (q : ℂ) (d : Exponent D) :
-    monomial (fun x : Index D => q ^ (x.2 + 1)) d = q ^ oscillatorEnergy d := by
+private lemma oscillator_monomial (r : ℕ) (q : ℂ) (d : (Fin r × ℕ) →₀ ℕ) :
+    monomial (fun x : Fin r × ℕ => q ^ (x.2 + 1)) d = q ^ integerEnergy (Fin r) d := by
   classical
   simp only [monomial, Finsupp.prod, ← pow_mul, Finset.prod_pow_eq_pow_sum]
   congr 1
-  simp only [oscillatorEnergy, Finsupp.weight_apply, Finsupp.sum, nsmul_eq_mul]
+  simp only [integerEnergy, Finsupp.weight_apply, Finsupp.sum, nsmul_eq_mul]
   exact Finset.sum_congr rfl (fun _ _ => Nat.mul_comm _ _)
 
-private lemma oscillator_eta (D : LatticeData) (τ : ℂ) (hτ : 0 < τ.im) :
-    exp (-2 * Real.pi * I * τ * D.rank / 24) *
-      (∑' d : Exponent D, exp (2 * Real.pi * I * τ) ^ oscillatorEnergy d) =
-      (ModularForm.eta τ ^ D.rank)⁻¹ := by
+/-- The normalized unsigned integer-mode occupation sum for `r` colours. -/
+lemma oscillator_eta (r : ℕ) (τ : ℂ) (hτ : 0 < τ.im) :
+    exp (-2 * Real.pi * I * τ * r / 24) *
+      (∑' d : (Fin r × ℕ) →₀ ℕ, exp (2 * Real.pi * I * τ) ^ integerEnergy (Fin r) d) =
+      (ModularForm.eta τ ^ r)⁻¹ := by
   let q := exp (2 * Real.pi * I * τ)
   have hq : ‖q‖ < 1 := by
     simpa [q, Function.Periodic.qParam] using
       Function.Periodic.norm_qParam_lt_one (by norm_num : (0 : ℝ) < 1) hτ
-  have hp := hasProd_inverse_eq_occupation_sum (fun x : Index D => q ^ (x.2 + 1))
-    ((oscillator_norm D hq).congr (fun d => congrArg norm (oscillator_monomial D q d).symm))
+  have hp := hasProd_inverse_eq_occupation_sum (fun x : Fin r × ℕ => q ^ (x.2 + 1))
+    ((oscillator_norm r hq).congr (fun d => congrArg norm (oscillator_monomial r q d).symm))
     (fun x => by simpa only [norm_pow] using
       pow_lt_one₀ (norm_nonneg q) hq (Nat.succ_ne_zero x.2))
   simp_rw [oscillator_monomial] at hp
-  have hs : HasProd (fun n : ℕ => ((1 - q ^ (n + 1))⁻¹) ^ D.rank)
-      (∑' d : Exponent D, q ^ oscillatorEnergy d) := by
-    have hh := (Equiv.prodComm ℕ (Fin D.rank)).hasProd_iff.mpr hp
+  have hs : HasProd (fun n : ℕ => ((1 - q ^ (n + 1))⁻¹) ^ r)
+      (∑' d : (Fin r × ℕ) →₀ ℕ, q ^ integerEnergy (Fin r) d) := by
+    have hh := (Equiv.prodComm ℕ (Fin r)).hasProd_iff.mpr hp
     simpa using hh.prod_fiberwise
-      (fun n => hasProd_fintype (fun _ : Fin D.rank => (1 - q ^ (n + 1))⁻¹))
+      (fun n => hasProd_fintype (fun _ : Fin r => (1 - q ^ (n + 1))⁻¹))
   have hn : (∏' n : ℕ, (1 - q ^ (n + 1))) ≠ 0 := by
     simpa [ModularForm.eta_q, Function.Periodic.qParam, q] using
       ModularForm.eta_tprod_ne_zero hτ
-  have he := ((ModularForm.multipliable_one_sub_pow hq).hasProd.inv₀ hn).pow D.rank
-  have heta : ModularForm.eta τ ^ D.rank =
-      exp (2 * Real.pi * I * τ * D.rank / 24) *
-        (∏' n : ℕ, (1 - q ^ (n + 1))) ^ D.rank := by
+  have he := ((ModularForm.multipliable_one_sub_pow hq).hasProd.inv₀ hn).pow r
+  have heta : ModularForm.eta τ ^ r =
+      exp (2 * Real.pi * I * τ * r / 24) *
+        (∏' n : ℕ, (1 - q ^ (n + 1))) ^ r := by
     have hparam : Function.Periodic.qParam 1 τ = q := by
       simp [q, Function.Periodic.qParam]
     simp only [ModularForm.eta, ModularForm.eta_q, mul_pow, hparam]
@@ -145,8 +146,8 @@ private lemma oscillator_eta (D : LatticeData) (τ : ℂ) (hτ : 0 < τ.im) :
     simp only [Function.Periodic.qParam, ofReal_ofNat, ← exp_nat_mul]
     congr 1
     ring
-  have hexp : exp (-2 * Real.pi * I * τ * D.rank / 24) =
-      (exp (2 * Real.pi * I * τ * D.rank / 24))⁻¹ := by
+  have hexp : exp (-2 * Real.pi * I * τ * r / 24) =
+      (exp (2 * Real.pi * I * τ * r / 24))⁻¹ := by
     rw [← exp_neg]
     congr 1
     ring
@@ -191,7 +192,8 @@ private lemma character_formula (D : LatticeData) (hD : (gramReal D).PosDef)
     simpa [Function.Periodic.qParam] using
       Function.Periodic.norm_qParam_lt_one (by norm_num : (0 : ℝ) < 1) hτ
   have hc := summable_coset_norm D hD (representative D a) τ hτ
-  have ho := oscillator_norm D hq
+  have ho : Summable (fun d : Exponent D => ‖exp (2 * Real.pi * I * τ) ^ oscillatorEnergy d‖) :=
+    oscillator_norm D.rank hq
   have habs : Summable (fun x => ‖f x‖) := by
     have h := (hc.mul_norm ho).mul_left ‖exp (-2 * Real.pi * I * τ * D.rank / 24)‖
     simpa only [f, μ, basis_term, norm_mul] using h
@@ -220,7 +222,12 @@ private lemma character_formula (D : LatticeData) (hD : (gramReal D).PosDef)
   change exp (-2 * Real.pi * I * τ * D.rank / 24) *
     (sectorTheta D a τ * ∑' d : Exponent D,
       exp (2 * Real.pi * I * τ) ^ oscillatorEnergy d) = _
-  rw [mul_left_comm, oscillator_eta D τ hτ, div_eq_mul_inv]
+  have heta : exp (-2 * Real.pi * I * τ * D.rank / 24) *
+      (∑' d : Exponent D, exp (2 * Real.pi * I * τ) ^ oscillatorEnergy d) =
+      (ModularForm.eta τ ^ D.rank)⁻¹ :=
+    oscillator_eta D.rank τ hτ
+  rw [mul_left_comm, heta]
+  exact (div_eq_mul_inv _ _).symm
 
 /-- The actual rational-grade trace character converges absolutely and
 transforms by the existing negative, cardinality-normalized Weil S operator.
