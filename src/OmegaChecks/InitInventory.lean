@@ -5,6 +5,7 @@ import OmegaChecks.InitInventory.UnsafeCast
 meta import OmegaChecks.InitInventory.UnsafeCast
 import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.InitInventory.OriginalType
+meta import OmegaChecks.InitInventory.OriginalType
 import OmegaChecks.InitInventory.ConstructorIff
 meta import OmegaChecks.InitInventory.ConstructorIff
 meta import OmegaChecks.InitCompiler.RootNames
