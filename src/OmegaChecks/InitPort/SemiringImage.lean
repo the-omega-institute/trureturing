@@ -1,9 +1,10 @@
 module
 public import Init.Grind.Ring.CommSemiringAdapter
 
-/-! The semiring interpreter supplies a representative for each operand of these operations.
-The pinned right endpoints of `denoteSAsRing.eq_4`, `eq_5` and `eq_6` call
-`Lean.Grind.Ring.OfSemiring.ofSemiring`, which is missing from the strict public interface. -/
+/-! The pinned types of `denoteSAsRing.eq_4`, `eq_5`, `eq_6` and `eq_def` project arithmetic
+from `Lean.Grind.Ring.OfSemiring.ofSemiring`. The strict public library computes these operations
+on embedded semiring values. Both public kernels accept the constructor equations, including all
+nine branches of `constructorCases`. The standalone ring instance is unavailable. -/
 
 open Lean.Grind Lean.Grind.CommRing
 namespace OmegaChecks.InitPort.SemiringImage
