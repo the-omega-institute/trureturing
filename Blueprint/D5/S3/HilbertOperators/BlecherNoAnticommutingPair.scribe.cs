@@ -55,7 +55,16 @@ internal sealed class BlecherNoAnticommutingPairDocument : IScribeDocumentDefini
                         + "on the image. At every matrix level its copies form a block diagonal unitary. "
                         + "Unitary multiplication on both sides preserves the assembled Euclidean operator norm. "
                         + "Transpose also reverses multiplication, so it realizes the reversed algebra "
-                        + "completely isometrically."))),
+                        + "completely isometrically.")),
+                    Paragraph(Text(
+                        "For each m ≥ 2 the same construction uses m² probes. There is one identity probe, "
+                        + "m − 1 diagonal sign changes, and one unsigned swap and one signed swap for each "
+                        + "unordered pair of distinct coordinates. Subtracting the signed swap reading from "
+                        + "the unsigned swap reading recovers twice one off-diagonal entry. Comparing the "
+                        + "unsigned swap reading to the identity reading recovers the other using the known "
+                        + "diagonal. The representation is faithful in complex matrices of size m²(m + 2), and the same argument "
+                        + "proves noncommutativity, the zero-product implication and all amplification "
+                        + "norm equalities."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("blecher-2025-example-5-5-no-anticommuting-pair"),
@@ -66,9 +75,9 @@ internal sealed class BlecherNoAnticommutingPairDocument : IScribeDocumentDefini
         Formula a = F.Id("A"), x = F.Id("x"), y = F.Id("y"), k = F.Id("k");
         Formula i = F.Id("i"), j = F.Id("j");
         Formula xy = Multiply(x, y), yx = Multiply(y, x);
-        Formula closed = ForPair(Forall, Member(xy, a));
-        Formula noncommutative = ForPair(Exists, Relation(xy, FormulaRelationOperator.NotEqual, yx));
-        Formula badPair = ForPair(Exists, Logic(
+        Formula closed = ForPair(true, Member(xy, a));
+        Formula noncommutative = ForPair(false, Relation(xy, FormulaRelationOperator.NotEqual, yx));
+        Formula badPair = ForPair(false, Logic(
             Relation(xy, FormulaRelationOperator.Equal, Seq(Neg, Sp, Parenthesized(yx))),
             FormulaLogicOperator.And, Relation(xy, FormulaRelationOperator.NotEqual, D(0))));
         Formula entries = Bind(Forall, i, Fin(k), Bind(Forall, j, Fin(k), Member(At(x, i, j), a)));
@@ -81,9 +90,9 @@ internal sealed class BlecherNoAnticommutingPairDocument : IScribeDocumentDefini
             Arrow(closed, Arrow(noncommutative, Arrow(symmetric, badPair))));
     }
 
-    private static Formula ForPair(Formula quantifier, Formula body)
+    private static Formula ForPair(bool universal, Formula body)
     {
-        bool universal = quantifier == Forall;
+        Formula quantifier = universal ? Forall : Exists;
         return MemberBind(F.Id("x"), MemberBind(F.Id("y"), body));
 
         Formula MemberBind(Formula variable, Formula rest) =>

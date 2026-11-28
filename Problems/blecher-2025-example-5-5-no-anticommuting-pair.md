@@ -17,3 +17,5 @@ After exhibiting a nonzero anticommuting product, Example 5.5 asks for an exampl
 ## Result
 
 The witness is the image of the complex-linear representation of $\mathbb C^{1\times 2}\oplus M_2(\mathbb C)$ whose product is $(r,Z)(s,W)=(0,r^Ts)$. Four probes, consisting of the identity, a diagonal sign change, a coordinate swap and a signed coordinate swap, give a faithful representation in $M_{16}(\mathbb C)$. The image is a finite-dimensional closed subalgebra. Every amplification preserves its operator norm under entrywise transpose, which reverses the product. The argument refutes the necessity of a nonzero anticommuting product already among noncommutative symmetric subalgebras of $M_{16}(\mathbb C)$. [Preregistration #35141](https://github.com/the-omega-institute/trureturing/issues/35141)
+
+For each $m\ge2$ the construction gives a faithful representation of $\mathbb C^{1\times m}\oplus M_m(\mathbb C)$ in $M_{m^2(m+2)}(\mathbb C)$ with the same product, pair condition and amplified norm equalities. It uses the identity, diagonal sign changes at all but the last coordinate, and two swap probes per unordered pair.
