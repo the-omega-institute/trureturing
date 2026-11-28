@@ -8,7 +8,6 @@ prelude
 public import OmegaInit.Core
 import OmegaInit.Data.Nat.Basic
 import OmegaInit.Data.Nat.Dvd
-import OmegaInit.Data.Nat.Div.Lemmas
 
 namespace Omega.Nat
 
