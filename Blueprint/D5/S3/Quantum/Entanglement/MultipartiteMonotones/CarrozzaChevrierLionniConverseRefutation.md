@@ -49,7 +49,7 @@ For any party cut, the grouped local maps act on the coefficient matrix M by L M
 For Eq. (24), the column is ket–dual and the row is dual–ket. The active pairs follow adjacent colors of the permutation. Within each pair, summing the spectator colors gives the corresponding two-color density matrix rho. Top and bottom labels exchange ket and bra roles between successive pairs. The terminal top label is the ket for even D and the dual for odd D, which accounts for the parity-dependent output swap in contraction. For D = 4 and order (a,b,c,d), the entry at row (j′,j) and column (i,i′) is the following sum.
 
 $$
-A_{\sigma}[(j',j),(i,i')] = \sum_{x,x',y,y'} \rho_{ab}[(i,x),(i',x')]\,\rho_{bc}[(x',y'),(x,y)]\,\rho_{cd}[(y,j),(y',j')]
+A_{\sigma}[(j',j),(i,i')] = \sum_{x,x',y,y'} \rho_{ab}[(i,x),(i',x')] \cdot \rho_{bc}[(x',y'),(x,y)] \cdot \rho_{cd}[(y,j),(y',j')]
 $$
 
 For every one of the 24 permutations the contraction gives A = e e transpose / 16 with e = (1,0,0,1) in the endpoint basis (00,01,10,11). Its Gram matrix X = A A adjoint is e e transpose / 128, has trace t = 1/64, and satisfies X squared = t X. The real part of the complex trace agrees with the real trace of powers of this positive semidefinite matrix. Hence tr(X^n) = t^n for every positive integer n. The logarithm in Eq. (30) has the positive argument one, and every term in Eq. (31) vanishes.

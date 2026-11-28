@@ -109,8 +109,8 @@ internal sealed class CarrozzaChevrierLionniConverseRefutationDocument : IScribe
         Formula ip = Seq(i, Apos), jp = Seq(j, Apos), xp = Seq(x, Apos), yp = Seq(y, Apos);
         return Equal(Entry(new Formula.Subscript(F.Id("A"), SigmaLower), jp, j, i, ip),
             Seq(new Formula.Subscript(Sum, Seq(x, Comma, xp, Comma, y, Comma, yp)), Sp,
-                Entry(new Formula.Subscript(Rho, F.Id("ab")), i, x, ip, xp), Thin,
-                Entry(new Formula.Subscript(Rho, F.Id("bc")), xp, yp, x, y), Thin,
+                Entry(new Formula.Subscript(Rho, F.Id("ab")), i, x, ip, xp), Sp, Cdot, Sp,
+                Entry(new Formula.Subscript(Rho, F.Id("bc")), xp, yp, x, y), Sp, Cdot, Sp,
                 Entry(new Formula.Subscript(Rho, F.Id("cd")), y, j, yp, jp)));
     }
 
