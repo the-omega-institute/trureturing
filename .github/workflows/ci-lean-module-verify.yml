@@ -31,6 +31,7 @@ jobs:
     env:
       STRATALINT_CACHE_WRITES: 'false'
       CACHE_SCOPE: D5.S3.Quantum.AURICOmega.RationalBlochTetrahedron
+      IMPORT_SCOPE: D5.S3.VertexAlgebra.TwistedGround.BinaryGauss
     steps:
       - uses: actions/checkout@v5
         with:
@@ -103,7 +104,7 @@ jobs:
           PUBLICATION_KIND: ${{ inputs.kind }}
         run: |
           case "$PUBLICATION_KIND" in
-            compiler) echo "$CACHE_SCOPE" > "$RUNNER_TEMP/verification-compilers" ;;
+            compiler) printf '%s\n' "$CACHE_SCOPE" "$IMPORT_SCOPE" > "$RUNNER_TEMP/verification-compilers" ;;
             report)
               make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
               dotnet tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll \
@@ -134,7 +135,7 @@ jobs:
           sha256sum "$module" > "$RUNNER_TEMP/restored-compiler.sha256"
       - if: inputs.exact && inputs.kind == 'compiler'
         name: Load the restored compiler with Lake
-        run: lake --no-build build "+$CACHE_SCOPE:olean"
+        run: lake --no-build build "+$CACHE_SCOPE:olean" "+$IMPORT_SCOPE:olean"
       - if: (inputs.exact && inputs.kind == 'report') || steps.entry.outputs.hit == 'true'
         name: Restore the selected module through the CI reader
         continue-on-error: ${{ !inputs.exact }}
