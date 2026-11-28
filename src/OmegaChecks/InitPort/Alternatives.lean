@@ -162,6 +162,20 @@ public def loadAlternatives : IO (NameMap ConstantInfo) := do
       unless Kernel.isDefEqGuarded env {} value.type target.type do
         throw <| IO.userError s!"constructive equation {ci.name} does not match the complete type of {name}"
     aligned := aligned.insert name value
+  -- A private theorem can compute on explicit representatives. Index its template
+  -- under the defining module's private name only after checking the complete type.
+  for (owner, data) in env.header.moduleNames.zip env.header.moduleData do
+    unless (`Init).isPrefixOf owner do continue
+    for original in data.constants do
+      unless original.isTheorem && !aligned.contains original.name do continue
+      let some user := privateToUserName? original.name | continue
+      let some alt := aligned.find? user | continue
+      unless alt.isTheorem && original.numLevelParams == alt.numLevelParams do continue
+      -- Generated equations have a separate owner and parent check above.
+      if (Meta.declFromEqLikeName env user).isSome then continue
+      let type := alt.type.instantiateLevelParams alt.levelParams (original.levelParams.map Level.param)
+      if (Kernel.check env {} type).isOk && Kernel.isDefEqGuarded env {} original.type type then
+        aligned := aligned.insert original.name alt
   return aligned
 
 /-- A dependent interface can use different proofs of the same index bounds. The caller

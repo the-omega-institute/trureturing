@@ -17,6 +17,15 @@ namespace OmegaChecks.InitPort.Alternatives
 section
 open Std
 
+public theorem Lean.Grind.IntModule.OfNatModule.mk_pos {α : Type u} [NatModule α] [LE α] [LT α] [LawfulOrderLT α] [IsPreorder α] [OrderedAdd α]
+    {a₁ a₂ : α} : ((0 + a₂ ≤ 0 + a₁) ∧ ¬ (a₁ + 0 ≤ a₂ + 0)) ↔ a₂ < a₁ := by
+  rw [AddCommMonoid.zero_add, AddCommMonoid.zero_add, AddCommMonoid.add_zero, AddCommMonoid.add_zero, LawfulOrderLT.lt_iff]
+
+public theorem Lean.Grind.IntModule.OfNatModule.mk_lt_mk {α : Type u} [NatModule α] [LE α] [LT α] [LawfulOrderLT α]
+    [IsPreorder α] [OrderedAdd α] {a₁ a₂ b₁ b₂ : α} :
+    ((a₁ + b₂ ≤ a₂ + b₁) ∧ ¬ (b₁ + a₂ ≤ b₂ + a₁)) ↔ a₁ + b₂ < a₂ + b₁ := by
+  rw [AddCommMonoid.add_comm b₁ a₂, AddCommMonoid.add_comm b₂ a₁, LawfulOrderLT.lt_iff]
+
 public theorem Lean.Grind.IntModule.OfNatModule.mk_le_mk {α : Type u} [NatModule α] [LE α] [IsPreorder α] [OrderedAdd α]
     {a₁ a₂ b₁ b₂ : α} : (a₁ + b₂ ≤ a₂ + b₁) ↔ a₁ + b₂ ≤ a₂ + b₁ := Iff.rfl
 

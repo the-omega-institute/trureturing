@@ -3,7 +3,16 @@ import all Init.Grind.Ring.CommSemiringAdapter
 import all Init.Grind.Ring.CommSolver
 import all Init.Grind.Ring.Envelope
 
-/-! The semiring expression interpreter and its embedding into the ring envelope. -/
+/-!
+The semiring expression interpreter and its embedding into the ring envelope.
+
+The private arithmetic and comparison lemmas take explicit pairs. The quotient lifts
+reduce on those pairs, giving the representative formulas below. The public
+`of_diseq` still requires the embedding to preserve disequality for every additively
+cancellative semiring: taking the two variables in a context with leaves `a` and
+`b` gives `a ≠ b → toQ a ≠ toQ b`. The upstream proof calls `toQ_inj`, which
+uses effectiveness of the quotient via `Q.exact`.
+-/
 
 open Lean.Grind Lean.Grind.CommRing
 namespace OmegaChecks.InitPort.Alternatives
@@ -24,6 +33,27 @@ public theorem Lean.Grind.Ring.OfSemiring.of_eq {α : Type u} [Semiring α] (ctx
 
 section
 open Std
+
+attribute [local instance] Semiring.natCast in
+public theorem Lean.Grind.Ring.OfSemiring.mk_pos {α : Type u} [Semiring α] [LE α] [LT α] [LawfulOrderLT α] [IsPreorder α] [OrderedAdd α]
+    {a₁ a₂ : α} :
+    ((((0 : Nat) : α) + a₂ ≤ 0 + a₁) ∧ ¬ (a₁ + 0 ≤ a₂ + ((0 : Nat) : α))) ↔ a₂ < a₁ := by
+  rw [Semiring.natCast_zero, AddCommMonoid.zero_add, AddCommMonoid.zero_add,
+    AddCommMonoid.add_zero, AddCommMonoid.add_zero, LawfulOrderLT.lt_iff]
+
+public theorem Lean.Grind.Ring.OfSemiring.mk_lt_mk {α : Type u} [Semiring α] [LE α] [LT α] [LawfulOrderLT α]
+    [IsPreorder α] [OrderedAdd α] {a₁ a₂ b₁ b₂ : α} :
+    ((a₁ + b₂ ≤ a₂ + b₁) ∧ ¬ (b₁ + a₂ ≤ b₂ + a₁)) ↔ a₁ + b₂ < a₂ + b₁ := by
+  rw [AddCommMonoid.add_comm b₁ a₂, AddCommMonoid.add_comm b₂ a₁, LawfulOrderLT.lt_iff]
+
+open _root_.Lean.Grind.Ring.OfSemiring in
+/-- Both sides of the pinned pair-addition equation compute to this representative. -/
+public theorem Lean.Grind.Ring.OfSemiring.mk_add_mk {α : Type u} [Semiring α] {a₁ a₂ b₁ b₂ : α} :
+    Q.mk (a₁ + b₁, a₂ + b₂) = Q.mk (a₁ + b₁, a₂ + b₂) := rfl
+
+open _root_.Lean.Grind.Ring.OfSemiring in
+public theorem Lean.Grind.Ring.OfSemiring.mk_mul_mk {α : Type u} [Semiring α] {a₁ a₂ b₁ b₂ : α} :
+    Q.mk (a₁*b₁ + a₂*b₂, a₁*b₂ + a₂*b₁) = Q.mk (a₁*b₁ + a₂*b₂, a₁*b₂ + a₂*b₁) := rfl
 
 public theorem Lean.Grind.Ring.OfSemiring.mk_le_mk {α : Type u} [Semiring α] [LE α] [IsPreorder α] [OrderedAdd α]
     {a₁ a₂ b₁ b₂ : α} : (a₁ + b₂ ≤ a₂ + b₁) ↔ a₁ + b₂ ≤ a₂ + b₁ := Iff.rfl
