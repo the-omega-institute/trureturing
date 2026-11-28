@@ -7,6 +7,7 @@ prelude
 
 public import OmegaInit.Data.Nat.Coprime
 public import OmegaInit.Data.Nat.Div
+public import OmegaInit.Data.Nat.Dvd
 public import OmegaInit.Data.Nat.Gcd
 public import OmegaInit.Data.Nat.Lemmas
 public import OmegaInit.Data.Nat.MinMax

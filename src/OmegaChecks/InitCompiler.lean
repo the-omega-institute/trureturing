@@ -169,8 +169,17 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
       withOptions (fun opts => Elab.async.set opts false) do Lean.compileDecls #[name] (logErrors := false)
     | _ => throwError "expected a private theorem or total definition"
 
+/-- Remove proposition casts from a pinned body while preserving its definition in the
+official kernel. The strict kernel checks the translated term again at its original type. -/
+private def translateConstructiveBody (source : Environment) (value : Expr) : CoreM Expr := do
+  let candidate := constructiveCasts source value (useEquivalences := true)
+  let candidate ← decidableProof source candidate
+  unless (Kernel.check source {} candidate).isOk && Kernel.isDefEqGuarded source {} value candidate do
+    throwError "constructive replacement does not convert to the pinned body"
+  ofExcept (translateProofTerm source candidate)
+
 @[command_parser, builtin_command_parser] def portProof := leading_parser
-  "port_proof " >> ident >> optional (" using " >> ident) >> optional (" by_reflexivity" <|> " by_finite_cases")
+  "port_proof " >> ident >> optional (" using " >> ident) >> optional (" by_reflexivity" <|> " by_finite_cases" <|> " by_constructive_casts")
 
 @[builtin_command_elab portProof] def elabPortProof : CommandElab := fun stx => do
   let (src, info) ← officialDeclaration stx[1]
@@ -183,7 +192,10 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
     unless ← Meta.MetaM.run' (Meta.isProp target.type) do throwError "expected a proof interface"
     if !stx[3].isNone then
       if implementation.isSome then throwError "specify only one proof implementation"
-      let term ← if stx[3][0].getAtomVal == "by_finite_cases" then do
+      let term ← if stx[3][0].getAtomVal == "by_constructive_casts" then do
+        let some body := info.value? (allowOpaque := true) | throwError "expected a proof body"
+        translateConstructiveBody src body
+      else if stx[3][0].getAtomVal == "by_finite_cases" then do
         let some body ← finiteProof? src info.type | throwError "no finite case proof for {info.name}"
         ofExcept (translateProofTerm src body)
       else do
@@ -282,12 +294,13 @@ private def installRuntimeExtern (src : Environment) (name : Name) : CoreM Unit 
   modifyEnv fun env => externAttr.ext.addEntry (asyncDecl := n) env (n, ⟨[.standard `all symbol]⟩)
 
 @[command_parser, builtin_command_parser] def portDefinition := leading_parser
-  "port_definition " >> ident >> optional " with_native_code"
+  "port_definition " >> ident >> optional " with_native_code" >> optional " by_constructive_casts"
 
 @[builtin_command_elab portDefinition] def elabPortDefinition : CommandElab := fun stx => do
   let (src, .defnInfo defn) ← officialDeclaration stx[1] | throwError "expected a safe definition"
   liftCoreM <| withExporting do
-    let value ← ofExcept (translateProofTerm src defn.value)
+    let value ← if stx[3].isNone then ofExcept (translateProofTerm src defn.value)
+      else translateConstructiveBody src defn.value
     let type ← ofExcept (translateProofTerm src defn.type)
     let name := omegaName defn.name
     Lean.addDecl (.defnDecl {defn with name, type, value, all := defn.all.map omegaName}) (forceExpose := true)
