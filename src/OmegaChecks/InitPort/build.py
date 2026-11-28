@@ -440,6 +440,7 @@ def main():
                 probe += "example {p q : Prop} (h : Omega.And p q) : p := Omega.And.left h\n"
             hosted_env = {**os.environ, "LEAN_PATH": str(hosted)}
             run("lean", "--stdin", text=True, input=probe, env=hosted_env)
+            run("lean", HERE / "consumers/QuotientConsumer.lean", env=hosted_env)
             if (hosted / "OmegaInit/Data/List/Scan/Basic.olean").is_file():
                 run("lean", HERE / "consumers/ListScanConsumer.lean", env=hosted_env)
         product.rename(target)

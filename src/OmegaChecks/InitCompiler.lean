@@ -17,6 +17,45 @@ namespace OmegaChecks.InitCompiler
 @[command_parser, builtin_command_parser] def physicalNaturals := leading_parser "port_kernel_naturals"
 @[builtin_command_elab physicalNaturals] def elabPhysicalNaturals : CommandElab := fun _ => installNaturalBootstrap
 
+open Compiler.LCNF in
+private def installCompiledCode (compiled : Environment) (name : Name) : CoreM Unit := do
+  let original ← getEnv
+  -- Reattach generated code in backend order, including recursive workers and lifted closures.
+  let names := (declOrderExt.getState compiled).1.reverse.toArray.filter fun n =>
+    !(declOrderExt.getState original).2.contains n
+
+  unless names.contains name do throwError m!"no executable code generated for {name}"
+  modifyEnv fun env => PersistentEnvExtension.modifyState noncomputableExt env fun (entries, marked) =>
+    (entries.filter (· != name), marked.erase name)
+  for n in names do
+    if let some decl := baseExt.getState compiled |>.find? n then modifyEnv (saveBaseDeclCore · decl)
+    if let some decl := monoExt.getState compiled |>.find? n then modifyEnv (saveMonoDeclCore · decl)
+    if let some decl := impureExt.getState compiled |>.find? n then modifyEnv (saveImpureDeclCore · decl)
+    if let some ir := IR.declMapExt.getState compiled |>.find? n then modifyEnv (IR.declMapExt.addEntry · ir)
+    if isDeclPublic compiled n then modifyEnv (setDeclPublic · n)
+    modifyEnv (recordFinalImpureDecl · n)
+
+@[command_parser, builtin_command_parser] def quotientInterfaces := leading_parser "port_quotient_interfaces"
+@[builtin_command_elab quotientInterfaces] def elabQuotientInterfaces : CommandElab := fun _ => do
+  unless (← getMainModule) == `OmegaInit.Prelude do throwError "expected OmegaInit.Prelude"
+  let pinned ← officialEnvironment `Init.Prelude
+  liftCoreM <| withExporting do
+    for name in RootNames.quotientPrimitives do
+      let wrapper := RootNames.quotientInterface (← getConstInfo name)
+      Lean.addDecl (.defnDecl wrapper) (forceExpose := true)
+      unless name == `Quot.mk || name == `Quot.lift do continue
+      let compiled ← withoutModifyingEnv do
+        -- Lean's compiler erases this internal inverse when it lowers Quot.lift.
+        -- Only the resulting executable code is exported from the temporary environment.
+        let some (.axiomInfo inverse) := pinned.find? `Quot.lcInv
+          | throwError "missing pinned quotient compiler primitive"
+        unless inverse.isUnsafe do throwError "unexpected quotient compiler primitive"
+        Lean.addDecl (.axiomDecl inverse)
+        withOptions (fun o => (Elab.async.set o false).setBool `compiler.postponeCompile false) do
+          Lean.compileDecls #[wrapper.name] (logErrors := true)
+        return ← getEnv
+      installCompiledCode compiled wrapper.name
+
 private def omegaName (n : Name) := if RootNames.usesRoot n then n else `Omega ++ n
 
 private def sourceGroup (src : Environment) (owner name : Name) : CoreM (Declaration × Array Name) := do
@@ -332,19 +371,5 @@ open Compiler.LCNF in
       withOptions (fun o => (Elab.async.set o false).setBool `compiler.postponeCompile false) do
         Lean.compileDecls #[name] (logErrors := true)
       return ← getEnv
-    let original ← getEnv
-    -- Reattach generated code in backend order, including recursive workers and lifted closures.
-    let names := (declOrderExt.getState compiled).1.reverse.toArray.filter fun n =>
-      !(declOrderExt.getState original).2.contains n
-
-    unless names.contains name do throwError "no recursive code generated"
-    modifyEnv fun env => PersistentEnvExtension.modifyState noncomputableExt env fun (entries, marked) =>
-      (entries.filter (· != name), marked.erase name)
-    for n in names do
-      if let some decl := baseExt.getState compiled |>.find? n then modifyEnv (saveBaseDeclCore · decl)
-      if let some decl := monoExt.getState compiled |>.find? n then modifyEnv (saveMonoDeclCore · decl)
-      if let some decl := impureExt.getState compiled |>.find? n then modifyEnv (saveImpureDeclCore · decl)
-      if let some ir := IR.declMapExt.getState compiled |>.find? n then modifyEnv (IR.declMapExt.addEntry · ir)
-      if isDeclPublic compiled n then modifyEnv (setDeclPublic · n)
-      modifyEnv (recordFinalImpureDecl · n)
+    installCompiledCode compiled name
 end OmegaChecks.InitCompiler

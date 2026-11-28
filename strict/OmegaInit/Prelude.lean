@@ -18,6 +18,8 @@ set_option linter.unusedVariables.funArgs false in
 
 port_compiler_markers
 port_kernel_naturals
+init_quot
+port_quotient_interfaces
 
 set_option genCtorIdx false
 

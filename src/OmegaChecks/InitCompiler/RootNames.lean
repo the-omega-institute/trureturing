@@ -59,6 +59,18 @@ private def primitiveUnfolding (name : Name) : Bool :=
 
 public def usesRoot (name : Name) := primitiveName name || reservedEquation name || primitiveUnfolding name
 
+/-- Quotient primitives have fixed kernel names. Their public Omega definitions use
+the original binder types, referring to Omega constructors and to the kernel equality. -/
+public def quotientPrimitives := #[`Quot, `Quot.mk, `Quot.ind, `Quot.lift]
+
+public def quotientInterface (ci : ConstantInfo) : DefinitionVal :=
+  let name := `Omega ++ ci.name
+  let type := ci.type.replace fun
+    | .const n ls => some (.const (if usesRoot n then n else `Omega ++ n) ls)
+    | _ => none
+  { name, type, levelParams := ci.levelParams, value := mkConst ci.name (ci.levelParams.map Level.param),
+    all := [name], hints := .regular 1, safety := .safe }
+
 public def isPrimitive (owner name : Name) : Bool :=
   (owner == `OmegaInit.Data.Nat.Gcd && name == `Nat.gcd) ||
   (owner == `OmegaInit.Data.Nat.Bitwise.Basic && name == `Nat.xor) ||
