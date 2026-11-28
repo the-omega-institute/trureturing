@@ -7,6 +7,7 @@
    digest: Actual fixed-source states representing the BPZ-inverted twisted coefficients. -/
 
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeOppositeGrade
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeFixedInvertedIterate
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedSourceBPZ
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeRestrictedDualPairing
 import D5.S3.VertexAlgebra.SourceBPZ.AllStateTranspose
@@ -35,8 +36,11 @@ open P48qNativeConformalSector
   (fixedStates sector fixedField fixedField_coeff_val fixedOmega fixedProduct fixedVacuum)
 open P48qNativeDualCoefficients (bpzTerm)
 open P48qNativeDualLinearField (dualField dualField_homogeneous)
+open P48qNativeFixedInvertedIterate
+  (fixedSourceLOne sectorLOne sectorLOne_divided_inverted_iterate)
 open P48qNativeFixedRightInsertion (rightInsertion sectorTranslation)
-open P48qNativeOppositeGrade (invertedCoeff_grade_of_ne_zero)
+open P48qNativeOppositeGrade
+  (fixedMode_weight fixedMode_eq_zero_of_below_minimum invertedCoeff_grade_of_ne_zero)
 open P48qNativeOppositeVacuum
   (gradeProjection invertedCoeff invertedCoeff_translation ground groundFunctional
     invertedCoeff_ground_vacuum)
@@ -50,6 +54,7 @@ open SourceBPZ.AllStateTranspose (sourcePairing_allState)
 open SourceBPZ.OriginalSourcePairing (sourcePairing sourcePairing_vacuum)
 open SourceBPZ.SourcePairingLaws (sourcePairing_grade)
 open StateField.BorcherdsPermutations (dividedTranslation)
+open StateFieldResidueReconstruction (integerBinomial)
 open private gram_det_unit from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConformalVectorDecomposition
 open private fixedProjection fixedProjection_eq_self fixedProjection_fixed lift_fixed
@@ -57,7 +62,8 @@ open private fixedProjection fixedProjection_eq_self fixedProjection_fixed lift_
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalSector
 open private rightMode sourceMode from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeFixedRightJacobi
-open private gradeProjection_eq_zero gradeProjection_self inversionTerm from
+open private gradeProjection_eq_zero gradeProjection_self inversionTerm
+  inversionTerm_eq_zero_of_le rightInsertionEval rightInsertionEval_apply from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeOppositeVacuum
 
 noncomputable section
@@ -142,6 +148,74 @@ theorem evaluation_eq_zero_of_grade_ne (s : Fin 3) (h : ℤ) (w : ℂ) (u : sect
 local notation "C" => HVertexOperator.coeff
 local notation "L₀" => sugawaraMode lattice (actualInverse lattice) 0
 local notation "L₁" => sugawaraMode lattice (actualInverse lattice) 1
+
+/-- The paired opposite coefficient of a normalized fixed-mode iterate is the
+finite divided-power expansion of the actual right-insertion coefficient. -/
+theorem invertedCoeff_iterate_coeff (s : Fin 3) (a : fixedStates) (u : sector s)
+    (e h : ℤ) (ha : L₀ a.val = (e : ℂ) • a.val)
+    (m : ℤ) (w : ℂ) (f : Module.Dual ℂ (totalLZero.eigenspace w))
+    (b : fixedStates) (k : ℤ) :
+    let H : ℤ := h + 9 * (e - m - 1)
+    invertedCoeff s H w (((fixedField s a)[[m]]) u) f b k =
+      Complex.exp ((Real.pi : ℂ) * Complex.I * ((H : ℂ) / 9)) *
+        ∑ r ∈ Finset.range (((H - 16) / 9).toNat + 1),
+          ∑ i ∈ Finset.range (r + 1), ∑ j ∈ Finset.range (r - i + 1),
+            integerBinomial (2 * e - m - (i : ℤ) - 2) (r - i - j) *
+              f (gradeProjection w ((rightInsertion s
+                (((fixedField s (dividedTranslation fixedSourceLOne i a))
+                  [[m + (r : ℤ) - (i : ℤ) - (j : ℤ)]])
+                    (dividedTranslation (sectorLOne s) j u)) b).coeff ((r : ℤ) - k)).val) := by
+  intro H
+  let v := ((fixedField s a)[[m]]) u
+  let readout (r : ℕ) := rightInsertionEval s w f b ((r : ℤ) - k)
+  unfold invertedCoeff
+  apply congrArg (Complex.exp ((Real.pi : ℂ) * Complex.I * ((H : ℂ) / 9)) * ·)
+  apply Finset.sum_congr rfl
+  intro r _
+  calc
+    inversionTerm s w v f b k r = readout r (dividedTranslation (sectorLOne s) r v) := by
+      rw [rightInsertionEval_apply]
+      rfl
+    _ = _ := by
+      rw [show dividedTranslation (sectorLOne s) r v =
+        dividedTranslation (sectorLOne s) r (((fixedField s a)[[m]]) u) from rfl,
+        sectorLOne_divided_inverted_iterate s a u e ha m r]
+      simp only [map_sum, map_smul, smul_eq_mul]
+      simp only [readout, rightInsertionEval_apply]
+
+/-- The actual inverted iterate has no terms beyond the cutoff determined
+by its homogeneous output grade. -/
+theorem invertedCoeff_iterate_term_eq_zero_of_le (s : Fin 3) (a : fixedStates) (u : sector s)
+    (e h : ℤ) (ha : L₀ a.val = (e : ℂ) • a.val)
+    (hu : totalLZero u.val = ((h : ℂ) / 9) • u.val)
+    (m : ℤ) (w : ℂ) (f : Module.Dual ℂ (totalLZero.eigenspace w))
+    (b : fixedStates) (k : ℤ) (r : ℕ)
+    (hr : ((h + 9 * (e - m - 1) - 16) / 9).toNat + 1 ≤ r) :
+    f (gradeProjection w ((rightInsertion s
+      (dividedTranslation (sectorLOne s) r (((fixedField s a)[[m]]) u)) b).coeff
+        ((r : ℤ) - k)).val) = 0 :=
+  inversionTerm_eq_zero_of_le s (h + 9 * (e - m - 1)) w _
+    (fixedMode_weight s a u e h ha hu m) f b k r hr
+
+/-- The outer iterate modes vanish uniformly past the minimum actual twisted
+weight, so the Borcherds iterate channel has a finite cutoff. -/
+theorem invertedCoeff_iterate_cutoff (s : Fin 3) (a : fixedStates) (u : sector s)
+    (e h : ℤ) (ha : L₀ a.val = (e : ℂ) • a.val)
+    (hu : totalLZero u.val = ((h : ℂ) / 9) • u.val)
+    (m : ℤ) (w : ℂ) (f : Module.Dual ℂ (totalLZero.eigenspace w))
+    (b : fixedStates) (k : ℤ) (t : ℕ)
+    (ht : ((h + 9 * (e - m - 1) - 16) / 9).toNat + 1 ≤ t) :
+    invertedCoeff s (h + 9 * (e - (m + (t : ℤ)) - 1)) w
+      (((fixedField s a)[[m + (t : ℤ)]]) u) f b k = 0 := by
+  have hBelow : h + 9 * (e - (m + (t : ℤ)) - 1) < 16 := by omega
+  rw [fixedMode_eq_zero_of_below_minimum s a u e h ha hu _ hBelow]
+  unfold invertedCoeff
+  suffices (∑ j ∈ Finset.range
+      (((h + 9 * (e - (m + (t : ℤ)) - 1) - 16) / 9).toNat + 1),
+      inversionTerm s w 0 f b k j) = 0 by rw [this, mul_zero]
+  apply Finset.sum_eq_zero
+  intro j _
+  simp only [inversionTerm, ← rightInsertionEval_apply, map_zero]
 
 private theorem sourceGrade_weight (d : ℤ) (a : fixedGrade d) :
     L₀ a.val = (d : ℂ) • a.val :=

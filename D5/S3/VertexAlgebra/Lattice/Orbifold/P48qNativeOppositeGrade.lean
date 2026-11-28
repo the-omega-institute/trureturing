@@ -25,16 +25,19 @@ open LatticeActualConformalWard (omega_product)
 open LatticeAllStateReconstruction (mu)
 open LatticeSugawaraCurrents (sugawaraMode)
 open P48qNativeConformalSector
-  (fixedStates sector fixedField fixedField_conformal_zero fixedOmega fixedProduct)
+  (fixedStates sector fixedField fixedField_borcherds fixedField_conformal_zero
+    fixedOmega fixedProduct)
 open P48qNativeFixedRightInsertion (rightInsertion rightInsertion_translation sectorTranslation)
 open P48qNativeFixedRightJacobi (rightInsertion_borcherds)
 open P48qNativeOppositeVacuum (exponent gradeProjection invertedCoeff)
 open P48qTwistedChargeAction (lattice)
-open P48qTwistedStateEnergy (totalLZero)
+open P48qTwistedStateEnergy (totalLZero totalLZero_minimum)
 open StateField.BorcherdsPermutations (dividedTranslation)
 open StateFieldResidueReconstruction (epsilon integerBinomial)
-open private rightMode from
+open private rightMode sectorMode from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeFixedRightJacobi
+open private fixedField_translate_coeff signedBinomial_zero_sum from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeFixedRightInsertion
 open private dividedConformal_weight gradeProjection_eq_zero inversionTerm from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeOppositeVacuum
 open private finsum_range from D5.S3.VertexAlgebra.StateField.BorcherdsPermutations
@@ -45,6 +48,95 @@ local notation "R" => rightMode
 local notation "sourceLZero" => sugawaraMode lattice (actualInverse lattice) 0
 local notation:max "L[" s "," n "]" =>
   HVertexOperator.coeff (fixedField s fixedOmega) (-(n : ℤ) - 2)
+
+/-- The normalized fixed mode sends the actual weight `h / 9` to
+`(h + 9 * (e - m - 1)) / 9`. -/
+theorem fixedMode_weight (s : Fin 3) (a : fixedStates) (u : sector s)
+    (e h : ℤ) (ha : sourceLZero a.val = (e : ℂ) • a.val)
+    (hu : totalLZero u.val = ((h : ℂ) / 9) • u.val) (m : ℤ) :
+    totalLZero (((fixedField s a)[[m]]) u).val =
+      (((h + 9 * (e - m - 1) : ℤ) : ℂ) / 9) • (((fixedField s a)[[m]]) u).val := by
+  have hSector (v : sector s) :
+      (((fixedField s fixedOmega)[[1]]) v).val = totalLZero v.val := by
+    rw [VertexOperator.ncoeff_apply, show -(1 : ℤ) - 1 = -2 by decide]
+    exact fixedField_conformal_zero s v
+  have hInput : ((fixedField s fixedOmega)[[1]]) u = ((h : ℂ) / 9) • u := by
+    apply Subtype.ext
+    rw [hSector, Submodule.coe_smul, hu]
+  obtain ⟨N, hcut, hB⟩ := fixedField_borcherds s fixedOmega a
+  let term (j : ℕ) : sector s :=
+    Ring.choose (1 : ℂ) j • ((fixedField s (fixedProduct fixedOmega a j))[[1 + m - j]]) u
+  have hJacobi := hB 1 m 0 u
+  simp only [signedBinomial_zero_sum, epsilon, zpow_zero, one_smul, Nat.cast_zero,
+    Int.toNat_natCast, Int.cast_one, add_zero, zero_add, sub_zero] at hJacobi
+  change ((fixedField s fixedOmega)[[1]]) (((fixedField s a)[[m]]) u) -
+    ((fixedField s a)[[m]]) (((fixedField s fixedOmega)[[1]]) u) =
+      ∑ j ∈ Finset.range N, term j at hJacobi
+  have support (n : ℕ) (hz : ∀ j ≥ n, term j = 0) :
+      Function.support term ⊆ ↑(Finset.range n) := by
+    intro j hj
+    exact Finset.mem_range.mpr (lt_of_not_ge (fun hnj => hj (hz j hnj)))
+  have hN := support N (by
+    intro j hj
+    simp only [term, hcut j (by exact_mod_cast hj), map_zero, VertexOperator.ncoeff_apply,
+      Pi.zero_apply, LinearMap.zero_apply, smul_zero])
+  have hTwo := support 2 (by
+    intro j hj
+    have hChoose : Ring.choose (1 : ℂ) j = 0 := by
+      rw [← (Nat.cast_one : ((1 : ℕ) : ℂ) = 1), Ring.choose_natCast,
+        Nat.choose_eq_zero_of_lt (show 1 < j by omega), Nat.cast_zero]
+    simp only [term, hChoose, zero_smul])
+  rw [← finsum_eq_sum_of_support_subset term hN,
+    finsum_eq_sum_of_support_subset term hTwo] at hJacobi
+  norm_num only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add] at hJacobi
+  have h0 : term 0 = -((m + 1 : ℤ) : ℂ) • ((fixedField s a)[[m]]) u := by
+    have hDerivative := fixedField_translate_coeff s a u (-(m + 1) - 1)
+    have hIndex : -(m + 1) - 1 + 1 = -m - 1 := by omega
+    have hScalar : ((-(m + 1) - 1 + 1 : ℤ) : ℂ) = -((m + 1 : ℤ) : ℂ) := by
+      push_cast
+      ring
+    rw [hScalar, hIndex] at hDerivative
+    simpa only [term, Ring.choose_zero_right, Nat.cast_zero, sub_zero, one_smul,
+      show (1 : ℤ) + m = m + 1 by omega, VertexOperator.ncoeff_apply] using hDerivative
+  have hSource : fixedProduct fixedOmega a 1 = (e : ℂ) • a := by
+    apply Subtype.ext
+    exact (omega_product lattice (actualInverse lattice) a.val 1).trans ha
+  have h1 : term 1 = (e : ℂ) • ((fixedField s a)[[m]]) u := by
+    change Ring.choose (1 : ℂ) 1 • sectorMode s (1 + m - 1) (fixedProduct fixedOmega a 1) u = _
+    rw [show (1 : ℤ) + m - 1 = m by omega, hSource, map_smul, LinearMap.smul_apply,
+      Ring.choose_one_right, one_smul] <;> rfl
+  rw [h0, h1, hInput, map_smul] at hJacobi
+  have hValue := congrArg (fun v : sector s => v.val) hJacobi
+  simp only [Submodule.coe_sub, Submodule.coe_add, Submodule.coe_smul, hSector] at hValue
+  let v := (((fixedField s a)[[m]]) u).val
+  change totalLZero v - ((h : ℂ) / 9) • v =
+    (-((m + 1 : ℤ) : ℂ)) • v + (e : ℂ) • v at hValue
+  calc
+    totalLZero v = ((-((m + 1 : ℤ) : ℂ)) • v + (e : ℂ) • v) + ((h : ℂ) / 9) • v :=
+      eq_add_of_sub_eq hValue
+    _ = _ := by
+      rw [← add_smul, ← add_smul]
+      congr 1
+      push_cast
+      ring
+
+/-- Actual fixed-mode truncation at the lower endpoint of the twisted
+spectrum. The bound is independent of the evaluation grade and test state. -/
+theorem fixedMode_eq_zero_of_below_minimum (s : Fin 3) (a : fixedStates) (u : sector s)
+    (e h : ℤ) (ha : sourceLZero a.val = (e : ℂ) • a.val)
+    (hu : totalLZero u.val = ((h : ℂ) / 9) • u.val) (m : ℤ)
+    (hm : h + 9 * (e - m - 1) < 16) :
+    ((fixedField s a)[[m]]) u = 0 := by
+  let H : ℤ := h + 9 * (e - m - 1)
+  let v := ((fixedField s a)[[m]]) u
+  have hWeight : totalLZero v.val = (((H : ℝ) / 9 : ℝ) : ℂ) • v.val := by
+    simpa only [v, H, Complex.ofReal_div, Complex.ofReal_intCast, Complex.ofReal_ofNat] using
+      fixedMode_weight s a u e h ha hu m
+  by_contra hv
+  have hMin := totalLZero_minimum.2 ⟨v.val, fun hz => hv (Subtype.ext hz), hWeight⟩
+  have hH : H < 16 := hm
+  have hBelow : (H : ℝ) < 16 := by exact_mod_cast hH
+  linarith
 
 private theorem rightMode_weight (s : Fin 3) (n : ℤ) (u : sector s) (b : fixedStates)
     (vWeight d : ℂ) (hu : totalLZero u.val = vWeight • u.val)
