@@ -3,6 +3,8 @@ meta import OmegaChecks.InitPort.StrictReplay
 import OmegaChecks.InitPort.StrictReplay
 meta import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitPort.Translation
+meta import OmegaChecks.InitInventory.OrderedAlgebra
+import OmegaChecks.InitInventory.OrderedAlgebra
 meta import OmegaChecks.InitInventory.TransformerLaws
 import OmegaChecks.InitInventory.TransformerLaws
 meta import OmegaChecks.InitInventory.ConstraintReflection
@@ -18,12 +20,14 @@ public def main (args : List String) : IO Unit := do
   let owners := if owners.isEmpty then [`Init.Data.Range.Polymorphic.NatLemmas] else owners.map String.toName
   let source ← importModules #[{module := `OmegaChecks.InitInventory.RangeIndex},
     {module := `OmegaChecks.InitInventory.ConstraintReflection, importAll := true},
+    {module := `OmegaChecks.InitInventory.OrderedAlgebra, importAll := true},
     {module := `OmegaChecks.InitInventory.TransformerLaws, importAll := true}] {} (level := .private)
   searchPathRef.set [lib]
   let strict ← importModules (owners.toArray.map fun owner => {module := owner.replacePrefix `Init `OmegaInit}) {} (level := .private)
   let mut kernel := strict.toKernelEnv
   let laws := (``Lean.Omega.Constraint.combine_sat, ``ConstraintReflection.AndReflection,
-    ``ConstraintReflection.equivalence) :: (RangeIndex.equivalences ++ TransformerLaws.ReturnImage.equivalences)
+    ``ConstraintReflection.equivalence) :: (RangeIndex.equivalences ++ TransformerLaws.ReturnImage.equivalences ++
+      WeakRingOrder.stabilityEquivalences)
   let entries := laws.filter fun (name, _, _) =>
     owners.any fun owner => source.getModuleIdxFor? name == source.getModuleIdx? owner
   let mut rows := #[]

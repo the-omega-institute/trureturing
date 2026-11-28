@@ -162,6 +162,8 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     | `Init.Classical, ``Classical.skolem => return (result, ``OmegaChecks.InitBoundaries.PropositionalChoice.ofSkolem)
     | `Init.Prelude, ``Pi.instNonempty => return (result, ``OmegaChecks.InitBoundaries.PropositionalChoice.ofProducts)
     | _, _ => pure ()
+  if let some result := OmegaChecks.InitBoundaries.WeakRingOrder.stabilityEquivalences.lookup name then
+    return result
   if owner == `Init.Control.Lawful.MonadAttach.Lemmas then
     if let some result := OmegaChecks.InitBoundaries.TransformerLaws.ReturnImage.equivalences.lookup name then
       return result

@@ -235,6 +235,68 @@ def witnesses : List (Name × (Name × Name)) := [
   (``OrderedRing.mul_nonneg_iff, ``LinearSquare, ``squareOfProductSigns),
   (``OrderedRing.sq_nonneg, ``SumOfSquares, ``sumsOfSquares)]
 
+private theorem notLTOfDoubleNegLE {α : Type u} [LE α] [LT α] [LawfulOrderLT α]
+    {a b : α} (h : ¬¬ b ≤ a) : ¬ a < b :=
+  fun lt => h ((LawfulOrderLT.lt_iff _ _).mp lt).2
+
+private theorem doubleNegLE {α : Type u} [LE α] [LT α] [LawfulOrderLT α] [IsLinearPreorder α]
+    {a b : α} (h : ¬ a < b) : ¬¬ b ≤ a := by
+  intro no
+  rcases IsLinearPreorder.le_total a b with le | le
+  · exact h ((LawfulOrderLT.lt_iff _ _).mpr ⟨le, no⟩)
+  · exact no le
+
+/-- Double-negation stability of comparison in a linearly preordered ring. -/
+def StableRingLE : Prop := ∀ {α : Type u} [LE α] [LT α] [LawfulOrderLT α] [IsLinearPreorder α]
+  [Ring α] [OrderedRing α] (a b : α), ¬¬ a ≤ b → a ≤ b
+
+attribute [local instance] Ring.intCast Semiring.natCast
+
+theorem offsetRule : (type_of% @Grind.Order.le_of_not_lt_k.{u}) ↔ StableRingLE.{u} := by
+  constructor
+  · intro rule α _ _ _ _ _ _ a b h
+    have shift (z : α) : z + ((0 : Int) : α) = z :=
+      (congrArg (z + ·) Ring.intCast_zero).trans (Semiring.add_zero z)
+    have order := rule (a := b) (b := a) (k := 0) (k' := 0) rfl
+    rw [shift, shift] at order
+    exact order (notLTOfDoubleNegLE h)
+  · intro stable α _ _ _ _ _ _ a b k k' cert denied
+    have same : k' = -k := eq_of_beq ((Int.beq'_eq_beq _ _).symm ▸ cert)
+    subst k'
+    have h := OrderedAdd.add_le_left (stable _ _ (doubleNegLE denied)) (- (k : α))
+    rwa [Semiring.add_assoc, AddCommGroup.add_neg_cancel, Semiring.add_zero, ← Ring.intCast_neg] at h
+
+/-- Double-negation stability of the nonpositive cone in a linearly ordered integer module. -/
+def StableModuleCone : Prop := ∀ {α : Type u} [IntModule α] [LE α] [LT α] [LawfulOrderLT α]
+  [IsLinearOrder α] [OrderedAdd α] (a : α), ¬¬ a ≤ 0 → a ≤ 0
+
+theorem linearRule : (type_of% @Linarith.not_lt_norm.{u}) ↔ StableModuleCone.{u} := by
+  constructor
+  · intro rule α _ _ _ _ _ _ a h
+    exact rule (.leaf a) .zero (.var 0) (.add 1 0 .nil) rfl (notLTOfDoubleNegLE h)
+  · intro stable α _ _ _ _ _ _ ctx lhs rhs p cert denied
+    apply stable
+    exact fun no => doubleNegLE denied (fun le => no (Linarith.le_norm ctx rhs lhs p cert le))
+
+/-- Double-negation stability of the nonpositive cone in a linearly ordered commutative ring. -/
+def StableCommRingCone : Prop := ∀ {α : Type u} [CommRing α] [LE α] [LT α] [LawfulOrderLT α]
+  [IsLinearOrder α] [OrderedRing α] (a : α), ¬¬ a ≤ 0 → a ≤ 0
+
+theorem commRingRule : (type_of% @CommRing.not_lt_norm.{u}) ↔ StableCommRingCone.{u} := by
+  constructor
+  · intro rule α _ _ _ _ _ _ a h
+    have result := rule (.leaf a) (.num 0) (.var 0) (CommRing.Poly.ofVar 0) rfl (notLTOfDoubleNegLE h)
+    rw [CommRing.Poly.denote_ofVar] at result
+    exact result
+  · intro stable α _ _ _ _ _ _ ctx lhs rhs p cert denied
+    apply stable
+    exact fun no => doubleNegLE denied (fun le => no (CommRing.le_norm ctx rhs lhs p cert le))
+
+def stabilityEquivalences : List (Name × Name × Name) := [
+  (``Grind.Order.le_of_not_lt_k, ``StableRingLE, ``offsetRule),
+  (``Linarith.not_lt_norm, ``StableModuleCone, ``linearRule),
+  (``CommRing.not_lt_norm, ``StableCommRingCone, ``commRingRule)]
+
 end WeakRingOrder
 
 namespace NaturalCancellation
