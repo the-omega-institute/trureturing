@@ -55,6 +55,18 @@ async function loadCacheClient() {
     cacheVersion: path => utils.getCacheVersion([path], compression) };
 }
 
+function visibleEntries(ref, prefix) {
+  const repository = process.env.GITHUB_REPOSITORY;
+  if (!process.env.GH_TOKEN || !repository) throw new Error('Actions cache inventory credentials are missing');
+  const listing = execFileSync('gh', [
+    'api', '--paginate', '--method', 'GET', 'repos/' + repository + '/actions/caches',
+    // Restores update last_accessed_at while other workers are paging through the same keys.
+    '-f', 'sort=created_at', '-f', 'direction=asc', '-f', 'ref=' + ref, '-f', 'per_page=100', '-f', 'key=' + prefix,
+    '--jq', '.actions_caches[] | {key, ref, version, created_at}',
+  ], { encoding: 'utf8', timeout: 300000, maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+  return listing.trim().split('\n').filter(Boolean).map(line => JSON.parse(line)).filter(row => row.ref === ref);
+}
+
 async function digestFile(path) {
   const hash = createHash('sha256');
   for await (const chunk of createReadStream(path)) hash.update(chunk);
@@ -137,16 +149,6 @@ async function moduleCacheEntry(key, digest, file) {
   } finally {
     await rm(path, { force: true });
   }
-}
-
-function visibleEntries(ref, prefix) {
-  const repository = process.env.GITHUB_REPOSITORY;
-  if (!process.env.GH_TOKEN || !repository) throw new Error('Actions cache inventory credentials are missing');
-  const listing = execFileSync('gh', [
-    'api', '--paginate', '--method', 'GET', 'repos/' + repository + '/actions/caches',
-    '-f', 'ref=' + ref, '-f', 'per_page=100', '-f', 'key=' + prefix, '--jq', '.actions_caches[] | {key, ref, version, created_at}',
-  ], { encoding: 'utf8', timeout: 300000, maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
-  return listing.trim().split('\n').filter(Boolean).map(line => JSON.parse(line)).filter(row => row.ref === ref);
 }
 
 // The SDK logs throttling and returns the same sentinel as a cache miss or
