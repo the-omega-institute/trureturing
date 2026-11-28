@@ -180,6 +180,47 @@ public theorem HasModel.instRxiLawfulHasSize.{u,v} :
     exact (reachesEncoded model.encode model.decode (fun _ => model.encode_decode)
       (fun _ => model.decode_encode) _ y).mp reaches
 
+section
+open _root_.BitVec.Signed
+
+private theorem minimumNat {n : Nat} (h : n > 0) : (intMinSealed n).toNat = 2 ^ (n - 1) := by
+  rw [intMinSealed_def]
+  exact Nat.mod_eq_of_lt (Nat.pow_lt_pow_of_lt (by decide) (Nat.sub_one_lt_of_lt h))
+
+public theorem BitVec.Signed.toInt_eq_ofNat_toNat_rotate_sub :
+    type_of% (private_decl% @_root_.BitVec.Signed.toInt_eq_ofNat_toNat_rotate_sub) := by
+  intro n x h
+  have rotated := _root_.BitVec.Signed.ofNat_eq_rotate_ofInt_sub (n := n) (k := (rotate x).toNat)
+  rw [BitVec.ofNat_toNat, BitVec.setWidth_eq] at rotated
+  have original := _root_.BitVec.Signed.rotate_inj.mp rotated
+  have bound := (rotate x).isLt
+  rw [← Nat.two_pow_pred_add_two_pow_pred h] at bound
+  refine (congrArg BitVec.toInt original).trans ?_
+  rw [minimumNat h]
+  have power : ((2 ^ (n - 1) : Nat) : Int) = 2 ^ (n - 1) := Int.natCast_pow ..
+  apply BitVec.toInt_ofInt_eq_self h
+  · rw [← power]
+    omega
+  · rw [← power]
+    omega
+
+public theorem HasModel.toNat_toInt_add_one_sub_toInt :
+    type_of% (private_decl% @_root_.HasModel.toNat_toInt_add_one_sub_toInt) := by
+  intro n lo hi hn
+  rw [_root_.BitVec.Signed.toInt_eq_ofNat_toNat_rotate_sub (x := hi) hn,
+    _root_.BitVec.Signed.toInt_eq_ofNat_toNat_rotate_sub (x := lo) hn]
+  omega
+
+public theorem HasModel.toNat_two_pow_sub_one_sub_toInt :
+    type_of% (private_decl% @_root_.HasModel.toNat_two_pow_sub_one_sub_toInt) := by
+  intro n lo hn
+  have power : ((2 ^ (n - 1) : Nat) : Int) = 2 ^ (n - 1) := Int.natCast_pow ..
+  rw [_root_.BitVec.Signed.toInt_eq_ofNat_toNat_rotate_sub (x := lo) hn, minimumNat hn,
+    ← Nat.two_pow_pred_add_two_pow_pred hn, ← power]
+  omega
+
+end
+
 public theorem BitVec.Signed.rotate_map_eq_iff :
     type_of% (private_decl% @_root_.BitVec.Signed.rotate_map_eq_iff) := by
   intro n x y
