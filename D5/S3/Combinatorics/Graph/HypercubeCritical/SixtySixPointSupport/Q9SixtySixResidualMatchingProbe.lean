@@ -28,8 +28,7 @@ open private parity_bipartite from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private ball_exit third_distance from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubicFiftyFourReconstruction
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private diff diff_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 open private actual_full_leaf_blocking from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9FourthLeafSignProbe

@@ -22,8 +22,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CubicalSubdivisionRigidity
 
 open SimpleGraph BalancedCriticalSpectrum FifteenSliceStructure
 open D5.S3.Combinatorics.Graph.Hypercube
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 private abbrev Triple := Fin 3
 private abbrev Pattern := Option Triple × Option Triple

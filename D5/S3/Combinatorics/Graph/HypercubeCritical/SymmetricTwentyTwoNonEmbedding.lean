@@ -22,8 +22,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricTwentyTwoNonEmbed
 
 open D5.S3.Combinatorics.Graph.Hypercube
 open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum (Q flip)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private crossing_flip flip_adj_iff edge_color from
   D5.S3.Combinatorics.Graph.HypercubeCritical.AsymmetricSliceNonEmbedding
 

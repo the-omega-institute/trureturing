@@ -22,7 +22,8 @@ open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q flip flip_adj IsBalanced)
 open BalancedCubeComponentBoundary (directions exterior_even mem_directions regular_directions)
 open BalancedCubeGirth (flip_comm)
-open private cross_two_not_mem flip_injective link link_subset from
+open BalancedCubeComponentBoundary (flip_injective)
+open private cross_two_not_mem link link_subset from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 
 /-- Directions whose first flip avoids the partner support. -/

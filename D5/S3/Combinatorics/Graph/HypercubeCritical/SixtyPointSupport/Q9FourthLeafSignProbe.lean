@@ -203,7 +203,7 @@ open private endpoint_eq_of_short_paths from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
 open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
   (directions regular_directions)
-open private adjacent_exists_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open BalancedCubeComponentBoundary (mem_directions)
 open private third_distance distance_parity from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubicFiftyFourReconstruction

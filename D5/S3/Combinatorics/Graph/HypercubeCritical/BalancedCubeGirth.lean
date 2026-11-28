@@ -260,9 +260,6 @@ theorem adjacent_exists_flip {n : Nat} {x y : Q n}
       exact hji ((hdiff j).mp hne)
     simpa [BalancedCriticalSpectrum.flip, hji] using heq.symm
 
--- Keep the short-name lookup used by existing `open private ... from` callers.
-private alias Legacy.adjacent_exists_flip := adjacent_exists_flip
-
 /-- The actual induced graph of a balanced cube restriction has no four-cycle. -/
 theorem no_four_cycle {n : Nat} {C : Finset (Q n)} (hC : IsBalanced C)
     {u : (C : Set (Q n))}
