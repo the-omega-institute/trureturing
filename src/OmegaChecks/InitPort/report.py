@@ -288,12 +288,14 @@ def check_strict_longest_matches(product, stage):
     return {(owner, name): (target, witness) for owner, name, target, witness in json.loads(output.read_text())}
 
 
-def check_strict_arithmetic_equivalences(product, stage):
+def check_strict_equivalences(product, stage):
     lib = product / "lib"
     owners = [f"Init.Data.Range.Polymorphic.{kind}Lemmas" for kind in ("Nat", "Int")
               if (lib / f"OmegaInit/Data/Range/Polymorphic/{kind}Lemmas.olean").is_file()]
     if (lib / "OmegaInit/Omega/Constraint.olean").is_file():
         owners.append("Init.Omega.Constraint")
+    if (lib / "OmegaInit/Control/Lawful/MonadAttach/Lemmas.olean").is_file():
+        owners.append("Init.Control.Lawful.MonadAttach.Lemmas")
     if not owners:
         return {}
     output = stage / "strict-range-index.json"
@@ -329,14 +331,14 @@ def report(product, require_complete=False):
         strict_choices = check_strict_reference_choices(product, stage, attempts)
         strict_matches = check_strict_longest_matches(product, stage)
         strict_folds = check_strict_fin_folds(product, stage)
-        strict_arithmetic = check_strict_arithmetic_equivalences(product, stage)
+        strict_equivalences = check_strict_equivalences(product, stage)
         admissibility = ("Init.Internal.Order.Basic", "Lean.Order.admissible")
         if attempts.get(admissibility, (None,))[0] in {"added", "existing"}:
             subprocess.run(["lake", "env", "lean", "--run", HERE / "AdmissibilityCheck.lean", product / "lib"],
                            cwd=ROOT, check=True)
         pending = {site: (*result, "strictLogicalConsequenceWitness")
                    for site, result in (strict_matches | strict_folds).items()}
-        pending.update({site: (*result, "strictEquivalenceWitness") for site, result in strict_arithmetic.items()})
+        pending.update({site: (*result, "strictEquivalenceWitness") for site, result in strict_equivalences.items()})
         for row in official["declarations"]:
             site = (row["module"], row["name"])
             witness = strict_choices.get(site)
@@ -353,7 +355,7 @@ def report(product, require_complete=False):
         if pending:
             raise ValueError(f"missing official definition sites for strict consequences: {sorted(pending)}")
         reduction_count, unresolved = check_coverage(official)
-        if strict_choices or strict_matches or strict_arithmetic or strict_folds:
+        if strict_choices or strict_matches or strict_equivalences or strict_folds:
             inventory.write_text(json.dumps(official, ensure_ascii=False, separators=(",", ":")) + "\n")
         with (product / "interface-rejections.jsonl").open() as f:
             rejected = dict(map(json.loads, f))
