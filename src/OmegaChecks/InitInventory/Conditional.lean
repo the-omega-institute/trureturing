@@ -14,6 +14,9 @@ namespace OmegaChecks.InitInventory
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 public def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Control.Lawful.MonadAttach.Lemmas && name == ``WeaklyLawfulMonadAttach.bind_attach_of_nonempty then
+    return ("∀ p : Prop, Decidable p", ``OmegaChecks.InitBoundaries.AttachDecision.decideFromBranch,
+      "The right-hand continuation supplies a CanReturn decision for every weakly lawful attachment")
   if owner == `Init.Data.Iterators.Combinators.Monadic.Take && name == `Std.Iterators.Types.Take.Rel.eq_1 then
     return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
       ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromTakeDecision,

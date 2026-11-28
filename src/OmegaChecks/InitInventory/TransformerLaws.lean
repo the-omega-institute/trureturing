@@ -734,4 +734,49 @@ end FiniteFold
 
 end TransformerLaws
 
+namespace AttachDecision
+
+/-- The identity action returns its argument. Its weak attachment may also permit an arbitrary proposition. -/
+@[instance_reducible] private def attach (p : Prop) : MonadAttach Id where
+  CanReturn x a := a = x ∨ p
+  attach x := ⟨x, Or.inl rfl⟩
+
+private theorem weak (p : Prop) : @WeaklyLawfulMonadAttach Id _ (attach p) := by
+  letI := attach p
+  exact ⟨rfl⟩
+
+/-- In the right-hand continuation of bind_attach_of_nonempty the action can be false
+and the argument true. Deciding the attachment predicate there decides p. -/
+def decideFromBranch (classify : ∀ [a : MonadAttach Id] [WeaklyLawfulMonadAttach Id],
+    Decidable (a.CanReturn (α := Bool) false true)) (p : Prop) : Decidable p := by
+  letI := attach p
+  letI := weak p
+  cases classify with
+  | isTrue yes => exact isTrue (yes.elim Bool.noConfusion id)
+  | isFalse no => exact isFalse fun hp => no (Or.inr hp)
+
+private def pinnedBranch [a : MonadAttach Id] [w : WeaklyLawfulMonadAttach Id] :=
+  @WeaklyLawfulMonadAttach.bind_attach_of_nonempty Id Unit Bool _ a _ w ⟨()⟩ false (fun _ => ())
+
+open Meta Elab.Command in
+run_cmd
+  liftTermElabM do
+    let site ← getConstInfo ``pinnedBranch
+    forallTelescope site.type fun args conclusion => do
+      let some (_, _, rhs) := conclusion.eq? | throwError "expected an equality at the pinned attachment law"
+      unless rhs.isAppOfArity ``Bind.bind 6 do throwError "expected the right-hand bind"
+      let cont := rhs.appArg!
+      unless cont.isLambda do throwError "expected the attached value's continuation"
+      let branch := cont.bindingBody!.instantiate1 (mkConst ``Bool.true)
+      unless branch.isAppOfArity ``dite 5 do throwError "missing dependent branch in the pinned statement"
+      let decision := branch.getAppArgs[2]!
+      unless decision.isAppOfArity ``Classical.propDecidable 1 do throwError "unexpected attachment decision"
+      let required ← mkForallFVars args (← inferType decision)
+      let reduction ← getConstInfo ``decideFromBranch
+      unless Kernel.isDefEqGuarded (← getEnv) {} required reduction.type.bindingDomain! do
+        throwError "the pinned branch decision differs from the proposition decider input"
+    unless (← collectAxioms ``decideFromBranch).isEmpty do throwError "the attachment reduction depends on axioms"
+
+end AttachDecision
+
 end OmegaChecks.InitBoundaries
