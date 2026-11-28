@@ -414,6 +414,7 @@ end
 
 -- Lean's pattern elaborator uses these root names for patterns, cases and argument-free branches.
 
+port_native_records Neg, Dvd
 port_native_records Mul, Div, Mod, Pow, NatPow, HomogeneousPow, SMul
 port_native_records HMul, HDiv, HMod, HPow, HSMul
 port_native_records OrElse, AndThen, AndOp, XorOp, OrOp, Complement, ShiftLeft, ShiftRight
