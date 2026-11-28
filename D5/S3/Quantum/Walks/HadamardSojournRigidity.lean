@@ -478,18 +478,6 @@ private lemma pathPolynomial_cons (U : Coin) (x : ℤ) (b : Bool) (w : List Bool
     split <;> simp
   · simp
 
-private lemma list_sum_map_mul_matrix (l : List PolyMatrix) (A : PolyMatrix) :
-    (l.map (fun B => B * A)).sum = l.sum * A := by
-  induction l with
-  | nil => simp
-  | cons B l ih => simp [ih, add_mul]
-
-private lemma list_sum_map_smul_matrix (l : List PolyMatrix) (a : Poly) :
-    (l.map (fun B => a • B)).sum = a • l.sum := by
-  induction l with
-  | nil => simp
-  | cons B l ih => simp [ih, smul_add]
-
 private lemma walkPolynomial_succ (U : Coin) (x : ℤ) (n : ℕ) :
     walkPolynomial U x (n + 1) =
       intervalMark x false • (walkPolynomial U (x - 1) n * (step U false).map Polynomial.C) +
