@@ -5,6 +5,7 @@ public import Mathlib.Algebra.Order.BigOperators.Expect
 public import Mathlib.Algebra.BigOperators.Field
 public import Mathlib.Algebra.Group.Equiv.Basic
 public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Data.Fintype.Perm
 public import Mathlib.GroupTheory.Perm.Finite
 public import Mathlib.Tactic.FieldSimp
 public import Mathlib.Tactic.Linarith
@@ -152,7 +153,7 @@ private lemma weighted_abs_le (w e : I → ℝ) (hw : ∀ i, 0 ≤ w i)
       rw [abs_mul, abs_of_nonneg (hw i)]
     _ ≤ ∑ i, w i * δ := Finset.sum_le_sum (fun i _ =>
       mul_le_mul_of_nonneg_left (he i) (hw i))
-    _ = δ * ∑ i, w i := by rw [Finset.sum_mul]; ring
+    _ = δ * ∑ i, w i := by rw [← Finset.sum_mul]; ring
 
 /-- An exact rational expansion with an explicit uniform remainder bound. -/
 private lemma rational_remainder_bound (S T U x δ B : ℝ)
@@ -217,7 +218,7 @@ private lemma expect_perm_apply [Nonempty I] (f : I → ℝ) (i : I) :
       _ = 𝔼 _σ : Equiv.Perm I, ∑ j, f j := by
         apply Finset.expect_congr rfl
         intro σ _
-        exact σ.sum_comp f
+        exact Equiv.sum_comp σ f
       _ = ∑ j, f j := Fintype.expect_const _
   apply mul_left_cancel₀ (ne_of_gt (card_pos (I := I)))
   exact hsum.trans (Fintype.card_mul_expect f).symm
@@ -269,12 +270,12 @@ theorem permutation_perturbation_bound [Nonempty I] (p e : I → ℝ) (δ : ℝ)
     have := weighted_abs_le p (fun i => e (σ i)) hp (fun i => he (σ i))
     simpa only [hpsum, mul_one] using this
   have hXB (σ : Equiv.Perm I) : 2 * |X σ| ≤ B := by
-    have hes : (∑ i, e (σ i)) = 0 := (σ.sum_comp e).trans hesum
+    have hes : (∑ i, e (σ i)) = 0 := (Equiv.sum_comp σ e).trans hesum
     have hsq : (𝔼 i, e (σ i) ^ 2) = ε := by
       dsimp only [ε]
       rw [Fintype.expect_eq_sum_div_card, Fintype.expect_eq_sum_div_card]
       exact congrArg (fun s : ℝ => s / (Fintype.card I : ℝ))
-        (σ.sum_comp (fun i => e i ^ 2))
+        (Equiv.sum_comp σ (fun i => e i ^ 2))
     simpa only [hsq] using overlap_abs_le p (fun i => e (σ i)) hpsum hes
   have hT (σ : Equiv.Perm I) : |T σ| ≤ δ := by
     have h := weighted_abs_le (fun i => p i ^ 2) (fun i => e (σ i))
@@ -323,8 +324,8 @@ theorem permutation_perturbation_bound [Nonempty I] (p e : I → ℝ) (δ : ℝ)
         (∑ i, p i ^ 2 * (1 + e (σ i)) ^ 2) / (1 + X σ)) ≤
         S + S * ε + 4 * δ * B := by
     calc
-      _ ≤ 𝔼 σ : Equiv.Perm I,
-          S + 2 * T σ - S * X σ + U σ + 4 * δ * B :=
+      _ ≤ (𝔼 σ : Equiv.Perm I,
+          (S + 2 * T σ - S * X σ + U σ + 4 * δ * B)) :=
         Finset.expect_le_expect (fun σ _ => hpoint σ)
       _ = S + S * ε + 4 * δ * B := by
         simp only [Finset.expect_add_distrib, Finset.expect_sub_distrib,
@@ -444,8 +445,9 @@ theorem orbit_fusion_le_card_sub_one [Nonempty I] (p r : I → ℝ)
         ∑ i, p i * r (σ i) :=
     square_ratio_le_sum _ (fun i => mul_nonneg (hp i) (hr (σ i)))
   have havg := Finset.expect_le_expect (s := Finset.univ) (fun σ _ => hpoint σ)
-  rw [expect_perm_weighted, hpsum, one_mul,
-    Fintype.expect_eq_sum_div_card, hrsum] at havg
+  have hrmean : (𝔼 i, r i) = 1 / (Fintype.card I : ℝ) := by
+    rw [Fintype.expect_eq_sum_div_card, hrsum]
+  rw [expect_perm_weighted, hpsum, one_mul, hrmean] at havg
   have hn : (Fintype.card I : ℝ) ≠ 0 := ne_of_gt (card_pos (I := I))
   have hscaled := mul_le_mul_of_nonneg_left havg
     (sq_nonneg (Fintype.card I : ℝ))
@@ -458,7 +460,9 @@ private lemma centered_coord_le (r : I → ℝ) (hr : ∑ i, r i = 1)
     (i : I) : ((Fintype.card I : ℝ) * r i - 1) ^ 2 ≤
       (Fintype.card I : ℝ) * posteriorCapacity r := by
   rw [← centered_square_sum r hr]
-  exact Finset.single_le_sum (fun j _ => sq_nonneg _) (Finset.mem_univ i)
+  exact Finset.single_le_sum
+    (fun (j : I) _ => sq_nonneg ((Fintype.card I : ℝ) * r j - 1))
+    (Finset.mem_univ i)
 
 private lemma orbit_fusion_le_of_square_root [Nonempty I]
     (p r : I → ℝ) (t : ℝ)
@@ -471,6 +475,7 @@ private lemma orbit_fusion_le_of_square_root [Nonempty I]
   let n : ℝ := Fintype.card I
   have hn : 0 < n := card_pos
   have hn1 : 1 ≤ n := by
+    change (1 : ℝ) ≤ (Fintype.card I : ℝ)
     exact_mod_cast (show 1 ≤ Fintype.card I from Fintype.card_pos)
   have hnsq : n ≤ n ^ 2 := by
     simpa only [mul_one, ← sq] using mul_le_mul_of_nonneg_left hn1 hn.le
