@@ -1,0 +1,1 @@
+{"statement_id":"sha256:601262e92045d0e8d2d444b3432d273e816e52ae04f226d5e3e44b718b44c6b3","declarations":[{"declaration_name_key":"ns(n0,32:exists_dual_pairing_of_isHCParam)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
