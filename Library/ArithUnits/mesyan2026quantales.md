@@ -31,3 +31,18 @@ The direct sum of the prime residue rings with coordinatewise operations gives
 an affirmative answer to the existence clause. The entire ring is the two-sided
 identity for the product of its additive submonoids. The classification clause
 is outside the scope of this construction. [Construction in #35254](https://github.com/the-omega-institute/trureturing/issues/35254)
+
+## The domain clause of Question 34
+
+[Question 34](https://arxiv.org/html/2611.31109v1#Thmtheorem34) on page 24 asks, “For a domain
+\(R\), is \(R\) being commutative equivalent to \(\mathcal M(R)\) being
+commutative?” Section 2.2 permits semirings without a multiplicative identity.
+[Remark 14](https://arxiv.org/html/2611.31109v1#Thmtheorem14) uses domain for a
+nonzero semiring where products of nonzero elements are nonzero.
+
+[Example 6](https://arxiv.org/html/2611.31109v1#Thmtheorem6) gives a nonunital
+algebra with basis \(x,y,xy\) over a field of characteristic other than two.
+In these coordinates its product is
+\((a,b,c)(d,e,f)=(0,0,ae-bd)\). The example observes that in positive odd
+characteristic reversing the product gives an additive multiple of the
+original product.

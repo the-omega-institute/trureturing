@@ -7,7 +7,7 @@
    digest: The concrete moving oscillator spectrum in the normalized P48q dual bases. -/
 
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdCoverSixteenPairSpectrum
-import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairingDraft
+import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairing
 
 set_option autoImplicit false
 
