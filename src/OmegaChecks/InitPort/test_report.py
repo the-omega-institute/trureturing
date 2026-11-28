@@ -188,6 +188,33 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(change=change), self.assertRaisesRegex(ValueError, "order type dependency"):
                 check_coverage(data | {"declarations": [row | change]})
 
+    def test_quotient_order_requires_both_implications_and_the_correct_public_comparison(self):
+        owner = "Init.Grind.Module.Envelope"
+        prefix = "Lean.Grind.IntModule.OfNatModule."
+        instance = prefix + "instLTQOfOrderedAdd"
+        name = prefix + "toQ_lt"
+        coherence = prefix + "instLEQOfOrderedAdd._proof_3"
+        root = "OmegaChecks.InitBoundaries.EnvelopeOrder."
+        certificate = [owner, name, instance, coherence, root + "propextFromModuleLift", root + "moduleLiftFromPropext"]
+        comparison = site(owner, name, matchingNameAndModule=True, strictModule="Omega" + owner,
+                          originalTypeChecked=False, originalTypeGap="missing type dependencies: Omega." + instance)
+        data = inventory(comparison)
+        data.update(schemaVersion=6)
+        data["summary"]["originalTypesChecked"] = 0
+        self.assertEqual(check_coverage(data), (0, [(owner, name)]))
+        comparison["originalTypeEnvelopeOrderInstance"] = instance
+        data["certifiedEnvelopeOrderCoherence"] = [certificate]
+        self.assertEqual(check_coverage(data), (0, []))
+        for index in (1, 2, 3, 4, 5):
+            bad = certificate.copy()
+            bad[index] = "Other"
+            with self.subTest(index=index), self.assertRaisesRegex(ValueError, "public envelope order coherence"):
+                check_coverage(data | {"certifiedEnvelopeOrderCoherence": [bad]})
+        with patch("report.envelope_type_certificates", return_value=[]) as live:
+            with self.assertRaisesRegex(ValueError, "live envelope order certificates"):
+                verify_complete(data, Path("product"), *check_coverage(data))
+            live.assert_called_once_with(Path("product"), order=True)
+
     def test_module_embedding_requires_the_model_refutation_of_its_pinned_instance(self):
         owner = "Init.Grind.Module.Envelope"
         prefix = "Lean.Grind.IntModule.OfNatModule."

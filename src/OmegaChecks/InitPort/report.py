@@ -152,11 +152,33 @@ def envelope_type_dependencies(checks):
     return sites
 
 
-def envelope_type_certificates(product):
+MODULE_ENVELOPE_PREFIX = ENVELOPE_INSTANCE.rsplit(".", 1)[0]
+MODULE_LE = MODULE_ENVELOPE_PREFIX + ".instLEQOfOrderedAdd"
+MODULE_LT = MODULE_ENVELOPE_PREFIX + ".instLTQOfOrderedAdd"
+ORDER_COHERENCE = MODULE_LE + "._proof_3"
+ORDER_WITNESSES = ("OmegaChecks.InitBoundaries.EnvelopeOrder.propextFromModuleLift",
+                   "OmegaChecks.InitBoundaries.EnvelopeOrder.moduleLiftFromPropext")
+ORDER_COMPARISONS = {MODULE_ENVELOPE_PREFIX + ".mk_le_mk": MODULE_LE,
+                     MODULE_ENVELOPE_PREFIX + ".toQ_le": MODULE_LE, MODULE_ENVELOPE_PREFIX + ".toQ_lt": MODULE_LT}
+
+
+def envelope_order_dependencies(checks):
+    sites = {}
+    for owner, name, instance, coherence, forward, reverse in checks:
+        site = owner, name
+        if (owner != MODULE_ENVELOPE or ORDER_COMPARISONS.get(name) != instance or
+                coherence != ORDER_COHERENCE or (forward, reverse) != ORDER_WITNESSES or site in sites):
+            raise ValueError(f"invalid public envelope order coherence for {site}")
+        sites[site] = instance
+    return sites
+
+
+def envelope_type_certificates(product, *, order=False):
     library = product / "lib"
     if not (library / "OmegaInit/Grind/Module/Envelope.olean").is_file():
         return []
-    result = subprocess.run(["lake", "env", "lean", "--run", HERE / "EnvelopeInstanceCheck.lean", library],
+    result = subprocess.run(["lake", "env", "lean", "--run", HERE / "EnvelopeInstanceCheck.lean", library,
+                             *(["order"] if order else [])],
                             cwd=ROOT, stdout=subprocess.PIPE, text=True, check=True)
     return [json.loads(line) for line in result.stdout.splitlines()]
 
@@ -189,6 +211,7 @@ def check_coverage(official):
     embeddings = envelope_type_dependencies(official.get("certifiedEnvelopeTypeDependencies", []))
     if embeddings and by_refutation.get((MODULE_ENVELOPE, ENVELOPE_INSTANCE)) != (ENVELOPE_INSTANCE, ENVELOPE_REFUTER):
         raise ValueError("module embedding certificates lack the counterexample for their instance")
+    comparisons = envelope_order_dependencies(official.get("certifiedEnvelopeOrderCoherence", []))
     finite_bounds = fin_bounds.sites(official.get("certifiedFinBoundTypes", []))
     pointwise_sites = order_consumers.sites(official.get("certifiedPointwiseOrderTypes", []))
     finite_sites = finite_consumers.sites(official.get("certifiedFiniteConsumerTypes", []))
@@ -353,6 +376,12 @@ def check_coverage(official):
                 (row.get("originalTypeGap") or "").partition(". ")[0] != "missing type dependencies: Omega." + ENVELOPE_INSTANCE or
                 any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")))):
             raise ValueError(f"uncertified module instance in embedding equation {site}")
+        comparison = comparisons.get(site)
+        if row.get("originalTypeEnvelopeOrderInstance") != comparison or (comparison and (
+                not port or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
+                (row.get("originalTypeGap") or "").partition(". ")[0] != "missing type dependencies: Omega." + comparison or
+                any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")))):
+            raise ValueError(f"uncertified quotient comparison coherence for {site}")
         equivalent = site in finite_bounds
         if equivalent != row.get("finBoundProofReplacementChecked", False) or (equivalent and (
                 not port or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
@@ -394,7 +423,7 @@ def check_coverage(official):
                 if row.get("originalTypeChecked") is True and row.get("originalTypeGap") is None:
                     original_types += 1
                 elif row.get("originalTypeChecked") is False and row.get("originalTypeGap"):
-                    if not any((private_type, choice_operand, equivalent, pointwise, finite, projected, embedding)):
+                    if not any((private_type, choice_operand, equivalent, pointwise, finite, projected, embedding, comparison)):
                         unresolved.append(site)
                 else:
                     raise ValueError(f"inconsistent original type check for {owner}/{name}")
@@ -406,6 +435,8 @@ def check_coverage(official):
             reductions += 1
         elif not endpoint and not argument and not refuter and path != "Quot.sound":
             unresolved.append(site)
+    if not comparisons.keys() <= sites:
+        raise ValueError("envelope order certificate has no definition site")
     if not embeddings <= sites:
         raise ValueError("module embedding certificate has no declaration")
     if not scopes.keys() <= sites:
@@ -481,6 +512,10 @@ def verify_complete(official, product, reductions, unresolved):
     if embeddings and envelope_type_certificates(product) != embeddings:
         raise ValueError("live module embedding certificates differ from inventory")
     blocked = blocked | envelope_type_dependencies(embeddings)
+    comparisons = official.get("certifiedEnvelopeOrderCoherence", [])
+    if comparisons and envelope_type_certificates(product, order=True) != comparisons:
+        raise ValueError("live envelope order certificates differ from inventory")
+    blocked = blocked | envelope_order_dependencies(comparisons).keys()
     bounds = official.get("certifiedFinBoundTypes", [])
     if bounds and fin_bounds.certificates(product) != bounds:
         raise ValueError("live finite-index bound certificates differ from inventory")
@@ -635,6 +670,9 @@ def report(product, require_complete=False):
         embedding_checks = envelope_type_certificates(product)
         official["certifiedEnvelopeTypeDependencies"] = embedding_checks
         embeddings = envelope_type_dependencies(embedding_checks)
+        order_coherence = envelope_type_certificates(product, order=True)
+        official["certifiedEnvelopeOrderCoherence"] = order_coherence
+        comparisons = envelope_order_dependencies(order_coherence)
         bound_checks = fin_bounds.certificates(product)
         official["certifiedFinBoundTypes"] = bound_checks
         official["summary"]["finBoundProofReplacementsChecked"] = len(bound_checks)
@@ -680,6 +718,8 @@ def report(product, require_complete=False):
                 row["finBoundProofReplacementChecked"] = True
             if site in choice_operands:
                 row["originalTypeChoiceDependency"] = choice_operands[site]
+            if site in comparisons:
+                row["originalTypeEnvelopeOrderInstance"] = comparisons[site]
             if site in embeddings:
                 row["originalTypeEnvelopeInstance"] = ENVELOPE_INSTANCE
             if site in orders:
@@ -723,7 +763,7 @@ def report(product, require_complete=False):
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
                              "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap",
                              "importAllOriginalTypeChecked", "originalTypeOrderDependencies", "originalTypeChoiceDependency", "finBoundProofReplacementChecked",
-                             "pointwiseOrderTypeChecked", "finiteConsumerTypeChecked", "publicProjectionTypeChecked", "moduleBodyStrictImport", "originalTypeEnvelopeInstance"])
+                             "pointwiseOrderTypeChecked", "finiteConsumerTypeChecked", "publicProjectionTypeChecked", "moduleBodyStrictImport", "originalTypeEnvelopeInstance", "originalTypeEnvelopeOrderInstance"])
             for row in official["declarations"]:
                 if row["originalTypeChecked"] or row["kind"] == "axiom":
                     continue
@@ -774,7 +814,8 @@ def report(product, require_complete=False):
                                  "true" if row.get("finBoundProofReplacementChecked") else "",
                                  "true" if row.get("pointwiseOrderTypeChecked") else "",
                                  "true" if row.get("finiteConsumerTypeChecked") else "",
-                                 "true" if row.get("publicProjectionTypeChecked") else "", row.get("moduleBodyStrictImport"), row.get("originalTypeEnvelopeInstance")])
+                                 "true" if row.get("publicProjectionTypeChecked") else "", row.get("moduleBodyStrictImport"), row.get("originalTypeEnvelopeInstance"),
+                                 row.get("originalTypeEnvelopeOrderInstance")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
