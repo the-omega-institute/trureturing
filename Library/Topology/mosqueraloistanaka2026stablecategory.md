@@ -49,6 +49,7 @@ strata_touched:
   - D5/S3/Topology/StableCategory/ShellingExactExtension
   - D5/S3/Topology/StableCategory/ProductRigidCores
   - D5/S3/Topology/StableCategory/ProductStableCover
+  - D5/S3/Topology/StableCategory/ProductStableLower
 license: citation-only
 triage: anchor
 ---
@@ -1254,10 +1255,13 @@ by deleting the three up-beat boundary edges in each factor. Six
 pointwise comparisons contract each colour in the product order.
 Pullback along the beat retraction and the ordinary subdivision cover
 theorem give two categorical lower sets after two subdivisions.
-The stable category is two. The subdivided product retracts onto a coordinate slice,
-and the factor is strongly minimal before
-subdivision. Strong collapsibility is reflected by ordinary
-barycentric subdivision by Barmak and Minian, Theorem 4.15.
+Lean proves that two is the minimum over all ordinary subdivision depths.
+The subdivided product retracts onto a coordinate slice. A contraction of that
+slice would give a contiguity chain on its order complex by choosing vertices
+in the images of singleton faces. The chain would fix two distinct original
+vertices of the subdivided boundary, which rules out a constant endpoint.
+Barmak and Minian's strong-collapse reflection theorem gives a second proof
+of the lower bound.
 This determines ((\operatorname{cat}_w,\operatorname{cat}_s,
 \operatorname{cat})(X)=(1,2,3)) for this product. The general inequality
 in Question 6.3 remains open.
