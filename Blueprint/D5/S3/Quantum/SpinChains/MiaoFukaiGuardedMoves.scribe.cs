@@ -50,8 +50,7 @@ internal sealed class MiaoFukaiGuardedMovesDocument : IScribeDocumentDefinition
                     Eq(Square(AtSite("T")), Add(Centre("DA"), Flanks("DF"))))),
                 "Ue is the squared difference of the two empty projectors at distance two. Um is the squared difference of the minus projectors on the adjacent sites. DA is the projector onto a centre that is not minus with two empty flanks. DF projects onto two occupied flanks. These give the two five-rung pieces in Eq. (71)."),
             Theorem("ladder-kills", "Each controlled ladder contribution annihilates a jammed word", "ladder_parts_kill",
-                Length(Imp(Le(D(5), L), All(X, Config, Imp(Call("Jammed", X), All(J, Fin,
-                    And(Kills(Centre("A")), And(Kills(Flanks("F")), And(Kills(Centre("DA")), Kills(Flanks("DF"))))))))),
+                Length(Imp(Le(D(5), L), All(X, Config, Imp(Call("Jammed", X), All(J, Fin, LadderKills()))))),
                 "The centre and flank contributions have disjoint support for both the first and second powers, giving separate row and column vanishing."))));
 
     private static DocumentBlock Theorem(string id, string title, string name, Formula formula, string prose) =>
@@ -73,6 +72,8 @@ internal sealed class MiaoFukaiGuardedMovesDocument : IScribeDocumentDefinition
     private static Formula Ket() => Call("ket", X);
     private static Formula Centre(string name) => Mul(AtSite("Ue"), AtSite(name));
     private static Formula Flanks(string name) => Mul(AtSite("Um"), AtSite(name));
+    private static Formula LadderKills() =>
+        And(Kills(Centre("A")), And(Kills(Flanks("F")), And(Kills(Centre("DA")), Kills(Flanks("DF")))));
     private static Formula Kills(Formula matrix) =>
         And(Eq(Call("mulVec", matrix, Ket()), D(0)), Eq(Call("vecMul", Ket(), matrix), D(0)));
     private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);

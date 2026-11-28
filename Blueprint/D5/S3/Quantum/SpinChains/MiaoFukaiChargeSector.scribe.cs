@@ -21,7 +21,7 @@ internal sealed class MiaoFukaiChargeSectorDocument : IScribeDocumentDefinition
             Theorem("tile-word", "The sector embedding recovers the tile word", "jamEmbedding_val",
                 Lengths(All(B, Seq(Call("Fin", Call("blocks", L)), To, Call("Bool")),
                     new Formula.Relation(Call("val", Call("jamEmbedding", HMin, B)),
-                        Call("tiledConfig", HMin, B), FormulaRelationOperator.Equal))),
+                        FormulaRelationOperator.Equal, Call("tiledConfig", HMin, B)))),
                 "The two maps use the same labelled configurations, including across the seam."),
             Theorem("odd-deficit", "Parity of the common charge deficit", "target_deficit_odd",
                 LengthHypothesis(Call("Odd", Seq(L, Minus, Call("targetCharge", L)))),

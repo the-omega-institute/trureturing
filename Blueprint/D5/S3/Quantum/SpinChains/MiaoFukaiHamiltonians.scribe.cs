@@ -24,9 +24,9 @@ internal sealed class MiaoFukaiHamiltoniansDocument : IScribeDocumentDefinition
         "One odd-deficit sector of the periodic ladder contains an explicitly counted family of singleton components.",
         H("Singleton charge components in the periodic Rydberg ladder"),
         Blocks(
-            Paragraph(Text("The rows and columns are indexed by labelled blockade words. The restricted graph has one vertex per word of the specified charge. Distinct vertices are adjacent when the Hamiltonian entry in either direction is nonzero. PreservesCharge means that every matrix entry between unequal charges vanishes.")),
-            Paragraph(Text("In Eq. (46), the first density is T minus the coupling times its square and the second uses the plus sign. The two agree with reversed coupling because the controlled square equals the control times the unextended square. The explicit density in Eq. (71) has the plus sign. The normalized right side of Eq. (57) uses the minus-sign base at cosine of mu, as fixed by Eq. (50).")),
-            Paragraph(Text("The staggered correction uses the four cubic monomials, the two quadratic monomials and the ordered quartic monomial of Eq. (58) with their Eq. (59) coefficients. The ordered one-based pairs are (2,3), (4,5), through (L,1). Even length and nonzero sine denominators define the scope of the staggered conclusion. The analytic identification with the derivative of Eq. (51) remains open and its regular domain also requires nonzero sine of mu.")),
+            Paragraph(Text("The rows and columns are indexed by labelled blockade words. The restricted graph has one vertex per word of the specified charge. Distinct vertices are adjacent when the Hamiltonian entry in either direction is nonzero. PreservesCharge means that every matrix entry between unequal charges vanishes. Kills means that the matrix annihilates the basis ket and its dual row.")),
+            Paragraph(Text("Hminus and Hplus sum the first and second densities printed in Eq. (46), respectively. The two agree with reversed coupling because the controlled square equals the control times the unextended square. Hladder sums the explicit plus-sign density in Eq. (71). The normalized right side of Eq. (57) uses the minus-sign base at cosine of mu, as fixed by Eq. (50).")),
+            Paragraph(Text("The staggered correction uses the four cubic monomials, the two quadratic monomials and the ordered quartic monomial of Eq. (58) with their Eq. (59) coefficients. The ordered one-based pairs are (2,3), (4,5), through (L,1). Nonsingular means that the sines of v plus m and v minus m are both nonzero. The staggered conclusion uses even length and nonsingular parameters. The analytic identification with the derivative of Eq. (51) remains open and its regular domain also requires nonzero sine of mu.")),
             Describe.Lean(
                 DescribeId.Create("miao-fukai-tiled-singletons"),
                 DeclarationHandle.Create(Prefix + "tiled_singleton_components"),
@@ -44,15 +44,15 @@ internal sealed class MiaoFukaiHamiltoniansDocument : IScribeDocumentDefinition
             And(Call("Odd", Seq(L, Minus, Call("targetCharge", L))),
                 Eq(Call("card", Call("image", Call("sectorEmbedding", HMin))),
                     new Formula.Power(D(2), Call("blocks", L)))),
-            All(Delta, Complex, And(Preserves(MinusHamiltonian()), Preserves(PlusHamiltonian()), Preserves(LadderHamiltonian()))),
-            OnStaggeredDomain(Preserves(StaggeredHamiltonian())),
-            All(B, Seq(Call("Fin", Call("blocks", L)), To, Call("Bool")),
+            Conjunct(All(Delta, Complex, And(Preserves(MinusHamiltonian()), Preserves(PlusHamiltonian()), Preserves(LadderHamiltonian())))),
+            Conjunct(OnStaggeredDomain(Preserves(StaggeredHamiltonian()))),
+            Conjunct(All(B, Seq(Call("Fin", Call("blocks", L)), To, Call("Bool")),
                 Seq(Operatorname, Grp(F.Id("let")), Sp, Eq(X, Call("sectorEmbedding", HMin, B)), Comma, Sp,
                     And(Eq(Value(), Call("tiledConfig", HMin, B)),
                         Ne(Ket(), D(0)),
                         Eq(Call("mulVec", Call("NP", L), Ket()), Call("smul", Call("ofNat", Call("targetCharge", L)), Ket())),
-                        All(Delta, Complex, And(Singleton(MinusHamiltonian()), Singleton(PlusHamiltonian()), Singleton(LadderHamiltonian()))),
-                        OnStaggeredDomain(Singleton(StaggeredHamiltonian())))))
+                        Parens(All(Delta, Complex, And(Singleton(MinusHamiltonian()), Singleton(PlusHamiltonian()), Singleton(LadderHamiltonian())))),
+                        Parens(OnStaggeredDomain(Singleton(StaggeredHamiltonian())))))))
         ])));
 
     private static Formula MinusHamiltonian() => Call("Hminus", L, Delta);
@@ -65,8 +65,7 @@ internal sealed class MiaoFukaiHamiltoniansDocument : IScribeDocumentDefinition
     private static Formula OnStaggeredDomain(Formula body) =>
         Imp(Call("Even", L), All(Mu, Complex, All(V, Complex, Imp(Call("Nonsingular", Mu, V), body))));
     private static Formula Singleton(Formula matrix) =>
-        And(Eq(Call("mulVec", matrix, Ket()), D(0)),
-            Eq(Call("vecMul", Ket(), matrix), D(0)),
+        And(Call("Kills", matrix, Value()),
             Eq(Call("componentSupport", Call("sectorSupport", matrix), X), Call("singleton", X)));
 
     private static Formula Call(string name, params Formula[] arguments)
@@ -75,6 +74,7 @@ internal sealed class MiaoFukaiHamiltoniansDocument : IScribeDocumentDefinition
         return arguments.Length == 0 ? symbol : new Formula.Apply(symbol, [.. arguments]);
     }
 
+    private static Formula Conjunct(Formula body) => Seq(Land, Sp, Parens(body));
     private static Formula Parens(Formula body) => Seq(Open, body, Close);
     private static Formula All(Formula variable, Formula type, Formula body) =>
         Seq(Forall, Sp, Parens(Seq(variable, Colon, Sp, type)), Comma, Sp, body);
