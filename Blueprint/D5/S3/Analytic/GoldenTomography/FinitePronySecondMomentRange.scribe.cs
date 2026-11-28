@@ -21,8 +21,8 @@ internal sealed class FinitePronySecondMomentRangeDocument : IScribeDocumentDefi
                     + "the quantity (a + b) x minus a b, exclusive. A realizing family "
                     + "has one node if and only if its second moment equals the lower "
                     + "endpoint. Each interior second moment admits a two-node family. "
-                    + "Thus fixing mass and mean leaves both the second moment and the "
-                    + "minimum pole count undetermined.")),
+                    + "The minimum number of nodes realizing the full moment triple "
+                    + "is one at the lower endpoint and two in the interior.")),
                 Paragraph(Text("The weighted sum of squared distances from the mean gives "
                     + "the lower slack. If it vanishes, positivity forces every node to "
                     + "equal the mean. The upper slack is the weighted sum of the products "
@@ -30,7 +30,7 @@ internal sealed class FinitePronySecondMomentRangeDocument : IScribeDocumentDefi
                     + "Every summand is positive, and the positive mass implies there is "
                     + "at least one node.")),
                 Paragraph(Text("For positive variance v, choose the left distance d halfway "
-                    + "between v divided by b minus x and x minus a. The right distance e "
+                    + "between v/(b − x) and x − a. The right distance e "
                     + "is v divided by d. Weights proportional to e and d center the two "
                     + "nodes at x and give variance d times e. Both nodes lie strictly "
                     + "inside the interval. The upper variance bound is the strict form "
