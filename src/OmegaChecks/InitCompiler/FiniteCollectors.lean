@@ -74,6 +74,8 @@ public def finiteCollectors (env : Environment) (input : Expr) (withinImplementa
     let some head := sub.getAppFn.constName? | return .continue
     -- Both string consumers fold a mapped iterator. Expose the fold only when the
     -- caller supplies finiteness, so the mapped iterator can select a terminating loop.
+    if hasStringFold && head == mkPrivateNameCore `Init.Data.String.Iter.Intercalate `Std.Iter.intercalateString.match_1 then
+      if let some cases ← unfoldDefinition? sub then return .visit cases
     if stringFolds.contains head then
       let args := sub.getAppArgs
       let arity := if head == ``Std.Iter.joinString then 5 else 6

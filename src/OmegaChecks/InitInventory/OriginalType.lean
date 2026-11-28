@@ -137,15 +137,18 @@ private def checkFiniteConsumer (official visible strict : Environment) (owner :
   return .gap (s!"missing type dependencies: {names missing}. The upstream public interface hides the body of " ++
     s!"{names hiddenSlices}. {sourceResult} {strictResult}")
 
-/-- The default forward and backward string searchers need a loop on arbitrary
-patterns. For a finite pattern the strict signature uses the well-founded consumer.
-Check the exported, public spelling of that consumer on both sides. -/
-private def finiteSearchLoopGap? (visible strict : Environment) (owner : Name)
+/-- Check the public well-founded consumer used in string folding and search against
+the complete pinned and strict propositions. -/
+private def finiteStringLoopGap? (visible strict : Environment) (owner : Name)
     (source : ConstantInfo) (pinned target : Expr) (missing : Array Name) : Option String := do
-  let #[absent] := missing | none
-  let name := InitKernelPort.originalName absent
-  guard (name == `String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorLoopIdSearchStep ||
-    name == `String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorLoopIdSearchStep)
+  let original := missing.map InitKernelPort.originalName
+  let search := original == #[`String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorLoopIdSearchStep] ||
+    original == #[`String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorLoopIdSearchStep]
+  let fold := owner == `Init.Data.String.Lemmas.Iter && [
+    (`Std.Iter.joinString_eq, `Std.Iter.joinString),
+    (`Std.Iter.intercalateString_eq, `Std.Iter.intercalateString)].any fun (theoremName, operation) =>
+      source.name == theoremName && original.size == 2 && original.contains operation && original.contains `Std.Iter.toList
+  guard (search || fold)
   guard (source.isTheorem && visible.getModuleIdxFor? source.name == visible.getModuleIdx? owner &&
     (visible.find? source.name).any (fun ci => ci.type.equal source.type))
   let helper := OmegaChecks.InitPort.LawfulLoop.helper
@@ -158,9 +161,12 @@ private def finiteSearchLoopGap? (visible strict : Environment) (owner : Name)
   guard ((Kernel.check visible {} pinned).isOk && (Kernel.check visible {} published).isOk &&
     (Kernel.check strict {} translated).isOk && Kernel.isDefEqGuarded strict {} translated target &&
     !Kernel.isDefEqGuarded visible {} published pinned)
+  let absent := String.intercalate ", " (missing.toList.map Name.toString)
+  let conclusion := if search then "The pinned public signature retains the default string search loop and fails this conversion."
+    else "The pinned public string fold and its finite-loop spelling fail conversion in the upstream kernel."
+  guard (!fold || !published.getUsedConstants.any isPrivateName)
   return s!"missing type dependencies: {absent}. The full type using Std.IterM.DefaultConsumers.forIn'.wf " ++
-    "checks in both public environments and converts to the strict signature. The pinned public " ++
-    "signature retains the default string search loop and fails this conversion."
+    "checks in both public environments and converts to the strict signature. " ++ conclusion
 
 /-- Compare the concrete forward or backward skip call with the model call wherever it
 occurs in the full signature. The character and predicate instances and the pattern
@@ -216,7 +222,7 @@ public def originalTypeGap? (official visible strict : Environment) (owner : Nam
     | .checked => return some (gap ++ ". The finite-iterator reformulation checks in both public kernels.")
     | .gap reason => return some reason
     | .notApplicable => pure ()
-    if let some gap := finiteSearchLoopGap? visible strict owner source pinned target.type missing then
+    if let some gap := finiteStringLoopGap? visible strict owner source pinned target.type missing then
       return some gap
     if let some gap ← patternSkipGap? official visible strict owner source pinned target.type missing then
       return some gap
