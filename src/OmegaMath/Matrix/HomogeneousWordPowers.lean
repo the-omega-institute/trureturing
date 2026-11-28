@@ -10,8 +10,9 @@ import Mathlib.Tactic.NoncommRing
 
 Dimension growth for exact powers of subspaces of a finite-dimensional algebra and
 the two-dimensional generator-space reduction for size-three matrix algebras.
-In the setting of Shitov's Question 2, the invertible-generator case reduces to a
-rank-one, square-zero second generator with exactly one of two scalar returns. -/
+In the setting of Shitov's Question 2, a proper seventh power in the
+invertible-generator case forces a square-zero generator with zero first return
+and nonzero second return. -/
 
 compile_only_with_mathlib
 
@@ -530,7 +531,7 @@ private theorem exists_outer_product_of_rank_one {B : Mat} (hB : B.rank = 1) :
   simp at hB
 
 private theorem third_power_eq (A : Mat) :
-    ∃ x y z : K, A ^ 3 = x • A ^ 2 + y • A + z • (1 : Mat) := by
+    ∃ x y : K, A ^ 3 = x • A ^ 2 + y • A + A.det • (1 : Mat) := by
   have h := Matrix.aeval_self_charpoly A
   rw [Polynomial.aeval_eq_sum_range, Matrix.charpoly_natDegree_eq_dim, Fintype.card_fin] at h
   have hc : A.charpoly.coeff 3 = 1 := by
@@ -540,7 +541,11 @@ private theorem third_power_eq (A : Mat) :
   change (∑ i ∈ Finset.range 4, A.charpoly.coeff i • A ^ i) = 0 at h
   rw [Finset.sum_range_succ, Finset.sum_range_succ, Finset.sum_range_succ,
     Finset.sum_range_one, hc, one_smul, pow_zero, pow_one] at h
-  refine ⟨-A.charpoly.coeff 2, -A.charpoly.coeff 1, -A.charpoly.coeff 0, ?_⟩
+  have hdet : A.det = -A.charpoly.coeff 0 := by
+    rw [Matrix.det_eq_sign_charpoly_coeff, Fintype.card_fin]
+    ring
+  refine ⟨-A.charpoly.coeff 2, -A.charpoly.coeff 1, ?_⟩
+  rw [hdet]
   rw [eq_neg_of_add_eq_zero_right h]
   simp only [neg_smul, neg_add]
   abel
@@ -563,12 +568,12 @@ private theorem span_column_orbit
     fin_cases i
     · simpa [w] using hw 1
     · simpa [w, Matrix.mulVec_mulVec, pow_two] using hw 2
-    · obtain ⟨a, b, c, h⟩ := third_power_eq A
-      have hs : a • w 2 + b • w 1 + c • w 0 ∈ W :=
-        W.add_mem (W.add_mem (W.smul_mem a (hw 2)) (W.smul_mem b (hw 1))) (W.smul_mem c (hw 0))
+    · obtain ⟨a, b, h⟩ := third_power_eq A
+      have hs : a • w 2 + b • w 1 + A.det • w 0 ∈ W :=
+        W.add_mem (W.add_mem (W.smul_mem a (hw 2)) (W.smul_mem b (hw 1))) (W.smul_mem A.det (hw 0))
       change A *ᵥ (A ^ 2 *ᵥ u) ∈ W
       rw [Matrix.mulVec_mulVec, ← pow_succ', h]
-      change a • (A ^ 2 *ᵥ u) + b • (A ^ 1 *ᵥ u) + c • (A ^ 0 *ᵥ u) ∈ W at hs
+      change a • (A ^ 2 *ᵥ u) + b • (A ^ 1 *ᵥ u) + A.det • (A ^ 0 *ᵥ u) ∈ W at hs
       simpa only [Matrix.add_mulVec, Matrix.smul_mulVec, pow_zero, pow_one] using hs
   have hB : ∀ z ∈ W, Matrix.vecMulVec u v *ᵥ z ∈ W := by
     intro z _
@@ -754,6 +759,160 @@ theorem single_rank_one_return_of_pow_seven_ne_top
   rcases hreturn with h1 | h2
   · exact Or.inl ⟨h1, by_contra fun h2 => hseven (hpair h1 h2)⟩
   · exact Or.inr ⟨by_contra fun h1 => hseven (hpair h1 h2), h2⟩
+
+private theorem isUnit_of_span_columns (P : Mat)
+    (h : Submodule.span K (Set.range P.col) = ⊤) : IsUnit P :=
+  Matrix.mulVec_surjective_iff_isUnit.1
+    (LinearMap.range_eq_top.1 ((Matrix.range_mulVecLin P).trans h))
+
+/-- A nonzero first return and zero second return force at least five independent
+matrices in the exact cube of an eventually full span with an invertible generator. -/
+theorem five_le_finrank_cube_of_first_return
+    (L : Submodule K Mat) (A : Matˣ) (u v : Fin 3 → K)
+    (hL : L = Submodule.span K ({(A : Mat), Matrix.vecMulVec u v} : Set Mat))
+    (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤)
+    (h0 : v ⬝ᵥ u = 0) (h1 : v ⬝ᵥ ((A : Mat) *ᵥ u) ≠ 0)
+    (h2 : v ⬝ᵥ ((A : Mat) ^ 2 *ᵥ u) = 0) :
+    5 ≤ Module.finrank K ↥(L ^ 3) := by
+  classical
+  let P : Mat := A
+  let B := Matrix.vecMulVec u v
+  let w (i : Fin 3) := P ^ (i : ℕ) *ᵥ u
+  let r (j : Fin 3) := v ᵥ* P ^ (j : ℕ)
+  have hu : u ≠ 0 := by rintro rfl; simp at h1
+  have hv : v ≠ 0 := by rintro rfl; simp at h1
+  obtain ⟨U, hU⟩ := isUnit_of_span_columns (Matrix.of fun i j => w j i)
+    (span_column_orbit L hu hL hfull)
+  have hVunit : IsUnit (Matrix.of r : Mat) :=
+    (Matrix.isUnit_transpose (Matrix.of r : Mat)).1 (isUnit_of_span_columns (Matrix.of r)ᵀ
+      (span_row_orbit L hv hL hfull))
+  obtain ⟨V, hV⟩ := hVunit
+  have hcol (i : Fin 3) : (U : Mat).col i = w i := by rw [hU]; rfl
+  have hrow (j : Fin 3) : (V : Mat).row j = r j := by rw [hV]; rfl
+  let e := (U.mulLeftLinearEquiv K Mat).trans (V.mulRightLinearEquiv K)
+  let b := (Matrix.stdBasis K (Fin 3) (Fin 3)).map e
+  have hb (i j : Fin 3) : b (i, j) = Matrix.vecMulVec (w i) (r j) := by
+    change e (Matrix.stdBasis K _ _ (i, j)) = _
+    rw [Matrix.stdBasis_eq_single, Matrix.single_eq_single_vecMulVec_single]
+    change (U : Mat) * Matrix.vecMulVec (Pi.single i 1) (Pi.single j 1) * (V : Mat) = _
+    rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.mulVec_single_one,
+      Matrix.single_one_vecMul, hcol, hrow]
+  have hP : P ∈ L := hL.symm ▸ Submodule.subset_span (Set.mem_insert _ _)
+  have hB : B ∈ L := hL.symm ▸ Submodule.subset_span (by simp [B])
+  have hmul {m n : ℕ} {X Y : Mat} (hX : X ∈ L ^ m) (hY : Y ∈ L ^ n) :
+      X * Y ∈ L ^ (m + n) := by
+    rw [pow_add]
+    exact Submodule.mul_mem_mul hX hY
+  have hB1 : B ∈ L ^ 1 := by simpa using hB
+  have hB3 : B ∈ L ^ 3 := by
+    let c : K := v ⬝ᵥ (P *ᵥ u)
+    have hc : c ≠ 0 := h1
+    have hw := hmul (hmul hB1 (Submodule.pow_mem_pow L hP 1)) hB1
+    rw [return_product P u v 1, pow_one] at hw
+    change c • B ∈ L ^ 3 at hw
+    simpa only [smul_smul, inv_mul_cancel₀ hc, one_smul] using (L ^ 3).smul_mem c⁻¹ hw
+  have hword (i j : Fin 3) (hlen : (i : ℕ) + 1 + (j : ℕ) = 3) : b (i, j) ∈ L ^ 3 := by
+    rw [hb, ← Matrix.vecMulVec_mul, ← Matrix.mul_vecMulVec]
+    have hw := hmul (hmul (Submodule.pow_mem_pow L hP (i : ℕ)) hB1)
+      (Submodule.pow_mem_pow L hP (j : ℕ))
+    rwa [hlen] at hw
+  -- Three cubic words and the padded generator occupy four distinct basis positions.
+  let p : Fin 4 → Fin 3 × Fin 3 := ![(2, 0), (1, 1), (0, 2), (0, 0)]
+  have hp : Function.Injective p := by
+    change ∀ i j : Fin 4, p i = p j → i = j
+    decide
+  let W := Submodule.span K (Set.range (b ∘ p))
+  have hdimW : Module.finrank K W = 4 := by
+    simpa [W] using finrank_span_eq_card (b.linearIndependent.comp p hp)
+  have hWL : W ≤ L ^ 3 := by
+    apply Submodule.span_le.2
+    rintro _ ⟨i, rfl⟩
+    fin_cases i
+    · exact hword 2 0 rfl
+    · exact hword 1 1 rfl
+    · exact hword 0 2 rfl
+    · change b (0, 0) ∈ L ^ 3
+      simpa [hb, w, r, B] using hB3
+  let coord : (Fin 3 → K) →ₗ[K] K :=
+    (LinearMap.proj 2).comp (↑U⁻¹ : Mat).mulVecLin
+  have hcoord (i : Fin 3) : coord (w i) = (Pi.single i 1 : Fin 3 → K) 2 := by
+    change ((↑U⁻¹ : Mat) *ᵥ w i) 2 = _
+    rw [← hcol, ← Matrix.mulVec_single_one, Matrix.mulVec_mulVec, Units.inv_mul, Matrix.one_mulVec]
+  let eval (k : Fin 3) : Mat →ₗ[K] K := coord.comp ((Matrix.mulVecBilin K K).flip (w k))
+  have heval (i j k : Fin 3) :
+      eval k (b (i, j)) = (r j ⬝ᵥ w k) * (Pi.single i 1 : Fin 3 → K) 2 := by
+    change coord (b (i, j) *ᵥ w k) = _
+    rw [hb, Matrix.vecMulVec_mulVec, op_smul_eq_smul, map_smul, hcoord, smul_eq_mul]
+  have hker (k : Fin 3) (hk : v ⬝ᵥ w k = 0) : W ≤ (eval k).ker := by
+    apply Submodule.span_le.2
+    rintro _ ⟨i, rfl⟩
+    change eval k (b (p i)) = 0
+    fin_cases i
+    · change eval k (b (2, 0)) = 0
+      rw [heval]
+      simpa [r] using hk
+    · change eval k (b (1, 1)) = 0
+      simp [heval]
+    · change eval k (b (0, 2)) = 0
+      simp [heval]
+    · change eval k (b (0, 0)) = 0
+      simp [heval]
+  -- In the last column-orbit coordinate, only the outer product at (2, 0) contributes.
+  -- Its row is v, which annihilates both u and A^2 u.
+  have hnot : P ^ 3 ∉ W := by
+    intro hW
+    obtain ⟨x, y, hrel⟩ := third_power_eq P
+    have htest0 : coord (P ^ 3 *ᵥ u) = 0 := by
+      have ht := hker 0 (by simpa [w] using h0) hW
+      change coord (P ^ 3 *ᵥ w 0) = 0 at ht
+      simpa [w] using ht
+    have hx : x = 0 := by
+      have ht := htest0
+      rw [hrel, Matrix.add_mulVec, Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.smul_mulVec,
+        Matrix.smul_mulVec, Matrix.one_mulVec, map_add, map_add, map_smul, map_smul, map_smul] at ht
+      have ht' : x • coord (w 2) + y • coord (w 1) + P.det • coord (w 0) = 0 := by
+        simpa [w] using ht
+      simpa [hcoord] using ht'
+    have htest2 := hker 2 h2 hW
+    change coord (P ^ 3 *ᵥ (P ^ 2 *ᵥ u)) = 0 at htest2
+    rw [Matrix.mulVec_mulVec, ← pow_add] at htest2
+    have h5 : P ^ 5 = y • P ^ 3 + P.det • P ^ 2 := by
+      calc
+        P ^ 5 = P ^ 3 * P ^ 2 := pow_add P 3 2
+        _ = (y • P + P.det • (1 : Mat)) * P ^ 2 := by
+          exact congrArg (· * P ^ 2) (by simpa [hx] using hrel)
+        _ = y • P ^ 3 + P.det • P ^ 2 := by
+          rw [add_mul, smul_mul_assoc, smul_mul_assoc, one_mul, ← pow_succ']
+    rw [h5, Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.smul_mulVec,
+      map_add, map_smul, map_smul] at htest2
+    change y • coord (P ^ 3 *ᵥ u) + P.det • coord (w 2) = 0 at htest2
+    have hd : P.det = 0 := by simpa [htest0, hcoord] using htest2
+    exact (isUnit_iff_ne_zero.1 ((Matrix.isUnit_iff_isUnit_det P).1 A.isUnit)) hd
+  let W' := W ⊔ Submodule.span K ({P ^ 3} : Set Mat)
+  have hP3 : P ^ 3 ∈ W' := Submodule.mem_sup_right (Submodule.subset_span (Set.mem_singleton _))
+  have hlt : W < W' := lt_of_le_not_ge le_sup_left
+    (fun h => hnot (h hP3))
+  have hW'L : W' ≤ L ^ 3 := sup_le hWL
+    ((Submodule.span_singleton_le_iff_mem _ _).2 (Submodule.pow_mem_pow L hP 3))
+  have hdim := (Submodule.finrank_lt_finrank_of_lt hlt).trans_le (Submodule.finrank_mono hW'L)
+  omega
+
+/-- In the invertible-generator case, a proper seventh power requires the
+second return to be the unique nonzero return of order one or two. -/
+theorem second_rank_one_return_of_pow_seven_ne_top
+    (L : Submodule K Mat) (A : Matˣ) (hA : (A : Mat) ∈ L)
+    (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤) (hseven : L ^ 7 ≠ ⊤) :
+    ∃ u v : Fin 3 → K,
+      L = Submodule.span K ({(A : Mat), Matrix.vecMulVec u v} : Set Mat) ∧
+      (Matrix.vecMulVec u v).rank = 1 ∧ v ⬝ᵥ u = 0 ∧
+      (v ⬝ᵥ ((A : Mat) *ᵥ u)) = 0 ∧ (v ⬝ᵥ ((A : Mat) ^ 2 *ᵥ u)) ≠ 0 := by
+  obtain ⟨u, v, hL, hrank, h0, hreturns⟩ :=
+    single_rank_one_return_of_pow_seven_ne_top L A hA hfull hseven
+  refine ⟨u, v, hL, hrank, h0, hreturns.resolve_left ?_⟩
+  rintro ⟨h1, h2⟩
+  have hdim := five_le_finrank_cube_of_first_return L A u v hL hfull h0 h1 h2
+  exact hseven (pow_eq_top_of_finrank_add_le L A hA hfull (j := 3) (t := 4) (by decide)
+    (by rw [finrank_matrix_three]; omega))
 
 end SizeThree
 end OmegaMath.HomogeneousWordPowers
