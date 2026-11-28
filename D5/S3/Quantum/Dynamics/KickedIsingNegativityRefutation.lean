@@ -37,6 +37,7 @@ public import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutati
 public import D5.S3.Quantum.Foundation.FiniteTraceDistance
 public import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+public import Mathlib.Tactic.NormNum.RealSqrt
 
 @[expose] public section
 

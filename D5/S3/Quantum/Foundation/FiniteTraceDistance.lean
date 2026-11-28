@@ -238,7 +238,13 @@ module
 public import Mathlib.Analysis.Matrix.Order
 public import Mathlib.Analysis.Matrix.PosDef
 public import Mathlib.Analysis.InnerProductSpace.PiL2
-public import Mathlib.Tactic
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.CongrExclamation
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NoncommRing
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
 public import D5.S3.Quantum.Foundation.FiniteStateChannel
 public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Abs
 
