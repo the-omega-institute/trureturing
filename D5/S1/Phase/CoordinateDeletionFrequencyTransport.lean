@@ -5,7 +5,9 @@
    anchors: []
    digest: Transport coordinate frequencies and union closure through finite coordinate deletion. -/
 
-import Mathlib
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Data.Finset.Powerset
+import Mathlib.Tactic.Ring
 
 /- Library-search audit trail (2026-09-05):
    * Current `origin/dev` has no declaration or conclusion-shape match for either
