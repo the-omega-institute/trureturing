@@ -8,7 +8,7 @@ internal sealed class StronglyCospectralTwinAmplitudeBoundDocument : IScribeDocu
 {
     private const string Prefix = "D5/S3/Quantum/Dynamics/StronglyCospectralTwinAmplitudeBound.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/meaghermonterdenguyen2026sedentary");
+        LibraryNoteRef.Create("D5/L/CayleyGrowth/meaghermonterdenguyen2026sedentary");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every odd integer relation among the supported adjacency gaps of strongly cospectral "
