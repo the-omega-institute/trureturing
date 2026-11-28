@@ -2,7 +2,14 @@ module
 import all Init.Grind.Module.NatModuleNorm
 import all Init.Grind.Module.Envelope
 
-/-! Interpret normalized polynomials with nonnegative coefficients in a natural module. -/
+/-! Interpret normalized polynomials with nonnegative coefficients in a natural module.
+
+The six envelope lemmas below have specialized interfaces. Ordinary imports of the
+pinned module keep `OfNatModule.ofNatModule` opaque, so its addition, zero and scalar
+action fields in `toQ_add`, `toQ_zero` and `toQ_smul` do not reduce. The order
+instances unfold, but the comparisons in `mk_le_mk`, `toQ_le` and `toQ_lt` reach
+`Q.liftOn₂`, whose body is also opaque to ordinary imports.
+-/
 
 open Lean.Grind Lean.Grind.Linarith
 namespace OmegaChecks.InitPort.Alternatives
