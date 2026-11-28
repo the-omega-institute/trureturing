@@ -5,7 +5,8 @@
    anchors: []
    digest: Neutral and quadratic charge channels invert exactly to split and inert channels by the C2 Fourier transform. -/
 
-import Mathlib
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.Ring
 
 /-!
 This is the finite `C2` tomography underlying the pair of channels
