@@ -6,9 +6,17 @@
    utility: none
    digest: Reflected Li kernels have a summable quadratic tail and converge uniformly on a fixed disk. -/
 
-import D5.S3.Weil.ZeroData.LiZeroSumConvergence
+import OmegaBuild.Commands
+import D5.S3.Weil.ZetaBridge.ClassicExplicitFormula
 import Mathlib.Analysis.Normed.Group.FunctionSeries
-import Mathlib.Tactic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+
+compile_only_with_mathlib
 
 /-! Reflection cancels the first-order reciprocal-zero terms in the Li
 resolvent. The resulting quadratic tail is summable without a critical-line
@@ -28,6 +36,7 @@ open D5.S3.Weil.ZetaBridge.ClassicExplicitFormula
 
 private def ratio (rho : ℂ) : ℂ := 1 - 1 / rho
 
+/-- The multiplicity-weighted Li resolvent averaged over reflection. -/
 def reflectedLiKernel (Z : ZeroData) (k : ℕ) (z : ℂ) : ℂ :=
   (Z.multiplicity k : ℂ) / 2 *
     (2 * (1 - z)⁻¹ - ratio (Z.zero k) * (1 - ratio (Z.zero k) * z)⁻¹ -
@@ -157,20 +166,10 @@ private theorem kernel_tail_bound (Z : ZeroData) (k : ℕ) (hk : 2 ≤ ‖Z.gamm
         (by positivity)
     _ = _ := by ring
 
-private theorem reciprocal_weight_summable (Z : ZeroData) :
-    Summable (fun k : ℕ =>
-      (Z.multiplicity k : ℝ) / (1 + Complex.normSq (Z.gamma k))) := by
-  have h := (zeroEquiv Z).summable_iff.mpr (Zeta23.WeilEF.zero_sum_inv_sq Zeta23.zetaSeam)
-  refine h.congr fun k => ?_
-  change (Zeta23.zeroMult (Z.zero k) : ℝ) /
-    (1 + Complex.normSq (Zeta23.gammaOf (Z.zero k))) = _
-  rw [← multiplicity_eq_zeroMult, gammaOf_eq_spectralParameter]
-  rfl
-
 /-- The reflection-paired Li kernels have an explicit summable tail on the
 closed quarter disk, hence absolute pointwise and uniform unordered convergence.
 No critical-line or zero-height lower-bound hypothesis is required. -/
-theorem reflected_li_kernel_normal_convergence (Z : ZeroData) :
+theorem reflected_li_kernel_uniform_convergence (Z : ZeroData) :
     (∀ k : ℕ, 2 ≤ ‖Z.gamma k‖ → ∀ z : ℂ, ‖z‖ ≤ 1 / 4 →
       ‖reflectedLiKernel Z k z‖ ≤ 4 * ((Z.multiplicity k : ℝ) /
         (1 + Complex.normSq (Z.gamma k)))) ∧
@@ -180,7 +179,15 @@ theorem reflected_li_kernel_normal_convergence (Z : ZeroData) :
       (fun z : ℂ => ∑' k : ℕ, reflectedLiKernel Z k z) atTop
       (Metric.closedBall (0 : ℂ) (1 / 4)) := by
   classical
-  have hw := (reciprocal_weight_summable Z).mul_left 4
+  have hweight : Summable (fun k : ℕ =>
+      (Z.multiplicity k : ℝ) / (1 + Complex.normSq (Z.gamma k))) := by
+    have h := (zeroEquiv Z).summable_iff.mpr (Zeta23.WeilEF.zero_sum_inv_sq Zeta23.zetaSeam)
+    refine h.congr fun k => ?_
+    change (Zeta23.zeroMult (Z.zero k) : ℝ) /
+      (1 + Complex.normSq (Zeta23.gammaOf (Z.zero k))) = _
+    rw [← multiplicity_eq_zeroMult, gammaOf_eq_spectralParameter]
+    rfl
+  have hw := hweight.mul_left 4
   have he : ∀ᶠ k in cofinite, ∀ z : ℂ, ‖z‖ ≤ 1 / 4 →
       ‖reflectedLiKernel Z k z‖ ≤ 4 * ((Z.multiplicity k : ℝ) /
         (1 + Complex.normSq (Z.gamma k))) := by
@@ -196,6 +203,6 @@ theorem reflected_li_kernel_normal_convergence (Z : ZeroData) :
     filter_upwards [he] with k hk z hz
     exact hk z (by simpa only [Metric.mem_closedBall, dist_zero_right] using hz)
 
-#print axioms reflected_li_kernel_normal_convergence
+#print axioms reflected_li_kernel_uniform_convergence
 
 end D5.S3.Weil.ZeroData.LiReflectedKernel

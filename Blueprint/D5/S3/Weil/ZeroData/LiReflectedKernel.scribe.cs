@@ -19,8 +19,8 @@ internal sealed class LiReflectedKernelDocument : IScribeDocumentDefinition
                     + "The operation pairs reflection rho with 1-rho; it does not "
                     + "identify reflection with complex conjugation.")),
             Describe.Lean(
-                DescribeId.Create("reflected-li-kernel-normal-convergence"),
-                DeclarationHandle.Create(Owner + "reflected_li_kernel_normal_convergence"),
+                DescribeId.Create("reflected-li-kernel-uniform-convergence"),
+                DeclarationHandle.Create(Owner + "reflected_li_kernel_uniform_convergence"),
                 H("A fixed disk and a summable tail"),
                 StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
@@ -36,7 +36,8 @@ internal sealed class LiReflectedKernelDocument : IScribeDocumentDefinition
                             + "no particular ordering of the zeros is required.")),
                     Paragraph(Text(
                         "Set D_k=rho_k*(1-rho_k)=gamma_k^2+1/4 and x_k=1/D_k. "
-                            + "Then q_k*r_k=1 and q_k+r_k=2-x_k, so the rational "
+                            + "Then q_k*r_k=1 and q_k+r_k=2-x_k. Where the denominators "
+                            + "are nonzero, the rational "
                             + "expression in parentheses is "
                             + "x_k*(1+z)/((1-z)*((1-z)^2+x_k*z)). "
                             + "The tail condition gives |x_k|<=1/2 and "
