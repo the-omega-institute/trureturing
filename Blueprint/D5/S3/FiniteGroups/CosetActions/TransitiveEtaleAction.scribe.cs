@@ -30,6 +30,6 @@ internal sealed class TransitiveEtaleActionDocument : IScribeDocumentDefinition
                         + "is one, so the orbit contains every point. Take K to be the stabilizer of that "
                         + "point and reindex evaluation along the equivariant bijection from G/K to the orbit."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("See Davydov and Simmons, On Lagrangian algebras in group-theoretical modular "
+            Paragraph(Text("See Davydov and Simmons, On Lagrangian algebras in group-theoretical braided fusion "
                 + "categories, Lemma 2.10. https://arxiv.org/abs/1603.04650")))));
 }

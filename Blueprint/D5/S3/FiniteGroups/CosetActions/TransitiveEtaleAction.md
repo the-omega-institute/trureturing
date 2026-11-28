@@ -18,7 +18,7 @@ Let a group G act by complex algebra automorphisms on a nontrivial finite étale
 
 Evaluation identifies A with the functions on its nonempty set of complex points. The point action is precomposition by the inverse automorphism. The indicator of the orbit of a chosen point is invariant, so its preimage in A is scalar. The indicator is therefore constant, and its value at the chosen point is one, so the orbit contains every point. Take K to be the stabilizer of that point and reindex evaluation along the equivariant bijection from G/K to the orbit.
 
-See Davydov and Simmons, On Lagrangian algebras in group-theoretical modular categories, Lemma 2.10. https://arxiv.org/abs/1603.04650
+See Davydov and Simmons, On Lagrangian algebras in group-theoretical braided fusion categories, Lemma 2.10. https://arxiv.org/abs/1603.04650
 
 ## References
 
