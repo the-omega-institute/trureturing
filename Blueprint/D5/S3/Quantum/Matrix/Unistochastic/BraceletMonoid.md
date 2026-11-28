@@ -18,7 +18,7 @@ $$\forall (d: \mathbb{N}), (\operatorname{CirculantBraceletNonUnistochastic.IsBr
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Grzegorz Rajchel-Mieldzioć, Kamil Korzekwa, Zbigniew Puchała, Karol Życzkowski (2021). *Algebraic and geometric structures inside the Birkhoff polytope*. DOI: [10.1063/5.0046581](https://doi.org/10.1063/5.0046581). URL: <https://arxiv.org/abs/2101.11288>.
+*Acknowledgement.* Grzegorz Rajchel-Mieldzioć, Kamil Korzekwa, Zbigniew Puchała, Karol Życzkowski (2021). *Algebraic and geometric structures inside the Birkhoff polytope*. URL: <https://arxiv.org/html/2101.11288v1#Thmtheorem9>.
 
 *Commentary.*
 
