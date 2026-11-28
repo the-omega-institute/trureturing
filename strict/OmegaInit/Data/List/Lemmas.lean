@@ -260,6 +260,10 @@ theorem filter_cons_of_neg {α : Type u} {p : α → Bool} {a : α} {l : List α
   congrArg (fun bit => Bool.rec (motive := fun _ => List α) (filter p l) (cons a (filter p l)) bit)
     (Bool.eq_false_of_ne_true pa)
 
+/- Open: List.filterMap_eq_filter asks for equality of the two functions before a
+list is supplied. The pinned public bodies of filterMap and filter recurse with
+different steps. The pointwise agreement follows by list induction and a Boolean
+case split, as in OmegaChecks.InitPort.Alternatives.List.filterGuard. -/
 theorem filterMap_cons_some {α : Type u} {β : Type v} {f : α → Option β} {a : α} {l : List α} {b : β}
     (h : Eq (f a) (Option.some b)) : Eq (filterMap f (cons a l)) (cons b (filterMap f l)) :=
   congrArg (fun o => Option.casesOn (motive := fun _ => List β) o (filterMap f l) (fun x => cons x (filterMap f l))) h
