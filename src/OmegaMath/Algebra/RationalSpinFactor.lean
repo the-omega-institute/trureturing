@@ -6,8 +6,6 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 import OmegaBuild.Commands
 
-compile_only_with_mathlib
-
 /-!
 Omega original.
 
@@ -16,6 +14,8 @@ selected-axis Lie algebra, with and without a scalar direct summand.
 The multiplication and orthogonal Lie algebras use their usual classical
 definitions.
 -/
+
+compile_only_with_mathlib
 
 open scoped Matrix
 open Matrix LieAlgebra
@@ -109,6 +109,7 @@ private theorem spin_coords (s : n → ℚ) (x : B n) (t : ℚ) :
   · rintro ⟨ha, hv, hz⟩
     exact ⟨⟨by linarith, fun i => by have := hv i; linarith⟩, hz⟩
 
+omit [DecidableEq n] in
 private theorem spin_one (s : n → ℚ) (hs : s ⬝ᵥ s = 1) (x : B n) :
     x ∈ eig left (spinAxis s) 1 ↔ x.1.2 = x.1.1 • s ∧ x.2 = 0 := by
   rw [spin_coords]
@@ -119,9 +120,12 @@ private theorem spin_one (s : n → ℚ) (hs : s ⬝ᵥ s = 1) (x : B n) :
     have := hv i
     linarith
   · rintro ⟨hv, hz⟩
-    simp [hv, hz, dotProduct_smul, hs]
-    constructor <;> intros <;> ring
+    simp only [hv, hz, dotProduct_smul, hs, one_mul, mul_zero]
+    refine ⟨by ring, fun i => ?_, trivial⟩
+    change (1 / 2 : ℚ) * (x.1.1 * s i + x.1.1 * s i) = x.1.1 * s i
+    ring
 
+omit [DecidableEq n] in
 private theorem spin_zero (s : n → ℚ) (hs : s ⬝ᵥ s = 1) (x : B n) :
     x ∈ eig left (spinAxis s) 0 ↔ x.1.2 = (-x.1.1) • s := by
   rw [spin_coords]
@@ -134,6 +138,7 @@ private theorem spin_zero (s : n → ℚ) (hs : s ⬝ᵥ s = 1) (x : B n) :
   · intro hv
     simp [hv, dotProduct_smul, hs]
 
+omit [DecidableEq n] in
 private theorem spin_half (s : n → ℚ) (hs : s ⬝ᵥ s = 1) (x : B n) :
     x ∈ eig left (spinAxis s) (1 / 2) ↔
       x.1.1 = 0 ∧ s ⬝ᵥ x.1.2 = 0 ∧ x.2 = 0 := by
@@ -190,7 +195,11 @@ private def extendEnd : Module.End ℚ (J n) →ₗ⁅ℚ⁆ Module.End ℚ (B n
   map_add' f g := by ext x <;> simp
   map_smul' c f := by ext x <;> simp
   map_lie' {f g} := by
-    ext x <;> rfl
+    apply LinearMap.ext
+    intro x
+    apply Prod.ext
+    · simp [Ring.lie_def, Module.End.mul_apply]
+    · simp [Ring.lie_def, Module.End.mul_apply]
 
 private def vectorBlock : Orthogonal.so n ℚ →ₗ⁅ℚ⁆ Module.End ℚ (B n) :=
   extendEnd.comp spinBlock
@@ -277,7 +286,8 @@ private theorem selected_eq_range {A : Type*} [AddCommGroup A] [Module ℚ A]
       exact (selectedLie L X).smul_mem _ (hcoord i j)
 
 /-- The selected-axis Lie span is the skew block on the vector coordinates. -/
-def chosenLieEquiv : Orthogonal.so n ℚ ≃ₗ⁅ℚ⁆ selectedLie left (chosen : Set (B n)) := by
+noncomputable def chosenLieEquiv :
+    Orthogonal.so n ℚ ≃ₗ⁅ℚ⁆ selectedLie left (chosen : Set (B n)) := by
   rw [selected_eq_range left chosen (fun x => x.1.2) vectorBlock left_bracket
     (fun i => ⟨spinAxis (coord i), positive_mem i, rfl⟩)]
   apply vectorBlock.equivRangeOfInjective
@@ -288,6 +298,7 @@ def chosenLieEquiv : Orthogonal.so n ℚ ≃ₗ⁅ℚ⁆ selectedLie left (chose
   intro v
   exact congrArg (fun f : Module.End ℚ (B n) => (f (vector v)).1.2) h
 
+omit [DecidableEq n] in
 private theorem spin_axis (s : n → ℚ) (hs : s ⬝ᵥ s = 1) :
     IsAxis left (spinAxis s) := by
   have ha : spinAxis s ∈ eig left (spinAxis s) 1 :=
@@ -383,6 +394,8 @@ private theorem spin_axis (s : n → ℚ) (hs : s ⬝ᵥ s = 1) :
     rw [hxy]
     exact Submodule.smul_mem _ _ hu
 
+omit [DecidableEq n] in
+omit [DecidableEq n] in
 private theorem z_axis : IsAxis left (z : B n) := by
   have h1 (x : B n) : x ∈ eig left z 1 ↔ x.1 = 0 := by simp [z_eig]
   have h0 (x : B n) : x ∈ eig left z 0 ↔ x.2 = 0 := by simp [z_eig]
@@ -448,7 +461,10 @@ theorem chosen_axes (a : B n) (ha : a ∈ chosen) : IsAxis left a := by
   · obtain rfl : a = z := ha
     exact z_axis
 
-private theorem chosen_spans [Nonempty n] : Submodule.span ℚ (chosen : Set (B n)) = ⊤ := by
+omit [Fintype n] in
+private theorem chosen_spans [Finite n] [Nonempty n] :
+    Submodule.span ℚ (chosen : Set (B n)) = ⊤ := by
+  let := Fintype.ofFinite n
   let W := Submodule.span ℚ (chosen : Set (B n))
   have hp (i : n) : spinAxis (coord i) ∈ W := Submodule.subset_span (positive_mem i)
   have hm (i : n) : spinAxis (-coord i) ∈ W := Submodule.subset_span (negative_mem i)
@@ -546,7 +562,7 @@ private theorem pure_axis (s : n → ℚ) (hs : s ⬝ᵥ s = 1) :
       obtain ⟨r, hr⟩ := Submodule.mem_span_singleton.mp hx'
       exact Submodule.mem_span_singleton.mpr ⟨r, congrArg Prod.fst hr⟩
     · apply (Submodule.span_singleton_le_iff_mem _ _).mpr
-      exact Module.End.mem_eigenspace_iff.mpr (by simpa using congrArg Prod.fst hidem)
+      exact spin_eig_fst ((spin_one s hs _).mpr ⟨rfl, rfl⟩)
   · apply top_unique
     intro x _
     have hx : (x, (0 : ℚ)) ∈ eig left (spinAxis s) 1 ⊔ eig left (spinAxis s) 0 ⊔
@@ -587,17 +603,16 @@ theorem signedAxes_generate [Nonempty n] :
   rw [chosen_spans] at h
   exact top_unique fun x _ => h (show (x, (0 : ℚ)) ∈ (⊤ : Submodule ℚ (B n)) from trivial)
 
-omit [DecidableEq n] in
 private theorem spinBracket (x y : J n) :
     ⁅spinLeft x, spinLeft y⁆ = spinBlock (skewPair x.2 y.2) := by
   apply LinearMap.ext
   intro w
   have h := congrArg (fun f : Module.End ℚ (B n) => (f (w, 0)).1)
     (left_bracket (x, 0) (y, 0))
+  change (⁅left (x, 0), left (y, 0)⁆ (w, 0)).1 = spinBlock (skewPair x.2 y.2) w at h
   simpa only [Ring.lie_def, LinearMap.sub_apply, Module.End.mul_apply, Prod.fst_sub,
     spin_first] using h
 
-omit [DecidableEq n] in
 /-- A commutator of spin left multiplications vanishes on the unit coordinate. -/
 theorem spinBracket_apply (x y w : J n) :
     ⁅spinLeft x, spinLeft y⁆ w = (0, (skewPair x.2 y.2).val *ᵥ w.2) := by
@@ -605,7 +620,8 @@ theorem spinBracket_apply (x y w : J n) :
   rfl
 
 /-- The selected-axis Lie algebra on the pair carrier is the actual standard orthogonal algebra. -/
-def signedAxesLieEquiv : Orthogonal.so n ℚ ≃ₗ⁅ℚ⁆ selectedLie spinLeft (signedAxes : Set (J n)) := by
+noncomputable def signedAxesLieEquiv :
+    Orthogonal.so n ℚ ≃ₗ⁅ℚ⁆ selectedLie spinLeft (signedAxes : Set (J n)) := by
   rw [selected_eq_range spinLeft signedAxes Prod.snd spinBlock spinBracket
     (fun i => ⟨(spinAxis (coord i)).1, Or.inl ⟨i, rfl⟩, rfl⟩)]
   apply spinBlock.equivRangeOfInjective

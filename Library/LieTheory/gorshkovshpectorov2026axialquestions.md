@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2606.30048v1
 claim: "Problem 3.20 asks whether simplicity of an axial algebra and simplicity of its inner Lie algebra for a chosen generating set of axes imply one another."
 strata_touched:
   - D5/S3/QuadraticForms/AxialInnerLieConverseRefutation
+  - D5/S3/QuadraticForms/AxialInnerLieForwardRefutation
 license: citation-only
 triage: anchor
 ---
