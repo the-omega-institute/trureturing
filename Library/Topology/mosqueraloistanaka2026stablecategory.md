@@ -47,6 +47,8 @@ strata_touched:
   - D5/S3/Topology/StableCategory/MixedSimplexChart
   - D5/S3/Topology/StableCategory/MixedSimplexAttachment
   - D5/S3/Topology/StableCategory/ShellingExactExtension
+  - D5/S3/Topology/StableCategory/ProductRigidCores
+  - D5/S3/Topology/StableCategory/ProductStableCover
 license: citation-only
 triage: anchor
 ---
@@ -1230,3 +1232,34 @@ monochromatic case connectedness suffices to move the constants for
 the disjoint new and old components to a common vertex. A last
 ordinary subdivision covers the remaining mixed flags and preserves
 the prescribed intersections.
+
+## Weak, stable, and ordinary category of a four-dimensional product
+
+Let (P) have facets `012, 015, 023, 035, 145, 234, 345` and let
+(X=F(P)\times F(P)), where (F(P)) is the poset of nonempty faces.
+The realization is a PL four-ball since (P) is the boundary of an
+octahedron with the relative interior of the face `124` removed.
+Thus the weak category is one.
+
+Lean gives ordinary category three. Deleting one boundary edge and its
+unique triangle gives each of three categorical lower sets in the factor.
+Every face is retained in at least two sets, so three corresponding
+rectangles cover the product. With only two colours, the nine pairs of
+exceptional triangles force a whole boundary cycle in a coordinate
+slice of one colour. The three original vertices of that cycle remain
+fixed under every step of a comparable order-map fence.
+
+Lean also verifies a partition of the 484-point product core, obtained
+by deleting the three up-beat boundary edges in each factor. Six
+pointwise comparisons contract each colour in the product order.
+Pullback along the beat retraction and the ordinary subdivision cover
+theorem give two categorical lower sets after two subdivisions.
+The stable category is two. The subdivided product retracts onto a coordinate slice,
+and the factor is strongly minimal before
+subdivision. Strong collapsibility is reflected by ordinary
+barycentric subdivision by Barmak and Minian, Theorem 4.15.
+This determines ((\operatorname{cat}_w,\operatorname{cat}_s,
+\operatorname{cat})(X)=(1,2,3)) for this product. The general inequality
+in Question 6.3 remains open.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Strong homotopy types, nerves and collapses](https://arxiv.org/abs/0907.2954)
