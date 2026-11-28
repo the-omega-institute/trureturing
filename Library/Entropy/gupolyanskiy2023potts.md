@@ -48,14 +48,15 @@ version includes all output cardinalities, zero entries, zero-mass columns,
 redundant symbols and trivial channels. For `q≥2`, `ε>0` and `C₂(P)≤ε`,
 the local estimate has the form
 
-`C₂(P⋆Q) ≤ (1 + (8q⁴+q) ε^(1/5)) (C₂(P)+C₂(Q))`.
+`C₂(P⋆Q) ≤ (1 + A_q ε^(1/5)) (C₂(P)+C₂(Q))`
+
+for a positive constant `A_q` depending only on q.
 
 The finite proof uses posterior mixtures, permutation cancellation of the
 first variation, a rational remainder bound for small coordinate deviations,
 and the good/bad split at posterior defect t² when the mean defect is at most
 t⁵. Lemma 35 is the local fully symmetric-channel estimate. Appendix D.2,
-equation (167), uses a uniform version of the local bound. The coefficient
-`8q⁴+q` is an explicit sufficient constant; no optimality claim is made.
+equation (167), uses a uniform version of the local bound.
 
 Appendix H supplies the research anchor:
 
