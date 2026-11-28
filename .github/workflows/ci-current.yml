@@ -483,7 +483,8 @@ jobs:
         env:
           CI: 'true'
           OMEGA_SCOPE_FILE: ${{ runner.temp }}/omega-scope.json
-        run: python3 tools/scripts/workflow/ci_checks.py unit omega
+          LEAN_NUM_THREADS: '1'
+        run: bash .github/actions/lean-compile-layer/measure.sh --compile python3 tools/scripts/workflow/ci_checks.py unit omega
       - name: Publish official declaration axiom dependencies
         if: steps.omega_scope.outputs.report-file != ''
         uses: actions/upload-artifact@v4
