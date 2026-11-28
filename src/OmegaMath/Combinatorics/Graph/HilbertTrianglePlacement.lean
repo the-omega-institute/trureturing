@@ -1,0 +1,123 @@
+import OmegaBuild.Commands
+import OmegaMath.Combinatorics.Graph.ChordalResidualExtension
+import OmegaMath.Combinatorics.Graph.HilbertTriangleCenter
+
+compile_only_with_mathlib
+
+/-! Omega original.
+
+# Three-neighbor Hilbert insertion
+
+Two rational interval certificates preserve the triangle invariant at edge
+radius (259/200). The tetrahedron bound here follows from the six edge bounds.
+-/
+
+namespace HilbertTriangleInsertion
+
+open SimpleGraph.ChordalResidualExtension
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+theorem place (r : Fin 3 → Fin 3 → E) (y : Fin 3 → E)
+    (h : Neighborhood (Fin 3) r y R C 11) :
+    ∃ z, Placement r y R C 11 z := by
+  let x₀ := y 0 - y 1
+  let x₁ := y 1 - y 2
+  let x₂ := y 2 - y 0
+  let d₀ := x₀ - r 0 1
+  let d₁ := x₁ - r 1 2
+  let d₂ := x₂ - r 2 0
+  let S := ‖x₀‖ ^ 2 + ‖x₁‖ ^ 2 + ‖x₂‖ ^ 2
+  have hsum : (r 0 1 + r 1 2 + r 2 0) + (d₀ + d₁ + d₂) = 0 := by
+    dsimp [d₀, d₁, d₂, x₀, x₁, x₂]
+    abel
+  have htri : ‖r 0 1‖ ^ 2 + ‖r 1 2‖ ^ 2 + ‖r 2 0‖ ^ 2 -
+      (2 / 3) * ‖r 0 1 + r 1 2 + r 2 0‖ ^ 2 ≤ C := by
+    rw [h.skew 0 2, norm_neg, ← sub_eq_add_neg]
+    exact h.tri 0 1 2
+  have hdiam (i j : Fin 3) (t : ℝ) (ht : ‖r i j - (y i - y j)‖ ≤ t) :
+      ‖y i - y j‖ ≤ R + t := by
+    calc
+      _ = ‖r i j - (r i j - (y i - y j))‖ := by rw [sub_sub_cancel]
+      _ ≤ ‖r i j‖ + ‖r i j - (y i - y j)‖ := norm_sub_le _ _
+      _ ≤ _ := add_le_add (h.edge i j) ht
+  have hdiam₂ (i j : Fin 3) : ‖y i - y j‖ ^ 2 ≤ B :=
+    pow_le_pow_left₀ (norm_nonneg _) (hdiam i j 1 (h.defect i j)) 2
+  obtain ⟨c, q, hq, hc, hedge, hS⟩ := center_bounds y hdiam₂
+  change B / 4 < q → q * (6 * B - S) ≤ B ^ 2 at hS
+  have hd₀ : ‖d₀‖ ≤ 1 := (norm_sub_rev _ _).trans_le (h.defect 0 1)
+  have hd₁ : ‖d₁‖ ≤ 1 := (norm_sub_rev _ _).trans_le (h.defect 1 2)
+  have hd₂ : ‖d₂‖ ≤ 1 := (norm_sub_rev _ _).trans_le (h.defect 2 0)
+  have hC : 0 ≤ C := by norm_num [C]
+  have hds₀ := pow_le_pow_left₀ (norm_nonneg _) hd₀ 2
+  have hds₁ := pow_le_pow_left₀ (norm_nonneg _) hd₁ 2
+  have hds₂ := pow_le_pow_left₀ (norm_nonneg _) hd₂ 2
+  have hsum_of_defect (t : ℝ) (ht : 0 ≤ t) (ht₁ : t ≤ 1)
+      (hd : ‖d₀‖ ^ 2 + ‖d₁‖ ^ 2 + ‖d₂‖ ^ 2 ≤ 2 + t ^ 2) :
+      S ≤ C + 2 + t ^ 2 + 2 * Real.sqrt (C * (2 + t ^ 2)) := by
+    have hT : 2 + t ^ 2 ≤ C := by
+      dsimp [C]
+      nlinarith only [pow_le_pow_left₀ ht ht₁ 2]
+    have hh := centered_minkowski (r 0 1) (r 1 2) (r 2 0) d₀ d₁ d₂ hsum hd hT htri
+    rw [show r 0 1 + d₀ = x₀ by dsimp [d₀]; abel,
+      show r 1 2 + d₁ = x₁ by dsimp [d₁]; abel,
+      show r 2 0 + d₂ = x₂ by dsimp [d₂]; abel] at hh
+    dsimp [S]
+    linarith only [hh]
+  have hSnum := hsum_of_defect ‖d₀‖ (norm_nonneg _) hd₀ (by linarith only [hds₁, hds₂])
+  have hrad := radius_closure hq
+    (side_sum_cap (norm_nonneg _) hd₀ (Real.sqrt_nonneg _)
+      (Real.sq_sqrt (by positivity)) hSnum) hS
+  have hnorm (i : Fin 3) : ‖y i - c‖ ≤ R :=
+    (sq_le_sq₀ (norm_nonneg _) (by norm_num [R])).mp ((hc i).trans hrad)
+  have bound (i j : Fin 3) (hij : i ≠ j)
+      (hs : ‖d₀‖ ^ 2 + ‖d₁‖ ^ 2 + ‖d₂‖ ^ 2 ≤ 2 + ‖r i j - (y i - y j)‖ ^ 2) :
+      ‖r i j‖ ^ 2 + ‖y j - c‖ ^ 2 + ‖y i - c‖ ^ 2 -
+        (2 / 3) * ‖r i j - (y i - y j)‖ ^ 2 ≤ C := by
+    let t := ‖r i j - (y i - y j)‖
+    have hh := hsum_of_defect t (norm_nonneg _) (h.defect i j) hs
+    have hside := pow_le_pow_left₀ (norm_nonneg _) (hdiam i j t le_rfl) 2
+    have he : q * (4 * B - (R + t) ^ 2) ≤ B ^ 2 := by
+      exact (mul_le_mul_of_nonneg_left (sub_le_sub_left hside _) hq).trans (hedge i j hij)
+    have ht := child_closure hq (norm_nonneg _) (h.defect i j) (Real.sqrt_nonneg _)
+      (Real.sq_sqrt (by positivity)) hh hS he
+    linarith only [ht, hc i, hc j, pow_le_pow_left₀ (norm_nonneg _) (h.edge i j) 2]
+  have symm (i j : Fin 3) :
+      ‖r j i - (y j - y i)‖ = ‖r i j - (y i - y j)‖ := by
+    rw [h.skew i j, show -r i j - (y j - y i) = -(r i j - (y i - y j)) by abel, norm_neg]
+  have sum₀ : ‖d₀‖ ^ 2 + ‖d₁‖ ^ 2 + ‖d₂‖ ^ 2 ≤ 2 + ‖r 0 1 - (y 0 - y 1)‖ ^ 2 := by
+    have he : ‖d₀‖ = ‖r 0 1 - (y 0 - y 1)‖ := norm_sub_rev _ _
+    rw [he]
+    linarith only [hds₁, hds₂]
+  have sum₁ : ‖d₀‖ ^ 2 + ‖d₁‖ ^ 2 + ‖d₂‖ ^ 2 ≤ 2 + ‖r 1 2 - (y 1 - y 2)‖ ^ 2 := by
+    have he : ‖d₁‖ = ‖r 1 2 - (y 1 - y 2)‖ := norm_sub_rev _ _
+    rw [he]
+    linarith only [hds₀, hds₂]
+  have sum₂ : ‖d₀‖ ^ 2 + ‖d₁‖ ^ 2 + ‖d₂‖ ^ 2 ≤ 2 + ‖r 2 0 - (y 2 - y 0)‖ ^ 2 := by
+    have he : ‖d₂‖ = ‖r 2 0 - (y 2 - y 0)‖ := norm_sub_rev _ _
+    rw [he]
+    linarith only [hds₀, hds₁]
+  refine ⟨c, ⟨hnorm, ?_, ?_⟩⟩
+  · intro i j
+    by_cases hij : i = j
+    · subst j
+      simp [h.skew.diagonal]
+      have hh := hc i
+      dsimp [R, C] at hrad ⊢
+      linarith only [hh, hrad]
+    apply bound _ _ hij
+    fin_cases i <;> fin_cases j <;> first
+      | exact (hij rfl).elim
+      | exact sum₀
+      | exact sum₁
+      | exact sum₂
+      | (rw [symm]; first | exact sum₀ | exact sum₁ | exact sum₂)
+  · intro i j l
+    have ht : ∀ x w, ‖r x w‖ ^ 2 ≤ R ^ 2 := fun x w =>
+      pow_le_pow_left₀ (norm_nonneg _) (h.edge x w) 2
+    have hR : 6 * R ^ 2 ≤ 11 := by norm_num [R]
+    linarith only [ht i j, ht i l, ht j l, hc i, hc j, hc l, hrad, hR,
+      sq_nonneg ‖holonomy r i j l‖, sq_nonneg ‖r i j - (y i - y j)‖,
+      sq_nonneg ‖r i l - (y i - y l)‖, sq_nonneg ‖r j l - (y j - y l)‖]
+
+end HilbertTriangleInsertion
