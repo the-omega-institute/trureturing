@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The Motzkin walk interpretation of reverse backgammon fibers. -/
+   digest: Weighted and signed Motzkin formulas for increasing-prefix backgammon outcomes. -/
 
 import D5.S3.Combinatorics.Parking.BackgammonIncreasingPrefix
 
@@ -463,12 +463,249 @@ theorem reverseOutcome_count_eq_motzkin (m : Nat) :
     reverseOutcome_weight_eq_motzkin m (fun _ => 1)
 
 /-- The increasing prefix outcome is counted by weighting ordinary Motzkin
-walks of length `n - k` by the number of ways to insert the `k) prefix cars. -/
+walks of length `n - k` by the number of ways to insert the `k` prefix cars. -/
 theorem increasingPrefix_count_eq_motzkin (n k : Nat) (bound : k ≤ n) :
     (outcomeWords (withIncreasingPrefix k (reverseOutcome (n - k)))).length =
       walkWeight (n - k) (iteratedLiftCount k) := by
   obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le bound
   rw [Nat.add_sub_cancel_left, ← reverseOutcome_weight_eq_motzkin, increasingPrefix_count,
     outcomeWeight]
+
+private theorem liftWeight_shift (weight : Nat → Nat) (r : Nat) :
+    liftWeight weight (r + 1) = weight 1 + liftWeight (fun s => weight (s + 1)) r := by
+  unfold liftWeight
+  conv => lhs; rw [List.range']
+  simp only [List.map_cons, List.sum_cons, Nat.reduceAdd]
+  rw [List.range'_succ_left, List.map_map]
+  rfl
+
+private theorem sumNat_map_mul_left {α : Type} (xs : List α) (a : Nat) (f : α → Nat) :
+    ((xs.map fun x => a * f x).sum) = a * (xs.map f).sum := by
+  induction xs <;> simp_all [Nat.mul_add]
+
+private theorem sumNat_map_add {α : Type} (xs : List α) (f g : α → Nat) :
+    ((xs.map fun x => f x + g x).sum) = (xs.map f).sum + (xs.map g).sum := by
+  induction xs <;> simp_all [Nat.add_left_comm, Nat.add_assoc]
+
+/-- The diagonal of the lift triangle. Its Catalan recurrence is proved below. -/
+def liftCatalan (k : Nat) : Nat := iteratedLiftCount k 0
+
+private theorem liftCatalan_succ (k : Nat) : liftCatalan (k + 1) = iteratedLiftCount k 1 := by
+  simp [liftCatalan, iteratedLiftCount_succ, List.range']
+
+private theorem sum_rank_weights {α β : Type} (entries : List α) (rank : α → Nat)
+    (terms : List β) (c : β → Nat) (f : β → Nat → Nat) :
+    (entries.map fun entry => (terms.map fun x => c x * f x (rank entry)).sum).sum =
+      (terms.map fun x => c x * (entries.map fun entry => f x (rank entry)).sum).sum := by
+  induction terms with
+  | nil => simp [List.map_const', List.sum_replicate_nat]
+  | cons x xs ih =>
+    simp only [List.map_cons, List.sum_cons]
+    rw [sumNat_map_add, sumNat_map_mul_left, ih]
+
+/-- One extra ground return convolves the lift counts with the Catalan diagonal. -/
+private theorem iteratedLiftCount_shift (k r : Nat) :
+    iteratedLiftCount k (r + 1) =
+      ((List.finRange (k + 1)).map fun i =>
+        liftCatalan i.val * iteratedLiftCount (k - i.val) r).sum := by
+  induction k generalizing r with
+  | zero => simp [List.finRange_succ, liftCatalan, iteratedLiftCount, iteratedLiftWeight]
+  | succ k ih =>
+    change liftWeight (iteratedLiftCount k) (r + 1) = _
+    rw [liftWeight_shift, List.finRange_succ_last, List.map_append, List.sum_append]
+    simp only [List.map_map, Function.comp_def, Fin.val_castSucc, List.map_singleton,
+      List.sum_cons, List.sum_nil, Nat.add_zero, Fin.val_last, Nat.sub_self]
+    rw [liftCatalan_succ]
+    have same (i : Fin (k + 1)) : k + 1 - i.val = k - i.val + 1 := by omega
+    simp only [same]
+    change iteratedLiftCount k 1 + liftWeight (fun s => iteratedLiftCount k (s + 1)) r =
+      _ + iteratedLiftCount k 1 * 1
+    simp only [Nat.mul_one]
+    have expanded := sum_rank_weights (List.range' 1 (r + 1)) id (List.finRange (k + 1))
+      (fun i => liftCatalan i.val) (fun i => iteratedLiftCount (k - i.val))
+    change liftWeight (fun s => ((List.finRange (k + 1)).map fun i =>
+      liftCatalan i.val * iteratedLiftCount (k - i.val) s).sum) r = _ at expanded
+    rw [← funext (ih ·)] at expanded
+    rw [expanded, Nat.add_comm (iteratedLiftCount k 1)]
+    rfl
+
+/-- The initial value and convolution characterize the ordinary Catalan numbers. -/
+theorem liftCatalan_spec :
+    liftCatalan 0 = 1 ∧ ∀ k,
+      liftCatalan (k + 1) =
+        ((List.finRange (k + 1)).map fun i => liftCatalan i.val * liftCatalan (k - i.val)).sum :=
+  ⟨rfl, fun k => (liftCatalan_succ k).trans (iteratedLiftCount_shift k 0)⟩
+
+private theorem weighted_walk_recurrence (k m : Nat) :
+    walkWeight m (iteratedLiftCount (k + 1)) +
+      ((List.finRange (k + 1)).map fun i =>
+        liftCatalan i.val * walkWeight (m + 1) (iteratedLiftCount (k - i.val))).sum =
+      walkWeight (m + 2) (iteratedLiftCount k) := by
+  rw [walkWeight_succ_succ, Nat.add_comm]
+  change _ + walkWeight m (iteratedLiftCount (k + 1)) =
+    _ + walkWeight m (iteratedLiftCount (k + 1))
+  congr 1
+  unfold walkWeight
+  simp only [iteratedLiftCount_shift]
+  exact (sum_rank_weights (motzkinWalks (m + 1))
+    (fun word => ((trace word 0).getD (0, 0)).2) (List.finRange (k + 1))
+    (fun i => liftCatalan i.val) (fun i => iteratedLiftCount (k - i.val))).symm
+
+private def subtractCoefficients : List Int → List Int → List Int
+  | [], right => right.map Neg.neg
+  | left, [] => left
+  | a :: as, b :: bs => (a - b) :: subtractCoefficients as bs
+
+/-- Coefficients in increasing offset from the suffix length `n - k`.
+If `P_k(T)` is the Laurent polynomial in shifts from `n`, this list
+represents `T^k P_k(T)`. -/
+def signedCoefficients : Nat → List Int
+  | 0 => [1]
+  | k + 1 => 0 :: (List.finRange (k + 1)).foldr
+      (fun i acc => subtractCoefficients acc
+        ((signedCoefficients (k - i.val)).map ((liftCatalan i.val : Int) * ·)))
+      (0 :: signedCoefficients k)
+termination_by k => k
+decreasing_by all_goals omega
+
+private theorem subtractCoefficients_length (as bs : List Int) (bound : bs.length ≤ as.length) :
+    (subtractCoefficients as bs).length = as.length := by
+  induction as generalizing bs with
+  | nil => cases bs <;> simp_all [subtractCoefficients]
+  | cons a as ih =>
+    cases bs with
+    | nil => simp [subtractCoefficients]
+    | cons b bs =>
+      simp only [subtractCoefficients, List.length_cons]
+      rw [ih bs (by simpa using bound)]
+
+private theorem subtractCoefficients_append (as bs : List Int) (a : Int)
+    (bound : bs.length ≤ as.length) :
+    subtractCoefficients (as ++ [a]) bs = subtractCoefficients as bs ++ [a] := by
+  induction as generalizing bs with
+  | nil => cases bs <;> simp_all [subtractCoefficients]
+  | cons b as ih =>
+    cases bs with
+    | nil => simp [subtractCoefficients]
+    | cons c bs =>
+      simp only [List.cons_append, subtractCoefficients, List.cons.injEq, true_and]
+      exact ih bs (by simpa using bound)
+
+private theorem fold_subtract_coefficients {α : Type} (xs : List α) (coeffs : α → List Int)
+    (base : List Int) (a : Int) (bound : ∀ x ∈ xs, (coeffs x).length ≤ base.length) :
+    ∃ front : List Int, front.length = base.length ∧
+      xs.foldr (fun x acc => subtractCoefficients acc (coeffs x)) (base ++ [a]) =
+        front ++ [a] := by
+  induction xs with
+  | nil => exact ⟨base, rfl, rfl⟩
+  | cons x xs ih =>
+    obtain ⟨front, size, eq⟩ := ih (fun y hy => bound y (List.mem_cons_of_mem x hy))
+    have fits : (coeffs x).length ≤ front.length := size ▸ bound x (by simp)
+    exact ⟨subtractCoefficients front (coeffs x), (subtractCoefficients_length _ _ fits).trans size,
+      by rw [List.foldr_cons, eq, subtractCoefficients_append _ _ _ fits]⟩
+
+/-- The coefficient of the highest shift is one. In positive rank the
+zero offset vanishes, so there are at most `2 * k` nonzero shifts. -/
+theorem signedCoefficients_shape (k : Nat) :
+    (signedCoefficients k).length = 2 * k + 1 ∧
+      (signedCoefficients k).getLast? = some 1 ∧
+      (0 < k → (signedCoefficients k).head? = some 0) := by
+  induction k using Nat.strongRecOn with
+  | ind k ih =>
+    cases k with
+    | zero => simp [signedCoefficients]
+    | succ k =>
+      obtain ⟨size, last, _⟩ := ih k (Nat.lt_succ_self k)
+      obtain ⟨lower, split⟩ := List.getLast?_eq_some_iff.mp last
+      let start := 0 :: lower
+      have startSize : start.length = 2 * k + 1 := by
+        rw [split] at size
+        simp only [List.length_append, List.length_cons, List.length_nil] at size
+        simp [start, Nat.add_right_cancel size]
+      obtain ⟨front, prefixSize, eq⟩ := fold_subtract_coefficients (List.finRange (k + 1))
+        (fun i => (signedCoefficients (k - i.val)).map ((liftCatalan i.val : Int) * ·))
+        start 1 (by
+          intro i _
+          rw [List.length_map, (ih (k - i.val) (by omega)).1, startSize]
+          omega)
+      have startSplit : 0 :: signedCoefficients k = start ++ [1] :=
+        congrArg (0 :: ·) split
+      rw [signedCoefficients, startSplit, eq]
+      simp [List.getLast?_cons, List.getLast?_append, prefixSize, startSize]
+      omega
+
+private def shiftSum (coefficients : List Int) (m : Nat) : Int :=
+  ((coefficients.zipIdx m).map (fun (a, j) => a * ((motzkinWalks j).length : Int))).sum
+
+@[simp] private theorem shiftSum_nil (m : Nat) : shiftSum [] m = 0 := rfl
+
+@[simp] private theorem shiftSum_cons (a : Int) (as : List Int) (m : Nat) :
+    shiftSum (a :: as) m = a * ((motzkinWalks m).length : Int) + shiftSum as (m + 1) := by
+  simp [shiftSum]
+
+private theorem shiftSum_scale (a : Int) (as : List Int) (m : Nat) :
+    shiftSum (as.map (a * ·)) m = a * shiftSum as m := by
+  induction as generalizing m <;> simp_all [Int.mul_add, Int.mul_assoc]
+
+private theorem shiftSum_sub (as bs : List Int) (m : Nat) :
+    shiftSum (subtractCoefficients as bs) m = shiftSum as m - shiftSum bs m := by
+  induction as generalizing bs m with
+  | nil =>
+    simp only [subtractCoefficients, shiftSum_nil]
+    have negated : bs.map Neg.neg = bs.map ((-1 : Int) * ·) := by
+      exact congrArg (fun f => bs.map f) (funext Int.neg_eq_neg_one_mul)
+    rw [negated, shiftSum_scale]
+    omega
+  | cons a as ih =>
+    cases bs with
+    | nil => simp [subtractCoefficients]
+    | cons b bs =>
+      simp only [subtractCoefficients, shiftSum_cons, ih, Int.sub_mul]
+      omega
+
+private theorem shiftSum_fold_sub {α : Type} (xs : List α) (coeffs : α → List Int)
+    (base : List Int) (m : Nat) :
+    shiftSum (xs.foldr (fun x acc => subtractCoefficients acc (coeffs x)) base) m =
+      shiftSum base m - (xs.map fun x => shiftSum (coeffs x) m).sum := by
+  induction xs with
+  | nil => simp
+  | cons x xs ih =>
+    simp only [List.foldr_cons, shiftSum_sub, ih, List.map_cons, List.sum_cons]
+    omega
+
+private theorem cast_sum {α : Type} (xs : List α) (f : α → Nat) :
+    ((xs.map f).sum : Int) = (xs.map fun x => (f x : Int)).sum := by
+  induction xs <;> simp_all [Int.natCast_add]
+
+private theorem shiftSum_eq_walkWeight (k m : Nat) :
+    shiftSum (signedCoefficients k) m = walkWeight m (iteratedLiftCount k) := by
+  induction k using Nat.strongRecOn generalizing m with
+  | ind k ih =>
+    cases k with
+    | zero =>
+      simp [signedCoefficients]
+      simp [walkWeight, iteratedLiftCount, iteratedLiftWeight, List.map_const',
+        List.sum_replicate_nat]
+    | succ k =>
+      rw [signedCoefficients, shiftSum_cons, Int.zero_mul, Int.zero_add, shiftSum_fold_sub]
+      simp only [shiftSum_cons, Int.zero_mul, Int.zero_add, shiftSum_scale]
+      have term (i : Fin (k + 1)) :
+          shiftSum (signedCoefficients (k - i.val)) (m + 1) =
+            walkWeight (m + 1) (iteratedLiftCount (k - i.val)) :=
+        ih (k - i.val) (by omega) (m + 1)
+      simp only [ih k (Nat.lt_succ_self k), term]
+      have recurrence := congrArg Int.ofNat (weighted_walk_recurrence k m)
+      simp only [Int.ofNat_eq_natCast, Int.natCast_add, cast_sum, Int.natCast_mul] at recurrence
+      rw [show m + 1 + 1 = m + 2 by rfl]
+      omega
+
+/-- The parking count is a signed sum of shifted ordinary Motzkin numbers.
+Coefficient list indices start at offset zero from the suffix length. -/
+theorem increasingPrefix_count_eq_signed_motzkin (n k : Nat) (bound : k ≤ n) :
+    ((outcomeWords (withIncreasingPrefix k (reverseOutcome (n - k)))).length : Int) =
+      (((signedCoefficients k).zipIdx (n - k)).map
+        (fun (a, j) => a * ((motzkinWalks j).length : Int))).sum := by
+  rw [increasingPrefix_count_eq_motzkin n k bound]
+  exact (shiftSum_eq_walkWeight k (n - k)).symm
 
 end BackgammonMotzkinPaths

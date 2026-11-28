@@ -28,7 +28,10 @@ reverse-outcome words.
 [Path definition and proof](https://arxiv.org/pdf/2611.29890v1#page=15)
 
 Question 5.2 uses an increasing prefix followed by the remaining labels in
-decreasing order. In particular, the third suffix in Theorem 1.6 is
-`(n,n−2,n−1)`. Corollary 1.10 uses a decreasing suffix.
+decreasing order. Theorem 1.8 and Corollaries 1.9–1.10 give the Motzkin
+formulas for prefix lengths zero, one and two, respectively. Theorem 1.6
+gives Catalan counts for the increasing-prefix outcomes with suffix lengths
+zero, one or two. Its three-label suffix is `(n,n−2,n−1)`, while Corollary
+1.10 uses a decreasing suffix.
 [Theorem and corollary](https://arxiv.org/pdf/2611.29890v1#page=5) ·
 [Question 5.2](https://arxiv.org/pdf/2611.29890v1#page=27)
