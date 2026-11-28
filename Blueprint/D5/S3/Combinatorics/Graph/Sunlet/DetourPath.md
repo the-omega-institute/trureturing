@@ -82,6 +82,10 @@ $$\forall (n:\mathbb{N}), (4 \leq n) \implies \operatorname{sInf}\left(\operator
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Sunlet/DetourPath.sunlet_detour_numbers` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alsinai-ahmed-sunlet-detour` (proved) by `D5/S3/Combinatorics/Graph/Sunlet/DetourPath.sunlet_detour_numbers`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alsinai-ahmed-sunlet-detour","declaration_gid":"D5/S3/Combinatorics/Graph/Sunlet/DetourPath.sunlet_detour_numbers","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ammar Alsinai and Hanan Ahmed (2026). *Detour different-distance sets in graphs*. DOI: [10.48550/arXiv.2611.26653](https://doi.org/10.48550/arXiv.2611.26653). URL: <https://arxiv.org/abs/2611.26653v1>.

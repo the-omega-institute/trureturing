@@ -72,13 +72,14 @@ internal sealed class DetourPathDocument : IScribeDocumentDefinition
                 + "a closer full index. Adjacent full pairs force every index, violating properness. This bounds "
                 + "every DDD set by two. Each singleton extends to its core–leaf pair, so the orders "
                 + "of the inclusion-maximal sets form the singleton set containing two.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alsinai-ahmed-sunlet-detour"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string decl, Formula formula,
-        string prose, DescribeRole role) =>
+        string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Owner + decl), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(DefinitionDsl.Text(prose))), role);
+            Blocks(Paragraph(DefinitionDsl.Text(prose))), role, resolution);
 
     private static Formula Graph()
     {
