@@ -5,7 +5,11 @@
    anchors: []
    digest: Per-axis admissible-word partial sums satisfy the closed golden trace-map recursion. -/
 
-import Mathlib
+import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Data.Finset.Powerset
+import Mathlib.NumberTheory.Real.GoldenRatio
+import Mathlib.Tactic.Ring
 
 /- Provenance: top-bit decomposition of admissible words (using the top bit
    forces its neighbour empty) over pinned mathlib finite-set algebra

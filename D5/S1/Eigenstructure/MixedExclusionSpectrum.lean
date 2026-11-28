@@ -5,6 +5,8 @@
    anchors: []
    digest: Colored nearest-neighbor exclusion has a quadratic law and a fermionic trace term. -/
 
+import Mathlib.LinearAlgebra.Eigenspace.Matrix
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import D5.S1.Recurrence.TraceMap
 
 /- Provenance: the weighted no-adjacent-position recurrence is
