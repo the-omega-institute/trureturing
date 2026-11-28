@@ -8,6 +8,10 @@ prelude
 public import OmegaInit.Data.Slice.Basic
 
 port_native_records Std.Slice.SliceSize
+port_definition Std.Slice.SliceSize.noConfusionType
+port_definition Std.Slice.SliceSize.noConfusion
+port_definition Std.Slice.SliceSize.mk.noConfusion
+port_definition Std.Slice.SliceSize.ctorIdx with_native_code
 port_definition Std.Slice.size with_native_code
 
 /- Open: the unique field of Std.Slice.LawfulSliceSize compares size with
