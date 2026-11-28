@@ -7,7 +7,7 @@
    digest: Runge–Lenz symmetry, circular Dirac radial states and Sommerfeld energy coefficients. -/
 
 import OmegaBuild.Commands
-import D5.S3.Geometry.OrthogonalFourSplit
+import D5.S3.Geometry.Orthogonality.OrthogonalFourSplit
 import Mathlib.Algebra.Lie.OfAssociative
 import Mathlib.LinearAlgebra.CrossProduct
 import Mathlib.Analysis.Calculus.Deriv.Slope

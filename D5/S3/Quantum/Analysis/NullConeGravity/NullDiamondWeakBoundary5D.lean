@@ -438,7 +438,7 @@ private theorem regulatedShellQuad_difference_limit_5D {M : ℝ} (hM : 0 < M) (F
 
 open private strip_cos_pos modularDenom_bound radialDecay_integrable from
   D5.S3.Quantum.Analysis.NullConeGravity.NullDiamondKernel5D
-open private kernelG5D_norm_le fourierIntegrand fourierIntegrand_line_integrable contourLine from OmegaMath.Analysis.HalfIntegerBesselFourier
+open private kernelG5D_norm_le fourierIntegrand fourierIntegrand_line_integrable contourLine from D5.S3.Analysis.HalfIntegerBesselFourier
 
 private abbrev realKernel5D (M r s x : ℝ) : ℂ := kernelG5D M (r : ℂ) (s : ℂ) x
 

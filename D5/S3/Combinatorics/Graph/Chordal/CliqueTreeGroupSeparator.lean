@@ -8,7 +8,7 @@
 
 import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.CliqueTreeBanachPotential
-import D5.S3.Combinatorics.Graph.RootedAncestorReconstruction
+import D5.S3.Combinatorics.Graph.Chordal.RootedAncestorReconstruction
 import Mathlib.Topology.MetricSpace.IsometricSMul
 import Mathlib.Order.Prod.Lex.Basic
 import Mathlib.Tactic.Group

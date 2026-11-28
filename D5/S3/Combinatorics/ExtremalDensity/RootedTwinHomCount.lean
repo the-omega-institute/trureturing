@@ -6,7 +6,7 @@
    utility: none
    digest: The fixed-centre homomorphism count of two rooted copies is at most a quarter square. -/
 
-import D5.S3.Combinatorics.RootedTwinHomCount
+import D5.S3.Combinatorics.Graph.Homomorphisms.RootedTwinHomCount
 
 /-! The isomorphic-pair bound of Proposition 5.2, for every asymmetric host relation. -/
 

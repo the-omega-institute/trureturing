@@ -6,8 +6,8 @@
    utility: none
    digest: Euclidean-three transfer and width-four round SU2 family lower bound. -/
 
-import D5.S3.Combinatorics.Graph.SU2TangentTransfer
-import D5.S3.Geometry.SU2EuclideanCoordinates
+import D5.S3.Combinatorics.Graph.Chordal.QuaternionFitting.SU2TangentTransfer
+import D5.S3.Geometry.UnitQuaternions.SU2EuclideanCoordinates
 import D5.S3.Combinatorics.Graph.Chordal.Reconstruction.ChordalBanachExactStrata
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 

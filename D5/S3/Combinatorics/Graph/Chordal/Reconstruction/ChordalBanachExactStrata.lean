@@ -9,8 +9,8 @@
 import D5.S3.Combinatorics.Graph.Chordal.GainPotential
 import D5.S3.Combinatorics.Graph.Chordal.EliminationForest
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import D5.S3.Combinatorics.Graph.ChordalGainReduction
-import D5.S3.Combinatorics.Graph.RootedAncestorReconstruction
+import D5.S3.Combinatorics.Graph.Chordal.ChordalGainReduction
+import D5.S3.Combinatorics.Graph.Chordal.RootedAncestorReconstruction
 import D5.S3.Combinatorics.Graph.Chordal.CliqueTreeBanachPotential
 import D5.S3.Combinatorics.Graph.Chordal.ChordalWalkHolonomy
 import D5.S3.Combinatorics.Graph.Chordal.FiniteHilbertJung
@@ -19,17 +19,17 @@ import D5.S3.Combinatorics.Graph.Chordal.ScalarCycleReconstruction
 import D5.S3.Combinatorics.Graph.Chordal.SimplicialAndIntervalPotential
 import D5.S3.Combinatorics.Graph.Chordal.PathPowerReconstruction
 import D5.S3.Combinatorics.Graph.Chordal.ChordalPath49Metric
-import D5.S3.Combinatorics.Graph.L1Jung
+import D5.S3.Combinatorics.Graph.Chordal.L1Geometry.L1Jung
 import D5.S3.Combinatorics.Graph.Chordal.ChordalFanLower
 import D5.S3.Combinatorics.Graph.Chordal.ChordalGroupCoefficient
 import D5.S3.Combinatorics.Graph.Chordal.UniformGainPotential
 import D5.S3.Combinatorics.Graph.Chordal.CompleteAndCliqueSumBanach
 import D5.S3.Combinatorics.Graph.Chordal.ChordalBanachLimitTwo
-import D5.S3.Combinatorics.Graph.PairRetention
+import D5.S3.Combinatorics.Graph.Chordal.PairRetention
 import D5.S3.Combinatorics.Graph.Chordal.PathPowerRadius
-import D5.S3.Combinatorics.Graph.HilbertSimplexRadius
-import D5.S3.Combinatorics.Graph.L1BalancedRadius
-import D5.S3.Combinatorics.Graph.L1Counting
+import D5.S3.Combinatorics.Graph.Chordal.HilbertGeometry.HilbertSimplexRadius
+import D5.S3.Combinatorics.Graph.Chordal.L1Geometry.L1BalancedRadius
+import D5.S3.Combinatorics.Graph.Chordal.L1Geometry.L1Counting
 import D5.S3.Combinatorics.Graph.Chordal.ChordalAbelianReduction
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
 import D5.S3.Combinatorics.Graph.Chordal.ChordalEightVertexMetric
@@ -37,14 +37,14 @@ import D5.S3.Combinatorics.Graph.Chordal.CliqueTreeRadiusForm
 import D5.S3.Combinatorics.Graph.Chordal.CliqueTreeGroupSeparator
 import D5.S3.Combinatorics.Graph.Chordal.CliqueTreeL1Separator
 import D5.S3.Combinatorics.Graph.Chordal.CliqueTreeBanachOverlap
-import D5.S3.Combinatorics.Graph.RollingSpanOne
-import D5.S3.Combinatorics.Graph.RollingSpanOneLower
-import D5.S3.Combinatorics.Graph.L1TetrahedronRadius
+import D5.S3.Combinatorics.Graph.Chordal.RollingSpanOne
+import D5.S3.Combinatorics.Graph.Chordal.RollingSpanOneLower
+import D5.S3.Combinatorics.Graph.Chordal.L1Geometry.L1TetrahedronRadius
 import D5.S3.Combinatorics.Graph.Chordal.ChordalPathNine
-import D5.S3.Combinatorics.Graph.StackedThreeTreeGraph
+import D5.S3.Combinatorics.Graph.Chordal.ThreeTrees.StackedThreeTreeGraph
 import D5.S3.Combinatorics.Graph.Chordal.GroupCliqueMetricStrata
 import D5.S3.Combinatorics.Graph.Chordal.PureThreeTreeReverse
-import D5.S3.Combinatorics.Graph.BinaryStaircaseGraph
+import D5.S3.Combinatorics.Graph.Chordal.Staircase.BinaryStaircaseGraph
 import D5.S3.Combinatorics.Graph.Chordal.Dirac
 
 /-! # Chordal reconstruction strata

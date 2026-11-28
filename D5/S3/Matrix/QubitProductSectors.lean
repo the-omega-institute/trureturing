@@ -15,7 +15,7 @@ import Mathlib.Algebra.Order.Star.Prod
 import Mathlib.Algebra.Algebra.Prod
 import Mathlib.Algebra.Group.Action.Prod
 import D5.S3.Matrix.QubitProductOperators
-import D5.S3.Topology.TailProducts
+import D5.S3.Topology.InfiniteProducts.TailProducts
 import D5.S3.OperatorAlgebra.VectorStateDistance
 
 /-! Omega original.

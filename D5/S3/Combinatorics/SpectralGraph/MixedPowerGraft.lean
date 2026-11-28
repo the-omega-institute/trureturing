@@ -7,9 +7,9 @@
    digest: Moving a pendant tip toward the longer arm decreases the mixed largest eigenvalue of the power. -/
 
 import D5.S3.Combinatorics.Graph.ZeroForcing.GridPowerZeroForcingRefutation
-import D5.S3.Combinatorics.Graph.PairedEdgeEnergy
-import D5.S3.Combinatorics.Graph.GraphDistance
-import D5.S3.Combinatorics.Graph.TreeGraft
+import D5.S3.Combinatorics.Graph.SpectralBounds.PairedEdgeEnergy
+import D5.S3.Combinatorics.Graph.Distances.GraphDistance
+import D5.S3.Combinatorics.Graph.Distances.TreeGraft
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

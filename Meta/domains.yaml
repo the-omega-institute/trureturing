@@ -2,9 +2,15 @@ domains:
   AdjacencyProduct:
     stratum: S3
     definition: Products of adjacency matrices of simple graphs, including factorability and structural constraints on the factors.
+  Algebra:
+    stratum: S3
+    definition: Exterior powers, projective and resonant polynomial algebras, algebraic spin factors, and ordered-cone refinement.
   Aliabadi:
     stratum: S3
     definition: Cyclic subgroup constructions and right-quotient realizations in finite groups.
+  Analysis:
+    stratum: S3
+    definition: Analytic estimates for integral kernels, special functions, Fourier and radial profiles, singular integrals, and Hilbert-space approximations.
   Analytic:
     stratum: S3
     definition: Mellin-transform analysis reconstructing completed zeta from theta-kernel tails.
@@ -32,6 +38,9 @@ domains:
   Carrier:
     stratum: S0
     definition: The golden integer carrier, conjugation, norm, and units.
+  Calculus:
+    stratum: S3
+    definition: Local differential and asymptotic identities for real and special-function germs, including Clausen functions.
   CayleyGrowth:
     stratum: S0
     definition: Word metrics and diameters of Cayley graphs of finite permutation groups, and whether the resulting integer sequences are eventually quasipolynomial in the rank.
@@ -137,12 +146,27 @@ domains:
   HomologicalAlgebra:
     stratum: S3
     definition: Exact sequences, derived functors, extension classes, and concrete homological obstructions.
+  InformationTheory:
+    stratum: S3
+    definition: Finite information channels and their composition and calibration, including Potts fusion and bilinear remainders.
+  LatticeGauge:
+    stratum: S3
+    definition: Lattice gauge observables and rectangular loops, including reflection positivity, transfer operators, and strong-coupling area laws.
   Ledger:
     stratum: S1
     definition: Prime-exponent generation ledgers, their length readings, and the monotonicity of legal generation.
   LieTheory:
     stratum: S3
     definition: Finite-type root data and Cartan matrices, their Weyl-group and Gram-form normalizations, and the q-series attached to them such as specializations of Toda and Whittaker eigenfunctions.
+  LinearAlgebra:
+    stratum: S3
+    definition: Linear maps and matrix algebra, including rank, projections, realification, tensor identities, exceptional root systems, and rational matrix graphs.
+  Matrix:
+    stratum: S3
+    definition: Structured matrix words, block entropy, and operator and distance models for product qubit states.
+  MeasureTheory:
+    stratum: S3
+    definition: Measures and integration for affine actions, interval volumes, moment constraints, and measurable matrix fields.
   Midline:
     stratum: S3
     definition: Dual and multiple characterizations of the critical midline sigma equals one half.
@@ -158,6 +182,9 @@ domains:
   ObserverMemory:
     stratum: S3
     definition: Finite epistemic-state and forgetting-ledger certificate structures of the observer program.
+  OperatorAlgebra:
+    stratum: S3
+    definition: Bounded operators on Hilbert spaces, commutant density, normal and tracial functionals, and vector state representations.
   PermutationPatterns:
     stratum: S3
     definition: Classical, vincular and mesh patterns in permutations, their occurrence statistics on all permutations and on subclasses such as involutions, and the Wilf- and distribution-equivalence of patterns.

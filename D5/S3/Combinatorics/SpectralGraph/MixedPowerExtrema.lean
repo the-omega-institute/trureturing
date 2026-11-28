@@ -6,7 +6,7 @@
    utility: none
    digest: A path power minimizes the mixed largest eigenvalue and complete powers maximize it. -/
 
-import D5.S3.Combinatorics.Graph.GraphDistance
+import D5.S3.Combinatorics.Graph.Distances.GraphDistance
 import D5.S3.Combinatorics.SpectralGraph.MixedPowerGraft
 import D5.S3.Combinatorics.Graph.LinearForests.TreePathCuts
 

@@ -8,7 +8,7 @@
 
 import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.HilbertTetrahedronGeometryContacts
-import D5.S3.Combinatorics.Graph.HilbertTetrahedronGeometryRows
+import D5.S3.Combinatorics.Graph.Chordal.HilbertGeometry.HilbertTetrahedronGeometryRows
 
 compile_only_with_mathlib
 

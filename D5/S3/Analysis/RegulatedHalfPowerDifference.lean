@@ -30,7 +30,7 @@ open scoped Topology
 
 namespace Omega
 
-open private regulatedSeparation_norm_bound from OmegaMath.Analysis.RegulatedSeparation
+open private regulatedSeparation_norm_bound from D5.S3.Analysis.RegulatedSeparation
 
 /-- The massive-minus-massless elementary correction at a complex separation. -/
 def halfPowerDifference (M : ℝ) (q : ℂ) : ℂ :=

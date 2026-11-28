@@ -10,7 +10,7 @@ import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.UniformGainPotential
 import D5.S3.Combinatorics.Graph.Chordal.ChordalWalkHolonomy
 import Mathlib.Algebra.Order.Floor.Ring
-import D5.S3.Combinatorics.Graph.GroupWordMetric
+import D5.S3.Combinatorics.Graph.CayleyGraphs.GroupWordMetric
 import Mathlib.GroupTheory.FreeGroup.Basic
 
 compile_only_with_mathlib

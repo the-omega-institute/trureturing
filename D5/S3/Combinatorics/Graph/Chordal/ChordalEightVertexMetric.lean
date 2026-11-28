@@ -8,7 +8,7 @@
 
 import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.ChordalEightVertex
-import D5.S3.Combinatorics.Graph.GroupWordMetric
+import D5.S3.Combinatorics.Graph.CayleyGraphs.GroupWordMetric
 
 compile_only_with_mathlib
 

@@ -8,8 +8,8 @@
 
 import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.HilbertTetrahedronGeometry
-import D5.S3.Combinatorics.Graph.HilbertTriangleInsertionAlgebra
-import D5.S3.Combinatorics.Graph.HilbertChildFace
+import D5.S3.Combinatorics.Graph.Chordal.HilbertGeometry.HilbertTriangleInsertionAlgebra
+import D5.S3.Combinatorics.Graph.Chordal.HilbertGeometry.HilbertChildFace
 
 compile_only_with_mathlib
 

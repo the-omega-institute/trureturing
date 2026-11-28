@@ -8,7 +8,7 @@
 
 import Mathlib.Data.Set.Card
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9DegreeThreeContactOrbit
-import D5.S3.Combinatorics.ContactSwapRectangle
+import D5.S3.Combinatorics.Geometry.CartesianProducts.ContactSwapRectangle
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9SquareMaskGraph
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.SixAxisGridSignedCompression
 

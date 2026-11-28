@@ -7,7 +7,7 @@
    digest: Anti-de Sitter geometry, real indicial roots and scalar kernels. -/
 
 import OmegaBuild.Commands
-import D5.S3.Geometry.OrthogonalMatrixGenerators
+import D5.S3.Geometry.Orthogonality.OrthogonalMatrixGenerators
 import D5.S3.Analysis.ConformalHalfSpaceKernel
 import Mathlib.Analysis.Calculus.Deriv.Prod
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic

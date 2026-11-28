@@ -6,7 +6,7 @@
    utility: none
    digest: Forced squares constrain the number and shape of distance-two contact masks. -/
 
-import D5.S3.Combinatorics.CubicSquareCompletion
+import D5.S3.Combinatorics.Graph.CubicGraphs.CubicSquareCompletion
 import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9EightMaskGraph
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9DegreeThreeContactOrbit

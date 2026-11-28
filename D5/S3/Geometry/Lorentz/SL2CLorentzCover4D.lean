@@ -7,7 +7,7 @@
    digest: Pauli spinor conjugation, the proper Lorentz double cover and the celestial Möbius action. -/
 
 import OmegaBuild.Commands
-import D5.S3.Geometry.SU2EulerCover
+import D5.S3.Geometry.UnitQuaternions.SU2EulerCover
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.Complex.Order
 import Mathlib.LinearAlgebra.Matrix.PosDef

@@ -8,7 +8,7 @@
 
 import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.EuclideanChordalScalar
-import D5.S3.Combinatorics.Graph.EuclideanChordalGaussian
+import D5.S3.Combinatorics.Graph.Chordal.EuclideanChordalGaussian
 import Mathlib.MeasureTheory.Integral.Pi
 
 compile_only_with_mathlib

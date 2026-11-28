@@ -8,7 +8,7 @@
 
 import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.ChordalAbelianReduction
-import D5.S3.Combinatorics.Graph.GroupWordMetric
+import D5.S3.Combinatorics.Graph.CayleyGraphs.GroupWordMetric
 import D5.S3.Combinatorics.Graph.Chordal.ChordalBanachLimitTwo
 import D5.S3.Combinatorics.Graph.Chordal.SimplicialAndIntervalPotential
 import Mathlib.Algebra.BigOperators.Fin

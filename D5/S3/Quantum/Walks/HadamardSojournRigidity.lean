@@ -15,7 +15,7 @@ import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 import Mathlib.RingTheory.PowerSeries.Catalan
-import D5.S3.Combinatorics.HadamardSojournSeries
+import D5.S3.Combinatorics.Probability.QuantumWalks.HadamardSojournSeries
 import OmegaBuild.Commands
 
 /-! Positive sojourn time in the fixed direction basis of a two-state quantum walk. -/

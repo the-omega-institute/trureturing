@@ -113,7 +113,7 @@ four_mobile | content | F1,F2,F3 | none | result
 result | content | F1,F2,F3 | none | settling result
 -/
 
-import D5.S3.Combinatorics.Graph.GraphDistance
+import D5.S3.Combinatorics.Graph.Distances.GraphDistance
 import Mathlib.Data.Finset.Sort
 import D5.S3.Combinatorics.Graph.Walks.MatchingCliqueCycle
 import Mathlib.Data.Fin.VecNotation

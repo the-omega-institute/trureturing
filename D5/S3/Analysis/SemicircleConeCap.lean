@@ -29,12 +29,12 @@ open scoped Topology ENNReal NNReal
 
 namespace Omega.ConeCap
 
-open private densityError from OmegaMath.Analysis.HalfPowerCapIntegral
+open private densityError from D5.S3.Analysis.HalfPowerCapIntegral
 
 open private pair_radii_ae angularRemainder angularRemainder_measurable diagonalWeight
   diagonalWeight_measurable diagonalWeight_bound diagonalWeight_cancels
   diagonalCap_boundary affineLogIntegral_diagonal first_measurable second_measurable coincident
-  from OmegaMath.Analysis.ConeCapLimits
+  from D5.S3.Analysis.ConeCapLimits
 
 variable {A : Type*} [MeasurableSpace A]
 

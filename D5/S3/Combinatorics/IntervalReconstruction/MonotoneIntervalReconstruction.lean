@@ -6,7 +6,7 @@
    utility: none
    digest: Full unlabelled interval sums reconstruct nonnegative nondecreasing real lists. -/
 
-import D5.S3.Combinatorics.MonotoneIntervalReconstruction
+import D5.S3.Combinatorics.IntervalReconstruction.Occurrences.MonotoneIntervalReconstruction
 
 /-! Book citation of the real, weakly monotone interval reconstruction theorem. -/
 
