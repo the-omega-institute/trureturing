@@ -8,6 +8,7 @@
 
 -- Source: https://github.com/lsernau/grh-lean/blob/72fead102f663d5c7a407964a13dc0cf9d977207/grh-compact/src/New/TwistedHecke/ElementaryDivisors.lean
 -- Apache 2.0 license, notice and attribution: docs/reports/third-party/grh-lean/
+import D5.S3.Zeros.GRH.New.Core.CappedMinorWitness
 import D5.S3.Zeros.GRH.New.Core.ModuleIndex
 import D5.S3.Zeros.GRH.New.TwistedHecke.Counting
 -- Adapted imports and elaboration settings for D5.
@@ -81,6 +82,68 @@ lemma of_pairing a z {w G B} (hR : R * Q = 1) (hw : ¬IsUnit w) (h : ∀ i j, a 
   simp_all [↓det_one_add_smul w, map_mul, ← residue_ne_zero_iff_isUnit, -residue_eq_zero_iff]
   simp [Submodule.add_mem_sup, -mulVec_mulVec]
   simpa using (⟨A *ᵥ ·, by simp [-sub_mulVec, A, funext_iff, -Matrix.mul_assoc]; grind⟩)
+
+/-- The pairing congruence bounds the determinant of a nonzero full minor of `[βQ | zI]`
+by divisibility, with the exponent of `z` controlled by the residue dimension. -/
+lemma of_pairing_capped_minor a z {w G B} (hR : R * Q = 1) (hw : ¬IsUnit w) (h : ∀ i j, a * w ∣
+    (β * M - a • 1 :) i j) (hn : ∀ u v F, Q *ᵥ u - M *ᵥ v = (a * w) • F → ∀ x, F ∘ (x, ·) ∈
+    T.translatesIn n G (maximalIdeal O) B) (haw : a * w ≠ 0) (hz : z ≠ 0) :
+    ∃ l, card E + l ≤ finrank (ResidueField O) (X → (map (residue O) T).translatesIn n G ⊥ B) ∧
+      ∃ s : E ↪ E ⊕ E,
+        ((Matrix.fromCols (β * Q) (z • (1 : Matrix E E O))).submatrix id s).det ≠ 0 ∧
+        ((Matrix.fromCols (β * Q) (z • (1 : Matrix E E O))).submatrix id s).det ∣
+          a ^ card E * z ^ l := by
+  obtain ⟨⟨U, V⟩, _, K, _, t, e⟩ := isValuationPair_top.smith_normal_form ((Q * R * M - M) * R)
+  rw [← K.mul_inv_eq_iff_eq_mul] at e
+  have hcount : card E + #{i | t i ∣ a * w ∧ t i ≠ 0} ≤
+      finrank (ResidueField O) (X → (map (residue O) T).translatesIn n G ⊥ B) := by
+    clear haw hz
+    refine (T.card_le_finrank_translatesIn (Q.fromCols U) (R.fromRows (V - V * Q * R))
+      (by simp_all [V.mul_apply, Q.mul_apply, one_apply, by
+      simpa [← ext_iff, ← Matrix.mul_assoc, hR, or_iff_not_imp_right] using
+        congr(R * $e)]) ?_).trans_eq' (card_disjSum _ {i | t i ∣ a * w ∧ t i ≠ 0})
+    simpa using ⟨fun j ↦ hn (Pi.single j _) 0 _ (by aesop), fun _ _ ⟨c, h⟩ _ ↦ hn _ _ _ (by
+      simpa [-mulVec_smul, h, ↓ ← mulVec_mulVec, ↓diagonal_mulVec_single,
+        ↓op_smul_eq_smul] using! congr($e *ᵥ Pi.single (_, _) c))⟩
+  let S : Finset (X × (ZMod N → Monomials (Fin k) n)) := {i | t i ∣ a * w ∧ t i ≠ 0}
+  refine ⟨#S, hcount, ?_⟩
+  choose s hs using (ValuationRing.cond (a * w) <| t ·)
+  choose W hW using h
+  let Aold := β * U * (diagonal (a • w • s) - diagonal t)
+  let correction := 1 + w • (of W + β * U * diagonal s * K.1 * Q)
+  have hcorrection : Aold * K.1 * Q + β * Q * R * M = a • correction := by
+    ext i j
+    simp_all [Aold, correction, ← e]
+    linear_combination hW i j
+  have hunit : IsUnit correction.det := by
+    simp_all [correction, ↓det_one_add_smul w, map_mul, ← residue_ne_zero_iff_isUnit,
+      -residue_eq_zero_iff]
+  have hzero i (hi : i ∉ S) : ∀ j, Aold j i = 0 := by
+    have hsi : a * w * s i = t i := by
+      rcases hs i with hi' | hi'
+      · exact hi'
+      · have hdvd : t i ∣ a * w := ⟨s i, hi'.symm⟩
+        have ht : t i ≠ 0 := fun ht ↦ haw (by simpa [ht] using hi'.symm)
+        exact (hi (mem_filter.mpr ⟨mem_univ _, hdvd, ht⟩)).elim
+    have hentry : (a • w • s) i = t i := by
+      simpa only [Pi.smul_apply, smul_eq_mul, ← mul_assoc] using hsi
+    intro j
+    simp only [Aold, Matrix.mul_sub, Matrix.sub_apply, mul_diagonal, hentry, sub_self]
+  let cols : Matrix E S O := Aold.submatrix id Subtype.val
+  let rows : Matrix S E O := (K.1 * Q).submatrix Subtype.val id
+  have hfactor : cols * rows = Aold * (K.1 * Q) := by
+    ext i j
+    rw [Matrix.mul_apply, Matrix.mul_apply]
+    let summand k := Aold i k * (K.1 * Q) k j
+    change (∑ k : S, summand k) = ∑ k, summand k
+    calc
+      _ = ∑ k ∈ S, summand k := Finset.sum_coe_sort S summand
+      _ = _ := Finset.sum_subset (Finset.subset_univ _) fun k _ hk ↦ by
+        simp only [summand, hzero k hk i, zero_mul]
+  simpa only [Fintype.card_coe] using
+    D5.S3.Zeros.GRH.New.Core.exists_capped_minor_dvd_of_low_rank_correction
+      (β * Q) (R * M) correction cols rows a z
+      (by simpa only [hfactor, Matrix.mul_assoc, add_comm] using hcorrection) hunit hz
 
 variable [CharZero O]
 
