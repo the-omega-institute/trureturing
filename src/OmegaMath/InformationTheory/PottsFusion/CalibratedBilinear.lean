@@ -27,14 +27,16 @@ namespace Omega.InformationTheory.PottsFusion
 variable {I : Type*} [Fintype I] [Nonempty I]
 
 private theorem centered_energy (x : I → ℝ)
-    (hx0 : ∀ i, 0 ≤ x i) (hxn : ∀ i, x i ≤ (Fintype.card I : ℝ))
+    (hx0 : ∀ i, 0 ≤ x i)
     (hx : inputMean x = 1) :
     inputMean (fun i => x i - 1) = 0 ∧
     inputMean (fun i => (x i - 1) ^ 2) = inputMean (fun i => x i ^ 2) - 1 ∧
     0 ≤ inputMean (fun i => (x i - 1) ^ 2) ∧
-    inputMean (fun i => (x i - 1) ^ 2) ≤ (Fintype.card I : ℝ) ∧
+    inputMean (fun i => (x i - 1) ^ 2) ≤ (Fintype.card I : ℝ) - 1 ∧
     (∀ i, |x i - 1| ≤ (Fintype.card I : ℝ)) := by
   have hn := card_real_one_le (I := I)
+  have hxn : ∀ i, x i ≤ (Fintype.card I : ℝ) :=
+    inputMean_upper_of_normalized x hx0 hx
   have hm : inputMean (fun i => x i - 1) = 0 := by
     rw [inputMean_sub, hx, inputMean_const]
     ring
@@ -63,8 +65,8 @@ private theorem centered_pair_bound (a b : I → ℝ)
     (ha : inputMean a = 0) (hb : inputMean b = 0)
     (han : ∀ i, |a i| ≤ (Fintype.card I : ℝ))
     (hbn : ∀ i, |b i| ≤ (Fintype.card I : ℝ))
-    (hA : inputMean (fun i => a i ^ 2) ≤ (Fintype.card I : ℝ))
-    (hB : inputMean (fun i => b i ^ 2) ≤ (Fintype.card I : ℝ))
+    (hA : inputMean (fun i => a i ^ 2) ≤ (Fintype.card I : ℝ) - 1)
+    (hB : inputMean (fun i => b i ^ 2) ≤ (Fintype.card I : ℝ) - 1)
     (hab : ∀ i, 0 ≤ (a i + 1) * (b i + 1)) :
     inputMean (fun i => (a i + 1) ^ 2 * (b i + 1) ^ 2) /
         inputMean (fun i => (a i + 1) * (b i + 1)) - 1 ≤
@@ -73,7 +75,7 @@ private theorem centered_pair_bound (a b : I → ℝ)
           inputMean (fun i => a i * b i) +
         2 * inputMean (fun i => a i ^ 2 * b i) +
         2 * inputMean (fun i => a i * b i ^ 2)) +
-      32 * (Fintype.card I : ℝ) * inputMean (fun i => a i ^ 2) *
+      16 * (Fintype.card I : ℝ) * inputMean (fun i => a i ^ 2) *
         inputMean (fun i => b i ^ 2) := by
   classical
   let n : ℝ := Fintype.card I
@@ -159,7 +161,7 @@ private theorem centered_pair_bound (a b : I → ℝ)
     (card_real_one_le (I := I)) (add_nonneg hA0 hB0)
     (by dsimp only [n, A, B]; linarith only [hA, hB]) hc ht hd he hf hnum hglobal
   dsimp only [n, A, B, c, d, e, H] at hh
-  convert hh using 1 <;> ring
+  convert hh using 1; ring
 
 private theorem weighted_centered_correction
     {Y Z : Type*} [Fintype Y] [Fintype Z]
@@ -211,14 +213,15 @@ private theorem weighted_centered_correction
       ring
     _ = 0 := by rw [hc, hd, he, hAc, hBc]; ring
 
+omit [Nonempty I] in
 private theorem weighted_pair_average
     {Y Z : Type*} [Fintype Y] [Fintype Z]
     (w : Y → ℝ) (v : Z → ℝ) (A : Y → ℝ) (B : Z → ℝ)
     (hw : ∑ y, w y = 1) (hv : ∑ z, v z = 1) :
     (∑ yz : Y × Z, w yz.1 * v yz.2 *
-      (A yz.1 + B yz.2 + 32 * (Fintype.card I : ℝ) * A yz.1 * B yz.2)) =
+      (A yz.1 + B yz.2 + 16 * (Fintype.card I : ℝ) * A yz.1 * B yz.2)) =
       (∑ y, w y * A y) + (∑ z, v z * B z) +
-      32 * (Fintype.card I : ℝ) * (∑ y, w y * A y) * (∑ z, v z * B z) := by
+      16 * (Fintype.card I : ℝ) * (∑ y, w y * A y) * (∑ z, v z * B z) := by
   rw [Fintype.sum_prod_type]
   simp only [mul_add, Finset.sum_add_distrib]
   have h1 : (∑ y, ∑ z, w y * v z * A y) = ∑ y, w y * A y := by
@@ -241,10 +244,10 @@ private theorem weighted_pair_average
         intro z _
         ring
       _ = ∑ z, v z * B z := by rw [hw, one_mul]
-  have h3 : (∑ y, ∑ z, w y * v z * (32 * (Fintype.card I : ℝ) * A y * B z)) =
-      32 * (Fintype.card I : ℝ) * (∑ y, w y * A y) * (∑ z, v z * B z) := by
+  have h3 : (∑ y, ∑ z, w y * v z * (16 * (Fintype.card I : ℝ) * A y * B z)) =
+      16 * (Fintype.card I : ℝ) * (∑ y, w y * A y) * (∑ z, v z * B z) := by
     calc
-      _ = 32 * (Fintype.card I : ℝ) *
+      _ = 16 * (Fintype.card I : ℝ) *
           ((∑ y, w y * A y) * (∑ z, v z * B z)) := by
         rw [Finset.sum_mul_sum, Finset.mul_sum]
         apply Finset.sum_congr rfl
@@ -261,15 +264,16 @@ theorem calibratedFusion_bilinear_bound
     {Y Z : Type*} [Fintype Y] [Fintype Z]
     (w : Y → ℝ) (x : Y → I → ℝ) (v : Z → ℝ) (r : Z → I → ℝ)
     (hw0 : ∀ y, 0 ≤ w y) (hv0 : ∀ z, 0 ≤ v z)
-    (hw : ∑ y, w y = 1) (hv : ∑ z, v z = 1)
     (hx0 : ∀ y i, 0 ≤ x y i) (hr0 : ∀ z i, 0 ≤ r z i)
     (hxm : ∀ y, inputMean (x y) = 1) (hrm : ∀ z, inputMean (r z) = 1)
-    (hxn : ∀ y i, x y i ≤ (Fintype.card I : ℝ))
-    (hrn : ∀ z i, r z i ≤ (Fintype.card I : ℝ))
     (hxc : ∀ i, ∑ y, w y * x y i = 1)
     (hrc : ∀ i, ∑ z, v z * r z i = 1) :
     calibratedFusion w x v r ≤ calibratedCapacity w x + calibratedCapacity v r +
-      (32 * (Fintype.card I : ℝ)) * calibratedCapacity w x * calibratedCapacity v r := by
+      (16 * (Fintype.card I : ℝ)) * calibratedCapacity w x * calibratedCapacity v r := by
+  have hw : ∑ y, w y = 1 := by
+    simpa only [hxm, mul_one, hxc, inputMean_const] using weighted_sum_inputMean w x
+  have hv : ∑ z, v z = 1 := by
+    simpa only [hrm, mul_one, hrc, inputMean_const] using weighted_sum_inputMean v r
   let a : Y → I → ℝ := fun y i => x y i - 1
   let b : Z → I → ℝ := fun z i => r z i - 1
   let A : Y → ℝ := fun y => inputMean (fun i => a y i ^ 2)
@@ -278,8 +282,8 @@ theorem calibratedFusion_bilinear_bound
     (3 - A yz.1 - B yz.2) * inputMean (fun i => a yz.1 i * b yz.2 i) +
       2 * inputMean (fun i => a yz.1 i ^ 2 * b yz.2 i) +
       2 * inputMean (fun i => a yz.1 i * b yz.2 i ^ 2)
-  have hxa (y : Y) := centered_energy (x y) (hx0 y) (hxn y) (hxm y)
-  have hrb (z : Z) := centered_energy (r z) (hr0 z) (hrn z) (hrm z)
+  have hxa (y : Y) := centered_energy (x y) (hx0 y) (hxm y)
+  have hrb (z : Z) := centered_energy (r z) (hr0 z) (hrm z)
   have hac (i : I) : ∑ y, w y * a y i = 0 := by
     dsimp only [a]
     simp only [mul_sub, mul_one, Finset.sum_sub_distrib]
@@ -303,7 +307,7 @@ theorem calibratedFusion_bilinear_bound
   have hp (yz : Y × Z) :
       inputMean (fun i => x yz.1 i ^ 2 * r yz.2 i ^ 2) /
         inputMean (fun i => x yz.1 i * r yz.2 i) - 1 ≤
-        A yz.1 + B yz.2 + C yz + 32 * (Fintype.card I : ℝ) * A yz.1 * B yz.2 := by
+        A yz.1 + B yz.2 + C yz + 16 * (Fintype.card I : ℝ) * A yz.1 * B yz.2 := by
     have hh := centered_pair_bound (a yz.1) (b yz.2)
       (hxa yz.1).1 (hrb yz.2).1 (hxa yz.1).2.2.2.2 (hrb yz.2).2.2.2.2
       (hxa yz.1).2.2.2.1 (hrb yz.2).2.2.2.1
@@ -316,7 +320,7 @@ theorem calibratedFusion_bilinear_bound
       (inputMean (fun i => x yz.1 i ^ 2 * r yz.2 i ^ 2) /
         inputMean (fun i => x yz.1 i * r yz.2 i) - 1)) ≤
       ∑ yz : Y × Z, w yz.1 * v yz.2 *
-        (A yz.1 + B yz.2 + C yz + 32 * (Fintype.card I : ℝ) * A yz.1 * B yz.2) := by
+        (A yz.1 + B yz.2 + C yz + 16 * (Fintype.card I : ℝ) * A yz.1 * B yz.2) := by
     apply Finset.sum_le_sum
     intro yz _
     exact mul_le_mul_of_nonneg_left (hp yz) (mul_nonneg (hw0 _) (hv0 _))
@@ -329,12 +333,12 @@ theorem calibratedFusion_bilinear_bound
     rw [hweights]
     rfl
   have hright : (∑ yz : Y × Z, w yz.1 * v yz.2 *
-        (A yz.1 + B yz.2 + C yz + 32 * (Fintype.card I : ℝ) * A yz.1 * B yz.2)) =
+        (A yz.1 + B yz.2 + C yz + 16 * (Fintype.card I : ℝ) * A yz.1 * B yz.2)) =
       calibratedCapacity w x + calibratedCapacity v r +
-        (32 * (Fintype.card I : ℝ)) * calibratedCapacity w x * calibratedCapacity v r := by
+        (16 * (Fintype.card I : ℝ)) * calibratedCapacity w x * calibratedCapacity v r := by
     calc
       _ = (∑ yz : Y × Z, w yz.1 * v yz.2 *
-          (A yz.1 + B yz.2 + 32 * (Fintype.card I : ℝ) * A yz.1 * B yz.2)) +
+          (A yz.1 + B yz.2 + 16 * (Fintype.card I : ℝ) * A yz.1 * B yz.2)) +
           ∑ yz : Y × Z, w yz.1 * v yz.2 * C yz := by
         rw [← Finset.sum_add_distrib]
         apply Finset.sum_congr rfl

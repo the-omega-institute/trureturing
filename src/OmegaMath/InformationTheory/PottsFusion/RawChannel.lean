@@ -49,7 +49,7 @@ theorem raw_margin_sum_one [Nonempty I] [Fintype Y]
 theorem raw_zero_column_entry (P : I → Y → ℝ)
     (hP : ∀ i y, 0 ≤ P i y) (y : Y) (hy : channelMargin P y = 0) (i : I) :
     P i y = 0 := by
-  letI : Nonempty I := ⟨i⟩
+  let : Nonempty I := ⟨i⟩
   have hsum : (∑ j, P j y) = 0 := by
     unfold channelMargin at hy
     exact (div_eq_zero_iff.mp hy).resolve_right (ne_of_gt (card_real_pos (I := I)))
@@ -94,15 +94,6 @@ theorem raw_density_mean_one [Nonempty I] (P : I → Y → ℝ) (y : Y) :
       rw [← Finset.sum_div]
       ring
     rw [hid, hmean, div_self hm]
-
-theorem raw_density_upper (P : I → Y → ℝ)
-    (hP : ∀ i y, 0 ≤ P i y) (y : Y) (i : I) :
-    rawDensity P y i ≤ (Fintype.card I : ℝ) := by
-  letI : Nonempty I := ⟨i⟩
-  have hle : rawDensity P y i ≤ ∑ j, rawDensity P y j :=
-    Finset.single_le_sum (fun j _ => raw_density_nonneg P hP y j) (Finset.mem_univ i)
-  rw [sum_eq_card_mul_inputMean, raw_density_mean_one, mul_one] at hle
-  exact hle
 
 theorem raw_density_calibrated [Fintype Y] (P : I → Y → ℝ)
     (hP0 : ∀ i y, 0 ≤ P i y) (hP1 : ∀ i, ∑ y, P i y = 1) (i : I) :

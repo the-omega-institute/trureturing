@@ -120,10 +120,19 @@ theorem weighted_inner_inputMean {J K : Type*} [Fintype J] [Fintype K]
   intro k _
   ring
 
-theorem sum_eq_card_mul_inputMean [Nonempty I] (f : I → ℝ) :
+theorem sum_eq_card_mul_inputMean (f : I → ℝ) :
     (∑ i, f i) = (Fintype.card I : ℝ) * inputMean f := by
-  unfold inputMean
-  field_simp [ne_of_gt (card_real_pos (I := I))]
+  rw [inputMean_eq_expect]
+  simpa only [Finset.card_univ, nsmul_eq_mul] using
+    (Finset.card_smul_expect Finset.univ f).symm
+
+theorem inputMean_upper_of_normalized (f : I → ℝ)
+    (hf0 : ∀ i, 0 ≤ f i) (hf1 : inputMean f = 1) (i : I) :
+    f i ≤ (Fintype.card I : ℝ) := by
+  have hle : f i ≤ ∑ j, f j :=
+    Finset.single_le_sum (fun j _ => hf0 j) (Finset.mem_univ i)
+  rw [sum_eq_card_mul_inputMean, hf1, mul_one] at hle
+  exact hle
 
 theorem square_ratio_le_sum (a : I → ℝ) (ha : ∀ i, 0 ≤ a i) :
     (∑ i, a i ^ 2) / (∑ i, a i) ≤ ∑ i, a i := by
@@ -135,16 +144,18 @@ theorem square_ratio_le_sum (a : I → ℝ) (ha : ∀ i, 0 ≤ a i) :
   · apply (div_le_iff₀ (lt_of_le_of_ne hs0 (Ne.symm hs))).2
     nlinarith
 
-theorem inputMean_ratio_le_card_mul [Nonempty I]
+theorem inputMean_ratio_le_card_mul
     (a : I → ℝ) (ha : ∀ i, 0 ≤ a i) :
     inputMean (fun i => a i ^ 2) / inputMean a ≤
       (Fintype.card I : ℝ) * inputMean a := by
+  by_cases hn : (Fintype.card I : ℝ) = 0
+  · simp [inputMean, hn]
   have hratio : inputMean (fun i => a i ^ 2) / inputMean a =
       (∑ i, a i ^ 2) / (∑ i, a i) := by
     unfold inputMean
     by_cases hs : (∑ i, a i) = 0
     · simp [hs]
-    · field_simp [hs, ne_of_gt (card_real_pos (I := I))]
+    · field_simp [hs, hn]
   rw [hratio, ← sum_eq_card_mul_inputMean]
   exact square_ratio_le_sum a ha
 
