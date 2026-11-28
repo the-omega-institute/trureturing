@@ -38,3 +38,13 @@ settlement under Definition 4.1. Worldwide priority and complete index
 coverage remain unverified.
 [2021 abstract](https://api.openalex.org/works/https://doi.org/10.1063/5.0042278) ·
 [Search scope and limitations](https://github.com/the-omega-institute/trureturing/issues/35242)
+
+## Matrix-rank question
+
+In §7, p. 17, Mekera, Somer and Yeşil also ask “how the arcs of
+\(\overrightarrow{\mathrm{AG}}(M_n(F))\) can be characterized in terms of
+matrix ranks.” This is the rank question in the paragraph beginning
+“Future studies can characterize the semigroups and rings.” It uses
+the ordered arcs of Definition 4.1.
+[Exact v2 paragraph](https://arxiv.org/html/2608.09243v2#S7.p2.1) ·
+[Rank-question preregistration](https://github.com/the-omega-institute/trureturing/issues/35243)
