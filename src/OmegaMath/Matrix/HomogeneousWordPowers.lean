@@ -1154,5 +1154,100 @@ theorem second_rank_one_return_of_pow_seven_ne_top
   exact hseven (pow_eq_top_of_finrank_add_le L A hA hfull (j := 3) (t := 4) (by decide)
     (by rw [finrank_matrix_three]; omega))
 
+private theorem no_common_kernel_of_positive_full (L : Submodule K Mat)
+    (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤) :
+    ∀ v : Fin 3 → K, (∀ A ∈ L, A *ᵥ v = 0) → v = 0 := by
+  intro v hv
+  have hpow : ∀ n : ℕ, 0 < n → ∀ X ∈ L ^ n, X *ᵥ v = 0 := by
+    intro n hn
+    induction n with
+    | zero => omega
+    | succ n ih =>
+        rw [pow_succ]
+        intro Z hZ
+        refine Submodule.mul_induction_on hZ ?_ ?_
+        · intro X hX Y hY
+          rw [← Matrix.mulVec_mulVec, hv Y hY]
+          simp
+        · intro X Y hX hY
+          rw [Matrix.add_mulVec, hX, hY, add_zero]
+  obtain ⟨m, hm, htop⟩ := hfull
+  have h1 : (1 : Mat) ∈ L ^ m := by rw [htop]; trivial
+  simpa using hpow m hm 1 h1
+
+private theorem no_common_cokernel_of_positive_full (L : Submodule K Mat)
+    (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤) :
+    ∀ v : Fin 3 → K, (∀ A ∈ L, v ᵥ* A = 0) → v = 0 := by
+  intro v hv
+  have hpow : ∀ n : ℕ, 0 < n → ∀ X ∈ L ^ n, v ᵥ* X = 0 := by
+    intro n hn
+    induction n with
+    | zero => omega
+    | succ n ih =>
+        rw [pow_succ']
+        intro Z hZ
+        refine Submodule.mul_induction_on hZ ?_ ?_
+        · intro X hX Y hY
+          rw [← Matrix.vecMul_vecMul, hv X hX]
+          simp
+        · intro X Y hX hY
+          rw [Matrix.vecMul_add, hX, hY, add_zero]
+  obtain ⟨m, hm, htop⟩ := hfull
+  have h1 : (1 : Mat) ∈ L ^ m := by rw [htop]; trivial
+  simpa using hpow m hm 1 h1
+
+/-- A positive full power has neither a common right kernel nor a common left kernel. -/
+theorem eventually_full_reduced
+    (L : Submodule K Mat)
+    (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤) :
+    (∀ v : Fin 3 → K, (∀ A ∈ L, A *ᵥ v = 0) → v = 0) ∧
+      (∀ v : Fin 3 → K, (∀ A ∈ L, v ᵥ* A = 0) → v = 0) := by
+  exact ⟨no_common_kernel_of_positive_full L hfull,
+    no_common_cokernel_of_positive_full L hfull⟩
+
+/-- The rank-one branch is impossible as soon as its common-kernel/common-cokernel
+    alternative has been established. -/
+theorem exclude_rank_one_branch
+    (L : Submodule K Mat)
+    (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤)
+    (hbranch :
+      (∃ v : Fin 3 → K, v ≠ 0 ∧ ∀ A ∈ L, A *ᵥ v = 0) ∨
+      (∃ v : Fin 3 → K, v ≠ 0 ∧ ∀ A ∈ L, v ᵥ* A = 0)) :
+    False := by
+  rcases hbranch with ⟨v, hv, hkill⟩ | ⟨v, hv, hkill⟩
+  · exact hv (no_common_kernel_of_positive_full L hfull v hkill)
+  · exact hv (no_common_cokernel_of_positive_full L hfull v hkill)
+
+/-- Linear estimates close either the alternating-square branch or the compression
+    certificate branch of the size-three singular classification. -/
+theorem pow_seven_eq_top_of_singular_alternatives
+    (L : Submodule K Mat)
+    (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤)
+    (halt : (L ^ 2 = ⊤) ∨
+      (∃ U : Matˣ, (U : Mat) ∈ L ^ 2 ∧
+        7 ≤ Module.finrank K ↥(L ^ 3))) :
+    L ^ 7 = ⊤ := by
+  rcases halt with hsq | ⟨U, hU, hdim⟩
+  · exact pow_eq_top_of_le L (by decide) hsq (by decide)
+  by_cases h3 : L ^ 3 = ⊤
+  · exact pow_eq_top_of_le L (by decide) h3 (by decide)
+  by_cases h5 : L ^ 5 = ⊤
+  · exact pow_eq_top_of_le L (by decide) h5 (by decide)
+  have hg3 := finrank_pow_lt_of_unit_mem L 3 2 U hfull (by decide) hU h3
+  have hg5 := finrank_pow_lt_of_unit_mem L 5 2 U hfull (by decide) hU h5
+  have hdim7 : 9 ≤ Module.finrank K ↥(L ^ 7) := by
+    have h3le : 7 ≤ Module.finrank K ↥(L ^ 3) := hdim
+    have h5le : Module.finrank K ↥(L ^ 5) ≥ Module.finrank K ↥(L ^ 3) + 1 := by
+      have hg3' : Module.finrank K ↥(L ^ 3) < Module.finrank K ↥(L ^ 5) := by
+        simpa using hg3
+      omega
+    have h7le : Module.finrank K ↥(L ^ 7) ≥ Module.finrank K ↥(L ^ 5) + 1 := by
+      have hg5' : Module.finrank K ↥(L ^ 5) < Module.finrank K ↥(L ^ 7) := by
+        simpa using hg5
+      omega
+    omega
+  apply Submodule.eq_of_le_of_finrank_le le_top
+  simpa [Module.finrank_matrix] using hdim7
+
 end SizeThree
 end OmegaMath.HomogeneousWordPowers
