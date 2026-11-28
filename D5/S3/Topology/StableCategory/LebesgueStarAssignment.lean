@@ -14,11 +14,12 @@ import D5.S3.Topology.StableCategory.TerminalCarrierIteration
 import D5.S3.Topology.TauCeti.Analysis.Normed.Affine.Centroid
 import Mathlib.Analysis.Convex.PathConnected
 import Mathlib.Analysis.Normed.Module.Convex
+import Mathlib.Topology.Homotopy.Contractible
 import Mathlib.Topology.Homotopy.Path
 import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
 
 /-!
-The geometric input to the dimension-four categorical colour theorem.
+Categorical open covers give categorical subcomplex covers after ordinary subdivision.
 All distances are measured in the finite coordinate space of the original complex.
 -/
 
@@ -165,23 +166,32 @@ theorem iteratedRealization_barycentric_formula (n : ℕ) (x : Space (depthCompl
       congrArg (fun w => iteratedCoordinates K n w) (pi_eq_sum_univ' x.val)
     _ = _ := by simp only [map_sum, map_smul, vertexCoordinates]
 
-theorem face_card_le_five (dimension : ∀ s ∈ K, s.card ≤ 5) (n : ℕ) :
-    ∀ s ∈ depthComplex K n, s.card ≤ 5 := by
+private theorem face_card_le_at_depth {D : ℕ} (dimension : ∀ s ∈ K, s.card ≤ D) (n : ℕ) :
+    ∀ s ∈ depthComplex K n, s.card ≤ D := by
   induction n with
   | zero => exact dimension
   | succ n ih =>
     exact (ColourGraphJoin.subdivision_rank_colouring (depthComplex K n) ih).1
 
-/-- Each ordinary subdivision multiplies the vertex mesh bound by 4/5 in
-dimension at most four. This estimate uses the original coordinate sup metric. -/
-theorem iterated_vertex_mesh_four_fifths (dimension : ∀ s ∈ K, s.card ≤ 5) (n : ℕ) :
+theorem face_card_le_five (dimension : ∀ s ∈ K, s.card ≤ 5) (n : ℕ) :
+    ∀ s ∈ depthComplex K n, s.card ≤ 5 :=
+  face_card_le_at_depth K dimension n
+
+/-- Each ordinary subdivision multiplies the vertex mesh bound by `1 - 1 / D`,
+where `D` is a positive bound on face cardinalities. -/
+private theorem iterated_vertex_mesh_of_card_le {D : ℕ} (hD : 0 < D)
+    (dimension : ∀ s ∈ K, s.card ≤ D) (n : ℕ) :
     ∀ s ∈ depthComplex K n, ∀ a ∈ s, ∀ b ∈ s,
-      dist (vertexCoordinates K n a) (vertexCoordinates K n b) ≤ (4 / 5 : ℝ) ^ n := by
+      dist (vertexCoordinates K n a) (vertexCoordinates K n b) ≤
+        (1 - 1 / (D : ℝ)) ^ n := by
+  have hDpos : (0 : ℝ) < (D : ℝ) := by exact_mod_cast hD
+  have hDone : (1 : ℝ) ≤ (D : ℝ) := by exact_mod_cast (Nat.succ_le_of_lt hD)
+  have hfactor : 0 ≤ 1 - 1 / (D : ℝ) := sub_nonneg.mpr ((div_le_one hDpos).2 hDone)
   induction n with
   | zero =>
     intro s hs a ha b hb
     change dist (Pi.single (M := fun _ : X => ℝ) a 1)
-      (Pi.single (M := fun _ : X => ℝ) b 1) ≤ (4 / 5 : ℝ) ^ 0
+      (Pi.single (M := fun _ : X => ℝ) b 1) ≤ (1 - 1 / (D : ℝ)) ^ 0
     rw [pow_zero, dist_pi_le_iff (zero_le_one : (0 : ℝ) ≤ 1)]
     intro v
     simp only [Pi.single_apply, Real.dist_eq]
@@ -191,26 +201,26 @@ theorem iterated_vertex_mesh_four_fifths (dimension : ∀ s ∈ K, s.card ≤ 5)
     intro s hs a ha b hb
     have nested (p q : Face L) (hpq : p ≤ q) :
         dist (vertexCoordinates K (n + 1) p) (vertexCoordinates K (n + 1) q) ≤
-          (4 / 5 : ℝ) ^ (n + 1) := by
+          (1 - 1 / (D : ℝ)) ^ (n + 1) := by
       have hnonempty := (L.isRelLowerSet_faces p.property).1
       have hqpos : (0 : ℝ) < (q.val.card : ℝ) := by
         exact_mod_cast (L.isRelLowerSet_faces q.property).1.card_pos
       have hpone : (1 : ℝ) ≤ (p.val.card : ℝ) := by
         exact_mod_cast (Nat.succ_le_of_lt hnonempty.card_pos)
-      have hqfive : (q.val.card : ℝ) ≤ 5 := by
-        exact_mod_cast (face_card_le_five K dimension n q.val q.property)
-      have hratio : (1 / 5 : ℝ) ≤ (p.val.card : ℝ) / (q.val.card : ℝ) := by
-        apply (le_div_iff₀ hqpos).2
-        linarith
+      have hqD : (q.val.card : ℝ) ≤ (D : ℝ) := by
+        exact_mod_cast (face_card_le_at_depth K dimension n q.val q.property)
+      have hratio : 1 / (D : ℝ) ≤ (p.val.card : ℝ) / (q.val.card : ℝ) :=
+        (one_div_le_one_div_of_le hqpos hqD).trans
+          (div_le_div_of_nonneg_right hpone hqpos.le)
       rw [vertexCoordinates_succ K n p, vertexCoordinates_succ K n q]
       calc
-        _ ≤ (1 - (p.val.card : ℝ) / (q.val.card : ℝ)) * (4 / 5 : ℝ) ^ n :=
+        _ ≤ (1 - (p.val.card : ℝ) / (q.val.card : ℝ)) * (1 - 1 / (D : ℝ)) ^ n :=
           Finset.dist_centroid_centroid_le_of_subset
             (fun u hu v hv => ih q.val q.property u (Finset.mem_sdiff.mp hu).1 v (hpq hv))
             hpq hnonempty
-        _ ≤ (4 / 5 : ℝ) * (4 / 5 : ℝ) ^ n :=
-          mul_le_mul_of_nonneg_right (by linarith) (by positivity)
-        _ = (4 / 5 : ℝ) ^ (n + 1) := by rw [pow_succ, mul_comm]
+        _ ≤ (1 - 1 / (D : ℝ)) * (1 - 1 / (D : ℝ)) ^ n :=
+          mul_le_mul_of_nonneg_right (sub_le_sub_left hratio 1) (pow_nonneg hfactor n)
+        _ = (1 - 1 / (D : ℝ)) ^ (n + 1) := by rw [pow_succ, mul_comm]
     by_cases he : a = b
     · subst b
       exact nested a a le_rfl
@@ -219,6 +229,31 @@ theorem iterated_vertex_mesh_four_fifths (dimension : ∀ s ∈ K, s.card ≤ 5)
       · rw [dist_comm]
         exact nested b a hba.le
 
+/-- Each ordinary subdivision multiplies the vertex mesh bound by 4/5 in
+dimension at most four. This estimate uses the original coordinate sup metric. -/
+theorem iterated_vertex_mesh_four_fifths (dimension : ∀ s ∈ K, s.card ≤ 5) (n : ℕ) :
+    ∀ s ∈ depthComplex K n, ∀ a ∈ s, ∀ b ∈ s,
+      dist (vertexCoordinates K n a) (vertexCoordinates K n b) ≤ (4 / 5 : ℝ) ^ n := by
+  have hfactor : (1 - 1 / ((5 : ℕ) : ℝ)) = 4 / 5 := by norm_num
+  simpa only [hfactor] using iterated_vertex_mesh_of_card_le K (D := 5) (by decide) dimension n
+
+private theorem dist_face_to_vertex_le_of_card_le {D : ℕ} (hD : 0 < D)
+    (dimension : ∀ s ∈ K, s.card ≤ D) (n : ℕ)
+    {s : Finset (DepthVertices K n)} (hs : s ∈ depthComplex K n)
+    {v : DepthVertices K n} (hv : v ∈ s)
+    {x : DepthVertices K n → ℝ} (hx : x ∈ faceSimplex s) :
+    dist (iteratedCoordinates K n x) (vertexCoordinates K n v) ≤ (1 - 1 / (D : ℝ)) ^ n := by
+  let B := Metric.closedBall (vertexCoordinates K n v) ((1 - 1 / (D : ℝ)) ^ n)
+  have hconv : Convex ℝ (iteratedCoordinates K n ⁻¹' B) :=
+    (convex_closedBall _ _).linear_preimage (iteratedCoordinates K n)
+  have hvertices : (fun w : DepthVertices K n => Pi.single w (1 : ℝ)) '' (s : Set _) ⊆
+      iteratedCoordinates K n ⁻¹' B := by
+    rintro _ ⟨w, hw, rfl⟩
+    exact Metric.mem_closedBall.mpr
+      (iterated_vertex_mesh_of_card_le K hD dimension n s hs w hw v hv)
+  rw [faceSimplex_eq_convexHull] at hx
+  exact Metric.mem_closedBall.mp (convexHull_min hvertices hconv hx)
+
 /-- An entire closed simplex lies within the mesh bound of each of its vertices
 after both are mapped into the original coordinates. -/
 theorem dist_face_to_vertex_le (dimension : ∀ s ∈ K, s.card ≤ 5) (n : ℕ)
@@ -226,16 +261,9 @@ theorem dist_face_to_vertex_le (dimension : ∀ s ∈ K, s.card ≤ 5) (n : ℕ)
     {v : DepthVertices K n} (hv : v ∈ s)
     {x : DepthVertices K n → ℝ} (hx : x ∈ faceSimplex s) :
     dist (iteratedCoordinates K n x) (vertexCoordinates K n v) ≤ (4 / 5 : ℝ) ^ n := by
-  let B := Metric.closedBall (vertexCoordinates K n v) ((4 / 5 : ℝ) ^ n)
-  have hconv : Convex ℝ (iteratedCoordinates K n ⁻¹' B) :=
-    (convex_closedBall _ _).linear_preimage (iteratedCoordinates K n)
-  have hvertices : (fun w : DepthVertices K n => Pi.single w (1 : ℝ)) '' (s : Set _) ⊆
-      iteratedCoordinates K n ⁻¹' B := by
-    rintro _ ⟨w, hw, rfl⟩
-    exact Metric.mem_closedBall.mpr
-      (iterated_vertex_mesh_four_fifths K dimension n s hs w hw v hv)
-  rw [faceSimplex_eq_convexHull] at hx
-  exact Metric.mem_closedBall.mp (convexHull_min hvertices hconv hx)
+  have hfactor : (1 - 1 / ((5 : ℕ) : ℝ)) = 4 / 5 := by norm_num
+  simpa only [hfactor] using
+    dist_face_to_vertex_le_of_card_le K (D := 5) (by decide) dimension n hs hv hx
 
 private def facePoint {Y : Type} [Fintype Y] [DecidableEq Y]
     {L : PreAbstractSimplicialComplex Y} {s : Finset Y} (hs : s ∈ L)
@@ -256,6 +284,97 @@ private def subcomplexInOpen {Y : Type} [Fintype Y] [DecidableEq Y]
       ⟨hx.1, hx.2.1, fun w hw => hx.2.2 w (fun hwt => hw (hts hwt))⟩
     exact hlands x hx'
 
+private theorem categorical_subcomplexes_of_open_cover_of_card_le {D : ℕ} (hD : 0 < D)
+    (dimension : ∀ s ∈ K, s.card ≤ D) {ι : Type*} [Nonempty ι] (U : ι → Set (Space K))
+    (hopen : ∀ i, IsOpen (U i)) (hcover : (Set.univ : Set (Space K)) ⊆ ⋃ i, U i)
+    (point : ι → Space K)
+    (H : ∀ i, Nonempty ((ContinuousMap.subtypeVal (U i)).Homotopy
+      (ContinuousMap.const ↥(U i) (point i)))) :
+    ∃ n : ℕ, ∃ label : DepthVertices K n → ι,
+      ∃ A : ι → PreAbstractSimplicialComplex (DepthVertices K n),
+      ∃ hA : ∀ i, A i ≤ depthComplex K n,
+        (∀ s ∈ depthComplex K n, ∀ v ∈ s, s ∈ A (label v)) ∧
+        (∀ i (x : Space (A i)), iteratedRealization K n (realizationInclusion (hA i) x) ∈ U i) ∧
+        (∀ i, Nonempty ((realizationInclusion (hA i)).Homotopy
+          (ContinuousMap.const (Space (A i)) ((iteratedRealization K n).symm (point i))))) := by
+  classical
+  letI : CompactSpace (Space K) := realizationCompactSpace K
+  obtain ⟨δ, hδ, hball⟩ := lebesgue_number_lemma_of_metric isCompact_univ hopen hcover
+  have hDpos : (0 : ℝ) < (D : ℝ) := by exact_mod_cast hD
+  have hfactor : 1 - 1 / (D : ℝ) < 1 := sub_lt_self _ (one_div_pos.mpr hDpos)
+  obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one hδ hfactor
+  let L := depthComplex K n
+  let e := iteratedRealization K n
+  let chooseColour (v : Vertex L) : ι :=
+    (hball (e (vertexPoint L v.val v.property)) (Set.mem_univ _)).choose
+  have chooseColour_spec (v : Vertex L) :
+      Metric.ball (e (vertexPoint L v.val v.property)) δ ⊆ U (chooseColour v) :=
+    (hball (e (vertexPoint L v.val v.property)) (Set.mem_univ _)).choose_spec
+  let label (v : DepthVertices K n) : ι :=
+    if hv : ({v} : Finset (DepthVertices K n)) ∈ L then chooseColour ⟨v, hv⟩
+    else Classical.choice (inferInstance : Nonempty ι)
+  let A (i : ι) := subcomplexInOpen K e (U i)
+  have hA (i : ι) : A i ≤ L := fun _ hs => hs.choose
+  have hsubordinate : ∀ s ∈ L, ∀ v ∈ s, s ∈ A (label v) := by
+    intro s hs v hv
+    have hsingleton : ({v} : Finset (DepthVertices K n)) ∈ L :=
+      (L.isRelLowerSet_faces hs).2 (Finset.singleton_subset_iff.mpr hv)
+        (Finset.singleton_nonempty v)
+    have hlabel : label v = chooseColour ⟨v, hsingleton⟩ := dif_pos hsingleton
+    refine ⟨hs, fun x hx => ?_⟩
+    rw [hlabel]
+    apply chooseColour_spec ⟨v, hsingleton⟩
+    apply Metric.mem_ball.mpr
+    change dist (iteratedRealization K n (facePoint hs hx)).val
+      (iteratedRealization K n (vertexPoint L v hsingleton)).val < δ
+    simp only [iteratedRealization_coordinates]
+    exact (dist_face_to_vertex_le_of_card_le K hD dimension n hs hv hx).trans_lt hn
+  have hlands (i : ι) (x : Space (A i)) :
+      e (realizationInclusion (hA i) x) ∈ U i := by
+    obtain ⟨s, hs, hx⟩ := (realization_mem_iff (A i) x.val).mp x.property
+    obtain ⟨hs', hwhole⟩ := hs
+    exact hwhole x.val hx
+  refine ⟨n, label, A, hA, hsubordinate, hlands, fun i => ?_⟩
+  let inc := realizationInclusion (hA i)
+  let into : C(Space (A i), ↥(U i)) :=
+    ⟨fun x => ⟨e (inc x), hlands i x⟩, (e.continuous.comp inc.continuous).subtype_mk _⟩
+  let F := (ContinuousMap.Homotopy.refl (toContinuousMap e.symm)).comp
+    ((H i).some.compContinuousMap into)
+  refine ⟨F.cast ?_ rfl⟩
+  apply ContinuousMap.ext
+  intro x
+  exact e.symm_apply_apply (inc x)
+
+/-- At a common ordinary subdivision depth, a categorical open cover with a
+nonempty index type yields a subcomplex cover indexed by the same type. Each
+region contains all closed faces incident to any vertex assigned to it, lies
+over its original open set, and has nullhomotopic inclusion into the subdivided
+realization. -/
+theorem categorical_subcomplex_cover_of_open_cover {ι : Type*} [Nonempty ι]
+    (U : ι → Set (Space K)) (hopen : ∀ i, IsOpen (U i))
+    (hcover : (Set.univ : Set (Space K)) ⊆ ⋃ i, U i)
+    (H : ∀ i, (ContinuousMap.subtypeVal (U i)).Nullhomotopic) :
+    ∃ n : ℕ, ∃ label : DepthVertices K n → ι,
+      ∃ A : ι → PreAbstractSimplicialComplex (DepthVertices K n),
+      ∃ hA : ∀ i, A i ≤ depthComplex K n,
+        (∀ s ∈ depthComplex K n, ∃ i, s ∈ A i) ∧
+        (∀ s ∈ depthComplex K n, ∀ v ∈ s, s ∈ A (label v)) ∧
+        (∀ i (x : Space (A i)), iteratedRealization K n (realizationInclusion (hA i) x) ∈ U i) ∧
+        (∀ i, (realizationInclusion (hA i)).Nullhomotopic) := by
+  classical
+  simp only [ContinuousMap.Nullhomotopic, ContinuousMap.Homotopic] at H
+  choose point Hpoint using H
+  have dimension (s : Finset X) (_ : s ∈ K) : s.card ≤ Fintype.card X + 1 :=
+    (Finset.card_le_univ s).trans (Nat.le_succ _)
+  obtain ⟨n, label, A, hA, hstars, hlands, hcontracts⟩ :=
+    categorical_subcomplexes_of_open_cover_of_card_le K (Nat.succ_pos (Fintype.card X))
+      dimension U hopen hcover point Hpoint
+  refine ⟨n, label, A, hA, ?_, hstars, hlands, fun i =>
+    ⟨(iteratedRealization K n).symm (point i), hcontracts i⟩⟩
+  intro s hs
+  obtain ⟨v, hv⟩ := ((depthComplex K n).isRelLowerSet_faces hs).1
+  exact ⟨label v, hstars s hs v hv⟩
+
 /-- A categorical open cover by two sets yields two categorical subcomplexes
 containing all incident faces of their assigned vertices at a finite ordinary depth.
 The homotopies preserve the chosen endpoint of each original contraction under the
@@ -272,51 +391,9 @@ theorem categorical_subcomplexes_of_open_cover
         (∀ s ∈ depthComplex K n, ∀ v ∈ s, s ∈ A (label v)) ∧
         (∀ i (x : Space (A i)), iteratedRealization K n (realizationInclusion (hA i) x) ∈ U i) ∧
         (∀ i, Nonempty ((realizationInclusion (hA i)).Homotopy
-          (ContinuousMap.const (Space (A i)) ((iteratedRealization K n).symm (point i))))) := by
-  classical
-  letI : CompactSpace (Space K) := realizationCompactSpace K
-  obtain ⟨δ, hδ, hball⟩ := lebesgue_number_lemma_of_metric isCompact_univ hopen hcover
-  obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one hδ (show (4 / 5 : ℝ) < 1 by norm_num)
-  let L := depthComplex K n
-  let e := iteratedRealization K n
-  let chooseColour (v : Vertex L) : Bool :=
-    (hball (e (vertexPoint L v.val v.property)) (Set.mem_univ _)).choose
-  have chooseColour_spec (v : Vertex L) :
-      Metric.ball (e (vertexPoint L v.val v.property)) δ ⊆ U (chooseColour v) :=
-    (hball (e (vertexPoint L v.val v.property)) (Set.mem_univ _)).choose_spec
-  let label (v : DepthVertices K n) : Bool :=
-    if hv : ({v} : Finset (DepthVertices K n)) ∈ L then chooseColour ⟨v, hv⟩ else false
-  let A (i : Bool) := subcomplexInOpen K e (U i)
-  have hA (i : Bool) : A i ≤ L := fun _ hs => hs.choose
-  have hsubordinate : ∀ s ∈ L, ∀ v ∈ s, s ∈ A (label v) := by
-    intro s hs v hv
-    have hsingleton : ({v} : Finset (DepthVertices K n)) ∈ L :=
-      (L.isRelLowerSet_faces hs).2 (Finset.singleton_subset_iff.mpr hv)
-        (Finset.singleton_nonempty v)
-    have hlabel : label v = chooseColour ⟨v, hsingleton⟩ := dif_pos hsingleton
-    refine ⟨hs, fun x hx => ?_⟩
-    rw [hlabel]
-    apply chooseColour_spec ⟨v, hsingleton⟩
-    apply Metric.mem_ball.mpr
-    change dist (iteratedRealization K n (facePoint hs hx)).val
-      (iteratedRealization K n (vertexPoint L v hsingleton)).val < δ
-    simp only [iteratedRealization_coordinates]
-    exact (dist_face_to_vertex_le K dimension n hs hv hx).trans_lt hn
-  have hlands (i : Bool) (x : Space (A i)) :
-      e (realizationInclusion (hA i) x) ∈ U i := by
-    obtain ⟨s, hs, hx⟩ := (realization_mem_iff (A i) x.val).mp x.property
-    obtain ⟨hs', hwhole⟩ := hs
-    exact hwhole x.val hx
-  refine ⟨n, label, A, hA, hsubordinate, hlands, fun i => ?_⟩
-  let inc := realizationInclusion (hA i)
-  let into : C(Space (A i), ↥(U i)) :=
-    ⟨fun x => ⟨e (inc x), hlands i x⟩, (e.continuous.comp inc.continuous).subtype_mk _⟩
-  let F := (ContinuousMap.Homotopy.refl (toContinuousMap e.symm)).comp
-    ((H i).some.compContinuousMap into)
-  refine ⟨F.cast ?_ rfl⟩
-  apply ContinuousMap.ext
-  intro x
-  exact e.symm_apply_apply (inc x)
+          (ContinuousMap.const (Space (A i)) ((iteratedRealization K n).symm (point i))))) :=
+  categorical_subcomplexes_of_open_cover_of_card_le K (D := 5) (by decide)
+    dimension U hopen hcover point H
 
 /-- Points of one closed face are joined by paths in the realization. -/
 private theorem joined_in_face {s : Finset X} (hs : s ∈ K)

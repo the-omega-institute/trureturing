@@ -77,6 +77,25 @@ asymptotic existence theorem. For fixed $k$ and $g=2$, the progression
 satisfies its two divisibility conditions, yielding eventual attainment
 as a literature consequence. [J. Liu, JCTA 114 (2007), 410–420](https://doi.org/10.1016/j.jcta.2006.06.006)
 
+At $(n,t,w,e)=(58,2,6,4)$ the exact optimum is 57 information classes.
+The projective plane $\mathrm{PG}(2,7)$ has 57 points and 57 lines with
+eight points per line. Embed the points in the 58 coordinates, leaving
+one coordinate unused. Each line supplies an information class of all
+six-subsets of its points. Each two-point deletion leaves at least six
+points on every line, and distinct lines meet in at most one point.
+
+The finite bound gives at most 58 classes. Attainment at 58 would force
+a design with 29 two-point groups and 58 eight-point blocks. Its square
+integer incidence matrix $A$ would have $AA^{\mathsf T}=8I+J-P$, where
+$J$ is all ones and $P$ records membership in the same group. The
+29 pair blocks of $8I-P$ each have determinant 48. The all-ones
+rank-one update gives determinant $48^{29}(1+58/6)=2^{121}3^{28}$,
+which cannot equal the integer square $\det(A)^2$.
+Lean checks both the design obstruction and the exact support-family
+optimum in [ExactLength58](../D5/S3/Combinatorics/Hamming/ConstantPowerCooling/ExactLength58.lean).
+Other finite parameter choices in the even-deletion question remain open
+in this dossier. [Source, Section 5](https://arxiv.org/html/2611.34386v1#S5)
+
 ## ASSUMED-UNVERIFIED
 
 Asymptotic GDD existence is external to the Lean development. An explicit
@@ -105,3 +124,7 @@ telescopes. [Issue #35136](https://github.com/the-omega-institute/trureturing/is
 - `CPECCBridge.support_distance_of_inter_le_one`
 - `CPECCBridge.shadows_edge_disjoint_of_distance`
 - `CPECCBridge.nonclique_shadow_edge_lower_of_ambient_deletion`
+
+The length-58 source mirror validates the audit for `support_optimum`.
+The source binding for `no_group_divisible_design` remains open.
+[Audit issue #35136](https://github.com/the-omega-institute/trureturing/issues/35136#issuecomment-7235364329)

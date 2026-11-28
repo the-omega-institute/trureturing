@@ -21,7 +21,7 @@ open WithLp
 
 namespace OmegaMath.ExceptionalSix
 
-private abbrev Lattice := Fin 8 → ℤ
+abbrev Lattice := Fin 8 → ℤ
 
 private def pairs : Fin 10 → Fin 5 × Fin 5 :=
   ![(0, 1), (0, 2), (0, 3), (0, 4), (1, 2),
@@ -43,11 +43,11 @@ private def spinCode (k : Fin 32) : Lattice :=
     if j.val < 5 then sign (k.val.testBit j.val)
     else if j.val = 7 then -tail else tail
 
-private def code (k : Fin 72) : Lattice :=
+def code (k : Fin 72) : Lattice :=
   if hk : k.val < 40 then orthogonalCode ⟨k.val, hk⟩
   else spinCode (Fin.ofNat 32 (k.val - 40))
 
-private def indexOf (z : Lattice) : Fin 72 :=
+def indexOf (z : Lattice) : Fin 72 :=
   if z 5 = 0 then
     let p := (List.range 10).findIdx fun k =>
       let ij := pairs (Fin.ofNat 10 k)
@@ -63,7 +63,7 @@ private def indexOf (z : Lattice) : Fin 72 :=
 private theorem indexOf_code (k : Fin 72) : indexOf (code k) = k := by
   fin_cases k <;> decide
 
-private def dot (x y : Lattice) : ℤ :=
+def dot (x y : Lattice) : ℤ :=
   ((List.finRange 8).map fun j => x j * y j).sum
 
 private theorem dot_eq_sum (x y : Lattice) : dot x y = ∑ j, x j * y j := by
@@ -102,7 +102,7 @@ noncomputable def realize (z : Fin 8 → ℤ) : Ambient :=
 
 noncomputable def root (k : Fin 72) : Ambient := realize (code k)
 
-private theorem realize_injective : Function.Injective realize := by
+theorem realize_injective : Function.Injective realize := by
   intro x y h
   funext j
   have hj := congrArg (fun v : Ambient => v j) h
@@ -110,7 +110,7 @@ private theorem realize_injective : Function.Injective realize := by
   have he : (x j : ℝ) = (y j : ℝ) := (div_left_inj' (by norm_num : (2 : ℝ) ≠ 0)).mp hj
   exact_mod_cast he
 
-private theorem inner_realize (x y : Lattice) :
+theorem inner_realize (x y : Lattice) :
     ⟪realize x, realize y⟫_ℝ = (dot x y : ℝ) / 4 := by
   rw [dot_eq_sum, Int.cast_sum, Finset.sum_div]
   simp only [PiLp.inner_apply, Real.inner_apply, realize, Int.cast_mul]
@@ -118,7 +118,7 @@ private theorem inner_realize (x y : Lattice) :
   intro i _
   ring
 
-private theorem realize_neg (x : Lattice) : realize (-x) = -realize x := by
+theorem realize_neg (x : Lattice) : realize (-x) = -realize x := by
   ext i
   change ((-x i : ℤ) : ℝ) / 2 = -((x i : ℝ) / 2)
   push_cast
@@ -238,7 +238,7 @@ theorem root_reflection {v w : Ambient} (hv : v ∈ roots) (hw : w ∈ roots) :
   rw [hcast]
   ring
 
-private def simpleCode : Fin 6 → Lattice :=
+def simpleCode : Fin 6 → Lattice :=
   ![![1, -1, -1, -1, -1, -1, -1, 1],
     ![2, 2, 0, 0, 0, 0, 0, 0], ![-2, 2, 0, 0, 0, 0, 0, 0],
     ![0, -2, 2, 0, 0, 0, 0, 0], ![0, 0, -2, 2, 0, 0, 0, 0],

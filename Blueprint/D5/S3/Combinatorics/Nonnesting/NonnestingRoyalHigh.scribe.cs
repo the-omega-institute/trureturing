@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Nonnesting;
 internal sealed class NonnestingRoyalHighDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Nonnesting/NonnestingRoyalHigh.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/elizalde2024pattern");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/elizalde2024pattern");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The generating function for nonnesting permutations avoiding 1233 and 1322 satisfies the stated quadratic equation.",

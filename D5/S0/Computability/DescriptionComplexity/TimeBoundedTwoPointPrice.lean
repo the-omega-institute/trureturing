@@ -5,7 +5,14 @@
    anchors: []
    digest: Finite bounded search constructs incomparable fast-long and short-slow witnesses. -/
 
-import Mathlib
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.Order.GroupWithZero.Basic
+import Mathlib.Algebra.Order.Ring.Nat
+import Mathlib.Data.Finset.Max
+import Mathlib.Data.Finset.Option
+import Mathlib.Data.List.OfFn
+import Mathlib.Data.Nat.Find
+import Mathlib.Data.Nat.Log
 
 /-!
 Library-search and duplication audit (2026-09-05):

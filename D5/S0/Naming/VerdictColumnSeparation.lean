@@ -5,7 +5,7 @@
    anchors: []
    digest: A population extension can separate previously equal verdict columns. -/
 
-import Mathlib
+import Mathlib.Basic.Nontrivial.Defs
 
 namespace D5.S0.Naming.VerdictColumnSeparation
 

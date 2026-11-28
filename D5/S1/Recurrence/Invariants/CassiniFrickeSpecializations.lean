@@ -5,6 +5,7 @@
    anchors: []
    digest: Log-coordinate Cassini-Fricke values alternate with conserved absolute value. -/
 
+import Mathlib.NumberTheory.Real.GoldenRatio
 import D5.S1.Recurrence.CassiniFricke
 
 namespace D5.S1.Recurrence.Invariants.CassiniFrickeSpecializations
