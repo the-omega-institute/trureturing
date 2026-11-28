@@ -1410,10 +1410,6 @@ private theorem reverseOutcome_nodup (n : Nat) : (reverseOutcome n).Nodup := by
 private theorem emptyBoard_snoc (n : Nat) : emptyBoard (n + 1) = emptyBoard n ++ [none] := by
   simp [emptyBoard, List.replicate_succ']
 
-private theorem backgammonOutcome_length (word : List Nat) :
-    (backgammonOutcome word).length = word.length := by
-  simp [backgammonOutcome, parkFrom_length, emptyBoard]
-
 /-- If car 1 finishes in the last spot, no other car can prefer that spot. -/
 private theorem reverse_tail_range (p : Nat) (rest : List Nat) (valid : Valid (p :: rest))
     (out : backgammonOutcome (p :: rest) = reverseOutcome (rest.length + 1)) :
