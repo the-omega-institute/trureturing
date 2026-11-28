@@ -242,6 +242,8 @@ def generate(stage, product, seed, roots, excluded, original_seed):
             if safe.returncode == 0 or any(f"uses unsafe declaration '{name}'" not in safe.stdout + safe.stderr
                                            for name in ("Omega.ST.Prim.Ref.put", "Omega.ST.Ref.put")):
                 raise ValueError("safe client did not reject both unsafe reference writes")
+        if has_interfaces(inventory, {"Init.System.ST": {"ST.Prim.Ref.modifyUnsafe"}}):
+            check_state_consumer(stage, artifact, "ReferenceModify", "ref_modify", [product / "native/reference.o"])
         pure_state = {"Init.System.ST": {"Void.mk", "ST.pure", "ST.bind", "EST.pure", "EST.bind",
                                          "EST.throw", "EST.tryCatch", "runST", "runEST", "EST.Out.ok.elim",
                                          "EST.Out.error.elim", "instMonadST", "instMonadEST", "instMonadExceptOfEST",

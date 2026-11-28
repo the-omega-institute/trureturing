@@ -34,7 +34,7 @@ private def operations := #[`Omega.ST.pure, `Omega.ST.bind, `Omega.EST.pure, `Om
   `Omega.instSTWorldOfMonadLift, `Omega.instMonadFinallyST, `Omega.instMonadFinallyEST,
   `Omega.instMonadAttachST, `Omega.instMonadAttachEST, `Omega.instMonadLiftSTEST]
 
-private def lifted := #[`Omega.ST.mkRef, `Omega.ST.Ref.put, `Omega.ST.Ref.swap, `Omega.ST.Ref.set, `Omega.ST.Ref.modify, `Omega.ST.Ref.ptrEq]
+private def referenceWrappers := #[`Omega.ST.Prim.Ref.modifyUnsafe, `Omega.ST.mkRef, `Omega.ST.Ref.put, `Omega.ST.Ref.swap, `Omega.ST.Ref.set, `Omega.ST.Ref.modify, `Omega.ST.Ref.ptrEq]
 
 public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : IO Unit := do
   let original ← importModules #[{module := `Init.System.ST}] {}
@@ -62,7 +62,7 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
   let env ← importModules imports {}
   let ref? := if interpreter then none else env.find? `Omega.ST.Ref
   let refNames := if let some (.inductInfo ref) := ref? then #[ref.name] ++ ref.ctors.toArray else #[]
-  let wrappers := if interpreter then #[] else (operations ++ lifted).filter env.contains
+  let wrappers := if interpreter then #[] else (operations ++ referenceWrappers).filter env.contains
   -- Some translated matchers have a private lexical name, while others are public.
   let matchers := wrappers.foldl (init := #[]) fun ns w => Id.run do
     let some value := (env.find? w).bind (·.value?) | return ns
@@ -126,6 +126,12 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
     emitBridge compiled `StrictVoidInterpreter "src/OmegaChecks/InitPort/est_out_elim.h" output
   else
     writeCode lib owner compiled (layouts ++ codeExtensions ++ #[Lean.privateConstKindsExt.name])
+    let modifyUnsafe := InitKernelPort.portName OmegaChecks.InitPort.ReferenceModify.implementation
+    if env.contains modifyUnsafe then
+      let publicEnv ← importModules #[{module := owner}] {}
+      let some idx := publicEnv.getModuleIdx? owner | throw <| IO.userError s!"missing {owner}"
+      unless (impureSigExt.getModuleEntries publicEnv idx).any (·.name == modifyUnsafe) do
+        throw <| IO.userError s!"missing exported native signature for {modifyUnsafe}"
     emitBridge compiled owner "src/OmegaChecks/InitPort/reference_runtime.c" output
 
 end ReferenceNative
