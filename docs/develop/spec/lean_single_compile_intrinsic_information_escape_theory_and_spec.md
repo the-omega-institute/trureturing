@@ -2319,9 +2319,9 @@ $$
 若 flat catalog 中有 $i\neq j$ 且 $K_j\subseteq K_i$，则 $U_i=\varnothing$。因此
 strict cumulative chain 不蕴含每个 flat member 的 leave-one-out capture 为正。
 
-### IE-039　`systemWidePositive_iff_systemCatalogIrredundant`
+### IE-039　`SystemCatalogIrredundant`
 
-对显式指定的 system root $R_\star$：
+对显式指定的 system root $R_\star$，展开 Lean 定义 `SystemCatalogIrredundant` 即得
 
 $$
 \operatorname{SystemCatalogIrredundant}(R_\star)

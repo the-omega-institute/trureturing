@@ -105,7 +105,7 @@ jobs:
       - name: Verify the changed generation transport
         shell: bash
         run: |
-          if grep -zEq '^(Meta/tools-release.json$|\.github/(actions/lean-(cache-shards|compile-layer)/|scripts/(test-)?(read-module-reports|compiler-release-coordinator)\.py$|workflows/(ci-current|ci-lean-generation-compile|ci-lean-module-publication|ci-lean-module-verify|ci-publication-verify|lean-cache-publish|cache-release-publish|report-release-publish|truth-release-publish)\.yml$))' "$RUNNER_TEMP/changed-paths"; then
+          if grep -zEq '^(Meta/tools-release.json$|\.github/(actions/lean-(cache-shards|compile-layer)/|scripts/(test-)?(read-module-reports|compiler-release-coordinator)\.py$|workflows/(ci-current|ci-lean-generation-compile|ci-lean-module-publication|ci-lean-module-verify|ci-publication-verify|cache-release-publish|report-release-publish|truth-release-publish)\.yml$))' "$RUNNER_TEMP/changed-paths"; then
             node --test .github/actions/lean-cache-shards/test-generation.mjs
             python3 -B .github/scripts/test-read-module-reports.py
             python3 -B .github/scripts/test-compiler-release-coordinator.py
@@ -268,9 +268,7 @@ jobs:
         run: python3 tools/scripts/workflow/ci_checks.py current lean-plan --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - id: keys
         if: ${{ !cancelled() && steps.lean_plan.outputs.needs_lean == 'true' }}
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
       - id: elan
         if: ${{ !cancelled() && steps.keys.outputs.elan_key != '' }}
         continue-on-error: true
@@ -413,9 +411,7 @@ jobs:
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
         run: bash tools/scripts/workflow/ci-entry.sh
       - id: keys
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
       - id: elan
         if: ${{ !cancelled() && steps.keys.outputs.elan_key != '' }}
         continue-on-error: true

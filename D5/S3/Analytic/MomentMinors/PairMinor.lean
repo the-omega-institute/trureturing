@@ -10,9 +10,6 @@ import Mathlib.Analysis.Matrix.Order
 
 /-! Second minors as a nonnegative congruence of a tensor square. -/
 
-set_option backward.isDefEq.respectTransparency false
-set_option backward.isDefEq.respectTransparency.types false
-
 noncomputable section
 open Matrix
 open scoped Kronecker
@@ -34,12 +31,11 @@ theorem pairMinor_posSemidef {ι κ : Type*} [Fintype ι] [Finite κ]
       A (p a) (q b) * A (q a) (p b) : Matrix κ κ ℝ) =
       (1 / 2 : ℝ) • (Tᴴ * (A ⊗ₖ A) * T) := by
     funext a b
-    simp only [Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply,
-      Matrix.conjTranspose_apply, T, star_trivial,
-      sub_mul, mul_sub, Finset.sum_sub_distrib]
-    simp only [ite_mul, zero_mul, mul_ite, mul_zero,
-      Finset.sum_ite_eq', Finset.mem_univ, ite_true, one_mul, mul_one]
-    simp only [Matrix.kroneckerMap_apply]
+    change _ = (1 / 2 : ℝ) * ∑ y : ι × ι,
+      (∑ x : ι × ι, T x a * (A x.1 y.1 * A x.2 y.2)) * T y b
+    simp only [T, sub_mul, mul_sub, Finset.sum_sub_distrib,
+      ite_mul, zero_mul, mul_ite, mul_zero, Finset.sum_ite_eq',
+      Finset.mem_univ, ite_true, one_mul, mul_one]
     ring
   rw [he]
   exact h

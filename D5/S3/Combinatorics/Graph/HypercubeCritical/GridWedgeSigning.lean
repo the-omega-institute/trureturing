@@ -28,8 +28,7 @@ open private rowPrefix switchSign switchSign_unit gridPrefix_flip sign_lower_edg
 open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private matrix_flip_prefix from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GrayGridComponent
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 open Classical in
 /-- The finite realization of the literal TRUE-row support. -/

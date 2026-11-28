@@ -4,9 +4,6 @@ inputs:
   operation:
     description: select-base or install-base
     required: true
-  mode:
-    description: production or verification
-    required: true
   previous-commit-only:
     description: Verify rolling publication from a strictly older source
     default: 'false'
@@ -39,18 +36,12 @@ runs:
       shell: bash
       env:
         OPERATION: ${{ inputs.operation }}
-        RELEASE_MODE: ${{ inputs.mode }}
         PREVIOUS_COMMIT_ONLY: ${{ inputs.previous-commit-only }}
         PREVIOUS_TAG: ${{ inputs.tag }}
         PREVIOUS_SHA: ${{ inputs.producer }}
         PREVIOUS_MANIFEST: ${{ inputs.manifest }}
       run: |
-        case "$RELEASE_MODE" in
-          production) ref=refs/heads/dev ;;
-          verification) ref="$GITHUB_REF" ;;
-          *) exit 2 ;;
-        esac
-        args=(--mode "$RELEASE_MODE" --source-ref "$ref" --source-commit "$(git rev-parse HEAD)")
+        args=(--mode verification --source-ref "$GITHUB_REF" --source-commit "$(git rev-parse HEAD)")
         case "$OPERATION" in
           select-base)
             if [[ "$PREVIOUS_COMMIT_ONLY" == true ]]; then args+=(--previous-commit-only); fi

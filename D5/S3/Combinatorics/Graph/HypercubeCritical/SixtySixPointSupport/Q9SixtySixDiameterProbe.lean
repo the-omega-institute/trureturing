@@ -209,8 +209,7 @@ private lemma sixty_six_no_distance_eight {C : Finset (Q 9)} (hc : C.card = 66)
 
 #print axioms sixty_six_no_distance_eight
 
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private diff diff_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical

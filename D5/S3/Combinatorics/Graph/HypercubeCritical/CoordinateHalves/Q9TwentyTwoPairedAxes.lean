@@ -18,8 +18,7 @@ open BalancedCriticalSpectrum (Q flip_adj flip_apply_same)
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open CubeCoordinateNormalization (normalize origin)
 open BalancedCubeGirth (flip_comm)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private normalize_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeCoordinateNormalization
 open private normalize_center from

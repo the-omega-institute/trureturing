@@ -11,10 +11,6 @@ import Mathlib.LinearAlgebra.Finsupp.Pi
 
 /-! Finite coordinates obtained from Mathlib's actual Finsupp coproduct cocone. -/
 
-set_option backward.defeqAttrib.useBackward true
-set_option backward.isDefEq.respectTransparency false
-set_option backward.isDefEq.respectTransparency.types false
-
 noncomputable section
 open CategoryTheory Limits
 
@@ -33,7 +29,7 @@ theorem ι_coordinateIso (j : J) :
     Sigma.ι (fun _ : J => ModuleCat.of ℤ ℤ) j ≫ (coordinateIso e).hom =
       ModuleCat.ofHom ((LinearMap.id : ℤ →ₗ[ℤ] ℤ).smulRight
         (fun i => if e i = j then (1 : ℤ) else 0)) := by
-  dsimp only [coordinateIso, Iso.trans_hom]
+  dsimp only [coordinateIso, Iso.trans]
   rw [colimit.isoColimitCocone_ι_hom_assoc]
   apply ModuleCat.hom_ext
   apply LinearMap.ext

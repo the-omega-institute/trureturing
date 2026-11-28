@@ -19,9 +19,6 @@ public import Lean.Elab.Tactic.Omega
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
--- Preserve the original private-instance references while exposing module visibility.
-set_option backward.privateInPublic true
-
 @[expose] public section
 
 namespace D5.S3.Arith.SumFreeCodeDimensionRefutation
