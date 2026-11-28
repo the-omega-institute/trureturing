@@ -6,7 +6,7 @@ meta import OmegaChecks.InitPort.StrictReplay
 
 open Lean InitKernelPort OmegaChecks.InitPort OmegaChecks.InitBoundaries
 
-/-- Each statement uses an operation whose full public type yields choice. -/
+/-- Each statement uses an operation whose public type and pinned behavior yield choice. -/
 private def sites : List (Name × Name × Name × Name) := [
   (`Init.Grind.Injective, `Lean.Grind.leftInv_eq, `Lean.Grind.leftInv, ``choiceFromLeftInv),
   (`Init.Control.Lawful.MonadAttach.Lemmas, `WeaklyLawfulMonadAttach.bind_attach_of_nonempty,
@@ -23,6 +23,8 @@ private def sites : List (Name × Name × Name × Name) := [
     `WellFounded.extrinsicFix₃, ``choiceFromFix₃),
   (`Init.Data.Range.Polymorphic.RangeIterator, `Std.Rxi.Iterator.instIteratorLoop.loop.eq_1,
     `WellFounded.extrinsicFix₃, ``choiceFromFix₃),
+  (`Init.Internal.Order.While, `repeatM.Internal.eq_of_monadTail, `repeatM, ``choiceFromRepeatM),
+  (`Init.Internal.Order.While, `Lean.Loop.forIn_eq_of_monadTail, `Lean.Loop.forIn, ``WhileChoice.choiceFromLoop),
   (`Init.Classical, `Classical.epsilon_singleton, `Classical.epsilon, ``choiceFromEpsilon),
   (`Init.Data.Range.Polymorphic.RangeIterator, `Std.Rxc.Iterator.instIteratorLoop.loop.eq_1,
     `WellFounded.extrinsicFix₃, ``choiceFromFix₃)]
@@ -51,11 +53,25 @@ public unsafe def main (args : List String) : IO Unit := do
     let opLevels ← if dep == ``Lean.Grind.leftInv then do
       let [u] := levels | throw <| IO.userError "expected one universe for left-inverse choice"
       pure [u, u.succ]
+    else if dep == ``repeatM || dep == ``Lean.Loop.forIn then do
+      let [u] := levels | throw <| IO.userError "expected a single universe for loop choice"
+      pure [u, u]
     else pure levels
-    let expected := Lean.mkForall `op .default (operation.type.instantiateLevelParams operation.levelParams opLevels)
-      (ax.type.instantiateLevelParams ax.levelParams (levels.drop (levels.length - ax.numLevelParams)))
+    let choiceType := ax.type.instantiateLevelParams ax.levelParams (levels.drop (levels.length - ax.numLevelParams))
+    let mut conclusion := choiceType
+    if dep == ``Lean.Loop.forIn then
+      -- The loop type alone admits immediate return. Its pinned unfolding on the
+      -- parity action is what forces a value of every nonempty exception type.
+      let fixed := mkConst ``WhileChoice.fixed levels
+      let law := mkConst ``WhileChoice.officialFixed levels
+      let .ok lawType := Kernel.check evidence {} law | throw <| IO.userError "invalid pinned loop law"
+      unless Kernel.isDefEqGuarded evidence {} lawType (mkApp fixed (mkConst dep opLevels)) do
+        throw <| IO.userError "the pinned loop must have the specified fixed point"
+      conclusion := Lean.mkForall `h .default (mkApp fixed (.bvar 0)) choiceType
+    let expected := Lean.mkForall `op .default
+      (operation.type.instantiateLevelParams operation.levelParams opLevels) conclusion
     unless ax.isAxiom && operation.numLevelParams == opLevels.length &&
-        Kernel.isDefEqGuarded visible {} expected proof.type do
+        Kernel.isDefEqGuarded evidence {} expected proof.type do
       throw <| IO.userError s!"{witness} must derive choice from the complete type of {dep}"
     searchPathRef.set [lib]
     let strict ← importModules #[{module := strictOwner}] {} (level := .exported)

@@ -27,7 +27,9 @@ element of any nonempty type, as proved by choiceFromRepeatM.
 Lean.Loop.forIn and Lean.instForInLoopUnitOfMonad must obey the pinned
 fixed-point equation when a fixed point exists. On the exception computation
 in OmegaChecks.InitBoundaries.WhileChoice, this behavior yields Classical.choice
-through choiceFromLoop and choiceFromInstance.
+through choiceFromLoop and choiceFromInstance. The statements
+repeatM.Internal.eq_of_monadTail and Lean.Loop.forIn_eq_of_monadTail use
+these operations at their original public types.
 
 Classical.choice.congr_simp and Exists.choose.congr_simp have equality endpoints
 that apply their selectors to a nonempty type or an existential proof.
