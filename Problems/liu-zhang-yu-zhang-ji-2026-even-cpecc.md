@@ -83,8 +83,6 @@ Asymptotic GDD existence is external to the Lean development. An explicit
 starting length and the other length residues are outside the finite
 construction established here.
 
-## Pending source-based information audit
-
 The source-based information audit remains unfinished for the following
 14 public theorems (DTR-Unregistered). A faithful enrolled readout requires
 typed reconstruction of each actual source, a full-scope realization bridge,
