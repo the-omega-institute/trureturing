@@ -70,6 +70,10 @@ $$\neg \left(\forall V \in Type,\; [\operatorname{Fintype}\left(V\right)] [\oper
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.not_conjecture52` (`✓ std3`). ∎
 
+*Resolves.* `Problems/higuita-diaz-lopez-roldan-correa-2026-parking-conjecture-52` (refuted) by `D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.not_conjecture52`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"higuita-diaz-lopez-roldan-correa-2026-parking-conjecture-52","declaration_gid":"D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.not_conjecture52","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Robinson Higuita-Diaz, Lykos López, Alejandro Roldán-Correa (2026). *Random Sequential Adsorption versus the Uniform Ensemble of Jammed Configurations: Stochastic Dominance on Graphs*. URL: <https://arxiv.org/abs/2611.14718v2>.
