@@ -36,6 +36,14 @@ internal sealed class BKMFlagRefinementPetzDocument : IScribeDocumentDefinition
                 "inverse-square-root sandwich. Its outer factors are the square root of that " +
                 "block of the reference. Assembling these blocks gives the ordinary Petz output.",
                 DescribeRole.Definition),
+            Entry("joint-trace-norm", "traceNorm_joint", "Trace norm adds over flag blocks",
+                "For any finite family of square complex matrices S indexed by the flags, "
+                + "the trace norm of joint(S) equals the sum of the trace norms of its blocks.",
+                DescribeRole.Lemma),
+            Entry("joint-petz", "partialTracePetz_joint", "Petz recovery respects the flag blocks",
+                "For positive definite reference blocks T and any retained input matrix X, "
+                + "partialTracePetz(joint(T), X) equals the joint matrix of petzBlocks(T, X).",
+                DescribeRole.Lemma),
             Entry("petz-intertwines", "refine_ordinaryPetz", "Petz recovery intertwines with refinement",
                 "For positive definite reference blocks and strictly positive normalized weights, " +
                 "every retained input matrix has the same refined output whether one recovers " +
