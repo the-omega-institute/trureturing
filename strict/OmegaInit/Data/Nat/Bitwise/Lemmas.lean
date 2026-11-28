@@ -4,6 +4,8 @@ public import OmegaInit.Core
 public import OmegaInit.Data.Nat.Bitwise.Basic
 import all OmegaInit.Data.Nat.Bitwise.Basic
 import OmegaInit.Data.Nat.Basic
+import OmegaInit.Data.Nat.Lemmas
+import OmegaInit.Data.Nat.Log2
 import OmegaInit.Data.Nat.Div.Basic
 import all OmegaInit.Prelude
 
@@ -294,4 +296,39 @@ end Omega.Nat
 public section
 namespace Nat
 export _root_.Omega.Nat (and_lt_two_pow bitwise_lt_two_pow exists_ge_and_testBit_of_ge_two_pow exists_testBit_of_ne_zero ge_two_pow_of_testBit lt_pow_two_of_testBit one_and_eq_mod_two or_lt_two_pow testBit_add_one testBit_and testBit_bitwise testBit_div_two testBit_lt_two_pow testBit_of_two_pow_le_and_two_pow_add_one_gt testBit_or testBit_succ zero_testBit)
+end Nat
+
+namespace Omega.Nat
+
+private theorem highestBit {n : Nat} (nz : Not (Eq n 0)) : Eq (testBit n (log2 n)) Bool.true :=
+  let bounds := (log2_eq_iff nz).mp rfl
+  testBit_of_two_pow_le_and_two_pow_add_one_gt bounds.left bounds.right
+
+private theorem lowerBits (k : Nat) : ∀ i, Nat.lt i k → Eq (testBit (Nat.pow 2 k) i) Bool.false :=
+  Nat.rec (motive := fun k => ∀ i, Nat.lt i k → Eq (testBit (Nat.pow 2 k) i) Bool.false)
+    (fun i h => False.elim (not_succ_le_zero i h))
+    (fun k ih i => Nat.casesOn (motive := fun i => Nat.lt i (Nat.succ k) →
+      Eq (testBit (Nat.pow 2 k.succ) i) Bool.false) i
+      (fun _ => (bit_as_parity (Nat.pow 2 k.succ)).trans
+        (congrArg (fun r => Nat.beq r 1) ((congrArg (fun y => Nat.mod y 2) (Nat.mul_comm (Nat.pow 2 k) 2)).trans (Nat.mul_mod_right 2 (Nat.pow 2 k)))))
+      (fun i hi => (testBit_succ (Nat.pow 2 k.succ) i).trans
+        ((congrArg (fun r => testBit r i) (Nat.mul_div_cancel (Nat.pow 2 k) Nat.zero_lt_two)).trans
+          (ih i (Nat.le_of_succ_le_succ hi))))) k
+
+private theorem offBit {n m : Nat} (ne : Not (Eq n m)) : Eq (testBit (Nat.pow 2 n) m) Bool.false :=
+  Decidable.byCases (dec := Nat.decLt m n) (fun lt => lowerBits n m lt)
+    (fun no =>
+      let h : Nat.lt n m := Nat.lt_of_not_ge (fun rev => ne (Nat.le_antisymm (Nat.le_of_not_gt no) rev))
+      let scale : Nat.lt (Nat.pow 2 n) (Nat.mul (Nat.pow 2 n) 2) :=
+        Eq.subst (motive := fun a => Nat.lt a (Nat.mul (Nat.pow 2 n) 2)) (Nat.mul_one _)
+          (Nat.mul_lt_mul_of_pos_left Nat.one_lt_two (Nat.two_pow_pos n))
+      let pos : Nat.lt (Nat.pow 2 n) (Nat.pow 2 m) := Nat.lt_of_lt_of_le scale (Nat.pow_le_pow_right Nat.zero_lt_two h)
+      testBit_lt_two_pow pos)
+
+end Omega.Nat
+port_proof Nat.testBit_log2 using Omega.Nat.highestBit
+port_proof Nat.testBit_two_pow_of_ne using Omega.Nat.offBit
+
+namespace Nat
+export _root_.Omega.Nat (testBit_log2 testBit_two_pow_of_ne)
 end Nat
