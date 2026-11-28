@@ -39,6 +39,7 @@ public import OmegaInit.Data.Option.Basic
 public import OmegaInit.Data.Option.Lemmas
 public import OmegaInit.Data.Option.Monadic
 public import OmegaInit.Data.Ord.Basic
+public import OmegaInit.Data.Order.Classes
 public import OmegaInit.Data.PLift
 public import OmegaInit.Data.Prod
 public import OmegaInit.Data.String.Decode
