@@ -2,7 +2,7 @@ import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9FiveAxisFibreCapacity
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9TightDistanceTwoCenter
 import D5.S3.Combinatorics.Graph.HypercubeCritical.HuangUnitSupportGap
-import D5.S3.Combinatorics.Graph.HypercubeCritical.SignedMidpointLink
+import D5.S3.Combinatorics.Graph.HypercubeCritical.SignedFlips.SignedMidpointLink
 
 /-! A shared midpoint keeps both contact rows inside one inactive-coordinate fibre. -/
 
