@@ -7,7 +7,7 @@ internal sealed class GerlingMultiorbitalCompletenessRefutationDocument : IScrib
 {
     private const string Owner = "D5/S3/Combinatorics/Graph/Chromatic/GerlingMultiorbitalCompletenessRefutation";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/gerling2026multiorbital");
+        LibraryNoteRef.Create("D5/L/FiniteGroups/gerling2026multiorbital");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Two connected finite graphs with faithful C2 actions share a multiorbital polynomial despite being nonisomorphic.",
