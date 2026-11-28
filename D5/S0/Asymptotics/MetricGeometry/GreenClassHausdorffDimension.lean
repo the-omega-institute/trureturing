@@ -6,6 +6,8 @@
    digest: For a finite nontrivial discrete alphabet O, the PiNat naming space has Hausdorff dimension log base 2 of card O; its critical Hausdorff measure is the uniform string measure, and every finite-support green class has the same Hausdorff dimension. The proof establishes the mass-distribution bound from least differing coordinates and the reverse measure bound from finite prefix-cylinder covers. The varying-marginal generalization is not covered. -/
 
 import D5.S0.Asymptotics.MetricGeometry.GreenClassDiameter
+import Mathlib.Analysis.SpecialFunctions.Log.Base
+import Mathlib.Topology.MetricSpace.HausdorffDimension
 
 open MeasureTheory Measure
 open scoped ENNReal Topology

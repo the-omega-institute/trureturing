@@ -27,9 +27,18 @@ strata_touched:
   - D5/S3/Topology/GraphSubdivisionIntervals
   - D5/S3/Topology/GraphSubdivisionHalves
   - D5/S3/Topology/GraphSubdivisionNullhomotopy
+  - D5/S3/Topology/GraphSubdivisionPositions
+  - D5/S3/Topology/GeometricGraphTermination
   - D5/S3/Topology/RankedCofaceContiguity
   - D5/S3/Topology/CofaceComparisonObstruction
   - D5/S3/Topology/CofaceTriangleCollapse
+  - D5/S3/Topology/RetractionCoordinate
+  - D5/S3/Topology/StableCategory/TetrahedralGraphIteration
+  - D5/S3/Topology/StableCategory/TetrahedralCategoricalCover
+  - D5/S3/Topology/BarycentricRealization
+  - D5/S3/Topology/StableCategory/FourPieceCategoricalCover
+  - D5/S3/Topology/StableCategory/DimensionFourCategoricalColour
+  - D5/S3/Topology/StableCategory/LebesgueStarAssignment
 license: citation-only
 triage: anchor
 ---
@@ -965,6 +974,16 @@ fundamental group gives finite move witnesses for this choice.
 The Lean theorem takes those witnesses as hypotheses. This is the
 fixed-target step for the three-dimensional approach to Question 6.3.
 
+For a geometric nullhomotopy there is also a direct construction.
+Place the subdivided graph vertices at dyadic points on their old edges.
+The pullbacks of the target vertex stars have a common Lebesgue number
+on the homotopy cylinder. A fine time mesh gives contiguous consecutive
+rows because the labels on each subdivided face at adjacent times all
+belong to a single target face. The bottom row is contiguous to every
+selection from the original supports, and the top row is constant.
+The Lean theorem `GeometricGraphTermination.realized_graph_map_contracts`
+uses this construction with the affine realization of a simplicial graph map.
+
 ## Coface comparisons in the four-dimensional approach
 
 The triangle-cone construction seeks a map from a region of the ordinary
@@ -1003,6 +1022,20 @@ charts are given on all source faces, an interval contiguity chain
 can be interpreted in each chart. At vertices fixed during the
 chain the charts need only agree at the fixed value.
 
+The three-dimensional chamber comparison uses recursive path
+coordinates on the selected old graph. A subdivision vertex
+gets the sum of the least and greatest coordinates in its face.
+The coordinate of the actual two-cut retraction therefore agrees
+with the height computed from the tetrahedral table. On an old
+edge the two possible ranks orient the interval chart. On a
+singleton support the table fixes both maps at its retained vertex.
+These two cases glue the contiguity chain on the whole main region.
+In each extra component, adjacency preserves the two selected old
+vertices of the opposite colour. Its opposite retraction lies in
+the subdivided edge on those two vertices. The categorical-cover
+iteration also requires the map to the fourth subdivision and its
+comparison with the graph map used for termination.
+
 The four-dimensional cone argument uses a separate chain argument
 to force an interface of nonzero degree to hit every target
 triangle. The ranked-fibre bound in Lean
@@ -1015,3 +1048,102 @@ source chain with sizes at least three, four, and five. The
 ordinary triangle cone allows only four vertices in a source
 face. The weaker comparison with only containment in the largest
 assigned face remains open.
+
+For a synchronously subdivided coarsening ($f_{s+1}=\operatorname{sd} f_s$),
+there is an obstruction at every depth $s\ge4$ when the comparison is
+required to preserve the full old sides and their endpoints. The source
+and target subdivisions of an old side are paths of equal length, so the
+comparison on that side is the identity. At the singleton flag over an
+edge $A$, maximal-face containment then forces a singleton face of the
+preceding target to equal $A$. The same argument allows either direction
+of comparison between consecutive flags.
+
+## One round of two-colour graph refinement
+
+Suppose that the inclusions of two induced colour regions admit contiguity
+factorizations through properly two-coloured graphs. The join of these
+graphs has a proper four-rank colouring. On each main region the
+tetrahedral heights give a map into four ordinary subdivisions of the
+corresponding graph after only three ambient subdivisions. Each extra
+component contracts through one opposite-colour carrier edge. If the
+ambient one-skeleton is connected, its constant can be moved to the
+image of a chosen vertex of the main parameter graph. The Lean
+construction gives both refined factorizations in the same colouring
+and permits any vertex selector for the final parameter subdivision.
+
+## Weak category one in dimension at most three
+
+Let the order complex of a nonempty finite poset have dimension at
+most three and contractible realization. Some ordinary iterated chain
+poset of the original poset has a categorical lower cover by two
+sets. This is the weak-category-one case of Question 6.3 in that
+range.
+
+Height gives a proper four-rank colouring of every chain. The two
+pairs of ranks induce bipartite graph parameters whose inclusions are
+nullhomotopic by restriction of the contraction. Each refinement adds
+three ambient subdivisions and four parameter subdivisions. After
+enough rounds, the extra parameter subdivisions give fixed-target
+contiguity contractions. The original edge carriers transport them
+to the synchronously subdivided ambient complex. Taking the face
+neighbourhoods that meet the two final colours gives categorical lower
+sets in an ordinary iterated chain poset.
+
+The relative theorem applies to a nonempty subcomplex with a proper
+four-rank colouring and a nullhomotopic realization inclusion in a
+finite ambient complex with connected one-skeleton. It gives two
+subcomplexes covering an ordinary subdivision of the source. Both
+inclusions contract by contiguity in the ambient at that same depth.
+This allows a categorical region of dimension at most three to be
+split while keeping its contractions in a higher-dimensional ambient.
+
+## Four categorical pieces from a star assignment
+
+Suppose a finite complex has dimension at most four and every closed
+vertex star can be assigned to one of two subcomplexes with nullhomotopic
+realization inclusions. The first barycentric subdivision separates
+the mixed-label and five-vertex faces from the remaining faces. Each
+induced region has dimension at most three. On every monochromatic flag,
+the old label set is constant, including at the isolated pure top faces.
+The realization map sends a flag to the weighted average of its face
+barycentres. It identifies every subdivided subcomplex with the original
+one and permits the supplied homotopies to glue on the open fibres of
+the label sets. In a connected ambient, the two relative two-piece covers
+then pull back by the face intersections at a common ordinary subdivision
+depth. The Lean theorem gives four categorical lower sets in the face
+poset at that depth.
+
+For a connected complex of weak category two, the Lean theorem proves
+the star assignment from the categorical open cover. In the original
+coordinate metric each barycentric subdivision shrinks the mesh by at
+most four fifths. Once the mesh is smaller than the Lebesgue number,
+each closed vertex star lies in one categorical open. The proof
+transports the two homotopies to the subcomplexes of faces carried into
+the respective opens. For a finite poset with connected order-complex
+realization and order-complex dimension at most four, this gives four
+categorical lower sets in some ordinary iterated chain poset.
+
+## Three-piece bound for contractible complexes
+
+For a nullhomotopic realization inclusion of a subcomplex of dimension
+at most five, the one-sided tetrahedral refinement gives a paper
+proof of a relative three-piece cover. The lowest two face ranks form
+a bipartite graph. Fold the other ranks to one apex when reading the
+tetrahedral colouring. The graph parameter gains four levels for
+every three ambient levels, and the other parameter retains the
+ambient depth. Its exceptions contract through single graph edges
+and enter the next parameter as isolated vertices. At the terminal
+depth the graph region contracts. The remaining parameter has
+dimension at most three and gives two pieces by the relative theorem.
+Pulling back through the meeting-face maps gives the three-piece
+cover at a single ambient depth. The final three-piece deduction is
+currently a paper result.
+
+In dimension four the two-piece bound for contractible realization
+remains open. A PL four-ball with 19 vertices and 69 maximal simplexes
+admits a three-piece cover with strongly collapsible intersections
+for which each pairwise union contains a domination-free ambient
+retract. The retracts persist under common subdivision, so every
+pairwise union remains noncategorical. This ball has another
+two-piece cover obtained by redistributing parts of the original
+three pieces.

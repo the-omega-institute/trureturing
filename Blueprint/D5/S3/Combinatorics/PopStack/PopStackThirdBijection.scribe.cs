@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PopStack;
 internal sealed class PopStackThirdBijectionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PopStack/PopStackThirdBijection.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/cioni2025sorting");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/cioni2025sorting");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The map undoPhi(n,p) is empty for n = 0 and equals 3142 for n = 4. Otherwise, when p starts with two, delete that entry and decrease every remaining value other than one to obtain q. If q is simple, apply Phi(n-1,q), increase all values, and insert one second; if not, delete its third entry and decrease every value other than one, inflate the first entry of the resulting skeleton by 21, increase all values, and insert one second. When p does not start with two, delete its third entry and subtract one from every remaining value to obtain q. If q is simple, increase its values and insert one second. If q = R(n-1), do this to B(n-1) instead. Otherwise delete the second entry of q, standardize above its third value, inflate the first entry by 21, increase all values, and insert one second.",

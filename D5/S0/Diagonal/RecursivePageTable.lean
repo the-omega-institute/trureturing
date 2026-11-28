@@ -6,8 +6,6 @@
    utility: none
    digest: A finite recursive page walk returns ordinary data, exposes a leaf through a self-map slot, and closes at the root on every repeated self-map index. -/
 
-import Mathlib
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

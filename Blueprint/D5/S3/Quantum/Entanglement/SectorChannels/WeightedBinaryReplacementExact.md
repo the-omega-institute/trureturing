@@ -24,8 +24,21 @@ The three arcs have explicit physical attainers: filtering on the smaller direct
 
 This is a fixed-resource, matched-diagonal replacement result. It does not assert an optimum for general coherent input-dependent recovery, mixed resources, shared randomness, or communications.
 
+**Theorem 1.2 (Reference-stabilized distance of native replacement channels).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/SectorChannels/WeightedBinaryReplacementExact.replacer_diamond_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SectorChannels/WeightedBinaryReplacementExact.replacer_diamond_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Assume the finite input carrier has an element. If both native channels replace the input by a fixed matrix multiplied by its trace, every reference-amplified output difference is the trace-one positive marginal on the reference tensored with the output-matrix difference. The trace norm is multiplicative for this tensor, so the native diamond distance is exactly the trace norm of the difference between the two replacement outputs.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Entanglement/SectorChannels/WeightedBinaryReplacementExact.replacer_diamond_exact`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SectorChannels/WeightedBinaryReplacementExact.result`
 - Dependency: [D5/S3/Quantum/Entanglement/FiniteSectorChannelModel](../FiniteSectorChannelModel.md)
 - Dependency: [D5/S3/Quantum/Entanglement/SectorChannels/WeightedBinaryEffectOptimum](WeightedBinaryEffectOptimum.md)

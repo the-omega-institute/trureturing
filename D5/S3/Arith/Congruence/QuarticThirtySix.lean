@@ -5,7 +5,8 @@
    anchors: []
    digest: The quartic m(k) = 27k⁴+108k³+171k²+126k+36 is divisible by 36 for every integer k, a polynomial congruence identity proved by evaluating the residue over ZMod 36. -/
 
-import Mathlib
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Tactic.Ring.RingNF
 
 namespace D5.S3.Arith.Congruence.QuarticThirtySix
 

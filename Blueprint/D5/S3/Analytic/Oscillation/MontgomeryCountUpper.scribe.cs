@@ -19,6 +19,13 @@ internal sealed class MontgomeryCountUpperDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("If |N(Y)−M(Y)| is bounded for all sufficiently large Y, then N(Y)/(Y log Y) tends to c. Use the normalized count limit with mean scale log(Y)/(2π), then rescale the limit by c."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("abs-pair-sum-le-of-local-discrepancy"),
+                DeclarationHandle.Create(Owner + ".abs_pairSum_le_of_local_discrepancy"),
+                H("A bound from the count through the cutoff"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Fix Y > 1 and 1 ≤ A ≤ Y. If |N(x)−M(x)| ≤ D for every x between A and Y, then |G_Y(t)| ≤ N(Y)(2πc log Y + N(A) + 2D + c) for every real t. The cutoff interval contains both count evaluations for every Lorentz superlevel interval. The triangle inequality and |cos| ≤ 1 bound the absolute sum."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("pair-sum-le-of-bounded-discrepancy"),
                 DeclarationHandle.Create(Owner + ".pairSum_le_of_bounded_discrepancy"),
                 H("A uniform bound on the leading coefficient"),

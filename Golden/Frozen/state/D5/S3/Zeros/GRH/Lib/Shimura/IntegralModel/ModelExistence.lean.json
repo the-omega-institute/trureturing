@@ -1,0 +1,1 @@
+{"statement_id":"sha256:13bc38eabd89ae180ab125106b05fd9dd7874d300d94f75f1b978d8d14880865","declarations":[{"declaration_name_key":"ns(n0,12:exists_model)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
