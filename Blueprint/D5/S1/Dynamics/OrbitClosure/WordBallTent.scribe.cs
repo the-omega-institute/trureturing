@@ -63,7 +63,7 @@ internal sealed class WordBallTentDocument : IScribeDocumentDefinition
             And(range, Eqn(At("u", V("b")), D(1)),
                 Eqn(At("u", Act(V("h"), V("b"))), D(0)), defect, separation))));
         var statement = All("G", type, All("X", type, Seq(classes,
-            All("S", C("Finset", gType), All("R", nat, Imp(hypotheses, conclusion)))));
+            All("S", C("Finset", gType), All("R", nat, Imp(hypotheses, conclusion))))));
 
         return DocumentDefinition.Create(ScribeNode.Create(
             "Infinite-image finitely generated continuous actions have bounded continuous tents with arbitrarily small generator defects and fixed orbit oscillation.",
