@@ -46,7 +46,7 @@ internal sealed class BojicThreeTermDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("bojic-2026-three-term-cyclic-unipotent-order"),
-                    ResolutionKind.Proved))))));
+                    ResolutionKind.Proved)))));
 
     private static Formula MainFormula()
     {
