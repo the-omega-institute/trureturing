@@ -1,0 +1,30 @@
+# Passive fragmented response
+
+## Abstract
+
+The sharp linewidth bound and minimum loss rank for each fragmented Jordan partition.
+
+**Theorem 1.1 (Sharp response and simultaneous minimum loss rank).**
+
+$$\forall b \in \operatorname{Nat}\left(\right), p \in \operatorname{Nat}\left(\right), m \in \operatorname{Function}\left(\operatorname{Fin}\left(b\right), \operatorname{PNat}\left(\right)\right), E \in \operatorname{Complex}\left(\right),\; \left(2 \le b \land \left(2 \le p \land \left(\left(\forall j \in \operatorname{Fin}\left(b\right),\; \operatorname{size}\left(m, j\right) \le p\right) \land \left(\left(\exists j \in \operatorname{Fin}\left(b\right),\; \operatorname{size}\left(m, j\right) = p\right) \land 0 < \operatorname{linewidth}\left(E\right)\right)\right)\right)\right) \Rightarrow \left(\left(\forall H \in \operatorname{ComplexMatrix}\left(\operatorname{Positions}\left(m\right)\right),\; \left(\operatorname{PosSemidef}\left(\operatorname{Gamma}\left(H\right)\right) \land \left(\exists B \in \operatorname{Basis}\left(\operatorname{Positions}\left(m\right), \operatorname{Complex}\left(\right)\right),\; \forall r \in \operatorname{Nat}\left(\right), j \in \operatorname{Fin}\left(b\right), a \in \operatorname{Fin}\left(\operatorname{size}\left(m, j\right)\right),\; \operatorname{mulVec}\left(\operatorname{pow}\left(\operatorname{N}\left(H, E\right), r\right), \operatorname{basisAt}\left(B, j, a\right)\right) = \operatorname{ite}\left(\operatorname{add}\left(a, r\right) < \operatorname{size}\left(m, j\right), \operatorname{basisAt}\left(B, j, \operatorname{add}\left(a, r\right)\right), 0\right)\right)\right) \Rightarrow \left(\operatorname{pow}\left(\operatorname{N}\left(H, E\right), \operatorname{pred}\left(p\right)\right) \neq 0 \land \left(\operatorname{opNorm}\left(\operatorname{pow}\left(\operatorname{N}\left(H, E\right), \operatorname{pred}\left(p\right)\right)\right) \le \operatorname{pow}\left(\operatorname{linewidth}\left(E\right), \operatorname{pred}\left(p\right)\right) \land \left(b \le \operatorname{rank}\left(\operatorname{Gamma}\left(H\right)\right) \land \left(\left(\forall z \in \operatorname{Complex}\left(\right),\; \operatorname{not}\left(\operatorname{IsUnit}\left(\operatorname{sub}\left(\operatorname{scalarMatrix}\left(z\right), H\right)\right)\right) \Leftrightarrow z = E\right) \land \left(\forall z \in \operatorname{Complex}\left(\right),\; z \neq E \Rightarrow \operatorname{inv}\left(\operatorname{sub}\left(\operatorname{scalarMatrix}\left(z\right), H\right)\right) = \sum_{k \in \operatorname{range}\left(p\right)} \operatorname{smul}\left(\operatorname{pow}\left(\operatorname{inv}\left(\operatorname{sub}\left(z, E\right)\right), \operatorname{succ}\left(k\right)\right), \operatorname{pow}\left(\operatorname{N}\left(H, E\right), k\right)\right)\right)\right)\right)\right)\right)\right) \land \left(\exists W \in \operatorname{ComplexMatrix}\left(\operatorname{Positions}\left(m\right)\right),\; \left(\operatorname{PosSemidef}\left(\operatorname{Gamma}\left(W\right)\right) \land \left(\exists B \in \operatorname{Basis}\left(\operatorname{Positions}\left(m\right), \operatorname{Complex}\left(\right)\right),\; \forall r \in \operatorname{Nat}\left(\right), j \in \operatorname{Fin}\left(b\right), a \in \operatorname{Fin}\left(\operatorname{size}\left(m, j\right)\right),\; \operatorname{mulVec}\left(\operatorname{pow}\left(\operatorname{N}\left(W, E\right), r\right), \operatorname{basisAt}\left(B, j, a\right)\right) = \operatorname{ite}\left(\operatorname{add}\left(a, r\right) < \operatorname{size}\left(m, j\right), \operatorname{basisAt}\left(B, j, \operatorname{add}\left(a, r\right)\right), 0\right)\right)\right) \land \left(\operatorname{opNorm}\left(\operatorname{pow}\left(\operatorname{N}\left(W, E\right), \operatorname{pred}\left(p\right)\right)\right) = \operatorname{pow}\left(\operatorname{linewidth}\left(E\right), \operatorname{pred}\left(p\right)\right) \land \operatorname{rank}\left(\operatorname{Gamma}\left(W\right)\right) = b\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Eigenstructure/WiersigFragmentedResponse.sharp_passive_fragmented_response` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Jan Wiersig (2026). *Rank-One Loss Maximizes the Spectral Response Strength of Passive Full-Order Exceptional Points*. DOI: [10.1103/5451-5wd1](https://doi.org/10.1103/5451-5wd1). URL: <https://arxiv.org/pdf/2610.31268v1>.
+
+*Commentary.*
+
+The partition is a positive size function m on Fin(b). The largest size p bounds every size and occurs among them. Positions(m) is the dependent sum of Fin(m(j)) over the block labels j. The complex matrices use orthonormal coordinates indexed by Positions(m).
+
+Write N(H,E) = H − EI, linewidth(E) = −2 Im E, and Γ(H) = i(H − H*), where * denotes conjugate transpose. The chain basis B is a complex linear basis of the coordinate space. The conditional chain step sends B(j,a) to B(j,a+k) when a+k is in the block and to zero otherwise. The function pred is natural predecessor and the matrix norm is the Euclidean operator norm.
+
+For every passive matrix of the given partition, E is the sole eigenvalue. The resolvent is the finite Laurent sum away from E and its highest-order coefficient N^(p−1) is nonzero. The coefficient norm is at most the linewidth to power p−1 and the loss rank is at least b. One matrix of the same partition attains both bounds.
+
+The normalized Cayley transform gives the norm bound. Restricting the loss to the eigenspace gives an injective map. For attainment use the orthogonal sum S of lower unit shifts and A = (I−S)^−1 − I. Each normalized loss block is the all-ones matrix. The largest block supplies a unit vector on which A^(p−1) has norm one. Ranks of powers give the prescribed chain multiplicities, and the nilpotent Jordan-chain theorem gives a basis with those sizes.
+
+## References
+
+- Truth anchor: `D5/S1/Eigenstructure/WiersigFragmentedResponse.sharp_passive_fragmented_response`
+- Dependency: [D5/S1/Eigenstructure/NilpotentJordanChains](NilpotentJordanChains.md)
