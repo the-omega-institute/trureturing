@@ -835,3 +835,11 @@ port_proof Nat.lt_trans
 port_proof decide_eq_false
 port_proof of_decide_eq_true
 port_proof Nat.brecOn.eq
+
+public section
+namespace Nat
+export _root_.Omega.Nat (div_rec_fuel_lemma div_rec_lemma eq_or_lt_of_le le_of_lt_succ le_succ le_succ_of_le lt_add_one lt_of_lt_of_le lt_of_not_le lt_or_ge lt_succ_of_le lt_succ_self lt_trans modCoreGo_lt not_lt_zero pred_le sub_le sub_lt)
+end Nat
+namespace Nat.brecOn
+export _root_.Omega.Nat.brecOn (eq)
+end Nat.brecOn

@@ -536,3 +536,8 @@ port_proof Nat.not_le_of_gt
 port_proof Nat.not_lt_of_ge
 port_definition Nat.casesAuxOn
 port_proof Nat.le_of_not_gt
+
+public section
+namespace Nat
+export _root_.Omega.Nat (casesAuxOn ge_of_not_lt le_of_not_gt not_le_of_gt not_lt_of_ge recAux)
+end Nat

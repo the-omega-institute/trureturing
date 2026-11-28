@@ -18,14 +18,17 @@ port_proof List.zipWithM_nil_left by_reflexivity
 
 namespace Omega.List
 
-public theorem zipWithM'_nil_right {m : Type u → Type v} {α : Type w} {β : Type x} {γ : Type u}
-    {l : List α} [mon : Monad m] {f : α → β → m γ} :
-    Eq (zipWithM' f l List.nil) (@Pure.pure m (@Applicative.toPure m (@Monad.toApplicative m mon)) (List γ) List.nil) :=
+private theorem zipWithM'_nil_rightImpl {m : Type u → Type v} {α : Type w} {β : Type x} {γ : Type u}
+    {l : List α} [inst : Monad m] {f : α → β → m γ} :
+    Eq (zipWithM' f l List.nil) (@Pure.pure m (@Applicative.toPure m (@Monad.toApplicative m inst)) (List γ) List.nil) :=
   List.casesOn l rfl (fun _ _ => rfl)
 
-public theorem zipWithM_nil_right {m : Type u → Type v} {α : Type w} {β : Type x} {γ : Type u}
-    {l : List α} [mon : Monad m] {f : α → β → m γ} :
-    Eq (zipWithM f l List.nil) (@Pure.pure m (@Applicative.toPure m (@Monad.toApplicative m mon)) (List γ) List.nil) :=
+private theorem zipWithM_nil_rightImpl {m : Type u → Type v} {α : Type w} {β : Type x} {γ : Type u}
+    {l : List α} [inst : Monad m] {f : α → β → m γ} :
+    Eq (zipWithM f l List.nil) (@Pure.pure m (@Applicative.toPure m (@Monad.toApplicative m inst)) (List γ) List.nil) :=
   List.casesOn l rfl (fun _ _ => rfl)
 
 end Omega.List
+
+port_proof List.zipWithM'_nil_right using Omega.List.zipWithM'_nil_rightImpl
+port_proof List.zipWithM_nil_right using Omega.List.zipWithM_nil_rightImpl

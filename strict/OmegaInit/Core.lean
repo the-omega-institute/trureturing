@@ -574,3 +574,8 @@ port_proof dite_eq_left
 port_proof dite_eq_right
 port_definition Decidable.byCases
 port_proof Decidable.em
+
+public section
+namespace Decidable
+export _root_.Omega.Decidable (byCases em)
+end Decidable

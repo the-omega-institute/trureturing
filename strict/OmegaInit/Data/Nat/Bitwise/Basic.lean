@@ -59,3 +59,8 @@ export _root_.Omega.Nat (bitwise land lor shiftRight testBit)
 end Nat
 
 port_definition Nat.hasNotBit
+
+public section
+namespace Nat
+export _root_.Omega.Nat (hasNotBit)
+end Nat
