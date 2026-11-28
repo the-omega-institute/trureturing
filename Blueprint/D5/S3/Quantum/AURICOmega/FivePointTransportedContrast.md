@@ -22,7 +22,7 @@ The same classification and witnesses hold over every linearly ordered field. Th
 
 Exchange x with y and w with v to reverse the contrast. For a nonnegative contrast, delete v and split the four-point form using the simultaneous exchanges of x with z and y with w. The resulting two binary forms restrict the contrast. In each range a four-point witness can be chosen with the yw entry zero and b at most both t and a.
 
-For the fifth point take its projection in the span of y and z with coefficients (a − bt)/(1 − b²) and (t − ba)/(1 − b²). The witnesses have b strictly below one, and both coefficients are nonnegative. Testing the residual of x with the coefficients reversed shows that the fifth diagonal can be filled by nonnegative slack. The construction is on the five prescribed Gram readings. Extending them to a kernel on an entire heap is a separate existence problem.
+For the fifth point take its projection in the span of y and z with coefficients (a − bt)/(1 − b²) and (t − ba)/(1 − b²). The witnesses have b strictly below one, and both coefficients are nonnegative. Testing the residual of x with the coefficients reversed shows that the fifth diagonal can be filled by nonnegative slack. The construction realizes the prescribed Gram readings on these five points. Extending them to a kernel on an entire heap is a separate existence problem.
 
 ## References
 

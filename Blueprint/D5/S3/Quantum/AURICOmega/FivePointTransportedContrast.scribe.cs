@@ -36,7 +36,7 @@ internal sealed class FivePointTransportedContrastDocument : IScribeDocumentDefi
                     + "The witnesses have b strictly below one, and both coefficients are "
                     + "nonnegative. Testing the residual of x with the coefficients reversed "
                     + "shows that the fifth diagonal can be filled by nonnegative slack. "
-                    + "The construction is on the five prescribed Gram readings. Extending "
+                    + "The construction realizes the prescribed Gram readings on these five points. Extending "
                     + "them to a kernel on an entire heap is a separate existence problem."))),
             DescribeRole.Theorem)),
         []));
