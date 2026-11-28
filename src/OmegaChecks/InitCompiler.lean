@@ -118,7 +118,13 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
       getEffectiveDefaultFnForField? src structureName field == some name
     let flatCtor := (getStructureInfo? src structureName).isSome &&
       mkFlatCtorOfStructCtorName (getStructureCtor src structureName).name == name
-    unless fieldDefault || flatCtor || ((src.find? parent).isSome && referencesHelper src parent name [parent]) do
+    let sizeInstance := parent ++ `_sizeOf_inst
+    let registeredSize := (Meta.instanceExtension.ext.getModuleEntries src idx).any fun
+      | .global entry => entry.globalName? == some sizeInstance
+      | .scoped .. => false
+    let sizeHelper := registeredSize && referencesHelper src parent name [sizeInstance]
+    unless fieldDefault || flatCtor || sizeHelper ||
+        ((src.find? parent).isSome && referencesHelper src parent name [parent]) do
       throwErrorAt stx "expected an official implementation dependency"
   if info.isAxiom || info.isUnsafe || info.isPartial then throwErrorAt stx "inadmissible declaration"
   return (src, info)

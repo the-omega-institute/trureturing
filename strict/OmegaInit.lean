@@ -58,6 +58,8 @@ public import OmegaInit.MetaTypes
 public import OmegaInit.Omega.Logic
 public import OmegaInit.PropLemmas
 public import OmegaInit.SimpLemmas
+public import OmegaInit.SizeOf
 public import OmegaInit.System.IO
 public import OmegaInit.WF
 public import OmegaInit.WFExtrinsicFix
+public import OmegaInit.While
