@@ -3,6 +3,7 @@ module
 public import OmegaChecks.InitInventory.Reductions
 public import OmegaChecks.InitInventory.Collector
 public import OmegaChecks.InitInventory.OpenRangeLoop
+public import OmegaChecks.InitInventory.RangeLoopLift
 public import OmegaChecks.InitInventory.FieldNormalization
 public import OmegaChecks.InitInventory.StringPatterns
 public import OmegaChecks.InitInventory.StringSearchLoops
@@ -13,6 +14,10 @@ namespace OmegaChecks.InitInventory
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 public def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Data.Range.Polymorphic.RangeIterator && [``Std.Rxc.Iterator.instLawfulIteratorLoop,
+      ``Std.Rxo.Iterator.instLawfulIteratorLoop, ``Std.Rxi.Iterator.instLawfulIteratorLoop].contains name then
+    return ((``funext).toString, ``OmegaChecks.InitBoundaries.RangeLoopLift.funextFromTwoSteps,
+      "On two successive outputs the optimized loop ignores its lift and the default loop performs both lawful identity-monad lifts with their pinned behavior")
   if owner == `Init.Data.Range.Polymorphic.RangeIterator && name == ``Std.Rxo.Iterator.instIteratorLoop.loop then
     return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
       ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromOpenRangeLoop,
