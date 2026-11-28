@@ -618,4 +618,78 @@ public theorem Nat.add_eq_three_iff : type_of% @_root_.Nat.add_eq_three_iff := b
       · exact Or.inr (Or.inr (Or.inr (⟨rfl, rfl⟩)))
   · rintro (⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩) <;> rfl
 
+public theorem Nat.forall_lt_succ_right' : type_of% @_root_.Nat.forall_lt_succ_right' := by
+  intro n p
+  constructor
+  · intro all
+    exact ⟨fun m h => all m (_root_.Nat.lt_trans h (_root_.Nat.lt_succ_self _)), all n (_root_.Nat.lt_succ_self _)⟩
+  · rintro ⟨lower, last⟩ m h
+    rcases _root_.Nat.lt_or_eq_of_le (_root_.Nat.le_of_lt_succ h) with lt | rfl
+    · exact lower m lt
+    · exact last
+
+public theorem Nat.forall_lt_succ_left' : type_of% @_root_.Nat.forall_lt_succ_left' := by
+  intro n p
+  constructor
+  · intro all
+    exact ⟨all 0 (_root_.Nat.zero_lt_succ _), fun m h => all m.succ (_root_.Nat.succ_lt_succ h)⟩
+  · rintro ⟨zero, succ⟩ m h
+    cases m with
+    | zero => exact zero
+    | succ m => exact succ m (_root_.Nat.lt_of_succ_lt_succ h)
+
+public theorem Nat.exists_lt_succ_right' : type_of% @_root_.Nat.exists_lt_succ_right' := by
+  intro n p
+  constructor
+  · rintro ⟨m, hm, w⟩
+    rcases _root_.Nat.lt_or_eq_of_le (_root_.Nat.le_of_lt_succ hm) with lt | rfl
+    · exact Or.inl ⟨m, lt, w⟩
+    · exact Or.inr w
+  · rintro (⟨m, hm, w⟩ | last)
+    · exact ⟨m, _root_.Nat.lt_trans hm (_root_.Nat.lt_succ_self _), w⟩
+    · exact ⟨n, _root_.Nat.lt_succ_self _, last⟩
+
+public theorem Nat.exists_lt_succ_left' : type_of% @_root_.Nat.exists_lt_succ_left' := by
+  intro n p
+  constructor
+  · rintro ⟨m, hm, w⟩
+    cases m with
+    | zero => exact Or.inl w
+    | succ m => exact Or.inr ⟨m, _root_.Nat.lt_of_succ_lt_succ hm, w⟩
+  · rintro (zero|⟨m, hm, w⟩)
+    · exact ⟨0, _root_.Nat.zero_lt_succ _, zero⟩
+    · exact ⟨m+1, _root_.Nat.succ_lt_succ hm, w⟩
+
+public theorem Nat.add_le_mul : type_of% @_root_.Nat.add_le_mul := by
+  intro a ha b hb
+  obtain ⟨k, rfl⟩ := _root_.Nat.exists_eq_add_of_le hb
+  induction k with
+  | zero =>
+    rw [_root_.Nat.add_zero, _root_.Nat.mul_two]
+    exact _root_.Nat.add_le_add_left ha a
+  | succ k ih =>
+    have prev := ih (_root_.Nat.le_add_right ..)
+    change (a + (2 + k)) + 1 ≤ a * (2 + k).succ
+    rw [_root_.Nat.mul_succ]
+    exact _root_.Nat.add_le_add prev (_root_.Nat.le_trans (_root_.Nat.le_succ 1) ha)
+
+public theorem Nat.div_two_le_of_sub_le_div_two : type_of% @_root_.Nat.div_two_le_of_sub_le_div_two := by
+  intro a b h
+  have lo : a / 2 + a / 2 ≤ a := by
+    rw [← _root_.Nat.two_mul]
+    exact _root_.Nat.mul_div_le ..
+  have hi : a ≤ b + a / 2 := _root_.Nat.sub_le_iff_le_add'.mp h
+  exact _root_.Nat.le_of_add_le_add_right (_root_.Nat.le_trans lo hi)
+
+public theorem Nat.le_div_two_of_div_two_lt_sub : type_of% @_root_.Nat.le_div_two_of_div_two_lt_sub := by
+  intro a b h
+  have lt : a / 2 + b < a := _root_.Nat.lt_sub_iff_add_lt.mp h
+  have hi : a ≤ a / 2 + (a / 2 + 1) := by
+    have rem : a % 2 ≤ 1 := _root_.Nat.le_of_lt_succ (_root_.Nat.mod_lt a _root_.Nat.zero_lt_two)
+    calc
+      a = a % 2 + 2 * (a / 2) := (_root_.Nat.mod_add_div ..).symm
+      _ ≤ 1 + 2 * (a / 2) := _root_.Nat.add_le_add_right rem _
+      _ = _ := by rw [_root_.Nat.two_mul, _root_.Nat.add_comm 1, _root_.Nat.add_assoc]
+  exact _root_.Nat.le_of_lt_succ ((_root_.Nat.add_lt_add_iff_left (k := a / 2)).mp (_root_.Nat.lt_of_lt_of_le lt hi))
+
 end OmegaChecks.InitPort.Alternatives

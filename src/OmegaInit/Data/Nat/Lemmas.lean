@@ -124,3 +124,9 @@ export _root_.Nat (add_eq_one_iff add_eq_three_iff add_eq_two_iff add_mod_eq_ite
   pow_lt_pow_iff_pow_mul_le_pow self_sub_mod sub_add_sub_cancel sub_lt_sub_iff_right
   sub_sub_sub_cancel_right)
 end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_le_mul div_two_le_of_sub_le_div_two exists_lt_succ_left exists_lt_succ_left'
+  exists_lt_succ_right exists_lt_succ_right' forall_lt_succ_left forall_lt_succ_left'
+  forall_lt_succ_right forall_lt_succ_right' le_div_two_of_div_two_lt_sub)
+end Omega.Nat

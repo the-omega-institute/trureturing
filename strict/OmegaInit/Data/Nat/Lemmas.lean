@@ -866,3 +866,34 @@ export _root_.Omega.Nat (add_eq_one_iff add_eq_three_iff add_eq_two_iff add_mod_
   pow_lt_pow_iff_pow_mul_le_pow self_sub_mod sub_add_sub_cancel sub_lt_sub_iff_right
   sub_sub_sub_cancel_right)
 end Nat
+
+namespace Omega.Nat
+private theorem zeroBelowSucc {n : Nat} : Nat.lt Nat.zero (Nat.succ n) := Nat.zero_lt_succ n
+private theorem succBelowSucc {n : Nat} (m : Nat) (h : Nat.lt m n) : Nat.lt (Nat.succ m) (Nat.succ n) :=
+  Nat.succ_lt_succ h
+private theorem belowNext {n : Nat} (m : Nat) (h : Nat.lt m n) : Nat.lt m (Nat.succ n) :=
+  Nat.lt_trans h (Nat.lt_succ_self n)
+private theorem belowOwnSucc {n : Nat} : Nat.lt n (Nat.succ n) := Nat.lt_succ_self n
+end Omega.Nat
+
+port_proof Nat.forall_lt_succ_left'._proof_2 using Omega.Nat.zeroBelowSucc
+port_proof Nat.forall_lt_succ_left'._proof_4 using Omega.Nat.succBelowSucc
+port_proof Nat.forall_lt_succ_right'._proof_2 using Omega.Nat.belowNext
+port_proof Nat.forall_lt_succ_right'._proof_4 using Omega.Nat.belowOwnSucc
+port_alternative_proof Nat.forall_lt_succ_right' from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.forall_lt_succ_left' from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.exists_lt_succ_right' from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.exists_lt_succ_left' from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.add_le_mul from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.div_two_le_of_sub_le_div_two from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.le_div_two_of_div_two_lt_sub from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.forall_lt_succ_right by_constructive_casts
+port_proof Nat.forall_lt_succ_left by_constructive_casts
+port_proof Nat.exists_lt_succ_right by_constructive_casts
+port_proof Nat.exists_lt_succ_left by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (add_le_mul div_two_le_of_sub_le_div_two exists_lt_succ_left
+  exists_lt_succ_left' exists_lt_succ_right exists_lt_succ_right' forall_lt_succ_left
+  forall_lt_succ_left' forall_lt_succ_right forall_lt_succ_right' le_div_two_of_div_two_lt_sub)
+end Nat
