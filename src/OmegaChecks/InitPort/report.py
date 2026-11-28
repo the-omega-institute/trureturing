@@ -359,7 +359,7 @@ def check_coverage(official):
                 if row.get("originalTypeChecked") is True and row.get("originalTypeGap") is None:
                     original_types += 1
                 elif row.get("originalTypeChecked") is False and row.get("originalTypeGap"):
-                    if not private_type and not orders and not choice_operand and not equivalent and not pointwise and not finite and not projected:
+                    if not any((private_type, choice_operand, equivalent, pointwise, finite, projected)):
                         unresolved.append(site)
                 else:
                     raise ValueError(f"inconsistent original type check for {owner}/{name}")
@@ -437,7 +437,7 @@ def verify_complete(official, product, reductions, unresolved):
     choice_checks = official.get("certifiedChoiceTypeDependencies", [])
     if choice_checks and choice_type_certificates(product) != choice_checks:
         raise ValueError("live choice operand certificates differ from inventory")
-    blocked = order_dependencies(order_checks).keys() | choice_type_dependencies(choice_checks).keys()
+    blocked = choice_type_dependencies(choice_checks).keys()
     bounds = official.get("certifiedFinBoundTypes", [])
     if bounds and fin_bounds.certificates(product) != bounds:
         raise ValueError("live finite-index bound certificates differ from inventory")

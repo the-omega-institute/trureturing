@@ -167,7 +167,16 @@ class CoverageTest(unittest.TestCase):
         self.assertEqual(check_coverage(data), (0, [(owner, name)]))
         row["originalTypeOrderDependencies"] = {dep: proof}
         data["certifiedOrderTypeDependencies"] = checked
+        self.assertEqual(check_coverage(data), (0, [(owner, name)]))
+        with patch("report.order_certificates", return_value=checked), self.assertRaisesRegex(ValueError, "fresh strict check"):
+            verify_complete(data, Path("product"), 0, [])
+        row["publicProjectionTypeChecked"] = True
+        data["certifiedProjectionTypes"] = [[owner, name]]
+        data["summary"]["publicProjectionTypesChecked"] = 1
         self.assertEqual(check_coverage(data), (0, []))
+        with patch("report.order_certificates", return_value=checked), patch(
+                "report.finite_consumers.certificates", return_value=[]), self.assertRaisesRegex(ValueError, "live public projection"):
+            verify_complete(data, Path("product"), *check_coverage(data))
         with patch("report.order_certificates", return_value=[]), self.assertRaisesRegex(ValueError, "live implication"):
             verify_complete(data, Path("product"), *check_coverage(data))
         for bad in ([], checked + checked, [[owner, name, dep, "weakRelation"]],
