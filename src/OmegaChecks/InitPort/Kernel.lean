@@ -623,7 +623,9 @@ partial def visit (n : Name) : M Bool := do
   modify fun s => {s with visiting := s.visiting.insert n}
   -- A dependent type can contain a proof emitted by simp. Keep its official
   -- conversion class and let the target kernel check the replacement.
-  let specialized ← OmegaChecks.InitCompiler.finiteCollectors c.source ci.type
+  -- The finite list collector and the original named loop coexist in the subarray fold.
+  let keepLoop := if n == `Subarray.foldl_toList then some `instIteratorLoopSubarrayIteratorIdOfMonad else none
+  let specialized ← OmegaChecks.InitCompiler.finiteCollectors c.source ci.type (keepLoop := keepLoop)
   let compact ← OmegaChecks.InitCompiler.namedLogicalProjections c.source (compactNonzeroBounds c.source n specialized)
   let mut type := if !compact.equal ci.type && Kernel.isDefEqGuarded c.source {} ci.type compact then compact else ci.type
   for dep in usedConstants type do
