@@ -126,6 +126,64 @@ public theorem contains_bool_eq : type_of% @_root_.String.Slice.contains_bool_eq
     obtain ⟨pos, h, rfl⟩ := mem_toList_copy_iff_exists_get.mp mem
     exact ⟨pos, CharPred.matchesAt_iff.mpr ⟨h, ok⟩⟩
 
+public theorem Pos.find?_char_eq_none_iff._proof_1_2 :
+    type_of% (private_decl% @_root_.String.Slice.Pos.find?_char_eq_none_iff._proof_1_2) :=
+  @_root_.String.Slice.Pos.find?_char_eq_none_iff
+
+public theorem Pos.find?_char_eq_some_iff._proof_1_4 :
+    type_of% (private_decl% @_root_.String.Slice.Pos.find?_char_eq_some_iff._proof_1_4) :=
+  @_root_.String.Slice.Pos.find?_char_eq_some_iff
+
+public theorem find?_char_eq_some_iff._proof_1_4 :
+    type_of% (private_decl% @_root_.String.Slice.find?_char_eq_some_iff._proof_1_4) :=
+  @_root_.String.Slice.find?_char_eq_some_iff
+
+public theorem Pos.find?_char_eq_some_iff._proof_1_3 :
+    type_of% (private_decl% @_root_.String.Slice.Pos.find?_char_eq_some_iff._proof_1_3) := by
+  intro pattern s start pos q absent atEnd
+  subst q
+  exact absent (fun _ before _ => Nat.not_lt_of_ge (Pos.le_endPos _) before)
+
+public theorem find?_char_eq_some_iff._proof_1_3 :
+    type_of% (private_decl% @_root_.String.Slice.find?_char_eq_some_iff._proof_1_3) := by
+  intro pattern s pos q absent atEnd
+  subst q
+  exact absent (fun before _ => Nat.not_lt_of_ge (Pos.le_endPos _) before)
+
+public theorem Pos.find?_bool_eq_none_iff._proof_1_2 :
+    type_of% (private_decl% @_root_.String.Slice.Pos.find?_bool_eq_none_iff._proof_1_2) :=
+  @_root_.String.Slice.Pos.find?_bool_eq_none_iff
+
+public theorem Pos.find?_bool_eq_some_iff._proof_1_4 :
+    type_of% (private_decl% @_root_.String.Slice.Pos.find?_bool_eq_some_iff._proof_1_4) :=
+  @_root_.String.Slice.Pos.find?_bool_eq_some_iff
+
+public theorem find?_bool_eq_some_iff._proof_1_4 :
+    type_of% (private_decl% @_root_.String.Slice.find?_bool_eq_some_iff._proof_1_4) :=
+  @_root_.String.Slice.find?_bool_eq_some_iff
+
+public theorem Pos.find?_bool_eq_some_iff._proof_1_3 :
+    type_of% (private_decl% @_root_.String.Slice.Pos.find?_bool_eq_some_iff._proof_1_3) := by
+  intro pattern s start pos q absent atEnd
+  subst q
+  exact absent (fun _ before _ => Nat.not_lt_of_ge (Pos.le_endPos _) before)
+
+public theorem find?_bool_eq_some_iff._proof_1_3 :
+    type_of% (private_decl% @_root_.String.Slice.find?_bool_eq_some_iff._proof_1_3) := by
+  intro pattern s pos q absent atEnd
+  subst q
+  exact absent (fun before _ => Nat.not_lt_of_ge (Pos.le_endPos _) before)
+
+public theorem isSome_find?._proof_1_10 :
+    type_of% (private_decl% @_root_.String.Slice.isSome_find?._proof_1_10) := by
+  intro s head tail ih
+  cases head <;> first | rfl | exact ih
+
+public theorem Pattern.Model.find?_eq_none_iff._proof_1_7 :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.find?_eq_none_iff._proof_1_7) := by
+  intro ρ pat model s absent pos yes
+  exact (absent pos yes).elim
+
 end OmegaChecks.InitPort.Alternatives.String.Slice
 
 namespace OmegaChecks.InitPort.Alternatives.String
