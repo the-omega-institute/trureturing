@@ -5,7 +5,10 @@
    anchors: []
    digest: The golden shift s(v)=⌊(v+1)/φ⌋ satisfies s(v)≤N exactly when v<⌊(N+1)φ⌋, so the count of v∈ℕ with s(v)≤N is exactly ⌊(N+1)φ⌋; the biconditional is proved by floor arithmetic and the irrationality of (N+1)φ. -/
 
-import Mathlib
+import Mathlib.NumberTheory.Real.GoldenRatio
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 
 namespace D5.S1.Phase.GoldenBeattyCount
 

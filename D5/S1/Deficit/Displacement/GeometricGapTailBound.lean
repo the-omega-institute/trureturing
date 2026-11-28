@@ -5,7 +5,10 @@
    anchors: []
    digest: For any R with Ring R, PartialOrder R, and IsStrictOrderedRing R, hypotheses 0 < r and r ^ 2 + r = 1 imply: if (a :: l).Pairwise (fun x y => y + 2 <= x) and every k in a :: l satisfies d + 1 <= k, then ((a :: l).map (fun k => r ^ k)).sum <= r ^ d - r ^ (a + 1); if l.Pairwise (fun x y => y + 2 <= x) and every k in l satisfies d + 1 <= k, then (l.map (fun k => r ^ k)).sum < r ^ d; the private recurrence over a ring assumes r ^ 2 + r = 1 and the positive-index condition 1 <= a. -/
 
-import Mathlib
+import Mathlib.Algebra.Order.GroupWithZero.Basic
+import Mathlib.Algebra.Order.Ring.Basic
+import Mathlib.Algebra.BigOperators.Group.List.Basic
+import Mathlib.Tactic.Abel
 
 /- Provenance: Native proof over pinned mathlib. -/
 
