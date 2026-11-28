@@ -31,11 +31,19 @@ internal sealed class GangulyEncodingDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), DescribeRole.Theorem,
                 "The logical matrices at +1 and −1 differ at entry (0, 1)."),
             Node("encoding-witness-reduced-density-eq", "witness_reduced_density_eq", "Exact equality of the retained states",
-                StatementSource.WithoutFormula(), DescribeRole.Theorem,
+                StatementSource.FromAuthor(Disp(new Formula.Relation(
+                    Reduction(D(1)), FormulaRelationOperator.Equal, Reduction(Seq(Minus, D(1)))))),
+                DescribeRole.Theorem,
                 "On the witness graph with dealer 4 and retained set {2, 5, 6}, the two input projectors give the same partial trace. The two diagonal entries of the input difference vanish, and both off-diagonal entries are one. Each entry of the output difference is the sum of the forward and reverse cross sums divided by 64. The forward sum vanishes by the integer certificate and the reverse sum follows by swapping a with b and commuting the integer factors."))));
 
     private static DocumentBlock Node(string id, string name, string title, StatementSource statement,
         DescribeRole role, string prose) => Describe.Lean(
         DescribeId.Create("ganguly-circuit-access-" + id), DeclarationHandle.Create(Prefix + name),
         H(title), statement, AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Reduction(Formula sign) => new Formula.Apply(Name("reducedEncoding"),
+        [Name("witnessGraph"), Name("witnessDealer"), Name("witnessPlayers"),
+            new Formula.Apply(Name("logicalDensity"), [sign])]);
+
+    private static Formula Name(string name) => new Formula.Symbol(FormulaIdentifier.Create(name));
 }
