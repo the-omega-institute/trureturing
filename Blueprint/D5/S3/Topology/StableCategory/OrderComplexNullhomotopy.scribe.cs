@@ -10,7 +10,7 @@ internal sealed class OrderComplexNullhomotopyDocument : IScribeDocumentDefiniti
         Blocks(
             Describe.Lean(
                 DescribeId.Create("order-map-fence-from-realization-nullhomotopy"),
-                DeclarationHandle.Create("D5/S3/Topology/OrderComplexNullhomotopy.order_map_fence_of_nullhomotopy"),
+                DeclarationHandle.Create("D5/S3/Topology/StableCategory/OrderComplexNullhomotopy.order_map_fence_of_nullhomotopy"),
                 H("Fences after sufficiently many maximum projections"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(

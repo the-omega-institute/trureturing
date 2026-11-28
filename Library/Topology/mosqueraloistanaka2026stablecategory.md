@@ -58,8 +58,8 @@ strata_touched:
   - D5/S3/Topology/StableCategory/ShellingColourObstruction
   - D5/S3/Topology/StableCategory/CategoricalCoverFactorization
   - D5/S3/Topology/SimplicialNullhomotopyApproximation
-  - D5/S3/Topology/OrderComplexNullhomotopy
-  - D5/S3/Geometry/RelativeDeformationRetract
+  - D5/S3/Topology/StableCategory/OrderComplexNullhomotopy
+  - D5/S3/Geometry/Gluing/RelativeDeformationRetract
 license: citation-only
 triage: anchor
 ---
@@ -1491,6 +1491,7 @@ with the subdivision homeomorphism up to homotopy, and assembling
 the finite cylinders, remain separate parts of the factorization.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
 [Non-Hausdorff mapping cylinders](https://arxiv.org/abs/1005.0538)
+
 ## Prescribed subdivision depths in coherent four-balls
 
 For each depth \(d\), there is a coherent triangulation \(T\) of a

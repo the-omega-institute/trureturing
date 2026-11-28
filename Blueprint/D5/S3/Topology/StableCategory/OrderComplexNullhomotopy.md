@@ -6,9 +6,9 @@ Order-map fences from realization nullhomotopies
 
 **Theorem 1.1 (Fences after sufficiently many maximum projections).**
 
-Lean statement: `D5/S3/Topology/OrderComplexNullhomotopy.order_map_fence_of_nullhomotopy`
+Lean statement: `D5/S3/Topology/StableCategory/OrderComplexNullhomotopy.order_map_fence_of_nullhomotopy`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Topology/OrderComplexNullhomotopy.order_map_fence_of_nullhomotopy` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/StableCategory/OrderComplexNullhomotopy.order_map_fence_of_nullhomotopy` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,6 +20,6 @@ If the realization of an order map is nullhomotopic, composing with enough itera
 
 ## References
 
-- Truth anchor: `D5/S3/Topology/OrderComplexNullhomotopy.order_map_fence_of_nullhomotopy`
-- Dependency: [D5/S3/Topology/BarycentricRealization](BarycentricRealization.md)
-- Dependency: [D5/S3/Topology/SimplicialNullhomotopyApproximation](SimplicialNullhomotopyApproximation.md)
+- Truth anchor: `D5/S3/Topology/StableCategory/OrderComplexNullhomotopy.order_map_fence_of_nullhomotopy`
+- Dependency: [D5/S3/Topology/BarycentricRealization](../BarycentricRealization.md)
+- Dependency: [D5/S3/Topology/SimplicialNullhomotopyApproximation](../SimplicialNullhomotopyApproximation.md)

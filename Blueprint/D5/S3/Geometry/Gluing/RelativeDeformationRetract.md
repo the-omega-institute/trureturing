@@ -6,9 +6,9 @@ Strong deformation retractions onto finite subcomplexes
 
 **Theorem 1.1 (A homotopy-equivalent subcomplex inclusion yields a strong deformation retraction).**
 
-Lean statement: `D5/S3/Geometry/RelativeDeformationRetract.strongDeformationRetract_of_homotopyEquiv`
+Lean statement: `D5/S3/Geometry/Gluing/RelativeDeformationRetract.strongDeformationRetract_of_homotopyEquiv`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/RelativeDeformationRetract.strongDeformationRetract_of_homotopyEquiv` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Gluing/RelativeDeformationRetract.strongDeformationRetract_of_homotopyEquiv` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,5 +20,5 @@ Homotopy extension first turns a homotopy inverse of the realization inclusion i
 
 ## References
 
-- Truth anchor: `D5/S3/Geometry/RelativeDeformationRetract.strongDeformationRetract_of_homotopyEquiv`
-- Dependency: [D5/S3/Geometry/FiniteSubcomplexCylinder](FiniteSubcomplexCylinder.md)
+- Truth anchor: `D5/S3/Geometry/Gluing/RelativeDeformationRetract.strongDeformationRetract_of_homotopyEquiv`
+- Dependency: [D5/S3/Geometry/FiniteSubcomplexCylinder](../FiniteSubcomplexCylinder.md)

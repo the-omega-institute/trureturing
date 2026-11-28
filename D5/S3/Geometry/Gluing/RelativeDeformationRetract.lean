@@ -1,6 +1,6 @@
-/- GID: D5/S3/Geometry/RelativeDeformationRetract
+/- GID: D5/S3/Geometry/Gluing/RelativeDeformationRetract
    generality: G
-   mirror-B: D5/B/S3/Geometry/RelativeDeformationRetract
+   mirror-B: D5/B/S3/Geometry/Gluing/RelativeDeformationRetract
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

@@ -10,7 +10,7 @@ internal sealed class RelativeDeformationRetractDocument : IScribeDocumentDefini
         Blocks(
             Describe.Lean(
                 DescribeId.Create("strong-deformation-retract-from-subcomplex-homotopy-equivalence"),
-                DeclarationHandle.Create("D5/S3/Geometry/RelativeDeformationRetract.strongDeformationRetract_of_homotopyEquiv"),
+                DeclarationHandle.Create("D5/S3/Geometry/Gluing/RelativeDeformationRetract.strongDeformationRetract_of_homotopyEquiv"),
                 H("A homotopy-equivalent subcomplex inclusion yields a strong deformation retraction"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(
