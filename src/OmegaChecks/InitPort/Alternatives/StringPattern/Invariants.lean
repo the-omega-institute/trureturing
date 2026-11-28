@@ -9,6 +9,7 @@ import all Init.Data.String.Lemmas.Pattern.Char
 import all Init.Data.String.Lemmas.Pattern.Pred
 import all Init.Data.String.Pattern.Pred
 import all Init.Data.String.Pattern.String
+import all Init.Data.String.Lemmas.Pattern.Find.Basic
 import all Init.Data.String.Lemmas.Pattern.Find.String
 import all Init.Data.Iterators.Consumers.Loop
 import all Init.Data.Iterators.Consumers.Monadic.Loop
@@ -360,27 +361,10 @@ private theorem firstMatch {ρ : Type} {pat : ρ} [PatternModel pat] [StrictPatt
   | endPos =>
     refine ⟨(fun h => nomatch h), fun ⟨hle, hm, _⟩ => ?_⟩
     exact (not_matchesAt_endPos ((Std.le_antisymm (Pos.le_endPos q) hle) ▸ hm)).elim
-  | @matched _ start stop hit tail ih =>
-    constructor
-    · intro eq
-      obtain rfl := Option.some.inj eq
-      exact ⟨Nat.le_refl _, hit.matchesAt, fun _ bound before =>
-        (Nat.not_lt_of_ge bound before).elim⟩
-    · rintro ⟨bound, _, first⟩
-      by_cases same : start = q
-      · cases same; rfl
-      · have lt : start < q := Std.lt_of_le_of_ne bound same
-        exact (first start (Nat.le_refl _) lt hit.matchesAt).elim
-  | @mismatched _ start stop lt miss tail ih =>
-    refine ih.trans ⟨?_, ?_⟩
-    · rintro ⟨bound, yes, first⟩
-      refine ⟨Nat.le_trans (Nat.le_of_lt lt) bound, yes, fun r lo hi => ?_⟩
-      by_cases below : stop ≤ r
-      · exact first r below hi
-      · exact miss r lo (Nat.lt_of_not_ge below)
-    · rintro ⟨bound, yes, first⟩
-      have after : stop ≤ q := Nat.le_of_not_gt fun before => miss q bound before yes
-      exact ⟨after, yes, fun r lo => first r (Nat.le_trans (Nat.le_of_lt lt) lo)⟩
+  | matched hit _ _ =>
+    exact (private_decl% _root_.String.Slice.Pattern.Model.find?_eq_some_iff._proof_1_7) pat q hit.matchesAt
+  | mismatched lt miss _ ih =>
+    exact (private_decl% _root_.String.Slice.Pattern.Model.find?_eq_some_iff._proof_1_8) pat q lt miss ih
 
 public theorem String.Slice.Pattern.Model.find?_eq_some_iff :
     type_of% @_root_.String.Slice.Pattern.Model.find?_eq_some_iff := by

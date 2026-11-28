@@ -179,6 +179,32 @@ public theorem isSome_find?._proof_1_10 :
   intro s head tail ih
   cases head <;> first | rfl | exact ih
 
+public theorem Pattern.Model.find?_eq_some_iff._proof_1_7 :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.find?_eq_some_iff._proof_1_7) := by
+  intro ρ pat model s q steps start stop hit
+  constructor
+  · intro found
+    obtain rfl := Option.some.inj found
+    exact ⟨Nat.le_refl _, hit, fun _ bound before => (Nat.not_lt_of_ge bound before).elim⟩
+  · rintro ⟨bound, _, first⟩
+    by_cases same : start = q
+    · cases same
+      rfl
+    · exact (first start (Nat.le_refl _) (Std.lt_of_le_of_ne bound same) hit).elim
+
+public theorem Pattern.Model.find?_eq_some_iff._proof_1_8 :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.find?_eq_some_iff._proof_1_8) := by
+  intro ρ pat model s q steps start stop lt miss ih
+  refine ih.trans ⟨?_, ?_⟩
+  · rintro ⟨bound, yes, first⟩
+    refine ⟨Nat.le_trans (Nat.le_of_lt lt) bound, yes, fun r lo hi => ?_⟩
+    by_cases below : stop ≤ r
+    · exact first r below hi
+    · exact miss r lo (Nat.lt_of_not_ge below)
+  · rintro ⟨bound, yes, first⟩
+    have after : stop ≤ q := Nat.le_of_not_gt fun before => miss q bound before yes
+    exact ⟨after, yes, fun r lo => first r (Nat.le_trans (Nat.le_of_lt lt) lo)⟩
+
 public theorem Pattern.Model.find?_eq_none_iff._proof_1_7 :
     type_of% (private_decl% @_root_.String.Slice.Pattern.Model.find?_eq_none_iff._proof_1_7) := by
   intro ρ pat model s absent pos yes
