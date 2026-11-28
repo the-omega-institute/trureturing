@@ -306,13 +306,13 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
       | `Omega.String.toList => pure (`OmegaInit.Data.String.Basic, "omega_string_to_list")
       | `Omega.String.ofList => pure (`OmegaInit.Prelude, "omega_string_of_list")
       | _ => do
-        if let some symbol := OmegaChecks.InitCompiler.RootNames.natBitwiseExtern? (InitKernelPort.originalName n) then
-          let args := #[(IR.IRType.tobject, true), (.tobject, true)]
+        if let some (moduleName, symbol, arity) := OmegaChecks.InitCompiler.RootNames.borrowedNatExtern? (InitKernelPort.originalName n) then
+          let args := Array.replicate arity (IR.IRType.tobject, true)
           InitPort.NativeState.checkNativeNat full
           InitPort.NativeState.verify full n args .tobject symbol
           if let some ref := reference? then
             InitPort.NativeState.verify ref (InitKernelPort.originalName n) args .tobject symbol
-          pure (`OmegaInit.Data.Nat.Bitwise.Basic, symbol)
+          pure (moduleName, symbol)
         else if n == InitKernelPort.portName InitPort.RandomState.support then
           pure (`OmegaInit.Data.Random, "omega_std_gen_ref")
         else if n == InitKernelPort.portName InitPort.ReferenceModify.support then
