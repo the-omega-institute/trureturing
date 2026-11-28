@@ -634,6 +634,16 @@ partial def visit (n : Name) : M Bool := do
         break
       unless found do return ← record n (.blocked "unavailable dependency" (some blocker))
       break
+  -- Collection can specialize a named public loop to its implementation. Retain
+  -- the original operand whenever its strict type is already convertible here,
+  -- as the implementation can be sealed when its defining module is imported.
+  if !specialized.equal ci.type && !type.equal ci.type then
+    if ← ci.type.getUsedConstants.allM visit then
+      let current := Environment.ofKernelEnv (← get).env
+      let original := translate portName ci.type
+      if (Kernel.check current {} original).isOk &&
+          Kernel.isDefEqGuarded current {} original (translate portName type) then
+        type := ci.type
   let some body := ci.value? (allowOpaque := true) | return ← record n (.blocked "no kernel body")
   let checkValue (value : Expr) (budget : Nat) : M Outcome := do
     let value ← OmegaChecks.InitCompiler.finiteCollectors c.source value (withinImplementation := true)
