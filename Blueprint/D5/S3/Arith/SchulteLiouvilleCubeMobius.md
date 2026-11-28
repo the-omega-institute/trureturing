@@ -42,7 +42,91 @@ $$\operatorname{B} = \operatorname{\mu} * \operatorname{liftPow}\left(3, \operat
 
 The function liftPow(3,zeta) is one on positive cubes and zero elsewhere. Convolution with mu inverts the positive-divisor sum in the Lambert series defining A210826.
 
-**Theorem 1.4 (Schulte's product formula).**
+**Theorem 1.4 (Coefficients at exact powers).**
+
+$$\forall k \in \mathbb{N},\; (k \ne 0) \implies (\forall f \in \operatorname{ArithmeticFunction}\left(\mathbb{Z}\right),\; \forall m \in \mathbb{N},\; \operatorname{liftPow}\left(k, f\right)\left(m^{k}\right) = f\left(m\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/SchulteLiouvilleCubeMobius.liftPow_apply_pow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At an exact positive-degree power, the lift evaluates the original function at the base.
+
+**Theorem 1.5 (Coefficients outside exact powers).**
+
+$$\forall k \in \mathbb{N},\; \forall f \in \operatorname{ArithmeticFunction}\left(\mathbb{Z}\right),\; \forall n \in \mathbb{N},\; (Not (\exists m \in \mathbb{N},\; m^{k} = n)) \implies (\operatorname{liftPow}\left(k, f\right)\left(n\right) = 0)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/SchulteLiouvilleCubeMobius.liftPow_apply_nonpow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If the input has no natural k-th root, its coefficient in the lift is zero.
+
+**Theorem 1.6 (Multiplicativity of the power lift).**
+
+$$\forall k \in \mathbb{N},\; (k \ne 0) \implies (\forall f \in \operatorname{ArithmeticFunction}\left(\mathbb{Z}\right),\; (\operatorname{ArithmeticFunction}.\operatorname{IsMultiplicative}\left(f\right)) \implies (\operatorname{ArithmeticFunction}.\operatorname{IsMultiplicative}\left(\operatorname{liftPow}\left(k, f\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/SchulteLiouvilleCubeMobius.liftPow_isMultiplicative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Coprime factors of an exact power are exact powers of the same degree.
+
+**Theorem 1.7 (Power lift on prime powers).**
+
+$$\forall k \in \mathbb{N},\; (k \ne 0) \implies (\forall f \in \operatorname{ArithmeticFunction}\left(\mathbb{Z}\right),\; \forall p \in \mathbb{N},\; \forall e \in \mathbb{N},\; (\operatorname{Nat}.\operatorname{Prime}\left(p\right)) \implies (\operatorname{liftPow}\left(k, f\right)\left(p^{e}\right) = (if (k \mid e) then f\left(p^{\operatorname{Nat}.\operatorname{div}\left(e, k\right)}\right) else 0)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/SchulteLiouvilleCubeMobius.liftPow_prime_pow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exponent must be divisible by the lift degree. The quotient is natural-number division.
+
+**Theorem 1.8 (Convolution on prime powers).**
+
+$$\forall f \in \operatorname{ArithmeticFunction}\left(\mathbb{Z}\right),\; \forall g \in \operatorname{ArithmeticFunction}\left(\mathbb{Z}\right),\; \forall p \in \mathbb{N},\; \forall e \in \mathbb{N},\; (\operatorname{Nat}.\operatorname{Prime}\left(p\right)) \implies ((f * g)\left(p^{e}\right) = \operatorname{Finset}.\operatorname{sum}\left(\operatorname{Finset}.\operatorname{range}\left(e + 1\right), (fun i:\mathbb{N} \mapsto f\left(p^{i}\right) \cdot g\left(p^{e - i}\right))\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/SchulteLiouvilleCubeMobius.conv_prime_pow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The divisors of p raised to e have exponents from zero to e. Their complementary exponents use natural subtraction.
+
+**Theorem 1.9 (Lifted Möbius function on prime powers).**
+
+$$\forall k \in \mathbb{N},\; (k \ne 0) \implies (\forall p \in \mathbb{N},\; \forall e \in \mathbb{N},\; (\operatorname{Nat}.\operatorname{Prime}\left(p\right)) \implies (\operatorname{liftPow}\left(k, \operatorname{\mu}\right)\left(p^{e}\right) = (if (e = 0) then 1 else 0) - (if (e = k) then 1 else 0)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/SchulteLiouvilleCubeMobius.lift_moebius_prime_pow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The two integer indicators give one at exponent zero and minus one at exponent k.
+
+**Theorem 1.10 (Lifted zeta on prime powers).**
+
+$$\forall k \in \mathbb{N},\; (k \ne 0) \implies (\forall p \in \mathbb{N},\; \forall e \in \mathbb{N},\; (\operatorname{Nat}.\operatorname{Prime}\left(p\right)) \implies (\operatorname{liftPow}\left(k, \operatorname{ArithmeticFunction}.\operatorname{natCoe}\left(\operatorname{ArithmeticFunction}.\operatorname{zeta}\right)\right)\left(p^{e}\right) = (if (k \mid e) then 1 else 0)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/SchulteLiouvilleCubeMobius.lift_zeta_prime_pow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The integer-valued lift gives one exactly when k divides the exponent.
+
+**Theorem 1.11 (Schulte's product formula).**
 
 $$\forall n \in \mathbb{N}, (0 < n) \implies (\operatorname{A}\left(n\right) = \operatorname{\lambda}\left(n\right) \cdot \operatorname{B}\left(n\right))$$
 
@@ -62,5 +146,12 @@ Every convolution factor is multiplicative. On a prime power with exponent e, bo
 
 - Truth anchor: `D5/S3/Arith/SchulteLiouvilleCubeMobius.A`
 - Truth anchor: `D5/S3/Arith/SchulteLiouvilleCubeMobius.B`
+- Truth anchor: `D5/S3/Arith/SchulteLiouvilleCubeMobius.conv_prime_pow`
 - Truth anchor: `D5/S3/Arith/SchulteLiouvilleCubeMobius.liftPow`
+- Truth anchor: `D5/S3/Arith/SchulteLiouvilleCubeMobius.liftPow_apply_nonpow`
+- Truth anchor: `D5/S3/Arith/SchulteLiouvilleCubeMobius.liftPow_apply_pow`
+- Truth anchor: `D5/S3/Arith/SchulteLiouvilleCubeMobius.liftPow_isMultiplicative`
+- Truth anchor: `D5/S3/Arith/SchulteLiouvilleCubeMobius.liftPow_prime_pow`
+- Truth anchor: `D5/S3/Arith/SchulteLiouvilleCubeMobius.lift_moebius_prime_pow`
+- Truth anchor: `D5/S3/Arith/SchulteLiouvilleCubeMobius.lift_zeta_prime_pow`
 - Truth anchor: `D5/S3/Arith/SchulteLiouvilleCubeMobius.result`
