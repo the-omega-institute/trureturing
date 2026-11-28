@@ -90,3 +90,4 @@ The induced-profile equation makes each positive reconstruction row sum to one. 
 
 - Truth anchor: `D5/S3/Estimation/DecisionRisk/CARRevelationScaling.result`
 - Dependency: [D5/S3/Estimation/DecisionRisk/CARApproximateRecovery](CARApproximateRecovery.md)
+- Dependency: [D5/S3/Estimation/DecisionRisk/FixedMarginalGenericFeatures](FixedMarginalGenericFeatures.md)

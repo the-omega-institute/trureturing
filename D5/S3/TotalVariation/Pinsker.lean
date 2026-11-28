@@ -20,8 +20,17 @@
      only the scalar binary estimate and the finite positive-part identity are proved here.
 -/
 
-import D5.S3.Divergence.GrandmotherTheorem
-import D5.S3.DivergenceSupport.ZeroSupportDPI
+module
+
+public import D5.S3.Divergence.GrandmotherTheorem
+public import D5.S3.DivergenceSupport.ZeroSupportDPI
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+
+/-! Finite total variation, its normalization, and Pinsker’s inequality. -/
+
+@[expose] public section
 
 namespace D5.S3.TotalVariation.Pinsker
 

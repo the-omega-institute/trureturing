@@ -6,7 +6,13 @@
    utility: none
    digest: Construct common approximate CAR recovery with signed pair budgets. -/
 
-import D5.S3.Estimation.SequentialDecisionRisk.FiniteDeficiencyRiskTransfer
+module
+
+public import D5.S3.Estimation.SequentialDecisionRisk.FiniteDeficiencyRiskTransfer
+
+/-! Approximate recovery of finite coarsening-at-random experiments. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false

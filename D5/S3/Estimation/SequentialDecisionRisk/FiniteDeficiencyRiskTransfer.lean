@@ -5,8 +5,14 @@
    anchors: []
    digest: Finite experiment deficiency bounds the transfer of optimal bounded-loss risk. -/
 
-import D5.S3.Estimation.DecisionRisk.BoundedRiskSimulatorTransport
-import Mathlib.Data.ENNReal.Real
+module
+
+public import D5.S3.Estimation.DecisionRisk.BoundedRiskSimulatorTransport
+public import Mathlib.Data.ENNReal.Real
+
+/-! Finite Bayes risks and deficiency bounds for stochastic experiments. -/
+
+@[expose] public section
 
 /- Library-search audit trail (2026-08-28):
    * `BoundedRiskSimulatorTransport.bounded_loss_risk_stability_of_simulator`
