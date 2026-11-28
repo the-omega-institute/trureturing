@@ -26,7 +26,7 @@ namespace D5.S3.Quantum.Recovery.BKMFlagRefinement
 variable {n ι : Type*} [Fintype n] [DecidableEq n] [Fintype ι] [DecidableEq ι]
 
 omit [DecidableEq n] in
-private theorem traceNorm_joint (S : ι → Matrix n n ℂ) :
+theorem traceNorm_joint (S : ι → Matrix n n ℂ) :
     traceNorm (joint S) = ∑ i, traceNorm (S i) := by
   classical
   let Q : ι → Matrix n n ℂ := fun i => (S i)ᴴ * S i
@@ -146,7 +146,7 @@ def petzBlocks (T : ι → Matrix n n ℂ) (X : Matrix n n ℂ) (i : ι) : Matri
   let P := mpow (marginal T) (-(1 / 2))
   Q * (P * X * P) * Q
 
-private theorem partialTracePetz_joint (T : ι → Matrix n n ℂ) (hT : ∀ i, (T i).PosDef)
+theorem partialTracePetz_joint (T : ι → Matrix n n ℂ) (hT : ∀ i, (T i).PosDef)
     (X : Matrix n n ℂ) :
     partialTracePetz (joint T) X = joint (petzBlocks T X) := by
   simp only [partialTracePetz, mpow_joint T (fun i => (hT i).isHermitian),
