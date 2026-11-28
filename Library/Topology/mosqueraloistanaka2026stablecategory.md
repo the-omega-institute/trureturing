@@ -57,6 +57,7 @@ strata_touched:
   - D5/S3/Topology/StableCategory/ShellingColourCriterion
   - D5/S3/Topology/StableCategory/ShellingColourObstruction
   - D5/S3/Topology/StableCategory/CategoricalCoverFactorization
+  - D5/S3/Topology/SimplicialNullhomotopyApproximation
 license: citation-only
 triage: anchor
 ---
@@ -1442,3 +1443,26 @@ vertex sufficiently little. The exact retraction transports a
 categorical cover at the same depth. This is a paper-level reduction.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
 [Relative simplicial approximation](https://doi.org/10.1017/S0305004100037415)
+
+## Fixed-target approximation in arbitrary dimension
+
+A nullhomotopy of the affine realization of a simplicial map gives a
+finite contiguity chain after sufficiently many ordinary subdivisions
+of its source. The same threshold works for every later depth and
+every vertex selector supported in the original carriers. The
+constant can be taken at the same vertex of the target for all these
+choices. In `SimplicialNullhomotopyApproximation`, iterated barycentric
+averaging gives zero coordinates outside the original carrier, and
+the uniform mesh estimate brings an entire source simplex within
+the cylinder's Lebesgue radius.
+
+For the weak-category-one reduction, the target of this approximation
+stays fixed during this construction. A paper-level exact factor can
+then be built with a non-Hausdorff mapping cylinder of the iterated
+maximum map, attached to the finite order homotopy of the refined
+inclusion. The mapping cylinder retains the original source map.
+The simplicial homotopy uses the later fine source at a separate end
+of the mapping cylinder. The finite order homotopy and exact gluing
+are additional steps beyond the approximation formalized here.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Non-Hausdorff mapping cylinders](https://arxiv.org/abs/1005.0538)
