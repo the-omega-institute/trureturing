@@ -12,9 +12,10 @@ internal sealed class BoundedRealCocycleDocument : IScribeDocumentDefinition
         Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body);
     private static Formula And(params Formula[] parts)
     {
-        var result = parts[0];
+        var result = Seq(Open, parts[0], Close);
         for (var i = 1; i < parts.Length; i++)
-            result = new Formula.Logic(result, FormulaLogicOperator.And, parts[i]);
+            result = new Formula.Logic(result, FormulaLogicOperator.And,
+                Seq(Open, parts[i], Close));
         return result;
     }
     private static Formula Abs(Formula value) => Seq(Bar, value, Bar);
