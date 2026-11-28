@@ -19,9 +19,13 @@ were written first as a self-contained development (namespace `RHLinalg`) accomp
 paper's authors, and are incorporated here unchanged; they have no upstream outside this project (see README
 § Provenance and attribution).
 -/
-import D5.S3.Weil.ZetaLinear.PosIndex
-import D5.S3.Weil.ZetaLinear.VonNeumann
-import D5.S3.Weil.ZetaLinear.HermitianPosPart
+module
+
+public import D5.S3.Weil.ZetaLinear.PosIndex
+public import D5.S3.Weil.ZetaLinear.VonNeumann
+public import D5.S3.Weil.ZetaLinear.HermitianPosPart
+
+@[expose] public section
 
 /-!
 # The rank–trace inequality (paper §3, `lem:ranktrace`)
