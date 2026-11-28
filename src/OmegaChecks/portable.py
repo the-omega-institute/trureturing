@@ -7,7 +7,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
-from host_lake import (COMMON_SRC, INSPECTOR, ROOT, UPSTREAM, UPSTREAM_SRC,
+from host_lake import (COMMON_SRC, INSPECTOR, REFERENCE, ROOT, UPSTREAM, UPSTREAM_SRC,
                        lake_layout, upstream_portable)
 
 
@@ -85,10 +85,20 @@ def dependency_paths():
 
 
 def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environment,
-                      common_dir=None, *, snapshots=None):
-    lake, libraries = lake_layout(strict, with_reg, common_dir)
+                      common_dir=None, *, reference=False, snapshots=None):
+    lake, libraries = lake_layout(strict, with_reg, common_dir, reference=reference)
     return upstream_portable().stage_artifacts(lake, libraries, sources, stage, packages, lean,
                                                environment, cwd=ROOT, snapshots=snapshots)
+
+
+def compare_consumers(strict_path, reference_path, modules, basis, environment, *, report=None):
+    env = {**environment, "OMEGA_CACHE_CONSUMER_MODE": "common-interface"}
+    if report is not None:
+        env.update(OMEGA_CACHE_CONSUMER_MODE="official-interface", OMEGA_OFFICIAL_AXIOM_REPORT=str(report))
+    subprocess.run([AUDIT, "--consumer", strict_path, reference_path, *modules, "--basis", *basis],
+                   cwd=ROOT, env=env, check=True)
+    if report is not None and not report.is_file():
+        raise RuntimeError(f"consumer audit did not produce its official axiom report: {report}")
 
 
 def publish(tree, destination):
@@ -147,6 +157,16 @@ def normalize_row(row):
 def same_measurement(first, second):
     return ({key: normalize_row(row) for key, row in declaration_rows(first).items()}
             == {key: normalize_row(row) for key, row in declaration_rows(second).items()})
+
+
+def verify_reference_statements(official, reference):
+    def statements(module):
+        return {row["nameKey"]: (row["kind"], row["includeInStatement"], row["statementTypeAddress"])
+                for row in module["declarations"]}
+
+    for first, second in zip(official, reference, strict=True):
+        if first["module"] != second["module"] or statements(first) != statements(second):
+            raise RuntimeError(f"product and Mathlib reference statements differ: {first['module']}")
 
 
 def paired_inventory(official, staged_official, strict, eligible):
@@ -262,10 +282,9 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         raise RuntimeError("no downstream consumers selected")
     print(f"Portable consumer targets ({len(selected)}): {' '.join(selected)}", flush=True)
     all_basis = {name for name in graph if root(name) in BASIS}
-    facades = {str(path.relative_to(UPSTREAM_SRC).with_suffix("")).replace(os.sep, "."): path
-               for prefix in BASIS for path in (*UPSTREAM_SRC.glob(prefix + ".lean"), *(UPSTREAM_SRC / prefix).rglob("*.lean"))}
-    if all_basis != set(facades):
-        raise RuntimeError(f"standard and strict module trees differ: {sorted(all_basis ^ set(facades))}")
+    facades, _ = import_graph(lean, official_basis=True) if backend == "both" else ({}, {})
+    if backend == "both" and all_basis != set(facades):
+        raise RuntimeError(f"reference and strict module trees differ: {sorted(all_basis ^ set(facades))}")
     roots = [*selected, *basis_roots] if scoped else selected if only else [*selected, *all_basis]
     modules = closure(graph, roots)
     basis = [n for n in modules if root(n) in BASIS]
@@ -277,18 +296,23 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     compiled = dict.fromkeys([*modules, *common_modules])
     with_reg = any(root(n) in {"Reg", "LeanInformationAuditInterface"} for n in compiled)
     strict_sources = {name: sources[name] for name in compiled}
-    official_sources = {name: facades[name] if root(name) in BASIS else sources[name]
+    official_sources = {name: UPSTREAM_SRC.joinpath(*name.split(".")).with_suffix(".lean")
+                        if root(name) in BASIS else sources[name]
                         for name in compiled}
+    reference_sources = {}
     if backend == "both":
+        reference_sources = {name: facades.get(name, source) for name, source in official_sources.items()}
         certificates = closure(graph, ["OmegaChecks.Interface.Equations"])
-        for name in certificates:
-            official_sources[name] = sources[name]
+        reference_sources.update((name, sources[name]) for name in certificates)
 
     tracked = set()
     if backend != "mathlib":
         tracked.update(strict_sources.values())
         tracked.update(sources[name] for name in closure(graph, ["OmegaChecks.InitCompiler"]))
     tracked.update(official_sources.values())
+    tracked.update(reference_sources.values())
+    if backend == "both":
+        tracked.update(REFERENCE / file for file in ("lakefile.toml", "lake-manifest.json"))
     tracked.update(directory / file for directory in (ROOT, UPSTREAM)
                    for file in ("lakefile.toml", "lake-manifest.json", "lean-toolchain"))
     if with_reg:
@@ -326,15 +350,19 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             if strict_sources:
                 strict_path = backend_artifacts(True, with_reg, strict_sources, strict, packages, lean,
                                                 environment, snapshots=snapshots)
+        if backend == "both" and (downstream or basis or common_modules):
+            reference_path = backend_artifacts(
+                False, with_reg, {name: source for name, source in reference_sources.items() if name not in skipped},
+                Path(temp) / "reference", packages, lean, environment, reference=True, snapshots=snapshots)
         if common_modules:
             common_basis = [name for name in common_modules if root(name) in BASIS]
-            normal, common = derived_facades(lean, strict, common_basis, official_path)
+            normal, common = derived_facades(lean, strict, common_basis, reference_path)
             common_downstream = [name for name in common_modules if root(name) not in BASIS | {"OmegaBuild"}]
-            common_sources = {name: official_sources[name] for name in [*common_modules, *certificates]}
+            common_sources = {name: reference_sources[name] for name in [*common_modules, *certificates]}
             for name, expected in normal.items():
                 if facades[name].read_bytes() != expected:
                     raise RuntimeError(f"{facades[name]} does not re-export the compiled strict interface")
-                path = COMMON_SRC / facades[name].relative_to(UPSTREAM_SRC)
+                path = COMMON_SRC.joinpath(*name.split(".")).with_suffix(".lean")
                 path.parent.mkdir(parents=True, exist_ok=True)
                 if not path.exists() or path.read_bytes() != common[name]:
                     with tempfile.NamedTemporaryFile(dir=path.parent, delete=False) as f:
@@ -350,15 +378,13 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         if backend == "both" and frozen is None:
             build_audit(environment)
         if common_modules:
-            upstream_portable().compare_consumers(strict_path, common_path, common_downstream,
-                                                  common_basis, environment)
+            compare_consumers(strict_path, common_path, common_downstream, common_basis, environment)
             print(f"Common computational interface checked: {len(common_basis)} basis modules, "
                   f"{len(common_downstream)} downstream modules", flush=True)
         if backend == "both" and frozen is None:
             staged_report = Path(temp) / "official-axioms.json"
             if downstream or basis:
-                upstream_portable().compare_consumers(strict_path, official_path, downstream, basis,
-                                                      environment, report=staged_report)
+                compare_consumers(strict_path, reference_path, downstream, basis, environment, report=staged_report)
             upstream_portable().write_official_report(staged_report, plan, modules)
         if frozen is not None:
             canonical, inspector, response = frozen
@@ -382,17 +408,20 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             inventory, strict_rows, certified = [], [], []
             if eligible:
                 request.write_text(json.dumps(eligible))
+                paired_official = [row for row in official_rows if row["module"] not in skipped]
+                reference_rows = measure_staged(inspector, request, eligible, reference_path,
+                                                Path(temp) / "reference-dependencies.json", environment)
+                verify_reference_statements(paired_official, reference_rows)
                 strict_rows = measure_staged(inspector, request, eligible, strict_path,
                                              Path(temp) / "strict-dependencies.json", environment)
-                paired_official = [row for row in official_rows if row["module"] not in skipped]
                 inventory = paired_inventory(canonical, paired_official, strict_rows, set(eligible))
                 inventory_path = Path(temp) / "frozen-inventory.json"
                 certificate_path = Path(temp) / "frozen-certificate.json"
                 inventory_path.write_text(json.dumps(inventory))
                 build_audit(environment)
-                subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis],
-                               cwd=ROOT, env={**environment, "OMEGA_FROZEN_INVENTORY": str(inventory_path),
-                                    "OMEGA_FROZEN_CERTIFICATE": str(certificate_path)}, check=True)
+                compare_consumers(strict_path, reference_path, downstream, basis,
+                                  {**environment, "OMEGA_FROZEN_INVENTORY": str(inventory_path),
+                                   "OMEGA_FROZEN_CERTIFICATE": str(certificate_path)})
                 certified = json.loads(certificate_path.read_text())
             for tree, before in snapshots.items():
                 if artifact_snapshot(tree) != before:
@@ -408,11 +437,11 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         if destination:
             keep = set(official_sources)
             if only and backend == "both":
-                keep = set(modules) | set(certificates)
+                keep = set(modules)
             elif with_reg and not only:
                 # The root publication excludes the separate Reg package's research-tool artifacts.
                 root_targets = [name for name in selected if root(name) not in {"Reg", "LeanInformationAuditInterface"}]
-                keep = set(closure(graph, [*root_targets, *all_basis, "OmegaChecks.Interface.Equations"]))
+                keep = set(closure(graph, [*root_targets, *all_basis]))
             for name in official_sources.keys() - keep:
                 base = official.joinpath(*name.split("."))
                 for artifact in base.parent.glob(base.name + ".*"):

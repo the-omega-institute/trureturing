@@ -161,6 +161,18 @@ class FrozenMeasurement(unittest.TestCase):
                     with self.assertRaisesRegex(RuntimeError, "inadmissible strict axioms"):
                         inventory({**row, "nameKey": "strictOnly", "includeInStatement": included, "axioms": [axiom]})
 
+    def test_reference_comparison_uses_statement_identity_not_reference_dependencies(self):
+        row = {"nameKey": "lemma", "kind": "theorem", "statementTypeAddress": "sha256:" + "a" * 64,
+               "includeInStatement": True, "axioms": [], "libraries": ["OmegaMathlib"]}
+        product = [{"module": "D5.Fixture", "declarations": [row]}]
+        reference = copy.deepcopy(product)
+        reference_row = reference[0]["declarations"][0]
+        reference_row.update(axioms=["propext"], libraries=["Mathlib"])
+        portable.verify_reference_statements(product, reference)
+        reference_row["statementTypeAddress"] = "sha256:" + "b" * 64
+        with self.assertRaisesRegex(RuntimeError, "product and Mathlib reference statements differ: D5.Fixture"):
+            portable.verify_reference_statements(product, reference)
+
     def test_rejects_unmatched_private_source_declaration(self):
         inspector = portable.ROOT / ".lake/build/lean-inspector/producer/bin/reportInspector"
         portable.build_audit()

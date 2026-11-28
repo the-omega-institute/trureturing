@@ -4,6 +4,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tempfile
@@ -12,6 +13,7 @@ import tomllib
 ROOT = Path(__file__).resolve().parents[2]
 UPSTREAM = (ROOT / ".lake/packages/omegamath").resolve()
 UPSTREAM_SRC = UPSTREAM / "src"
+REFERENCE = UPSTREAM / "checks/mathlib"
 BUILD = ".lake/build/omega-strict"
 COMMON_SRC = ROOT / ".lake/omega-common-src"
 INSPECTOR = ROOT / "tools/lean-inspector-interface"
@@ -72,21 +74,51 @@ def isolate_config(directory, build_dir, label):
     return write_config(f"omega-{label}.toml", source)
 
 
-def lake_layout(strict, with_reg, common_dir=None):
-    label = "common" if common_dir is not None else "strict"
-    variant = strict or common_dir is not None
-    build_dir = ".lake/build/omega-common" if common_dir is not None else BUILD
-    if not variant:
-        build_dir = ".lake/build"
+def package_overlay(build_dir, label, common_dir):
+    if label == "reference":
+        source = (REFERENCE / "lakefile.toml").read_text()
+        name = tomllib.loads(source)["name"]
+        package = tomllib.loads((UPSTREAM / "lakefile.toml").read_text())["name"]
+        source = source.replace(f'name = {json.dumps(name)}\n', f'name = {json.dumps(package)}\n', 1)
+        source = (f'buildDir = {json.dumps(str(UPSTREAM / build_dir))}\n'
+                  'preferReleaseBuild = false\n' + source)
+    else:
+        config = (foundation().foundation_config(str(common_dir), build_dir, label)
+                  if common_dir is not None else foundation().strict_config())
+        source = config.read_text()
+    # Lake applies package overrides relative to the package root. The
+    # reference descriptor declares its source directories relative to itself.
+    def relocate(match):
+        directory = REFERENCE / json.loads(match[1])
+        return f"srcDir = {json.dumps(str(directory.resolve()))}"
+
+    relocated = re.sub(r'^srcDir = (".*")$', relocate, source, flags=re.MULTILINE)
+    expected = tomllib.loads(source)
+    for kind in ("lean_lib", "lean_exe"):
+        for target in expected.get(kind, []):
+            target["srcDir"] = str((REFERENCE / target["srcDir"]).resolve())
+    if tomllib.loads(relocated) != expected:
+        raise ValueError(f"unable to relocate the omegamath {label} source directories")
+    return write_config(f"omega-{label}-omegamath.toml", relocated)
+
+
+def lake_layout(strict, with_reg, common_dir=None, *, reference=False):
+    if common_dir is not None:
+        label, build_dir = "common", ".lake/build/omega-common"
+    elif strict:
+        label, build_dir = "strict", BUILD
+    elif reference:
+        label, build_dir = "reference", ".lake/build/omega-reference"
+    else:
+        label, build_dir = None, ".lake/build"
     root_build = ROOT / build_dir
     package_build = UPSTREAM / build_dir
     libraries = {"": root_build / "lib/lean",
                  **dict.fromkeys(OMEGA_ROOTS, package_build / "lib/lean")}
     configs = {}
-    if variant:
+    if label:
         configs["trureturing"] = isolate_config(ROOT, root_build, label)
-        configs["omegamath"] = (foundation().strict_config() if strict else
-                                foundation().foundation_config(str(common_dir), build_dir, label))
+        configs["omegamath"] = package_overlay(build_dir, label, common_dir)
     workspace = ROOT
     command = ["lake"]
     if with_reg:
@@ -96,11 +128,11 @@ def lake_layout(strict, with_reg, common_dir=None):
                                            ("leanInspectorInterface", INSPECTOR, "LeanInformationAuditInterface")]:
             config = tomllib.loads((directory / "lakefile.toml").read_text())
             build = (directory / config["buildDir"]).resolve()
-            if variant:
+            if label:
                 build = root_build / name
                 configs[name] = isolate_config(directory, build, f"{label}-{name}")
             libraries[namespace] = build / "lib/lean"
-    if variant:
+    if label:
         name = "reg" if with_reg else "trureturing"
         command.extend(["-f", configs[name], "--no-cache"])
         manifest = json.loads((workspace / "lake-manifest.json").read_text())

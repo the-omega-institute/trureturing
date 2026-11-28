@@ -7,11 +7,59 @@ import sys
 import tempfile
 import tomllib
 import unittest
+from unittest.mock import Mock, patch
 
+import host_lake
 from host_lake import ROOT, UPSTREAM
 
 
 class BackendScheduling(unittest.TestCase):
+    def test_foundation_overlays_resolve_the_init_compiler_relative_to_the_reference_workspace(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            package = root / "packages/omegamath"
+            reference = package / "checks/mathlib"
+            overlay = root / "foundation.toml"
+            foundation = Mock()
+            foundation.strict_config.return_value = overlay
+            foundation.foundation_config.return_value = overlay
+            with patch.multiple(host_lake, ROOT=root, REFERENCE=reference), \
+                 patch.object(host_lake, "foundation", return_value=foundation):
+                for label, basis in (("strict", package / "strict"), ("common", root / "common")):
+                    with self.subTest(label=label):
+                        overlay.write_text(
+                            'name = "omegamath"\n'
+                            '[[lean_lib]]\nname = "OmegaInit"\n'
+                            f'srcDir = {json.dumps(str(basis))}\n'
+                            '[[lean_lib]]\nname = "OmegaChecks.InitCompiler"\nsrcDir = "../../src"\n')
+                        config = host_lake.package_overlay(f".lake/build/omega-{label}", label,
+                                                           basis if label == "common" else None)
+                        libraries = tomllib.loads(config.read_text())["lean_lib"]
+                        self.assertEqual([Path(lib["srcDir"]) for lib in libraries],
+                                         [basis, package / "src"])
+
+    def test_reference_package_paths_are_relative_to_its_own_workspace(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            package = root / "packages/omegamath"
+            reference = package / "checks/mathlib"
+            reference.mkdir(parents=True)
+            (package / "lakefile.toml").write_text('name = "omegamath"\n')
+            (reference / "lakefile.toml").write_text(
+                'name = "reference"\n'
+                '[[lean_lib]]\nname = "OmegaMathlib"\nsrcDir = "src"\n'
+                '[[lean_lib]]\nname = "OmegaMath"\nsrcDir = "../../src"\n'
+                '[[lean_exe]]\nname = "omegaAudit"\nsrcDir = "../../src"\n')
+            with patch.multiple(host_lake, ROOT=root, UPSTREAM=package, REFERENCE=reference):
+                config = host_lake.package_overlay(".lake/build/omega-reference", "reference", None)
+            data = tomllib.loads(config.read_text())
+            self.assertEqual(data["name"], "omegamath")
+            self.assertFalse(data["preferReleaseBuild"])
+            self.assertEqual(Path(data["buildDir"]), package / ".lake/build/omega-reference")
+            self.assertEqual([Path(lib["srcDir"]) for lib in data["lean_lib"]],
+                             [reference / "src", package / "src"])
+            self.assertEqual(Path(data["lean_exe"][0]["srcDir"]), package / "src")
+
     def test_ordinary_init_compiler_library_owns_its_helpers(self):
         plugin = "OmegaChecks.InitCompiler"
         with tempfile.TemporaryDirectory(prefix="omega-plugin-") as directory:
