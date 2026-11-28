@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery.GibbsOverlap;
 
 internal sealed class PetzIntegerQutritOverlapDocument : IScribeDocumentDefinition
 {
@@ -19,11 +19,11 @@ internal sealed class PetzIntegerQutritOverlapDocument : IScribeDocumentDefiniti
                 + "After the scalar shift, exp(-18) exp(A+B) exp(A) exp(B) is bounded in trace norm by "
                 + "801763/1638400 < 1/2, while exp(-18) Tr exp(2(A+B)) = 1 + exp(-16) + exp(-32) > 1. "
                 + "Hence ||exp(A+B) exp(A) exp(B)||_1 < Tr exp(2(A+B)). "
-                + "These computations and the rational floor table are recorded in "
-                + "three-level-gt-overlap-independent-review.json and three-level-gt-overlap-obstruction.txt.")),
+                + "The Lean declaration integer_certificate supplies the floor table, "
+                + "and rational_certificate supplies the rational bounds.")),
             Describe.Lean(
                 DescribeId.Create("strict-integer-witness"),
-                DeclarationHandle.Create("D5/S3/Quantum/Recovery/PetzIntegerQutritOverlap.polar_optimized_overlap_lt"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/GibbsOverlap/PetzIntegerQutritOverlap.polar_optimized_overlap_lt"),
                 H("Strict integer qutrit witness"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -39,7 +39,7 @@ internal sealed class PetzIntegerQutritOverlapDocument : IScribeDocumentDefiniti
                 + "so the strict witness is a literal kernel proof of Not of that universal claim.")),
             Describe.Lean(
                 DescribeId.Create("universal-claim-refuted"),
-                DeclarationHandle.Create("D5/S3/Quantum/Recovery/PetzIntegerQutritOverlap.result"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/GibbsOverlap/PetzIntegerQutritOverlap.result"),
                 H("The universal half-time polar claim is false"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

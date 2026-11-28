@@ -1,9 +1,9 @@
-/- GID: D5/S3/Quantum/Recovery/PetzIntegerQutritOverlap
+/- GID: D5/S3/Quantum/Recovery/GibbsOverlap/PetzIntegerQutritOverlap
    generality: I
-   mirror-B: D5/B/S3/Quantum/Recovery/PetzIntegerQutritOverlap
+   mirror-B: D5/B/S3/Quantum/Recovery/GibbsOverlap/PetzIntegerQutritOverlap
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Recovery/PetzIntegerQutritOverlap.claim; result=D5/S3/Quantum/Recovery/PetzIntegerQutritOverlap.result; claim=D5/S3/Quantum/Recovery/PetzIntegerQutritOverlap.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Recovery/GibbsOverlap/PetzIntegerQutritOverlap.claim; result=D5/S3/Quantum/Recovery/GibbsOverlap/PetzIntegerQutritOverlap.result; claim=D5/S3/Quantum/Recovery/GibbsOverlap/PetzIntegerQutritOverlap.claim
    digest: An integer qutrit witness refutes the universal half-time polar overlap lower bound. -/
 
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
@@ -17,9 +17,10 @@ import OmegaBuild.Commands
 
 /-! # The integer qutrit counterexample to the polar-optimized half-time overlap
 
-The matrices and the Taylor certificate come from
-`three-level-gt-overlap-independent-review.json`, at
-`conclusion.polar_optimized_overlap.integer_variant`.
+`D5.S3.Quantum.Recovery.GibbsOverlap.PetzIntegerQutritOverlap.integer_certificate`
+checks the floor table for the product of the two degree-100 Taylor polynomials.
+`D5.S3.Quantum.Recovery.GibbsOverlap.PetzIntegerQutritOverlap.rational_certificate`
+uses that table to bound each entry of the Taylor product in a rational interval.
 -/
 
 compile_only_with_mathlib
@@ -29,7 +30,7 @@ set_option autoImplicit false
 open scoped BigOperators Matrix Matrix.Norms.Operator Nat NNReal
 open NormedSpace
 
-namespace D5.S3.Quantum.Recovery.PetzIntegerQutritOverlap
+namespace D5.S3.Quantum.Recovery.GibbsOverlap.PetzIntegerQutritOverlap
 
 abbrev Qutrit (R : Type) := Matrix (Fin 3) (Fin 3) R
 
@@ -456,4 +457,4 @@ theorem result : Not claim := by
 
 end
 
-end D5.S3.Quantum.Recovery.PetzIntegerQutritOverlap
+end D5.S3.Quantum.Recovery.GibbsOverlap.PetzIntegerQutritOverlap
