@@ -5,7 +5,11 @@
    anchors: []
    digest: Binary XOR transformation prices are tight within an explicit logarithmic gap. -/
 
-import Mathlib
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Data.Finite.Card
+import Mathlib.Data.Nat.Log
+import Mathlib.Tactic.Push
 import D5.S0.Computability.DescriptionComplexity.TransformationDescriptionBound
 
 namespace D5.S0.Computability.DescriptionComplexity.XorTransformationTightness
