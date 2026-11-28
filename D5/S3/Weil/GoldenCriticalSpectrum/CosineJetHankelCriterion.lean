@@ -55,8 +55,7 @@ theorem cosine_jet_hankel_iff_critical_or_real {d : ℕ}
       scaleJet ((t : ℂ) * spectralParameter (conj w)) =
         conj (scaleJet ((t : ℂ) * spectralParameter w)) := by
     rw [harg]
-    simp [scaleJet_eq, Complex.sin_conj]
-    <;> ring
+    simp [scaleJet_eq, Complex.sin_conj] <;> ring
   have transport (f : ℂ → ℂ) (hf : ∀ w, f (conj w) = conj (f w)) :
       ∀ w, w ∈ Finset.univ.image (fun j => f (rho j)) ↔
         conj w ∈ Finset.univ.image (fun j => f (rho j)) := by

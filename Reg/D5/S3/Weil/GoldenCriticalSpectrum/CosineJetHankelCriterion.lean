@@ -104,7 +104,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     sourceSelection := some {
       owner := `D5.S3.Weil.GoldenCriticalSpectrum.CosineJetHankelCriterion
       definition := none
-      coordinates := #[]
+      coordinates := #[0]
       readouts := #[
         { path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"]
           stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false },

@@ -20,6 +20,7 @@ internal sealed class CosineJetHankelCriterionDocument : IScribeDocumentDefiniti
                     "For any natural d, let rho enumerate d complex points, allowing repetitions, and suppose its finite support is closed under conjugation. "
                     + "Let t be any nonzero real number. Write Gamma(rho)=-i(rho-1/2), C(z)=2 cos(z), and J(z)=d/du C(uz) at u=1, so J(z)=-2z sin(z). "
                     + "H(t,rho) is the normalized d by d Newton-Hankel matrix of the nodes C(t Gamma(rho(j))); K(t,rho) uses J(t Gamma(rho(j))) instead. "
+                    + "For either node list, entry (a,b) is the real part of the sum of the node powers a+b, divided by d. "
                     + "ConjugationStable in the formula means closure of the finite support, and PSD means positive semidefinite. No equality of conjugate multiplicities is required.")),
                 Paragraph(Text(
                     "For z=x+iy, put A=Im C(z) and B=Im J(z). The estimate 4 x^2 y^2 <= (x^2+1+cosh(y)^2)(A^2+B^2) implies that both coordinates are real exactly when z lies on one of the two axes. "
@@ -28,7 +29,7 @@ internal sealed class CosineJetHankelCriterionDocument : IScribeDocumentDefiniti
                 Paragraph(Text(
                     "Both node lists have conjugation-stable support because C and J are even and commute with conjugation. The Newton-Hankel real-root criterion therefore applies to each list. "
                     + "Since t is nonzero, the two-axis alternative for t Gamma(rho(j)) is exactly Re rho(j)=1/2 or Im rho(j)=0. "
-                    + "For a spectrum without real points this is critical-line location. A single cosine list can hide off-critical points whenever its real phase is an integer multiple of pi; the derivative list detects those points.")),
+                    + "For a spectrum without real points this is critical-line location. A single cosine list can hide off-critical points whenever its real phase is a nonzero integer multiple of pi; the derivative list detects those points.")),
                 Paragraph(Text(
                     "At the golden sampling period the same criterion applies without requiring a second irrational scale. This is a finite moment criterion. "
                     + "The entries of K are moments of J itself. A single scale derivative of H gives mixed moments instead, and does not supply K; realizing powers of J can require higher derivative data. "

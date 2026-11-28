@@ -33,15 +33,13 @@ private theorem value_im (z : ℂ) :
     (value z).im = -2 * Real.sin z.re * Real.sinh z.im := by
   unfold value
   rw [Complex.cos_eq]
-  simp [Complex.mul_re, Complex.mul_im]
-  <;> ring
+  simp [Complex.mul_re, Complex.mul_im] <;> ring
 
 private theorem scaleJet_im (z : ℂ) :
     (scaleJet z).im = -2 * (z.re * Real.cos z.re * Real.sinh z.im +
       z.im * Real.sin z.re * Real.cosh z.im) := by
   rw [scaleJet_eq, Complex.sin_eq]
-  simp [Complex.mul_re, Complex.mul_im]
-  <;> ring
+  simp [Complex.mul_re, Complex.mul_im] <;> ring
 
 /-- A quantitative lower bound for the joint imaginary-coordinate energy.
 The bound retains both the real-axis and imaginary-axis degeneracies. -/
@@ -82,8 +80,7 @@ theorem separation (z : ℂ) :
   have hres : B - r * A = -2 * x * Real.cos x * s := by
     rw [hA, hB]
     dsimp [r]
-    field_simp [hsne]
-    <;> ring
+    field_simp [hsne] <;> ring
   have hid : x ^ 2 * A ^ 2 + (B - r * A) ^ 2 = 4 * x ^ 2 * s ^ 2 := by
     rw [hres, hA]
     calc
