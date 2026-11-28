@@ -52,6 +52,25 @@ internal sealed class LyudogovskiySimplexDocument : IScribeDocumentDefinition
                     All("j", V("Nat"), Iff(In(C("pair", V("i"), V("j")), C("staircase", r)),
                         Lt(Add(V("i"), V("j")), r))))),
                     "The ideal is empty at r=0 and has row lengths r,r-1,...,1 for positive r."),
+                Reuse("expandedStaircase", "The top-row extension of the staircase",
+                    All("r", V("Nat"), All("e", V("Nat"),
+                        Eq(C("cells", C("expandedStaircase", r, V("e"))),
+                            C("union", C("cells", C("staircase", r)),
+                                C("product", C("singleton", D(0)), C("range", Add(r, V("e")))))))),
+                    "The extra cells extend row zero to length r+e.", DescribeRole.Definition),
+                Reuse("mem_staircase", "Staircase cell membership",
+                    All("r", V("Nat"), All("c", C("Prod", V("Nat"), V("Nat")),
+                        Iff(In(V("c"), C("staircase", r)),
+                            Lt(Add(C("fst", V("c")), C("snd", V("c"))), r)))),
+                    "Coordinates are zero-based. The cell condition identifies the staircase cell missing from the lower boundary endpoint."),
+                Reuse("expanded_card", "Size of the top-row extension",
+                    All("r", V("Nat"), All("e", V("Nat"),
+                        Eq(C("card", C("expandedStaircase", r, V("e"))),
+                            Add(C("triangular", r), V("e"))))),
+                    "One extra cell gives an upper endpoint at the first size of its layer."),
+                Reuse("maximum_at_threshold", "Maximum dimension at the exact-layer threshold",
+                    All("r", V("Nat"), Eq(C("maxDimension", t), r)),
+                    "At the first size of the upper layer, the global maximum bounds the dimension of every potential lower endpoint."),
                 Node("firstFamily", "All addable one-cell extensions", All("r", V("Nat"),
                     OnVertex(Iff(In(p, C("firstFamily", r, n)), extension)))),
                 Node("ThresholdClaim", "The full threshold question", Iff(C("ThresholdClaim"), threshold),
@@ -74,6 +93,12 @@ internal sealed class LyudogovskiySimplexDocument : IScribeDocumentDefinition
                         ProblemSlugRef.Create("lyudogovskiy-2026-first-occurrence-family"), ResolutionKind.Proved)))));
 
     }
+
+    private static DocumentBlock Reuse(string name, string title, Formula formula, string prose,
+        DescribeRole role = DescribeRole.Theorem) =>
+        Describe.Lean(DescribeId.Create("lyudogovskiy-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula OnVertex(Formula b) => All("n", V("Nat"), All("p", C("Partition", V("n")), b));
     private static DocumentBlock Node(string name, string title, Formula formula, string prose = "") =>

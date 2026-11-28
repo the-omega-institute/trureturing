@@ -43,6 +43,7 @@ strata_touched:
   - D5/S3/Topology/StableCategory/TetrahedralAsymmetricIteration
   - D5/S3/Topology/StableCategory/ThreePieceCategoricalCover
   - D5/S3/Topology/StableCategory/DepthZeroElementaryExpansion
+  - D5/S3/Topology/StableCategory/ExactCategoricalExtension
 license: citation-only
 triage: anchor
 ---
@@ -1176,3 +1177,18 @@ depth. Linked curves in the old trace can become nullhomologous in
 the new colour, preventing any endpoint map that fixes the old
 trace. It remains open whether a different colouring or a
 contraction that moves the old trace gives a general transfer.
+
+
+## Exact intersections across an attachment
+
+Suppose the retained subcomplex is full and has a prescribed two-piece
+cover. One further ordinary subdivision gives an exact categorical
+extension when the attachment and one old piece are categorical
+together. When the attachment and both old pieces are individually
+categorical, there is an exact extension with three pieces, with the
+third disjoint from the retained subdivision. More generally, if a
+categorical cover by full subcomplexes contains the corresponding
+prescribed old pieces, one further ordinary subdivision gives the
+prescribed intersections without increasing the number of pieces.
+The proofs intersect each retained face with a vertex set and compare
+this order map with inclusion by a finite contiguity chain.
