@@ -1367,19 +1367,18 @@ subdivision depth the closed stars are subordinate to those opens, giving
 complex. The arbitrary-dimension mesh estimate and this choice of
 subcomplexes are formalized in `LebesgueStarAssignment`.
 
-A nullhomotopic inclusion \(A\hookrightarrow K\) extends continuously over
-the cone on \(A\). Zeeman’s 1964 relative simplicial approximation theorem
-gives a triangulation retaining the given base and a simplicial map to \(K\)
-which extends the inclusion. The cone has contractible realization, so
-its face poset lies in the weak-category-one branch. At any common
-subdivision depth witnessing the \(b\)-bound for these factors, pull back
-their categorical pieces to the original regions and compose their
-contractions with the maps to \(K\). Both maps preserve the given
-inclusion on the base. The order-level assembly is formalized in
-`CategoricalCoverFactorization`, giving \(ab\) categorical lower sets.
-The relative approximation step uses the cited classical theorem.
-[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
-[Relative simplicial approximation](https://doi.org/10.1017/S0305004100037415)
+For each region, pass to its face poset and take the inclusion into the
+ambient face poset. `WeaklyContractibleFactor` factors this order map
+exactly through a finite poset with contractible order complex. It uses
+a finite fence after precomposition by a chain-maximum projection,
+then attaches a mapping cylinder to carry the original map into the
+factor. The equality of the composite with the original inclusion
+is preserved by ordinary subdivision. `WeakCategoryOneReduction`
+moves the finitely many factor covers to one common depth and
+assembles the product cover of size \(ab\). The reverse implication
+takes the whole of a contractible realization as one categorical
+open set. Lean checks this equivalence for each natural number \(b\).
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3)
 
 For the universal bound, shellable PL balls of unrestricted dimension
 suffice. Embed a finite complex with contractible realization as a
@@ -1394,10 +1393,9 @@ non-evasive complexes. For a complex with contractible realization,
 Adiprasito and Benedetti make its actual product with a cube collapsible,
 and its face poset retracts onto the original face poset. Further ordinary
 subdivisions give a non-evasive complex. These equivalences use the
-classical subdivision and collapse results below. Lean checks the
-open-cover-to-subcomplex step and the order-level assembly described
-above. The universal equivalences use the paper proofs with relative
-approximation and the cited results on subdivision and collapse.
+classical subdivision and collapse results below. The equivalences involving shellable balls and non-evasive
+complexes use paper proofs with relative approximation and the cited
+results on subdivision and collapse.
 Question 6.3, the case \(b=2\), remains open.
 [Adiprasito and Benedetti](https://arxiv.org/abs/1202.6606) ·
 [Barmak and Minian](https://arxiv.org/abs/0907.2954)
@@ -1458,17 +1456,6 @@ averaging gives zero coordinates outside the original carrier, and
 the uniform mesh estimate brings an entire source simplex within
 the cylinder's Lebesgue radius.
 
-For the weak-category-one reduction, the target of this approximation
-stays fixed during this construction. A paper-level exact factor can
-then be built with a non-Hausdorff mapping cylinder of the iterated
-maximum map, attached to the finite order homotopy of the refined
-inclusion. The mapping cylinder retains the original source map.
-The simplicial homotopy uses the later fine source at a separate end
-of the mapping cylinder. The finite order homotopy and exact gluing
-are additional steps beyond the approximation formalized here.
-[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
-[Non-Hausdorff mapping cylinders](https://arxiv.org/abs/1005.0538)
-
 ## From realization nullhomotopies to finite order-map fences
 
 At each step on a nonempty chain, taking its maximum chooses a vertex
@@ -1517,3 +1504,51 @@ for each individual input is the remaining question. These lower
 bounds are proved at the paper level.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
 [Collapsibility of barycentric subdivisions](https://arxiv.org/html/1709.07930#S4.SSx1.Thmtheorem3)
+
+## Face-rank parity can fail at every depth of a fixed triangulation
+
+There is a coherent triangulation \(T\) of a triangle such that at every
+positive ordinary subdivision depth the odd-cardinality face vertices
+induce a noncategorical subcomplex. Take the cone from an interior
+point to the three boundary edges and stellarly subdivide two of the
+triangles at interior points. Each of the six vertices belongs to at
+least three triangles, and each triangle has at most one boundary
+edge. To realize the two stellar subdivisions coherently, lift each
+new point below its triangle's affine lifting plane and above the
+other planes at that point.
+
+In the subdivision of this disk, keep the small triangles whose flags
+use interior edges. Each old boundary edge \(xy\) is replaced by the
+path \(x,b_F,y\), where \(b_F\) is the barycentre of its unique incident
+triangle \(F\). Each triangle still has at most one boundary edge.
+An old boundary vertex incident to \(t\) triangles now meets \(2t-2\);
+old interior vertices meet twice as many, and all retained new
+vertices meet four or six. Iterating provides a disk with these
+incidence properties inside every ordinary subdivision of \(T\).
+
+The order complex on the singleton and triangle faces of each retained
+disk lies in the odd colour at the next depth. Any map contiguous to
+its inclusion fixes every triangle, because it must remain comparable
+to the three singletons of that triangle. It fixes every singleton
+as well, because the intersection of its incident triangles is exactly
+that singleton. The inclusion therefore has no nonconstant contiguity
+step. The starting triangulation itself admits an unrestricted
+categorical two-cover by separating one stellarly subdivided triangle
+from the rest. Each side contracts by a cone or a dominated-vertex
+deletion followed by a cone.
+
+The same obstruction holds for a fixed coherent four-simplex
+triangulation. Affinely retract the four-simplex onto its triangular
+face by sending both extra vertices to one corner. The inverse images
+of the triangles of \(T\) form a coherent polytopal subdivision, from
+the coherent lifting function of \(T\) composed with the retraction.
+A generic small lifting perturbation triangulates these cells without
+adding vertices to the triangular face. Each cell vertex retracts to a
+vertex of \(T\), so the retraction is simplicial. Its ordinary
+subdivisions are still exact retractions. The embedded odd piece of
+the triangular face keeps its ranks at each depth, and any contraction
+of the larger odd piece would restrict and project to one of that
+triangular piece. These are paper-level obstructions to the parity
+rule. The existence of some categorical two-cover at an
+input-dependent depth remains open.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3)
