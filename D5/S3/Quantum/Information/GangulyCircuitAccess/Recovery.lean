@@ -50,10 +50,8 @@ private theorem witness_no_recovery :
   apply witness_no_common_recovery
   refine ⟨fun ρ => CStarMatrix.ofMatrix.symm (R.toCompletelyPositiveMap (CStarMatrix.ofMatrix ρ)),
     ?_, ?_⟩
-  · rw [hR]
-    exact CStarMatrix.ofMatrix.symm_apply_apply _
-  · rw [hR]
-    exact CStarMatrix.ofMatrix.symm_apply_apply _
+  · exact congrArg CStarMatrix.ofMatrix.symm (hR (logicalDensity 1))
+  · exact congrArg CStarMatrix.ofMatrix.symm (hR (logicalDensity (-1)))
 
 theorem result : ¬ claim := by
   intro h
