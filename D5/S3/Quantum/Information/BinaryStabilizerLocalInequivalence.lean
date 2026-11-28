@@ -19,8 +19,12 @@ Direct frozen dependencies: D5/S3/Quantum/Information/StabilizerPairLocalUnitary
   D5/S3/Quantum/FiniteDimensional through that import
 -/
 
-import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+module
+
+public import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+public import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
