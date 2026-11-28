@@ -105,3 +105,14 @@ export _root_.Nat (decidableExistsFin decidableExistsLE decidableExistsLT decida
   pow_eq_one pow_eq_self_iff pow_eq_zero pow_le_pow_iff_left pow_le_pow_iff_right pow_lt_pow_iff_right
   pow_lt_pow_right pow_pos_iff pow_right_inj pow_self_pos succ_mod_succ_eq_zero_iff zero_pow)
 end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_eq_max_iff add_eq_min_iff add_eq_zero add_lt_iff_lt_sub_right
+  add_pos_iff_pos_or_pos add_succ_lt_add eq_sub_of_add_eq eq_sub_of_add_eq' eq_zero_of_le_div
+  eq_zero_of_le_div_two eq_zero_of_mul_le eq_zero_of_two_mul_le exists_add_one_eq exists_eq_add_one
+  le_add_one_iff le_add_pred_of_pos le_and_le_add_one_iff le_iff_lt_add_one lt_mul_div_self_add
+  lt_of_lt_pred max_eq_zero_iff mul_lt_mul'' mul_self_inj mul_self_le_mul_self_iff
+  mul_self_lt_mul_self mul_self_lt_mul_self_iff pos_of_lt_mul_left pos_of_lt_mul_right
+  pred_eq_succ_iff sub_eq_of_eq_add' sub_lt_iff_lt_add sub_lt_iff_lt_add' sub_max_sub_left
+  sub_min_sub_left)
+end Omega.Nat

@@ -793,3 +793,49 @@ export _root_.Omega.Nat (decidableExistsFin decidableExistsLE decidableExistsLT 
   pow_eq_one pow_eq_self_iff pow_eq_zero pow_le_pow_iff_left pow_le_pow_iff_right pow_lt_pow_iff_right
   pow_lt_pow_right pow_pos_iff pow_right_inj pow_self_pos succ_mod_succ_eq_zero_iff zero_pow)
 end Nat
+
+port_alternative_proof Nat.add_eq_zero from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.le_iff_lt_add_one from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.le_add_one_iff from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.add_lt_iff_lt_sub_right from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.lt_of_lt_pred from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.sub_eq_of_eq_add' from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.eq_sub_of_add_eq from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.eq_sub_of_add_eq' from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.add_pos_iff_pos_or_pos from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.le_and_le_add_one_iff from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.le_add_pred_of_pos from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.mul_lt_mul'' from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.pos_of_lt_mul_left from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.pos_of_lt_mul_right from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.eq_zero_of_two_mul_le from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.add_succ_lt_add from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.sub_lt_iff_lt_add from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.sub_lt_iff_lt_add' from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.sub_min_sub_left from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.sub_max_sub_left from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.max_eq_zero_iff from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.lt_mul_div_self_add from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.exists_eq_add_one from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.exists_add_one_eq from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.pred_eq_succ_iff from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.add_eq_max_iff from OmegaChecks.InitPort.Alternatives.NatOrder
+port_alternative_proof Nat.add_eq_min_iff from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.mul_self_lt_mul_self by_constructive_casts
+port_proof Nat.mul_self_le_mul_self_iff by_constructive_casts
+port_proof Nat.mul_self_lt_mul_self_iff by_constructive_casts
+port_proof Nat.eq_zero_of_mul_le by_constructive_casts
+port_proof Nat.eq_zero_of_le_div by_constructive_casts
+port_proof Nat.eq_zero_of_le_div_two by_constructive_casts
+port_alternative_proof Nat.mul_self_inj from OmegaChecks.InitPort.Alternatives.NatOrder
+
+namespace Nat
+export _root_.Omega.Nat (add_eq_max_iff add_eq_min_iff add_eq_zero add_lt_iff_lt_sub_right
+  add_pos_iff_pos_or_pos add_succ_lt_add eq_sub_of_add_eq eq_sub_of_add_eq' eq_zero_of_le_div
+  eq_zero_of_le_div_two eq_zero_of_mul_le eq_zero_of_two_mul_le exists_add_one_eq exists_eq_add_one
+  le_add_one_iff le_add_pred_of_pos le_and_le_add_one_iff le_iff_lt_add_one lt_mul_div_self_add
+  lt_of_lt_pred max_eq_zero_iff mul_lt_mul'' mul_self_inj mul_self_le_mul_self_iff
+  mul_self_lt_mul_self mul_self_lt_mul_self_iff pos_of_lt_mul_left pos_of_lt_mul_right
+  pred_eq_succ_iff sub_eq_of_eq_add' sub_lt_iff_lt_add sub_lt_iff_lt_add' sub_max_sub_left
+  sub_min_sub_left)
+end Nat

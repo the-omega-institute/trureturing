@@ -335,4 +335,164 @@ public theorem Nat.min_eq_zero_iff : type_of% @_root_.Nat.min_eq_zero_iff := by
     · exact Nat.zero_min _
     · exact Nat.min_zero _
 
+public theorem Nat.add_eq_zero : type_of% @_root_.Nat.add_eq_zero := by
+  exact _root_.Nat.add_eq_zero_iff
+
+public theorem Nat.le_iff_lt_add_one : type_of% @_root_.Nat.le_iff_lt_add_one := by
+  exact _root_.Nat.lt_succ_iff.symm
+
+public theorem Nat.le_add_one_iff : type_of% @_root_.Nat.le_add_one_iff := by
+  exact _root_.Nat.le_succ_iff
+
+public theorem Nat.add_lt_iff_lt_sub_right : type_of% @_root_.Nat.add_lt_iff_lt_sub_right := by
+  exact _root_.Nat.lt_sub_iff_add_lt.symm
+
+public theorem Nat.lt_of_lt_pred : type_of% @_root_.Nat.lt_of_lt_pred := by
+  intro m n h
+  exact _root_.Nat.lt_of_lt_of_le h (_root_.Nat.sub_le _ _)
+
+public theorem Nat.sub_eq_of_eq_add' : type_of% @_root_.Nat.sub_eq_of_eq_add' := by
+  intro a b c h
+  exact _root_.Nat.sub_eq_of_eq_add (h.trans (_root_.Nat.add_comm b c))
+
+public theorem Nat.eq_sub_of_add_eq : type_of% @_root_.Nat.eq_sub_of_add_eq := by
+  intro a b c h
+  exact (_root_.Nat.sub_eq_of_eq_add h.symm).symm
+
+public theorem Nat.eq_sub_of_add_eq' : type_of% @_root_.Nat.eq_sub_of_add_eq' := by
+  intro a b c h
+  exact (_root_.Nat.sub_eq_of_eq_add (h.symm.trans (_root_.Nat.add_comm b c))).symm
+
+public theorem Nat.add_pos_iff_pos_or_pos : type_of% @_root_.Nat.add_pos_iff_pos_or_pos := by
+  intro m n
+  constructor
+  · intro h
+    exact (_root_.Nat.eq_zero_or_pos m).elim (fun z => Or.inr (by rwa [z, _root_.Nat.zero_add] at h)) Or.inl
+  · exact fun h => h.elim (fun hm => _root_.Nat.add_pos_left hm n) (fun hn => _root_.Nat.add_pos_right m hn)
+
+public theorem Nat.le_and_le_add_one_iff : type_of% @_root_.Nat.le_and_le_add_one_iff := by
+  intro n m
+  constructor
+  · intro h
+    exact (_root_.Nat.le_succ_iff.mp h.2).elim (fun le => Or.inl (_root_.Nat.le_antisymm le h.1)) Or.inr
+  · rintro (rfl | rfl)
+    · exact ⟨_root_.Nat.le_refl _, _root_.Nat.le_succ _⟩
+    · exact ⟨_root_.Nat.le_succ _, _root_.Nat.le_refl _⟩
+
+public theorem Nat.le_add_pred_of_pos : type_of% @_root_.Nat.le_add_pred_of_pos := by
+  intro b a hb
+  cases a with
+  | zero => exact _root_.Nat.zero_le _
+  | succ a =>
+    exact _root_.Nat.le_trans (_root_.Nat.le_of_eq (_root_.Nat.one_add a).symm)
+      (_root_.Nat.add_le_add_right (_root_.Nat.pos_of_ne_zero hb) a)
+
+public theorem Nat.mul_lt_mul'' : type_of% @_root_.Nat.mul_lt_mul'' := by
+  intro a b c d hac hbd
+  exact _root_.Nat.mul_lt_mul_of_lt_of_le hac (_root_.Nat.le_of_lt hbd) (_root_.Nat.lt_of_le_of_lt (_root_.Nat.zero_le b) hbd)
+
+public theorem Nat.pos_of_lt_mul_left : type_of% @_root_.Nat.pos_of_lt_mul_left := by
+  intro a b c h
+  exact _root_.Nat.pos_of_mul_pos_left (_root_.Nat.lt_of_le_of_lt (_root_.Nat.zero_le a) h)
+
+public theorem Nat.pos_of_lt_mul_right : type_of% @_root_.Nat.pos_of_lt_mul_right := by
+  intro a b c h
+  exact _root_.Nat.pos_of_mul_pos_right (_root_.Nat.lt_of_le_of_lt (_root_.Nat.zero_le a) h)
+
+public theorem Nat.eq_zero_of_two_mul_le : type_of% @_root_.Nat.eq_zero_of_two_mul_le := by
+  intro n h
+  exact _root_.Nat.eq_zero_of_le_zero (_root_.Nat.le_of_add_le_add_right (a := n) (b := n) (c := 0)
+    (by simpa only [_root_.Nat.two_mul, _root_.Nat.zero_add] using h))
+
+public theorem Nat.add_succ_lt_add : type_of% @_root_.Nat.add_succ_lt_add := by
+  intro a b c d hab hcd
+  exact _root_.Nat.lt_of_le_of_lt (by simpa only [_root_.Nat.succ_add] using _root_.Nat.add_le_add_right hab c)
+    (_root_.Nat.add_lt_add_left hcd b)
+
+public theorem Nat.sub_lt_iff_lt_add : type_of% @_root_.Nat.sub_lt_iff_lt_add := by
+  intro a b c hba
+  have sum := _root_.Nat.sub_add_cancel hba
+  exact ⟨fun lt => sum ▸ _root_.Nat.add_lt_add_right lt b,
+    fun lt => (_root_.Nat.add_lt_add_iff_right (k := b)).mp (sum.symm ▸ lt)⟩
+
+public theorem Nat.sub_lt_iff_lt_add' : type_of% @_root_.Nat.sub_lt_iff_lt_add' := by
+  intro a b c hba
+  rw [_root_.Nat.add_comm b c]
+  exact _root_.Nat.sub_lt_iff_lt_add hba
+
+public theorem Nat.sub_min_sub_left : type_of% @_root_.Nat.sub_min_sub_left := by
+  intro a b c
+  rcases _root_.Nat.le_total b c with bc | cb
+  · rw [_root_.Nat.max_eq_right bc, _root_.Nat.min_eq_right (_root_.Nat.sub_le_sub_left bc a)]
+  · rw [_root_.Nat.max_eq_left cb, _root_.Nat.min_eq_left (_root_.Nat.sub_le_sub_left cb a)]
+
+public theorem Nat.sub_max_sub_left : type_of% @_root_.Nat.sub_max_sub_left := by
+  intro a b c
+  rcases _root_.Nat.le_total b c with bc | cb
+  · rw [_root_.Nat.min_eq_left bc, _root_.Nat.max_eq_left (_root_.Nat.sub_le_sub_left bc a)]
+  · rw [_root_.Nat.min_eq_right cb, _root_.Nat.max_eq_right (_root_.Nat.sub_le_sub_left cb a)]
+
+public theorem Nat.mul_self_inj : type_of% @_root_.Nat.mul_self_inj := by
+  intro m n
+  exact ⟨fun h => _root_.Nat.le_antisymm (_root_.Nat.mul_self_le_mul_self_iff.mp (_root_.Nat.le_of_eq h))
+    (_root_.Nat.mul_self_le_mul_self_iff.mp (_root_.Nat.le_of_eq h.symm)), fun h => congrArg (fun x => x*x) h⟩
+
+public theorem Nat.max_eq_zero_iff : type_of% @_root_.Nat.max_eq_zero_iff := by
+  intro m n
+  constructor
+  · intro eq
+    exact ⟨_root_.Nat.eq_zero_of_le_zero (eq ▸ _root_.Nat.le_max_left m n),
+      _root_.Nat.eq_zero_of_le_zero (eq ▸ _root_.Nat.le_max_right m n)⟩
+  · rintro ⟨rfl, rfl⟩
+    rfl
+
+public theorem Nat.lt_mul_div_self_add : type_of% @_root_.Nat.lt_mul_div_self_add := by
+  intro x k hk
+  calc
+    x = x % k + k * (x / k) := (_root_.Nat.mod_add_div x k).symm
+    _ = k * (x / k) + x % k := _root_.Nat.add_comm ..
+    _ < k * (x / k) + k := _root_.Nat.add_lt_add_left (_root_.Nat.mod_lt _ hk) _
+
+public theorem Nat.exists_eq_add_one : type_of% @_root_.Nat.exists_eq_add_one := by
+  intro a
+  constructor
+  · rintro ⟨n, rfl⟩
+    exact _root_.Nat.zero_lt_succ _
+  · cases a with
+    | zero => exact (_root_.Nat.not_lt_zero _ · |>.elim)
+    | succ n => exact fun _ => ⟨n, rfl⟩
+
+public theorem Nat.exists_add_one_eq : type_of% @_root_.Nat.exists_add_one_eq := by
+  intro a
+  exact ⟨fun ⟨n, h⟩ => _root_.Nat.exists_eq_add_one.mp ⟨n, h.symm⟩,
+    fun h => (_root_.Nat.exists_eq_add_one.mpr h).elim (fun n eq => ⟨n, eq.symm⟩)⟩
+
+public theorem Nat.pred_eq_succ_iff : type_of% @_root_.Nat.pred_eq_succ_iff := by
+  intro n m
+  cases n with
+  | zero => exact ⟨fun h => (_root_.Nat.noConfusion h), fun h => _root_.Nat.noConfusion h⟩
+  | succ n => exact ⟨congrArg _root_.Nat.succ, _root_.Nat.succ.inj⟩
+
+public theorem Nat.add_eq_max_iff : type_of% @_root_.Nat.add_eq_max_iff := by
+  intro m n
+  constructor
+  · intro sum
+    rcases _root_.Nat.le_total m n with h | h
+    · exact Or.inl (_root_.Nat.add_eq_right.mp (sum.trans (_root_.Nat.max_eq_right h)))
+    · exact Or.inr (_root_.Nat.add_eq_left.mp (sum.trans (_root_.Nat.max_eq_left h)))
+  · rintro (rfl | rfl)
+    · rw [_root_.Nat.zero_add, _root_.Nat.zero_max]
+    · rw [_root_.Nat.add_zero, _root_.Nat.max_zero]
+
+public theorem Nat.add_eq_min_iff : type_of% @_root_.Nat.add_eq_min_iff := by
+  intro m n
+  constructor
+  · intro sum
+    have hm : m + n ≤ m := sum ▸ _root_.Nat.min_le_left m n
+    have hn : m + n ≤ n := sum ▸ _root_.Nat.min_le_right m n
+    exact ⟨_root_.Nat.eq_zero_of_le_zero (_root_.Nat.le_of_add_le_add_right (by simpa only [_root_.Nat.zero_add] using hn)),
+      _root_.Nat.eq_zero_of_le_zero (_root_.Nat.le_of_add_le_add_left (by simpa only [_root_.Nat.add_zero] using hm))⟩
+  · rintro ⟨rfl, rfl⟩
+    rfl
+
 end OmegaChecks.InitPort.Alternatives
