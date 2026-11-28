@@ -110,7 +110,7 @@ private theorem wsubsets_deletion_of_block_size {V : Type*} [DecidableEq V]
     (Finset.card_le_card Finset.inter_subset_left).trans_eq hS
   omega
 
-private theorem block_support_family
+theorem block_support_family
     {V : Type*} [DecidableEq V]
     (blocks : Finset (Finset V)) (w t k : ℕ)
     (hblock : ∀ B ∈ blocks, B.card = k)
@@ -236,7 +236,7 @@ private noncomputable def design_of_matching_leave
     exact huv (Finset.card_le_one.mp hpair u (Finset.mem_inter.mpr ⟨huB, hui⟩)
       v (Finset.mem_inter.mpr ⟨hvB, hvi'⟩))
 
-private theorem even_strict_edge_threshold {w t : ℕ} (ht : 1 ≤ t)
+theorem even_strict_edge_threshold {w t : ℕ} (ht : 1 ≤ t)
     (hw : t + 3 < w) (heven : Even t) :
     (w + t) * (w + t) < 2 * AppendixA.B w t := by
   obtain ⟨s, hs⟩ := heven
