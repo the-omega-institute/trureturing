@@ -526,9 +526,9 @@ theorem controlled_square {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
 
 open scoped Classical in
 private theorem guarded_sq {L : ℕ} (M : Op L) (g : Word L → Prop) (f : Word L → Word L)
-    (hm : ∀ y x, M y x = if h : g x.val ∧ y.val = f x.val then 1 else 0)
+    (hm : ∀ y x, M y x = if g x.val ∧ y.val = f x.val then 1 else 0)
     (hmove : ∀ x : Config L, g x.val → Blockade (f x.val) ∧ g (f x.val) ∧ f (f x.val) = x.val) :
-    M ^ 2 = Matrix.diagonal (fun x => if h : g x.val then 1 else 0) := by
+    M ^ 2 = Matrix.diagonal (fun x => if g x.val then 1 else 0) := by
   classical
   ext y x
   rw [pow_two, Matrix.mul_apply]
@@ -538,17 +538,21 @@ private theorem guarded_sq {L : ℕ} (M : Op L) (g : Word L → Prop) (f : Word 
     rw [Finset.sum_eq_single z]
     · rw [hm y z, hm z x]
       have hz : z.val = f x.val := rfl
-      simp [hg, hz, hguard, hinv, Matrix.diagonal_apply, Subtype.ext_iff]
+      by_cases hy : y = x
+      · subst y
+        simp [hg, hz, hguard, hinv]
+      · have hv : y.val ≠ x.val := fun h => hy (Subtype.ext h)
+        simp [hg, hz, hguard, hinv, hy, hv]
     · intro w _ hw
       have hne : w.val ≠ f x.val := fun h => hw (Subtype.ext h)
       simp [hm w x, hne]
     · simp
   · have hz : ∀ w : Config L, M w x = 0 := by intro w; simp [hm, hg]
-    by_cases hy : y = x <;> simp [Matrix.diagonal_apply, hy, hg, hz]
+    by_cases hy : y = x <;> simp [hy, hg, hz]
 
 open scoped Classical in
 private theorem DA_eq {L : ℕ} (j : Fin L) :
-    DA j = Matrix.diagonal (fun x : Config L => if h : centerAllowed j x.val then 1 else 0) := by
+    DA j = Matrix.diagonal (fun x : Config L => if centerAllowed j x.val then 1 else 0) := by
   classical
   simp only [DA, E, Nminus, ← Matrix.diagonal_one, Matrix.diagonal_sub,
     Matrix.diagonal_mul_diagonal]
@@ -559,7 +563,7 @@ private theorem DA_eq {L : ℕ} (j : Fin L) :
 
 open scoped Classical in
 private theorem DF_eq {L : ℕ} (j : Fin L) :
-    DF j = Matrix.diagonal (fun x : Config L => if h : flanksAllowed j x.val then 1 else 0) := by
+    DF j = Matrix.diagonal (fun x : Config L => if flanksAllowed j x.val then 1 else 0) := by
   classical
   simp only [DF, E, ← Matrix.diagonal_one, Matrix.diagonal_sub, Matrix.diagonal_mul_diagonal]
   congr 1
